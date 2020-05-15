@@ -1,0 +1,16 @@
+---
+title: "Data Story: Narrative Basics"
+# yaml-author
+date: 2020-05-15
+output: github_document
+---
+
+*Purpose*:
+
+*Reading*: [Randy Olson's TED Talk](https://www.youtube.com/watch?v=ERB7ITvabA4).
+*Reading Time*: ~ 10 minutes
+
+| TLA | Framework |
+| AAA | And, And, And |
+| ABT | And, But, Therefore |
+| DHY | Despite, However, Yet |
