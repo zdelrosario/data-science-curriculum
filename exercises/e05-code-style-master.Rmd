@@ -1,0 +1,97 @@
+---
+title: "Code Style"
+# yaml-author
+date: 2020-05-05
+output: github_document
+---
+
+*Purpose*: From the tidyverse style guide "Good coding style is like correct
+punctuation: you can manage without it, butitsuremakesthingseasiertoread." We
+will follow the [tidyverse style guide](https://style.tidyverse.org/); Google's
+internal [R style guide](https://google.github.io/styleguide/Rguide.html) is
+actually based on these guidelines!
+
+*Reading*: [tidyverse style guide](https://style.tidyverse.org/).
+*Topics*: [Spacing](https://style.tidyverse.org/syntax.html#spacing) (subsection only), [Pipes](https://style.tidyverse.org/pipes.html) (whole section)
+*Reading Time*: ~ 10 minutes
+
+```{r setup}
+library(tidyverse)
+```
+
+__q1__ Re-write according to the style guide
+
+*Hint*: The pipe operator `%>%` will help make this code more readable.
+
+```{r q1-task}
+## Original code; hard to read
+summarize(group_by(diamonds, cut), mean_price = mean(price))
+```
+
+```{r q1-solution}
+# task-begin
+## TODO: Re-write the code above following the tidyverse style guide
+# task-end
+# solution-begin
+diamonds %>%
+  group_by(cut) %>%
+  summarize(
+    mean_price = mean(price)
+  )
+# solution-end
+```
+
+__q2__ Re-write according to the style guide
+
+*Hint*: There are *particular rules* about spacing!
+
+```{r q2-task}
+iris %>%
+  mutate(Sepal.Area=Sepal.Length*Sepal.Width) %>%
+  group_by( Species ) %>%
+  summarize_if(is.numeric,mean)%>%
+  ungroup() %>%
+  gather( measure,value,-Species ) %>%
+  arrange(value )
+```
+
+```{r q2-solution}
+# task-begin
+## TODO: Re-write the code above following the tidyverse style guide
+# task-end
+# solution-begin
+iris %>%
+  mutate(Sepal.Area = Sepal.Length * Sepal.Width) %>%
+  group_by(Species) %>%
+  summarize_if(is.numeric, mean) %>%
+  ungroup() %>%
+  gather(measure, value, -Species) %>%
+  arrange(value)
+# solution-end
+```
+
+__q3__ Re-write according to the style guide
+
+*Hint*: What do we do about long lines?
+
+```{r q3-task}
+iris %>%
+  group_by(Species) %>%
+  summarize(Sepal.Length = mean(Sepal.Length), Sepal.Width = mean(Sepal.Width), Petal.Length = mean(Petal.Length), Petal.Width = mean(Petal.Width))
+```
+
+```{r q3-task}
+# task-begin
+## TODO: Re-write the code above following the tidyverse style guide
+# task-end
+# solution-begin
+iris %>%
+  group_by(Species) %>%
+  summarize(
+    Sepal.Length = mean(Sepal.Length),
+    Sepal.Width  = mean(Sepal.Width),
+    Petal.Length = mean(Petal.Length),
+    Petal.Width  = mean(Petal.Width)
+  )
+# solution-end
+```

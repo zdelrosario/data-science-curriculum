@@ -1,0 +1,117 @@
+---
+title: "Documentation"
+# yaml-author
+date: 2020-05-05
+output: github_document
+---
+
+*Purpose*: No programmer memorizes every fact about every function. Expert
+programmers get used to quickly reading *documentation*, which allows them to
+look up the facts they need, when they need them. Just as you had to learn how
+to read English, you will have to learn how to consult documentation. This
+exercise will get you started.
+
+*Reading*: (None)
+
+```{r setup}
+library(tidyverse)
+```
+
+The `vignette()` function allows us to look up
+[vignettes](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/vignette.html);
+short narrative-form tutorials associated with a package, written by its
+developers.
+
+__q1__ Use `vignette(package = ???)` to look up vignettes associated with
+`"dplyr"`. What vignettes are available?
+
+```{r q1-task}
+# task-begin
+## TODO: Re-write the code above following the tidyverse style guide
+# task-end
+# solution-begin
+vignette(package = "dplyr")
+# solution-end
+```
+
+<!-- solution-begin -->
+The `dplyr` package has vignettes `compatibility`, `dplyr`, `programming`,
+`two-table`, and `window-functions`. We'll cover many of these topics
+in this course!
+<!-- solution-end -->
+
+Once we know *what* vignettes are available, we can use the same function to
+read a particular vignette.
+
+__q2__ Use `vignette(???, package = "dplyr")` to read the vignette on `dplyr`.
+Read this vignette up to the first note on `filter()`. Use `filter()` to select
+only those rows of the `iris` dataset where `Species == "setosa"`.
+
+*Note*: This should open up your browser.
+
+```{r q2-task}
+iris %>%
+  as_tibble() %>%
+  filter(
+    # TODO: Filter on Species "setosa"
+# solution-begin
+    Species == "setosa"
+# solution-end
+  )
+```
+
+Vignettes are useful when we only know *generally* what we're looking for. Once
+we know the verbs (functions) we want to use, we need more specific help.
+
+__q3__ Remember back to `e04-function-basics`; how do we look up help for a
+specific function?
+
+<!-- solution-begin -->
+We have a few options:
+
+- We can use `?function` to look up the help for a function
+- We can execute `function` (without parentheses) to show the source code
+<!-- solution-end -->
+
+Sometimes we'll be working with a function, but we won't *quite* know how to get
+it to do what we need. In this case, consulting the function's documentation can
+be *extremely* helpful.
+
+__q4__ Use your knowledge of documentation lookup to answer the following
+question: How could we `filter` the `iris` dataset to return only those rows
+with `Sepal.Length` between `5.1` and `6.4`?
+
+```{r q3-task}
+# task-begin
+## TODO: Consult the docs; Write your code here
+# task-end
+# solution-begin
+iris %>%
+  as_tibble() %>%
+  filter(
+    5.1 <= Sepal.Length,
+    Sepal.Length <= 6.4
+  )
+# solution-end
+```
+
+<!-- solution-begin -->
+We have at least two options:
+
+- We can use two lines of filter
+- We can use the helper function `between()`
+<!-- solution-end -->
+
+On other occasions we'll know a function, but would like to know about other,
+related functions. In this case, it's useful to be able to trace the `function`
+back to its parent `package`. Then we can read the vignettes on the package to
+learn more.
+
+__q5__ Look up the documentation on `cut_number`; what package does it come
+from? What about `parse_number()`? What about `row_number()`?
+
+<!-- solution-begin -->
+* `ggplot2::cut_number()`
+* `readr::parse_number()`
+* `dplyr::row_number()`
+<!-- solution-end -->

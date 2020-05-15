@@ -1,0 +1,92 @@
+---
+title: "Data Basics"
+# yaml-author
+date: 2020-05-03
+output: github_document
+---
+
+*Purpose*: When first studying a new dataset, there are very simple checks we
+should perform first. These are those checks.
+
+*Reading*: (None)
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+__q0__ Run the following chunk:
+
+```{r }
+head(iris)
+```
+
+This is a *dataset*; the fundamental object we'll study throughout this course.
+Some nomenclature:
+
+- The `1, 2, 3, ...` on the left enumerate the **rows** of the dataset
+- The names `Sepal.Length`, `Sepal.Width`, `...` name the **columns** of the dataset
+- The column `Sepal.Length` takes **numeric** values
+- The column `Species` takes **string** values
+
+__q1__ Load the `tidyverse` and inspect the `diamonds` dataset. What do the
+`cut`, `color`, and `clarity` variables mean?
+
+*Hint*: You can run `?diamonds` to get information on a built-in dataset.
+
+<!-- solution-begin -->
+```{r setup}
+library(tidyverse)
+
+?diamonds
+```
+<!-- solution-end -->
+<!-- task-begin -->
+```{r setup}
+
+```
+<!-- task-end -->
+
+__q2__ Run `glimpse(diamonds)`; what variables does `diamonds` have?
+
+<!-- solution-begin -->
+```{r glimpse}
+glimpse(diamonds)
+```
+
+The `diamonds` dataset has variables `carat, cut, color, clarity, depth, table,
+price, x, y, z`.
+<!-- solution-end -->
+
+__q3__ Run `summary(diamonds)`; what are the common values for each of the
+variables? How widely do each of the variables vary?
+
+*Hint*: The `Median` and `Mean` are common values, while `Min` and `Max` give us
+a sense of variation.
+
+<!-- task-begin -->
+```{r summary}
+
+```
+
+**Observations**:
+
+- (Write your observations here!)
+<!-- task-end -->
+<!-- solution-begin -->
+```{r summary}
+summary(diamonds)
+```
+
+**Observations**:
+
+- `carat` seems to be bounded between `0` and `5`
+- The highest-priced diamond in this set is $18,823!
+-
+- Some of the variables do not have `min, max` etc. values. These are *factors*; variables that take one of a finite set of possible values.
+<!-- solution-end -->
+
+
+You should always analyze your dataset in the simplest way possible, build
+hypotheses, and devise more specific analyses to probe those hypotheses. The
+`glimpse()` and `summary()` functions are two of the simplest tools we have.

@@ -1,0 +1,115 @@
+---
+title: "Data Visualization Basics"
+# yaml-author
+date: 2020-05-03
+output: github_document
+---
+
+*Purpose*: The most powerful way for us to learn about a dataset is to
+_visualize the data_. Throughout this class we will make extensive use of the
+_grammar of graphics_, a powerful graphical programming _grammar_ that will
+allow us to create just about any graph you can imagine!
+
+*Reading*: [Data Visualization Basics](https://rstudio.cloud/learn/primers/1.1).
+*Topics*: `Welcome`, `A code template`, `Aesthetic mappings`.
+*Reading Time*: ~ 30 minutes
+
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+__q1__ Load the `tidyverse` and inspect the `diamonds` dataset. What do the
+`cut`, `color`, and `clarity` variables mean?
+
+*Hint*: We learned how to inspect a dataset in the previous exercise!
+
+<!-- solution-begin -->
+```{r setup}
+library(tidyverse)
+
+?diamonds
+```
+<!-- solution-end -->
+<!-- task-begin -->
+```{r setup}
+
+```
+<!-- task-end -->
+
+__q2__ Use your "standard checks" to determine what variables the dataset has.
+
+<!-- solution-begin -->
+```{r glimpse}
+glimpse(diamonds)
+```
+
+The `diamonds` dataset has variables `carat, cut, color, clarity, depth, table,
+price, x, y, z`.
+<!-- solution-end -->
+
+Now that we have the list of variables in the dataset, we know what we can visualize!
+
+__q3__ Using `ggplot`, visualize `price` vs `carat` with points. What trend do
+you observe?
+
+*Hint*: Usually the language `y` vs `x` refers to the `vertical axis` vs
+`horizontal axis`. This is the opposite order from the way we often specify `x,
+y` pairs. Language is hard!
+
+<!-- task-begin -->
+```{r price-vs-carat}
+## Complete this code
+ggplot(diamonds)
+
+```
+
+**Observations**:
+
+- (Write your observations here!)
+<!-- task-end -->
+<!-- solution-begin -->
+```{r price-vs-carat}
+ggplot(diamonds) +
+  geom_point(aes(x = carat, y = price))
+
+```
+
+**Observations**:
+
+- `price` generally increases with `carat`
+- The trend is not 'clean'; there is no single curve in the relationship
+<!-- solution-end -->
+
+__q4__ Create a new graph to visualize `price`, `carat`, and `cut`
+simultaneously.
+
+*Hint*: Remember that you can add additional aesthetic mappings in `aes()`. Some
+options include `size`, `color`, and `shape`.
+
+<!-- task-begin -->
+```{r price-vs-carat-vs-cut}
+## Complete this code
+ggplot(diamonds)
+
+```
+
+**Observations**:
+
+- (Write your observations here!)
+<!-- task-end -->
+<!-- solution-begin -->
+```{r price-vs-carat-vs-cut}
+ggplot(diamonds) +
+  geom_point(aes(x = carat, y = price, color = cut))
+
+```
+
+**Observations**:
+
+- `price` generally increases with `carat`
+- The `cut` helps explain the variation in price;
+  - `Ideal` cut diamonds tend to be more expensive
+  - `Fair` cut diamonds tend to be less expensive
+<!-- solution-end -->

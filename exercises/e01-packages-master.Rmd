@@ -1,0 +1,54 @@
+---
+title: "Packages"
+# yaml-author
+date: 2020-04-30
+output: github_document
+---
+
+*Purpose*: Every time you start an analysis, you will need to *load packages*.
+This is a quick warmup to get you in this habit.
+
+*Reading*: (None)
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+__q1__ Create a new code chunk and prepare to load the `tidyverse`.
+
+In [RStudio](https://bookdown.org/yihui/rmarkdown/r-code.html) use the shortcut
+`Ctrl + Alt + I` (`Cmd + Option + I` on Mac). Type the command
+`library(tidyverse`).
+
+<!-- solution-begin -->
+```{r setup}
+library(tidyverse)
+```
+<!-- solution-end -->
+
+__q2__ Run the chunk with `library(tidyverse)`. What packages are loaded?
+
+In
+[RStudio](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts)
+press `Ctrl + Alt + T` (`Cmd + Option + T` on Mac) to run the code chunk at your
+cursor.
+
+<!-- solution-begin -->
+ggplot2, tibble, tidyr, readr, purrr, dplyr, stringr, forcats
+<!-- solution-end -->
+
+__q3__ What are the main differences between `install.packages()` and `library()`? How often do you need to call each one?
+
+<!-- solution-begin -->
+`install.packages()` downloads and installs packages into R's library of
+packages on your computer. After a package is installed, it is available for
+use, but not loaded to use. `library()` loads a package from the library for
+use. The package remains loaded until your session ends, such as when you
+quit R. You only need to call `install.packages()` once. You need to call
+`library()` for each new session.
+
+Packages are frequently updated. You can check for updates and update your
+packages by using the Update button in the Packages tab of RStudio (lower
+right pane).
+<!-- solution-end -->
