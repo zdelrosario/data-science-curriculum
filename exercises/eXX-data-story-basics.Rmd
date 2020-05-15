@@ -1,16 +1,70 @@
 ---
 title: "Data Story: Narrative Basics"
-# yaml-author
+author: Zach del Rosario
 date: 2020-05-15
 output: github_document
 ---
 
-*Purpose*:
+*Purpose*: The point of data science is not to gather a random pile of facts;
+it's to *do something* with those facts. One of our key goals in data science is
+to help drive decisions and action---we accomplish this by communicating our
+*data story*. Since story is fundamentally an exercise in narrative, we'll
+start our data story training with some narrative basics.
 
-*Reading*: [Randy Olson's TED Talk](https://www.youtube.com/watch?v=ERB7ITvabA4).
+*Reading*: [Randy Olson's TED Talk](https://www.youtube.com/watch?v=ERB7ITvabA4), introducing the *And, But, Therefore* (ABT) framework.
 *Reading Time*: ~ 10 minutes
 
-| TLA | Framework |
-| AAA | And, And, And |
-| ABT | And, But, Therefore |
-| DHY | Despite, However, Yet |
+## Exposition
+
+Scientist-turned-storyteller Randy Olson[1] introduced the *narrative spectrum*.
+Three points along the spectrum are listed below:
+
+| TLA | Framework | Narrative Spectrum |
+|-----|-----|-----|
+| AAA | And, And, And | Non-narrative |
+| ABT | And, But, Therefore | Just right! |
+| DHY | Despite, However, Yet | Overly-narrative |
+
+The narrative spectrum runs from non-narrative: introducing no conflict or
+tension, to overly-narrative: introducing too many conflicting ideas. Olson
+observed that the middle of the narrative spectrum is just the right amount of
+narrative content. The extreme points tend to be boring:
+
+- A child may tell a story like "We went to the store, and the man had a hat,
+  and I lost a shoe, and we went home." This story lacks any narrative content:
+  no part of the story relates to any other part, so no conflict or drama
+  can arise. (AAA)
+- An extremely learned professor may tell a story like "Kolmogorov proposed a
+  5/3 power law. However Smith found 3/8 power law behavior. Yet Chandrasekhar
+  discovered a 2/3 power law...." This story swings in the opposite direction;
+  there is *too much conflict*, and most listeners will be totally lost. This is
+  the proverbial *random pile of facts* we need to avoid when communicating.
+  (DHY)
+
+Using the ABT framework can help us get started with framing a story. For
+example:
+
+  "Data science is the use of computation and statistics to learn from data AND
+  we want to use data science to help people make decisions BUT a random pile of
+  facts will lose our audience THEREFORE we will study narrative to help tell
+  our data story."
+
+The **AND** part of the framework is our *exposition*; every story needs some
+setup. The **BUT** part introduces some conflict---in a hollywood story this
+could be a murder, but in science it could be an unexplained phenomenon.
+**THEREFORE** is where we pay off the exposition and conflict. In our hollywood
+story its where we solve the murder. In science its where we learn something
+about reality, and pose the next exciting question to answer.
+
+*Note*: The ABT framework is **not the only way to tell a story**. It is a
+simplified framework to help us get started!
+
+## Data Story
+
+Using the narrative spectrum and our understanding of ABT
+
+__q1__ (Identify the point on the narrative spectrum)
+
+## Bibliography
+
+- [1] Olson, ["Houston, We Have a Narrative"](http://scienceneedsstory.com/) (2015)
