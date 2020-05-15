@@ -14,6 +14,22 @@ start our data story training with some narrative basics.
 *Reading*: [Randy Olson's TED Talk](https://www.youtube.com/watch?v=ERB7ITvabA4){target="_blank"}, introducing the *And, But, Therefore* (ABT) framework.
 *Reading Time*: ~ 10 minutes
 
+<!-- solution-begin -->
+*Lesson Plan*: Ensure all students submit their narrative spectrum
+classifications and justification through the Google Form. Set aside a
+full-class meeting to discuss the student results. Visualize the results,
+and see what (if any) consensus the class came to. Ask a few students who
+classified the graphs differently to share their perspective. After gathering
+student input, offer your own perspective on the graph. Repeat for
+each example.
+
+Make sure to emphasize that different people will read graphs differently;
+we don't have *complete control* over the narrative when presenting a graph.
+But the simpler and more focused our graph, the better control we have over
+the narrative experienced. (TODO: Future exercises/activities should
+emphasize this!)
+<!-- solution-end -->
+
 ## Exposition
 
 Scientist-turned-storyteller Randy Olson[1] introduced the *narrative spectrum*.
@@ -76,11 +92,12 @@ variability, etc.), but she's also busy. You need to present a figure that
 *tells a story* quickly, or she's going to use her limited time to think about
 something else.
 
-**Your task**: Study the following graphs and determine where each example lies
-on the narrative spectrum. Keep in mind your intended audience (your colleague)
-when judging how much or how little narrative content is present.
+**Your task**: Study the following graphs and determine *the closest
+point*---AAA, ABT, or DHY---near which the example lies on narrative spectrum.
+Keep in mind your intended audience (your colleague) when judging how much or
+how little narrative content is present.
 
-```{r setup}
+```{r setup, echo=FALSE}
 ## NOTE: No need to edit, just some setup
 library(tidyverse)
 ## My personal "common theme" for presentation-ready graphs
@@ -113,7 +130,10 @@ theme_common <- function() {
 
 __q1__ Identify the point on the narrative spectrum, and justify your answer.
 
-```{r q1-vis}
+*Hint*: Try telling yourself a story based on the graph! This can be your
+**justification** for the narrative spectrum point you select.
+
+```{r q1-vis, cache=TRUE, echo=FALSE}
 diamonds %>%
   filter(carat <= 2) %>%
 
@@ -148,14 +168,14 @@ Write your justification here!
 <!-- task-end -->
 <!-- solution-begin -->
 At low carat, an improvement in `cut` tends to *decrease* `price`. However,
-at a higher carat, and improvement in `cut` tends to *increase* `price`.
+at a higher carat, an improvement in `cut` tends to *increase* `price`.
 This graph conveys a small amount of information, but still manages to
 introduce some conflict.
 <!-- solution-end -->
 
 __q2__ Identify the point on the narrative spectrum, and justify your answer.
 
-```{r q2-vis}
+```{r q2-vis, cache=TRUE, echo=FALSE}
 diamonds %>%
 
   ggplot(aes(carat, price, color = cut)) +
@@ -187,12 +207,13 @@ Write your justification here!
 <!-- solution-begin -->
 Diamonds tend to be `price` ordered by their `cut`. However, at low `carat`
 the `Fair` diamonds tend to be most pricey. Yet `Good`, `Very Good` and
-`Premium` diamonds tend to overlap.
+`Premium` diamonds tend to overlap. There are too many conflicting ideas
+in this graph to quickly tell a compelling story.
 <!-- solution-end -->
 
 __q3__ Identify the point on the narrative spectrum, and justify your answer.
 
-```{r q3-vis}
+```{r q3-vis, cache=TRUE, echo=FALSE}
 diamonds %>%
   pivot_longer(
     c(carat, depth, table, price, x, y, z),
@@ -225,7 +246,7 @@ to vary a lot in `depth`, and `price` varies widely for all `cut` values,
 and some diamonds have `x, y, z` values at zero....
 <!-- solution-end -->
 
-__q4__ (Turn in all your answers via google forms)
+__q4__ (Turn in all your answers via google forms. TODO: Add link!)
 
 ## Bibliography
 
