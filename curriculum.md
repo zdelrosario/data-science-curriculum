@@ -31,7 +31,7 @@ Bonus
 ## (Visualization)
 
 Core
-- State the basic components of the /grammar of graphics/: geometry, aesthetics,
+- State the basic components of the *grammar of graphics*: geometry, aesthetics,
   theme, layers
 - (Create)
   - bar charts
@@ -42,7 +42,7 @@ Core
   - EDA-quality graphics
   - presentation-ready graphics
 - (Criticize)
-  - data visualizations based on /the visual hierarchy/
+  - data visualizations based on *the visual hierarchy*
   - data visualizations based on their intended audience
 
 Bonus
