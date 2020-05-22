@@ -10,7 +10,7 @@ _visualize the data_. Throughout this class we will make extensive use of the
 _grammar of graphics_, a powerful graphical programming _grammar_ that will
 allow us to create just about any graph you can imagine!
 
-*Reading*: [Data Visualization Basics](https://rstudio.cloud/learn/primers/1.1).
+*Reading*: [Data Visualization Basics](https://rstudio.cloud/learn/primers/1.1). *Note*: In RStudio use `Ctrl + Click` (Mac `Command + Click`) to follow the link.
 *Topics*: `Welcome`, `A code template`, `Aesthetic mappings`.
 *Reading Time*: ~ 30 minutes
 
