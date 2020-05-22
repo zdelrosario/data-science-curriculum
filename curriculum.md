@@ -77,7 +77,7 @@ Bonus
   - features based on an appropriate error estimate
   - hyperparameters based on an appropriate error estimate
 
-*** (Communication)
+## (Communication)
 - Write easily-readable code by following a styleguide
 - Tell a story using the ABT framework
 - Judge a data story using the ABT framework
