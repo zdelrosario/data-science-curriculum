@@ -9,9 +9,9 @@ output: github_document
 how to construct a variety of different bar charts, as well as when---and when
 *not*---to use various charts.
 
-*Reading*: [Exploratory Data Analysis](https://rstudio.cloud/learn/primers/3.2)
-*Topics*: `Welcome`, `Bar Charts`, `Aesthetics`, `Position adjustments` (skip `Facets`)
-*Reading Time*: ~20 minutes
+*Reading*: [Bar Charts](https://rstudio.cloud/learn/primers/3.2)
+*Topics*: (All topics)
+*Reading Time*: ~30 minutes
 
 ```{r setup, include=FALSE}
 # knitr options
@@ -177,3 +177,22 @@ mpg %>%
   - Audi, Toyota, and Volkswagen favor `compact`
   - Dodge favors `pickup`
 <!-- solution-end -->
+
+__q5__ The following graph is hard to read. What other form of faceting would
+make the visual more convenient to read? Modify the code below with your
+suggested improvement.
+
+```{r q5-task}
+# task-begin
+mpg %>%
+  ggplot(aes(x = cyl)) +
+  geom_bar() +
+  facet_grid(~ manufacturer)
+# task-end
+# solution-begin
+mpg %>%
+  ggplot(aes(x = cyl)) +
+  geom_bar() +
+  facet_wrap(~ manufacturer)
+# solution-end
+```
