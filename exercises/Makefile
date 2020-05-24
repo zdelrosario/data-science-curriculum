@@ -1,6 +1,7 @@
 SRC := $(wildcard *master.Rmd)
 ASSIGNMENTS := $(subst master,assignment,$(SRC))
 SOLUTIONS := $(subst master,solution,$(SRC))
+# ${RSTUDIO_PASS} # Set in environment variables
 
 all: ${ASSIGNMENTS} ${SOLUTIONS}
 
@@ -19,6 +20,19 @@ all: ${ASSIGNMENTS} ${SOLUTIONS}
 	-e '/# solution-(begin|end)/d' \
 	-e '/<!-- solution-(begin|end)/d' \
 	< $< > $@
+
+start:
+	./run-rstudio
+
+stop:
+	docker stop rstudio
+
+setup:
+	docker pull rocker/geospatial
+	mkdir data
+
+unset:
+	docker rm rstudio
 
 clean:
 	rm -f *assignment.Rmd *solution.Rmd
