@@ -47,6 +47,8 @@ Core
 
 Bonus
 - (Geospatial with sf)
+- (Shiny apps)
+- (Leaflet maps)
 
 ## (Statistical Literacy)
 
@@ -54,13 +56,13 @@ Core
 - (Describe)
   - the difference between variability and uncertainty
   - the difference between error and uncertainty
-  - a random quantity with a distribution
   - a dataset with descriptive statistics (mean, quantiles, correlations)
+  - a random quantity with a distribution
   - the relationship between variables using a model
   - a future outcome using a fitted model
 - (Quantify)
   - the degree of uncertainty (in an estimate, a prediction)
-  - testing and training (e.g. via cross-validation)
+  - testing and training error (e.g. via cross-validation)
 - (Fit)
   - a distribution
   - a linear model
@@ -68,6 +70,7 @@ Core
   - whether a given numerical result relates to a qualitative conclusion
   - whether a given degree of certainty is sufficient to make a decision
   - whether a given study has sufficient relevance to a given question
+  - whether a model is flexible enough to fit a given dataset
 
 Bonus
 - (Fit)
@@ -85,9 +88,6 @@ Bonus
 ## (Reproducibility)
 
 Core
--
-
-Bonus
 - (Git)
 - (Command line)
 - (File hygiene)
