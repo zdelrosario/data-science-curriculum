@@ -1,4 +1,7 @@
 # Learning outcomes
+**Core** outcomes are topics I will adjust the course to ensure we cover.
+**Bonus** topics are those I will cover if we have bonus time.
+
 By the end of this course, students will be able to...
 
 ## (Data)
