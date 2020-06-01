@@ -1,0 +1,19 @@
+#!/bin/bash
+# ${RSTUDIO_PASS} # Set in environment variables
+
+echo Running rstudio on localhost:8787
+docker run --rm -d \
+-e PASSWORD=${RSTUDIO_PASS} \
+-p 8787:8787 \
+--name rstudio \
+--mount type=bind,source="${PWD}"/.,target=/home/rstudio/src \
+--mount type=bind,source="${PWD}"/data,target=/home/rstudio/data \
+rocker/geospatial 
+
+echo Copying rstudio settings
+docker cp user-settings rstudio:/home/rstudio/.rstudio/monitored/user-settings/.
+
+echo Launching browser
+open http://localhost:8787
+
+
