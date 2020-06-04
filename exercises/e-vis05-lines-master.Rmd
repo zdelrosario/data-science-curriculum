@@ -1,0 +1,89 @@
+---
+title: "Visualization: Lines"
+author: Zach del Rosario
+date: 2020-06-04
+output: github_document
+---
+
+*Purpose*: *Line plots* are a key tool for EDA. In contrast with a scatterplot,
+a line plot assumes the data have a *function* relation. This can create an
+issue if we try to plot data that do not satisfy our assumptions. In this
+exercise, we'll practice some best-practices for constructing line plots.
+
+*Reading*: [Boxplots and Counts](https://rstudio.cloud/learn/primers/3.5)
+*Topics*: Welcome, Line graphs, Similar geoms (skip Maps)
+*Reading Time*: ~30 minutes
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+library(gapminder)
+
+```
+
+__q1__ The following graph doesn't work as its author intended. Based on what we
+learned in the reading, fix the following code.
+
+```{r q1-task}
+# task-begin
+## TODO: Fix the following code
+gapminder %>%
+  filter(continent == "Asia") %>%
+  ggplot(aes(year, lifeExp)) +
+  geom_line()
+# task-end
+# solution-begin
+gapminder %>%
+  filter(continent == "Asia") %>%
+  ggplot(aes(year, lifeExp, color = country)) +
+  geom_line()
+# solution-end
+```
+
+__q2__ A line plot makes *a certain assumption* about the underlying data. What
+assumption is this? How does that assumption relate to the following graph? Put
+differently, why is the use of `geom_line` a bad idea for the following dataset?
+
+```{r q2-vis}
+## TODO: No need to edit; just answer the questions
+mpg %>%
+  ggplot(aes(displ, hwy)) +
+  geom_line()
+
+```
+
+**Observations**:
+# task-begin
+- What does a line plot assume about the data?
+- How does the `mpg` dataset violate this assumption?
+# task-end
+# solution-begin
+- A line plot assumes the underlying data have a *function* relationship; that is, that there is one y value for every x value
+- The `mpg` dataset does not have a function relation between `displ` and `hwy`; there are cars with identical `displ` but different values of `hwy`
+# solution-end
+
+__q3__ The following graph shows both the raw data and a smoothed version.
+Describe the trends that you can see in the different curves.
+
+```{r q3-task}
+## TODO: No need to edit; just interpret the graph
+economics %>%
+  ggplot(aes(date, unemploy)) +
+  geom_line(aes(color = "Raw")) +
+  geom_smooth(aes(color = "Smoothed"), se = FALSE) +
+  scale_color_discrete(name = "Source")
+```
+
+**Observations**:
+# task-begin
+- What can you tell based on the `Raw` data?
+- What can you tell based on the `Smoothed` data?
+# task-end
+# solution-begin
+- The `Raw` data indicate short-term cyclical patterns that occur over a few years
+- The `Smoothed` data indicate a longer-term trend occuring over decades
+# solution-end
