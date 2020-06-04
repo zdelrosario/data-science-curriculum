@@ -12,10 +12,6 @@ dep: e-data02-derive
 *Topics*: (All topics)
 *Reading Time*: ~20 minutes
 
-`geom_boxplot, geom_violin, geom_count, geom_tile & count, cut_interval, cut_number, cut_width, coord_flip`
-
-Concept: Derive facts about data, then visualize those facts
-
 ```{r setup, include=FALSE}
 # knitr options
 knitr::opts_chunk$set(echo = TRUE)
