@@ -4,6 +4,15 @@
 
 By the end of this course, students will be able to...
 
+## (Setup)
+
+Core
+- install Rstudio and other data science packages
+- load packages to access useful functions
+- access documentation to use R functions
+- access vignettes to learn new functions
+- use Rstudio shortcuts to improve productivity
+
 ## (Data)
 
 Core
@@ -63,6 +72,8 @@ Core
   - a random quantity with a distribution
   - the relationship between variables using a model
   - a future outcome using a fitted model
+- (Apply)
+  - the principles of curiosity and skepticism to perform EDA
 - (Quantify)
   - the degree of uncertainty (in an estimate, a prediction)
   - testing and training error (e.g. via cross-validation)
@@ -84,9 +95,9 @@ Bonus
   - hyperparameters based on an appropriate error estimate
 
 ## (Communication)
-- Write easily-readable code by following a styleguide
-- Tell a story using the ABT framework
-- Judge a data story using the ABT framework
+- write easily-readable code by following a styleguide
+- tell a story using the ABT framework
+- judge a data story using the ABT framework
 
 ## (Reproducibility)
 
