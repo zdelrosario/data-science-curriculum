@@ -10,6 +10,10 @@ output: github_document
 not all data we'll encounter is tidy! To that end, in this exercise we'll learn
 how to tidy our data by *pivoting*.
 
+As a result of learning how to quickly *tidy* data, you'll vastly expand the set
+of datasets you can analyze. Rather than fighting with data, you'll be able to
+quickly wrangle and extract insights.
+
 *Reading*: [Reshape Data](https://rstudio.cloud/learn/primers/4.1)
 *Topics*: Welcome, Tidy Data (skip Gathering and Spreading columns)
 *Reading Time*: ~10 minutes (this exercise contains more reading material)
