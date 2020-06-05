@@ -394,3 +394,32 @@ df_q5_res <-
 df_q5_res
 all_equal(df_base, df_q5_res) # Checks equality; returns TRUE if equal
 ```
+
+### Make Your Own!
+<!-- ------------------------- -->
+
+__q6__ Using a single pivot on `df_base` create your own *challenge* dataframe. You will share this with the rest of the class as a puzzle, so make sure to solve your own challenge so you have a solution!
+
+```{r q6-task}
+## NOTE: No need to edit; this is setup for the exercise
+df_q6 <-
+  df_base %>%
+# task-begin
+## NOTE: Add your pivot here!
+# task-end
+
+df_q6
+```
+
+Don't forget to create a solution!
+
+```{r q6-task}
+df_q6_res <-
+  df_q6 %>%
+# task-begin
+## NOTE: Add your pivot here!
+# task-end
+
+df_q6_res
+all_equal(df_base, df_q6_res) # Checks equality; returns TRUE if equal
+```
