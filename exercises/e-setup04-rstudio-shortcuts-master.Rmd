@@ -3,6 +3,8 @@ title: "RStudio: Shortcuts"
 # yaml-author
 date: 2020-05-07
 output: github_document
+time: 10
+reading: 5
 ---
 
 *Purpose*: Your ability to get stuff done is highly dependent on your fluency
@@ -10,7 +12,7 @@ with your tools. One aspect of fluency is knowing and *using* keyboard
 shortcuts. In this exercise, we'll go over some of the most important ones.
 
 *Reading*: [Keyboard
-shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts)
+shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts); [Code Chunk Options](https://rmarkdown.rstudio.com/lesson-3.html)
 *Note*: Use this reading to look up answers to the questions below. Rather than
 *memorizing* this information, I recommend you download a
 [cheatsheet](https://rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf),
@@ -52,6 +54,7 @@ __q1__ What do the following keyboard shortcuts do?
         <!-- solution-begin -->
         If cursor is on a function name, pull up the help page for the function.
         <!-- solution-end -->
+
 * Within R Markdown
 
     * `Cmd/Ctrl` + `Alt` + `I`

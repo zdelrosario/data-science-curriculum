@@ -1,8 +1,10 @@
 ---
 title: "Visualization: Bar Charts"
-# yaml-author
+author: Zach del Rosario
 date: 2020-05-13
 output: github_document
+time: 30
+reading: 30
 ---
 
 *Purpose*: *Bar charts* are a key tool for EDA. In this exercise, we'll learn

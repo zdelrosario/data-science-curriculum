@@ -1,8 +1,10 @@
 ---
 title: "Data Visualization Basics"
-# yaml-author
+author: Zach del Rosario
 date: 2020-05-03
 output: github_document
+time: 10
+reading: 30
 ---
 
 *Purpose*: The most powerful way for us to learn about a dataset is to
@@ -23,25 +25,20 @@ knitr::opts_chunk$set(echo = TRUE)
 __q1__ Load the `tidyverse` and inspect the `diamonds` dataset. What do the
 `cut`, `color`, and `clarity` variables mean?
 
-*Hint*: We learned how to inspect a dataset in the previous exercise!
+*Hint*: We learned how to inspect a dataset in `e-data-00-basics`!
 
-<!-- solution-begin -->
 ```{r setup}
+# solution-begin
 library(tidyverse)
 
 ?diamonds
+# solution-end
 ```
-<!-- solution-end -->
-<!-- task-begin -->
-```{r setup}
-
-```
-<!-- task-end -->
 
 __q2__ Use your "standard checks" to determine what variables the dataset has.
 
 <!-- solution-begin -->
-```{r glimpse}
+```{r q2-task}
 glimpse(diamonds)
 ```
 
@@ -58,26 +55,23 @@ you observe?
 `horizontal axis`. This is the opposite order from the way we often specify `x,
 y` pairs. Language is hard!
 
-<!-- task-begin -->
-```{r price-vs-carat}
-## Complete this code
+```{r q3-task}
+## TODO: Complete this code
+# task-begin
 ggplot(diamonds)
-
+# task-end
+# solution-begin
+ggplot(diamonds) +
+  geom_point(aes(x = carat, y = price))
+# solution-end
 ```
 
 **Observations**:
 
+<!-- task-begin -->
 - (Write your observations here!)
 <!-- task-end -->
 <!-- solution-begin -->
-```{r price-vs-carat}
-ggplot(diamonds) +
-  geom_point(aes(x = carat, y = price))
-
-```
-
-**Observations**:
-
 - `price` generally increases with `carat`
 - The trend is not 'clean'; there is no single curve in the relationship
 <!-- solution-end -->
@@ -88,26 +82,23 @@ simultaneously.
 *Hint*: Remember that you can add additional aesthetic mappings in `aes()`. Some
 options include `size`, `color`, and `shape`.
 
-<!-- task-begin -->
-```{r price-vs-carat-vs-cut}
-## Complete this code
+```{r q4-task}
+## TODO: Complete this code
+# task-begin
 ggplot(diamonds)
-
+# task-end
+# solution-begin
+ggplot(diamonds) +
+  geom_point(aes(x = carat, y = price, color = cut))
+# solution-end
 ```
 
 **Observations**:
 
+<!-- task-begin -->
 - (Write your observations here!)
 <!-- task-end -->
 <!-- solution-begin -->
-```{r price-vs-carat-vs-cut}
-ggplot(diamonds) +
-  geom_point(aes(x = carat, y = price, color = cut))
-
-```
-
-**Observations**:
-
 - `price` generally increases with `carat`
 - The `cut` helps explain the variation in price;
   - `Ideal` cut diamonds tend to be more expensive

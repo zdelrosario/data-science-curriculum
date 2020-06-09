@@ -3,6 +3,8 @@ title: "Function Basics"
 # yaml-author
 date: 2020-05-03
 output: github_document
+time: 10
+reading: 10
 ---
 
 *Purpose*: Functions are our primary tool in carying out data analysis with the

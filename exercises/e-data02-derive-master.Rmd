@@ -3,6 +3,8 @@ title: "Deriving Data"
 # yaml-author
 date: 2020-05-07
 output: github_document
+time: 15
+reading: 60
 ---
 
 *Purpose*: Often our data will not tell us *directly* what we want to know; in

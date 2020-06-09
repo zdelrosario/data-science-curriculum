@@ -3,6 +3,8 @@ title: "Packages"
 # yaml-author
 date: 2020-04-30
 output: github_document
+time: 5
+reading: 0
 ---
 
 *Purpose*: Every time you start an analysis, you will need to *load packages*.
@@ -26,6 +28,9 @@ In [RStudio](https://bookdown.org/yihui/rmarkdown/r-code.html) use the shortcut
 library(tidyverse)
 ```
 <!-- solution-end -->
+
+Make sure to load packages at the *beginning* of your notebooks! This is a
+best-practice.
 
 __q2__ Run the chunk with `library(tidyverse)`. What packages are loaded?
 

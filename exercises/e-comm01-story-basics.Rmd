@@ -4,6 +4,8 @@ author: Zach del Rosario
 date: 2020-05-15
 output: pdf_document
 urlcolor: cyan
+time: 20
+reading: 10
 ---
 
 *Purpose*: The point of data science is not to gather a random pile of facts;

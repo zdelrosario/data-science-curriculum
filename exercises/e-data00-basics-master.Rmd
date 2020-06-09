@@ -1,8 +1,10 @@
 ---
 title: "Data Basics"
-# yaml-author
+author: Zach del Rosario
 date: 2020-05-03
 output: github_document
+time: 5
+reading: 0
 ---
 
 *Purpose*: When first studying a new dataset, there are very simple checks we
@@ -16,6 +18,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 __q0__ Run the following chunk:
+
+*Hint*: You can do this either by clicking the green arrow at the top-right of
+the chunk, or by using the keybaord shortcut `Shift` + `Cmd/Ctrl` + `Enter`.
 
 ```{r }
 head(iris)
@@ -34,18 +39,13 @@ __q1__ Load the `tidyverse` and inspect the `diamonds` dataset. What do the
 
 *Hint*: You can run `?diamonds` to get information on a built-in dataset.
 
-<!-- solution-begin -->
-```{r setup}
+```{r load-packages}
+# solution-begin
 library(tidyverse)
 
 ?diamonds
+# solution-end
 ```
-<!-- solution-end -->
-<!-- task-begin -->
-```{r setup}
-
-```
-<!-- task-end -->
 
 __q2__ Run `glimpse(diamonds)`; what variables does `diamonds` have?
 
@@ -64,28 +64,23 @@ variables? How widely do each of the variables vary?
 *Hint*: The `Median` and `Mean` are common values, while `Min` and `Max` give us
 a sense of variation.
 
-<!-- task-begin -->
 ```{r summary}
-
+# task-begin
+summary(diamonds)
+# task-end
 ```
 
 **Observations**:
 
+<!-- task-begin -->
 - (Write your observations here!)
 <!-- task-end -->
 <!-- solution-begin -->
-```{r summary}
-summary(diamonds)
-```
-
-**Observations**:
-
 - `carat` seems to be bounded between `0` and `5`
 - The highest-priced diamond in this set is $18,823!
 -
 - Some of the variables do not have `min, max` etc. values. These are *factors*; variables that take one of a finite set of possible values.
 <!-- solution-end -->
-
 
 You should always analyze your dataset in the simplest way possible, build
 hypotheses, and devise more specific analyses to probe those hypotheses. The

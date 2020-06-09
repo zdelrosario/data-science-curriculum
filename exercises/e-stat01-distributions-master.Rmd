@@ -3,6 +3,8 @@ title: "Statistics: Intro to Distributions"
 author: Zach del Rosario
 date: 2020-05-22
 output: github_document
+time: 40
+reading: 0
 ---
 
 *Purpose*: We will use *distributions* to model and understand data. To that end, we'll need to understand some key ideas about distributions. Namely, we'll discuss *random variables*, how we model random variables with distributions, and the importance of *random seeds*. We're not going to learn everything we need to work with data in this single exercise, but this will be our starting point.
@@ -11,12 +13,12 @@ output: github_document
 
 ## Distributions
 
-Fundamentally, a distribution is a *function*: It takes an input, and returns an output. A distribution has a special interpretation though; it represents the *relative likelihood* of particular values occuring.
+Fundamentally, a distribution (also known as a density) is a *function*: It takes an input, and returns an output. A distribution has a special interpretation though; it represents the *relative likelihood* of particular values occuring.
 
 First, let's look at a distribution of some real data:
 
 ```{r ex-mpg-}
-mpg %>% 
+mpg %>%
   filter(class == "midsize") %>%
   ggplot(aes(cty, color = class)) +
   geom_density()
@@ -28,11 +30,11 @@ Next, let's look at a normal distribution:
 
 ```{r ex-distribution}
 ## NOTE: No need to change this!
-df_norm_dist <- 
-  tibble(z = seq(-5, +5, length.out = 100)) %>% 
+df_norm_dist <-
+  tibble(z = seq(-5, +5, length.out = 100)) %>%
   mutate(d = dnorm(z, mean = 0, sd = 1))
-  
-df_norm_dist %>% 
+
+df_norm_dist %>%
   ggplot(aes(z, d)) +
   geom_line() +
   labs(
@@ -60,12 +62,12 @@ __q1__ Modify the code below to evaluate a uniform distribution with `min = -1` 
 ```{r q1-task}
 # task-begin
 ## TODO: Complete this code
-df_q1 <- 
+df_q1 <-
   tibble(x = seq(-5, +5, length.out = 100))
 # task-end
 # solution-begin
-df_q1 <- 
-  tibble(x = seq(-5, +5, length.out = 100)) %>% 
+df_q1 <-
+  tibble(x = seq(-5, +5, length.out = 100)) %>%
   mutate(d = dunif(x, min = -1, max = +1))
 # solution-end
 ```
@@ -76,17 +78,17 @@ Use the following test to check your answer.
 ## NOTE: No need to change this
 assertthat::assert_that(
   all(
-    df_q1 %>% 
-      filter(-1 <= x, x <= +1) %>% 
-      mutate(flag = d > 0) %>% 
+    df_q1 %>%
+      filter(-1 <= x, x <= +1) %>%
+      mutate(flag = d > 0) %>%
       pull(flag)
     )
 )
 assertthat::assert_that(
   all(
-    df_q1 %>% 
-      filter((x < -1) | (+1 < x)) %>% 
-      mutate(flag = d == 0) %>% 
+    df_q1 %>%
+      filter((x < -1) | (+1 < x)) %>%
+      mutate(flag = d == 0) %>%
       pull(flag)
     )
 )
@@ -95,7 +97,7 @@ print("Nice!")
 
 ## Drawing Samples: A Model for Randomness
 
-What does it *practically* mean for a value to be more or less likely? A distribution gives information about a *random variable*. A random variable is a quantity that takes a random value every time we observe it. For instance: If we roll a six-sided die, it will (unpredictably) land on values `1` through `6`.
+What does it *practically* mean for a value to be more or less likely? A distribution gives information about a *random variable*. A random variable is a quantity that takes a random value every time we observe it. For instance: If we roll a six-sided die, it will (unpredictably) land on values `1` through `6`. In my research, I use random variables to model material properties: Every component that comes off an assembly line will have a different strength associated with it. In order to design for a desired rate of failure, I model this variability with a random variable.
 
 Let's illustrate this idea by using a normal distribution to define a *random variable* `Z`. This is sometimes denoted `Z ~ norm(mean, sd)`, which means `Z` is distributed as a normal distribution with `mean` and `sd`. The code below illustrates what it looks like when we draw a few samples of `Z`.
 
@@ -135,7 +137,7 @@ ggplot() +
   )
 ```
 
-__q2__ Plot densities for `Z` values in `df_q2`. Use aesthetics to plot a separate curve for different values of `n`. Comment on which values of `n` gives a density closer to "normal".
+__q2__ Plot densities for `Z` values in `df_q2`. Use aesthetics to plot a separate curve for different values of `n`. Comment on which values of `n` give a density closer to "normal".
 
 *Hint*: You may need to use the `group` aesthetic, in addition to `color` or `fill`.
 
@@ -149,7 +151,7 @@ df_q2 <- map_dfr(
 )
 ## TODO: Create the figure
 # solution-begin
-df_q2 %>% 
+df_q2 %>%
   ggplot(aes(Z, color = n, group = n)) +
   geom_density()
 # solution-end
@@ -176,20 +178,20 @@ What this means is we'll get a slightly different picture every time we draw a s
 
 ```{r ex-multiple-vis}
 ## NOTE: No need to change this!
-df_samp_multi <- 
-  tibble(Z = rnorm(n = 50, mean = 0, sd = 1), Run = "A") %>% 
+df_samp_multi <-
+  tibble(Z = rnorm(n = 50, mean = 0, sd = 1), Run = "A") %>%
   bind_rows(
-    tibble(Z = rnorm(n = 50, mean = 0, sd = 1), Run = "B") 
-  ) %>% 
+    tibble(Z = rnorm(n = 50, mean = 0, sd = 1), Run = "B")
+  ) %>%
   bind_rows(
-    tibble(Z = rnorm(n = 50, mean = 0, sd = 1), Run = "C") 
+    tibble(Z = rnorm(n = 50, mean = 0, sd = 1), Run = "C")
   )
 
 ggplot() +
   ## Plot *fitted distributions*
   geom_density(
     data = df_samp_multi,
-    mapping = aes(Z, color = idx, group = idx)
+    mapping = aes(Z, color = Run, group = Run)
   ) +
   ## Plot a *distribution*
   geom_line(

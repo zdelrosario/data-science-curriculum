@@ -3,6 +3,8 @@ title: "Separate and Unite Columns"
 # yaml-author
 date: 2020-06-05
 output: github_document
+time: 20
+reading: 30
 ---
 
 *Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse

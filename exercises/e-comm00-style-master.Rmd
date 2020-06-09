@@ -3,6 +3,8 @@ title: "Code Style"
 # yaml-author
 date: 2020-05-05
 output: github_document
+time: 10
+reading: 10
 ---
 
 *Purpose*: From the tidyverse style guide "Good coding style is like correct
@@ -74,7 +76,7 @@ __q3__ Re-write according to the style guide
 
 *Hint*: What do we do about long lines?
 
-```{r q3-task}
+```{r q3-description}
 iris %>%
   group_by(Species) %>%
   summarize(Sepal.Length = mean(Sepal.Length), Sepal.Width = mean(Sepal.Width), Petal.Length = mean(Petal.Length), Petal.Width = mean(Petal.Width))

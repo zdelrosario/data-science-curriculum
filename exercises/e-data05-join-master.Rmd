@@ -3,6 +3,8 @@ title: "Join Datasets"
 # yaml-author
 date: 2020-06-05
 output: github_document
+time: 30
+reading: 30
 ---
 
 *Purpose*: Often our data are scattered across multiple sets. In this case, we

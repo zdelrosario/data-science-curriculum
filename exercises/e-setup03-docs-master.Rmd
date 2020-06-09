@@ -3,6 +3,8 @@ title: "Documentation"
 # yaml-author
 date: 2020-05-05
 output: github_document
+time: 15
+reading: 0
 ---
 
 *Purpose*: No programmer memorizes every fact about every function. Expert
@@ -22,8 +24,8 @@ The `vignette()` function allows us to look up
 short narrative-form tutorials associated with a package, written by its
 developers.
 
-__q1__ Use `vignette(package = ???)` to look up vignettes associated with
-`"dplyr"`. What vignettes are available?
+__q1__ Use `vignette(package = ???)` (fill in the ???) to look up vignettes
+associated with `"dplyr"`. What vignettes are available?
 
 ```{r q1-task}
 # task-begin
@@ -63,7 +65,7 @@ iris %>%
 Vignettes are useful when we only know *generally* what we're looking for. Once
 we know the verbs (functions) we want to use, we need more specific help.
 
-__q3__ Remember back to `e04-function-basics`; how do we look up help for a
+__q3__ Remember back to `e-setup02-functions`; how do we look up help for a
 specific function?
 
 <!-- solution-begin -->

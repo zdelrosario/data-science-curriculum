@@ -3,6 +3,8 @@ title: "EDA Basics"
 # yaml-author
 date: 2020-05-07
 output: github_document
+time: 20
+reading: 45
 ---
 
 *Purpose*: *Exploratory Data Analysis* (EDA) is a __crucial__ skill for a
@@ -83,9 +85,9 @@ diamonds %>%
 
 **Another hypothesis**: The `Ideal` cut diamonds should be the most pricey.
 
-__q2.1__ Study the following graph; does it support or contradict hypothesis 2?
+__q2.1__ Study the following graph; does it support, contradict, or not relate to hypothesis 2?
 
-*Hint*: Is this an effective graph? Why
+*Hint*: Is this an effective graph? Why or why not?
 
 ```{r q2.1-task}
 diamonds %>%
@@ -98,7 +100,7 @@ diamonds %>%
 - Write your observations here!
 <!-- task-end -->
 <!-- solution-begin -->
-- This graph is virtually useless! There is severe overplotting.
+- This graph is virtually useless! There is severe overplotting. We cannot tell address Hypothesis 2 with this graph
 <!-- solution-end -->
 
 The following is a set of *boxplots*; the middle bar denotes the median, the

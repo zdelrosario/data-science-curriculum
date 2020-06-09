@@ -1,8 +1,10 @@
 ---
 title: "Setup"
-# yaml-author
+author: Zach del Rosario
 date: 2020-05-02
 output: github_document
+time: 20
+reading: 0
 ---
 
 *Purpose*: We're going to make extensive use of the [R programming
@@ -60,6 +62,8 @@ following packages. *Hint*: You can install multiple packages by typing
 `install.packages("package1", "package2")`, and so on.
 
 - `nycflights13`
+- `gapminder`
+- `ggrepel`
 
 __q5__ Download cheatsheets
 

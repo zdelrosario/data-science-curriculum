@@ -3,6 +3,8 @@ title: "Isolating Data"
 # yaml-author
 date: 2020-05-05
 output: github_document
+time: 20
+reading: 40
 ---
 
 *Purpose*: One of the keys to a successful analysis is the ability to *focus* on
@@ -27,7 +29,7 @@ package, the data are stored in the variable name `flights`. For instance:
 flights %>% glimpse
 ```
 
-__q1__ Select all the variables whose name ends in `_time`.
+__q1__ Select all the variables whose name ends with `_time`.
 
 ```{r q1-task}
 # task-begin

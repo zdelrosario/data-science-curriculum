@@ -3,6 +3,8 @@ title: "Visualization: Lines"
 author: Zach del Rosario
 date: 2020-06-04
 output: github_document
+time: 15
+reading: 30
 ---
 
 *Purpose*: *Line plots* are a key tool for EDA. In contrast with a scatterplot,
@@ -57,14 +59,14 @@ mpg %>%
 ```
 
 **Observations**:
-# task-begin
+<!-- task-begin -->
 - What does a line plot assume about the data?
 - How does the `mpg` dataset violate this assumption?
-# task-end
-# solution-begin
+<!-- task-end -->
+<!-- solution-begin -->
 - A line plot assumes the underlying data have a *function* relationship; that is, that there is one y value for every x value
 - The `mpg` dataset does not have a function relation between `displ` and `hwy`; there are cars with identical `displ` but different values of `hwy`
-# solution-end
+<!-- solution-end -->
 
 __q3__ The following graph shows both the raw data and a smoothed version.
 Describe the trends that you can see in the different curves.
@@ -79,11 +81,11 @@ economics %>%
 ```
 
 **Observations**:
-# task-begin
+<!-- task-begin -->
 - What can you tell based on the `Raw` data?
 - What can you tell based on the `Smoothed` data?
-# task-end
-# solution-begin
+<!-- task-end -->
+<!-- solution-begin -->
 - The `Raw` data indicate short-term cyclical patterns that occur over a few years
 - The `Smoothed` data indicate a longer-term trend occuring over decades
-# solution-end
+<!-- solution-end -->

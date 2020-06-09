@@ -4,6 +4,8 @@ author: Zach del Rosario
 date: 2020-06-04
 output: github_document
 dep: e-data02-derive
+time: 20
+reading: 20
 ---
 
 *Purpose*: *Boxplots* are a key tool for EDA. Like histograms, boxplots give us a sense of "shape" for a distribution. However, a boxplot is a *careful summary* of shape. This helps us pick out key features of a distribution, and enables easier comparison of different distributions.
@@ -87,12 +89,12 @@ diamonds %>%
 ```
 
 **Observations**:
-# task-begin
+<!-- task-begin -->
 - Did the most common group of cut and color change?
-# task-end
-# solution-begin
+<!-- task-end -->
+<!-- solution-begin -->
 - Yes, it used to be `G, Ideal`, but is now `I, Premium`
-# solution-end
+<!-- solution-end -->
 
 __q3__ The following plot has overlapping x-axis labels. Use a verb from the reading to `flip` the coordinates and improve readability.
 

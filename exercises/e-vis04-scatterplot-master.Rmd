@@ -3,6 +3,8 @@ title: "Visualization: Scatterplots and Layers"
 author: Zach del Rosario
 date: 2020-06-04
 output: github_document
+time: 20
+reading: 40
 ---
 
 *Purpose*: *Scatterplots* are a key tool for EDA. Scatteplots help us inspect the relationship between two variables. To enhance our scatterplots, we'll learn how to use *layers* in ggplot to add multiple pieces of information to our plots.
@@ -109,7 +111,6 @@ diamonds %>%
 <!-- task-end -->
 <!-- solution-begin -->
 - No; the "gam" trend curves below then above the linear trend
--
 <!-- solution-end -->
 
 __q2__ Add non-overlapping labels to the following scattterplot using the
@@ -168,11 +169,11 @@ mpg %>%
 ```
 
 **Observations**:
-# task-begin
+<!-- task-begin -->
 - Which tends to be larger? `cty` or `hwy` mileage?
 - What is the trend of mileage with `displ`?
-# task-end
-# solution-begin
+<!-- task-end -->
+<!-- solution-begin -->
 - `hwy` mileage tends to be larger; driving on the highway is more efficient
 - Mileage tends to decrease with engine size; cars with larger engines tend to be less efficient
-# solution-end
+<!-- solution-end -->

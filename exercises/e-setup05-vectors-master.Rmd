@@ -3,6 +3,8 @@ title: "Vector Basics"
 # yaml-author
 date: 2020-06-05
 output: github_document
+time: 5
+reading: 10
 ---
 
 *Purpose*: *Vectors* are the most important object we'll work with when doing

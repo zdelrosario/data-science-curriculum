@@ -3,6 +3,8 @@ title: "Pivoting Data"
 # yaml-author
 date: 2020-05-07
 output: github_document
+time: 40
+reading: 10
 ---
 
 *Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse

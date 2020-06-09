@@ -3,6 +3,8 @@ title: "Visualization: Histograms"
 author: Zach del Rosario
 date: 2020-05-22
 output: github_document
+time: 30
+reading: 20
 ---
 
 *Purpose*: *Histograms* are a key tool for EDA. In this exercise we'll get a little more practice constructing and interpreting histograms and densities.
@@ -53,7 +55,7 @@ In my opinion, it's easier to see the broadness of `subcompact` by the density p
 
 In the previous exercise, we learned how to *facet* a graph. Let's use that part of the grammar of graphics to clean up the graph above.
 
-__q2__ Re-create `q1-vis2` using a `facet_wrap()` on the `class`. "Free" the vertical axis to allow for a different y scale in each facet.
+__q2__ Modify `q1-vis2` to use a `facet_wrap()` on the `class`. "Free" the vertical axis with the `scales` keyword to allow for a different y scale in each facet.
 
 ```{r q2-task}
 # task-begin
@@ -74,14 +76,15 @@ In the reading, we learned that the "most important thing" to keep in mind with 
 __q3__ Analyze the following graph; make sure to test different binwidths. What patterns do you see? Which patterns remain as you change the binwidth?
 
 ```{r q2-task}
-diamonds %>% 
-  filter(carat < 1.1) %>% 
-  
+## TODO: Run this chunk; play with differnet bin widths
+diamonds %>%
+  filter(carat < 1.1) %>%
+
   ggplot(aes(carat)) +
   geom_histogram(binwidth = 0.01, boundary = 0.005) +
   scale_x_continuous(
     breaks = seq(0, 1, by = 0.1)
-    
+
   )
 ```
 
@@ -94,4 +97,3 @@ diamonds %>%
 - The peak near `0.5` is very broad, compared to the others.
 - The peak at `0.3` is most numerous
 <!-- solution-end -->
-
