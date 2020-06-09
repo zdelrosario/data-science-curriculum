@@ -27,7 +27,7 @@ __q1__ Load the `tidyverse` and inspect the `diamonds` dataset. What do the
 
 *Hint*: We learned how to inspect a dataset in `e-data-00-basics`!
 
-```{r setup}
+```{r library}
 # solution-begin
 library(tidyverse)
 

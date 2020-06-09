@@ -75,7 +75,7 @@ In the reading, we learned that the "most important thing" to keep in mind with 
 
 __q3__ Analyze the following graph; make sure to test different binwidths. What patterns do you see? Which patterns remain as you change the binwidth?
 
-```{r q2-task}
+```{r q3-task}
 ## TODO: Run this chunk; play with differnet bin widths
 diamonds %>%
   filter(carat < 1.1) %>%

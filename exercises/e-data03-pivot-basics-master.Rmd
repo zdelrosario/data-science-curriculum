@@ -419,7 +419,7 @@ df_q6
 
 Don't forget to create a solution!
 
-```{r q6-task}
+```{r q6-solution}
 df_q6_res <-
   df_q6 %>%
 # task-begin

@@ -24,7 +24,7 @@ In [RStudio](https://bookdown.org/yihui/rmarkdown/r-code.html) use the shortcut
 `library(tidyverse`).
 
 <!-- solution-begin -->
-```{r setup}
+```{r library}
 library(tidyverse)
 ```
 <!-- solution-end -->
