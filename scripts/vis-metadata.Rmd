@@ -11,6 +11,7 @@ output:
 
 ```{r setup}
 library(tidyverse)
+library(NCmisc)
 
 ## Data directory
 exercise_data <- "~/Git/data-science-curriculum/exercises"
@@ -22,6 +23,30 @@ df_ex_files <-
     filename = str_extract(file, "[^/]+\\.Rmd"),
     name = str_remove(filename, "(-master)?\\.Rmd")
   )
+
+## Flatten function list
+flatten_funs <- function(l) {
+  res <- c()
+
+  if (length(l) > 0) {
+    for (i in 1:length(l)) {
+      res <- c(res, l[[i]])
+    }
+
+    res
+  } else{
+    list()
+  }
+}
+```
+
+```{r }
+file <- "../exercises/e-setup02-functions-master.Rmd"
+fileR <- str_replace(file, "Rmd", "R")
+knitr::purl(file, output = fileR)
+
+res <- list.functions.in.file(fileR, alphabetic = TRUE)
+res
 ```
 
 ```{r load}
@@ -29,12 +54,22 @@ df_exercises <-
   pmap_dfr(
     df_ex_files,
     function(file, filename, name) {
+      ## Render R file for function discovery
+      fileR <- str_replace(file, "Rmd", "R")
+      knitr::purl(file, output = fileR)
+      funs <- list.functions.in.file(fileR, alphabetic = TRUE)
+      ## Delete temporary R file
+      unlink(fileR)
+
+      ## Parse Rmd file yaml
+      df_result <-
       rmarkdown::yaml_front_matter(file) %>%
         as_tibble() %>%
         mutate(
           total = time + reading,
           name = name,
-          catnum = str_extract(name, "[:alpha:]+\\d+")
+          catnum = str_extract(name, "[:alpha:]+\\d+"),
+          functions = list(flatten_funs(funs))
         ) %>%
         extract(
           col = catnum,
@@ -42,7 +77,6 @@ df_exercises <-
           regex = "([:alpha:]+)(\\d+)",
           convert = TRUE
         )
-
     }
   )
 
