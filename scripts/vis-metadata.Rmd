@@ -12,6 +12,7 @@ output:
 ```{r setup}
 library(tidyverse)
 library(NCmisc)
+library(ggrepel)
 
 ## Data directory
 exercise_data <- "~/Git/data-science-curriculum/exercises"
@@ -124,6 +125,32 @@ left_join(
   select(name, day, total, day_mins) %>%
   arrange(day) %>%
   knitr::kable()
+```
+
+Visualize schedule
+
+```{r vis-schedule}
+left_join(
+  df_exercises,
+  df_schedule,
+  by = "name"
+) %>%
+  filter(!str_detect(category, "setup")) %>%
+
+  ggplot(aes(category, day)) +
+  geom_label(
+    aes(label = name, fill = category)
+  ) +
+
+  scale_y_reverse() +
+  guides(fill = "none") +
+  theme_minimal() +
+  labs(
+    x = "Category",
+    y = "Day",
+    title = "Exercise Curriculum"
+  )
+
 ```
 
 # Summaries
