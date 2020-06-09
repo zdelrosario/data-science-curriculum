@@ -1,0 +1,88 @@
+---
+title: "Visualize Curriculum Metadata"
+author: "Zach"
+date: 2020-06-08
+output:
+  github_document
+---
+
+# Setup
+<!-- -------------------------------------------------- -->
+
+```{r setup}
+library(tidyverse)
+
+## Data directory
+exercise_data <- "~/Git/data-science-curriculum/exercises"
+
+df_ex_files <-
+  tibble(file = list.files(exercise_data, full.names = TRUE)) %>%
+  filter(str_detect(file, "Rmd$")) %>%
+  mutate(
+    filename = str_extract(file, "[^/]+\\.Rmd"),
+    name = str_remove(filename, "(-master)?\\.Rmd")
+  )
+```
+
+```{r load}
+df_exercises <-
+  pmap_dfr(
+    df_ex_files,
+    function(file, filename, name) {
+      rmarkdown::yaml_front_matter(file) %>%
+        as_tibble() %>%
+        mutate(
+          total = time + reading,
+          name = name,
+          catnum = str_extract(name, "[:alpha:]+\\d+")
+        ) %>%
+        extract(
+          col = catnum,
+          into = c("category", "number"),
+          regex = "([:alpha:]+)(\\d+)",
+          convert = TRUE
+        )
+
+    }
+  )
+
+```
+
+# Summaries
+<!-- -------------------------------------------------- -->
+
+Total exercise time, in hours
+
+```{r exercise-time}
+df_exercises %>%
+  mutate(across(c(time, reading, total), ~ . / 60)) %>%
+  summarize(across(c(time, reading, total), sum)) %>%
+  knitr::kable()
+```
+
+Exercise time, by category
+
+```{r exercise-category-time}
+df_exercises %>%
+  group_by(category) %>%
+  mutate(across(c(time, reading, total), ~ . / 60)) %>%
+  summarize(across(c(time, reading, total), sum)) %>%
+  knitr::kable()
+```
+
+Visualize
+
+```{r exercise-times}
+df_exercises %>%
+  select(name, category, exercise = time, reading) %>%
+  pivot_longer(
+    names_to = "type",
+    values_to = "time",
+    c(exercise, reading)
+  ) %>%
+
+  ggplot(aes(name, time, fill = type)) +
+  geom_col() +
+  coord_flip() +
+  facet_grid(category~., scales = "free_y")
+```
