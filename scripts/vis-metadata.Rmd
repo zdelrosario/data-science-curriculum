@@ -191,3 +191,17 @@ df_exercises %>%
   coord_flip() +
   facet_grid(category~., scales = "free_y")
 ```
+
+# Function reference
+<!-- -------------------------------------------------- -->
+
+Generate a list of all exercises where each function is used:
+
+```{r fun-ref}
+df_funs <-
+  df_exercises %>%
+  unnest(functions) %>%
+  rename(fun = functions) %>%
+  select(fun, name) %>%
+  arrange(fun)
+```
