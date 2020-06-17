@@ -36,14 +36,14 @@ flatten_funs <- function(l) {
 
     res
   } else{
-    list()
+    NA_character_
   }
 }
 ```
 
 Parse all exercise files; determine functions used and read metadata.
 
-```{r load-exercises}
+```{r load-exercises, echo=FALSE, message=FALSE}
 df_exercises <-
   pmap_dfr(
     df_ex_files,
