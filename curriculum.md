@@ -75,7 +75,8 @@ Core
 - (Apply)
   - the principles of curiosity and skepticism to perform EDA
 - (Quantify)
-  - the degree of uncertainty (in an estimate, a prediction)
+  - the degree of uncertainty in an estimate
+  - the degree of uncertainty in a prediction
   - testing and training error (e.g. via cross-validation)
 - (Fit)
   - a distribution
