@@ -9,7 +9,7 @@ output:
 # Setup
 <!-- -------------------------------------------------- -->
 
-```{r setup}
+```{r script-setup}
 library(tidyverse)
 library(NCmisc)
 library(ggrepel)
