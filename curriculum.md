@@ -31,6 +31,9 @@ Core
   - data from a flat file (e.g. .csv)
   - data from googlesheets
   - data messy data (e.g. a nasty excel file)
+- (Liberate)
+  - data from images with WebPlotDigitizer
+  - data from printed tables with Tabula
 
 Bonus
 - (Derive)
