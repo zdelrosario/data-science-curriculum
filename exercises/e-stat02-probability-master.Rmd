@@ -3,16 +3,13 @@ title: "Statistics: Probability"
 author: Zach del Rosario
 date: 2020-06-08
 output: github_document
-time: -1
-reading: -1
+time: 40
+reading: 0
 ---
 
-*Purpose*:
+*Purpose*: *Probability* is a quantitative measure of uncertainty. It is intimately tied to how we use distributions to model data and to how we express uncertainty. In order to do all these useful things, we'll need to learn some basics about probability.
 
-*Reading*:
-
-
-*Topics*:
+*Reading*: (None; this exercise *is* the reading.)
 
 "Probability is the most important concept in modern science, especially as
 nobody has the slightest notion what it means." --- Bertrand Russell
