@@ -12,19 +12,20 @@ reading: 0
 *Reading*: (None; this exercise *is* the reading.)
 
 ## Distributions
+<!-- -------------------------------------------------- -->
 
 Fundamentally, a distribution (also known as a density) is a *function*: It takes an input, and returns an output. A distribution has a special interpretation though; it represents the *relative likelihood* of particular values occuring.
 
 First, let's look at a distribution of some real data:
 
-```{r ex-mpg-}
+```{r ex-mpg}
 mpg %>%
   filter(class == "midsize") %>%
   ggplot(aes(cty, color = class)) +
   geom_density()
 ```
 
-This density indicates that a value around `18` is more likely than other values of `cty`, at least for `midsize` vehicles. Note that the plot above took a set of `cty` values, and smoothed them to create a density.
+This density indicates that a value around `18` is more prevalent than other values of `cty`, at least for `midsize` vehicles in this dataset. Note that the plot above took a set of `cty` values, and smoothed them to create a density.
 
 Next, let's look at a normal distribution:
 
@@ -96,8 +97,9 @@ print("Nice!")
 ```
 
 ## Drawing Samples: A Model for Randomness
+<!-- -------------------------------------------------- -->
 
-What does it *practically* mean for a value to be more or less likely? A distribution gives information about a *random variable*. A random variable is a quantity that takes a random value every time we observe it. For instance: If we roll a six-sided die, it will (unpredictably) land on values `1` through `6`. In my research, I use random variables to model material properties: Every component that comes off an assembly line will have a different strength associated with it. In order to design for a desired rate of failure, I model this variability with a random variable.
+What does it *practically* mean for a value to be more or less likely? A distribution gives information about a *random variable*. A random variable is a quantity that takes a random value every time we observe it. For instance: If we roll a six-sided die, it will (unpredictably) land on values `1` through `6`. In my research, I use random variables to model material properties: Every component that comes off an assembly line will have a different strength associated with it. In order to design for a desired rate of failure, I model this variability with a random variable. A single value from a random variable---a roll of the die or a single value of materialstrength---is called a *realization*.
 
 Let's illustrate this idea by using a normal distribution to define a *random variable* `Z`. This is sometimes denoted `Z ~ norm(mean, sd)`, which means `Z` is distributed as a normal distribution with `mean` and `sd`. The code below illustrates what it looks like when we draw a few samples of `Z`.
 
@@ -137,6 +139,12 @@ ggplot() +
   )
 ```
 
+To clarify some terms:
+
+- A **realization** is a single observed value of a random variable. A realization is a single value, e.g. `rnorm(n = 1)`.
+- A **sample** is a set of realizations. A sample is a set of values, e.g. `rnorm(n = 10)`.
+- A **distribution** is a function that describes the relative frequency of all the values a random variable might take. A distribution is a function, e.g. `dnorm(x)`.
+
 __q2__ Plot densities for `Z` values in `df_q2`. Use aesthetics to plot a separate curve for different values of `n`. Comment on which values of `n` give a density closer to "normal".
 
 *Hint*: You may need to use the `group` aesthetic, in addition to `color` or `fill`.
@@ -166,6 +174,7 @@ df_q2 %>%
 <!-- solution-end -->
 
 ## Random Seeds: Setting the State
+<!-- -------------------------------------------------- -->
 
 Remember that random variables are *random*. That means if we draw samples multiple times, we're bound to get different values. For example, run the following code chunk multiple times.
 
@@ -174,7 +183,7 @@ Remember that random variables are *random*. That means if we draw samples multi
 rnorm(5)
 ```
 
-What this means is we'll get a slightly different picture every time we draw a sample. **This is the problem we address with statistics**: Since we could have drawn a different set of samples, we need to know the degree to which we can trust conclusions drawn from data. Being *statistically literate* means knowing how much to trust your data.
+What this means is we'll get a slightly different picture every time we draw a sample. **This is the challenge with randomness**: Since we could have drawn a different set of samples, we need to know the degree to which we can trust conclusions drawn from data. Being *statistically literate* means knowing how much to trust your data.
 
 ```{r ex-multiple-vis}
 ## NOTE: No need to change this!
