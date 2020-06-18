@@ -11,6 +11,8 @@ reading: 0
 
 *Reading*: (None; this exercise *is* the reading.)
 
+*Topics*: Frequency, probability, probability density function (PDF), cumulative distribution function (CDF)
+
 "Probability is the most important concept in modern science, especially as
 nobody has the slightest notion what it means." --- Bertrand Russell
 
