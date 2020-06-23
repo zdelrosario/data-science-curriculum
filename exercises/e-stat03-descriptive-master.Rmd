@@ -277,7 +277,7 @@ The [standard deviation](https://en.wikipedia.org/wiki/Standard_deviation) (SD) 
 
 $$s = \sqrt{ \frac{1}{n-1} \sum_{i=1}^n (X_i - \overline{X})^2 },$$
 
-where $\overline{X}$ is the mean of the data. Note the factor of $n-1$ rather than $n$: This slippery idea is called [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction), and it's an idea we'll return to later.
+where $\overline{X}$ is the mean of the data. Note the factor of $n-1$ rather than $n$: This slippery idea is called [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction). Note that $\sigma^2$ is called the *variance*.
 
 By way of analogy, mean is to standard deviation as median is to IQR: The IQR is a robust measure of spread. Returning to our outlier example:
 
