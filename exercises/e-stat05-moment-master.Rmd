@@ -139,3 +139,14 @@ print("Excellent!")
 ```
 
 This example illustrates that we can create a normal with desired mean and standard deviation by transforming a standard normal $\mu + \sigma Z = X$.
+
+### Standard Error
+<!-- ------------------------- -->
+
+$$\mathbb{V}[aX + bY] = a^2 \mathbb{V}[X] + b^2 \mathbb{V}[Y] + 2 \text{Cov}[X, Y],$$
+
+where $\text{Cov}[X, Y] = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])]$ is the *covariance* between $X$ and $Y$. If $X, Y$ are independent, then the covariance between them is zero.
+
+Using this expression, we can prove that the standard error of the sample mean $\overline{X}$ is $\sigma / \sqrt{n}$.
+
+__q5__ (Bonus) Use the identity above to prove that $\mathbb{V}[\overline{X}] = \sigma^2 / n$, where $\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i$, $\sigma^2 = \mathbb{V}[X]$, and the $X_i$ are mutually independent.
