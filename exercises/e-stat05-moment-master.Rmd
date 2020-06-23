@@ -1,0 +1,141 @@
+---
+title: "Statistics: Moment Arithmetic"
+author: Zach del Rosario
+date: 2020-06-23
+output: github_document
+time: 15
+reading: 0
+---
+
+*Purpose*: In a future exercise, we will need to be able to do some basic arithmetic with *moments* of a distribution. To prepare for this later exercise, we'll do some practice now.
+
+*Reading*: (None, this is the reading)
+
+*Topics*: Moments, moment arithmetic, standardization
+
+# Moments
+<!-- -------------------------------------------------- -->
+
+Moments are a particular kind of statistic. There is a general, mathematical definition of a [moment](https://en.wikipedia.org/wiki/Moment_(mathematics)), but we will only need to talk about two in this class.
+
+We've already seen the *mean*; this is also called the expectation. For a random variable $X$, the expectation is defined in terms of its pdf $\rho(x)$ via
+
+$$\mathbb{E}[X] = \int x \rho(x) dx.$$
+
+We've also seen the standard deviation $\sigma$. This is related to the variance $\sigma^2$, which is defined for a random variable $X$ in terms of the expectation
+
+$$\mathbb{V}[X] = \mathbb{E}[(X - \mathbb{E}[X])^2].$$
+
+For future exercises, we'll need to learn how to do basic arithmetic with these two moments.
+
+# Moment Arithmetic
+<!-- -------------------------------------------------- -->
+
+We will need to be able to do some basic arithmetic with the mean and variance. The following exercises will help you remember this basic arithmetic.
+
+### Expectation
+<!-- ------------------------- -->
+
+The expectation is *linear*, that is $\mathbb{E}[aX + c] = a \mathbb{E}[X] + c$. We can use this fact to compute the mean of simply transformed random variables.
+
+__q1__ Compute the mean of $2 Z + 3$, where $Z$ is a standard normal.
+
+```{r q1-task}
+## TASK: Compute the mean of 2 Z + 3
+# task-begin
+E_q1 <- NA_real_
+# task-end
+# solution-begin
+E_q1 <- 3
+# solution-end
+```
+
+Use the following test to check your answer.
+
+```{r q1-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(assertthat::are_equal(E_q1, 3))
+print("Nice!")
+```
+
+### Variance
+<!-- ------------------------- -->
+
+Remember that variance is the square of standard deviation.
+
+Variance satisfies the property $$\mathbb{V}[aX + c] = a^2 \mathbb{V}[X].$$
+
+__q2__ Compute the variance of $2 Z + 3$, where $Z$ is a standard normal.
+
+```{r q2-task}
+## TASK: Compute the mean of 2 Z + 3
+# task-begin
+V_q2 <- NA_real_
+# task-end
+# solution-begin
+V_q2 <- 4
+# solution-end
+```
+
+Use the following test to check your answer.
+
+```{r q2-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(assertthat::are_equal(V_q2, 4))
+print("Well done!")
+```
+
+### Standardization
+<!-- ------------------------- -->
+
+The following two exercises illustrate two important transformations.
+
+__q3__ Compute the mean and variance of $(X - 1) / 2$, where $\mathbb{E}[X] = 1$ and $\mathbb{V}[X] = 4$.
+
+```{r q3-task}
+## TASK: Compute the mean and variance
+# task-begin
+E_q3 <- NA_real_
+V_q3 <- NA_real_
+# task-end
+# solution-begin
+E_q3 <- 0
+V_q3 <- 1
+# solution-end
+```
+
+Use the following test to check your answer.
+
+```{r q3-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(assertthat::are_equal(E_q3, 0))
+assertthat::assert_that(assertthat::are_equal(V_q3, 1))
+print("Well done!")
+```
+
+This process of centering (setting the mean to zero) and scaling a random variable is called *standardization*. For instance, if $X$ is a normal random variable, then $(X - \mu) / \sigma = Z$ is a standard normal.
+
+__q4__ Compute the mean and variance of $1 + 2 Z$, where $Z$ is a standard normal.
+
+```{r q4-task}
+## TASK: Compute the mean and variance
+# task-begin
+E_q4 <- NA_real_
+V_q4 <- NA_real_
+# task-end
+# solution-begin
+E_q4 <- 1
+V_q4 <- 4
+# solution-end
+```
+
+Use the following test to check your answer.
+
+```{r q4-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(assertthat::are_equal(E_q4, 1))
+assertthat::assert_that(assertthat::are_equal(V_q4, 4))
+print("Excellent!")
+```
+
+This example illustrates that we can create a normal with desired mean and standard deviation by transforming a standard normal $\mu + \sigma Z = X$.
