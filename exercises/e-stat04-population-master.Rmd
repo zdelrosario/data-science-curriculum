@@ -299,7 +299,7 @@ se_sample <- sd(z_sample) / sqrt(n_sample)
 
 Use the following tests to check your work.
 
-```{r q2-tests}
+```{r q3-tests}
 ## NOTE: No need to change this!
 assertthat::assert_that(
               assertthat::are_equal(
