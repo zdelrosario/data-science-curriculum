@@ -110,7 +110,7 @@ str_remove(
 
 while `str_remove_all()` removes *all* occurences of the matched pattern
 
-```{r ex-remove}
+```{r ex-remove-all}
 ## NOTE: No need to change this!
 str_remove_all(
   string = c("650-123-4567", "(814) 123 4567"),
