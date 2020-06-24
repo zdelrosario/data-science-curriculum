@@ -41,6 +41,8 @@ df_q1 <- flights %>% select(ends_with("_time"))
 df_q1
 ```
 
+Use the following code to check your answer.
+
 ```{r q1-tests}
 ## NOTE: No need to change this
 assertthat::assert_that(
@@ -131,6 +133,8 @@ df_q5b <-
   )
 # solution-end
 ```
+
+Use the following code to check your answer.
 
 ```{r q5-tests}
 ## NOTE: No need to change this!
