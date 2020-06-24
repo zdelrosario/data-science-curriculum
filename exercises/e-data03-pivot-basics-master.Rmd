@@ -1,6 +1,6 @@
 ---
 title: "Pivoting Data"
-# yaml-author
+author: Zachary del Rosario
 date: 2020-05-07
 output: github_document
 time: 40

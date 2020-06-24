@@ -1,6 +1,6 @@
 ---
 title: "Join Datasets"
-# yaml-author
+author: Zachary del Rosario
 date: 2020-06-05
 output: github_document
 time: 30
