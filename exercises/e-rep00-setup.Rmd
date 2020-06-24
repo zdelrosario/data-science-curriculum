@@ -35,7 +35,7 @@ Discord is a free service used for communication. It's like a combination of Sla
 
 Fandom is a free service used for community Wiki's, much like Wikipedia. I have created an [Olin Data Science Wiki](https://olin-data-science.fandom.com/wiki/Olin_Data_Science_Wiki); we will fill this in together with our data science findings. This is required, as group deliverables will be recorded in our Wiki.
 
-- You will need an account on [Fandom](https://www.fandom.com/register?redirect=https%3A%2F%2Folin-data-science.fandom.com%2Fwiki%2FOlin_Data_Science_Wiki); create an account.
+- You will need an account on [Fandom](https://www.fandom.com/register?redirect=https%3A%2F%2Fwww.fandom.com%2F); create an account.
 
 # Record Your Info
 <!-- -------------------------------------------------- -->
