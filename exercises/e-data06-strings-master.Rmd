@@ -1,0 +1,221 @@
+---
+title: "Data: Working with Strings"
+author: Zachary del Rosario
+date: 2020-06-24
+output: github_document
+time: 15
+reading: 30
+---
+
+*Purpose*: Strings show up in data science all the time. Even when all our variables are numeric, our *column names* are generally strings. To strengthen our ability to work with strings, we'll learn how to use *regular expressions* and apply them to wrangling and tidying data.
+
+*Reading*: [RegexOne](https://regexone.com/); All lessons in the Interactive Tutorial, Additional Practice Problems are optional
+
+*Topics*: Regular expressions, `stringr` package functions, pivoting
+
+*Note*: The [stringr cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf) is a helpful reference for this exercise!
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+# Intro to Stringr
+<!-- -------------------------------------------------- -->
+
+Within the Tidyverse, the package `stringr` contains a large number of functions for helping us with strings.
+
+### Match and Detect
+<!-- ------------------------- -->
+
+Two important ones are `str_match()` and `str_detect()`. The function `str_match()` returns a match (a string):
+
+```{r ex-str-match}
+## NOTE: No need to change this!
+str_match(
+  string = c("abc", "xyz", "123"),
+  pattern = "\\D{3}"
+)
+```
+
+Whereas `str_detect()` returns a boolean
+
+```{r ex-str-detect}
+## NOTE: No need to change this!
+str_detect(
+  string = c("abc", "xyz", "123"),
+  pattern = "\\D{3}"
+)
+```
+
+*Note*: In `R`, we can't type a single `\` to write special characters. Instead, we have to double-up the `\\`. For instance, if we wanted to use the digit character, we would type `\\d`.
+
+__q1__ Filter the `mpg` dataset to include only those observations with a `trans` of the form "l3, l4, l5, l6".
+
+```{r q1-task}
+## TASK: Mutate `trans` to extract
+# task-begin
+df_q1 <-
+  mpg
+# task-end
+# solution-begin
+df_q1 <-
+  mpg %>%
+  filter(str_detect(trans, "l\\d"))
+# solution-end
+df_q1
+```
+
+Use the following test to check your work.
+
+```{r q1-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+              all(
+                df_q1 %>%
+                pull(trans) %>%
+                str_detect(., "l\\d")
+              )
+)
+print("Great job!")
+```
+
+### Extract and Remove
+<!-- ------------------------- -->
+
+Two additional stringr functions are `str_extract()` and `str_remove()`. Unlike `str_match()` which returns the entire string, the function `str_extract()` returns *only* the first occurrence of the matched pattern:
+
+```{r ex-extract}
+## NOTE: No need to change this!
+str_extract(
+  string = c("650-123-4567", "(814) 123 4567"),
+  pattern = "\\d{3}"
+)
+```
+
+The function `str_remove()` *removes* the first occurence of the matched pattern
+
+```{r ex-remove}
+## NOTE: No need to change this!
+str_remove(
+  string = c("650-123-4567", "(814) 123 4567"),
+  pattern = "\\D"
+)
+```
+
+while `str_remove_all()` removes *all* occurences of the matched pattern
+
+```{r ex-remove}
+## NOTE: No need to change this!
+str_remove_all(
+  string = c("650-123-4567", "(814) 123 4567"),
+  pattern = "\\D"
+)
+```
+
+All of these functions are useful for processing string data.
+
+__q2__ Note that observations on the `trans` variable in the `mpg` dataset are of the form `type(code)`. Use regular expressions to extract the `type` and `code` into their own variables.
+
+```{r q2-task}
+## TASK: Extract the "type" and "code" of trans
+# task-begin
+df_q2 <-
+  mpg %>%
+  mutate(
+    trans_type = trans, # MODIFY
+    trans_code = trans  # MODIFY
+  )
+# task-end
+# solution-begin
+df_q2 <-
+  mpg %>%
+  mutate(
+    trans_type = str_extract(trans, "^\\w+"),
+    trans_code = str_extract(trans, "(?<=\\().*(?=\\))")
+  )
+# solution-end
+df_q2 %>% glimpse
+```
+
+<!-- solution-begin -->
+*Note*: In my solution I use *look-around* groups to leave the parentheses out of the extraction.
+<!-- solution-end -->
+
+Use the following test to check your work.
+
+```{r q2-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+              all(
+                df_q2 %>%
+                mutate(
+                  flag = !str_detect(trans_type, "\\(|\\)")
+                       & !str_detect(trans_code, "\\(|\\)")
+                ) %>%
+                pull(flag)
+              )
+)
+print("Nice!")
+```
+
+# Regex in Other Functions
+<!-- -------------------------------------------------- -->
+
+Other functions like `pivot_longer` and `pivot_wider` also take regex patterns. We can use these to help solve data tidying problems.
+
+Let's return to the alloy data from `e-data03-pivot-basics`; the version of the data below do not have the convenient `_` separators in the column names.
+
+```{r stang-setup}
+## NOTE: No need to edit; execute
+alloys <- tribble(
+  ~thick,  ~E00,  ~mu00,  ~E45,  ~mu45, ~rep,
+   0.022, 10600,  0.321, 10700,  0.329,    1,
+   0.022, 10600,  0.323, 10500,  0.331,    2,
+   0.032, 10400,  0.329, 10400,  0.318,    1,
+   0.032, 10300,  0.319, 10500,  0.326,    2
+)
+alloys
+```
+
+As described in the RegexOne tutorial, you can use capture groups in parentheses `(...)` to define different groups in your regex pattern. These can be used along with the `pivot_` functions, for instance when you want to break apart column names into multiple groups.
+
+__q3__ Use your knowledge of regular expressions along with the `names_pattern` argument to successfully tidy the `alloys` data.
+
+```{r q3-task}
+## TASK: Tidy `alloys`
+# task-begin
+df_q3 <- alloys
+# task-end
+# solution-begin
+df_q3 <-
+  alloys %>%
+  pivot_longer(
+    names_to = c("property", "angle"),
+    names_pattern = "(\\D+)(\\d+)",
+    values_to = "value",
+    cols = matches("\\d")
+  ) %>%
+  mutate(angle = as.integer(angle))
+# solution-end
+df_q3
+```
+
+Use the following test to check your work.
+
+```{r q3-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(dim(df_q3)[1] == 16)
+assertthat::assert_that(dim(df_q3)[2] == 5)
+print("Well done!")
+```
+
+# Notes
+<!-- -------------------------------------------------- -->
+
+[1] Here's a helpful mnemonic for remembering the meaning of the `^` and `$` characters: "When you start with power `^`, you end with money `$`."
