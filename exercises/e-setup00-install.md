@@ -1,11 +1,14 @@
-Setup
+Setup: RStudio
 ================
+Zach del Rosario
 2020-05-02
 
 *Purpose*: We’re going to make extensive use of the [R programming
 language](https://www.r-project.org/about.html); in particular, the
 [Tidyverse](https://www.tidyverse.org/) packages. This first exercise
 will guide you through setting up the necessary software.
+
+*Reading*: (None)
 
 **q1** Install Rstudio
 
@@ -44,3 +47,39 @@ the image below.
 ![RStudio package install](./images/rstudio-cli-library.png)
 
 If you have any issues with installation, **please** let me know\!
+
+**q4** Download extras
+
+We’ll use a number of extras for this class. To that end, please install
+the following packages. *Hint*: You can install multiple packages by
+typing `install.packages("package1", "package2")`, and so on.
+
+  - `mvtnorm`
+  - `nycflights13`
+  - `gapminder`
+  - `ggrepel`
+
+**q5** Download cheatsheets
+
+The `tidyverse` is essentially a language built on top of R. As such,
+there are a lot of functions to remember. To that end, RStudio has put
+together a number of
+[cheatsheets](https://rstudio.com/resources/cheatsheets/) to reference
+when doing data science. Some of the most important ones are:
+
+  - [Data
+    visualization](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
+  - [Data
+    transformation](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+  - [Data
+    importing](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf)
+
+Later, we will learn special tools for handling:
+
+  - [String
+    data](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf)
+  - [Dates and
+    times](https://github.com/rstudio/cheatsheets/raw/master/lubridate.pdf)
+  - [Factors](https://github.com/rstudio/cheatsheets/raw/master/factors.pdf)
+  - [R
+    Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
