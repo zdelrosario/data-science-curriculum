@@ -1,0 +1,33 @@
+---
+title: "Reproducibility: Creating a GitHub Repository"
+author: Zachary del Rosario
+date: 2020-06-24
+output: github_document
+time: 5
+reading: 10
+---
+
+*Purpose*: In this class you'll turn in all your work using GitHub. To do this, you'll need to create a repository. This short exercise will walk you through doing this.
+
+*Reading*: Follow all the steps in [Creating a Repository](https://swcarpentry.github.io/git-novice/03-create/index.html).
+
+*Note*: For the steps in the reading, I recommend using the Terminal in RStudio. This should help ensure you have access to Git.
+
+*Topics*: Creating a GitHub repository
+
+# Set Up Your Repository
+<!-- -------------------------------------------------- -->
+
+- Log into [GitHub](https://github.com/) and click the "New" button to start creating a new repository.
+
+![New](./images/rep02-new.png)
+
+- Give your a repository a name (such as `data-science-work`), enable "Initialize this repository with a README", then click "Create repository". This will take you to your new repository.
+
+*Important Note*: Make sure to click "Initialize this repository with a README"! This will help when you go to clone your repository later!
+
+![Info](./images/rep02-info-readme.png)
+
+Next, follow the steps in [e-rep01-intro-git](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-rep01-intro-git.md) to clone your new repository (make sure to target your new repository, though!).
+
+*Finishing*: When you complete this exercise, send me a message with the URL of your new repository.
