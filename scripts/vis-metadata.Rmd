@@ -14,6 +14,9 @@ library(tidyverse)
 library(NCmisc)
 library(ggrepel)
 
+## Filenames
+filename_seq <- "../sequence.md"
+
 ## Data directory
 exercise_data <- "~/Git/data-science-curriculum/exercises"
 
@@ -95,15 +98,22 @@ df_schedule <-
     "e-data04-separate-unite",         10,
     "e-data05-join",                   11,
 
-    "e-setup00-install",                1,
+    "e-setup00-install",                0,
     "e-setup01-packages",               1,
     "e-setup02-functions",              1,
     "e-setup03-docs",                   1,
     "e-setup04-rstudio-shortcuts",      1,
     "e-setup05-vectors",                3,
 
+    "e-rep00-setup",                    0,
+
     "e-stat00-eda-basics",              5,
     "e-stat01-distributions",          12,
+    "e-stat02-probability",            12,
+    "e-stat03-descriptive",            12,
+    "e-stat04-population",             12,
+    "e-stat05-moment",                 12,
+    "e-stat06-clt",                    12,
 
     "e-vis00-basics",                   2,
     "e-vis01-bar-charts",               4,
@@ -115,17 +125,43 @@ df_schedule <-
   )
 
 ## Compute day totals
-left_join(
-  df_exercises,
-  df_schedule,
-  by = "name"
-) %>%
+df_day_totals <-
+  left_join(
+    df_exercises,
+    df_schedule,
+    by = "name"
+  ) %>%
   group_by(day) %>%
   mutate(day_mins = sum(total)) %>%
   select(name, day, total, day_mins) %>%
-  arrange(day) %>%
+  arrange(day)
+
+df_day_totals %>%
   knitr::kable()
 ```
+
+### Markdown schedule
+<!-- ------------------------- -->
+
+```{r md-schedule}
+## Format table as string
+string_table <-
+  df_day_totals %>%
+  rename(
+    Filename = name,
+    Day = day,
+    `Exercise Duration (minutes)` = total,
+    `Day Duration (minutes)` = day_mins
+  ) %>%
+  knitr::kable(format = "markdown") %>%
+  c(.)
+
+## Write schedule file
+writeLines(string_table, filename_seq)
+```
+
+### Visual schedule
+<!-- ------------------------- -->
 
 Visualize schedule
 
