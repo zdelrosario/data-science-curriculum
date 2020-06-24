@@ -1,6 +1,6 @@
 ---
 title: "Code Style"
-# yaml-author
+author: Zachary del Rosario
 date: 2020-05-05
 output: github_document
 time: 10
@@ -48,12 +48,13 @@ __q2__ Re-write according to the style guide
 *Hint*: There are *particular rules* about spacing!
 
 ```{r q2-task}
+## NOTE: You can copy this code to the chunk below
 iris %>%
   mutate(Sepal.Area=Sepal.Length*Sepal.Width) %>%
   group_by( Species ) %>%
   summarize_if(is.numeric,mean)%>%
   ungroup() %>%
-  gather( measure,value,-Species ) %>%
+  pivot_longer( names_to="measure",values_to="value",cols=-Species ) %>%
   arrange(value )
 ```
 
@@ -67,7 +68,7 @@ iris %>%
   group_by(Species) %>%
   summarize_if(is.numeric, mean) %>%
   ungroup() %>%
-  gather(measure, value, -Species) %>%
+  pivot_longer(names_to = "measure", values_to = "value", cols = -Species) %>%
   arrange(value)
 # solution-end
 ```
