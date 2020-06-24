@@ -11,40 +11,40 @@ reading: 10
 
 *Reading*: [Automated Version Control](https://swcarpentry.github.io/git-novice/01-basics/index.html), complete the steps in [Setting Up Git](https://swcarpentry.github.io/git-novice/02-setup/index.html)
 
-*Topics*: version control, git setup, working with our exercises
+*Note*: For the steps in the reading, I recommend using the Terminal in RStudio. This should help ensure you have access to Git.
+
+*Topics*: version control, git setup, working with our exercises, ssh keys
 
 # Downloading Our Exercises
 <!-- -------------------------------------------------- -->
 
 Using RStudio, we will download a local copy of the [data-science-curriculum](https://github.com/zdelrosario/data-science-curriculum). Follow these instructions:
 
-- Navigate to `File > New Project...`
+- Open [data-science-curriculum](https://github.com/zdelrosario/data-science-curriculum) in your browser, and click the "Clone" button. Make sure you have "SSH" selected, and click the "clipboard" button to copy the `git@github:...` url.
 
-![New project](./images/rep01-new-project.png)
-
-- Select the `Version Control` option
-
-![Repository](./images/rep01-repository.png)
-
-- Select `Git`
-
-![Git](./images/rep01-git.png)
-
-- Input the relevant information; you will need to provide https://github.com/zdelrosario/data-science-curriculum as the `Repository URL` (this will auto-populate the `Project Directory Name`), and select a directory on your computer.
-- *Note*: I recommend creating a `Git` directory on your computer in an easy-to-find location (say Home or Documents), and that you put `data-science-repository` there.
-
-![Clone](./images/rep01-clone.png)
-
-- Once you have successfully cloned `data-science-curriculum`, open the `Terminal` tab
+- Open the `Terminal` tab
 
 ![Terminal](./images/rep01-terminal.png)
 
-- Change Directory to `exercises` by typing `$ cd exercises`
+- Use the change directory (`cd`) command to change to where you want to copy `data-science-curriculum`, and use the `git clone` command to copy the repository.
+
+- *Note*: I recommend creating a `Git` directory on your computer in an easy-to-find location (say Home or Documents), and that you put `data-science-curriculum` there.
+
+![Clone](./images/rep01-clone-cli.png)
+
+- Change Directory to `exercises` with the command `cd exercises`
 
 ![Terminal](./images/rep01-cd.png)
 
-- Run the command `$ make` to create the `assignment` files
+- Run the command `make` to create the `assignment` files
 
 ![Terminal](./images/rep01-make.png)
 
 - Great job! Now you have all the assignment exercises for the course!
+
+# Set Up SSH Key
+<!-- -------------------------------------------------- -->
+
+Follow these instructions to [add an SSH key](https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account) to your account. This will allow you to work with GitHub without typing in your password.
+
+*Note*: This can be a bit confusing if you've never worked with SSH before; *please do ask questions* if you are stuck!
