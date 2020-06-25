@@ -65,6 +65,7 @@ following packages. *Hint*: You can install multiple packages by typing
 - `nycflights13`
 - `gapminder`
 - `ggrepel`
+- `googlesheets4`
 
 __q5__ Download cheatsheets
 
