@@ -1,0 +1,78 @@
+---
+title: "Types"
+author: Zachary del Rosario
+date: 2020-06-26
+output: github_document
+time: 10
+reading: 5
+---
+
+*Purpose*: Vectors can hold data of only one *type*. While this isn't a course on computer science, there are some type "gotchas" to look out for when doing data science. This exercise will help us get ahead of those issues.
+
+*Reading*: [Types](https://rstudio.cloud/learn/primers/1.2)
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+# Objects vs Strings
+<!-- -------------------------------------------------- -->
+
+__q1__ Describe what is wrong with the code below.
+
+```{r q1-task}
+## TASK: Describe what went wrong here
+## Set our airport
+airport <- "BOS"
+
+## Check our airport value
+airport == ATL
+```
+
+**Observations**:
+
+<!-- task-begin -->
+- Write your explanation here
+<!-- task-end -->
+<!-- solution-begin -->
+- `ATL` (without quotes) is trying to refer to an object (variable); we would need to write `"ATL"` (with quotes) to produce a string.
+<!-- solution-end -->
+
+# Casting
+<!-- -------------------------------------------------- -->
+
+Sometimes our data will not be in the form we want; in this case we may need to *cast* the data to another format.
+
+- `as.integer(x)` converts to integer
+- `as.numeric(x)` converts to real (floating point)
+- `as.character(x)` converts to character (string)
+- `as.logical(x)` converts to logical (boolean)
+
+```{r q2-task}
+v_string <- c("00", "45", "90")
+# task-begin
+v_integer <- NA_real_
+# task-begin
+# solution-begin
+v_integer <- as.integer(v_string)
+# solution-begin
+```
+
+Use the following test to check your work.
+
+```{r q2-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+  assertthat::are_equal(
+                v_integer,
+                c(0L, 45L, 90L)
+  )
+)
+print("Great job!")
+```
