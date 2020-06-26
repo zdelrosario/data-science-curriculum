@@ -105,6 +105,7 @@ df_schedule <-
     "e-setup03-docs",                   3,
     "e-setup04-rstudio-shortcuts",      3,
     "e-setup05-vectors",                3,
+    "e-setup06-types",                  3,
 
     "e-rep00-setup",                    0,
     "e-rep01-intro-git",                0,

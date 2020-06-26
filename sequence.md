@@ -9,10 +9,11 @@
 |e-setup02-functions         |   1|                          20|                     55|
 |e-comm00-style              |   2|                          20|                     60|
 |e-vis00-basics              |   2|                          40|                     60|
-|e-data00-basics             |   3|                           5|                     50|
-|e-setup03-docs              |   3|                          15|                     50|
-|e-setup04-rstudio-shortcuts |   3|                          15|                     50|
-|e-setup05-vectors           |   3|                          15|                     50|
+|e-data00-basics             |   3|                           5|                     65|
+|e-setup03-docs              |   3|                          15|                     65|
+|e-setup04-rstudio-shortcuts |   3|                          15|                     65|
+|e-setup05-vectors           |   3|                          15|                     65|
+|e-setup06-types             |   3|                          15|                     65|
 |e-stat00-eda-basics         |   4|                          65|                     65|
 |e-data01-isolate            |   5|                          60|                     60|
 |e-vis01-bar-charts          |   6|                          60|                     60|
