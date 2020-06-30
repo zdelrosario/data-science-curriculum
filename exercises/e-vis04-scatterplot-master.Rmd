@@ -177,3 +177,58 @@ mpg %>%
 - `hwy` mileage tends to be larger; driving on the highway is more efficient
 - Mileage tends to decrease with engine size; cars with larger engines tend to be less efficient
 <!-- solution-end -->
+
+# Aside: Scatterplot vs bar chart
+<!-- -------------------------------------------------- -->
+
+Why use a scatterplot vs a bar chart? A bar chart is useful for emphasizing some *threshold*. Let's look at a few examples:
+
+## Raw populations
+<!-- ------------------------- -->
+
+Two visuals of the same data:
+
+```{r vis-bar-raw}
+economics %>%
+  filter(date > lubridate::ymd("2010-01-01")) %>%
+  ggplot(aes(date, pop)) +
+  geom_col()
+```
+
+Here we're emphasizing zero, so we don't see much of a change
+
+```{r vis-point-raw}
+economics %>%
+  filter(date > lubridate::ymd("2010-01-01")) %>%
+  ggplot(aes(date, pop)) +
+  geom_point()
+```
+
+Here's we're not emphasizing zero; the scale is adjusted to emphasize the trend in the data.
+
+## Population changes
+<!-- ------------------------- -->
+
+Two visuals of the same data:
+
+```{r vis-bar-change}
+economics %>%
+  mutate(pop_delta = pop - lag(pop)) %>%
+  filter(date > lubridate::ymd("2005-01-01")) %>%
+  ggplot(aes(date, pop_delta)) +
+  geom_col()
+```
+
+Here we're emphasizing zero, so we can easily see the month of negative change.
+
+```{r vis-point-change}
+economics %>%
+  mutate(pop_delta = pop - lag(pop)) %>%
+  filter(date > lubridate::ymd("2005-01-01")) %>%
+  ggplot(aes(date, pop_delta)) +
+  geom_point()
+```
+
+Here we're not emphasizing zero; we can easily see the outlier month, but we have to read the axis to see that this is a case of negative growth.
+
+For more, see [Bars vs Dots](https://dcl-data-vis.stanford.edu/discrete-continuous.html#bars-vs.-dots).
