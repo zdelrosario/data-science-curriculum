@@ -313,6 +313,8 @@ $$\mathbb{P}[\overline{X} - q_C (\sigma / \sqrt{n}) < \mu < \overline{X} + q_C (
 
 Using a plug-in estimate for $\sigma$ gives the procedure defined above.
 
+<!-- include-exit-ticket -->
+
 # Notes
 <!-- -------------------------------------------------- -->
 

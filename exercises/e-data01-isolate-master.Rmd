@@ -1,6 +1,6 @@
 ---
 title: "Isolating Data"
-# yaml-author
+author: Zachary del Rosario
 date: 2020-05-05
 output: github_document
 time: 20
@@ -13,9 +13,7 @@ facility at *isolating data*. In this exercise, you will practice isolating
 columns with `select()`, picking specific rows with `filter()`, and sorting your
 data` with `arrange()` to see what rises to the top.
 
-*Reading*: [Isolating Data with dplyr](https://rstudio.cloud/learn/primers/2.2)
-*Topics*: (All topics)
-*Reading Time*: ~ 40 minutes
+*Reading*: [Isolating Data with dplyr](https://rstudio.cloud/learn/primers/2.2) (All topics)
 
 ```{r setup}
 library(tidyverse)
@@ -211,3 +209,5 @@ print("Great job!")
 The longest flights are to "HNL"; this makes sense---Honolulu is quite far
 from NYC!
 <!-- solution-end -->
+
+<!-- include-exit-ticket -->

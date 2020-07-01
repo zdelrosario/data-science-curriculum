@@ -97,3 +97,5 @@ diamonds %>%
 - The peak near `0.5` is very broad, compared to the others.
 - The peak at `0.3` is most numerous
 <!-- solution-end -->
+
+<!-- include-exit-ticket -->

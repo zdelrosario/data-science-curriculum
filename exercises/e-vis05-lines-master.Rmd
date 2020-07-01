@@ -89,3 +89,5 @@ economics %>%
 - The `Raw` data indicate short-term cyclical patterns that occur over a few years
 - The `Smoothed` data indicate a longer-term trend occuring over decades
 <!-- solution-end -->
+
+<!-- include-exit-ticket -->

@@ -59,3 +59,5 @@ Calling `library()` without arguments lists all the available packages.
 The __examples__ in the help documentation are often *extremely* helpful for
 learning how to use a function (or reminding yourself how its used)! Get used to
 checking the examples, as they're a great resource.
+
+<!-- include-exit-ticket -->

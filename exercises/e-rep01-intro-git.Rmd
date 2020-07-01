@@ -48,3 +48,5 @@ Using RStudio, we will download a local copy of the [data-science-curriculum](ht
 Follow these instructions to [add an SSH key](https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account) to your account. This will allow you to work with GitHub without typing in your password.
 
 *Note*: This can be a bit confusing if you've never worked with SSH before; *please do ask questions* if you are stuck!
+
+<!-- include-exit-ticket -->

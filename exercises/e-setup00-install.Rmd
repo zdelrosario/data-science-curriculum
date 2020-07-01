@@ -86,3 +86,5 @@ Later, we will learn special tools for handling:
 - [Dates and times](https://github.com/rstudio/cheatsheets/raw/master/lubridate.pdf)
 - [Factors](https://github.com/rstudio/cheatsheets/raw/master/factors.pdf)
 - [R Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+
+<!-- include-exit-ticket -->

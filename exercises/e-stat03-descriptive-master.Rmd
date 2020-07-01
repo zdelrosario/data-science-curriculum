@@ -524,6 +524,8 @@ df_cor_outliers %>%
   summarize(rho = cor(x, y, method = "spearman"))
 ```
 
+<!-- include-exit-ticket -->
+
 # Notes
 <!-- -------------------------------------------------- -->
 

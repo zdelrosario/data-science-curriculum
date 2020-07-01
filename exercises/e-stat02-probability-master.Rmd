@@ -327,6 +327,8 @@ assertthat::assert_that(abs(pI - 0.95) < 1e-3)
 print("Nice!")
 ```
 
+<!-- include-exit-ticket -->
+
 # Notes
 <!-- -------------------------------------------------- -->
 

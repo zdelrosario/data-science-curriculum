@@ -50,3 +50,5 @@ Fandom is a free service used for community Wiki's, much like Wikipedia. I have 
 <!-- -------------------------------------------------- -->
 
 In order to fully enroll you in the course, I need some information. Please fill out [this survey](https://forms.gle/uyHKHh81TWthdUR66) once you've created all the accounts mentioned above.
+
+<!-- include-exit-ticket -->

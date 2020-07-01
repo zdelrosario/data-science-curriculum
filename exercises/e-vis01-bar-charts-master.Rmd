@@ -198,3 +198,5 @@ mpg %>%
   facet_wrap(~ manufacturer)
 # solution-end
 ```
+
+<!-- include-exit-ticket -->

@@ -1,6 +1,6 @@
 ---
 title: "RStudio: Shortcuts"
-# yaml-author
+author: Zachary del Rosario
 date: 2020-05-07
 output: github_document
 time: 10
@@ -90,3 +90,5 @@ __q3__ How do stop the code in a chunk from running once it has started?
 <!-- solution-begin -->
 Click the red square in the top right corner of the chunk.
 <!-- solution-end -->
+
+<!-- include-exit-ticket -->

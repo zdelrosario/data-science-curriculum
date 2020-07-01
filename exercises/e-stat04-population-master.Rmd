@@ -327,3 +327,5 @@ print("Well done!")
 The *population* is the set of all things we care about. No amount of math can help you here: *You* are responsible for defining your population. If we have the whole population, we don't need statistics!
 
 When we *don't* have all the data from the population, we need to *estimate*. The combined effects of random sampling, the shape of the population, and our chosen statistic all give rise to a *sampling distribution* for our estimated statistic. The standard deviation of the sampling distribution is called the *standard error*; it is a measure of accuracy of the *sampling procedure*, not the estimate itself.
+
+<!-- include-exit-ticket -->

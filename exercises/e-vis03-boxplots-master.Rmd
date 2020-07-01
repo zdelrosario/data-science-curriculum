@@ -113,3 +113,5 @@ mpg %>%
 ```
 
 This is a simple---but important---trick to remember when visualizing data with many categories.
+
+<!-- include-exit-ticket -->

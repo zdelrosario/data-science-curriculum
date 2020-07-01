@@ -215,6 +215,8 @@ assertthat::assert_that(dim(df_q3)[2] == 5)
 print("Well done!")
 ```
 
+<!-- include-exit-ticket -->
+
 # Notes
 <!-- -------------------------------------------------- -->
 

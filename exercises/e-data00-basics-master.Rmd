@@ -85,3 +85,5 @@ summary(diamonds)
 You should always analyze your dataset in the simplest way possible, build
 hypotheses, and devise more specific analyses to probe those hypotheses. The
 `glimpse()` and `summary()` functions are two of the simplest tools we have.
+
+<!-- include-exit-ticket -->

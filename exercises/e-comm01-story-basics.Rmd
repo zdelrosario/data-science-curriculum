@@ -254,6 +254,9 @@ and some diamonds have `x, y, z` values at zero....
 \newpage
 __q4__ Turn in all your answers via google forms. [Link](https://forms.gle/kHuT5oufUQA7jRWG8)
 
-## Bibliography
+<!-- include-exit-ticket -->
+
+# Bibliography
+<!-- -------------------------------------------------- -->
 
 - [1] Olson, ["Houston, We Have a Narrative"](http://scienceneedsstory.com/) (2015)

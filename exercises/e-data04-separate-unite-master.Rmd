@@ -148,3 +148,5 @@ assertthat::assert_that(
 )
 print("Nice!")
 ```
+
+<!-- include-exit-ticket -->

@@ -1,6 +1,6 @@
 ---
 title: "Deriving Data"
-# yaml-author
+author: Zachary del Rosario
 date: 2020-05-07
 output: github_document
 time: 15
@@ -206,3 +206,5 @@ print("Excellent!")
 - I would expect the `Ideal` diamonds to have the highest price, but that's not the case!
 - The `COV` for each cut is very large, on the order of 80 to 110 percent! To me, this implies that the other variables `clarity, carat, color` account for a large portion of the diamond price.
 <!-- solution-end -->
+
+<!-- include-exit-ticket -->

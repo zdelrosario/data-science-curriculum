@@ -57,3 +57,5 @@ Packages are frequently updated. You can check for updates and update your
 packages by using the Update button in the Packages tab of RStudio (lower
 right pane).
 <!-- solution-end -->
+
+<!-- include-exit-ticket -->

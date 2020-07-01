@@ -11,7 +11,10 @@ all: ${ASSIGNMENTS} ${SOLUTIONS}
 	-e '/# solution-begin/,/# solution-end/d' \
 	-e '/# task-(begin|end)/d' \
 	-e '/<!-- task-(begin|end)/d' \
+	-e '/<!-- include-exit-ticket -->/ r exit-ticket.md' \
 	< $< > $@
+	# Replace e-code-target
+	sed -i '' "s/e-code-target/$@/g" $@
 
 %solution.Rmd: %master.Rmd
 	sed -E \

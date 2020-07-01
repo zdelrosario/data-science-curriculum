@@ -79,8 +79,7 @@ ggplot(diamonds) +
 __q4__ Create a new graph to visualize `price`, `carat`, and `cut`
 simultaneously.
 
-*Hint*: Remember that you can add additional aesthetic mappings in `aes()`. Some
-options include `size`, `color`, and `shape`.
+*Hint*: Remember that you can add additional aesthetic mappings in `aes()`. Some options include `size`, `color`, and `shape`.
 
 ```{r q4-task}
 ## TODO: Complete this code
@@ -104,3 +103,5 @@ ggplot(diamonds) +
   - `Ideal` cut diamonds tend to be more expensive
   - `Fair` cut diamonds tend to be less expensive
 <!-- solution-end -->
+
+<!-- include-exit-ticket -->

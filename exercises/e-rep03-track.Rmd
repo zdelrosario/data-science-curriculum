@@ -46,3 +46,5 @@ __q3__ Click the `push` button (green upward arrow, highlighted below) to push y
 
 ![New](./images/rep03-push.png)
 Now you have a backup copy of your work in GitHub, and you can easily share your work by sharing a link to your repository!
+
+<!-- include-exit-ticket -->

@@ -202,6 +202,7 @@ digits while preserving the `x, y` column names. We can use the special ".value"
 entry in `names_to` in order to handle this:
 
 ```{r anscombe-pivot}
+## NOTE: No need to edit; execute
 ansc %>%
   pivot_longer(
     names_to = c(".value", "set"),
@@ -429,3 +430,5 @@ df_q6_res <-
 df_q6_res
 all_equal(df_base, df_q6_res) # Checks equality; returns TRUE if equal
 ```
+
+<!-- include-exit-ticket -->

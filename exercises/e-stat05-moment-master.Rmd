@@ -150,3 +150,5 @@ where $\text{Cov}[X, Y] = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])]$ is
 Using this expression, we can prove that the standard error of the sample mean $\overline{X}$ is $\sigma / \sqrt{n}$.
 
 __q5__ (Bonus) Use the identity above to prove that $\mathbb{V}[\overline{X}] = \sigma^2 / n$, where $\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i$, $\sigma^2 = \mathbb{V}[X]$, and the $X_i$ are mutually independent.
+
+<!-- include-exit-ticket -->

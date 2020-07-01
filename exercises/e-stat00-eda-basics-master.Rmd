@@ -154,3 +154,5 @@ diamonds %>%
 
 [1] Don't mistake my focus on `diamonds` as an endorsement of the diamond
 industry. In my opinion aesthetic diamonds are a morally dubious scam.
+
+<!-- include-exit-ticket -->

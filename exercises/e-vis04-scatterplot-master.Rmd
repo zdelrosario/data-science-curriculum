@@ -232,3 +232,5 @@ economics %>%
 Here we're not emphasizing zero; we can easily see the outlier month, but we have to read the axis to see that this is a case of negative growth.
 
 For more, see [Bars vs Dots](https://dcl-data-vis.stanford.edu/discrete-continuous.html#bars-vs.-dots).
+
+<!-- include-exit-ticket -->

@@ -99,7 +99,7 @@ print("Nice!")
 ## Drawing Samples: A Model for Randomness
 <!-- -------------------------------------------------- -->
 
-What does it *practically* mean for a value to be more or less likely? A distribution gives information about a *random variable*. A random variable is a quantity that takes a random value every time we observe it. For instance: If we roll a six-sided die, it will (unpredictably) land on values `1` through `6`. In my research, I use random variables to model material properties: Every component that comes off an assembly line will have a different strength associated with it. In order to design for a desired rate of failure, I model this variability with a random variable. A single value from a random variable---a roll of the die or a single value of materialstrength---is called a *realization*.
+What does it *practically* mean for a value to be more or less likely? A distribution gives information about a *random variable*. A random variable is a quantity that takes a random value every time we observe it. For instance: If we roll a six-sided die, it will (unpredictably) land on values `1` through `6`. In my research, I use random variables to model material properties: Every component that comes off an assembly line will have a different strength associated with it. In order to design for a desired rate of failure, I model this variability with a random variable. A single value from a random variable---a roll of the die or a single value of material strength---is called a *realization*.
 
 Let's illustrate this idea by using a normal distribution to define a *random variable* `Z`. This is sometimes denoted `Z ~ norm(mean, sd)`, which means `Z` is distributed as a normal distribution with `mean` and `sd`. The code below illustrates what it looks like when we draw a few samples of `Z`.
 
@@ -218,3 +218,5 @@ rnorm(5)
 ```
 
 The values are identical every time!
+
+<!-- include-exit-ticket -->

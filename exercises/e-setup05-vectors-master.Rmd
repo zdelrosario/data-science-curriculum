@@ -1,6 +1,6 @@
 ---
 title: "Vector Basics"
-# yaml-author
+author: Zachary del Rosario
 date: 2020-06-05
 output: github_document
 time: 5
@@ -67,3 +67,5 @@ assertthat::assert_that(length(vec_q2) == 4)
 assertthat::assert_that(mean(vec_q2) == 2.5)
 print("Well done!")
 ```
+
+<!-- include-exit-ticket -->
