@@ -54,10 +54,13 @@ We’ll use a number of extras for this class. To that end, please install
 the following packages. *Hint*: You can install multiple packages by
 typing `install.packages("package1", "package2")`, and so on.
 
+  - `curl`
   - `mvtnorm`
   - `nycflights13`
   - `gapminder`
   - `ggrepel`
+  - `googlesheets4`
+  - `viridis`
 
 **q5** Download cheatsheets
 
@@ -83,3 +86,16 @@ Later, we will learn special tools for handling:
   - [Factors](https://github.com/rstudio/cheatsheets/raw/master/factors.pdf)
   - [R
     Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+
+# Exit Ticket
+
+<!-- -------------------------------------------------- -->
+
+For every exercise, your deliverable will to complete an “exit ticket”.
+Make sure to follow the survey link at the end of every exercise and
+submit the survey to get credit for your work\! Note that in RStudio you
+can Ctrl + Click (CMD + Click) to follow a link.
+
+Once you have completed this exercise, make sure to fill out the **exit
+ticket survey**, [linked
+here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-setup00-install).
