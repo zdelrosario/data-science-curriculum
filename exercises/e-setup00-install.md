@@ -51,8 +51,7 @@ If you have any issues with installation, **please** let me know\!
 **q4** Download extras
 
 We’ll use a number of extras for this class. To that end, please install
-the following packages. *Hint*: You can install multiple packages by
-typing `install.packages("package1", "package2")`, and so on.
+the following packages.
 
   - `curl`
   - `mvtnorm`
@@ -98,4 +97,4 @@ can Ctrl + Click (CMD + Click) to follow a link.
 
 Once you have completed this exercise, make sure to fill out the **exit
 ticket survey**, [linked
-here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-setup00-install).
+here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-setup00-install.Rmd).
