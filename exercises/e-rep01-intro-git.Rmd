@@ -49,4 +49,7 @@ Follow these instructions to [add an SSH key](https://help.github.com/en/github/
 
 *Note*: This can be a bit confusing if you've never worked with SSH before; *please do ask questions* if you are stuck!
 
-<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-rep01-intro-git.Rmd).
