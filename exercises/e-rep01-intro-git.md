@@ -69,3 +69,16 @@ in your password.
 
 *Note*: This can be a bit confusing if you’ve never worked with SSH
 before; *please do ask questions* if you are stuck\!
+
+# Exit Ticket
+
+<!-- -------------------------------------------------- -->
+
+For every exercise, your deliverable will to complete an “exit ticket”.
+Make sure to follow the survey link at the end of every exercise and
+submit the survey to get credit for your work\! Note that in RStudio you
+can Ctrl + Click (CMD + Click) to follow a link.
+
+Once you have completed this exercise, make sure to fill out the **exit
+ticket survey**, [linked
+here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-rep01-intro-git.Rmd).
