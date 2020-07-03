@@ -19,6 +19,20 @@ RStudio. This should help ensure you have access to Git.
 *Topics*: version control, git setup, working with our exercises, ssh
 keys
 
+# Set Up SSH Key
+
+<!-- -------------------------------------------------- -->
+
+Before you can “clone” (download) the repository of exercises, you’ll
+need to set up `ssh` with GitHub. Follow these instructions to [add an
+SSH
+key](https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account)
+to your account. This will allow you to work with GitHub without typing
+in your password.
+
+*Note*: This can be a bit confusing if you’ve never worked with SSH
+before; *please do ask questions* if you are stuck\!
+
 # Downloading Our Exercises
 
 <!-- -------------------------------------------------- -->
@@ -58,26 +72,9 @@ Follow these instructions:
   - Great job\! Now you have all the assignment exercises for the
     course\!
 
-# Set Up SSH Key
-
-<!-- -------------------------------------------------- -->
-
-Follow these instructions to [add an SSH
-key](https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account)
-to your account. This will allow you to work with GitHub without typing
-in your password.
-
-*Note*: This can be a bit confusing if you’ve never worked with SSH
-before; *please do ask questions* if you are stuck\!
-
 # Exit Ticket
 
 <!-- -------------------------------------------------- -->
-
-For every exercise, your deliverable will to complete an “exit ticket”.
-Make sure to follow the survey link at the end of every exercise and
-submit the survey to get credit for your work\! Note that in RStudio you
-can Ctrl + Click (CMD + Click) to follow a link.
 
 Once you have completed this exercise, make sure to fill out the **exit
 ticket survey**, [linked
