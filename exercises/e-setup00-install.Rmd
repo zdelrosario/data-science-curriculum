@@ -57,9 +57,7 @@ If you have any issues with installation, __please__ let me know!
 
 __q4__ Download extras
 
-We'll use a number of extras for this class. To that end, please install the
-following packages. *Hint*: You can install multiple packages by typing
-`install.packages("package1", "package2")`, and so on.
+We'll use a number of extras for this class. To that end, please install the following packages.
 
 - `curl`
 - `mvtnorm`
