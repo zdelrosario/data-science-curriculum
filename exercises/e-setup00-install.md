@@ -16,9 +16,12 @@ Download [RStudio
 Desktop](https://rstudio.com/products/rstudio/download/) and install the
 [R programming language](https://cran.rstudio.com/). Both are free\!
 
-Once installed, you can open this `.Rmd` file in RStudio. This is an `R
-Markdown` file, which is a combination of human-readable text and
-machine-readable code. Think of it as a modern take on a lab notebook.
+Once installed, you can [download the
+source](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-setup00-install.Rmd)
+for this exercise and open open it in RStudio (or you can follow
+`e-rep01-intro-git` and *clone* the repository). This is an `R Markdown`
+file, which is a combination of human-readable text and machine-readable
+code. Think of it as a modern take on a lab notebook.
 
 **q2** Install packages
 
