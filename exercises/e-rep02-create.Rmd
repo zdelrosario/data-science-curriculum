@@ -30,7 +30,7 @@ reading: 10
 
 Next, follow the steps in [e-rep01-intro-git](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-rep01-intro-git.md) to clone your new repository (make sure to target your new repository, though!).
 
-*Finishing*: When you complete this exercise, send me a message with the URL of your new repository.
+*Finishing*: When you complete this exercise, [fill out this survey](https://forms.gle/Cvr8tUt3hRoLFb4C7) with your new repo url.
 
 # Exit Ticket
 <!-- -------------------------------------------------- -->
