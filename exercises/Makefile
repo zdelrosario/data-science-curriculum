@@ -14,7 +14,7 @@ all: ${ASSIGNMENTS} ${SOLUTIONS}
 	-e '/<!-- include-exit-ticket -->/ r exit-ticket.md' \
 	< $< > $@
 	# Replace e-code-target
-	sed -i '' "s/e-code-target/$@/g" $@
+	perl -epi "s/e-code-target/$@/g" $@
 
 %solution.Rmd: %master.Rmd
 	sed -E \
