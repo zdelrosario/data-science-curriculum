@@ -9,7 +9,7 @@ reading: 10
 
 *Purpose*: In this class you'll turn in all your work using GitHub. To do this, you'll need to create a repository. This short exercise will walk you through doing this.
 
-*Reading*: Follow all the steps in [Creating a Repository](https://swcarpentry.github.io/git-novice/03-create/index.html).
+*Reading*: Follow all the steps in [Creating a Repository](https://swcarpentry.github.io/git-novice/03-create/index.html). *Hint*: You can `Ctrl + Click` (`CMD + Click`) to follow links in RStudio.
 
 *Note*: For the steps in the reading, I recommend using the Terminal in RStudio. This should help ensure you have access to Git.
 
