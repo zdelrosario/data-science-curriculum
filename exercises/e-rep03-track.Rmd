@@ -13,6 +13,21 @@ reading: 10
 
 *Topics*: Staging, committing, pushing
 
+# Configure RStudio to use git
+<!-- -------------------------------------------------- -->
+
+This exercise introduces the *graphical* interface for git through RStudio. To
+use this interface, you'll need to click `Tools -> Global Options -> Git/SVN`.
+If *Git executable* shows (none), click *Browse* and selec tthe git executable
+installed on your system.
+
+- On Mac / Linux you can use `which git` from your command line
+- On Windows `git.exe` is probably somewhere in `Program Files`
+
+See [these
+notes](https://jennybc.github.io/2014-05-12-ubc/ubc-r/session03_git.html) for
+more info.
+
 # Set Up Your Repository
 <!-- -------------------------------------------------- -->
 
