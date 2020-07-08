@@ -12,6 +12,8 @@ This is a quick warmup to get you in this habit.
 
 *Reading*: (None)
 
+**Note**: If you open this `.Rmd` file in RStudio you can *execute* the chunks of code (stuff between triple-ticks) by clicking on the green arrow to the top-right of the chunk, or by placing your cursor within a chunk (between the ticks) and pressing `Ctrl + Shift + Enter`. See [here](https://rmarkdown.rstudio.com/authoring_quick_tour.html) for a brief introduction to RMarakdown files. Note that in RStudio you can Shift + Click (CMD + Click) to follow a link.
+
 ```{r setup, include=FALSE}
 # knitr options
 knitr::opts_chunk$set(echo = TRUE)
