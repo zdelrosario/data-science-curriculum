@@ -32,7 +32,4 @@ Next, follow the steps in [e-rep01-intro-git](https://github.com/zdelrosario/dat
 
 *Finishing*: When you complete this exercise, [fill out this survey](https://forms.gle/Cvr8tUt3hRoLFb4C7) with your new repo url.
 
-# Exit Ticket
-<!-- -------------------------------------------------- -->
-
-Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-rep02-create.Rmd).
+<!-- include-exit-ticket -->
