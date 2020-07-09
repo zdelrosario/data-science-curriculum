@@ -1,0 +1,145 @@
+---
+title: "Gapminder"
+author: "(Your name here)"
+date: 2020-
+output:
+  github_document:
+    toc: true
+---
+
+*Purpose*: Learning to do EDA well takes practice! In this challenge you'll further practice EDA by first completing a guided exploration, then by conducting your own investigation. This challenge will also give you a chance to use the wide variety of visual tools we've been learning.
+
+<!-- include-rubric -->
+# Grading Rubric
+<!-- -------------------------------------------------- -->
+
+Unlike exercises, **challenges will be graded**. The following rubrics define how you will be graded, both on an individual and team basis.
+
+## Individual
+<!-- ------------------------- -->
+
+| Category | Unsatisfactory | Satisfactory |
+|----------|----------------|--------------|
+| Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
+| Observed | Did not document observations | Documented observations based on analysis |
+| Supported | Some observations not supported by analysis | All observations supported by analysis (table, graph, etc.) |
+| Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
+
+## Team
+<!-- ------------------------- -->
+
+| Category | Unsatisfactory | Satisfactory |
+|----------|----------------|--------------|
+| Documented | No team contributions to Wiki | Team contributed to Wiki |
+| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
+| Relevant | References unrelated to assertion, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis |
+
+## Due Date
+<!-- ------------------------- -->
+
+All the deliverables stated in the rubrics above are due on the day of the class discussion of that exercise. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+
+```{r setup}
+library(tidyverse)
+library(gapminder)
+
+```
+
+*Background*: [Gapminder](https://www.gapminder.org/about-gapminder/) is an independent organization that seeks to education people about the state of the world. They promote a "fact-based worldview" by focusing on data. The dataset we'll study in this challenge is from Gapminder.
+
+# Guided EDA
+<!-- -------------------------------------------------- -->
+
+First, we'll go through a round of *guided EDA*. Try to pay attention to the high-level process we're going through---after this guided round you'll be responsible for doing another cycle of EDA on your own!
+
+__q0__ Perform your "first checks" on the dataset. What variables are in this
+dataset?
+
+```{r q0-task}
+## TASK: Do your "first checks" here!
+```
+
+**Observations**:
+
+- Write the variable names here
+
+__q1__ Determine the most and least recent years in the `gapminder` dataset.
+
+```{r q1-task}
+## TASK: Find the largest and smallest values of `year` in `gapminder`
+year_max <- NA_real_
+year_min <- NA_real_
+```
+
+Use the following test to check your work.
+
+```{r q1-tests}
+## NOTE: No need to change this
+assertthat::assert_that(year_max %% 7 == 5)
+assertthat::assert_that(year_max %% 3 == 0)
+assertthat::assert_that(year_min %% 7 == 6)
+assertthat::assert_that(year_min %% 3 == 2)
+print("Nice!")
+```
+
+__q2__ Filter on years matching `year_min`, and make a plot of the GDE per capita against continent. Choose an appropriate `geom_` to visualize the data. What observations can you make?
+
+You may encounter difficulties in visualizing these data; if so document your challenges and attempt to produce the most informative visual you can.
+
+```{r q2-task}
+## TASK: Create a visual of gdpPercap vs continent
+```
+
+**Observations**:
+
+- Write your observations here
+
+**Difficulties & Approaches**:
+
+- Write your challenges and your approach to solving them
+
+__q3__ You should have found at least three outliers in q2. Identify those outliers (figure out which countries they are).
+
+*Note*: I realize the reasons for
+
+```{r q3-task}
+## TASK: Identify the outliers from q2
+```
+
+**Observations**:
+
+- Identify the outlier countries from q2
+
+__q4__ Create a plot similar to yours from q2 studying both `year_min` and `year_max`. Find a way to highlight the outliers from q3 on your plot. Compare the patterns between `year_min` and `year_max`.
+
+*Hint*: We've learned a lot of different ways to show multiple variables; think about using different aesthetics or facets.
+
+```{r q4-task}
+## TASK: Create a visual of gdpPercap vs continent
+```
+
+**Observations**:
+
+- Write your observations here
+
+# Your Own EDA
+<!-- -------------------------------------------------- -->
+
+Now it's your turn! We just went through guided EDA considering the GDP per capita at two time points. You can continue looking at outliers, consider different years, repeat the exercise with `lifeExp`, consider the relationship between variables, or something else entirely.
+
+__q5__ Create *at least* three new figures below. With each figure, try to pose new questions about the data.
+
+```{r q5-task1}
+## TASK: Your first graph
+```
+
+
+```{r q5-task2}
+## TASK: Your second graph
+```
+
+
+```{r q5-task3}
+## TASK: Your third graph
+```
+
