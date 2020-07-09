@@ -4,7 +4,7 @@ title: "Documentation"
 date: 2020-05-05
 output: github_document
 time: 15
-reading: 0
+reading: 3
 ---
 
 *Purpose*: No programmer memorizes every fact about every function. Expert
@@ -13,7 +13,7 @@ look up the facts they need, when they need them. Just as you had to learn how
 to read English, you will have to learn how to consult documentation. This
 exercise will get you started.
 
-*Reading*: (None)
+*Reading*: [Getting help with R](https://www.r-project.org/help.html) (Vignettes and Code Demonstrations)
 
 ```{r setup}
 library(tidyverse)
