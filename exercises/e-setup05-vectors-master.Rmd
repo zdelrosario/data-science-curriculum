@@ -11,7 +11,7 @@ reading: 10
 data science. To that end, let's learn some basics about vectors.
 
 *Reading*: [Programming Basics](https://rstudio.cloud/learn/primers/1.2).
-*Topics*: `vectors`, `types`
+*Topics*: `vectors`
 *Reading Time*: ~10 minutes
 
 ```{r setup, include=FALSE}
