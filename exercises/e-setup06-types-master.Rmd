@@ -54,6 +54,8 @@ Sometimes our data will not be in the form we want; in this case we may need to 
 - `as.character(x)` converts to character (string)
 - `as.logical(x)` converts to logical (boolean)
 
+__q2__ Cast the following vector `v_string` to integers.
+
 ```{r q2-task}
 v_string <- c("00", "45", "90")
 # task-begin
