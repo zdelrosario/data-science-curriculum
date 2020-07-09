@@ -24,3 +24,7 @@ their suggested day-order. This is provided to
 [interleave](https://academicaffairs.arizona.edu/l2l-strategy-interleaving)
 topics and provide about an hour of work per day. I recommend working 5 days a
 week on the exercises and taking weekends off!
+
+# Contributing
+I welcome suggestions and contributions! If you want to contribute, please see
+[Contributing](https://github.com/zdelrosario/data-science-curriculum/blob/master/contributing.md).
