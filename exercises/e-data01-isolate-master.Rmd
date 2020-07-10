@@ -11,7 +11,7 @@ reading: 40
 particular topics. When analyzing a dataset, our ability to focus is tied to our
 facility at *isolating data*. In this exercise, you will practice isolating
 columns with `select()`, picking specific rows with `filter()`, and sorting your
-data` with `arrange()` to see what rises to the top.
+data with `arrange()` to see what rises to the top.
 
 *Reading*: [Isolating Data with dplyr](https://rstudio.cloud/learn/primers/2.2) (All topics)
 
