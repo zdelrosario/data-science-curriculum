@@ -59,9 +59,9 @@ retain all other columns.
 # task-begin
 df_q2 <- flights %>% select(everything()) # TODO: Modify to move columns to the front
 # task-end
-# task-begin
+# solution-begin
 df_q2 <- flights %>% select(dest, origin, carrier, everything())
-# task-end
+# solution-end
 df_q2
 ```
 
