@@ -1,0 +1,147 @@
+---
+title: "Estimating Pi With a Shotgun"
+author: "(Your name here)"
+date: 2020-
+output:
+  github_document:
+    toc: true
+---
+
+*Purpose*: Random sampling is extremely powerful. To build more intuition for how we can use random sampling to solve problems, we'll tackle what---at first blush---doesn't seem appropriate for a random approach: estimating fundamental deterministic constants. In this challenge you'll work through an example of turning a deterministic problem into a random sampling problem, and practice quantifying uncertainty in your estimate.
+
+<!-- include-rubric -->
+# Grading Rubric
+<!-- -------------------------------------------------- -->
+
+Unlike exercises, **challenges will be graded**. The following rubrics define how you will be graded, both on an individual and team basis.
+
+## Individual
+<!-- ------------------------- -->
+
+| Category | Unsatisfactory | Satisfactory |
+|----------|----------------|--------------|
+| Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
+| Observed | Did not document observations | Documented observations based on analysis |
+| Supported | Some observations not supported by analysis | All observations supported by analysis (table, graph, etc.) |
+| Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
+
+## Team
+<!-- ------------------------- -->
+
+| Category | Unsatisfactory | Satisfactory |
+|----------|----------------|--------------|
+| Documented | No team contributions to Wiki | Team contributed to Wiki |
+| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
+| Relevant | References unrelated to assertion, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis |
+
+## Due Date
+<!-- ------------------------- -->
+
+All the deliverables stated in the rubrics above are due on the day of the class discussion of that exercise. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+
+```{r setup}
+library(tidyverse)
+```
+
+*Background*: In 2014, some crazy Quebecois physicists estimated $\pi$ with a pump-action shotgun[1,2]. Their technique was based on the *Monte Carlo method*, a general strategy for turning deterministic problems into random sampling.
+
+# Monte Carlo
+<!-- -------------------------------------------------- -->
+
+The [Monte Carlo method](https://en.wikipedia.org/wiki/Monte_Carlo_method) is the use of randomness to produce approximate answers to deterministic problems. Its power lies in its simplicity: So long as we can take our deterministic problem and express it in terms of random variables, we can use simple random sampling to produce an approximate answer. Monte Carlo has an [incredible number](https://en.wikipedia.org/wiki/Monte_Carlo_method#Applications) of applications; for instance Ken Perlin won an [Academy Award](https://en.wikipedia.org/wiki/Perlin_noise) for developing a particular flavor of Monte Carlo for generating artificial textures.
+
+I remember when I first learned about Monte Carlo, I thought the whole idea was pretty strange: If I have a deterministic problem, why wouldn't I just "do the math" and get the right answer? It turns out "doing the math" is often hard---and in some cases an analytic solution is simply not possible. Problems that are easy to do by hand can quickly become intractable if you make a slight change to the problem formulation. Monte Carlo is a *general* approach; so long as you can model your problem in terms of random variables, you can apply the Monte Carlo method. See Ref. [3] for many more details on using Monte Carlo.
+
+In this challenge, we'll tackle a deterministic problem (computing $\pi$) with the Monte Carlo method.
+
+## Theory
+<!-- ------------------------- -->
+
+The idea behind estimating $\pi$ via Monte Carlo is to set up a probability estimation problem whose solution is related to $\pi$. Consider the following sets: a square with side length one $St$, and a quarter-circle $Sc$.
+
+```{r vis-areas}
+tibble(x = seq(0, 1, length.out = 100)) %>%
+  mutate(y = sqrt(1 - x^2)) %>%
+
+  ggplot(aes(x, y)) +
+  annotate(
+    "rect",
+    xmin = 0, ymin = 0, xmax = 1, ymax = 1,
+    fill = "grey40",
+    size = 1
+  ) +
+  geom_ribbon(aes(ymin = 0, ymax = y), fill = "coral") +
+  geom_line() +
+  annotate(
+    "label",
+    x = 0.5, y = 0.5, label = "Sc",
+    size = 8
+  ) +
+  annotate(
+    "label",
+    x = 0.8, y = 0.8, label = "St",
+    size = 8
+  ) +
+  scale_x_continuous(breaks = c(0, 1/2, 1)) +
+  scale_y_continuous(breaks = c(0, 1/2, 1)) +
+  theme_minimal()
+```
+
+The area of the set $Sc$ is $\pi/4$, while the area of $St$ is $1$. Thus the probability that a *uniform* random variable over the square lands inside $Sc$ is the ratio of the areas, that is
+
+$$\mathbb{P}_{X}[X \in Sc] = (\pi / 4) / 1.$$
+
+Re-arranging, we find
+
+$$\pi = 4 \times \mathbb{P}_{X}[X \in Sc].$$
+
+This expression is our ticket to estimating $\pi$ with a source of randomness: If we estimate the probability above and multiply by $4$, we'll be estimating $\pi$.
+
+## Implementation
+<!-- ------------------------- -->
+
+Remember in `e-stat02-probability` we learned how to estimate probabilities as the limit of frequencies. Use your knowledge from that exercise to generate Monte Carlo data.
+
+__q1__ Pick a sample size $n$ and generate $n$ points *uniform randomly* in the square $x \in [0, 1]$ and $y \in [0, 1]$. Create a column `stat` whose mean will converge to $\pi$.
+
+*Hint*: Remember that the mean of an *indicator function* on your target set will estimate the probability of points landing in that area (see `e-stat02-probability`). Based on the expression above, you'll need to *modify* that indicator to produce an estimate of $\pi$.
+
+```{r q1-task}
+## TASK: Choose a sample size and generate samples
+n <- NA_real_ # Choose a sample size
+df_q1 <- NA # Generate the data
+```
+
+__q2__ Using your data in `df_q1`, estimate $\pi$.
+
+```{r q2-task}
+## TASK: Estimate pi using your data from q1
+pi_est <- NA_real_
+pi_est
+```
+
+# Quantifying Uncertainty
+<!-- -------------------------------------------------- -->
+
+You now have an estimate of $\pi$, but how trustworthy is that estimate? In `e-stat06-clt` we discussed *confience intervals* as a means to quantify the uncertainty in an estimate. Now you'll apply that knowledge to assess your $\pi$ estimate.
+
+__q3__ Using a CLT approximation, produce a confidence interval for your estimate of $\pi$. Does your interval include the true value of $\pi$? Was your chosen sample size sufficiently large so as to produce a trustworthy answer?
+
+```{r q3-task}
+```
+
+**Observations**:
+
+- Does your interval include the true value of $\pi$?
+- Was your sample size $n$ large enough?
+- Yes, my interval includes $\pi$.
+- My CI is quite narrow, so $n$ is large enough.
+
+# References
+<!-- -------------------------------------------------- -->
+
+[1] Dumoulin and Thouin, "A Ballistic Monte Carlo Approximation of Pi" (2014) ArXiv, [link](https://arxiv.org/abs/1404.1499)
+
+[2] "How Mathematicians Used A Pump-Action Shotgun to Estimate Pi", [link](https://medium.com/the-physics-arxiv-blog/how-mathematicians-used-a-pump-action-shotgun-to-estimate-pi-c1eb776193ef)
+
+[3] Art Owen "Monte Carlo", [link](https://statweb.stanford.edu/~owen/mc/)

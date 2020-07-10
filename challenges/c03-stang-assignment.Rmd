@@ -1,0 +1,162 @@
+---
+title: "Aluminum Data"
+author: "(Your name here)"
+date: 2020-
+output:
+  github_document:
+    toc: true
+---
+
+*Purpose*: When designing structures such as bridges, boats, and planes, the design team needs data about *material properties*. Often when we engineers first learn about material properties through coursework, we talk about abstract ideas and look up values in tables without ever looking at the data that gave rise to published properties. In this challenge you'll study an aluminum alloy dataset: Studying these data will give you a better sense of the challenges underlying published material values.
+
+In this challenge, you will load a real dataset, wrangle it into tidy form, and perform EDA to learn more about the data.
+
+<!-- include-rubric -->
+# Grading Rubric
+<!-- -------------------------------------------------- -->
+
+Unlike exercises, **challenges will be graded**. The following rubrics define how you will be graded, both on an individual and team basis.
+
+## Individual
+<!-- ------------------------- -->
+
+| Category | Unsatisfactory | Satisfactory |
+|----------|----------------|--------------|
+| Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
+| Observed | Did not document observations | Documented observations based on analysis |
+| Supported | Some observations not supported by analysis | All observations supported by analysis (table, graph, etc.) |
+| Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
+
+## Team
+<!-- ------------------------- -->
+
+| Category | Unsatisfactory | Satisfactory |
+|----------|----------------|--------------|
+| Documented | No team contributions to Wiki | Team contributed to Wiki |
+| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
+| Relevant | References unrelated to assertion, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis |
+
+## Due Date
+<!-- ------------------------- -->
+
+All the deliverables stated in the rubrics above are due on the day of the class discussion of that exercise. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+
+```{r setup}
+library(tidyverse)
+```
+
+*Background*: In 1946, scientists at the Bureau of Standards tested a number of Aluminum plates to determine their [elasticity](https://en.wikipedia.org/wiki/Elastic_modulus) and [Poisson's ratio](https://en.wikipedia.org/wiki/Poisson%27s_ratio). These are key quantities used in the design of structural members, such as aircraft skin under [buckling loads](https://en.wikipedia.org/wiki/Buckling). These scientists tested plats of various thicknesses, and at different angles with respect to the [rolling](https://en.wikipedia.org/wiki/Rolling_(metalworking)) direction.
+
+# Loading and Wrangle
+<!-- -------------------------------------------------- -->
+
+The `readr` package in the Tidyverse contains functions to load data form many sources. The `read_csv()` function will help us load the data for this challenge.
+
+```{r load}
+## NOTE: If you extracted all challenges to the same location,
+## you shouldn't have to change this filename
+filename <- "./data/stang.csv"
+
+## Load the data
+df_stang <- read_csv(filename)
+df_stang
+```
+
+Note that these data are not tidy! The data in this form are convenient for reporting in a table, but are not ideal for analysis.
+
+__q1__ Tidy `df_stang` to produce `df_stang_long`. You should have column names `thick, alloy, angle, E, mu`. Make sure the `angle` variable is of correct type. Filter out any invalid values.
+
+*Hint*: You can reshape in one `pivot` using the `".value"` special value for `names_to`.
+
+```{r q1-task}
+## TASK: Tidy `df_stang`
+df_stang_long <-
+  df_stang
+
+df_stang_long
+```
+
+Use the following tests to check your work.
+
+```{r q1-tests}
+## NOTE: No need to change this
+## Names
+assertthat::assert_that(
+              setequal(
+                df_stang_long %>% names,
+                c("thick", "alloy", "angle", "E", "mu")
+              )
+            )
+## Dimensions
+assertthat::assert_that(all(dim(df_stang_long) == c(26, 5)))
+## Type
+assertthat::assert_that(
+              (df_stang_long %>% pull(angle) %>% typeof()) == "integer"
+            )
+
+print("Very good!")
+```
+
+# EDA
+<!-- -------------------------------------------------- -->
+
+## Initial checks
+<!-- ------------------------- -->
+
+__q2__ Perform a basic EDA on the aluminum data *without visualization*. Use your analysis to answer the questions under *observations* below. In addition, add your own question that you'd like to answer about the data.
+
+```{r q2-task}
+##
+```
+
+**Observations**:
+
+- Is there "one true value" for the material properties of Aluminum?
+- How many aluminum alloys were tested? How do you know?
+- What angles were tested?
+- What thicknesses were tested?
+- (Write your own question here)
+- No; we see a variety of values for `E` and `mu`.
+- Just one alloy: al_24st
+- Angles: 0, 45, 90 (degrees)
+- Thicknesses: 0.022, 0.032, 0.064, 0.081 (in)
+- I'm curious if the properties `E, mu` vary with thickness
+
+## Visualize
+<!-- ------------------------- -->
+
+__q3__ Create a visualization to investigate your question from q1 above. Can you find an answer to your question using the dataset? Would you need additional information to answer your question?
+
+```{r q3-task}
+## TASK: Investigate your question from q1 here
+```
+
+**Observations**:
+
+- (Address your question from q1 here)
+
+__q4__ Consider the following statement:
+
+"A material's property (or material property) is an intensive property of some material, i.e. a physical property that does not depend on the amount of the material."[2]
+
+Note that the "amount of material" would vary with the thickness of a tested plate. Does the following graph support or contradict the claim that "elasticity `E` is an intensive material property." Why or why not? Is this evidence *conclusive* one way or another? Why or why not?
+
+```{r q4-vis}
+## NOTE: No need to change; run this chunk
+df_stang_long %>%
+
+  ggplot(aes(mu, E, color = as_factor(thick))) +
+  geom_point(size = 3) +
+  theme_minimal()
+```
+
+**Observations**:
+
+- Does this graph support or contradict the claim above?
+
+# References
+<!-- -------------------------------------------------- -->
+
+[1] Stang, Greenspan, and Newman, "Poisson's ratio of some structural alloys for large strains" (1946) Journal of Research of the National Bureau of Standards, (pdf link)[https://nvlpubs.nist.gov/nistpubs/jres/37/jresv37n4p211_A1b.pdf]
+
+[2] Wikipedia, *List of material properties*, accessed 2020-06-26, (link)[https://en.wikipedia.org/wiki/List_of_materials_properties]

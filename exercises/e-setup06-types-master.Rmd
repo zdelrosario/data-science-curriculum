@@ -63,7 +63,7 @@ v_integer <- NA_real_
 # task-begin
 # solution-begin
 v_integer <- as.integer(v_string)
-# solution-begin
+# solution-end
 ```
 
 Use the following test to check your work.
