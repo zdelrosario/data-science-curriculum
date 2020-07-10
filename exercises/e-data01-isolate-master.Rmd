@@ -39,7 +39,8 @@ df_q1 <- flights %>% select(ends_with("_time"))
 df_q1
 ```
 
-Use the following code to check your answer.
+The following is a *unit test* of your code; if you managed to solve task __q2__
+correctly, the following code will execute without error.
 
 ```{r q1-tests}
 ## NOTE: No need to change this
@@ -64,8 +65,7 @@ df_q2 <- flights %>% select(dest, origin, carrier, everything())
 df_q2
 ```
 
-The following is a *unit test* of your code; if you managed to solve task __q2__
-correctly, the following code will execute without error.
+Use the following to check your code.
 
 ```{r q2-tests}
 ## NOTE: No need to change this
