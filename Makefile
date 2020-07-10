@@ -8,6 +8,7 @@ challenges:
 	cd ../data-science-challenges/challenges; make
 	cp -f ../data-science-challenges/challenges/*-assignment.Rmd challenges/.
 	cp -rf ../data-science-challenges/challenges/images challenges/.
+	cp -rf ../data-science-challenges/challenges/data challenges/.
 
 clean:
 	rm exercises/*-assignment.Rmd
