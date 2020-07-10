@@ -3,12 +3,15 @@ title: "Data Basics"
 author: Zach del Rosario
 date: 2020-05-03
 output: github_document
-time: 5
+time: 10
 reading: 0
 ---
 
 *Purpose*: When first studying a new dataset, there are very simple checks we
 should perform first. These are those checks.
+
+Additionally, we'll have our first look at the *pipe operator*, which will be
+super useful for writing code that's readable.
 
 *Reading*: (None)
 
@@ -16,6 +19,9 @@ should perform first. These are those checks.
 # knitr options
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+# First Checks
+<!-- -------------------------------------------------- -->
 
 __q0__ Run the following chunk:
 
@@ -64,7 +70,7 @@ variables? How widely do each of the variables vary?
 *Hint*: The `Median` and `Mean` are common values, while `Min` and `Max` give us
 a sense of variation.
 
-```{r summary}
+```{r q3-task}
 # task-begin
 summary(diamonds)
 # task-end
@@ -85,5 +91,38 @@ summary(diamonds)
 You should always analyze your dataset in the simplest way possible, build
 hypotheses, and devise more specific analyses to probe those hypotheses. The
 `glimpse()` and `summary()` functions are two of the simplest tools we have.
+
+# The Pipe Operator
+<!-- -------------------------------------------------- -->
+
+Throughout this class we're going to make heavy use of the *pipe operator*
+`%>%`. This handy little function will help us make our code more readable.
+Whenever you see `%>%`, you can translate that into the word "then". For
+instance
+
+```{r pipe-example}
+diamonds %>%
+  group_by(cut) %>%
+  summarize(carat_mean = mean(carat))
+```
+
+Would translate into the tiny "story"
+
+- Take the `diamonds` dataset, *then*
+- Group it by the variable `cut`, *then*
+- summarize it by computing the `mean` of `carat`
+
+*What the pipe actually does*. The pipe operator `LHS %>% RHS` takes its
+left-hand side (LHS) and inserts it as an the first argument to the function on
+its right-hand side (RHS). So the pipe will let us take `glimpse(diamonds)` and
+turn it into `diamonds %>% glimpse()`.
+
+__q4__ Use the pipe operator to re-write `summary(diamonds)`.
+
+```{r q4-task}
+# task-begin
+diamonds %>% summary()
+# task-end
+```
 
 <!-- include-exit-ticket -->
