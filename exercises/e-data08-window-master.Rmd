@@ -1,0 +1,165 @@
+---
+title: "Data: Window Functions"
+author: Zachary del Rosario
+date: 2020-07-10
+output: github_document
+time: 20
+reading: 10
+---
+
+*Purpose*: Window functions are another family of `dplyr` verbs that are related to aggregates like `mean` and `sd`. These functions are useful for building up more complicated filters, enabling aesthetic tricks in plots, and some advanced data wrangling we'll do next exercise.
+
+*Reading*: [Window Functions](https://dplyr.tidyverse.org/articles/window-functions.html#cumulative-aggregates-1), *Types of window functions*, *Ranking functions*, and *Lead and lag*
+
+```{r setup}
+library(tidyverse)
+library(ggrepel)
+```
+
+### Lead and Lag
+<!-- ------------------------- -->
+
+The lead and lag functions simply provide a "shifted" copy of a vector.
+
+```{r ex-lead-lag}
+## NOTE: No need to edit this; just an example
+v <- c(1, 2, 3, 4, 5)
+lead(v)
+lag(v)
+```
+
+These are particularly useful for computing things like differences:
+
+```{r ex-finite-differences}
+## NOTE: No need to edit this; just an example
+x <- seq(-1, +1, length.out = 6)
+f <- x ^ 2
+
+## Forward finite difference
+df_dx <- (lead(f) - f) / (lead(x) - x)
+df_dx
+```
+
+Make sure to order your data or use the `order_by` argument when using `lead` or `lag`! GGplot automatically reorders your data when making a line plot, but `lead` and `lag` will use the order of the data you provide.
+
+__q1__ Use a window function modify the following visual to color each segment differently based on whether the period of time was increasing or decreasing.
+
+```{r q1-task}
+# task-begin
+## TASK: Modify the following code to color each segment based on whether the
+##       trend is increasing or decreasing in time
+economics %>%
+
+  ggplot(aes(date, unemploy)) +
+  geom_segment(aes(
+    xend = lead(date, order_by = date),
+    yend = lead(unemploy, order_by = date)
+  ))
+# task-end
+# solution-begin
+economics %>%
+  arrange(date) %>%
+  mutate(
+    delta = lead(unemploy, order_by = date) - unemploy,
+    Positive = delta > 0
+  ) %>%
+
+  ggplot(aes(date, unemploy, color = Positive)) +
+  geom_segment(aes(
+    xend = lead(date, order_by = date),
+    yend = lead(unemploy, order_by = date)
+  ))
+# solution-end
+```
+
+### Ranks
+<!-- ------------------------- -->
+
+The rank functions allow you to assign (integer) ranks to smallest (or largest) values of a vector.
+
+```{r ex-ranks}
+## NOTE: No need to edit this; just an example
+v <- c(1, 1, 2, 3, 5)
+row_number(v)
+min_rank(v)
+dense_rank(v)
+```
+
+You can use the `desc()` function (or a negative sign) to reverse the ranking order.
+
+```{r ex-ranks-rev}
+## NOTE: No need to edit this; just an example
+v <- c(1, 1, 2, 3, 5)
+row_number(desc(v))
+min_rank(desc(v))
+dense_rank(-v)
+```
+
+I find it difficult to remember how the rank functions behave, so I created the following visual to help remind myself how they function..
+
+```{r ex-ranks}
+## NOTE: No need to edit this; just an example
+set.seed(101)
+tribble(
+  ~x, ~y,
+  0,  0,
+  1,  0,
+  1,  1,
+  0,  2,
+  2,  2,
+  0,  3,
+  2,  3,
+  3,  3
+) %>%
+  mutate(
+    rk_row = row_number(y),
+    rk_min = min_rank(y),
+    rk_dense = dense_rank(y)
+  ) %>%
+  pivot_longer(
+    names_to = "fcn",
+    names_prefix = "rk_",
+    values_to = "rk",
+    cols = c(-x, -y)
+  ) %>%
+
+  ggplot(aes(x, y)) +
+  geom_point(size = 4) +
+  geom_point(
+    data = . %>% filter(rk <= 3),
+    size = 3,
+    color = "orange"
+  ) +
+  geom_label(aes(label = rk), nudge_x = 0.2, nudge_y = 0.2) +
+
+  facet_wrap(~fcn) +
+  theme_minimal() +
+  theme(panel.border = element_rect(color = "black", fill = NA, size = 1)) +
+  labs(
+    x = "",
+    y = "Minimum Three Ranks"
+  )
+```
+
+__q2__ Use a rank function to filter the largest 3 `hwy` values and **all** vehicles that have those values.
+
+```{r q2-task}
+# task-begin
+## TASK: Use a rank function to filter the `mpg` data
+q2 <- mpg
+# task-end
+# solution-begin
+q2 <-
+  mpg %>%
+  filter(dense_rank(desc(hwy)) <= 3)
+# solution-end
+q2
+```
+
+Use the following test to check your work.
+
+```{r q2-test}
+## NOTE: No need to change this
+assertthat::assert_that(dim(q2)[1] == 4)
+print("Nice!")
+```
