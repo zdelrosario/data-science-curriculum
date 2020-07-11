@@ -7,7 +7,7 @@ time: 20
 reading: 0
 ---
 
-*Purpose*: Themes are key for aesthetic purposes; to make really good-looking
+*Purpose*: Themes are key for aesthetic purposes; to make really good-looking graphs, we'll need to use `theme()`.
 
 *Reading*: [`theme()` documentation](https://ggplot2.tidyverse.org/reference/theme.html) (Use as a reference; don't read the whole thing!)
 
