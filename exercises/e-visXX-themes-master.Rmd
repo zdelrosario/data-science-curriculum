@@ -1,0 +1,139 @@
+---
+title: "Visualization: Themes"
+author: Zach del Rosario
+date: 2020-07-10
+output: github_document
+time: 20
+reading: 0
+---
+
+*Purpose*: Themes are key for aesthetic purposes; to make really good-looking
+
+*Reading*: [`theme()` documentation](https://ggplot2.tidyverse.org/reference/theme.html) (Use as a reference; don't read the whole thing!)
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+__q1__ Use `theme_void()` and `guides()` (with an argument) to remove everything in this plot except the points.
+
+```{r q1-task}
+mpg %>%
+  ggplot(aes(displ, hwy, color = class)) +
+  geom_point()
+```
+
+<!-- solution-begin -->
+```{r q1-solution}
+mpg %>%
+  ggplot(aes(displ, hwy, color = class)) +
+  geom_point() +
+  guides(color = "none") +
+  theme_void()
+```
+<!-- solution-end -->
+
+When I make presentation-quality figures, I often start with the following stub code:
+
+```{r zdr-theme}
+## NOTE: No need to edit; feel free to re-use this code!
+theme_common <- function() {
+  theme_minimal() %+replace%
+  theme(
+    axis.text.x = element_text(size = 12),
+    axis.text.y = element_text(size = 12),
+    axis.title.x = element_text(margin = margin(4, 4, 4, 4), size = 16),
+    axis.title.y = element_text(margin = margin(4, 4, 4, 4), size = 16, angle = 90),
+
+    legend.title = element_text(size = 16),
+    legend.text = element_text(size = 12),
+
+    strip.text.x = element_text(size = 12),
+    strip.text.y = element_text(size = 12),
+
+    panel.grid.major = element_line(color = "grey90"),
+    panel.grid.minor = element_line(color = "grey90"),
+
+    aspect.ratio = 4 / 4,
+
+    plot.margin = unit(c(t = +0, b = +0, r = +0, l = +0), "cm"),
+    plot.title = element_text(size = 18),
+    plot.title.position = "plot",
+    plot.subtitle = element_text(size = 16),
+    plot.caption = element_text(size = 12)
+  )
+}
+```
+
+The `%+replace` magic above allows you to use `theme_common()` within your own ggplot calls.
+
+__q2__ Use `theme_common()` with the following graph. Document what's changed by the `theme()` arguments.
+
+```{r q2-task}
+mpg %>%
+  ggplot(aes(displ, hwy, color = class)) +
+  geom_point() +
+  labs(
+    x = "Engine Displacement (L)",
+    y = "Highway Fuel Economy (mpg)"
+  )
+```
+<!-- solution-begin -->
+
+```{r q2-solution}
+mpg %>%
+  ggplot(aes(displ, hwy, color = class)) +
+  geom_point() +
+  theme_common() +
+  labs(
+    x = "Engine Displacement (L)",
+    y = "Highway Fuel Economy (mpg)"
+  )
+```
+<!-- solution-end -->
+
+**Observations**:
+
+<!-- task-begin -->
+- What changed about the graph when you added `theme_common()`?
+<!-- task-end -->
+<!-- solution-begin -->
+- The text is larger, hence more readable
+- The background was flipped grey to white
+- The guide lines have been flipped from white to grey
+<!-- solution-end -->
+
+Calling `theme_common()`, along with settings `labs()` and making some smart choices about geoms and annotations is often all you need to make a *really high-quality graph*.
+
+__q3__ Make the following plot as *ugly as possible*; the more `theme()` arguments you use, the better!
+
+*Hint*: Use the `theme()` settings from q2 above as a starting point, and read the documentation for `theme()` to learn how to do more horrible things to this graph.
+
+```{r q3-task}
+mpg %>%
+  ggplot(aes(displ, hwy, color = class)) +
+  geom_point() +
+  theme(
+    axis.text.x = element_text(size = 32)
+  )
+```
+
+<!-- solution-begin -->
+Here's one possible graph:
+
+```{r q3-solution}
+mpg %>%
+  ggplot(aes(displ, hwy, color = class)) +
+  geom_point() +
+  guides(color = "none") +
+  theme(
+    line = element_line(size = 3, color = "purple"),
+    rect = element_rect(fill = "red"),
+    axis.text.x = element_text(size = 32, angle = 117),
+    axis.text.y = element_text(size = 32, angle = 129),
+    axis.title.x = element_text(size = 32, family = "Comic Sans MS"),
+    axis.title.y = element_text(size = 32, family = "Comic Sans MS")
+  )
+```
+<!-- solution-end -->
