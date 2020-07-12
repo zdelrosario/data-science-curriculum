@@ -157,7 +157,7 @@ huge level of variation, but it does raise questions about why the values don't
 agree!
 
 __q5__ Compute the `price_mean = mean(price)`, `price_sd = sd(price)`, and
-`price_cov = price_mean / price_sd` for each `cut` of diamond. What observations
+`price_cov = price_sd / price_mean` for each `cut` of diamond. What observations
 can you make about the various cuts? Do those observations match your expectations?
 
 ```{r q5-task}
