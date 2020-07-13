@@ -11,6 +11,10 @@ reading: 0
 
 *Reading*: (None; this exercise *is* the reading.)
 
+```{r setup}
+library(tidyverse)
+```
+
 ## Distributions
 <!-- -------------------------------------------------- -->
 
