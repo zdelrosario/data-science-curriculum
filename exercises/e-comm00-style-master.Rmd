@@ -99,4 +99,84 @@ iris %>%
 # solution-end
 ```
 
+The following is an *addition* I'm making to the "effective styleguide" for the
+class: Rather than doing this:
+
+```{r nopipe}
+## NOTE: No need to edit, just an example
+ggplot(diamonds, aes(carat, price)) +
+  geom_point()
+```
+
+Instead, do this:
+
+```{r withpipe}
+## NOTE: No need to edit, just an example
+diamonds %>%
+  ggplot(aes(carat, price)) +
+  geom_point()
+```
+
+This may seem like a small difference (it is), but getting in this habit will
+pay off when we start combining data operations with plotting; for instance:
+
+```{r withpipe-ops}
+## NOTE: No need to edit, just an example
+diamonds %>%
+  filter(1.5 <= carat, carat <= 2.0) %>%
+
+  ggplot(aes(carat, price)) +
+  geom_point()
+```
+
+Getting in the habit of "putting the data first" will make it easier for you to
+add preprocessing steps. Also, you can easily "disable" the plot to inspect your
+preprocessing while debugging; that is:
+
+```{r withpipe-ops-glimpse}
+## NOTE: No need to edit, just an example
+diamonds %>%
+  filter(1.5 <= carat, carat <= 2.0) %>%
+  glimpse()
+
+  ## ggplot(aes(carat, price)) +
+  ## geom_point()
+```
+
+I'll enforce this "data first" style, but after this class you are (of course)
+free to write code however you like!
+
+__q4__ Re-write according to the style guide
+
+*Hint*: Put the data first!
+
+```{r q4-description}
+ggplot(
+  iris %>%
+  pivot_longer(
+    names_to = c("Part", ".value"),
+    names_sep = "\\.",
+    cols = -Species
+  ),
+  aes(Width, Length, color = Part)
+) +
+  geom_point() +
+  facet_wrap(~Species)
+```
+
+```{r q4-task}
+# solution-begin
+iris %>%
+  pivot_longer(
+    names_to = c("Part", ".value"),
+    names_sep = "\\.",
+    cols = -Species
+  ) %>%
+
+  ggplot(aes(Width, Length, color = Part)) +
+  geom_point() +
+  facet_wrap(~Species)
+# solution-end
+```
+
 <!-- include-exit-ticket -->
