@@ -60,7 +60,7 @@ __q2__ Cast the following vector `v_string` to integers.
 v_string <- c("00", "45", "90")
 # task-begin
 v_integer <- NA_real_
-# task-begin
+# task-end
 # solution-begin
 v_integer <- as.integer(v_string)
 # solution-end
