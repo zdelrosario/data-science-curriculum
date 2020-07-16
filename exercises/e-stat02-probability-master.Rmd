@@ -132,7 +132,6 @@ __q2__: Modify the code below to consider the set $A = {z | -1.96 <= z <= +1.96}
 
 ```{r q2-task}
 ## TASK: Modify the code below
-# solution-begin
 map_dfr(
   c(10, 100, 1000, 1e4),
   function(n_samples) {
@@ -186,7 +185,6 @@ __q3__ Modify the code below to consider the set $A = {z | z = 2}$.
 
 ```{r q3-task}
 ## TASK: Modify the code below
-# solution-begin
 map_dfr(
   c(10, 100, 1000, 1e4),
   function(n_samples) {
