@@ -157,3 +157,5 @@ as_tibble(iris) %>%
 I chose to put the measurements of the same part close together, to facilitate
 comparison of the common plant features across different species.
 <!-- solution-end -->
+
+<!-- include-exit-ticket -->
