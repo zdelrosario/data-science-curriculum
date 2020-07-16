@@ -5,5 +5,13 @@ r:
 env:
  - TRAVIS_R_VERSION="3.2.0"
 
+r_packages:
+- dplyr
+- magrittr
+- purrr
+- stringr
+- testthat
+- tibble
+
 script:
  - Rscript -e 'testthat::test_dir("./tests/")'
