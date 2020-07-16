@@ -1,7 +1,7 @@
-Imports:
-    magrittr
-    purrr
-    stringr
-    testthat
-    tibble
-Remotes: cran/dplyr@0.8.0
+Remotes: 
+    cran/dplyr@0.8.0
+    cran/magrittr
+    cran/purrr
+    cran/stringr
+    cran/testthat
+    cran/tibble
