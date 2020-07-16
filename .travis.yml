@@ -16,4 +16,4 @@ r_packages:
 - tibble
 
 script:
- - Rscript -e 'testthat::test_dir("./tests/", reporter = c("progress", "fail")'
+ - Rscript -e 'testthat::test_dir("./tests/", stop_on_failure = TRUE)'
