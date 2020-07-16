@@ -55,6 +55,13 @@ __q1__ What do the following keyboard shortcuts do?
         If cursor is on a function name, pull up the help page for the function.
         <!-- solution-end -->
 
+	* `Cmd/Ctrl` + `Shift` + `C`
+
+        <!-- solution-begin -->
+		Comment/uncomment the code at the cursor, or highlighted code.
+        <!-- solution-end -->
+
+
 * Within R Markdown
 
     * `Cmd/Ctrl` + `Alt` + `I`
