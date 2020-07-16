@@ -6,4 +6,4 @@ env:
  - TRAVIS_R_VERSION="3.2.0"
 
 script:
- - make test
+ - Rscript -e 'testthat::test_dir("./tests/")'
