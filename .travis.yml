@@ -1,4 +1,7 @@
 language: r
 
+r:
+ - oldrel
+
 script:
  - make test
