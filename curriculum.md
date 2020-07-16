@@ -102,6 +102,7 @@ Bonus
 - write easily-readable code by following a styleguide
 - tell a story using the ABT framework
 - judge a data story using the ABT framework
+- use GitHub to discuss and improve reports
 
 ## (Reproducibility)
 
