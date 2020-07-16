@@ -163,3 +163,5 @@ Use the following test to check your work.
 assertthat::assert_that(dim(q2)[1] == 4)
 print("Nice!")
 ```
+
+<!-- include-exit-ticket -->
