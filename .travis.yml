@@ -2,6 +2,8 @@ language: r
 
 r:
 
+before_install: R -e 'source("https://install-github.me/r-lib/remotes")'
+
 env:
  - TRAVIS_R_VERSION="3.2.0"
 
