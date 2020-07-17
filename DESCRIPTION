@@ -1,0 +1,7 @@
+Imports:
+    dplyr,
+    magrittr,
+    purrr,
+    stringr,
+    testthat,
+    tibble
