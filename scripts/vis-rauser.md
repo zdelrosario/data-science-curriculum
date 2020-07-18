@@ -63,6 +63,13 @@ of Cleveland and McGill (1985) \[2\].
 <!-- ------------------------- -->
 
 ``` r
+mpg_levels <-
+  df_mtcars %>%
+  filter(model %in% model_select) %>%
+  mutate(mpg = as.factor(mpg)) %>%
+  pull(mpg) %>%
+  levels(.)
+
 df_mtcars %>%
   filter(model %in% model_select) %>%
 
@@ -70,7 +77,8 @@ df_mtcars %>%
   geom_tile() +
   scale_fill_discrete(
     name = "MPG",
-    labels = c("19.7", "", "", "", "", "", "", "33.9")
+    labels = rev(c("19.7", "", "", "", "", "", "", "33.9")),
+    limits = rev(mpg_levels)
   ) +
   scale_x_discrete(breaks = c()) +
   theme_common() +
