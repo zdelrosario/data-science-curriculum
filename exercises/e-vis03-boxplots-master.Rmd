@@ -28,7 +28,7 @@ A *subtle point* from the primer is that we can use `dplyr` to generate new
 facts about our data, then use `ggplot2` to visualize those facts. We'll
 practice this idea in a number of ways.
 
-__q1__ Use a `cut_*` verb to create a categorical variable out of `cut`. Tweak
+__q1__ Use a `cut_*` verb to create a categorical variable out of `carat`. Tweak
 the settings in your cut and document your observations.
 
 *Hint*: Recall that we learned about `cut_interval, cut_number, cut_width`. Take
