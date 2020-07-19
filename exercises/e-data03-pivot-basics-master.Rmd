@@ -330,7 +330,7 @@ df_q3_res
 all_equal(df_base, df_q3_res) # Checks equality; returns TRUE if equal
 ```
 
-__q4__ Recover `df_base` from `df_q3` by using a *single* pivot and no other functions.
+__q4__ Recover `df_base` from `df_q4` by using a *single* pivot and no other functions.
 
 ```{r q4-setup}
 ## NOTE: No need to edit; this is setup for the exercise
@@ -367,7 +367,7 @@ df_q4_res
 all_equal(df_base, df_q4_res) # Checks equality; returns TRUE if equal
 ```
 
-__q5__ Recover `df_base` from `df_q3` by using a *single* pivot and no other functions.
+__q5__ Recover `df_base` from `df_q5` by using a *single* pivot and no other functions.
 
 ```{r q5-setup}
 ## NOTE: No need to edit; this is setup for the exercise
