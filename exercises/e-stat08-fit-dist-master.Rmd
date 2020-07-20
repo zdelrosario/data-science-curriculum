@@ -10,9 +10,9 @@ reading: 0
 *Purpose*: We use distributions to model random quantities. However, in order to model physical phenomena, we should *fit* the distributions using data. In this short exercise you'll learn some functions for fitting distributions to data.
 
 ```{r setup}
+library(MASS)
 library(tidyverse)
 library(broom)
-library(MASS)
 ```
 
 The function `rnorm()` requires values for `mean` and `sd`; while `rnorm()` has
