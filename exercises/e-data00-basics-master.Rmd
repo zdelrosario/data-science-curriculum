@@ -120,9 +120,25 @@ turn it into `diamonds %>% glimpse()`.
 __q4__ Use the pipe operator to re-write `summary(diamonds)`.
 
 ```{r q4-task}
-# task-begin
+# solution-begin
 diamonds %>% summary()
-# task-end
+# solution-end
+```
+
+# Reading Data
+<!-- -------------------------------------------------- -->
+
+So far we've only been looking at built-in datasets. Ultimately, we'll want to read in our own data. We'll get to the art of loading and *wrangling* data later, but for now, know that the `readr` package provides us tools to read data. Let's quickly practice loading data below.
+
+__q5__ Use the function `read_csv()` to load the file `"./data/tiny.csv"`.
+
+```{r q5-task}
+# solution-begin
+df_q5 <-
+  read_csv("./data/tiny.csv")
+# solution-end
+
+df_q5
 ```
 
 <!-- include-exit-ticket -->
