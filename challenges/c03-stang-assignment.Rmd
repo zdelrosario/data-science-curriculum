@@ -116,11 +116,6 @@ __q2__ Perform a basic EDA on the aluminum data *without visualization*. Use you
 - What angles were tested?
 - What thicknesses were tested?
 - (Write your own question here)
-- No; we see a variety of values for `E` and `mu`.
-- Just one alloy: al_24st
-- Angles: 0, 45, 90 (degrees)
-- Thicknesses: 0.022, 0.032, 0.064, 0.081 (in)
-- I'm curious if the properties `E, mu` vary with thickness
 
 ## Visualize
 <!-- ------------------------- -->
