@@ -286,7 +286,7 @@ df_flights_sampled %>%
   )
 ```
 
-These confidence intervals illustrate a number of different sampling scenarios. In some of them, we correctly determine that the mean arrival delay is confidently greater than zero. The case at $n = 100$ is inconclusive; the CI is compatible with both positive and negative mean delay times. Note the two lowest $n$ cases; there we "confidently" determine that the mean arrival delay is negative![3] Any time we are doing estimation we are in danger of making an incorrect conclusion, even when we do the statistics correctly! Obtaining data simply decreases the probability of making a false conclusion.
+These confidence intervals illustrate a number of different sampling scenarios. In some of them, we correctly determine that the mean arrival delay is confidently greater than zero. The case at $n = 100$ is inconclusive; the CI is compatible with both positive and negative mean delay times. Note the two lowest $n$ cases; there we "confidently" determine that the mean arrival delay is negative![3] Any time we are doing estimation we are in danger of making an incorrect conclusion, even when we do the statistics correctly! Obtaining data simply decreases the probability of making a false conclusion.[4]
 
 However, combining all our available information to form a confidence interval is a principled way to report our results. A confidence interval gives us a plausible range of values for the population value, and by its width gives us a sense of how accurate our estimate is likely to be.
 
@@ -323,3 +323,5 @@ Using a plug-in estimate for $\sigma$ gives the procedure defined above.
 [2] [This](https://seeing-theory.brown.edu/frequentist-inference/index.html) **the best** visualization of the confidence interval concept that I have ever found. Click through Frequentist Inference > Confidence Interval to see the animation.
 
 [3] Part of the issue here is that we are not accounting for the additional variability that arises from estimating the standard deviation. Using a [t-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution#Confidence_intervals) to construct more conservative confidence intervals helps at lower sample sizes.
+
+[4] The process of making decisions about what to believe about reality based on data is called [hypothesis testing](https://en.wikipedia.org/wiki/Statistical_hypothesis_testing).
