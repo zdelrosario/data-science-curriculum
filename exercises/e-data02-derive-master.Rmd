@@ -110,51 +110,69 @@ diamonds %>%
 | Cumulants | `cumsum(x), cumprod(x), cummin(x), cummax(x), cummean(x)` |
 | Ranking | `min_rank(x), row_number(x), dense_rank(x), percent_rank(x), cume_dist(x), ntile(x)` |
 
-__q4__ The `depth` variable is supposedly computed via `depth_computed = 2 * z /
-(x + y)`. Compute `diff = depth - depth_computed`, and compute the summary
-*coefficient of variation* `cov = sd(x) / mean(x)`. Assign the resulting tibble
-to `df_q4`.
+__q4__ The `depth` variable is supposedly computed via `depth_computed = 100 *
+2 * z / (x + y)`. Compute `diff = depth - depth_computed`: This is a measure of
+discrepancy between the given and computed depth. Additionally, compute the
+*coefficient of variation* `cov = sd(x) / mean(x)` for both `depth` and `diff`:
+This is a dimensionless measure of variation in a variable. Assign the resulting
+tibble to `df_q4`, and assign the appropriate values to `cov_depth` and
+`cov_diff`. Comment on the relative values of `cov_depth` and `cov_diff`; why is
+`cov_diff` so large?
+
+*Note*: Confusingly, the documentation for `diamonds` leaves out the factor of `100` in the computation of `depth`.
 
 ```{r q4-task}
 # task-begin
-## TODO: Assign result to df_q4
+## TODO: Compute the `cov_depth` and `cov_diff` and assign the result to df_q4
+df_q4 <-
+  diamonds
 # task-end
 # solution-begin
 df_q4 <-
   diamonds %>%
   mutate(
-    depth_computed = 2 * z / (x + y),
+    depth_computed = 100 * 2 * z / (x + y),
     diff = depth - depth_computed
   ) %>%
   summarize(
+    depth_mean = mean(depth, na.rm = TRUE),
+    depth_sd = sd(depth, na.rm = TRUE),
+    cov_depth = depth_sd / depth_mean,
+
     diff_mean = mean(diff, na.rm = TRUE),
     diff_sd = sd(diff, na.rm = TRUE),
-    cov = diff_sd / diff_mean
+    cov_diff = diff_sd / diff_mean,
+    c_diff = IQR(diff, na.rm = TRUE) / median(diff, na.rm = TRUE)
   )
 # solution-end
 df_q4
 ```
 
+**Observations**
+
+<!-- task-begin -->
+- Comment on the relative values of `cov_depth` and `cov_diff`.
+- Why is `cov_diff` so large?
+<!-- task-end -->
+<!-- solution-begin -->
+- `cov_depth` is tiny; there's not much variation in the depth, compared to its scale.
+- `cov_diff` is enormous! This is because the mean difference between `depth` and `depth_computed` is small, which causes the `cov` to blow up.
+<!-- solution-end -->
+
 The following test will verify that your `df_q4` is correct:
 
 ```{r q4-tests}
 ## NOTE: No need to change this!
-assertthat::assert_that(
-  assertthat::are_equal(
-    df_q4 %>%
-      select(cov) %>%
-      mutate_all(~round(., digits = 3)),
-    tibble(
-      cov = 0.023
-    )
-  )
-)
+## assertthat::assert_that(abs(df_q4 %>% pull(cov_depth) - 0.02320057) < 1e-3)
+## assertthat::assert_that(abs(df_q4 %>% pull(cov_diff) - 497.5585) < 1e-3)
+## )
 print("Nice!")
 ```
 
-The coefficient of variation here is quite small, about 2 percent. This is not a
-huge level of variation, but it does raise questions about why the values don't
-agree!
+There is nonzero difference between `depth` and the computed `depth`; this
+raises some questions about how `depth` was actually computed! It's often a good
+idea to try to check derived quantities in your data, if possible. These can
+sometimes uncover errors in the data!
 
 __q5__ Compute the `price_mean = mean(price)`, `price_sd = sd(price)`, and
 `price_cov = price_sd / price_mean` for each `cut` of diamond. What observations
