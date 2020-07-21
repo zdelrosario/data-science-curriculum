@@ -56,10 +56,11 @@ Core
   - boxplots (e-vis03-boxplots)
   - scatterplots (e-vis04-scatterplot)
   - line plots (e-vis05-lines)
-  - small multiple plots
+  - small multiple plots (e-vis06-multiples)
+  - tweaks to visual aesthetics (e-vis07-themes)
 - Design
-  - EDA-quality graphics
-  - presentation-ready graphics
+  - EDA-quality graphics (many)
+  - presentation-ready graphics (e-vis07-themes, e-comm01-story-basics)
 - Criticize
   - data visualizations based on *the visual hierarchy*
   - data visualizations based on their intended audience
