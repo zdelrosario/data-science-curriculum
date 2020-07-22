@@ -7,7 +7,8 @@ time: 60
 reading: 0
 ---
 
-*Purpose*: (Learn how to fork and PR)
+*Purpose*: Git and GitHub are extremely useful for collaboration, but they take
+some getting used to. In this *partner exercise*, you will learn how to contribute
 
 *Reading*: [GitHub Forking](https://gist.github.com/Chaser324/ce0505fbed06b947d962) (Optional / Reference)
 
@@ -133,11 +134,49 @@ $ git pull
 
 This will pull down the latest changes that your partner made.
 
-__q9__ (*Merging*) Replace **TODO** above under *Merging partner* to complete the exercise.
+__q9__ (*Merging*) Replace **TODO** above under *Merging partner* to complete the exercise. Commit and push these changes to your repo.
+
+# Forking Partner
+---
+
+__q10__ (*Forking*) Now your partner has successfully merged your edits, but in
+order to keep collaborating, you'll need to update your fork based on your
+partner's current (and future!) edits.
+
+Use the following command to *fetch* your partner's edits.
+
+```{bash}
+$ git fetch upstream
+```
+
+Note that this hasn't actually changed your local repo; to see this check out
+your *branches*.
+
+```{bash}
+$ git branch -va
+```
+
+Note that I have my own master branch, and also have my partner's
+`upstream/master` that has the merged pull request from q8.
+
+![Branches for forked repo](./images/rep05-upstream-master.png)
+
+In order to keep your forked copy of your partner's repo current, run the following commands.
+
+```{bash}
+# Make sure you're on the master branch
+$ git checkout master
+# merge your master with your partner's upstream/master
+$ git merge upstream/master
+```
+
+If you do this *after* your partner has changed and pushed the assignment in q9,
+you should see both your and your partner's name in the assignment document.
 
 *Aside*: That was *a lot* of work just to get two names in one document. But the
 advantage in this process is that *the document was rigorously controlled*
-through every stage of this process, and you now have a *fully reversible
-and searchable history* of the document through all the changes. Git takes a lot of work to learn, but is *extraordinarly powerful* for collaboration.
+through every stage of this process, and you now have a *fully reversible and
+searchable history* of the document through all the changes. Git takes a lot of
+work to learn, but is *extraordinarly powerful* for collaboration.
 
 <!-- include-exit-ticket -->
