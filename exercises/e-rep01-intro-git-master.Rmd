@@ -49,4 +49,7 @@ Using RStudio, we will download a local copy of the [data-science-curriculum](ht
 
 - Great job! Now you have all the assignment exercises for the course!
 
+*Aside*: Note that *Git* and *GitHub* are two different things! *Git* is a
+version control tool, while *GitHub* is a service that uses Git where you can host repositories. For instance, [GitLab](https://about.gitlab.com/) is another service where you can host Git repositories.
+
 <!-- include-exit-ticket -->
