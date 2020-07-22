@@ -100,8 +100,44 @@ __q8__ (*Merging*) Open your public repo GitHub page; you should see that your p
 
 ![List pull requests](./images/rep05-list-pr.png)
 
-Your task is to *merge* their pull request.
+*Note*: You'll probably also get an automated email from GitHub once your partner opens a PR.
 
-__q9__ (*Merging*) Open your public repo GitHub page; you should see that your partner has an open pull request.
+Your task is to *merge* their pull request. Click on the merge request your partner opened; for instance mine was described as `Adding exercises dir, rep05.Rmd` by `mdelrosa`.
+
+![Select PR](./images/rep05-list-pr.png)
+
+Hopefully, you will see the message "This branch has no conflicts with the base
+branch. Merging can be performed automatically." This means that the edits your
+partner made don't conflict with any changes you made. Thus Git can
+*automagically* combine all the edits. Click `Merge pull request` and `Confirm
+merge` to proceed.
+
+*Note*: If you don't see "Merging can be performed automatically," *please*
+reach out to one of the teaching team. We'll gladly help you out!
+
+![Merge PR](./images/rep05-list-pr.png)
+
+Once done, the page should change to let you know that you completed the merge,
+as shown below:
+
+![Merged PR](./images/rep05-merged-pr.png)
+
+__q8__ (*Merging*) Now you will pull the most recent changes to your local copy
+of your repo. before pulling. Navigate to the directory of your repo. Make sure
+to commit any stray changes (e.g. in-progress exercises!). Then run `git pull`.
+
+```{bash}
+$ cd /path/to/your/repo
+$ git pull
+```
+
+This will pull down the latest changes that your partner made.
+
+__q9__ (*Merging*) Replace **TODO** above under *Merging partner* to complete the exercise.
+
+*Aside*: That was *a lot* of work just to get two names in one document. But the
+advantage in this process is that *the document was rigorously controlled*
+through every stage of this process, and you now have a *fully reversible
+and searchable history* of the document through all the changes. Git takes a lot of work to learn, but is *extraordinarly powerful* for collaboration.
 
 <!-- include-exit-ticket -->
