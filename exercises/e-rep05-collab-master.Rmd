@@ -12,6 +12,7 @@ reading: 0
 *Reading*: [GitHub Forking](https://gist.github.com/Chaser324/ce0505fbed06b947d962) (Optional / Reference)
 
 # Overview
+---
 
 At a *high level*, what you and your partner are going to do is create a copy of each others' public repos, make a change, and request that your partner *merge* those changes into their own repo. Using this workflow, you and your partner will be able to collaborate asynchronously on the same documents, all while maintaining safe version control of your work.
 
@@ -29,6 +30,9 @@ In this case you'll make *trivial edits* to the **TODO** items below, but in pra
 *Note*: All instructions below are coded for either the *Forking* partner, the *Merging* partner, or *Both*. Note that you will both do all of these steps, but you will take turns being *Forking* and *Merging*. Pay attention to when these flags change---that indicates where you and your partner need to take different actions.
 
 __q1__ (*Both*) Pick a partner in the class, preferably from your learning team. You must mutually agree to complete this exercise together, which will involve *forking* your partner's public repo and making a *pull request*.
+
+# Forking Partner
+---
 
 __q2__ (*Forking*) Navigate to your partner's GitHub repo page, and click the *Fork* button on the top-right of the page.
 
@@ -62,22 +66,7 @@ $ git remote add upstream https://github.com/UPSTREAM-USER/ORIGINAL-PROJECT.git
 
 where you should replace `UPSTREAM-USER` with your partner's GitHub username, and `ORIGINAL-PROJECT` with the name of your partner's GitHub public repo (the one you forked). What this does is allow you to pull any changes your partner makes in their own repo using the command `git fetch upstream`. We won't use that command in this exercise, but it's good to be aware of.
 
-[*Branches*](https://zellwk.com/blog/git-branch/) are an important concept in git. Basically, any time you're working in a repo with other people, you should use a branch to organize your edits, rather than committing directly to your master branch. This is important because the master branch---by the social contract of open-source software---*should* be guaranteed to work!
-
-__q4__ (*Forking*) Create a branch for making your edits.
-
-```{bash}
-# Use master as the starting point for your branch
-$ git checkout master
-
-# Create a new branch named dev_addname
-$ git branch dev_addname
-
-# Switch to your new branch
-$ git checkout dev_addname
-```
-
-__q5__ (*Forking*) Inspect your partner's repository; if they don't have an `exercises` directory, create a new one. Within that `exercise` directory either open their existing `e-rep-05-collab-assignment.Rmd`, or copy this file into the `exercises` directory. Edit the **TODO** above under *Forking Partner* to be your own name.
+__q5__ (*Forking*) Inspect your partner's repository (your forked-and-cloned version); if they don't have an `exercises` directory, create a new one. Within that `exercise` directory either open their existing `e-rep-05-collab-assignment.Rmd`, or copy this file into the `exercises` directory. Edit the **TODO** above under *Forking Partner* to be your own name.
 
 __q6__ (*Forking*) Commit your changes, and push them to your forked repository. If you do `$ git push`, you will probably see something like:
 
@@ -85,15 +74,15 @@ __q6__ (*Forking*) Commit your changes, and push them to your forked repository.
 fatal: The current branch dev_addname has no upstream branch.
 To push the current branch and set the remote as upstream, use
 
-    git push --set-upstream origin dev_addname
+    git push --set-upstream origin master
 ```
 
-Where `dev_addname` is the name of the branch I created. If you see this, it's because Git is not willing to make assumptions about *where you want to push*. The `--set-upstream origin dev_addname` tells Git to push to `origin` (which should be set to your forked repository if you cloned it in q2 above), while `dev_addname` tells Git to push the changes to the `dev_addname` branch.
+If you see this, it's because Git is not willing to make assumptions about *where you want to push*. The `--set-upstream origin master` tells Git to push to `origin` (which should be set to your forked repository if you cloned it in q2 above), while `master` tells Git to push the changes to the `master` branch.
 
 Follow the instructions by running
 
 ```{bash}
-$ git push --set-upstream origin dev_addname
+$ git push --set-upstream origin master
 ```
 
 This will push your commit(s) to your forked repo. Now you have the changes in your *personal* copy of your partner's work. Our task is now to request that our partner incorporate these changes in their own repository.
@@ -102,16 +91,17 @@ __q7__ (*Forking*) Navigate your browser to your forked repository on GitHub. Yo
 
 ![Pull request](./images/rep05-pr.png)
 
-Click the **Pull request** to start the process of making a pull request (PR). Add a comment justifying the PR, and click **Create pull request**. Your partner will now be able to see your PR.
+Click the **Pull request** to start the process of making a pull request (PR). Add a comment justifying the PR, and click **Create pull request**. Your partner will now be able to see your PR. Your *merging* partner will finish the rest of the exercise (though you should still complete the *merging* part on your own repo!).
 
-__q8__ (*Merging*) Open your public repo GitHub page; you should see that your partner has an open pull request. Your task is to *merge* their
+# Merging Partner
+---
+
+__q8__ (*Merging*) Open your public repo GitHub page; you should see that your partner has an open pull request.You can see the list of pull requests by clicking on the `Pull requests` tab towards the top of your repo.
+
+![List pull requests](./images/rep05-list-pr.png)
+
+Your task is to *merge* their pull request.
 
 __q9__ (*Merging*) Open your public repo GitHub page; you should see that your partner has an open pull request.
-
-__qX__ (*Forking*) Once you're done working on a branch, you can switch back to master with:
-
-```{bash}
-$ git checkout master
-```
 
 <!-- include-exit-ticket -->
