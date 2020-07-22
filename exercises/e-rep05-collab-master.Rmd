@@ -8,7 +8,10 @@ reading: 0
 ---
 
 *Purpose*: Git and GitHub are extremely useful for collaboration, but they take
-some getting used to. In this *partner exercise*, you will learn how to contribute
+some getting used to. In this *partner exercise*, you will learn how to
+contribute to a partner's work, and how to merge contributions to your own work.
+This will be your first taste of using Git not just as a way to track changes,
+but also as a powerful collaboration tool.
 
 *Reading*: [GitHub Forking](https://gist.github.com/Chaser324/ce0505fbed06b947d962) (Optional / Reference)
 
