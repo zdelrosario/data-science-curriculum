@@ -115,7 +115,8 @@ Bonus
 ## (Reproducibility)
 
 Core
-- (Git)
+- use Git for basic version control (e-rep01-intro-git, e-rep03-track)
+- create a GitHub repository (e-rep02-create)
+- structure a project directory (e-rep04-directories)
 - (Command line)
 - (File hygiene)
-- (Directory structuring)
