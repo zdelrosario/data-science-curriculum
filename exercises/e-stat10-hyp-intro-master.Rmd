@@ -1,0 +1,130 @@
+---
+title: "Statistics: Introduction to Hypothesis Testing"
+author: Zachary del Rosario
+date: 2020-07-23
+output: github_document
+time: -1
+reading: 9
+---
+
+*Purpose*: ()
+
+*Reading*: [Statistical Inference in One Sentence](https://medium.com/hackernoon/statistical-inference-in-one-sentence-33a4683a6424) (9 min)
+
+```{r setup}
+library(tidyverse)
+```
+
+(You are jewler, and you need to buy diamonds at < $2000 a diamond to break
+even)
+
+## Pick your population
+
+For the sake of this exercise, let's assume that `diamonds` is the entire world
+of possible diamonds on sale. In practice, we usually define just **one**
+population, but for the purposes of learning, let's actually define **two**.
+Population A will be the set of all diamonds with `carat < 1`, while Population
+B will be the set of diamonds with `carat == 0.3` *exactly*.
+
+```{r define-populations}
+## NOTE: No need to change this!
+## Define Population A
+df_population_A <-
+  diamonds %>%
+  filter(carat < 1)
+
+## Define Population B
+df_population_B <-
+  diamonds %>%
+  filter(carat == 0.3)
+```
+
+While we do have access to the entirety of both populations, in most real
+problems we'll only have a sample.
+
+The function `slice_sample()` allows us to choose a *random* sample from a
+dataframe.
+
+```{r define-samples}
+## NOTE: No need to change this!
+set.seed(101)
+
+df_sample_A <-
+  df_population_A %>%
+  slice_sample(n = 200)
+
+df_sample_B <-
+  df_population_B %>%
+  slice_sample(n = 200)
+```
+
+```{r define-samples-bad}
+## NOTE: No need to change this!
+set.seed(101)
+
+df_sample_A_bad <-
+  df_population_A %>%
+  filter(color == "D") %>%
+  slice_sample(n = 200)
+
+df_sample_B_bad <-
+  df_population_B %>%
+  filter(color == "D") %>%
+  slice_sample(n = 200)
+```
+
+
+
+## Set up your hypotheses
+
+(You are jewler, and you need to buy diamonds at < $2000 a diamond to break
+even)
+
+```{r budget}
+## NOTE: No need to change this; this will be our decision threshold
+price_max <- 2000
+```
+
+(Set up hypotheses)
+
+<!-- solution-begin -->
+```{r }
+## NOTE: This is for exercise-design purposes: What are the true parameters?
+df_sample_A %>%
+  group_by(cut) %>%
+  summarize(price = mean(price))
+
+df_sample_B %>%
+  group_by(cut) %>%
+  summarize(price = mean(price))
+```
+<!-- solution-end -->
+
+## Compute
+
+```{r }
+set.seed(101)
+
+df_qX_A <-
+  df_population_A %>%
+  group_by(cut) %>%
+  summarize(
+    price_mean = mean(price),
+    price_sd = sd(price),
+    price_lo = price_mean - 1.96 * price_sd / sqrt(n()),
+    price_hi = price_mean + 1.96 * price_sd / sqrt(n())
+  )
+
+df_qX_A %>%
+  select(cut, price_lo, price_mean, price_hi) %>%
+
+  ggplot(aes(cut, price_mean)) +
+  geom_errorbar(aes(ymin = price_lo, ymax = price_hi)) +
+  geom_point()
+```
+
+*Aside*: If you've taken a statistics course, you might be wondering why I'm
+talking about hypothesis testing *without* introducing p-values. I feel that
+confidence invervals more obviously communicate the uncertainty in results, in
+line with Andrew Gelman's suggestion that we [embrace
+uncertainty](https://stat.columbia.edu/~gelman/research/published/asa_pvalues.pdf).
