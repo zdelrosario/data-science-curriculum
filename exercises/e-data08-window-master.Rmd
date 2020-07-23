@@ -97,7 +97,7 @@ dense_rank(-v)
 
 I find it difficult to remember how the rank functions behave, so I created the following visual to help remind myself how they function..
 
-```{r ex-ranks}
+```{r ex-ranks-vis}
 ## NOTE: No need to edit this; just an example
 set.seed(101)
 tribble(
