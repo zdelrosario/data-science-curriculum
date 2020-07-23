@@ -128,3 +128,5 @@ talking about hypothesis testing *without* introducing p-values. I feel that
 confidence invervals more obviously communicate the uncertainty in results, in
 line with Andrew Gelman's suggestion that we [embrace
 uncertainty](https://stat.columbia.edu/~gelman/research/published/asa_pvalues.pdf).
+
+<!-- include-exit-ticket -->
