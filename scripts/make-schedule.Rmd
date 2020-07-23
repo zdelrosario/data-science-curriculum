@@ -26,19 +26,25 @@ df_schedule <-
     "e-data04-separate-unite",         13,
     "e-data05-join",                   16,
     "e-data06-strings",                19,
+    "e-data07-placeholders",           22,
+    "e-data08-window",                 23,
+    "e-data09-readxl",                 24,
+    "e-data10-map",                    25,
 
     "e-setup00-install",                0,
     "e-setup01-packages",               1,
     "e-setup02-functions",              1,
-    "e-setup03-docs",                   3,
-    "e-setup04-rstudio-shortcuts",      3,
-    "e-setup05-vectors",                3,
+    "e-setup03-docs",                   2,
+    "e-setup04-rstudio-shortcuts",      2,
+    "e-setup05-vectors",                2,
     "e-setup06-types",                  3,
 
     "e-rep00-setup",                    0,
     "e-rep01-intro-git",                0,
     "e-rep02-create",                   1,
     "e-rep03-track",                    1,
+    "e-rep04-directories",              9,
+    "e-rep05-collab",                  21,
 
     "e-stat00-eda-basics",              4,
     "e-stat01-distributions",           9,
@@ -47,6 +53,9 @@ df_schedule <-
     "e-stat04-population",             18,
     "e-stat05-moment",                 19,
     "e-stat06-clt",                    20,
+    "e-stat07-error-bias",             22,
+    "e-stat08-fit-dist",               23,
+    "e-stat09-bootstrap",              24,
 
     "e-vis00-basics",                   3,
     "e-vis01-bar-charts",               6,
@@ -54,6 +63,8 @@ df_schedule <-
     "e-vis03-boxplots",                11,
     "e-vis04-scatterplot",             14,
     "e-vis05-lines",                   17,
+    "e-vis06-multiples",               26,
+    "e-vis07-themes",                  26
 
   )
 
