@@ -16,6 +16,7 @@ library(ggrepel)
 
 ## Filenames
 filename_seq <- "../sequence.md"
+filename_schedule <- "./schedule.csv"
 
 ## Data directory
 exercise_data <- "~/Git/data-science-curriculum/exercises"
@@ -27,6 +28,8 @@ df_ex_files <-
     filename = str_extract(file, "[^/]+\\.Rmd"),
     name = str_remove(filename, "(-master)?\\.Rmd")
   )
+
+df_schedule <- read_csv(filename_schedule)
 
 ## Flatten function list
 flatten_funs <- function(l) {
@@ -84,51 +87,6 @@ df_exercises <-
 Schedule the exercise curriculum
 
 ```{r schedule}
-## Define schedule
-df_schedule <-
-  tribble(
-    ~name,                           ~day,
-    "e-comm00-style",                   2,
-    "e-comm01-story-basics",           20,
-
-    "e-data00-basics",                  3,
-    "e-data01-isolate",                 5,
-    "e-data02-derive",                  7,
-    "e-data03-pivot-basics",           10,
-    "e-data04-separate-unite",         13,
-    "e-data05-join",                   16,
-    "e-data06-strings",                19,
-
-    "e-setup00-install",                0,
-    "e-setup01-packages",               1,
-    "e-setup02-functions",              1,
-    "e-setup03-docs",                   3,
-    "e-setup04-rstudio-shortcuts",      3,
-    "e-setup05-vectors",                3,
-    "e-setup06-types",                  3,
-
-    "e-rep00-setup",                    0,
-    "e-rep01-intro-git",                0,
-    "e-rep02-create",                   1,
-    "e-rep03-track",                    1,
-
-    "e-stat00-eda-basics",              4,
-    "e-stat01-distributions",           9,
-    "e-stat02-probability",            12,
-    "e-stat03-descriptive",            15,
-    "e-stat04-population",             18,
-    "e-stat05-moment",                 19,
-    "e-stat06-clt",                    20,
-
-    "e-vis00-basics",                   2,
-    "e-vis01-bar-charts",               6,
-    "e-vis02-histograms",               8,
-    "e-vis03-boxplots",                11,
-    "e-vis04-scatterplot",             14,
-    "e-vis05-lines",                   17,
-
-  )
-
 ## Compute day totals
 df_day_totals <-
   left_join(
