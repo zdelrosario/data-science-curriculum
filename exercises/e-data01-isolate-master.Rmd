@@ -143,7 +143,7 @@ assertthat::assert_that(
   pull(flag)
 )
 assertthat::assert_that(
-  df_q5a %>%
+  df_q5b %>%
   mutate(flag = origin %in% c("JFK", "LGA", "EWR")) %>%
   summarize(flag = all(flag)) %>%
   pull(flag)
