@@ -48,8 +48,11 @@ Bonus
 ## (Visualization)
 
 Core
-- State the basic components of the *grammar of graphics*: geometry, aesthetics,
-  theme, layers
+- State and use the basic components of the *grammar of graphics*:
+  - geometry
+  - aesthetics
+  - theme
+  - layers (e-vis04-scatterplot)
 - Create
   - bar charts (e-vis01-bar-charts)
   - histograms (e-vis02-histograms)
