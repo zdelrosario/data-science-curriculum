@@ -3,7 +3,7 @@ title: "Factors"
 author: Zachary del Rosario
 date: 2020-07-24
 output: github_document
-time: 0
+time: 10
 reading: 0
 ---
 
