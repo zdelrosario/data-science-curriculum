@@ -10,7 +10,7 @@ reading: 30
 *Purpose*: Often our data are scattered across multiple sets. In this case, we
 need to be able to *join* data.
 
-*Reading*: [Separate and Unite Columns](https://rstudio.cloud/learn/primers/4.2)
+*Reading*: [Join Data Sets](https://rstudio.cloud/learn/primers/4.3)
 *Topics*: Welcome, mutating joins, filtering joins, Binds and set operations
 *Reading Time*: ~30 minutes
 
