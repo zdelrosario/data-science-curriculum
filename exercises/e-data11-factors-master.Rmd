@@ -189,3 +189,5 @@ gapminder %>%
 
 This *small, simple trick* is extremely helpful for creating easily-readable
 line graphs.
+
+<!-- include-exit-ticket -->
