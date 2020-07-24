@@ -36,6 +36,7 @@ Core
 - Wrangle
   - data from a messy source, e.g. a nasty excel file (e-data09-readxl)
   - loops into functional calls using purrr (e-data10-map)
+  - factors with forcats (e-data11-factors)
 - Liberate
   - data from images with WebPlotDigitizer
   - data from printed tables with Tabula
@@ -43,7 +44,6 @@ Core
 Bonus
 - Specialty
   - (lubridate)
-  - (forcats)
 
 ## (Visualization)
 
