@@ -49,9 +49,9 @@ Bonus
 
 Core
 - State and use the basic components of the *grammar of graphics*:
-  - geometry
-  - aesthetics
-  - theme
+  - geometry (many)
+  - aesthetics (e-vis00-basics)
+  - theme (e-vis07-themes)
   - layers (e-vis04-scatterplot)
 - Create
   - bar charts (e-vis01-bar-charts)
