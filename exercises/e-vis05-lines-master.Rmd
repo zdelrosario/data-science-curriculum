@@ -12,7 +12,7 @@ a line plot assumes the data have a *function* relation. This can create an
 issue if we try to plot data that do not satisfy our assumptions. In this
 exercise, we'll practice some best-practices for constructing line plots.
 
-*Reading*: [Boxplots and Counts](https://rstudio.cloud/learn/primers/3.5)
+*Reading*: [Line plots](https://rstudio.cloud/learn/primers/3.6)
 *Topics*: Welcome, Line graphs, Similar geoms (skip Maps)
 *Reading Time*: ~30 minutes
 
