@@ -406,10 +406,10 @@ df_line %>%
 - For what values of `slope` is the correlation positive?
 - For what values of `slope` is the correlation negative?
 <!-- task-end -->
-<!-- task-begin -->
-- For what values of `slope` is the correlation positive?
-- For what values of `slope` is the correlation negative?
-<!-- task-end -->
+<!-- solution-begin -->
+- `slope` values greater than 0 have a positive correlation
+- `slope` values less than 0 have a negative correlation
+<!-- solution-end -->
 
 Note that this means *correlation is a measure of dependence*; it is **not** a measure of slope! It is better thought of as how *strong* the relationship between two variables is. A closer-to-zero correlation indicates a noisy relationship between variables, while a closer-to-one (in absolute value) indicates a more perfect, predictable relationship between the variables. For instance, the following code simulates data with different correlations, and facets the data based on the underlying correlation.
 
@@ -492,9 +492,9 @@ df_quad %>%
 - What do you predict the correlations to be?
 - What are the actual correlations?
 <!-- task-end -->
-<!-- task-begin -->
+<!-- solution-begin -->
 - Both correlations are near-zero
-<!-- task-end -->
+<!-- solution-end -->
 
 One last point about correlation: The mean is to Pearson correlation as the median is to Spearman correlation; the latter are robust to outliers.
 
