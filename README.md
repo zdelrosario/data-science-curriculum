@@ -7,7 +7,8 @@ This is a curriculum of **open-source** data science exercises, intended to take
 ## Table of Contents
 
 - [Curriculum](https://github.com/zdelrosario/data-science-curriculum/blob/master/curriculum.md) contains the desired learning outcomes of this material
-- [Exercises](https://github.com/zdelrosario/data-science-curriculum/tree/master/exercises) contains the exercises, which support the learning outcomes
+- [Exercises](https://github.com/zdelrosario/data-science-curriculum/tree/master/exercises) contains the exercises, which provide a first introduction to using the Tidyverse to do Data Science
+- [Challenges](https://github.com/zdelrosario/data-science-curriculum/tree/master/challenges) contains more open-ended data challenges, which will test and build upon your skills from the exercises
 - [Utility script](https://github.com/zdelrosario/data-science-curriculum/blob/master/scripts/vis-metadata.Rmd) to help sequence course content and visualize topics
 
 ## Course Description
