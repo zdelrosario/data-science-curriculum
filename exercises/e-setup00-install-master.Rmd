@@ -59,6 +59,7 @@ We'll use a number of extras for this class. To that end, please install the fol
 
 - `broom`
 - `curl`
+- `modelr`
 - `mvtnorm`
 - `nycflights13`
 - `gapminder`
