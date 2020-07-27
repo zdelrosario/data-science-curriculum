@@ -1,0 +1,130 @@
+---
+title: "Statistics: Introduction to Modeling"
+author: Zachary del Rosario
+date: 2020-07-23
+output: github_document
+time: -1
+reading: -1
+---
+
+*Purpose*: (Introduction to modeling through linear regression)
+
+*Reading*:
+
+```{r setup}
+library(tidyverse)
+library(modelr)
+library(broom)
+```
+
+(Setup)
+
+```{r }
+set.seed(101)
+df_train <-
+  diamonds %>%
+  slice(1:1e4)
+
+df_test <-
+  diamonds %>%
+  slice((1e4+1):2e4)
+```
+
+## A simple model
+
+```{r model-manual-1}
+df_train %>%
+
+  ggplot(aes(carat, price)) +
+  geom_point() +
+  geom_abline(
+    intercept = 0,
+    slope = 1000 / 0.5, # Eyeball: $1000 / (1/2) carat,
+    linetype = 2,
+    color = "salmon"
+  )
+```
+
+```{r model-manual-2}
+df_train %>%
+
+  ggplot(aes(carat, price)) +
+  geom_point() +
+  geom_abline(
+    intercept = 0,
+    slope = 2000 / 0.5, # Adjusted by factor of 2
+    linetype = 2,
+    color = "salmon"
+  )
+```
+
+```{r model-manual-3}
+## Set model parameter values [theta]
+slope <- 2000 / 0.5
+intercept <- 0
+
+## Compute predicted values
+df_train %>%
+  mutate(price_pred = slope * carat + intercept) %>%
+
+  ## Visualize *residuals* as vertical bars
+  ggplot(aes(carat, price)) +
+  geom_point() +
+  geom_segment(
+    aes(xend = carat, yend = price_pred),
+    color = "salmon"
+  ) +
+  geom_line(
+    aes(y = price_pred),
+    linetype = 2,
+    color = "salmon"
+  )
+```
+
+This plot shows the *residuals* of the
+
+$$\text{Residual}_i(\theta) = \hat{f}_i(\theta) - f_i,$$
+
+where $f_i$ is the i-th observed output value (`price`), $\hat{f}_i(\theta)$ is the i-th prediction from the model (`price_pred`), and $\theta$ is the set of parameter values for the model. For instance, int he model
+
+## Fitting a model
+
+Define the *mean squared error* (MSE) via
+
+$$\text{MSE}(\theta) = \frac{1}{n} \sum_{i=1}^n \text{Residual}_i(\theta)^2 = \frac{1}{n} \sum_{i=1}^n (\hat{f}_i(\theta) - f_i)^2.$$
+
+
+
+```{r }
+## Fit model
+fit_carat <-
+  df_train %>%
+  slice_sample(n = 1000) %>%
+  lm(data = ., formula = price ~ carat)
+
+```
+
+## Diagnostics
+
+(Metrics)
+
+```{r metrics}
+## Compute metrics
+rsquare(fit_carat, df_train)
+rsquare(fit_carat, df_test)
+```
+
+(Predicted vs actual)
+
+```{r pred-vs-actual}
+## Predicted vs Actual
+df_train %>%
+  add_predictions(
+    model = fit_carat,
+    var = "price_pred"
+  ) %>%
+
+  ggplot(aes(price_pred, price)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  geom_point()
+```
