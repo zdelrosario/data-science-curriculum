@@ -36,7 +36,11 @@ We will need to be able to do some basic arithmetic with the mean and variance. 
 ### Expectation
 <!-- ------------------------- -->
 
-The expectation is *linear*, that is $\mathbb{E}[aX + c] = a \mathbb{E}[X] + c$. We can use this fact to compute the mean of simply transformed random variables.
+The expectation is *linear*, that is
+
+$$\mathbb{E}[aX + c] = a \mathbb{E}[X] + c.$$
+
+We can use this fact to compute the mean of simply transformed random variables.
 
 __q1__ Compute the mean of $2 Z + 3$, where $Z$ is a standard normal.
 
@@ -63,7 +67,9 @@ print("Nice!")
 
 Remember that variance is the square of standard deviation.
 
-Variance satisfies the property $$\mathbb{V}[aX + c] = a^2 \mathbb{V}[X].$$
+Variance satisfies the property
+
+$$\mathbb{V}[aX + c] = a^2 \mathbb{V}[X].$$
 
 __q2__ Compute the variance of $2 Z + 3$, where $Z$ is a standard normal.
 
@@ -90,7 +96,9 @@ print("Well done!")
 
 The following two exercises illustrate two important transformations.
 
-__q3__ Compute the mean and variance of $(X - 1) / 2$, where $\mathbb{E}[X] = 1$ and $\mathbb{V}[X] = 4$.
+__q3__ Compute the mean and variance of $(X - 1) / 2$, where
+
+$$\mathbb{E}[X] = 1, \mathbb{V}[X] = 4$$.
 
 ```{r q3-task}
 ## TASK: Compute the mean and variance
@@ -143,12 +151,22 @@ This example illustrates that we can create a normal with desired mean and stand
 ### Standard Error
 <!-- ------------------------- -->
 
+The variance satisfies the property
+
 $$\mathbb{V}[aX + bY] = a^2 \mathbb{V}[X] + b^2 \mathbb{V}[Y] + 2 \text{Cov}[X, Y],$$
 
-where $\text{Cov}[X, Y] = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])]$ is the *covariance* between $X$ and $Y$. If $X, Y$ are independent, then the covariance between them is zero.
+where
+
+$$\text{Cov}[X, Y] = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])]$$
+
+is the *covariance* between $X$ and $Y$. If $X, Y$ are independent, then the covariance between them is zero.
 
 Using this expression, we can prove that the standard error of the sample mean $\overline{X}$ is $\sigma / \sqrt{n}$.
 
-__q5__ (Bonus) Use the identity above to prove that $\mathbb{V}[\overline{X}] = \sigma^2 / n$, where $\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i$, $\sigma^2 = \mathbb{V}[X]$, and the $X_i$ are mutually independent.
+__q5__ (Bonus) Use the identity above to prove that
+
+$$\mathbb{V}[\overline{X}] = \sigma^2 / n,$$
+
+where $$\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i$$, $\sigma^2 = \mathbb{V}[X]$, and the $X_i$ are mutually independent.
 
 <!-- include-exit-ticket -->
