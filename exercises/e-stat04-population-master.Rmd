@@ -106,8 +106,8 @@ df_sample <-
 
 Some terminology:
 
-- We call the statistics of a population the *population statistic*; for instance, the population mean. A population statistic is also called a *parameter*.
-- We call the statistics of a sample the *sample statistic*; for instance, the sample mean. A sample statistic is also called an *estimate*.
+- We call a statistic of a population a *population statistic*; for instance, the population mean. A population statistic is also called a *parameter*.
+- We call a statistics of a sample a *sample statistic*; for instance, the sample mean. A sample statistic is also called an *estimate*.
 
 Let's visualize the sample mean for each sample generated above.
 
@@ -273,7 +273,9 @@ print("Nice!")
 
 Two notes:
 
-1. Note the language above: The standard error tells us about *settings*, not *estimates*: The standard error gives us an idea of how accurate our estimate will tend to be, but due to randomness we don't know the true accuracy of our estimate.
+1. Note the language above: The standard error tells us about *settings* (population $\sigma$ and sample count $n$), not *estimates* themselves. The accuracy of *an individual estimate* would depend on $\hat{\mu} - \mu$, but we in practice never know $\mu$ exactly. The standard error will tell us how variable $\hat{\mu}$ will be on average, but does not give us any information about the specific value of $\hat{\mu} - \mu$ for any given estimate $\hat{\mu}$. 
+
+The standard error gives us an idea of how accurate our estimate will tend to be, but due to randomness we don't know the true accuracy of our estimate.
 
 2. Note that we used the *population* standard deviation above; in practice we'll only have a *sample* standard deviation. In this case we can use a *plug-in* estimate for the standard error
 

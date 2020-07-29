@@ -177,7 +177,7 @@ df_clt %>%
 
 Some observations to note:
 
-- The coverage is well below our desired $95%$ when $n$ is small; this is because the CLT is an asymptotic result.
+- The coverage is well below our desired $95%$ when $n$ is small; this is because we are making an approximation.
 - As $n$ increases, the coverage tends towards our desired $95%$.
 
 See Note [2] for an animation that helps explain how confidence intervals are constructed.
