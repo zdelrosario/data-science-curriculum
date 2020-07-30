@@ -94,12 +94,13 @@ Core
   - testing and training error (e.g. via cross-validation)
 - Fit
   - a distribution (e-stat08-fit-dist)
-  - a linear model
+  - a linear model (e-stat11-models-intro)
 - Question
   - whether a given degree of certainty is sufficient to make a decision (e-stat10-hyp-intro)
+  - whether a model is flexible enough to fit a given dataset (e-stat11-models-train-validate)
+  - whether a model is overfit to a given dataset (e-stat11-models-train-validate)
   - whether a given numerical result relates to a qualitative conclusion
   - whether a given study has sufficient relevance to a given question
-  - whether a model is flexible enough to fit a given dataset
 
 Bonus
 - Fit
