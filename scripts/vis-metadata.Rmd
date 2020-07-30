@@ -23,7 +23,10 @@ exercise_data <- "~/Git/data-science-curriculum/exercises"
 
 df_ex_files <-
   tibble(file = list.files(exercise_data, full.names = TRUE)) %>%
-  filter(str_detect(file, "Rmd$")) %>%
+  filter(
+    str_detect(file, "Rmd$"),
+    str_detect(file, "master")
+  ) %>%
   mutate(
     filename = str_extract(file, "[^/]+\\.Rmd"),
     name = str_remove(filename, "(-master)?\\.Rmd")
@@ -78,7 +81,8 @@ df_exercises <-
           convert = TRUE
         )
     }
-  )
+  ) %>%
+  mutate(name = str_remove(name, "-master"))
 ```
 
 # Scheduling
