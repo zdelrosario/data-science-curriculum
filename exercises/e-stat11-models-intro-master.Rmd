@@ -9,7 +9,7 @@ reading: -1
 
 *Purpose*: (Introduction to modeling through linear regression)
 
-*Reading*:
+*Reading*: (*None*, this exercise *is* the reading.)
 
 ```{r setup}
 library(tidyverse)
@@ -32,31 +32,53 @@ df_test <-
 
 ## A simple model
 
+In what follows, we'll try to fit a *linear, one-dimensional* model for the `price` of a diamond. It will be *linear* in the sense that it will be a linear function of its inputs; i.e. for an input $x$ we'll limit ourselves to scaling the input $\beta \times x$. It will also be *one-dimensional* in the sense that we will only consider one input; namely, the `carat` of the diamond. Thus, my model for predicted price $\hat{f}$ will be
+
+$$\hat{f} = \beta_0 + \beta_{\text{carat}} \text{carat}.$$
+
+Remember that $\hat{f}$ notation indicates an estimate for the quantity $f$. To start modeling, I'll choose *parameters* for my model by selecting values for the slope and intercept.
+
 ```{r model-manual-1}
+## Set model parameter values [theta]
+slope <- 1000 / 0.5 # Eyeball: $1000 / (1/2) carat
+intercept <- 0
+
+## Represent model as an `abline`
 df_train %>%
 
   ggplot(aes(carat, price)) +
   geom_point() +
   geom_abline(
-    intercept = 0,
-    slope = 1000 / 0.5, # Eyeball: $1000 / (1/2) carat,
+    slope = slope,
+    intercept = intercept,
     linetype = 2,
     color = "salmon"
   )
 ```
+
+That doesn't look very good; the line tends to miss the higher-carat values. I manually adjust the slope up by a factor of two:
 
 ```{r model-manual-2}
+## Set model parameter values [theta]
+slope <- 2000 / 0.5 # Adjusted by factor of 2
+intercept <- 0
+
+## Represent model as an `abline`
 df_train %>%
 
   ggplot(aes(carat, price)) +
   geom_point() +
   geom_abline(
-    intercept = 0,
-    slope = 2000 / 0.5, # Adjusted by factor of 2
+    slope = slope,
+    intercept = intercept,
     linetype = 2,
     color = "salmon"
   )
 ```
+
+This approach to *fitting a model*---choosing parameter values---is labor-intensive and silly. Fortunately, there's a better way. We can *optimize* the parameter values by minimizing a chosen error metric.
+
+First, let's visualize the errors we will seek to minimize:
 
 ```{r model-manual-3}
 ## Set model parameter values [theta]
@@ -81,11 +103,11 @@ df_train %>%
   )
 ```
 
-This plot shows the *residuals* of the
+This plot shows the *residuals* of the model, that is
 
 $$\text{Residual}_i(\theta) = \hat{f}_i(\theta) - f_i,$$
 
-where $f_i$ is the i-th observed output value (`price`), $\hat{f}_i(\theta)$ is the i-th prediction from the model (`price_pred`), and $\theta$ is the set of parameter values for the model. For instance, int he model
+where $f_i$ is the i-th observed output value (`price`), $\hat{f}_i(\theta)$ is the i-th prediction from the model (`price_pred`), and $\theta$ is the set of parameter values for the model. For instance, the *linear, one-dimensional* model above has as parameters `theta = c(slope, intercept)`. We can use these residuals to define an error metric and fit a model.
 
 ## Fitting a model
 
@@ -93,15 +115,41 @@ Define the *mean squared error* (MSE) via
 
 $$\text{MSE}(\theta) = \frac{1}{n} \sum_{i=1}^n \text{Residual}_i(\theta)^2 = \frac{1}{n} \sum_{i=1}^n (\hat{f}_i(\theta) - f_i)^2.$$
 
+This is a summary of the total error of the model. While we could carry out this optimization analytically, the `R` routine `lm()` (which stands for *linear model*) automates this procedure. We simply give it `data` over which to fit the model, and a `formula` defining which inputs and output to consider.
 
-
-```{r }
+```{r fit-carat}
 ## Fit model
 fit_carat <-
   df_train %>%
-  slice_sample(n = 1000) %>%
-  lm(data = ., formula = price ~ carat)
+  lm(
+    data = .,               # Data for fit
+    formula = price ~ carat # Formula for fit
+  )
 
+```
+
+The `formula` argument uses R's formula notation, where `Y ~ X` means "fit a linear model with `Y` as the value to predict, and with `X` as an input." The formula `price ~ carat` translates to the linear model
+
+$$\hat{price} = \beta_0 + \beta_{\text{carat}} \text{carat}.$$
+
+This slightly-mysterious formula notation `price ~ carat` is convenient for defining many kinds of models, as we'll see later. For now, let's visually inspect the results of the model using the function `modelr::add_predictions()`:
+
+```{r vis-carat}
+## Compute predicted values
+df_train %>%
+  add_predictions(
+    model = fit_carat,
+    var = "price_pred"
+  ) %>%
+
+  ## Visualize *residuals* as vertical bars
+  ggplot(aes(carat, price)) +
+  geom_point() +
+  geom_line(
+    aes(y = price_pred),
+    linetype = 2,
+    color = "salmon"
+  )
 ```
 
 ## Diagnostics
@@ -110,9 +158,14 @@ fit_carat <-
 
 ```{r metrics}
 ## Compute metrics
+mse(fit_carat, df_train)
 rsquare(fit_carat, df_train)
-rsquare(fit_carat, df_test)
 ```
+
+- `mse` is the [*mean squared error*](https://en.wikipedia.org/wiki/Mean_squared_error). Lower values are more accurate.
+- `rsquare`, also known as the [*coefficient of determination*](https://en.wikipedia.org/wiki/Coefficient_of_determination), lies between `[0, 1]`. Higher values are more accurate.
+
+*Aside*: What's an acceptable r-squared value? That really depends on the application. For some physics-related problems $R \approx 0.9$ might be considered unacceptably low, while for some human-behavior related problems $R \approx 0.7$ might be considered phenomenally great!
 
 (Predicted vs actual)
 
@@ -126,5 +179,67 @@ df_train %>%
 
   ggplot(aes(price_pred, price)) +
   geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  geom_point()
+```
+
+## Improving a model
+
+### Adding predictors
+
+```{r fit-4c}
+## Fit model
+fit_4c <-
+  df_train %>%
+  lm(
+    data = .,
+    formula = price ~ carat + cut + color + clarity
+  )
+```
+
+The formula `price ~ carat + cut + color + clarity` corresponds to the model
+
+$$\hat{\text{price}} = \beta_0 + \beta_{\text{carat}} \text{carat} + \beta_{\text{cut}} \text{cut} + \beta_{\text{color}} \text{color} + \beta_{\text{clarity}} \text{clarity}.$$
+
+```{r compare-metrics}
+## Compute metrics
+rsquare(fit_carat, df_train)
+rsquare(fit_4c, df_train)
+```
+
+```{r compare-pred-vs-actual}
+## Predicted vs Actual
+df_train %>%
+  add_predictions(
+    model = fit_carat,
+    var = "price_pred-carat"
+  ) %>%
+  add_predictions(
+    model = fit_4c,
+    var = "price_pred-4c"
+  ) %>%
+  pivot_longer(
+    names_to = c(".value", "model"),
+    names_sep = "-",
+    cols = contains("price_pred")
+  ) %>%
+
+  ggplot(aes(price_pred, price)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, size = 1, color = "grey50") +
+
+  facet_grid(model ~ .) +
+  theme_minimal()
+```
+
+### Higher-order terms
+
+```{r }
+set.seed(113)
+
+df_train %>%
+  slice_sample(n = 10) %>%
+
+
+  ggplot(aes(carat, price)) +
   geom_point()
 ```
