@@ -7,7 +7,7 @@ time: 60
 reading: 0
 ---
 
-*Purpose*: There are multiple kinds of statistical intervals, and different intervals are useful for answering different questions. In this exercise, we'll learn about *prediction intervals*: How they differ from confidence intervals, and when we would use a CI versus a PI. We'll also learn how how to combine both CI and PI with regression analysis, and perform a mini case study.
+*Purpose*: There are multiple kinds of statistical intervals, and different intervals are useful for answering different questions. In this exercise, we'll learn about *prediction intervals*: How they differ from confidence intervals, and when we would use a CI versus a PI. 
 
 *Reading*: (None, this is the reading)
 
@@ -15,7 +15,6 @@ reading: 0
 library(tidyverse)
 library(modelr)
 library(broom)
-library(rsample)
 
 ## Helper function to compute uncertainty bounds
 add_uncertainties <- function(data, model, prefix = "pred", ...) {
@@ -182,6 +181,7 @@ df_q2 %>%
   guides(color = FALSE) +
   facet_grid(~ type)
 ```
+
 **Observations**:
 
 <!-- task-begin -->
@@ -232,204 +232,5 @@ left_join(
 - My CI does include the population mean.
 - My PI includes ~0.94 of the validation prices, which is quite close to the 0.95 desired.
 <!-- solution-end -->
-
-# Application: CI and PI in Regression
-<!-- -------------------------------------------------- -->
-
-Confidence and prediction intervals are useful for studying "pure sampling" of some distribution. However, we can combine CI and PI with regression analysis to equip our modeling efforts with powerful notions of uncertainty. Let's look at a real data example to illustrate.
-
-*Background*: The data you will study in this exercise come from a computational fluid dynamics (CFD) [simulation campaign](https://www.sciencedirect.com/science/article/abs/pii/S0301932219308651?via%3Dihub) that studied the interaction of turbulent flow and radiative heat transfer to suspended particles. The following code chunk downloads and unpacks the data to your local `./data/` folder.
-
-```{r data-download-unzip}
-## NOTE: No need to edit this chunk
-## Download PSAAP II data and unzip
-url_zip <- "https://ndownloader.figshare.com/files/24111269"
-filename_zip <- "./data/psaap.zip"
-filename_psaap <- "./data/psaap.csv"
-
-curl::curl_download(url_zip, destfile = filename_zip)
-unzip(filename_zip, exdir = "./data")
-df_psaap <- read_csv(filename_psaap)
-```
-
-The important variables in this dataset are:
-
-| Variable | Category |
-|----------|----------|
-| `x`      | Input    |
-| `idx`    | Metadata |
-| `L`      | Input    |
-| `W`      | Input    |
-| `U_0`    | Input    |
-| `N_p`    | Input    |
-| `k_f`    | Input    |
-| `T_f`    | Input    |
-| `rho_f`  | Input    |
-| `mu_f`   | Input    |
-| `lam_f`  | Input    |
-| `C_fp`   | Input    |
-| `rho_p`  | Input    |
-| `d_p`    | Input    |
-| `C_pv`   | Input    |
-| `h`      | Input    |
-| `I_0`    | Input    |
-| `eps_p`  | Input    |
-| `avg_q`  | Output   |
-| `avg_T`  | Output   |
-| `rms_T`  | Output   |
-| `T_norm` | Output   |
-
-The primary output of interest is `T_norm`, the normalized (dimensionless) temperature rise of the fluid, due to heat transfer. These measurements are taken at locations `x` along a column of fluid, for different experimental settings (e.g. different dimensions `W, L`, different flow speeds `U_0`, etc.).
-
-```{r data-vis}
-## NOTE: No need to edit this chunk
-df_psaap %>%
-  ggplot(aes(x, T_norm)) +
-  geom_line(aes(color = idx, group = idx), size = 0.3) +
-  geom_point() +
-
-  viridis::scale_color_viridis() +
-  guides(color = FALSE) +
-  theme_minimal() +
-  labs(
-    x = "Channel Location (-)",
-    y = "Normalized Temperature Rise (-)"
-  )
-```
-
-There are `35` simulations represented in this dataset, each with measurements taken at `4` locations: `x %in% c(0.25, 0.5, 0.75, 1.0)`. The following chunk will split the data into training and validation sets.
-
-```{r data-split}
-## NOTE: No need to edit this chunk
-# Addl' Note: These data are already randomized by idx; no need
-# to additionally shuffle the data!
-df_train <- df_psaap %>% filter(idx %in% seq(1:24))
-df_validate <- df_psaap %>% filter(idx %in% seq(25:36))
-```
-
-Let's fit a very simple model to these data, one which only considers the channel location and ignores all other inputs. We'll also use the helper function `add_uncertainties()` (defined in the `setup` chunk above) to estimate CI and PI to the linear model.
-
-```{r data-simple-model}
-## NOTE: No need to edit this chunk
-fit_mean <-
-  df_train %>%
-  lm(data = ., formula = T_norm ~ x)
-
-df_intervals <-
-  df_train %>%
-  add_uncertainties(fit_mean, interval = "confidence", prefix = "ci") %>%
-  add_uncertainties(fit_mean, interval = "prediction", prefix = "pi")
-```
-
-The following figure visualizes the regression CI and PI against the objects they are attempting to capture:
-
-```{r data-simple-model-vis}
-## NOTE: No need to edit this chunk
-df_intervals %>%
-  select(T_norm, x, matches("ci|pi")) %>%
-  pivot_longer(
-    names_to = c("method", ".value"),
-    names_sep = "_",
-    cols = matches("ci|pi")
-  ) %>%
-
-  ggplot(aes(x, fit)) +
-  geom_errorbar(
-    aes(ymin = lwr, ymax = upr, color = method),
-    width = 0.05,
-    size = 1
-  ) +
-  geom_smooth(
-    data = df_psaap %>% mutate(method = "ci"),
-    mapping = aes(x, T_norm),
-    se = FALSE,
-    linetype = 2,
-    color = "black"
-   ) +
-  geom_point(
-    data = df_validate %>% mutate(method = "pi"),
-    mapping = aes(x, T_norm),
-    size = 0.5
-  ) +
-
-  facet_grid(~method) +
-  theme_minimal() +
-  labs(
-    x = "Channel Location (-)",
-    y = "Normalized Temperature Rise (-)"
-  )
-```
-
-Under the `ci` facet we have the regression confidence intervals and the mean trend (computed with all the data `df_psaap`). Under the `pi` facet we have the regression prediction intervals and the `df_validation` observations.
-
-**Punchline**:
-
-- Confidence intervals are meant to capture the *mean trend*
-- Prediction intervals are meant to capture *new observations*
-
-Let's use these ideas to try to solve an engineering problem:
-
-__q4__ You are consulting with a team that is designing a prototype heat transfer device. They are asking you to help determine a *dependable, lower threshold* for `T_norm` they can design around, in order to be confident in a minimum performance for this *single prototype*. In order to maximize the conditions under which this device can operate successfully, they have chosen to fix the variables listed in the table below, and consider the other variables to fluctuate according to the values observed in `df_psaap`.
-
-| Variable | Value    |
-|----------|----------|
-| `x`      | 1.0      |
-| `L`      | 0.2      |
-| `W`      | 0.04     |
-| `U_0`    | 1.0      |
-| (Other)  | (Varies) |
-
-Your task is to use a regression analysis to deliver to the design team a lower estimate for `T_norm`, given their proposed design, and at a high probability level `0.99`. Perform your analysis below (use the helper function `add_uncertainties()`!), and answer the questions below.
-
-*Hint*: This problem will require you to *build a model* by choosing the appropriate variables to include in the analysis. Think about *which variables the design team can control*, and *which variables they have chosen to allow to vary*. You will also need choose between computing a CI or PI for the design prediction.
-
-```{r q4-task}
-# NOTE: No need to change df_design; this is the target the client
-#       is considering
-df_design <- tibble(x = 1, L = 0.2, W = 0.04, U_0 = 1.0)
-
-# task-begin
-## TODO: Fit a model, assess the uncertainty in your prediction, make a 
-#        recommendation on a *lower bound* for T_norm
-# task-end
-# solution-begin
-fit_q4 <-
-  df_train %>%
-  lm(data = ., formula = T_norm ~ x + L + W + U_0)
-
-# Check model quality
-rsquare(fit_q4, df_train)
-rsquare(fit_q4, df_validate)
-
-# Predict on target design
-df_q4 <- 
-  df_design %>% 
-  add_uncertainties(
-    fit_q4, 
-    interval = "prediction", 
-    prefix = "pi", 
-    level = 0.99
-  )
-df_q4 %>% 
-  select(pi_lwr, pi_fit, pi_upr)
-# solution-end
-```
-
-**Recommendation**:
-
-<!-- task-begin -->
-- How much do you trust your model? Why?
-- What kind of interval---confidence or prediction---would you use for this task, and why?
-- What lower value for `T_norm` would you recommend the design time to plan around?
-<!-- task-end -->
-<!-- solution-begin -->
-- I weakly trust this model; the test accuracy is quite bad, and while the validation accuracy is much better our validation set is quite small.
-- I would use a prediction interval, as the design team only plans to produce one of these devices and they want to be confident it will work.
-- I would recommend the designers plan for `T_norm = 1.07` as a lower bound, but would also highly recommend they consider restricting their operating conditions. The model is quite uncertain, and they could likely obtain much better performance by restricting the operating conditions, perhaps up to a factor of two.
-<!-- solution-end -->
-
-There's no unit test here; when you're done, check the solution document to see the analysis that I performed.
-
-*Bonus*: One way you could take this analysis further is to recommend which other variables the design team should tightly control. You could do this by fixing values in `df_design` and adding them to the model. An exercise you could carry out would be to systematically test the variables to see which ones the design team should more tightly control.
 
 <!-- include-exit-ticket -->
