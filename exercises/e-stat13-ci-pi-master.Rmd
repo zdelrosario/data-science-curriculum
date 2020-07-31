@@ -1,0 +1,435 @@
+---
+title: "Statistics: Confidence vs Prediction Intervals"
+author: Zachary del Rosario
+date: 2020-07-30
+output: github_document
+time: 60
+reading: 0
+---
+
+*Purpose*: There are multiple kinds of statistical intervals, and different intervals are useful for answering different questions. In this exercise, we'll learn about *prediction intervals*: How they differ from confidence intervals, and when we would use a CI versus a PI. We'll also learn how how to combine both CI and PI with regression analysis, and perform a mini case study.
+
+*Reading*: (None, this is the reading)
+
+```{r setup}
+library(tidyverse)
+library(modelr)
+library(broom)
+library(rsample)
+
+## Helper function to compute uncertainty bounds
+add_uncertainties <- function(data, model, prefix = "pred", ...) {
+  df_fit <-
+    stats::predict(model, data, ...) %>%
+    as_tibble() %>%
+    rename_with(~ str_c(prefix, "_", .))
+
+  bind_cols(data, df_fit)
+}
+```
+
+# Introduction: Confidence vs Prediction Intervals
+<!-- -------------------------------------------------- -->
+
+There are multiple kinds of statistical intervals: We have already discussed [confidence intervals](https://en.wikipedia.org/wiki/Confidence_interval) (in e-stat06-clt), now we'll discuss [prediction intervals](https://en.wikipedia.org/wiki/Prediction_interval).
+
+## Specific Mathematical Example: Normal Distribution
+
+To help distinguish between between confidence intervals (CI) and prediction intervals (PI), let's first limit our attention to normal distributions (where the math is easy).
+
+We saw in e-stat06-clt that a confidence interval is a way to summarize our knowledge about an *estimated parameter*; for instance, a confidence interval $[l, u]$ for the sample mean $\overline{X}$ of a normal distribution at confidence level $C$ would be
+
+$$C = \mathbb{P}\left[l < \overline{X} < u\right] = \mathbb{P}\left[\frac{l - \mu}{\sigma / \sqrt{n}} < Z < \frac{u - \mu}{\sigma / \sqrt{n}}\right].$$
+
+Note the $\sigma / \sqrt{n}$ in the denominator on the right; this is the standard error for the sample mean $\overline{X}$. A CI is a useful way to summarize our uncertainty about an estimated parameter.
+
+A different kind of interval is a *prediction interval* (PI). Rather than summarizing information about an estimated parameter, a PI summarizes information about *future observations*. The following equation defines a prediction interval for a normal distribution *assuming we magically know the mean and variance*:
+
+$$P = \mathbb{P}\left[l < X < u\right] = \mathbb{P}\left[\frac{l - \mu}{\sigma} < Z < \frac{u - \mu}{\sigma}\right]$$
+**Observations**:
+
+- Note that the CI equation above has a dependence on $n$; as we gather more data the interval will tend to narrow.
+- Note that the PI equation above have *no dependence* on $n$; when we turn the "magic" off and have to estimate `mean, sd` from data a dependence on $n$ shows up. However, even if we had infinite data (recovering the "magic" equation above), the interval would still not collapse to zero width.
+
+__q1__ Check your understanding; I provide code below to compute a confidence interval for the sample mean when sampling from `rnorm(mean = 1, sd = 2)` with `n = 400`. Modify the code to compute a prediction interval for the same underlying normal distribution.
+
+```{r q1-task}
+## NOTE: No need to edit this setup
+mu <- 1  # Normal mean
+sd <- 2  # Normal variance
+n <- 400 # Number of samples
+
+ci_lwr <- mu - 1.96 * sd / sqrt(n)
+ci_upr <- mu + 1.96 * sd / sqrt(n)
+# task-begin
+## TODO: Use the equations above to compute a prediction interval for the
+##       normal distribution rnorm(mean = mu, sd = sd)
+pi_lwr <- NA_real_
+pi_upr <- NA_real_
+# task-end
+# solution-begin
+pi_lwr <- mu - 1.96 * sd
+pi_upr <- mu + 1.96 * sd
+# solution-end
+```
+
+Use the following tests to check your work.
+
+```{r q1-tests}
+## NOTE: No need to change this
+assertthat::assert_that(abs(pi_lwr + 2.92) <= 1e-6)
+assertthat::assert_that(abs(pi_upr - 4.92) <= 1e-6)
+
+print("Well done!")
+```
+
+Our first observation about CI and PI is that PI will tend to be wider than CI! That's because they are telling us *fundamentally different things* about our population. Consequently, we use CI and PI for *very different applications*.
+
+## Applications of CI and PI
+
+A *confidence interval* is most likely to be useful when we care *more about aggregates*---rather than the individual observations.
+
+A *prediction interval* is most likely to be useful when we care *more about individual observations*---rather than the aggregate behavior.
+
+Let's think back to e-stat10-hyp-intro, where we were buying *many* diamonds. In that case we constructed confidence intervals on the mean price of diamonds and on the proportion of high-cut diamonds. Since we cared primarily about the properties of *many* diamonds, it made sense to use confidence interval to support our decision making.
+
+Now let's think of a different application: Imagine we were going to purchase just *one diamond*. In that case we don't care about the *mean price*; we care about the *single price* of the *one diamond* we'll ultimately end up buying. In this case, we would be better off constructing a prediction interval for the price of diamonds from the population---this will give us a sense of the range of values we might encounter in our purchase.
+
+Prediction intervals are also used for [other applications](https://en.wikipedia.org/wiki/Prediction_interval#Applications), such as defining a "standard reference range" for blood tests: Since doctors care about the individual patients---we want *every* patient to survive, not just mythical "average" patients!---it is more appropriate to use a prediction interval for this application.
+
+Let's apply these ideas to the diamonds dataset:
+
+```{r diamonds-train-validate}
+## NOTE: No need to edit this setup
+# Create a test-validate split
+set.seed(101)
+diamonds_randomized <-
+  diamonds %>%
+  slice(sample(dim(diamonds)[1]))
+
+diamonds_train <-
+  diamonds_randomized %>%
+  slice(1:10000)
+
+diamonds_validate <-
+  diamonds_randomized %>%
+  slice(10001:20000)
+```
+
+We're about to blindly apply the normal-assuming formulae, but before we do that, let's quickly inspect our data to see how normal or not they are:
+
+```{r diamonds-vis}
+## NOTE: No need to edit this chunk
+bind_rows(
+  diamonds_train %>% mutate(source = "Train"),
+  diamonds_validate %>% mutate(source = "Validate")
+) %>%
+
+  ggplot(aes(price)) +
+  geom_histogram(bins = 100) +
+
+  facet_grid(source ~ .)
+```
+Take a quick look at the plot above, and make a prediction (to yourself) whether the normally-approximated CI and PI will behave well in this case. Then continue on to q2.
+
+__q2__ Using the formulas above, estimate CI and PI using `diamonds_train`. Visualize the results using the chunk `q2-vis` below, and answer the questions under *observations*.
+
+```{r q2-task}
+# task-begin
+## TODO: Estimate CI and PI using the formulas from q1, use diamonds_train
+##       and assign your estimates to columns ci_lwr, ci_upr, pi_lwr, pi_upr
+df_q2 <- NA
+# task-end
+# solution-begin
+df_q2 <-
+  diamonds_train %>%
+  summarize(
+    price_mean = mean(price),
+    price_sd = sd(price),
+    price_n = n()
+  ) %>%
+  mutate(
+   ci_lwr = price_mean - 1.96 * price_sd / sqrt(n),
+   ci_upr = price_mean + 1.96 * price_sd / sqrt(n),
+   pi_lwr = price_mean - 1.96 * price_sd,
+   pi_upr = price_mean + 1.96 * price_sd
+  ) %>%
+  select(ci_lwr, ci_upr, pi_lwr, pi_upr)
+# solution-end
+df_q2
+```
+
+Use the following code to visualize your results; answer the questions below.
+
+```{r q2-vis}
+## NOTE: No need to edit this chunk
+df_q2 %>%
+  pivot_longer(
+    names_to = c("type", ".value"),
+    names_sep = "_",
+    cols = everything()
+  ) %>%
+
+  ggplot() +
+  geom_point(
+    data = diamonds_validate,
+    mapping = aes(x = "", y = price),
+    position = position_jitter(width = 0.3),
+    size = 0.2
+  ) +
+  geom_errorbar(aes(x = "", ymin = lwr, ymax = upr, color = type)) +
+
+  guides(color = FALSE) +
+  facet_grid(~ type)
+```
+**Observations**:
+
+<!-- task-begin -->
+- Compare the intervals against the price observations; do the intervals and observations relate to each other like you would expect?
+- Are the CI and PI working correctly? How would you check this?
+- What *assumptions* did you make when defining your CI and PI above? Are those assumptions valid for these data?
+<!-- task-end -->
+<!-- solution-begin -->
+- Visually the CI and PI seem decent.
+  - The CI seems to be located in the "middle" of the data.
+  - The PI covers a wide fraction of the data. However, its lower bound goes negative, which is undesirable.
+- I would check the CI against the population mean (if available) or a validation mean.
+- I would check if the PI contains an appropriate fraction of prices, either from the population (if available), or from validation data.
+- Both the CI and PI above assume a normal distribution and perfectly-known parameters `mean, sd`. The assumption of perfectly-known parameters is probably ok here (since we have *a lot* of data), but based on EDA we've done before, the assumption of normality is quite poor.
+<!-- solution-end -->
+
+__q3__ Test whether your CI and PI are constructed correctly: Remember the definitions of what CI and PI are meant to accomplish, and check how closely your intervals agree with the validation data.
+
+```{r q3-task}
+## TODO: Devise a test to see if your CI and PI are correctly reflecting
+##       the diamonds population; use diamonds_validation in your testing
+# solution-begin
+## Testing the CI
+bind_cols(
+  df_q2 %>% select(ci_lwr, ci_upr),
+  diamonds_validate %>% summarize(price_mean = mean(price))
+) %>%
+  select(ci_lwr, price_mean, ci_upr)
+
+## Testing the PI
+left_join(
+  diamonds_validate,
+  df_q2 %>% select(pi_lwr, pi_upr),
+  by = character()
+) %>%
+  summarize(P_empirical = mean(pi_lwr <= price & price <= pi_upr))
+# solution-end
+```
+
+**Observations**:
+
+<!-- task-begin -->
+- Does your CI include the mean price of diamonds?
+  - Do we expect the CI it to *always* include the true parameter?
+- Does your PI include the appropriate fraction of diamond prices?
+<!-- task-end -->
+<!-- solution-begin -->
+- My CI does include the population mean.
+- My PI includes ~0.94 of the validation prices, which is quite close to the 0.95 desired.
+<!-- solution-end -->
+
+# Application: CI and PI in Regression
+<!-- -------------------------------------------------- -->
+
+Confidence and prediction intervals are useful for studying "pure sampling" of some distribution. However, we can combine CI and PI with regression analysis to equip our modeling efforts with powerful notions of uncertainty. Let's look at a real data example to illustrate.
+
+*Background*: The data you will study in this exercise come from a computational fluid dynamics (CFD) [simulation campaign](https://www.sciencedirect.com/science/article/abs/pii/S0301932219308651?via%3Dihub) that studied the interaction of turbulent flow and radiative heat transfer to suspended particles. The following code chunk downloads and unpacks the data to your local `./data/` folder.
+
+```{r data-download-unzip}
+## NOTE: No need to edit this chunk
+## Download PSAAP II data and unzip
+url_zip <- "https://ndownloader.figshare.com/files/24111269"
+filename_zip <- "./data/psaap.zip"
+filename_psaap <- "./data/psaap.csv"
+
+curl::curl_download(url_zip, destfile = filename_zip)
+unzip(filename_zip, exdir = "./data")
+df_psaap <- read_csv(filename_psaap)
+```
+
+The important variables in this dataset are:
+
+| Variable | Category |
+|----------|----------|
+| `x`      | Input    |
+| `idx`    | Metadata |
+| `L`      | Input    |
+| `W`      | Input    |
+| `U_0`    | Input    |
+| `N_p`    | Input    |
+| `k_f`    | Input    |
+| `T_f`    | Input    |
+| `rho_f`  | Input    |
+| `mu_f`   | Input    |
+| `lam_f`  | Input    |
+| `C_fp`   | Input    |
+| `rho_p`  | Input    |
+| `d_p`    | Input    |
+| `C_pv`   | Input    |
+| `h`      | Input    |
+| `I_0`    | Input    |
+| `eps_p`  | Input    |
+| `avg_q`  | Output   |
+| `avg_T`  | Output   |
+| `rms_T`  | Output   |
+| `T_norm` | Output   |
+
+The primary output of interest is `T_norm`, the normalized (dimensionless) temperature rise of the fluid, due to heat transfer. These measurements are taken at locations `x` along a column of fluid, for different experimental settings (e.g. different dimensions `W, L`, different flow speeds `U_0`, etc.).
+
+```{r data-vis}
+## NOTE: No need to edit this chunk
+df_psaap %>%
+  ggplot(aes(x, T_norm)) +
+  geom_line(aes(color = idx, group = idx), size = 0.3) +
+  geom_point() +
+
+  viridis::scale_color_viridis() +
+  guides(color = FALSE) +
+  theme_minimal() +
+  labs(
+    x = "Channel Location (-)",
+    y = "Normalized Temperature Rise (-)"
+  )
+```
+
+There are `35` simulations represented in this dataset, each with measurements taken at `4` locations: `x %in% c(0.25, 0.5, 0.75, 1.0)`. The following chunk will split the data into training and validation sets.
+
+```{r data-split}
+## NOTE: No need to edit this chunk
+# Addl' Note: These data are already randomized by idx; no need
+# to additionally shuffle the data!
+df_train <- df_psaap %>% filter(idx %in% seq(1:24))
+df_validate <- df_psaap %>% filter(idx %in% seq(25:36))
+```
+
+Let's fit a very simple model to these data, one which only considers the channel location and ignores all other inputs. We'll also use the helper function `add_uncertainties()` (defined in the `setup` chunk above) to estimate CI and PI to the linear model.
+
+```{r data-simple-model}
+## NOTE: No need to edit this chunk
+fit_mean <-
+  df_train %>%
+  lm(data = ., formula = T_norm ~ x)
+
+df_intervals <-
+  df_train %>%
+  add_uncertainties(fit_mean, interval = "confidence", prefix = "ci") %>%
+  add_uncertainties(fit_mean, interval = "prediction", prefix = "pi")
+```
+
+The following figure visualizes the regression CI and PI against the objects they are attempting to capture:
+
+```{r data-simple-model-vis}
+## NOTE: No need to edit this chunk
+df_intervals %>%
+  select(T_norm, x, matches("ci|pi")) %>%
+  pivot_longer(
+    names_to = c("method", ".value"),
+    names_sep = "_",
+    cols = matches("ci|pi")
+  ) %>%
+
+  ggplot(aes(x, fit)) +
+  geom_errorbar(
+    aes(ymin = lwr, ymax = upr, color = method),
+    width = 0.05,
+    size = 1
+  ) +
+  geom_smooth(
+    data = df_psaap %>% mutate(method = "ci"),
+    mapping = aes(x, T_norm),
+    se = FALSE,
+    linetype = 2,
+    color = "black"
+   ) +
+  geom_point(
+    data = df_validate %>% mutate(method = "pi"),
+    mapping = aes(x, T_norm),
+    size = 0.5
+  ) +
+
+  facet_grid(~method) +
+  theme_minimal() +
+  labs(
+    x = "Channel Location (-)",
+    y = "Normalized Temperature Rise (-)"
+  )
+```
+
+Under the `ci` facet we have the regression confidence intervals and the mean trend (computed with all the data `df_psaap`). Under the `pi` facet we have the regression prediction intervals and the `df_validation` observations.
+
+**Punchline**:
+
+- Confidence intervals are meant to capture the *mean trend*
+- Prediction intervals are meant to capture *new observations*
+
+Let's use these ideas to try to solve an engineering problem:
+
+__q4__ You are consulting with a team that is designing a prototype heat transfer device. They are asking you to help determine a *dependable, lower threshold* for `T_norm` they can design around, in order to be confident in a minimum performance for this *single prototype*. In order to maximize the conditions under which this device can operate successfully, they have chosen to fix the variables listed in the table below, and consider the other variables to fluctuate according to the values observed in `df_psaap`.
+
+| Variable | Value    |
+|----------|----------|
+| `x`      | 1.0      |
+| `L`      | 0.2      |
+| `W`      | 0.04     |
+| `U_0`    | 1.0      |
+| (Other)  | (Varies) |
+
+Your task is to use a regression analysis to deliver to the design team a lower estimate for `T_norm`, given their proposed design, and at a high probability level `0.99`. Perform your analysis below (use the helper function `add_uncertainties()`!), and answer the questions below.
+
+*Hint*: This problem will require you to *build a model* by choosing the appropriate variables to include in the analysis. Think about *which variables the design team can control*, and *which variables they have chosen to allow to vary*. You will also need choose between computing a CI or PI for the design prediction.
+
+```{r q4-task}
+# NOTE: No need to change df_design; this is the target the client
+#       is considering
+df_design <- tibble(x = 1, L = 0.2, W = 0.04, U_0 = 1.0)
+
+# task-begin
+## TODO: Fit a model, assess the uncertainty in your prediction, make a 
+#        recommendation on a *lower bound* for T_norm
+# task-end
+# solution-begin
+fit_q4 <-
+  df_train %>%
+  lm(data = ., formula = T_norm ~ x + L + W + U_0)
+
+# Check model quality
+rsquare(fit_q4, df_train)
+rsquare(fit_q4, df_validate)
+
+# Predict on target design
+df_q4 <- 
+  df_design %>% 
+  add_uncertainties(
+    fit_q4, 
+    interval = "prediction", 
+    prefix = "pi", 
+    level = 0.99
+  )
+df_q4 %>% 
+  select(pi_lwr, pi_fit, pi_upr)
+# solution-end
+```
+
+**Recommendation**:
+
+<!-- task-begin -->
+- How much do you trust your model? Why?
+- What kind of interval---confidence or prediction---would you use for this task, and why?
+- What lower value for `T_norm` would you recommend the design time to plan around?
+<!-- task-end -->
+<!-- solution-begin -->
+- I weakly trust this model; the test accuracy is quite bad, and while the validation accuracy is much better our validation set is quite small.
+- I would use a prediction interval, as the design team only plans to produce one of these devices and they want to be confident it will work.
+- I would recommend the designers plan for `T_norm = 1.07` as a lower bound, but would also highly recommend they consider restricting their operating conditions. The model is quite uncertain, and they could likely obtain much better performance by restricting the operating conditions, perhaps up to a factor of two.
+<!-- solution-end -->
+
+There's no unit test here; when you're done, check the solution document to see the analysis that I performed.
+
+*Bonus*: One way you could take this analysis further is to recommend which other variables the design team should tightly control. You could do this by fixing values in `df_design` and adding them to the model. An exercise you could carry out would be to systematically test the variables to see which ones the design team should more tightly control.
+
+<!-- include-exit-ticket -->
