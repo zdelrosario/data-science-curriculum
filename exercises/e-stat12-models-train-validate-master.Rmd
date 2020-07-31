@@ -367,8 +367,7 @@ fit_q5 <-
 fit_q5 <-
   lm(
     data = diamonds_train,
-    # formula = price ~ carat + cut + color + clarity
-    formula = price ~ x + y + z
+    formula = price ~ carat + cut + color + clarity
   )
 # solution-end
 
