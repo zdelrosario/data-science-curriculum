@@ -83,15 +83,14 @@ Core
 - Describe
   - a random quantity with a distribution (e-stat01-distributions)
   - a dataset with descriptive statistics (e-stat03-descriptive, e-stat05-moment)
+  - a future outcome using a fitted model (e-stat13-ci-pi)
   - the relationship between variables using a model
-  - a future outcome using a fitted model
 - Apply
   - the principles of curiosity and skepticism to perform EDA (e-stat00-eda-basics)
 - Quantify
   - an approximate probability with Monte Carlo (e-stat02-probability)
   - the degree of uncertainty in an estimate (e-stat06-clt, e-stat09-bootstrap)
-  - the degree of uncertainty in a prediction
-  - testing and training error (e.g. via cross-validation)
+  - the degree of uncertainty in a prediction (e-stat13-ci-pi)
 - Fit
   - a distribution (e-stat08-fit-dist)
   - a linear model (e-stat11-models-intro)
@@ -99,16 +98,19 @@ Core
   - whether a given degree of certainty is sufficient to make a decision (e-stat10-hyp-intro)
   - whether a model is flexible enough to fit a given dataset (e-stat12-models-train-validate)
   - whether a model is overfit to a given dataset (e-stat12-models-train-validate)
+  - whether a model interpretation is real or spurious (e-stat14-models-interp-warnings)
   - whether a given numerical result relates to a qualitative conclusion
   - whether a given study has sufficient relevance to a given question
+- Select
+  - features based on an appropriate error estimate (e-stat12-model-train-validate)
+  - hyperparameters based on an appropriate error estimate (e-stat12-model-train-validate)
 
 Bonus
+- Quantify
+  - testing and training error, e.g. via cross-validation
 - Fit
   - a gaussian process
   - a random forest
-- Select
-  - features based on an appropriate error estimate
-  - hyperparameters based on an appropriate error estimate
 
 ## (Communication)
 - write easily-readable code by following a styleguide (e-comm00-style)
