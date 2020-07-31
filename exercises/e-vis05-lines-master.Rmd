@@ -64,7 +64,7 @@ mpg %>%
 - How does the `mpg` dataset violate this assumption?
 <!-- task-end -->
 <!-- solution-begin -->
-- A line plot assumes the underlying data have a *function* relationship; that is, that there is one y value for every x value
+- A line plot assumes the underlying data have a *function* relationship; that is, that there is one y-value for every x-value
 - The `mpg` dataset does not have a function relation between `displ` and `hwy`; there are cars with identical values of `displ` but different values of `hwy`
 <!-- solution-end -->
 
