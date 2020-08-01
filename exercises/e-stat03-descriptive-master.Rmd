@@ -444,7 +444,8 @@ One of the primary differences between Pearson and Spearman is that Pearson is a
 # Positive slope
 df_monotone <-
   tibble(x = seq(-pi/2 + 0.1, +pi/2 - 0.1, length.out = 50)) %>%
-  mutate(y = tan(x))
+  # mutate(y = tan(x))
+  mutate(y = x^2)
 
 df_monotone %>%
   ggplot(aes(x, y)) +
@@ -462,7 +463,7 @@ df_monotone %>%
   summarize(rho = cor(x, y, method = "spearman"))
 ```
 
-One more note about functional relationships: Neither Pearson nor Spearman can pick up on arbitrary dependencies.
+One more note about functional relationships: Neither Pearson nor Spearman can pick up on arbitrary dependencies. *Bonus*: To see this fact, try changing the function above to a parabola `y = x^2` and re-running the chunks!
 
 __q6__ Run the code chunk below and look at the visualization: Make a prediction about what you think the correlation will be. Then compute the Pearson correlation between `x, y` below.
 
