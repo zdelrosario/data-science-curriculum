@@ -1,8 +1,8 @@
 |Filename                        | Day| Exercise Duration (minutes)| Day Duration (minutes)|
 |:-------------------------------|---:|---------------------------:|----------------------:|
-|e-rep00-setup                   |   0|                          10|                     50|
-|e-rep01-intro-git               |   0|                          20|                     50|
-|e-setup00-install               |   0|                          20|                     50|
+|e-rep00-setup                   |   0|                          10|                     80|
+|e-rep01-intro-git               |   0|                          40|                     80|
+|e-setup00-install               |   0|                          30|                     80|
 |e-rep02-create                  |   1|                          15|                     55|
 |e-rep03-track                   |   1|                          15|                     55|
 |e-setup01-packages              |   1|                           5|                     55|
@@ -20,7 +20,7 @@
 |e-data02-derive                 |   7|                          75|                     75|
 |e-vis02-histograms              |   8|                          50|                     50|
 |e-rep04-directories             |   9|                          20|                     60|
-|e-stat01-distributions          |   9|                          40|                     60|
+|e-stat01-densities              |   9|                          40|                     60|
 |e-data03-pivot-basics           |  10|                          50|                     50|
 |e-rep05-collab                  |  11|                          60|                     60|
 |e-vis03-boxplots                |  12|                          40|                     40|
