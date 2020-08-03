@@ -18,9 +18,10 @@ Data Science is a powerful toolkit to extract usable insights from data. In this
 ## How to Use This Repo
 
 1. (Setup) Complete [this exercise](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-setup00-install.md) to install RStudio
-2. (Setup) Clone this repo
-3. (Setup) Navigate to the root directory (`data-science-curriculum`), run `$ make` to build the assignments in the `exercises_sequenced` directory
-4. (Learn) Work through the exercise `assignment` files at your own pace to learn Data Science!
+2. (Setup) Complete [this](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-rep01-intro-git.md) exercise to set up Git(Hub) in order to *clone* this repository
+3. (Setup) Clone this repo
+4. (Setup) Navigate to the root directory (`data-science-curriculum`), run `$ make` to build the assignments in the `exercises_sequenced` directory
+5. (Learn) Work through the exercise `assignment` files at your own pace to learn Data Science!
 
 **Suggested order**: The exercises filenames start with a `dXY` prefix to denote
 their suggested day-order. This is provided to
