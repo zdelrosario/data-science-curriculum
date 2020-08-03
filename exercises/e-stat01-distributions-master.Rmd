@@ -177,6 +177,41 @@ df_q2 %>%
 - The larger the value of `n`, the closer the density tends to be to normal.
 <!-- solution-end -->
 
+## Not Everything is Normal
+<!-- -------------------------------------------------- -->
+
+A *very common misconception* is that drawing more samples will make *anything* look like a normal distribution. **This is not the case!** The following exercise will help us understand that the normal distribution is *just a model*, and *not* what we should expect all randomness to look like.
+
+__q3__ Run the code below and inspect the resulting histogram. Increase `n_diamonds` below to increase the number of samples drawn: Do this a few times for an increasing number of samples. Answer the questions under *observations* below.
+
+```{r q3-task}
+# task-begin
+n_diamonds <- 10
+# task-begin
+# solution-begin
+n_diamonds <- 1000
+# solution-end
+
+diamonds %>%
+  filter(cut == "Good") %>%
+  slice_sample(n = n_diamonds) %>%
+  ggplot(aes(carat)) +
+  geom_histogram()
+```
+
+**Observations**:
+
+<!-- task-begin -->
+- Does the histogram look like a normal for *any* value of `n_diamonds`?
+- The normal distribution can take any value between negative infinity and positive infinity. Does that make sense for diamond `carat` values? Why or why not?
+<!-- task-end -->
+<!-- solution-begin -->
+- The histogram does not look normal for any `n_diamonds`, and indeed it should not. We've seen before that there are very "special" values of `carat` that gemcutters seem to favor. That "social" feature of diamonds is not at all captured by a normal distribution.
+- Carat is a measure of weight and weight cannot be negative.
+<!-- solution-end -->
+
+The normal distribution *is* a good model for some physical phenomena, such as the set of heights among a population. However, it is not always a good model. One reason the normal distribution "shows up" a lot is because it is involved in *estimation*, which we'll talk more about when we later discuss the central limit theorem.
+
 ## Random Seeds: Setting the State
 <!-- -------------------------------------------------- -->
 
