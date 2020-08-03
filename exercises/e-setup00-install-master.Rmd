@@ -3,7 +3,7 @@ title: "Setup: RStudio"
 author: Zach del Rosario
 date: 2020-05-02
 output: github_document
-time: 20
+time: 30
 reading: 0
 ---
 
