@@ -7,7 +7,7 @@ time: 40
 reading: 0
 ---
 
-*Purpose*: *Probability* is a quantitative measure of uncertainty. It is intimately tied to how we use distributions to model data and to how we express uncertainty. In order to do all these useful things, we'll need to learn some basics about probability.
+*Purpose*: *Probability* is a quantitative measure of uncertainty. It is intimately tied to how we use *distributions* to model data and to how we express uncertainty. In order to do all these useful things, we'll need to learn some basics about probability.
 
 *Reading*: (None; this exercise *is* the reading.)
 
@@ -23,15 +23,24 @@ library(tidyverse)
 # Intuitive Definition
 <!-- -------------------------------------------------- -->
 
-In the previous stats exercise, we learned about *distributions*. In this exercise, we're going to learn a more formal definition of distributions using probability.
+In the previous stats exercise, we learned about *densities*. In this exercise, we're going to learn a more formal definition using probability. To introduce the idea of probability, let's first think about *frequency*. 
 
-To introduce the notion of probability, let's first think about *frequency*, defined as
+Imagine we have some set of events $X$, and we're considering some *particular* subset of cases that we're interested in $A$. For instance, imagine we're rolling a 6-sided die, and we're interested in cases when the number rolled is even. Then the subset of cases is $A = \{2, 4, 6\}$, and an *example run* of rolls might be $X = \{3, 5, 5, 2, 6, 1, 3, 3\}$.
+
+The *frequency* with which events in $A$ occurred for a run $X$ is
 
 $$F_X(A) \equiv \sum \frac{\text{Cases in set }A}{\text{Total Cases in }X}.$$
+For the example above, we have
 
-Note that this frequency considers both a *set* $A$ and a sample $X$. We need to define both $A, X$ in order to compute a frequency.
+$$\begin{aligned} 
+  A &= \{2, 4, 6\}, \\ 
+  X &= \{3, 5, 5, \mathbf{2}, \mathbf{6}, 1, 3, 3\}, \\
+  F_X(A) &= \frac{2}{8} = 1/4
+  \end{aligned}$$
 
-As an example, let's consider the set $A$ to be the set of $-1.96 <= z <= +1.96$: We denote this set as $A = {z | -1.96 <= z <= +1.96}$. Let's also let $X$ be a sample from a standard (`mean = 0, sd = 1`) normal distribution. The following figure illustrates the set $A$ against a standard normal distribution.
+Note that this definition of frequency considers both a *set* $A$ and a sample $X$. We need to define both $A, X$ in order to compute a frequency.
+
+As an example, let's consider the set $A$ to be the set of $Z$ values such that $-1.96 <= Z <= +1.96$: We denote this set as $A = {Z | -1.96 <= Z <= +1.96}$. Let's also let $Z$ be a sample from a standard (`mean = 0, sd = 1`) normal. The following figure illustrates the set $A$ against a standard normal density.
 
 ```{r set-vis}
 ## NOTE: No need to change this!
@@ -47,7 +56,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
   scale_fill_discrete(name = "")
 ```
 
-Note that a frequency is defined *not* in terms of a distribution, but rather in terms of a sample. The following example code draws a sample from a standard normal, and computes the frequency with which values in the sample $X$ lie in the set $A$.
+Note that a frequency is defined *not* in terms of a density, but rather in terms of a sample $X$. The following example code draws a sample from a standard normal, and computes the frequency with which values in the sample $X$ lie in the set $A$.
 
 ```{r freq-compute}
 ## NOTE: No need to change this!
@@ -60,7 +69,7 @@ df_z %>%
 
 Now it's your turn!
 
-__q1__ Let $A = {z | z <= 0}$. Complete the following code to compute `count_total`, `count_A`, and `fr`. Before executing the code, **make a prediction** about the value of `fr`. Did the computed `fr` value match your prediction?
+__q1__ Let $A = {Z | Z <= 0}$. Complete the following code to compute `count_total`, `count_A`, and `fr`. Before executing the code, **make a prediction** about the value of `fr`. Did the computed `fr` value match your prediction?
 
 ```{r q1-task}
 ## NOTE: No need to change this!
@@ -87,7 +96,7 @@ df_z %>%
 - The value of `fr` I computed was `0.52`, not quite the same. This is due to randomness in the calculation.
 <!-- solution-end -->
 
-The following graph visualizes the set $A = {z | z <= 0}$ against a standard normal distribution.
+The following graph visualizes the set $A = {z | z <= 0}$ against a standard normal density.
 
 ```{r q1-vis}
 ## NOTE: No need to change this!
@@ -105,7 +114,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
 
 Based on this visual, we might expect `fr = 0.5`. This was (likely) not the value that our *frequency* took, but it is the precise value of the *probability* that $Z <= 0.5$.
 
-Remember in the previous stats exercise that we studied how larger values of `n` led to a histogram closer approaching a distribution? Something very similar happens with frequency and probability:
+Remember in the previous stats exercise that when running `rnorm` with larger values of `n` we obtained histograms closer to the normal density? Something very similar happens with frequency and probability:
 
 ```{r converge-fr}
 ## NOTE: No need to change this!
@@ -126,7 +135,7 @@ This is because *probability* is actually defined[1] in terms of the limit
 
 $$\mathbb{P}_{\rho}[X \in A] = \lim_{n \to \infty} F_{X_n}(A),$$
 
-where $X_n$ is a sample of size $n$ drawn from the distribution $\rho$.[2]
+where $X_n$ is a sample of size $n$ drawn from the density $\rho$.[2]
 
 __q2__: Modify the code below to consider the set $A = {z | -1.96 <= z <= +1.96}$. What value does `fr` appear to be limiting towards?
 
@@ -156,28 +165,28 @@ map_dfr(
 - What value does `fr` appear to be limiting towards?
 <!-- task-end -->
 <!-- solution-begin -->
-- `fr` is limiting towards `0.95`
+- `fr` is limiting towards `~0.95`
 <!-- solution-end -->
 
-Now that we know what probability is; let's connect the idea to distributions.
+Now that we know what probability is; let's connect the idea to *distributions*.
 
 # Relation to Distributions
 <!-- -------------------------------------------------- -->
 
-A continuous distribution *models* probability in terms of an integral
+A continuous *distribution* models probability in terms of an integral
 
 $$\mathbb{P}_{\rho}[X \in A] = \int_{-\infty}^{+\infty} 1_A(x)\rho(x)\,dx$$
 
-where $1_A(x)$ is the *indicator function*; a function that takes the value $1$ when $x \in A$, and the value $0$ when $x \not\in A$.
+where $1_A(x)$ is the *indicator function*; a function that takes the value $1$ when $x \in A$, and the value $0$ when $x \not\in A$. The function $\rho(x)$ is the *density* of the random variable---we'll return to this idea in a bit.
 
-This definition gives us a geometric way to think about probability; the distribution definition means probability is the area under the curve within the set $A$.
+This definition gives us a geometric way to think about probability; the distribution definition means probability is the area under the density curve within the set $A$.
 
 Before concluding this reading, let's talk about two sticking points about distributions:
 
 ## Sets vs Points
 <!-- ------------------------- -->
 
-Note that, for continuous distributions, the probability of a single point is *zero*. First, let's gather some empirical evidence.
+Note that for continuous distributions, the probability of a single point is *zero*. First, let's gather some empirical evidence.
 
 __q3__ Modify the code below to consider the set $A = {z | z = 2}$.
 
@@ -229,7 +238,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
 
 Note that this set $A$ has nonzero height but zero width. Zero width corresponds to zero area, and thus zero probability.
 
-*This is weird*. If we're using a distribution to model something physical, say a material property, this means that any specific material property has zero probability of occuring. But in practice, some specific value will be realized! If you'd like to learn more, take a look at Note [3].
+*This is weird*. If we're using a distribution to model something physical, say a material property, this means that any specific material property has zero probability of occurring. But in practice, some specific value will be realized! If you'd like to learn more, take a look at Note [3].
 
 ## Two expressions of the same information
 <!-- ------------------------- -->
@@ -249,7 +258,7 @@ tibble(z = seq(-3, +3, length.out = 1000)) %>%
   )
 ```
 
-There is also a [cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function), which is the indefinite integral of the PDF:
+There is also a [cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function), which is related to the PDF $\rho(x)$ via
 
 $$R(x) = \int_{-\infty}^x \rho(s) ds.$$
 
@@ -264,7 +273,7 @@ tibble(z = seq(-3, +3, length.out = 1000)) %>%
   labs(
     x = "z",
     y = "Probability",
-    title = "Cumulative Density Function"
+    title = "Cumulative Distribution Function"
   )
 ```
 
@@ -302,7 +311,7 @@ print("Nice!")
 
 Note that when our set $A$ is an *interval*, we can use the CDF to express the associated probability. Note that
 
-$$\mathbb{P}_{\rho}[a <= X <= b] = \int_a^b \rho(x) dx = \int_{-\infty} \rho(x) dx - \int_{-\infty}^a \rho(x) dx.$$
+$$\mathbb{P}_{\rho}[a <= X <= b] = \int_a^b \rho(x) dx = \int_{-\infty}^b \rho(x) dx - \int_{-\infty}^a \rho(x) dx.$$
 
 __q5__ Using the identity above, use `pnorm` to compute the probability that $-1.96 <= Z <= +1.96$ with `Z ~ norm(mean = 0, sd = 1)`.
 
