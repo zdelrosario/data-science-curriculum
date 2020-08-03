@@ -59,6 +59,7 @@ df_schedule <-
     "e-stat08-fit-dist",               24,
     "e-stat09-bootstrap",              25,
     "e-stat10-hyp-intro",              28,
+    "e-stat11-models-intro",           29,
 
     "e-vis00-basics",                   3,
     "e-vis01-bar-charts",               6,
