@@ -187,7 +187,7 @@ __q3__ Run the code below and inspect the resulting histogram. Increase `n_diamo
 ```{r q3-task}
 # task-begin
 n_diamonds <- 10
-# task-begin
+# task-end
 # solution-begin
 n_diamonds <- 1000
 # solution-end
