@@ -85,6 +85,15 @@ df_exercises <-
   mutate(name = str_remove(name, "-master"))
 ```
 
+Dump metadata file to disk
+
+```{r write-exercise-metadata}
+saveRDS(
+  df_exercises,
+  "./metadata.rds"
+)
+```
+
 # Scheduling
 <!-- -------------------------------------------------- -->
 
