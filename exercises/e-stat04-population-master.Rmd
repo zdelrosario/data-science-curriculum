@@ -3,11 +3,11 @@ title: "Statistics: Populations and Estimation"
 author: Zach del Rosario
 date: 2020-06-23
 output: github_document
-time: 40
-reading: 8
+time: 50
+reading: 10
 ---
 
-*Purpose*: Often, our data do not include all the facts that are relevant to the decision we are trying to make. Statistics is the science of determining the conclusions we can confidently make, based on our available data. To make sense of this science, we need to understand the distinction between a *sample* and a *population*, and how this distinction leads to *estimation*.
+*Purpose*: Often, our data do not include all the facts that are relevant to the decision we are trying to make. Statistics is the science of determining the conclusions we can confidently make, based on our available data. To make sense of this, we need to understand the distinction between a *sample* and a *population*, and how this distinction leads to *estimation*.
 
 *Reading*: [Statistician proves that statistics are boring](https://towardsdatascience.com/statistician-proves-that-statistics-are-boring-4fc22c95031b)
 
@@ -21,7 +21,7 @@ library(nycflights13)
 When using descriptive statistics to help us answer a question, there are (at least) two questions we should ask ourselves:
 
 1. Does the statistic we chose relate to the problem we care about?
-2. Do we have all the facts we need (the population), or do we have limited information (a sample from some well-defined population)?
+2. Do we have all the facts we need (the population) or do we have limited information (a sample from some well-defined population)?
 
 We already discussed (1) by learning about descriptive statistics and their meaning. Now we'll discuss (2) by learning the distinction between populations and samples.
 
@@ -143,7 +143,6 @@ map_dfr(
 ) %>%
   ggplot() +
   geom_line(aes(z, d, color = as.factor(n), group = as.factor(n))) +
-  geom_vline(xintercept = 0, linetype = 2) +
   scale_color_discrete(name = "Samples") +
   labs(
     x = "Estimated Mean",
