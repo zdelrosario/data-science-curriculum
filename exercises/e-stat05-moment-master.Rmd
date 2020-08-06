@@ -42,7 +42,7 @@ We will need to be able to do some basic arithmetic with the mean and variance. 
 ### Expectation
 <!-- ------------------------- -->
 
-The expectation is *linear*, that is 
+The expectation is *linear*, that is
 
 $$\mathbb{E}[aX + c] = a \mathbb{E}[X] + c.$$
 
@@ -94,7 +94,7 @@ print("Great!")
 ### Variance
 <!-- ------------------------- -->
 
-Remember that variance is the square of standard deviation. Variance satisfies the property 
+Remember that variance is the square of standard deviation. Variance satisfies the property
 
 $$\mathbb{V}[aX + c] = a^2 \mathbb{V}[X].$$
 

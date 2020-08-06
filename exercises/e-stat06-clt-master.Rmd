@@ -112,7 +112,7 @@ First, let's use some moment arithmetic to build a normal distribution with mean
 
 $$X = \mu + (\sigma / \sqrt{n}) Z.$$
 
-Now imagine we wanted to select two endpoints to give us the middle $95%$ of this distribution we could do this with $qnorm()$ with the appropriate values of `mean, sd`. But using the definition of $X$ above, we can also do this by using the appropriate quantiles of the standard normal $Z$. The following code gives the upper quantile.
+Now imagine we wanted to select two endpoints to give us the middle $95%$ of this distribution. We could do this with $qnorm()$ with the appropriate values of `mean, sd`. But using the definition of $X$ above, we can also do this by using the appropriate quantiles of the standard normal $Z$. The following code gives the upper quantile.
 
 ```{r ci-95}
 ## NOTE: No need to change this!
@@ -120,7 +120,7 @@ q95 <- qnorm( 1 - (1 - 0.95) / 2 )
 q95
 ```
 
-This is approximately `1.96` when seeking a $95%$ confidence level. Since the normal distribution is symmetric, we can use the same value `q95` with a negative sign for the appropriate lower quantile.
+This is approximately `1.96` when seeking a $95%$ confidence level. Since the standard normal distribution is symmetric about zero, we can use the same value `q95` with a negative sign for the appropriate lower quantile.
 
 *Here's the procedure*, we'll build lower and upper bounds for an interval based on the sample mean and sample standard error $[\hat{mu} - q_{95} \hat{\text{SE}}, \hat{mu} + q_{95} \hat{\text{SE}}]$. I construct this interval for each sample in `df_clt`, and check whether the interval contains the population mean of `0.5`. The following code visualizes the first `100` intervals.
 
@@ -159,7 +159,7 @@ Some observations to note:
 - We tend to have more "misses" when $n$ is small.
 - Every confidence interval either **does** or **does not** include the true value. Therefore a single confidence interval actually has no probability associated with it. The "confidence" is not in a single interval, but rather in the procedure that generated the interval.
 
-The following code estimates the frequency with which each interval includes the true mean; this quantity is called *coverage*, and should match the nominal $95%$ we selected above.
+The following code estimates the frequency with which each interval includes the true mean; this quantity is called *coverage*, and it should match the nominal $95%$ we selected above.
 
 ```{r comp-unif-ci}
 ## NOTE: No need to change this!
@@ -180,9 +180,9 @@ Some observations to note:
 - The coverage is well below our desired $95%$ when $n$ is small; this is because the CLT is an asymptotic result.
 - As $n$ increases, the coverage tends towards our desired $95%$.
 
-See Note [2] for an animation that helps explain how confidence intervals are constructed.
+[This animation](https://seeing-theory.brown.edu/frequentist-inference/index.html) is the best visual explain I've found on how confidence intervals are constructed [2].
 
-__q1__ Using the CLT, approximate a confidence interval for the population mean using the sample `z_q1`.
+__q1__ Using the CLT, approximate a $99\%$ confidence interval for the population mean using the sample `z_q1`.
 
 ```{r q1-task}
 ## TASK: Estimate a 99% confidence interval with the sample below
@@ -286,7 +286,7 @@ df_flights_sampled %>%
   )
 ```
 
-These confidence intervals illustrate a number of different sampling scenarios. In some of them, we correctly determine that the mean arrival delay is confidently greater than zero. The case at $n = 100$ is inconclusive; the CI is compatible with both positive and negative mean delay times. Note the two lowest $n$ cases; there we "confidently" determine that the mean arrival delay is negative![3] Any time we are doing estimation we are in danger of making an incorrect conclusion, even when we do the statistics correctly! Obtaining data simply decreases the probability of making a false conclusion.[4]
+These confidence intervals illustrate a number of different sampling scenarios. In some of them, we correctly determine that the mean arrival delay is confidently greater than zero. The case at $n = 100$ is inconclusive; the CI is compatible with both positive and negative mean delay times. Note the two lowest $n$ cases; there we "confidently" determine that the mean arrival delay is negative [3]. Any time we are doing estimation we are in danger of making an incorrect conclusion, even when we do the statistics correctly! Obtaining data simply decreases the probability of making a false conclusion [4].
 
 However, combining all our available information to form a confidence interval is a principled way to report our results. A confidence interval gives us a plausible range of values for the population value, and by its width gives us a sense of how accurate our estimate is likely to be.
 
@@ -324,4 +324,4 @@ Using a plug-in estimate for $\sigma$ gives the procedure defined above.
 
 [3] Part of the issue here is that we are not accounting for the additional variability that arises from estimating the standard deviation. Using a [t-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution#Confidence_intervals) to construct more conservative confidence intervals helps at lower sample sizes.
 
-[4] The process of making decisions about what to believe about reality based on data is called [hypothesis testing](https://en.wikipedia.org/wiki/Statistical_hypothesis_testing).
+[4] The process of making decisions about what to believe about reality based on data is called [hypothesis testing](https://en.wikipedia.org/wiki/Statistical_hypothesis_testing). We'll talk about this soon!
