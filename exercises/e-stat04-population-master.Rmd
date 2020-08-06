@@ -109,7 +109,44 @@ Some terminology:
 - We call the statistics of a population the *population statistic*; for instance, the population mean. A population statistic is also called a *parameter*.
 - We call the statistics of a sample the *sample statistic*; for instance, the sample mean. A sample statistic is also called an *estimate*.
 
-Let's visualize the sample mean for each sample generated above.
+The chunk `compute-samples` generated `n_samples = 5e3` of `n_observations = 3` each. You can think of each sample as an "alternative universe" where we happened to pick `3` particular values. The following chunk visualizes just the first few samples:
+
+```{r vis-samples}
+df_sample %>% 
+  filter(id <= 6) %>% 
+  
+  ggplot(aes(Z, "")) +
+  geom_point() +
+  facet_grid(id ~ .) +
+  labs(
+    x = "Realized Values",
+    y = "Samples"
+  )
+```
+
+Every one of these samples has its own sample mean; let's add that as an additional point:
+
+```{r vis-samples-wmean}
+df_sample %>% 
+  filter(id <= 6) %>% 
+  
+  ggplot(aes(Z, "")) +
+  geom_point() +
+  geom_point(
+    data = . %>% group_by(id) %>% summarize(Z = mean(Z)),
+    mapping = aes(color = "Sample Mean"),
+    size = 4
+  ) +
+  scale_color_discrete(name = "") +
+  theme(legend.position = "bottom") +
+  facet_grid(id ~ .) +
+  labs(
+    x = "Realized Values",
+    y = "Samples"
+  )
+```
+
+Thus, there is a "red dot" associated with each of the 5,000 samples. Let's visualize the individual sample mean values as a histogram:
 
 ```{r mean-estimates-vis}
 ## NOTE: No need to change this!
