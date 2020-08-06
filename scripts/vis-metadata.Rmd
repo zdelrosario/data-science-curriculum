@@ -107,6 +107,11 @@ df_day_totals <-
     df_schedule,
     by = "name"
   ) %>%
+  full_join(
+    .,
+    tibble(day = seq(0, 50)),
+    by = "day"
+  ) %>%
   group_by(day) %>%
   mutate(day_mins = sum(total)) %>%
   select(name, day, total, day_mins) %>%
