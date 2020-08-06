@@ -74,7 +74,8 @@ df_schedule <-
     "e-vis05-lines",                   20,
     "e-vis06-themes",                  23,
     "e-vis07-perception",              31,
-    "e-vis08-multiples",               33
+    "e-vis08-multiples",               33,
+    "e-vis09-improve",                 37
 
   )
 
