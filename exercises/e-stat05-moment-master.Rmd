@@ -137,7 +137,7 @@ V_q4 <- 2^2 + 3^3
 
 Use the following test to check your answer.
 
-```{r q3-tests}
+```{r q4-tests}
 ## NOTE: No need to change this!
 assertthat::assert_that(assertthat::are_equal(V_q4, 31))
 print("Well done!")

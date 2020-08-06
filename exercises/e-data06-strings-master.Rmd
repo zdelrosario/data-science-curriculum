@@ -188,7 +188,7 @@ str_extract(
 
 And finally the wildcard `.` allows us to match any character:
 
-```{r ex-extract4}
+```{r ex-extract5}
 ## NOTE: No need to change this!
 str_extract(
   string = c("abc", "xyz", "123"),
