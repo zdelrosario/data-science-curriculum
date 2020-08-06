@@ -7,7 +7,7 @@ time: 20
 reading: 40
 ---
 
-*Purpose*: (Use ideas of graphical perception)
+*Purpose*: Creating a *presentation-quality* graph is an exercise in *communication*. In order to create graphs that other people can understand, we should know some stuff about *how humans see data*. Through the required "reading" (video) you'll learn about visual perception, then put these ideas to use criticizing some graphs. Later, you'll use these ideas to *improve* some graphs.
 
 *Reading*: [How Humans See Data](https://www.youtube.com/watch?v=fSgEeI2Xpdc&list=PLluqivwOH1ouKkbM0c6x-g7DQnXF0UmC0&index=37&t=0s) (Video)
 
@@ -18,7 +18,15 @@ library(tidyverse)
 # Criticize these graphs!
 <!-- -------------------------------------------------- -->
 
-Using the ideas from the reading (video), state some issues with the following graphs.
+Using the ideas from the reading (video), state some issues with the following graphs. As a reminder, the *visual hierarchy* is:
+
+1. Position along a common scale
+2. Position on identical but nonaligned scales
+3. Length
+4. Angle; Slope (With slope not too close to 0, $\pi/2$, or $\pi$.)
+5. Area
+6. Volume; Density; Color saturation
+7. Color hue
 
 __q1__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
 
