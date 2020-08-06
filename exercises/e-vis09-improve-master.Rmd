@@ -108,7 +108,7 @@ diamonds %>%
 
 __q4__ Use concepts from the reading to improve the following graph. *Make sure your graph shows all the same variables*, no more and no fewer.
 
-```{r q4-task}
+```{r q4-vis}
 ## NOTE: No need to edit; run and inspect
 diamonds %>%
   ggplot(aes(x = "", fill = cut)) +
