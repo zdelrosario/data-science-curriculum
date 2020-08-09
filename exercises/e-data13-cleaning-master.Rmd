@@ -173,7 +173,7 @@ The numeric codes given for some of the variables are uninformative; let's repla
 
 Rather than go and modify our raw data, we will instead *recode* the variables in our loaded dataset. *It is bad practice to modify your raw data!* Modifying your data in code provides *traceable documentation* for the edits you made; this is a key part of doing [reproducible science](https://www.nature.com/articles/s41562-016-0021). It takes more work, but *your results will be more trustworthy if you do things the right way!*
 
-__q3__ 
+__q3__ Create *conversion functions* to recode factor values as human-readable strings. I have provided one function (`convert_sex`) as an example.
 
 *Note*: "In the wild" you would be responsible for devising your own sensible level names. However, I'm going to provide specific codes such that I can write unittests to check your answers:
 
@@ -197,6 +197,7 @@ convert_sex <- function(x) {
 } 
 # task-begin
 ## TODO: Complete the remaining conversion functions
+convert_cp <- NA
 convert_fbs <- NA
 convert_restecv <- NA
 convert_exang <- NA
@@ -204,6 +205,15 @@ convert_slope <- NA
 convert_thal <- NA
 # solution-end
 # solution-begin
+convert_cp <- function(x) {
+  case_when(
+    x == 1 ~ "typical angina",
+    x == 2 ~ "atypical angina",
+    x == 3 ~ "non-anginal pain",
+    x == 4 ~ "asymptomatic",
+    TRUE ~ NA_character_
+  )
+}
 convert_fbs <- function(x) {
   if_else(x == 1, TRUE, FALSE)
 }
@@ -241,6 +251,11 @@ Use the following to check your code.
 
 ```{r q3-tests}
 ## NOTE: No need to change this
+assertthat::assert_that(assertthat::are_equal(
+  convert_cp(c(1, 2, 3, 4)), 
+  c("typical angina", "atypical angina", "non-anginal pain", "asymptomatic")
+))
+
 assertthat::assert_that(assertthat::are_equal(
   convert_fbs(c(1, 0)), 
   c(TRUE, FALSE)
@@ -282,6 +297,7 @@ df_q4 <-
   df_q2 %>% 
   mutate(
     sex = convert_sex(sex),
+    cp = convert_cp(cp),
     fbs = convert_fbs(fbs),
     restecg = convert_restecv(restecg),
     exang = convert_exang(exang),
@@ -292,6 +308,93 @@ df_q4 <-
 df_q4
 ```
 
-Finally, we have a tidy dataset we can analyze! You should feel free to poke around in this datset, but we'll return to it in a later exercise.
+## Prepare the Data for Modeling
+
+Now we have a clean dataset we can use for EDA and modeling---great! Before we finish this exercise, let's do some standard checks to understand these data:
+
+__q5__ Perform your *first checks* on `df_heart_disease`. Answer the questions below.
+
+*Hint*: You may need to do some "deeper checks" to answer some of the questions below.
+
+```{r q5-task}
+# task-begin
+## TODO: Perform your first checks on df_heart_disease
+# task-end
+# solution-begin
+df_heart_disease %>% summary()
+# solution-end
+```
+
+**Observations**:
+
+<!-- task-begin -->
+- Which variables are numerical? Which are factors? Which are logical?
+- How many missing values (`NA`'s) does each variable have?
+- How many rows have *any* missing values in any of the columns?
+<!-- task-end -->
+<!-- solution-begin -->
+Variables:
+- Numerical: `age, trestbps, chol, thalach, oldpeak, ca, num`
+- Factors: `sex, cp, restecg, slope, thal, heart_disease`
+- Logical: `fbs, exang, heart_disease`
+
+Missingness:
+
+```{r sol-missingness}
+map(
+  df_heart_disease,
+  ~ sum(is.na(.))
+)
+```
+
+From this, we can see that most variables have no missing values, but `ca` has `4` and `thal` has `2`.
+
+Missingness pattern:
+
+```{r sol-missingness-pattern}
+df_heart_disease %>% 
+  filter(is.na(ca) | is.na(thal)) %>% 
+  select(ca, thal, everything())
+```
+
+There are six rows with missing values.
+<!-- solution-end -->
+
+If we were just doing EDA, we could stop here. However we're going to use these data for *modeling* in a future exercise. Most models can't deal with `NA` values, so we must choose how to handle rows with `NA`'s. In cases where only a few observations are missing values, we can simply *filter out* those rows.
+
+__q6__ Filter out the rows with missing values.
+
+```{r q6-task}
+# task-begin
+df_q6 <- 
+  df_heart_disease
+# task-end
+# solution-begin
+df_q6 <- 
+  df_heart_disease %>% 
+  filter(!is.na(ca), !is.na(thal))
+# solution-end
+
+df_q6
+```
+
+Use the following to check your code.
+
+```{r q6-tests}
+## NOTE: No need to change this
+assertthat::assert_that(
+  dim(
+    df_q6 %>% 
+      filter(rowSums(across(everything(), is.na)) > 0)
+  )[1] == 0
+)
+
+print("Well done!")
+```
+
+## In summary
+
+- We cleaned the dataset by giving it sensible names and recoding factors with human-readable values.
+- We filtered out rows with missing values (`NA`'s) *because we intend to use these data for modeling*.
 
 <!-- include-exit-ticket -->
