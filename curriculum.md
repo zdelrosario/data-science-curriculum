@@ -34,7 +34,7 @@ Core
   - data from a flat file, e.g. a comma-separated value (csv) file (e-data00-basics)
   - data from googlesheets (e-data12-simple-pipeline)
 - Wrangle
-  - data from a messy source, e.g. a nasty excel file (e-data09-readxl)
+  - data from a messy source (e-data09-readxl, e-data13-cleaning)
   - loops into functional calls using purrr (e-data10-map)
   - factors with forcats (e-data11-factors)
 - Liberate
@@ -110,6 +110,7 @@ Core
   - high-dimensional data with t-SNE
 - Assess
   - whether a model is flexible enough to fit a given dataset (e-model01-train-validate)
+  - whether it is worth measuring a given variable in order to make predictions
   - the accuracy of a classifier
 - Select
   - features based on an appropriate error estimate (e-stat12-model-train-validate)
