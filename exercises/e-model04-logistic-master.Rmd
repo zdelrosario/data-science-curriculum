@@ -7,7 +7,7 @@ time: 40
 reading: 11
 ---
 
-*Purpose*: (A brief intro to logistic regression)
+*Purpose*: So far we've talked about models to predict continuous values. However, we can also use models to make predictions about *binary outcomes*---classification. Classifiers are useful for a variety of uses, but they introduce a fair bit more complexity than simple linear models. In this exercise you'll learn about *logistic regression*: a variation on linear regression that is useful for classification.
 
 *Reading*: [StatQuest: Logistic Regression](https://www.youtube.com/watch?v=vN5cNN2-HWE) (Required, just watch up to 10:47 and dont' worry about the p-value stuff).
 
@@ -19,7 +19,7 @@ library(broom)
 
 *Note*: This exercise is heavily inspired by Josh Starmer's [logistic regression](https://github.com/StatQuest/logistic_regression_demo/blob/master/logistic_regression_demo.R) example.
 
-*Background*: This exercise's data comes from the UCI Machine Learning Database; specifically their [Heart Disease Data Set](https://archive.ics.uci.edu/ml/datasets/Heart+Disease). These data consist of clinical measurements on patients, and are intended to help predict heart disease.
+*Background*: This exercise's data comes from the UCI Machine Learning Database; specifically their [Heart Disease Data Set](https://archive.ics.uci.edu/ml/datasets/Heart+Disease). These data consist of clinical measurements on patients, and are intended to help study heart disease.
 
 ## Setup
 <!-- ------------------------- -->
