@@ -66,7 +66,7 @@ __q1__ Following the [dataset documentation](https://archive.ics.uci.edu/ml/data
 > 11. #41 (slope)
 > 12. #44 (ca)
 > 13. #51 (thal)
-> 14. #58 (num) (the predicted attribute) 
+> 14. #58 (num) (the predicted attribute)
 
 *Hint 2*: A "copy-paste-edit" is probably the most effective approach here!
 
@@ -126,13 +126,13 @@ __q2__ Call `read_csv()` with the `col_names` and `col_types` arguments. Use the
 *Hint*: Remember that you can always read the documentation to learn how to use a new argument!
 
 ```{r q2-task}
-## TODO: Use the col_names and col_types arguments to give the data the 
+## TODO: Use the col_names and col_types arguments to give the data the
 ##       correct column names, and to set their types to col_number()
 # task-begin
 df_q2 <- NA
 # task-end
 # solution-begin
-df_q2 <- 
+df_q2 <-
   read_csv(
     filename_disease,
     col_names = col_names,
@@ -182,7 +182,7 @@ __q3__ Create *conversion functions* to recode factor values as human-readable s
 | `sex`     | `1 = "male", 0 = "female"` |
 | `fbs`     | `1 = TRUE, 0 = FALSE` |
 | `restecg` | `0 = "normal", 1 = "ST-T wave abnormality", 2 = "Estes' criteria"` |
-| `exang`   | `1 = TRUE, 0 = FALSE` | 
+| `exang`   | `1 = TRUE, 0 = FALSE` |
 | `slope`   | `1 = "upsloping", 2 = "flat", 3 = "downsloping"` |
 | `thal`    | `3 = "normal", 6 = "fixed defect", 7 = "reversible defect"` |
 
@@ -193,8 +193,8 @@ convert_sex <- function(x) {
     x == 1 ~ "male",
     x == 0 ~ "female",
     TRUE ~ NA_character_
-  ) 
-} 
+  )
+}
 # task-begin
 ## TODO: Complete the remaining conversion functions
 convert_cp <- NA
@@ -203,7 +203,7 @@ convert_restecv <- NA
 convert_exang <- NA
 convert_slope <- NA
 convert_thal <- NA
-# solution-end
+# task-end
 # solution-begin
 convert_cp <- function(x) {
   case_when(
@@ -231,7 +231,7 @@ convert_exang <- function(x) {
 convert_slope <- function(x) {
   case_when(
     x == 1 ~ "upsloping",
-    x == 2 ~ "flat", 
+    x == 2 ~ "flat",
     x == 3 ~ "downsloping",
     TRUE ~ NA_character_
   )
@@ -252,32 +252,32 @@ Use the following to check your code.
 ```{r q3-tests}
 ## NOTE: No need to change this
 assertthat::assert_that(assertthat::are_equal(
-  convert_cp(c(1, 2, 3, 4)), 
+  convert_cp(c(1, 2, 3, 4)),
   c("typical angina", "atypical angina", "non-anginal pain", "asymptomatic")
 ))
 
 assertthat::assert_that(assertthat::are_equal(
-  convert_fbs(c(1, 0)), 
+  convert_fbs(c(1, 0)),
   c(TRUE, FALSE)
 ))
 
 assertthat::assert_that(assertthat::are_equal(
-  convert_restecv(c(0, 1, 2)), 
+  convert_restecv(c(0, 1, 2)),
   c("normal", "ST-T wave abnormality", "Estes' criteria")
 ))
 
 assertthat::assert_that(assertthat::are_equal(
-  convert_exang(c(1, 0)), 
+  convert_exang(c(1, 0)),
   c(TRUE, FALSE)
 ))
 
 assertthat::assert_that(assertthat::are_equal(
-  convert_slope(c(1, 2, 3)), 
+  convert_slope(c(1, 2, 3)),
   c("upsloping", "flat", "downsloping")
 ))
 
 assertthat::assert_that(assertthat::are_equal(
-  convert_thal(c(3, 6, 7)), 
+  convert_thal(c(3, 6, 7)),
   c("normal", "fixed defect", "reversible defect")
 ))
 
@@ -289,12 +289,12 @@ __q4__ Use your `convert_` functions from q3 to mutate the columns and recode th
 ```{r q4-task}
 # task-begin
 ## TODO: Convert the appropriate columns using your helper functions
-df_q4 <- 
+df_q4 <-
   df_q2
 # task-end
 # solution-begin
-df_q4 <- 
-  df_q2 %>% 
+df_q4 <-
+  df_q2 %>%
   mutate(
     sex = convert_sex(sex),
     cp = convert_cp(cp),
@@ -352,8 +352,8 @@ From this, we can see that most variables have no missing values, but `ca` has `
 Missingness pattern:
 
 ```{r sol-missingness-pattern}
-df_heart_disease %>% 
-  filter(is.na(ca) | is.na(thal)) %>% 
+df_heart_disease %>%
+  filter(is.na(ca) | is.na(thal)) %>%
   select(ca, thal, everything())
 ```
 
@@ -366,12 +366,12 @@ __q6__ Filter out the rows with missing values.
 
 ```{r q6-task}
 # task-begin
-df_q6 <- 
+df_q6 <-
   df_heart_disease
 # task-end
 # solution-begin
-df_q6 <- 
-  df_heart_disease %>% 
+df_q6 <-
+  df_heart_disease %>%
   filter(!is.na(ca), !is.na(thal))
 # solution-end
 
@@ -384,7 +384,7 @@ Use the following to check your code.
 ## NOTE: No need to change this
 assertthat::assert_that(
   dim(
-    df_q6 %>% 
+    df_q6 %>%
       filter(rowSums(across(everything(), is.na)) > 0)
   )[1] == 0
 )
