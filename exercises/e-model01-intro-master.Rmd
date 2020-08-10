@@ -171,7 +171,24 @@ fit_q1 %>% tidy()
   - These are `lm()`s way of *encoding* the `cut` factor as a numerical value: Note that there are `5` levels for `cut` and `4` terms representing `cut`.
 <!-- solution-end -->
 
-*Aside*: Handling *factors* in modeling is handled automatically by `lm()` by introducing [*dummy variables*](https://en.wikipedia.org/wiki/Dummy_variable_(statistics)).
+*Aside*: Handling *factors* in modeling is handled automatically by `lm()` by introducing [*dummy variables*](https://en.wikipedia.org/wiki/Dummy_variable_(statistics)). Conceptually, what the linear model does is fit a single *contant value* for each level of the factor. This gives us a different prediction for each factor level, as the next example shows.
+
+```{r fitting-factors}
+## NOTE: No need to edit; just run and inspect
+fit_cut <- 
+  lm(
+    data = df_train,
+    formula = price ~ cut
+  )
+
+df_train %>% 
+  add_predictions(fit_cut, var = "price_pred") %>% 
+  ggplot(aes(cut)) +
+  geom_errorbar(aes(ymin = price_pred, ymax = price_pred), color = "salmon") +
+  geom_point(aes(y = price))
+```
+
+## Assessing a model
 
 Next, let's visually inspect the results of model `fit_carat` using the function `modelr::add_predictions()`:
 
@@ -194,7 +211,7 @@ df_train %>%
 
 Frankly, these model predictions don't look very good! We know that diamond prices probably depend on the "4 C's"; maybe your model using more predictors will be more effective?
 
-__q2__ Repeat the code above to produce a similar visual with your model `fit_q1`. *This visual is unlikely to be effective*, note in your observations why that might be.
+__q2__ Repeat the code above from chunk `vis-carat` to produce a similar visual with your model `fit_q1`. *This visual is unlikely to be effective*, note in your observations why that might be.
 
 ```{r q2-task}
 # task-begin
@@ -229,7 +246,7 @@ df_train %>%
 
 Visualizing the results against a single variable quickly breaks down when we have more than one predictor! Let's learn some other tools for assessing model accuracy.
 
-## Diagnostics
+## Model Diagnostics
 
 The plot above allows us to visually assess the model performance, but sometimes we'll want a quick *numerical summary* of model accuracy, particularly when comparing multiple models for the same data. The functions `modelr::mse` and `modelr::rsquare` are two *error metrics* we can use to summarize accuracy:
 
