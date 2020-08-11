@@ -212,7 +212,7 @@ In order to "fit a line" to this kind of binary data, we make a careful choice a
 
 There's one more trick we need to make this scheme work: Probabilities lie between $p \in [0, 1]$, but the response of linear regression can be any real value between $x \in (-\infty, +\infty)$. To deal with this, we use the *logit function* to "warp space" and transform between the interval $p \in [0, 1]$ and the whole real line $x \in (-\infty, +\infty)$.
 
-```{r vis-logit}
+```{r def-logit}
 ## We'll need the logit and inverse-logit functions to "warp space"
 logit <- function(p) {
   odds_ratio <- p / (1 - p)
