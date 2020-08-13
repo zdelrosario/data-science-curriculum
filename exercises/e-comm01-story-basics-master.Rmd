@@ -155,6 +155,9 @@ diamonds %>%
     x = "Carat",
     y = "Price"
   )
+# solution-begin
+ggsave("./images/e-comm01-story-basics-fig1.png")
+# solution-end
 ```
 
 **Classify**:
@@ -194,6 +197,9 @@ diamonds %>%
     x = "Carat",
     y = "Price"
   )
+# solution-begin
+ggsave("./images/e-comm01-story-basics-fig2.png")
+# solution-end
 ```
 
 **Classify**:
@@ -231,6 +237,9 @@ diamonds %>%
   facet_wrap(~variable, scale = "free_y") +
   theme_common() +
   theme(axis.text.x = element_text(angle = 270, hjust = 0))
+# solution-begin
+ggsave("./images/e-comm01-story-basics-fig3.png")
+# solution-end
 ```
 
 **Classify**:

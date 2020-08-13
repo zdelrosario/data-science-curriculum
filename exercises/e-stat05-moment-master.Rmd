@@ -24,7 +24,13 @@ $$\mathbb{E}[X] = \int x \rho(x) dx.$$
 
 We've also seen the standard deviation $\sigma$. This is related to the variance $\sigma^2$, which is defined for a random variable $X$ in terms of the expectation
 
-$$\mathbb{V}[X] = \mathbb{E}[(X - \mathbb{E}[X])^2].$$
+$$\sigma^2 \equiv \mathbb{V}[X] = \mathbb{E}[(X - \mathbb{E}[X])^2].$$
+For instance, a standard normal $Z$ has
+
+$$ \begin{aligned}
+  \mathbb{E}[Z] &= 0 \\
+  \mathbb{V}[Z] &= 1
+ \end{aligned} $$
 
 For future exercises, we'll need to learn how to do basic arithmetic with these two moments.
 
@@ -62,24 +68,18 @@ assertthat::assert_that(assertthat::are_equal(E_q1, 3))
 print("Nice!")
 ```
 
-### Variance
-<!-- ------------------------- -->
+Since the expectation is linear, it also satisfies
 
-Remember that variance is the square of standard deviation.
-
-Variance satisfies the property
-
-$$\mathbb{V}[aX + c] = a^2 \mathbb{V}[X].$$
-
-__q2__ Compute the variance of $2 Z + 3$, where $Z$ is a standard normal.
+$$\mathbb{E}[aX + bY] = a \mathbb{E}[X] + b \mathbb{E}[Y].$$
+__q2__ Compute the mean of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are separate standard normals.
 
 ```{r q2-task}
-## TASK: Compute the mean of 2 Z + 3
+## TASK: Compute the mean of 2 Z1 + 3 Z2
 # task-begin
-V_q2 <- NA_real_
+E_q2 <- NA_real_
 # task-end
 # solution-begin
-V_q2 <- 4
+E_q2 <- 2 * 0 + 3 * 0
 # solution-end
 ```
 
@@ -87,7 +87,59 @@ Use the following test to check your answer.
 
 ```{r q2-tests}
 ## NOTE: No need to change this!
-assertthat::assert_that(assertthat::are_equal(V_q2, 4))
+assertthat::assert_that(assertthat::are_equal(E_q2, 0))
+print("Great!")
+```
+
+### Variance
+<!-- ------------------------- -->
+
+Remember that variance is the square of standard deviation. Variance satisfies the property
+
+$$\mathbb{V}[aX + c] = a^2 \mathbb{V}[X].$$
+
+__q3__ Compute the variance of $2 Z + 3$, where $Z$ is a standard normal.
+
+```{r q3-task}
+## TASK: Compute the mean of 2 Z + 3
+# task-begin
+V_q3 <- NA_real_
+# task-end
+# solution-begin
+V_q3 <- 2 ^ 2
+# solution-end
+```
+
+Use the following test to check your answer.
+
+```{r q3-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(assertthat::are_equal(V_q3, 4))
+print("Well done!")
+```
+
+The variance of a *sum* of random variables is a bit more complicated
+
+$$\mathbb{V}[aX + bY] = a^2 \mathbb{V}[X] + b^2 \mathbb{V}[Y] + 2ab \text{Cov}[X, Y],$$
+where $\text{Cov}[X, Y]$ denotes the [covariance](https://en.wikipedia.org/wiki/Covariance) of $X, Y$. Covariance is closely related to correlation, which we discussed in `e-stat03-descriptive`. If two random variables $X, Y$ are *uncorrelated*, then $\text{Cov}[X, Y] = 0$.
+
+__q4__ Compute the variance of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are *uncorrelated* standard normals.
+
+```{r q4-task}
+## TASK: Compute the variance of 2 Z1 + 3 Z2
+# task-begin
+V_q4 <- NA_real_
+# task-end
+# solution-begin
+V_q4 <- 2^2 + 3^3
+# solution-end
+```
+
+Use the following test to check your answer.
+
+```{r q4-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(assertthat::are_equal(V_q4, 31))
 print("Well done!")
 ```
 
@@ -100,7 +152,7 @@ __q3__ Compute the mean and variance of $(X - 1) / 2$, where
 
 $$\mathbb{E}[X] = 1, \mathbb{V}[X] = 4$$.
 
-```{r q3-task}
+```{r q5-task}
 ## TASK: Compute the mean and variance
 # task-begin
 E_q3 <- NA_real_
@@ -114,7 +166,7 @@ V_q3 <- 1
 
 Use the following test to check your answer.
 
-```{r q3-tests}
+```{r q5-tests}
 ## NOTE: No need to change this!
 assertthat::assert_that(assertthat::are_equal(E_q3, 0))
 assertthat::assert_that(assertthat::are_equal(V_q3, 1))
@@ -123,9 +175,9 @@ print("Well done!")
 
 This process of centering (setting the mean to zero) and scaling a random variable is called *standardization*. For instance, if $X$ is a normal random variable, then $(X - \mu) / \sigma = Z$ is a standard normal.
 
-__q4__ Compute the mean and variance of $1 + 2 Z$, where $Z$ is a standard normal.
+__q6__ Compute the mean and variance of $1 + 2 Z$, where $Z$ is a standard normal.
 
-```{r q4-task}
+```{r q6-task}
 ## TASK: Compute the mean and variance
 # task-begin
 E_q4 <- NA_real_
@@ -139,7 +191,7 @@ V_q4 <- 4
 
 Use the following test to check your answer.
 
-```{r q4-tests}
+```{r q6-tests}
 ## NOTE: No need to change this!
 assertthat::assert_that(assertthat::are_equal(E_q4, 1))
 assertthat::assert_that(assertthat::are_equal(V_q4, 4))
@@ -150,6 +202,8 @@ This example illustrates that we can create a normal with desired mean and stand
 
 ### Standard Error
 <!-- ------------------------- -->
+
+__q7__ (Bonus) Use the properties of the variance (used for q4 above) to  prove that $\mathbb{V}[\overline{X}] = \sigma^2 / n$, where $\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i$, $\sigma^2 = \mathbb{V}[X]$, and the $X_i$ are mutually independent.
 
 The variance satisfies the property
 

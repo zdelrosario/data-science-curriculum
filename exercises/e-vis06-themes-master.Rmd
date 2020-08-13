@@ -3,7 +3,7 @@ title: "Visualization: Themes"
 author: Zach del Rosario
 date: 2020-07-10
 output: github_document
-time: 20
+time: 30
 reading: 0
 ---
 

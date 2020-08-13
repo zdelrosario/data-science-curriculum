@@ -3,7 +3,7 @@ title: "Reproducibility: Git and Our Curriculum"
 author: Zachary del Rosario
 date: 2020-06-24
 output: github_document
-time: 10
+time: 30
 reading: 10
 ---
 

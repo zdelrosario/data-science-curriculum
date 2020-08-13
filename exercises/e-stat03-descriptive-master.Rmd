@@ -359,7 +359,7 @@ The [Pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coef
 
 $$r_{XY} = \frac{\sum_{i=1}^n (X_i - \overline{X}) (Y_i - \overline{Y})}{s_X s_Y}.$$
 
-The [Spearman correlation](https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient) is often denoted by $\rho_{XY}$, and is actually defined in terms of $r_{XY}$, but with the ranks ($1$ to $n$) rather than the values $X_i, Y_i$.
+The [Spearman correlation](https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient) is often denoted by $\rho_{XY}$, and is actually defined in terms of the Pearson correlation $r_{XY}$, but with the ranks ($1$ to $n$) rather than the values $X_i, Y_i$.
 
 For example, we might expect a strong correlation between the `air_time` and the `distance` between airports. The function `cor` computes the Pearson correlation.
 
@@ -496,7 +496,7 @@ df_quad %>%
 - Both correlations are near-zero
 <!-- solution-end -->
 
-One last point about correlation: The mean is to Pearson correlation as the median is to Spearman correlation; the latter are robust to outliers.
+One last point about correlation: The mean is to Pearson correlation as the median is to Spearman correlation. The median and Spearman's rho are robust to outliers.
 
 ```{r ex-cor-outliers}
 ## NOTE: No need to change this!

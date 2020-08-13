@@ -1,0 +1,193 @@
+---
+title: "Factors"
+author: Zachary del Rosario
+date: 2020-07-24
+output: github_document
+time: 10
+reading: 0
+---
+
+*Purpose*: Factors are an important type of variables. Since they're largely in
+a class of their own, there are special tools available in the package `forcats`
+to help wrangle factors.
+
+*Reading*: (None)
+
+```{r library}
+library(tidyverse)
+library(gapminder)
+```
+
+A *factor* is a variable that only takes fixed, often non-numeric, values.
+Factors are sometimes called *categorical variables*. We've already seen
+
+# Organization
+<!-- -------------------------------------------------- -->
+
+__q1__ The following chunk displays the levels of the factor `continent`. Run
+the following code chunk and note in what *order* they are listed.
+
+```{r q1-task}
+## NOTE: No need to edit this
+diamonds %>%
+  pull(cut) %>%
+  levels()
+
+## TASK: Determine what order the factors are listed in.
+```
+
+**Observations**:
+
+<!-- task-begin -->
+- How are the factor levels ordered?
+- What---if any---relation does the order of the factor levels have to trends in the data?
+<!-- task-end -->
+<!-- solution-begin -->
+- The factor levels are ordered in terms of increasing quality of diamond cut.
+- The levels are essentially a measure of quality; we would expect price to (generally) increase with improved cut.
+<!-- solution-end -->
+
+__q2__ Determine the levels for the `continent` variable in the `gapminder` dataset. Note the *order* of the levels.
+
+```{r q2-task}
+## TASK: Determine the levels of the variable
+# task-begin
+## TODO: Your code here!
+# task-end
+# solution-begin
+gapminder %>%
+  pull(continent) %>%
+  levels()
+# solution-end
+
+## TASK: Determine what order the factors are listed in.
+```
+
+**Observations**:
+
+<!-- task-begin -->
+- How are the factor levels ordered?
+- What---if any---relation does the order of the factor levels have to trends in the data?
+<!-- task-end -->
+<!-- solution-begin -->
+- The factor levels are ordered alphabetically.
+<!-- solution-end -->
+
+
+The [forcats](https://forcats.tidyverse.org/) package has tools for working with
+factors. For instance, we can assign manual factor levels with the function
+`fct_relevel()`. This is generally used in a `mutate()`; for instance `mutate(x
+= fct_relevel(x, "a", "b", "c")`.
+
+__q3__ Copy your code from q2 and introduce a mutate using `fct_relevel()` to
+reorder `continent`. Choose which levels to reorder and what order in which to
+put them. Note how the resulting order is changed when you call `levels()` at
+the end of the pipe.
+
+```{r q3-task}
+# solution-begin
+gapminder %>%
+  mutate(
+    continent = fct_relevel(
+      continent,
+      "Oceania"
+    )
+  ) %>%
+  pull(continent) %>%
+  levels()
+# solution-end
+
+```
+
+**Observations**:
+
+<!-- task-begin -->
+- How are the factor levels (re)ordered?
+<!-- task-end -->
+<!-- solution-begin -->
+- Calling `fct_reorder()` as I do in the solution brings "Oceania" to the front, but leaves the other factors alone.
+<!-- solution-end -->
+
+# Visual Tricks
+<!-- -------------------------------------------------- -->
+
+When factors do no have any *meaningful* order, it is generally better to
+sort them on another variable, rather
+
+```{r mpg-unsorted}
+mpg %>%
+  mutate(manufacturer = fct_reorder(manufacturer, cty)) %>%
+
+  ggplot(aes(manufacturer, cty)) +
+  geom_boxplot() +
+  coord_flip()
+```
+
+The function `fct_reorder(f, x)` allows you to reorder the factor `f` based on
+another variable `x`. This will "match" the order between the two.
+
+__q4__ Use `fct_reorder()` to sort `manufacturer` to match the order of `cty`.
+
+```{r q4-task}
+## TASK: Modify the following code to sort the factor `manufacturer` based on
+## `cty`.
+mpg %>%
+# solution-begin
+  mutate(manufacturer = fct_reorder(manufacturer, cty)) %>%
+# solution-end
+
+  ggplot(aes(manufacturer, cty)) +
+  geom_boxplot() +
+  coord_flip()
+```
+
+**Observations**:
+
+<!-- task-begin -->
+*Before*
+- Document your observations before sorting.
+*Sorted*
+- Modify the code to sort `manufacturer`, then note any additional observations you make.
+<!-- task-end -->
+<!-- solution-begin -->
+*Before*
+- Toyota and Nissan seem have the most variable vehicles in this dataset, in terms of `cty`.
+- Volkswagon has a number of high `cty` outliers.
+*Sorted*
+- Honda has the most efficient vehicles in this sample.
+- Lincoln and Land Rover have the least efficient vehicles in this sample.
+- Mercury has a remarkably consistent set of `cty` values; perhaps this is a small sample.
+<!-- solution-end -->
+
+The function `fct_reorder2(f, x, y)` allows us to sort on *two* variables; this
+is most useful when making line plots.
+
+__q5__ Use `fct_reorder2()` to sort `country` to match the order of `x = year, y = pop`. Pay attention to the rightmost edge of the curves and the legend order. How does `fct_reorder2()` sort factors?
+
+```{r q5-task}
+## TASK: Modify the following code to sort the factor `country` based on `year`
+## and `pop`.
+gapminder %>%
+  filter(dense_rank(country) <= 7) %>%
+# solution-begin
+  mutate(country = fct_reorder2(country, year, pop)) %>%
+# solution-end
+
+  ggplot(aes(year, pop, color = country)) +
+  geom_line() +
+  scale_y_log10()
+```
+
+**Observations**:
+
+<!-- task-begin -->
+- How does `fct_reorder2()` sort factors?
+<!-- task-end -->
+<!-- solution-begin -->
+- The factors are sorted such that the rightmost points on the lines are vertically ordered the same as the legend.
+<!-- solution-end -->
+
+This *small, simple trick* is extremely helpful for creating easily-readable
+line graphs.
+
+<!-- include-exit-ticket -->

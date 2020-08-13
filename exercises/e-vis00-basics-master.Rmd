@@ -76,6 +76,15 @@ ggplot(diamonds) +
 - The trend is not 'clean'; there is no single curve in the relationship
 <!-- solution-end -->
 
+## A note on *aesthetics*
+
+The function `aes()` is short for *aesthetics*. Aesthetics in ggplot are the
+mapping of variables in a dataframe to visual elements in the graph. For
+instance, in the plot above you assigned `carat` to the `x` aesthetic, and
+`price` to the `y` aesthetic. But there are *many more* aesthetics you can set,
+some of which vary based on the `geom_` you are using to visualize. The next
+question will explore this idea more.
+
 __q4__ Create a new graph to visualize `price`, `carat`, and `cut`
 simultaneously.
 

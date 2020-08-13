@@ -3,11 +3,11 @@ title: "Statistics: Populations and Estimation"
 author: Zach del Rosario
 date: 2020-06-23
 output: github_document
-time: 40
-reading: 8
+time: 50
+reading: 10
 ---
 
-*Purpose*: Often, our data do not include all the facts that are relevant to the decision we are trying to make. Statistics is the science of determining the conclusions we can confidently make, based on our available data. To make sense of this science, we need to understand the distinction between a *sample* and a *population*, and how this distinction leads to *estimation*.
+*Purpose*: Often, our data do not include all the facts that are relevant to the decision we are trying to make. Statistics is the science of determining the conclusions we can confidently make, based on our available data. To make sense of this, we need to understand the distinction between a *sample* and a *population*, and how this distinction leads to *estimation*.
 
 *Reading*: [Statistician proves that statistics are boring](https://towardsdatascience.com/statistician-proves-that-statistics-are-boring-4fc22c95031b)
 
@@ -21,7 +21,7 @@ library(nycflights13)
 When using descriptive statistics to help us answer a question, there are (at least) two questions we should ask ourselves:
 
 1. Does the statistic we chose relate to the problem we care about?
-2. Do we have all the facts we need (the population), or do we have limited information (a sample from some well-defined population)?
+2. Do we have all the facts we need (the population) or do we have limited information (a sample from some well-defined population)?
 
 We already discussed (1) by learning about descriptive statistics and their meaning. Now we'll discuss (2) by learning the distinction between populations and samples.
 
@@ -109,7 +109,44 @@ Some terminology:
 - We call a statistic of a population a *population statistic*; for instance, the population mean. A population statistic is also called a *parameter*.
 - We call a statistics of a sample a *sample statistic*; for instance, the sample mean. A sample statistic is also called an *estimate*.
 
-Let's visualize the sample mean for each sample generated above.
+The chunk `compute-samples` generated `n_samples = 5e3` of `n_observations = 3` each. You can think of each sample as an "alternative universe" where we happened to pick `3` particular values. The following chunk visualizes just the first few samples:
+
+```{r vis-samples}
+df_sample %>% 
+  filter(id <= 6) %>% 
+  
+  ggplot(aes(Z, "")) +
+  geom_point() +
+  facet_grid(id ~ .) +
+  labs(
+    x = "Realized Values",
+    y = "Samples"
+  )
+```
+
+Every one of these samples has its own sample mean; let's add that as an additional point:
+
+```{r vis-samples-wmean}
+df_sample %>% 
+  filter(id <= 6) %>% 
+  
+  ggplot(aes(Z, "")) +
+  geom_point() +
+  geom_point(
+    data = . %>% group_by(id) %>% summarize(Z = mean(Z)),
+    mapping = aes(color = "Sample Mean"),
+    size = 4
+  ) +
+  scale_color_discrete(name = "") +
+  theme(legend.position = "bottom") +
+  facet_grid(id ~ .) +
+  labs(
+    x = "Realized Values",
+    y = "Samples"
+  )
+```
+
+Thus, there is a "red dot" associated with each of the 5,000 samples. Let's visualize the individual sample mean values as a histogram:
 
 ```{r mean-estimates-vis}
 ## NOTE: No need to change this!
@@ -143,7 +180,6 @@ map_dfr(
 ) %>%
   ggplot() +
   geom_line(aes(z, d, color = as.factor(n), group = as.factor(n))) +
-  geom_vline(xintercept = 0, linetype = 2) +
   scale_color_discrete(name = "Samples") +
   labs(
     x = "Estimated Mean",
