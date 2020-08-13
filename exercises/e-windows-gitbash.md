@@ -1,3 +1,8 @@
+## Ensure you have Git Bash
+# -------------------------
+
+Press the Windows key and type "Git Bash". You may already have it installed! If not, go to the [Git website](https://git-scm.com/downloads) and click the Windows download and install.
+
 ## Add `make` to Git Bash
 # -------------------------
 
