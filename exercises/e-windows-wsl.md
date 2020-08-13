@@ -24,12 +24,12 @@ Run the following command in PowerShell
 
 4. Restart your computer
 
-5. Open PowerSHell with admin privileges
+5. Open PowerShell with admin privileges
 
 ## Linux distribution setup
 <!-- ------------------------- -->
 
-Now that you've installed WSL, you need to populate WSL with a specific Linux distribution. The following link will install Ubuntu (a particular flavor of Linux) in your WSL.
+Now that you've enabled WSL, you need to populate WSL with a specific Linux distribution. The following link will install Ubuntu (a particular flavor of Linux) in your WSL.
 
 - [Download Ubuntu 20.04](https://aka.ms/wslubuntu2004)
 
@@ -38,7 +38,7 @@ Note that you will have to provide a user name and password for your Ubuntu inst
 ## Use WSL in RStudio
 <!-- ------------------------- -->
 
-You just did all this hard work setting up WSL; now let's make sure to use those efforts in RStudio! Click the following buttons:
+You just did all this hard work setting up WSL; now let's make sure to use those efforts in RStudio! Open RStudio and click the following buttons:
 
 `Tools > Global Options > Terminal`
 
@@ -46,10 +46,12 @@ And select `Bash (Windows Subsystem for Linux)` as your Terminal.
 
 ![RStudio](./images/rstudio-terminal-wsl.png)
 
+This will allow you to use the `Terminal` in RStudio for the tasks mentioned in the other exercises.
+
 ## Installing missing packages in terminal
 <!-- ------------------------- -->
 
-For instance, you will need the `make` command to build; this is how you install it from WSL:
+You will need to install some missing packages in order to fully use the `data-science-curriculum` repository. For instance, you will need the `make` command to build; this is how you install it from WSL:
 
 `$ sudo apt install make --fix-missing`
 
