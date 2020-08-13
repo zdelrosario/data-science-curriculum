@@ -47,7 +47,7 @@ Installing Python is optional but *highly recommended*; this will create a set o
 
 ![python target](./images/python-target.png)
 
-- Download the example `.bashrc` file, and save it to your *home directory*. This is usually `C:\Users\username`; for example, my home directory is `C:\Users\zdelrosario`.
+- [Download](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/.bashrc) the example `.bashrc` file, and save it to your *home directory*. This is usually `C:\Users\username`; for example, my home directory is `C:\Users\zdelrosario`.
 
 - Copy the **path** for Python into that example `.bashrc` file (you can use notepad to edit it), following the instructions to edit the `export PATH="$PATH:/stuff"` line.
 
