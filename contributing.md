@@ -25,7 +25,7 @@ If you find an issue with the software or want to fix an existing issue, please 
 2. Fork `data-science-curriculum` and clone a local copy of the repository for your work.
 3. Create a branch for your fix with the name `fix_name`, where `name` should be sensibly related to your fix.
 4. Implement your fix.
-5. Create a pull request against `data-science-curriculum`; one of the Maintainers will review your contribution.
+5. Create a pull request against `data-science-curriculum` on the `develop` branch; one of the Maintainers will review your contribution.
 
 ### New Lessons
 
@@ -34,7 +34,7 @@ If you wish to add a new lesson to `data-science-curriculum`, please follow thes
 1. Fork `data-science-curriculum` and clone a local copy of the repository for your work.
 2. Create a branch for your fix with the name `dev_name`, where `name` should be sensibly related to your lesson.
 3. Implement your feature.
-4. Create a pull request against `data-science-curriculum`; one of the Maintainers will review your contribution.
+4. Create a pull request against `data-science-curriculum` on the `develop` branch; one of the Maintainers will review your contribution.
 
 Your lesson should conform to the lesson styleguide, which I will definitely write soon....
 

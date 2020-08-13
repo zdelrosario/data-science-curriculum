@@ -177,7 +177,7 @@ df_clt %>%
 
 Some observations to note:
 
-- The coverage is well below our desired $95%$ when $n$ is small; this is because the CLT is an asymptotic result.
+- The coverage is well below our desired $95%$ when $n$ is small; this is because we are making an approximation.
 - As $n$ increases, the coverage tends towards our desired $95%$.
 
 [This animation](https://seeing-theory.brown.edu/frequentist-inference/index.html) is the best visual explain I've found on how confidence intervals are constructed [2].
