@@ -15,6 +15,11 @@ reading: 10
 
 *Topics*: version control, git setup, working with our exercises, ssh keys
 
+# Windows-specific Instructions
+<!-- -------------------------------------------------- -->
+
+If you are on a Windows computer, you will need to complete some additional steps. Please follow [these instructions](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-windows-gitbash.md) before continuing.
+
 # Set Up SSH Key
 <!-- -------------------------------------------------- -->
 
