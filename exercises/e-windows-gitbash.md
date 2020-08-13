@@ -1,12 +1,29 @@
+# Using Git on Windows with Git Bash
+
+Git Bash is a helpful utility for working with Git on Windows. It gives us a linux-like interface that we can use within RStudio as well!
+
 ## Ensure you have Git Bash
 # -------------------------
 
 Press the Windows key and type "Git Bash". You may already have it installed! If not, go to the [Git website](https://git-scm.com/downloads) and click the Windows download and install.
 
+## Use Git Bash in RStudio
+<!-- ------------------------- -->
+
+Let's make sure you can use Git Bash in RStudio. Open RStudio and click the following buttons:
+
+`Tools > Global Options > Terminal`
+
+And select `Git Bash` as your Terminal.
+
+![RStudio](./images/rstudio-terminal-gitbash.png)
+
+This will allow you to use the `Terminal` in RStudio for the tasks mentioned in the other exercises.
+
 ## Add `make` to Git Bash
 # -------------------------
 
-Follow [these instructions](https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058); specifically the **make** section. You will download a `zip` file, extract, and copy those files to `C:\Program Files\Git\mingw64\` *without* overwriting any files.
+Follow [these instructions](https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058); **only the `make`** section. You will download a `zip` file, extract, and copy those files to `C:\Program Files\Git\mingw64\` *without* overwriting any files.
 
 This will allow you to run `> make` from Git Bash within the `data-science-curriculum`, which will process the exercises. However, the final step of `make` will fail unless you also install Python.
 
