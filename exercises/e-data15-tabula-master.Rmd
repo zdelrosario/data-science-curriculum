@@ -1,0 +1,18 @@
+---
+title: "Data Liberation: Tabula"
+author: Zachary del Rosario
+date: 2020-08-14
+output: github_document
+time: 40
+reading: 0
+---
+
+*Purpose*: (Liberating data: Tabula)
+
+*Reading*: (*None*, this exercise *is* the reading.)
+
+```{r setup}
+library(tidyverse)
+```
+
+*Background*:
