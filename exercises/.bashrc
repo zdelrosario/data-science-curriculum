@@ -3,7 +3,7 @@
 export PATH="$PATH:/your/python/pathname/here"
 
 # For example, my .bashrc file has this line:
-# export PATH="$PATH:/c/Users/zdelrosario/AppData/Local/Programs/Python/Python38-32"
+# export PATH="$PATH:C:\Users\zdelrosario\AppData\Local\Programs\Python\Python38"
 
 # 2. Save this `.bashrc` file to your home directory. This foler should 
 # include your computer username.
