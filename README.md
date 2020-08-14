@@ -7,7 +7,8 @@ This is a curriculum of **open-source** data science exercises, intended to take
 ## Table of Contents
 
 - [Curriculum](https://github.com/zdelrosario/data-science-curriculum/blob/master/curriculum.md) contains the desired learning outcomes of this material
-- [Exercises](https://github.com/zdelrosario/data-science-curriculum/tree/master/exercises) contains the exercises, which support the learning outcomes
+- [Exercises](https://github.com/zdelrosario/data-science-curriculum/tree/master/exercises) contains the exercises, which provide a first introduction to using the Tidyverse to do Data Science
+- [Challenges](https://github.com/zdelrosario/data-science-curriculum/tree/master/challenges) contains more open-ended data challenges, which will test and build upon your skills from the exercises
 - [Utility script](https://github.com/zdelrosario/data-science-curriculum/blob/master/scripts/vis-metadata.Rmd) to help sequence course content and visualize topics
 
 ## Course Description
@@ -17,9 +18,10 @@ Data Science is a powerful toolkit to extract usable insights from data. In this
 ## How to Use This Repo
 
 1. (Setup) Complete [this exercise](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-setup00-install.md) to install RStudio
-2. (Setup) Clone this repo
-3. (Setup) Navigate to the root directory (`data-science-curriculum`), run `$ make` to build the assignments in the `exercises_sequenced` directory
-4. (Learn) Work through the exercise `assignment` files at your own pace to learn Data Science!
+2. (Setup) Complete [this](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-rep01-intro-git.md) exercise to set up Git(Hub) in order to *clone* this repository
+3. (Setup) Clone this repo
+4. (Setup) Navigate to the root directory (`data-science-curriculum`), run `$ make` to build the assignments in the `exercises_sequenced` directory
+5. (Learn) Work through the exercise `assignment` files at your own pace to learn Data Science!
 
 **Suggested order**: The exercises filenames start with a `dXY` prefix to denote
 their suggested day-order. This is provided to
