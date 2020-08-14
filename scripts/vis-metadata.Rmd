@@ -109,7 +109,7 @@ df_day_totals <-
   ) %>%
   full_join(
     .,
-    tibble(day = seq(0, 50)),
+    tibble(day = seq(0, 45)),
     by = "day"
   ) %>%
   group_by(day) %>%
