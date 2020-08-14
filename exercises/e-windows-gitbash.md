@@ -32,7 +32,7 @@ This will allow you to run `> make` from Git Bash within the `data-science-curri
 
 Installing Python is optional but *highly recommended*; this will create a set of exercises in `exercises_sequenced` that have a prefix `dXY-` for the *day* associated with that exercise (e.g. `d03-` means day 3 of the class).
 
-- Download and install [Python](https://www.python.org/downloads/) for Windows.
+- Download and install [Python](https://www.python.org/downloads/windows/) for Windows. Make sure to download a 64 bit version (you should see `x86-64` in the link).
 - Once installed, determine the `path` of your Python executable.
 
 1. Press the Windows key, type `python`, and click the "open file location" button.
