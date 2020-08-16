@@ -3,7 +3,7 @@ title: "Data Liberation: WebPlotDigitizer"
 author: Zachary del Rosario
 date: 2020-08-14
 output: github_document
-time: 20
+time: 40
 reading: 0
 ---
 
@@ -84,6 +84,7 @@ df_price <- NA
 df_production <- NA
 # task-end
 # solution-begin
+## NOTE: Your filenames may vary!
 df_price <- read_csv(
   "./data/beef_price.csv",
   col_names = c("date", "price_percent")
@@ -92,6 +93,9 @@ df_production <- read_csv(
   "./data/beef_production.csv",
   col_names = c("date", "production_percent")
 )
+## NOTE: I'm relying on WebPlotDigitizer to produce dates in order to
+## make this join work. This will probably fail if you have numbers
+## rather than dates.
 df_both <- 
   inner_join(
     df_price,
@@ -109,9 +113,11 @@ df_both %>%
 
 <!-- task-begin -->
 - What relationship do you see between price and production levels?
+- Does that relationship change over time?
 <!-- task-end -->
 <!-- solution-begin -->
-- As production drops the price tends to increase dramatically; this is not a perfect relationship though.
+- In the middle of the pandemic beef production dropped quickly without a large change in price.
+- After production dropped by 20% beef price began to spike.
 - As the pandemic continued in the US, beef production increased slightly, but price continued to rise.
 <!-- solution-end -->
 
