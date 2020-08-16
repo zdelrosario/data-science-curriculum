@@ -102,16 +102,11 @@ Core
 ## (Modeling)
 - Fit
   - a linear model (e-model01-intro)
-  - a classifier
-  - a clustering
-- Describe
-  - the relationship between variables using a model
-  - high-dimensional data with PCA
-  - high-dimensional data with t-SNE
+  - a classifier (e-model04-logistic)
 - Assess
   - whether a model is flexible enough to fit a given dataset (e-model01-train-validate)
   - whether it is worth measuring a given variable in order to make predictions
-  - the accuracy of a classifier
+  - the accuracy of a classifier (e-model05-roc)
 - Select
   - features based on an appropriate error estimate (e-stat12-model-train-validate)
   - hyperparameters based on an appropriate error estimate (e-stat12-model-train-validate)
@@ -122,11 +117,17 @@ Bonus
 - Fit
   - a gaussian process
   - a random forest
+  - a clustering
+- Describe
+  - the relationship between variables using a model
+  - high-dimensional data with PCA
+  - high-dimensional data with t-SNE
 
 ## (Communication)
 - write easily-readable code by following a styleguide (e-comm00-style)
 - tell a story using the ABT framework (e-comm01-story-basics)
 - judge a data story using the ABT framework
+- use [active and constructive responding](https://gostrengths.com/what-is-active-and-constructive-responding/) to encourage cordial discussion
 - use GitHub to discuss and improve reports
 
 ## (Reproducibility)
