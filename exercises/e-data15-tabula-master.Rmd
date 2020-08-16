@@ -87,24 +87,24 @@ df_2019_raw <- read_csv(
   )
 )
 
-df_2019 <- 
-  df_2019_raw %>% 
-  select(-contains("X")) %>% 
+df_2019 <-
+  df_2019_raw %>%
+  select(-contains("X")) %>%
   ## across() allows us to apply the same mutation to multiple
   ## columns; remove all internal spaces from numbers
-  mutate(across(-category, ~str_remove_all(., "\\s"))) %>% 
+  mutate(across(-category, ~str_remove_all(., "\\s"))) %>%
   ## Handle numbers enclosed by parentheses; make them negative
   ## and remove all parentheses for the number parser
   mutate(across(
-    -category, 
+    -category,
     ~if_else(
-      str_detect(., "\\("), 
-      str_c("-", str_remove_all(., "[\\(\\)]")), 
+      str_detect(., "\\("),
+      str_c("-", str_remove_all(., "[\\(\\)]")),
       str_remove_all(., "[\\(\\)]")
     )
-  )) %>% 
+  )) %>%
   ## Use the number parser to handle conversions
-  mutate(across(-category, parse_number)) %>% 
+  mutate(across(-category, parse_number)) %>%
   ## Fix a couple chopped lines
   mutate(
     category = if_else(
@@ -112,14 +112,14 @@ df_2019 <-
       "Total assets and deferred outflow of resources",
       category
     )
-  ) %>% 
+  ) %>%
   mutate(
     category = str_replace(
-      category, 
+      category,
       "resources, and net position",
       "Total liabilities, deferred inflow of resources, and net position"
     )
-  ) %>% 
+  ) %>%
   filter(!is.na(governmental_2019))
 # solution-end
 df_2019 %>% glimpse()
@@ -131,16 +131,16 @@ Use the following to check your work:
 ## NOTE: No need to edit; check a couple problematic values
 assertthat::assert_that(
   (
-    df_2019 %>% 
-    filter(category == "Deferred outflow of resources") %>% 
+    df_2019 %>%
+    filter(category == "Deferred outflow of resources") %>%
     pull(business_2019)
   ) == 1160
 )
 
 assertthat::assert_that(
   (
-    df_2019 %>% 
-    filter(category == "Unrestricted") %>% 
+    df_2019 %>%
+    filter(category == "Unrestricted") %>%
     pull(governmental_2019)
   ) == -62396
 )
@@ -149,3 +149,5 @@ print("Excellent!")
 ```
 
 Where Tabula really shines is in cases where you need to process *many* documents; if you find yourself needing to process a whole folder of PDF's, consider using Tabula.
+
+<!-- include-exit-ticket -->
