@@ -13,6 +13,8 @@ reading: 0
 
 *Topics*: GitHub, Discord, Fandom
 
+*Note*: If you're reading this file in RStudio, you can Shift + Click (CMD + Click) to follow a link.
+
 # Setup
 <!-- -------------------------------------------------- -->
 
