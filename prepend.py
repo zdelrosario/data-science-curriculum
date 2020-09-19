@@ -6,14 +6,25 @@ from shutil import copyfile
 names = []
 days = []
 
-with open("./scripts/schedule.csv", "r") as file_schedule:
+# with open("./scripts/schedule.csv", "r") as file_schedule:
+with open("./scripts/exercise-calendar.csv", "r") as file_schedule:
     ## Dump the header
     file_schedule.readline()
     ## Process each line
     for i, line in enumerate(file_schedule):
-        name, day = line.split(",")
+        name, pr, cl, md, ds, dc, fn, ex, date, url = line.split(",")
+
+        ## Split M/D/Y
+        month, day, year = date.split("/")
+        datecode = "{:02d}".format(int(month)) + \
+            "-{:02d}".format(int(day)) + "-"
+
+        ## Record
         names.append(name)
-        days.append(int(day))
+        days.append(datecode)
+
+## DEBUG
+print(datecode)
 
 ## Copy the exercises
 dir_base = os.path.dirname(__file__)
@@ -23,7 +34,7 @@ for i in range(len(names)):
     target = os.path.join(
         dir_base,
         "exercises_sequenced",
-        "d{0:02d}-".format(days[i]) + \
+        days[i] + \
         names[i] + \
         "-assignment.Rmd"
     )
