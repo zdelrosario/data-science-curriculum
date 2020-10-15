@@ -163,9 +163,8 @@ The following test will verify that your `df_q4` is correct:
 
 ```{r q4-tests}
 ## NOTE: No need to change this!
-## assertthat::assert_that(abs(df_q4 %>% pull(cov_depth) - 0.02320057) < 1e-3)
-## assertthat::assert_that(abs(df_q4 %>% pull(cov_diff) - 497.5585) < 1e-3)
-## )
+assertthat::assert_that(abs(df_q4 %>% pull(cov_depth) - 0.02320057) < 1e-3)
+assertthat::assert_that(abs(df_q4 %>% pull(cov_diff) - 497.5585) < 1e-3)
 print("Nice!")
 ```
 

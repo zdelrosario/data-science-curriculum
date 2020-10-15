@@ -14,6 +14,8 @@ will guide you through setting up the necessary software.
 
 *Reading*: (None)
 
+*Note*: If you're reading this file in RStudio, you can Shift + Click (CMD + Click) to follow a link.
+
 ```{r setup, include=FALSE}
 # knitr options
 knitr::opts_chunk$set(echo = TRUE)

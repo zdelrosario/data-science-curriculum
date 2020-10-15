@@ -13,6 +13,8 @@ reading: 0
 
 *Topics*: GitHub, Discord, Fandom
 
+*Note*: If you're reading this file in RStudio, you can Shift + Click (CMD + Click) to follow a link.
+
 # Setup
 <!-- -------------------------------------------------- -->
 
@@ -23,7 +25,7 @@ Git is free and open-source version control software. One of our desired outcome
 
 - (Mac OS) If you attempt to run `git` from the Terminal and don't have it installed, Mac OS should automatically start the installation. [See here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for more info.
 - (Windows) Install [Git for Windows](https://gitforwindows.org/)
-- (Linux) Use your favorite package manager and install `git`. [See here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) fore more info.
+- (Linux) Use your favorite package manager and install `git`. [See here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for more info.
 
 ## GitHub
 <!-- ------------------------- -->
