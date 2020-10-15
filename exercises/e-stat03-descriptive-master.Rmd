@@ -200,6 +200,27 @@ flights %>%
 - Negative values of `dep_delay` signal early departures
 <!-- solution-end -->
 
+### Multi-modality
+<!-- ------------------------- -->
+
+It may not seem like it, but we're actually *making an assumption* when we use the mean (or median) as a typical value. Imagine we had the following data:
+
+```{r ex-bimodal}
+bind_rows(
+  tibble(X = rnorm(300, mean = -2)),
+  tibble(X = rnorm(300, mean = +2))
+) %>% 
+  
+  ggplot(aes(X)) +
+  geom_histogram(bins = 60) +
+  geom_vline(aes(xintercept = mean(X), color = "Mean")) +
+  geom_vline(aes(xintercept = median(X), color = "Median")) +
+  scale_color_discrete(name = "Statistic")
+```
+
+Here the mean and median are both close to zero, but *zero is an atypical number*! This is partly why we don't *only* compute descriptive statistics, but also do a deeper dive into our data. Here, we should probably refuse to give a single typical value; instead, it seems there might really be two populations showing up in the same dataset, so we can give two typical numbers, say `-2, +2`.
+
+
 ## Quantiles
 <!-- ------------------------- -->
 

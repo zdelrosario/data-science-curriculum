@@ -9,7 +9,7 @@ reading: 40
 
 *Purpose*: *Scatterplots* are a key tool for EDA. Scatteplots help us inspect the relationship between two variables. To enhance our scatterplots, we'll learn how to use *layers* in ggplot to add multiple pieces of information to our plots.
 
-*Reading*: [Boxplots and Counts](https://rstudio.cloud/learn/primers/3.5)
+*Reading*: [Scatterplots](https://rstudio.cloud/learn/primers/3.5)
 *Topics*: (All topics)
 *Reading Time*: ~40 minutes
 
