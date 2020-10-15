@@ -252,7 +252,7 @@ can only *fail to reject the null*. What this means is that we still maintain
 the possibility that the null is false, and all we can say for sure is that our
 data are not sufficient to reject the null hypothesis.
 
-In other words, when we fail to reject the null hypothese "we've learned
+In other words, when we fail to reject the null hypothesis "we've learned
 nothing."
 
 Learning nothing isn't a bad thing though! It's an important part of statistics
