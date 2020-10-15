@@ -7,9 +7,7 @@ output:
     toc: true
 ---
 
-*Purpose*: We can't *possibly* do a class on data science and *not* look at covid-19. Come on.
-
-In this challenge, you'll learn how to navigate the U.S. Census Bureau website, programmatically download data from the internet, and perform a county-level population-weighted analysis of current covid-19 trends. Get excited!
+*Purpose*: In this challenge, you'll learn how to navigate the U.S. Census Bureau website, programmatically download data from the internet, and perform a county-level population-weighted analysis of current COVID-19 trends. This will give you the base for a very deep investigation of COVID-19, which we'll build upon for Project 1.
 
 <!-- include-rubric -->
 # Grading Rubric
@@ -20,33 +18,36 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 ## Individual
 <!-- ------------------------- -->
 
-| Category | Unsatisfactory | Satisfactory |
+| Category | Needs Improvement | Satisfactory |
 |----------|----------------|--------------|
 | Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
-| Observed | Did not document observations | Documented observations based on analysis |
-| Supported | Some observations not supported by analysis | All observations supported by analysis (table, graph, etc.) |
+| Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
+| Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
+| Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
 
 ## Team
 <!-- ------------------------- -->
 
-| Category | Unsatisfactory | Satisfactory |
+| Category | Needs Improvement | Satisfactory |
 |----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed to Wiki |
+| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
 | Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to assertion, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis |
+| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due on the day of the class discussion of that exercise. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
 
 ```{r setup}
 library(tidyverse)
 
 ```
 
-*Background*: [COVID-19](https://en.wikipedia.org/wiki/Coronavirus_disease_2019) is the disease caused by the virus SARS-CoV-2. In 2020 it became a global pandemic, leading to huge loss of life and tremendous disruption to society. The New York Times published up-to-date data on the progression of the pandemic across the United States---we will study these data in this challenge.
+*Background*: [COVID-19](https://en.wikipedia.org/wiki/Coronavirus_disease_2019) is the disease caused by the virus SARS-CoV-2. In 2020 it became a global pandemic, leading to huge loss of life and tremendous disruption to society. The New York Times (as of writing) publishes up-to-date data on the progression of the pandemic across the United States---we will study these data in this challenge.
+
+*Optional Readings*: I've found this [ProPublica piece](https://www.propublica.org/article/how-to-understand-covid-19-numbers) on "How to understand COVID-19 numbers" to be very informative!
 
 # The Big Picture
 <!-- -------------------------------------------------- -->
@@ -70,12 +71,12 @@ That's the high-level view; now let's dig into the details.
 
 1. Go to [data.census.gov](data.census.gov).
 2. Scroll down and click `View Tables`.
-3. Apply filters to find the ACS Total Population estimates, disaggregated by counties. I used the filters:
+3. Apply filters to find the ACS **Total Population** estimates, disaggregated by counties. I used the filters:
   - `Topics > Populations and People > Counts, Estimates, and Projections > Population Total`
   - `Geography > County > All counties in United States`
-5. Click the `Download` button to download the data; make sure to select the 2018 y-year estimates.
+5. Select the **Total Population** table and click the `Download` button to download the data; make sure to select the 2018 5-year estimates.
 6. Unzip and move the data to your `challenges/data` folder.
-  - Note that the data will have the crazy-long filename `ACSDT5Y2018.B01003_data_with_overlays_2020-06-30T102151.csv`. That's because metadata is stored in the filename, such as the year of the estimate (`Y2018`) and my access date (`2020-06-30`).
+  - Note that the data will have a crazy-long filename `ACSDT5Y2018.B01003_data_with_overlays_2020-07-26T094857.csv`. That's because metadata is stored in the filename, such as the year of the estimate (`Y2018`) and my access date (`2020-06-30`). **Your filename will vary based on when you download the data**, so make sure to copy the filename that corresponds to what you downloaded!
 
 __q1__ Load Table `B01003` into the following tibble. Make sure the column names are `id, Geographic Area Name, Estimate!!Total, Margin of Error!!Total`.
 
@@ -126,8 +127,6 @@ You can now re-run the chunk above (or the entire notebook) to pull the most rec
 # Join the Data
 <!-- -------------------------------------------------- -->
 
-
-
 To get a sense of our task, let's take a glimpse at our two data sources.
 
 ```{r glimpse}
@@ -160,7 +159,7 @@ print("Very good!")
 
 Once
 
-__q4__ Join `df_covid` with `df_q3` by the `fips` column. Use the proper type of join to preserve all rows in `df_covid`.
+__q4__ Join `df_covid` with `df_q3` by the `fips` column. Use the proper type of join to preserve *only* the rows in `df_covid`.
 
 ```{r q4-task}
 ## TASK: Join df_covid and df_q3 by fips.
@@ -193,7 +192,7 @@ Now that we've done the hard work of loading and wrangling the data, we can fina
 ## Normalize
 <!-- ------------------------- -->
 
-__q5__ Use the `population` estimates in `df_data` to normalize `cases` and `deaths` to produce per 100,000 counts.[3] Store these values in the columns `cases_perk` and `deaths_perk`.
+__q5__ Use the `population` estimates in `df_data` to normalize `cases` and `deaths` to produce per 100,000 counts.[3] Store these values in the columns `cases_per100k` and `deaths_per100k`.
 
 ```{r q5-task}
 ## TASK: Normalize cases and deaths
@@ -206,13 +205,24 @@ You may use the following test to check your work.
 ```{r q5-tests}
 ## NOTE: No need to change this
 ## Check known county data
+if (any(df_normalized %>% pull(date) %>% str_detect(., "2020-01-21"))) {
+  assertthat::assert_that(TRUE)
+} else {
+  print(str_c(
+    "Date 2020-01-21 not found; did you download the historical data (correct),",
+    "or just the most recent data (incorrect)?",
+    sep = " "
+  ))
+  assertthat::assert_that(FALSE)
+}
+
 assertthat::assert_that(
               abs(df_normalized %>%
                filter(
                  str_detect(county, "Snohomish"),
                  date == "2020-01-21"
                ) %>%
-              pull(cases_perk) - 0.127) < 1e-3
+              pull(cases_per100k) - 0.127) < 1e-3
             )
 assertthat::assert_that(
               abs(df_normalized %>%
@@ -220,7 +230,7 @@ assertthat::assert_that(
                  str_detect(county, "Snohomish"),
                  date == "2020-01-21"
                ) %>%
-              pull(deaths_perk) - 0) < 1e-3
+              pull(deaths_per100k) - 0) < 1e-3
             )
 
 print("Excellent!")
@@ -231,18 +241,18 @@ print("Excellent!")
 
 Before turning you loose, let's complete a couple guided EDA tasks.
 
-__q6__ Compute the mean and standard deviation for `cases_perk` and `deaths_perk`.
+__q6__ Compute the mean and standard deviation for `cases_per100k` and `deaths_per100k`.
 
 ```{r q6-task}
-## TASK: Compute mean and sd for cases_perk and deaths_perk
+## TASK: Compute mean and sd for cases_per100k and deaths_per100k
 ```
 
-__q7__ Find the top 10 counties in terms of `cases_perk`, and the top 10 in terms of `deaths_perk`. Report the population of each county along with the per-100,000 counts. Compare the counts against the mean values you found in q6. Note any observations. Does New York City show up in the top? Why or why not?
+__q7__ Find the top 10 counties in terms of `cases_per100k`, and the top 10 in terms of `deaths_per100k`. Report the population of each county along with the per-100,000 counts. Compare the counts against the mean values you found in q6. Note any observations.
 
 ```{r q7-task}
-## TASK: Find the top 10 max cases_perk counties; report populations as well
+## TASK: Find the top 10 max cases_per100k counties; report populations as well
 
-## TASK: Find the top 10 deaths_perk counties; report populations as well
+## TASK: Find the top 10 deaths_per100k counties; report populations as well
 ```
 
 **Observations**:
@@ -260,6 +270,7 @@ __q8__ Drive your own ship: You've just put together a very rich dataset; you no
 - Look for outliers.
 - Try web searching for news stories in some of the outlier counties.
 - Investigate relationships between county population and counts.
+- Do a deep-dive on counties that are important to you (e.g. where you or your family live).
 - Fix the *geographic exceptions* noted below to study New York City.
 - Your own idea!
 
@@ -274,7 +285,7 @@ df_normalized %>%
   filter(state == "Massachusetts") %>%
 
   ggplot(
-    aes(date, cases_perk, color = fct_reorder2(county, date, cases_perk))
+    aes(date, cases_per100k, color = fct_reorder2(county, date, cases_per100k))
   ) +
   geom_line() +
   scale_y_log10(labels = scales::label_number_si()) +

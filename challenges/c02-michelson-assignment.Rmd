@@ -22,26 +22,27 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 ## Individual
 <!-- ------------------------- -->
 
-| Category | Unsatisfactory | Satisfactory |
+| Category | Needs Improvement | Satisfactory |
 |----------|----------------|--------------|
 | Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
-| Observed | Did not document observations | Documented observations based on analysis |
-| Supported | Some observations not supported by analysis | All observations supported by analysis (table, graph, etc.) |
+| Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
+| Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
+| Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
 
 ## Team
 <!-- ------------------------- -->
 
-| Category | Unsatisfactory | Satisfactory |
+| Category | Needs Improvement | Satisfactory |
 |----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed to Wiki |
+| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
 | Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to assertion, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis |
+| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due on the day of the class discussion of that exercise. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
 
 ```{r message=FALSE, warning=FALSE}
 # Libraries
@@ -57,9 +58,9 @@ LIGHTSPEED_PM        <- 51         # Michelson error estimate (km / s)
 ```
 
 *Background*: In 1879 Albert Michelson led an experimental campaign to measure
-the speed of light. His approach was a development upon the method of Foucault,
-and resulted in a new estimate of $v_0 = 299944 \pm 51$ kilometers per second
-(in a vacuum). This is very close to the modern *exact* value of `r
+the speed of light. His approach was a development upon the method of
+Foucault[3], and resulted in a new estimate of $v_0 = 299944 \pm 51$ kilometers
+per second (in a vacuum). This is very close to the modern *exact* value of `r
 LIGHTSPEED_VACUUM`. In this challenge, you will analyze Michelson's original
 data, and explore some of the factors associated with his experiment.
 
@@ -115,8 +116,8 @@ df_q1 %>%
 The `Velocity` values in the dataset are the speed of light *in air*; Michelson
 introduced a couple of adjustments to estimate the speed of light in a vacuum.
 In total, he added $+92$ km/s to his mean estimate for `VelocityVacuum` (from
-Michelson (1880), pg. 141). While this isn't fully rigorous ($+92$ km/s is based
-on the mean temperature), we'll simply apply this correction to all the
+Michelson (1880), pg. 141). While the following isn't fully rigorous ($+92$ km/s
+is based on the mean temperature), we'll simply apply this correction to all the
 observations in the dataset.
 
 __q2__ Create a new variable `VelocityVacuum` with the $+92$ km/s adjustment to
@@ -164,9 +165,14 @@ of `VelocityVacuum` against these other factors. Are there other patterns in the
 data that might help explain the difference between Michelson's estimate and
 `LIGHTSPEED_VACUUM`?
 
+**Observations**:
+
+- Make sure to record observations on your graphs!
+
 
 
 ## Bibliography
 
 - [1] Michelson, [Experimental Determination of the Velocity of Light](https://play.google.com/books/reader?id=343nAAAAMAAJ&hl=en&pg=GBS.PA115) (1880)
 - [2] Henrion and Fischhoff, [Assessing Uncertainty in Physical Constants](https://www.cmu.edu/epp/people/faculty/research/Fischoff-Henrion-Assessing%20uncertainty%20in%20physical%20constants.pdf) (1986)
+- [3] BYU video about a [Fizeau-Foucault apparatus](https://www.youtube.com/watch?v=Ik5ORaaeaME), similar to what Michelson used.
