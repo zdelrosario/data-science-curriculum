@@ -103,7 +103,7 @@ print("Great job!")
 
 What we have now in `df_q1 %>% pull(mean_est)` is an approximation of the *sampling distribution* for the mean estimate. Remember that a confidence interval is a construction based on the sampling distribution, so this is the object we need! From this point, our job would be to work the mathematical manipulations necessary to construct a confidence interval from the quantiles of `df_q1 %>% pull(mean_est)`. Thankfully, the `rsample` package has already worked out those details for us!
 
-The `rsample` function `int_pctl()` will compute (perecentile) confidence intervals from a bootstrap resampling, but we need to compute our own statistics. Remember the `fitdistr()` function from the previous exercise?
+The `rsample` function `int_pctl()` will compute (percentile) confidence intervals from a bootstrap resampling, but we need to compute our own statistics. Remember the `fitdistr()` function from the previous exercise?
 
 ```{r recall-fitdistr}
 # NOTE: No need to change this demo code
