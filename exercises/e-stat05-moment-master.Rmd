@@ -221,4 +221,11 @@ $$\mathbb{V}[\overline{X}] = \sigma^2 / n,$$
 
 where $$\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i$$, $\sigma^2 = \mathbb{V}[X]$, and the $X_i$ are mutually independent.
 
+The quantity
+
+$$\sqrt{\mathbb{V}[\overline{X}]}$$
+
+is called the *standard error of the mean*; more generally the *standard error*
+for a statistic is the standard deviation of its sampling distribution. We'll return to this concept in `e-stat06`.
+
 <!-- include-exit-ticket -->
