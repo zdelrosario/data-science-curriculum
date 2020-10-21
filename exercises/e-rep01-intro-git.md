@@ -19,6 +19,18 @@ RStudio. This should help ensure you have access to Git.
 *Topics*: version control, git setup, working with our exercises, ssh
 keys
 
+*Note*: If you’re reading this file in RStudio, you can Shift + Click
+(CMD + Click) to follow a link.
+
+# Windows-specific Instructions
+
+<!-- -------------------------------------------------- -->
+
+If you are on a Windows computer, you will need to complete some
+additional steps. Please follow [these
+instructions](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-windows-gitbash.md)
+before continuing.
+
 # Set Up SSH Key
 
 <!-- -------------------------------------------------- -->
@@ -72,10 +84,10 @@ Follow these instructions:
   - Great job\! Now you have all the assignment exercises for the
     course\!
 
-# Exit Ticket
+*Aside*: Note that *Git* and *GitHub* are two different things\! *Git*
+is a version control tool, while *GitHub* is a service that uses Git
+where you can host repositories. For instance,
+[GitLab](https://about.gitlab.com/) is another service where you can
+host Git repositories.
 
-<!-- -------------------------------------------------- -->
-
-Once you have completed this exercise, make sure to fill out the **exit
-ticket survey**, [linked
-here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-rep01-intro-git.Rmd).
+<!-- include-exit-ticket -->
