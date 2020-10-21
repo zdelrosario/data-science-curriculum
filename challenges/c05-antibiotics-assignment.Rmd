@@ -3,8 +3,7 @@ title: "Antibiotics"
 author: "(Your name here)"
 date: 2020-
 output:
-  github_document:
-    toc: true
+  pdf_document
 ---
 
 *Purpose*: To create an effective visualization, we need to keep our *purpose* firmly in mind. There are many different ways to visualize data, and the only way we can judge efficacy is with respect to our purpose.
@@ -22,31 +21,31 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 ## Individual
 <!-- ------------------------- -->
 
-| Category | Unsatisfactory | Satisfactory |
+| Category | Needs Improvement | Satisfactory |
 |----------|----------------|--------------|
 | Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
-| Observed | Did not document observations | Documented observations based on analysis |
-| Supported | Some observations not supported by analysis | All observations supported by analysis (table, graph, etc.) |
+| Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
+| Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
+| Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
 
 ## Team
 <!-- ------------------------- -->
 
-| Category | Unsatisfactory | Satisfactory |
+| Category | Needs Improvement | Satisfactory |
 |----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed to Wiki |
+| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
 | Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to assertion, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis |
+| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due on the day of the class discussion of that exercise. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
 
 ```{r setup}
 library(tidyverse)
 library(ggrepel)
-
 ```
 
 *Background*: The data[1] we study in this challenge report the [*minimum inhibitory concentration*](https://en.wikipedia.org/wiki/Minimum_inhibitory_concentration) (MIC) of three drugs for different bacteria. The smaller the MIC for a given drug and bacteria pair, the more practical the drug is for treating that particular bacteria. An MIC value of *at most* 0.1 is considered necessary for treating human patients.
@@ -69,7 +68,7 @@ df_antibiotics %>% knitr::kable()
 ## Purpose: Compare Effectiveness
 <!-- ------------------------- -->
 
-__q1__ Create a visualization of `df_antibiotics` that helps you to compare the effectiveness of the three antibiotics across all the bacteria reported. Can you make any broad statements about antibiotic effectiveness?
+__q1__ Create a visualization of `df_antibiotics` that helps you to compare the effectiveness of the three antibiotics across all the bacteria reported. Make sure to show *all* of the bacteria, all three antibiotic MIC values, and whether or not each bacterium is Gram positive/negative. Can you make any broad statements about antibiotic effectiveness?
 
 ```{r q1-task}
 ## TASK: Create your visualization
@@ -80,12 +79,15 @@ __q1__ Create a visualization of `df_antibiotics` that helps you to compare the 
 - Record your observations here
 - Can you make any broad statements about antibiotic effectiveness?
 
+
 ## Purpose: Categorize Bacteria
 <!-- ------------------------- -->
 
 The *genus* of a living organism is a human categorization, based on various characteristics of the organism. Since these categories are based on numerous factors, we will tend to see clusters if we visualize data according to relevant variables. We can use these visuals to categorize observations, and to question whether given categories are reasonable!
 
-__q2__ Create a visualization of `df_antibiotics` that helps you to categorize bacteria according to the variables in the data. Document your observations on how how clusters of bacteria in the variables do---or don't---align with their *genus* classification.
+__q2__ Create a visualization of `df_antibiotics` that helps you to categorize bacteria according to the variables in the data. Here your emphasis **need not** be on whether MIC < 0.1; instead focus on detecting patterns between the individual bacteria.
+
+Make sure to show *all* of the bacteria and whether or not each bacterium is Gram positive/negative; you do *not* need to show all three MIC values. Document your observations on how how clusters of bacteria in the variables do---or don't---align with their *genus* classification.
 
 ```{r q2-task}
 ## TASK: Create your visualization
@@ -95,9 +97,10 @@ __q2__ Create a visualization of `df_antibiotics` that helps you to categorize b
 
 - Document your observations here!
 
+
 # References
 <!-- -------------------------------------------------- -->
 
 [1] Neomycin in skin infections: A new topical antibiotic with wide antibacterial range and rarely sensitizing. Scope. 1951;3(5):4-7.
 
-[2] Wainer and Lysen, "That's Funny..." /American Scientist/ (2009) [link](https://www.americanscientist.org/article/thats-funny)
+[2] Wainer and Lysen, "That's Funny..." *American Scientist* (2009) [link](https://www.americanscientist.org/article/thats-funny)

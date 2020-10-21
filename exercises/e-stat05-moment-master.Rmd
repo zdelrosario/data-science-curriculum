@@ -148,7 +148,7 @@ print("Well done!")
 
 The following two exercises illustrate two important transformations.
 
-__q3__ Compute the mean and variance of $(X - 1) / 2$, where
+__q5__ Compute the mean and variance of $(X - 1) / 2$, where
 
 $$\mathbb{E}[X] = 1, \mathbb{V}[X] = 4$$.
 
@@ -203,8 +203,6 @@ This example illustrates that we can create a normal with desired mean and stand
 ### Standard Error
 <!-- ------------------------- -->
 
-__q7__ (Bonus) Use the properties of the variance (used for q4 above) to  prove that $\mathbb{V}[\overline{X}] = \sigma^2 / n$, where $\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i$, $\sigma^2 = \mathbb{V}[X]$, and the $X_i$ are mutually independent.
-
 The variance satisfies the property
 
 $$\mathbb{V}[aX + bY] = a^2 \mathbb{V}[X] + b^2 \mathbb{V}[Y] + 2 \text{Cov}[X, Y],$$
@@ -217,10 +215,17 @@ is the *covariance* between $X$ and $Y$. If $X, Y$ are independent, then the cov
 
 Using this expression, we can prove that the standard error of the sample mean $\overline{X}$ is $\sigma / \sqrt{n}$.
 
-__q5__ (Bonus) Use the identity above to prove that
+__q7__ (Bonus) Use the identity above to prove that
 
 $$\mathbb{V}[\overline{X}] = \sigma^2 / n,$$
 
 where $$\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i$$, $\sigma^2 = \mathbb{V}[X]$, and the $X_i$ are mutually independent.
+
+The quantity
+
+$$\sqrt{\mathbb{V}[\overline{X}]}$$
+
+is called the *standard error of the mean*; more generally the *standard error*
+for a statistic is the standard deviation of its sampling distribution. We'll return to this concept in `e-stat06`.
 
 <!-- include-exit-ticket -->

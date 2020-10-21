@@ -18,26 +18,27 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 ## Individual
 <!-- ------------------------- -->
 
-| Category | Unsatisfactory | Satisfactory |
+| Category | Needs Improvement | Satisfactory |
 |----------|----------------|--------------|
 | Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
-| Observed | Did not document observations | Documented observations based on analysis |
-| Supported | Some observations not supported by analysis | All observations supported by analysis (table, graph, etc.) |
+| Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
+| Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
+| Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
 
 ## Team
 <!-- ------------------------- -->
 
-| Category | Unsatisfactory | Satisfactory |
+| Category | Needs Improvement | Satisfactory |
 |----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed to Wiki |
+| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
 | Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to assertion, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis |
+| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due on the day of the class discussion of that exercise. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
 
 ```{r setup}
 library(tidyverse)
@@ -60,6 +61,7 @@ In this challenge, we'll tackle a deterministic problem (computing $\pi$) with t
 The idea behind estimating $\pi$ via Monte Carlo is to set up a probability estimation problem whose solution is related to $\pi$. Consider the following sets: a square with side length one $St$, and a quarter-circle $Sc$.
 
 ```{r vis-areas}
+## NOTE: No need to edit; this visual helps explain the pi estimation scheme
 tibble(x = seq(0, 1, length.out = 100)) %>%
   mutate(y = sqrt(1 - x^2)) %>%
 
@@ -84,7 +86,8 @@ tibble(x = seq(0, 1, length.out = 100)) %>%
   ) +
   scale_x_continuous(breaks = c(0, 1/2, 1)) +
   scale_y_continuous(breaks = c(0, 1/2, 1)) +
-  theme_minimal()
+  theme_minimal() +
+  coord_fixed()
 ```
 
 The area of the set $Sc$ is $\pi/4$, while the area of $St$ is $1$. Thus the probability that a *uniform* random variable over the square lands inside $Sc$ is the ratio of the areas, that is
@@ -125,7 +128,7 @@ pi_est
 
 You now have an estimate of $\pi$, but how trustworthy is that estimate? In `e-stat06-clt` we discussed *confience intervals* as a means to quantify the uncertainty in an estimate. Now you'll apply that knowledge to assess your $\pi$ estimate.
 
-__q3__ Using a CLT approximation, produce a confidence interval for your estimate of $\pi$. Does your interval include the true value of $\pi$? Was your chosen sample size sufficiently large so as to produce a trustworthy answer?
+__q3__ Using a CLT approximation, produce a confidence interval for your estimate of $\pi$. Make sure you specify your confidence level. Does your interval include the true value of $\pi$? Was your chosen sample size sufficiently large so as to produce a trustworthy answer?
 
 ```{r q3-task}
 ```
@@ -133,9 +136,8 @@ __q3__ Using a CLT approximation, produce a confidence interval for your estimat
 **Observations**:
 
 - Does your interval include the true value of $\pi$?
+- What confidence level did you choose?
 - Was your sample size $n$ large enough?
-- Yes, my interval includes $\pi$.
-- My CI is quite narrow, so $n$ is large enough.
 
 # References
 <!-- -------------------------------------------------- -->
