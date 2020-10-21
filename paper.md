@@ -97,6 +97,6 @@ Both the content and structure of this curriculum are inspired by the
 (discontinued) Data Challenge Lab course at Stanford University [@dcl]. The
 exercises make heavy use of the `Tidyverse` [@wickham2019tidyverse]
 "metapackage", as well as other R packages
-[@broom,@fitdistrplus,@curl,@gapminder,@ggrepel,@googlesheets4,@nycflights,@mvtnorm,@viridis,@modelr].
+[@broom;@fitdistrplus;@curl;@gapminder;@ggrepel;@googlesheets4;@nycflights;@mvtnorm;@viridis;@modelr].
 
 # References
