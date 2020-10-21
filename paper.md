@@ -1,5 +1,5 @@
 ---
-title: 'TODO'
+title: 'An Open-Source Active Learning Curriculum for Data Science'
 tags:
   - Active learning
   - Data science
