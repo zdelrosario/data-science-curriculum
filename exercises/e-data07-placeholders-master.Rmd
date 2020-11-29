@@ -31,7 +31,7 @@ __q1__ Re-write the following code to use the *placeholder*.
 diamonds %>% glimpse()
 # task-end
 # solution-begin
-diamonds %>% glimpse()
+diamonds %>% glimpse(.)
 # solution-end
 ```
 
