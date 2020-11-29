@@ -3,6 +3,7 @@ main:
 	cd exercises; make
 	./prepend.py
 	cp -rf exercises/images exercises_sequenced/.
+	cp -rf exercises/data/tiny.csv exercises_sequenced/data/.
 
 test:
 	Rscript -e 'testthat::test_dir("./tests/")'
