@@ -40,14 +40,14 @@ Let's start with a curious observation; look at the effect of `cut` on `price` a
 
 ```{r diamonds-lower-upper}
 ## NOTE: No need to edit this chunk
-diamonds_train %>% 
+diamonds_train %>%
   mutate(
     grouping = if_else(carat < 1.0, "Lower carat", "Upper carat")
-  ) %>% 
-  
+  ) %>%
+
   ggplot(aes(cut, price)) +
   geom_boxplot() +
-  
+
   scale_y_log10() +
   facet_grid(~ grouping)
 ```
@@ -58,29 +58,29 @@ __q1__ Fit two models on `diamonds_train`, one for `carat <= 1` and one for `car
 
 ```{r q1-task}
 # task-begin
-## TODO: Fit two models, one to lower (carat <= 1) and 
-#        one to upper (carat > 1) diamonds. 
+## TODO: Fit two models, one to lower (carat <= 1) and
+#        one to upper (carat > 1) diamonds.
 #        Use formula = price ~ cut
 fit_lower <- NA
 fit_upper <- NA
 # task-end
 # solution-begin
-fit_lower <- 
-  diamonds_train %>% 
-  filter(carat <= 1) %>% 
+fit_lower <-
+  diamonds_train %>%
+  filter(carat <= 1) %>%
   lm(formula = price ~ cut)
 
-fit_upper <- 
-  diamonds_train %>% 
-  filter(carat > 1) %>% 
+fit_upper <-
+  diamonds_train %>%
+  filter(carat > 1) %>%
   lm(formula = price ~ cut)
 # solution-end
 
 ## NOTE: No need to modify this code
-tibble(cut = c("Fair", "Good", "Very Good", "Premium", "Ideal")) %>% 
+tibble(cut = c("Fair", "Good", "Very Good", "Premium", "Ideal")) %>%
   mutate(
     cut = fct_relevel(cut, "Fair", "Good", "Very Good", "Premium", "Ideal")
-  ) %>% 
+  ) %>%
   add_predictions(fit_lower, var = "price_pred-lower") %>%
   add_predictions(fit_upper, var = "price_pred-upper") %>%
   pivot_longer(
@@ -112,29 +112,29 @@ __q2__ Repeat the same exercise above, but instead of `price ~ cut` fit `carat ~
 
 ```{r q2-task}
 # task-begin
-## TODO: Fit two models, one to lower (carat <= 1) and 
-#        one to upper (carat > 1) diamonds. 
+## TODO: Fit two models, one to lower (carat <= 1) and
+#        one to upper (carat > 1) diamonds.
 #        Use formula = carat ~ cut
 fit_carat_lower <- NA
 fit_carat_upper <- NA
 # task-end
 # solution-begin
-fit_carat_lower <- 
-  diamonds_train %>% 
-  filter(carat <= 1) %>% 
+fit_carat_lower <-
+  diamonds_train %>%
+  filter(carat <= 1) %>%
   lm(formula = carat ~ cut)
 
-fit_carat_upper <- 
-  diamonds_train %>% 
-  filter(carat > 1) %>% 
+fit_carat_upper <-
+  diamonds_train %>%
+  filter(carat > 1) %>%
   lm(formula = carat ~ cut)
 # solution-end
 
 ## NOTE: No need to change this code
-tibble(cut = c("Fair", "Good", "Very Good", "Premium", "Ideal")) %>% 
+tibble(cut = c("Fair", "Good", "Very Good", "Premium", "Ideal")) %>%
   mutate(
     cut = fct_relevel(cut, "Fair", "Good", "Very Good", "Premium", "Ideal")
-  ) %>% 
+  ) %>%
   add_predictions(fit_carat_lower, var = "carat_pred-lower") %>%
   add_predictions(fit_carat_upper, var = "carat_pred-upper") %>%
   pivot_longer(
@@ -175,36 +175,36 @@ __q3__ Fit two models, one with both carat and cut, and another with cut only. F
 ## TODO: Fit two models on the low-carat diamonds, one with
 #        formula = price ~ carat + cut, and one with
 #        formula = price ~ cut
-fit_carat_cut <- 
-  diamonds_train %>% 
+fit_carat_cut <-
+  diamonds_train %>%
   filter(carat <= 1)
   # lm()
 
 fit_cut_only <-
-  diamonds_train %>% 
+  diamonds_train %>%
   filter(carat <= 1)
   # lm()
 # task-end
 # solution-begin
-fit_carat_cut <- 
-  diamonds_train %>% 
-  filter(carat <= 1) %>% 
+fit_carat_cut <-
+  diamonds_train %>%
+  filter(carat <= 1) %>%
   lm(formula = price ~ carat + cut)
 
-fit_cut_only <- 
-  diamonds_train %>% 
-  filter(carat <= 1) %>% 
-  lm(formula = carat ~ cut)
+fit_cut_only <-
+  diamonds_train %>%
+  filter(carat <= 1) %>%
+  lm(formula = price ~ cut)
 # solution-end
 
 ## NOTE: No need to change this code
 tibble(
     cut = c("Fair", "Good", "Very Good", "Premium", "Ideal"),
     carat = c(0.4)
-  ) %>% 
+  ) %>%
   mutate(
     cut = fct_relevel(cut, "Fair", "Good", "Very Good", "Premium", "Ideal")
-  ) %>% 
+  ) %>%
   add_predictions(fit_carat_cut, var = "price_pred-carat_cut") %>%
   add_predictions(fit_cut_only, var = "price_pred-cut_only") %>%
   pivot_longer(
