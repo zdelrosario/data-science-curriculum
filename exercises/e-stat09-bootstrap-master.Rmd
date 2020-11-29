@@ -7,7 +7,7 @@ time: 30
 reading: 0
 ---
 
-*Purpose*: Confidence intervals are an important tool for assessing our estimates. However,
+*Purpose*: Confidence intervals are an important tool for assessing our estimates. However, our tools so far for estimating confidence intervals rely on assumptions (normality, applicability of the CLT) that limit the statistics we can study. In this exercise we'll learn about a general-purpose tool we can use to approximate CI---the *bootstrap*.
 
 ```{r setup}
 library(MASS)
@@ -187,7 +187,7 @@ tibble(x = rnorm(n = 100)) %>%
 
 The following code generates `100` different samples from a normal distribution (each with `n = 10`), and computes a very coarse bootstrap for each one.
 
-__q4__ (Number of replicates) First run this code, and comment on whether the approxiamted coverage probability is close to the nominal `0.95`. Increase the value of `n_boot` and re-run; at what point does the coverage probability approach the desired `0.95`?
+__q4__ (Number of replicates) First run this code, and comment on whether the approximate coverage probability is close to the nominal `0.95`. Increase the value of `n_boot` and re-run; at what point does the coverage probability approach the desired `0.95`?
 
 *Note*: At higher values of `n_boot`, the following code can take a long while to run. I recommend keeping `n_boot <= 1000`.
 
@@ -241,7 +241,7 @@ df_q4 %>%
 ## A Worked Example: Probability Estimate
 <!-- ------------------------- -->
 
-To finish, I'll present some example code on how you can apply the bootstrap to a more complicted problem. In the previous exercise `e-stat08-fit-dist` we estimated a probability based on a fitted distribution. Now we have the tools to produce a bootstrap-approximated a confidence interval for that probability estimate.
+To finish, I'll present some example code on how you can apply the bootstrap to a more complicated problem. In the previous exercise `e-stat08-fit-dist` we estimated a probability based on a fitted distribution. Now we have the tools to produce a bootstrap-approximated a confidence interval for that probability estimate.
 
 Remember that we had the following setup: sampling from a weibull distribution and estimating parameters with `fitdistr()`.
 

@@ -93,7 +93,7 @@ convincing so as to change our minds).
 
 For this buying scenario, we feel that the contract is pretty weird: We'll set
 up our null hypothesis to assume the vendor is trying to rip us off. In order to
-make this hypothesis testable, we'll need to make it *quantiative*.
+make this hypothesis testable, we'll need to make it *quantitative*.
 
 One way make our hypothesis quantitative is to think about the mean price of
 diamonds in the population: If the diamonds are---on average---less expensive

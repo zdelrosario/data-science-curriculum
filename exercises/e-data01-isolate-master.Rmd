@@ -83,10 +83,10 @@ to accomplish?
 
 ```{r q3-task}
 # task-begin
-## flights %>% filter(dest = "BOS") # Uncomment and run to see error
+## flights %>% filter(dest = LAX) # Uncomment and run to see error
 # task-end
 # solution-begin
-flights %>% filter(dest == "BOS")
+flights %>% filter(dest == "LAX")
 # solution-end
 ```
 

@@ -12,6 +12,7 @@ reading: 0
 *Reading*: [`theme()` documentation](https://ggplot2.tidyverse.org/reference/theme.html) (Use as a reference; don't read the whole thing!)
 
 ```{r setup, include=FALSE}
+library(tidyverse)
 # knitr options
 library(tidyverse)
 knitr::opts_chunk$set(echo = TRUE)
