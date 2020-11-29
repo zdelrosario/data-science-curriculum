@@ -133,7 +133,7 @@ The `tidy()` function takes a fit and returns the model's parameters; here we ca
 
 $$\widehat{\text{price}} = \beta_0 + \beta_{\text{carat}} (\text{carat}) + \epsilon.$$
 
-This slightly-mysterious formula notation `price ~ carat` is convenient for defining many kinds of models, as we'll see in the following task. 
+This slightly-mysterious formula notation `price ~ carat` is convenient for defining many kinds of models, as we'll see in the following task.
 
 __q1__ Copy the code above to fit a model of the form
 
