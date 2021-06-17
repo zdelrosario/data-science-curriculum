@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/zdelrosario/data-science-curriculum.svg?branch=master)](https://travis-ci.com/zdelrosario/data-science-curriculum)
+[![Build Status](https://travis-ci.com/zdelrosario/data-science-curriculum.svg?branch=master)](https://travis-ci.com/zdelrosario/data-science-curriculum) [![status](https://jose.theoj.org/papers/f610a5debae8f7f9f08edd1e2abda774/status.svg)](https://jose.theoj.org/papers/f610a5debae8f7f9f08edd1e2abda774)
 
 # data-science-curriculum
 
