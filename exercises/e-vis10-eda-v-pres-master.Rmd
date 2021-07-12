@@ -1,0 +1,33 @@
+---
+title: "Visualization: EDA vs Presentation Quality Graphs"
+author: Zach del Rosario
+date: 2021-07-11
+output: github_document
+time: 0
+reading: 0
+---
+
+*Purpose*: 
+
+*Reading*: None! (This is the reading)
+
+```{r setup}
+library(tidyverse)
+```
+
+# Two Levels of Quality
+<!-- -------------------------------------------------- -->
+
+> An *EDA quality graph* is meant to help *you* understand
+> A *presentation quality graph* is meant to help *someone else* understand
+
+## Producing an EDA quality graph
+<!-- -------------------------------------------------- -->
+
+- The point is *not* to make a single EDA quality graph; rather it is to quickly make *many graphs* to facilitate your understanding of the data.
+
+## Producing a presentation quality graph
+<!-- -------------------------------------------------- -->
+
+In order to *help* someone understand, you must have a clear idea of *what* you want them to understand. Put differently, you must have a clear *message* in mind.
+
