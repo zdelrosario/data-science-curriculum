@@ -1,0 +1,33 @@
+---
+title: "Variability Quadrants: Cause"
+author: Zachary del Rosario
+date: 2021-08-06
+output: github_document
+time: 30
+reading: 0
+---
+
+*Purpose*: 
+
+*Prerequisites*: e-stat02-probability, e-vis10-control-chart
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+## Note: No need to edit this chunk!
+library(tidyverse)
+```
+
+![Variability quadrants](./images/cause-source-quadrants.png)
+
+## Reminder: Control Charts
+
+![control chart](./images/control-chart.png)
+
+
+## Chance vs Assignable Cause
+
+<!-- include-exit-ticket -->

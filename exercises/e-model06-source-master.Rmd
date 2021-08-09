@@ -1,0 +1,156 @@
+---
+title: "Variability Quadrants: Source"
+author: Zachary del Rosario
+date: 2021-08-06
+output: github_document
+time: 30
+reading: 0
+---
+
+*Purpose*: 
+
+*Prerequisites*: (None)
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+## Note: No need to edit this chunk!
+library(tidyverse)
+```
+
+# Variability
+
+## The Cause-Source Quadrants
+
+![Variability quadrants](./images/cause-source-quadrants.png)
+
+In this exercise, we'll focus on the vertical axis: the **source** of variability.
+
+## Real vs Induced Source
+
+![Variability quadrants](./images/noise-v-deviation.png)
+
+# Manufacturing structural steel components
+
+*The Context*: An manufacturer is producing cast-steel parts for a landing gear. The part in question takes a heavy load, and if it fails it will disable the aircraft on the ground. These parts will be manufactured in bulk; approximately 500 will be made and installed in commercial aircraft that will operate for decades.
+
+*The Target*: The strength of each steel component---as-manufactured---will ultimately determine whether each aircraft is safe.
+
+## Scenarios
+
+### __q1__ Imagine the manufacturer selects one part and performs multiple non-destructive tensile tests on that single part, under similar conditions. The measured elasticity from each test is slightly different. Is this variability real or induced?
+
+<!-- task-begin -->
+- real or induced?
+- (Why?)
+<!-- task-end -->
+<!-- solution-begin -->
+- Induced
+- The properties of the component are essentially set at maunfacturing time; if multiple measurements on the same part return different values, then the variability is most likely induced by the measurement process.
+<!-- solution-end -->
+
+### __q2__ Imagine the manufacturer selects multiple parts and---for each part---performs multiple non-destructive tensile tests, all under similar conditions. The measured elasticity values for each part are averaged to provide a more reliable estimate for each part. Upon comparing the parts, each averaged value is fairly different. Is this variability real or induced?
+
+<!-- task-begin -->
+- real or induced?
+- (Why?)
+<!-- task-end -->
+<!-- solution-begin -->
+- Real
+- The properties of the component are essentially set at maunfacturing time; but no manufacturing process can create items with identical properties. Particularly if variability remains after induced variability has been controlled and eliminated (as described in the prompt), then the remaining variability is real.
+<!-- solution-end -->
+
+### __q3__ Now the manufacturer selects multiple parts and performs a destructive tensile test to characterize the strength of each part, with tests carried out under similar conditions. The measured strength values exhibit a fair amount of variability. Is this variability real or induced?
+
+<!-- task-begin -->
+- real or induced?
+- (Why?)
+<!-- task-end -->
+<!-- solution-begin -->
+- Without more information, it is impossible to say. It is likely a combination of real and induced sources.
+- Real variability can arise from the manufacturing process, and induced variability can arise from the measurement. Since the measurement is destructive, we cannot use multiple measurements to control the induced variability.
+- Note that it would generally be conservative to treat all of the variability in a strength as real; this would lead to parts that are heavier but safer than they need to be.
+<!-- solution-end -->
+
+## Analyzing Data
+
+The following generates data with both *noise* and *deviation*
+
+```{r gen-data}
+set.seed(101)
+df_meas <- 
+  map_dfr(
+    1:30,
+    function(i) {
+      Y_deviation <- rlnorm(n = 1, meanlog = 2)
+      Y_noise <- rnorm(n = 5, sd = 1)
+      
+      tibble(Y = Y_deviation + Y_noise) %>% 
+        mutate(id_sample = i, id_meas = row_number())
+    }
+  )
+
+df_meas %>% 
+  ggplot(aes(Y)) +
+  geom_histogram(bins = 30)
+```
+
+`id_sample` - represents an individual part
+`id_meas` - represents an individual measurement, with multiple carried out on each part
+`Y` - an individual measurement, identified by `id_sample` and `id_meas`
+
+### __q4__ Inspect the following graph. Answer the questions under *observations* below.
+
+```{r q4-task}
+## NOTE: No need to edit; run and inspect
+df_meas %>% 
+  ggplot(aes(id_sample, Y)) +
+  geom_point(
+    data = . %>% 
+      group_by(id_sample) %>% 
+      summarize(Y = mean(Y)),
+    color = "red",
+    size = 1
+  ) +
+  geom_point(size = 0.2) +
+  theme_minimal()
+```
+
+*Observations*
+<!-- task-begin -->
+- Which is larger: The variability due to noise, or the variability due to deviation?
+  - (Your response here)
+<!-- task-end -->
+<!-- solution-begin -->
+- Based on the visual, the variability due to deviation is obviously much larger than the variability due to noise: There is considerably more scatter between the red dots (each sample's measurement mean), than there is scatter around each red dot.
+
+We can make this quantitative with an *analysis of variance*:
+
+```{r q4-anova}
+fit_meas <- 
+  df_meas %>% 
+  lm(formula = Y ~ id_sample + id_meas)
+anova(fit_meas)
+```
+
+A [random effects model](https://en.wikipedia.org/wiki/Random_effects_model) would be more appropriate for these data, but the fixed-effects ANOVA above gives a rough quantitative comparison.
+
+<!-- solution-end -->
+
+### __q5__ Imagine `Y` represents the measured strength of the cast steel. Would it be safe to simply average all of the values and use that as the material strength for design?
+
+<!-- task-begin -->
+- (Your response here)
+<!-- task-end -->
+<!-- solution-begin -->
+- No, it would be foolish to take the average of all these strength measurements and use that value for design. In fact, in aircraft design, this approach would be *illegal* according to [Federal Airworthiness Regulations](https://www.law.cornell.edu/cfr/text/14/25.613).
+<!-- solution-end -->
+
+## Planning Data Collection
+
+
+
+<!-- include-exit-ticket -->
