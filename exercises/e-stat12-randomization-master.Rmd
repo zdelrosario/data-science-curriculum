@@ -1,0 +1,108 @@
+---
+title: "Statistics: Randomization"
+author: Zachary del Rosario
+date: 2021-08-10
+output: github_document
+time: 30
+reading: 0
+---
+
+*Purpose*: (Randomization is magic) 
+
+*Reading*: (None, this is the reading)
+
+```{r setup}
+library(tidyverse)
+```
+
+# Introduction
+
+# An Example: Fertilizer and Crop Yield
+
+## Scenario
+
+*TODO* (Our expectation in this scenario is that the treatment will have a higher yield than the control)
+
+```{r model-setup}
+## NOTE: Don't edit this; this sets up the example
+simulate_yield <- function(v) {
+  ## Check assertions
+  if (length(v) != 6) {
+    stop("Design must be a vector of length 6")
+  }
+  if (length(setdiff(v, c("T", "C")) != 0)) {
+    stop("Design must be a vector with 'T' and 'C' characters only")
+  }
+  if (length(setdiff(c("T", "C"), v)) > 0) {
+    stop("Design must contain at least one 'T' and at least one 'C'")
+  }
+  ## Simulate data
+  tibble(condition = v) %>% 
+    mutate(
+      condition = fct_relevel(condition, "T", "C"),
+      plot = row_number(),
+      yield = if_else(condition == "T", 1, 0) + plot / 3 + rnorm(n(), mean = 1, sd = 0.5)
+    )
+}
+```
+
+```{r define-design}
+## Define the sequence of treatment (T) and control (C) plots
+experimental_design <- c("T", "T", "T", "C", "C", "C")
+```
+
+In statistics, the word "design" refers to the "design of *data collection*". The purposeful planning of data collection is called *statistical design of experiments*.
+
+```{r example-run}
+## For reproducibility, set the seed
+set.seed(101)
+## Simulate the experimental yields
+experimental_design %>% 
+  simulate_yield() %>% 
+  group_by(condition) %>% 
+  summarize(
+    yield_mean = mean(yield),
+    yield_sd = sd(yield)
+  )
+```
+
+
+## TODO - SCHEMATIC w/ RIVER
+
+### __qX__ (Try a different design)
+
+```{r qX-task}
+## TODO: Define your own experimental design
+# task-begin
+your_design <- NA_character_
+# task-end
+# solution-begin
+your_design <- c("T", "T", "T", "C", "C", "C")
+# solution-end
+
+## NOTE: No need to edit; use this to simulate your design
+```
+
+
+## Randomization in action
+
+```{r randomize}
+set.seed(101)
+
+experimental_design %>% 
+  ## Randomize the plot order
+  sample() %>% 
+  simulate_yield() %>% 
+  group_by(condition) %>% 
+  summarize(
+    yield_mean = mean(yield),
+    yield_sd = sd(yield)
+  )
+```
+
+
+<!-- include-exit-ticket -->
+
+# References
+
+(something freely available on experimental design)
