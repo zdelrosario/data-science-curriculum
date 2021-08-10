@@ -2,7 +2,7 @@
 title: "Variability Quadrants: Source"
 author: Zachary del Rosario
 date: 2021-08-06
-output: github_document
+output: pdf_document
 time: 30
 reading: 0
 ---
@@ -203,6 +203,7 @@ print("Nice!")
 ```
 
 *Observations*
+
 <!-- task-begin -->
 - How does `Y_lo` compare with `Y_mean`?
   - (Your response here)
@@ -234,6 +235,7 @@ Y_lo
 ```
 
 *Observations*
+
 <!-- task-begin -->
 - Is the new value `Y_lo_improved` more or less conservative than the original `Y_lo`?
   - (Your response here)
@@ -254,3 +256,7 @@ Y_lo
 *Aside*: This kind of statistical experimental design is sometimes called a [nested design](https://online.stat.psu.edu/stat503/lesson/14/14.1).
 
 <!-- include-exit-ticket -->
+
+# References
+
+If you'd like to read more about the cause-source quadrants, see [this two-page description](https://www.zdelrosario.com/media/zdr-cause-source-2.pdf)

@@ -31,3 +31,7 @@ library(tidyverse)
 ## Chance vs Assignable Cause
 
 <!-- include-exit-ticket -->
+
+# References
+
+If you'd like to read more about the cause-source quadrants, see [this two-page description](https://www.zdelrosario.com/media/zdr-cause-source-2.pdf)
