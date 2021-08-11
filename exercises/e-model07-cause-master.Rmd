@@ -5,11 +5,12 @@ date: 2021-08-06
 output: github_document
 time: 30
 reading: 0
+prerequisites:
+  - e-stat02-probability
+  - e-vis10-control-chart
 ---
 
 *Purpose*: 
-
-*Prerequisites*: e-stat02-probability, e-vis10-control-chart
 
 ```{r setup, include=FALSE}
 # knitr options
@@ -21,14 +22,29 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
+# Variability
+
+## The Cause-Source Quadrants
+
+The *cause-source quadrants* organize variability into four distinct categories. Last time, we learned about the *source* axis. Today, we're going to focus on the *cause* axis.
+
 ![Variability quadrants](./images/cause-source-quadrants.png)
 
-## Reminder: Control Charts
+## Chance vs Assignable Cause
+
+# Hunting Assignable Causes
+
+## Control Charts - Observing a process
 
 ![control chart](./images/control-chart.png)
 
+## Comparing Groups - A planned experiment
 
-## Chance vs Assignable Cause
+# Treating Assignable Causes
+
+
+
+If we decide there are no remaining assignable causes, we should then treat the remaining chance causes appropriately. Remember that we discussed how to do this in `e-model06-source`.
 
 <!-- include-exit-ticket -->
 
