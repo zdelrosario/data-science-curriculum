@@ -3,11 +3,13 @@ title: "Variability Quadrants: Source"
 author: Zachary del Rosario
 date: 2021-08-06
 output: pdf_document
-time: 30
+time: 40
 reading: 0
 ---
 
 *Purpose*: All real data have variability: repeated measurements of "the same" quantity tend to result in different values. To help you recognize different kinds of variability and choose a reasonable analysis procedure based on the kind of variability, you will learn about different *sources* of variability in this exercise.
+
+*Reading*: [Conceptual Tools for Handling Uncertainty](https://drive.google.com/file/d/1FCvHiag25zqN6WdKoisaMUh35pSQU-0M/view?usp=sharing) (a draft chapter from a textbook I'm writing)
 
 *Prerequisites*: e-stat03-descriptive, c08-structures
 
@@ -27,16 +29,16 @@ As we've seen in this course, real data exhibit *variability*; that is, repeated
 
 ## The Cause-Source Quadrants
 
-The *cause-source quadrants* organize variability into four distinct categories. Today, we're going to focus on the *source* axis, and limit our attention to *chance causes*.
+As descrinbed in the reading, the *cause-source quadrants* organize variability into four distinct categories. Today, we're going to focus on the *source* axis, and limit our attention to *chance causes*.
 
 ![Variability quadrants](./images/cause-source-quadrants.png)
 
-- *Cause* is an idea from statistical quality control; a *chance cause* is understood to be random, while an *assignable cause* is thought to be traceable and preventable. We will explore cause further in the next exercise.
-- *Source* is an idea from statistical education theory; this concept is explained further below.
+- *Cause* is an idea from statistical quality control (manufacturing); a *chance cause* is modeled as random, while an *assignable cause* is thought to be traceable and preventable.
+- *Source* is an idea from statistics education theory; this concept is explained further below.
 
 ## Real vs Induced Source
 
-The idea of *source* can only be understood in the distinction between a *target value* and a *measured value*: The *target value* is the quantity that we are seeking to study, while the *measured value* is a possibly-corrupted version of our target. The key insight is that **variability can occur both in the target value, and in the measured value**.
+The idea of *source* can only be understood in the distinction between a *scopus* and a *measurement*: The *scopus* is the quantity that we are seeking to study, while the *measurement* is a possibly-corrupted version of our scopus. The key insight is that **variability can occur both in the scopus value, and in the measurement**.
 
 ![Variability quadrants](./images/noise-v-deviation.png)
 
@@ -44,13 +46,13 @@ As a simple example: based on our current understanding of physics, the speed of
 
 Conversely, our current understanding of physics is that quantum phenomena are [fundamentally unpredictable](https://en.wikipedia.org/wiki/Quantum_mechanics), and can only be described in a statistical sense. This means that quantum phenomena exhibit real variability.
 
-Other physical quantities exhibit both real and induced variability. Since the concept of *source* relies on a target value, the only way we can make progress with this concept is to consider a specific scenario in detail.
+Other physical quantities exhibit both real and induced variability. Since the concept of *source* relies on a choice of scopus, the only way we can make progress with this concept is to consider a specific scenario in detail.
 
 # Manufacturing structural steel components
 
-*The Context*: An manufacturer is producing cast-steel parts for a landing gear. The part in question takes a heavy load, and if it fails it will disable the aircraft on the ground. These parts will be manufactured in bulk; approximately 500 will be made and installed in commercial aircraft that will operate for decades.
+*The Context*: A manufacturer is producing cast steel parts for a landing gear. The part in question takes a heavy load, and if it fails it will disable the aircraft on the ground. These parts will be manufactured in bulk; approximately 500 will be made and installed in commercial aircraft that will operate for decades.
 
-*The Target*: The strength of each steel component---as-manufactured---will ultimately determine whether each aircraft is safe. As we learned in `c08-structures`, a structure is safe if its applied stress is less than its strength. Therefore, a smaller material strength is a more conservative value for design purposes.
+*The Scopus*: The strength of each steel component---as-manufactured---will ultimately determine whether each aircraft is safe. As we learned in `c08-structures`, a structure is safe if its applied stress is less than its strength. Therefore, a smaller material strength is a more conservative value for design purposes.
 
 ## Scenarios
 
@@ -256,7 +258,3 @@ Y_lo
 *Aside*: This kind of statistical experimental design is sometimes called a [nested design](https://online.stat.psu.edu/stat503/lesson/14/14.1).
 
 <!-- include-exit-ticket -->
-
-# References
-
-If you'd like to read more about the cause-source quadrants, see [this two-page description](https://www.zdelrosario.com/media/zdr-cause-source-2.pdf)
