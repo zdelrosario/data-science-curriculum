@@ -5,18 +5,14 @@ date: 2021-08-06
 output: pdf_document
 time: 40
 reading: 0
+prerequisites:
+  - e-stat03-descriptive
+  - c08-structures
 ---
 
 *Purpose*: All real data have variability: repeated measurements of "the same" quantity tend to result in different values. To help you recognize different kinds of variability and choose a reasonable analysis procedure based on the kind of variability, you will learn about different *sources* of variability in this exercise.
 
 *Reading*: [Conceptual Tools for Handling Uncertainty](https://drive.google.com/file/d/1FCvHiag25zqN6WdKoisaMUh35pSQU-0M/view?usp=sharing) (a draft chapter from a textbook I'm writing)
-
-*Prerequisites*: e-stat03-descriptive, c08-structures
-
-```{r setup, include=FALSE}
-# knitr options
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ```{r library}
 ## Note: No need to edit this chunk!
