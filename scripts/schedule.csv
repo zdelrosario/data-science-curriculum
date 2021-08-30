@@ -43,11 +43,13 @@ e-stat08-fit-dist,31
 e-stat09-bootstrap,33
 e-stat10-hyp-intro,35
 e-stat11-ci-pi,36
-e-model01-intro,37
-e-model02-train-validate,39
-e-model03-interp-warnings,41
-e-model04-logistic,43
-e-model05-roc,45
+e-stat12-randomization,46
+e-model00-source,37
+e-model01-intro,39
+e-model02-train-validate,41
+e-model03-interp-warnings,43
+e-model04-logistic,45
+e-model05-roc,47
 e-vis00-basics,5
 e-vis01-bar-charts,9
 e-vis02-histograms,11
@@ -58,3 +60,4 @@ e-vis06-themes,24
 e-vis07-perception,32
 e-vis08-multiples,34
 e-vis09-improve,38
+e-vis10-control-chart,48
