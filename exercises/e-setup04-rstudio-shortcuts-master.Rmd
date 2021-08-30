@@ -31,71 +31,79 @@ __q1__ What do the following keyboard shortcuts do?
 
     * `Alt` + `-`
 
-        <!-- solution-begin -->
-        Insert assignment operator `<-`
-        <!-- solution-end -->
+<!-- solution-begin -->
+Insert assignment operator `<-`
+<!-- solution-end -->
 
     * `Shift` + `Cmd/Ctrl` + `M`
 
-        <!-- solution-begin -->
-        Insert pipe operator `%>%`
-        <!-- solution-end -->
+<!-- solution-begin -->
+Insert pipe operator `%>%`
+<!-- solution-end -->
 
     * `Cmd/Ctrl` + `Enter`
 
-        <!-- solution-begin -->
-        If no text is highlighted, run complete expression that cursor is
-        on, and advance to the next line. If text is highlighted, run
-        selected text.
-        <!-- solution-end -->
+<!-- solution-begin -->
+If no text is highlighted, run complete expression that cursor is
+on, and advance to the next line. If text is highlighted, run
+selected text.
+<!-- solution-end -->
 
     * `F1` (Note: on a Mac you need to press `fn` + `F1`)
 
-        <!-- solution-begin -->
-        If cursor is on a function name, pull up the help page for the function.
-        <!-- solution-end -->
+<!-- solution-begin -->
+If cursor is on a function name, pull up the help page for the function.
+<!-- solution-end -->
 
 	* `Cmd/Ctrl` + `Shift` + `C`
 
-        <!-- solution-begin -->
-		Comment/uncomment the code at the cursor, or highlighted code.
-        <!-- solution-end -->
+<!-- solution-begin -->
+Comment/uncomment the code at the cursor, or highlighted code.
+<!-- solution-end -->
 
 
 * Within R Markdown
 
     * `Cmd/Ctrl` + `Alt` + `I`
 
-        <!-- solution-begin -->
-        Insert chunk.
-        <!-- solution-end -->
+<!-- solution-begin -->
+Insert chunk.
+<!-- solution-end -->
 
 * Within a chunk
 
     * `Shift` + `Cmd/Ctrl` + `Enter`
 
-        <!-- solution-begin -->
-        Run current chunk.
-        <!-- solution-end -->
+<!-- solution-begin -->
+Run current chunk.
+<!-- solution-end -->
 
 __q2__ For a chunk, what header option do you use to
 
 * Run the code, don't display it, but show its results?
 
-    <!-- solution-begin -->
-    `echo=FALSE`
-    <!-- solution-end -->
+<!-- solution-begin -->
+`echo=FALSE`
+<!-- solution-end -->
 
 * Run the code, but don't display it or its results?
 
-    <!-- solution-begin -->
-    `include=FALSE`
-    <!-- solution-end -->
+<!-- solution-begin -->
+`include=FALSE`
+<!-- solution-end -->
 
 __q3__ How do stop the code in a chunk from running once it has started?
 
 <!-- solution-begin -->
 Click the red square in the top right corner of the chunk.
+<!-- solution-end -->
+
+__q4__ How do you show the "Document Outline" in RStudio?
+
+*Hint*: Try googling "rstudio document outline"
+
+<!-- solution-begin -->
+Use the keyboard shortcut `Ctrl + Shift + O` (Windows), `Super + Shift + O` (Mac), or click the icon in the top-right of RStudio (it's between the Publish and Compass icons).
 <!-- solution-end -->
 
 <!-- include-exit-ticket -->
