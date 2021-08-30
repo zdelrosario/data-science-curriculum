@@ -19,7 +19,7 @@ filename_seq <- "../sequence.md"
 filename_schedule <- "./schedule.csv"
 
 ## Data directory
-exercise_data <- "~/Git/data-science-curriculum/exercises"
+exercise_data <- "../exercises"
 
 df_ex_files <-
   tibble(file = list.files(exercise_data, full.names = TRUE)) %>%
@@ -71,13 +71,13 @@ df_exercises <-
         mutate(
           total = time + reading,
           name = name,
-          catnum = str_extract(name, "[:alpha:]+\\d+"),
+          catnum = str_extract(name, "[[:alpha:]]+\\d+"),
           functions = list(flatten_funs(funs))
         ) %>%
         extract(
           col = catnum,
           into = c("category", "number"),
-          regex = "([:alpha:]+)(\\d+)",
+          regex = "([[:alpha:]]+)(\\d+)",
           convert = TRUE
         )
     }
@@ -152,7 +152,7 @@ left_join(
   df_schedule,
   by = "name"
 ) %>%
-  filter(!str_detect(category, "setup")) %>%
+  # filter(!str_detect(category, "setup")) %>%
 
   ggplot(aes(category, day)) +
   geom_label(
@@ -222,3 +222,4 @@ df_funs <-
   select(fun, name) %>%
   arrange(fun)
 ```
+
