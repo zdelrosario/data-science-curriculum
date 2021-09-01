@@ -11,7 +11,7 @@ reading: 0
 
 *Reading*: (None)
 
-*Topics*: GitHub, Discord, Fandom
+*Topics*: GitHub, Discord
 
 *Note*: If you're reading this file in RStudio, you can Shift + Click (CMD + Click) to follow a link.
 
@@ -40,17 +40,5 @@ GitHub is a free service that helps you track and share code, interfacing with G
 Discord is a free service used for communication. It's like a combination of Slack (persistent text channels) and Zoom (audio and video chat). We will use this for almost all communication about the class, including technical questions, office hours, and (online) class sessions.
 
 - You will need an account on [Discord](https://discord.com/); create an account and share your username in the survey below.
-
-## Fandom
-<!-- ------------------------- -->
-
-Fandom is a free service used for community Wiki's, much like Wikipedia. I have created an [Olin Data Science Wiki](https://olin-data-science.fandom.com/wiki/Olin_Data_Science_Wiki); we will fill this in together with our data science findings. This is required, as group deliverables will be recorded in our Wiki.
-
-- You will need an account on [Fandom](https://www.fandom.com/register?redirect=https%3A%2F%2Fwww.fandom.com%2F); create an account.
-
-# Record Your Info
-<!-- -------------------------------------------------- -->
-
-In order to fully enroll you in the course, I need some information. Please fill out [this survey](https://forms.gle/uyHKHh81TWthdUR66) once you've created all the accounts mentioned above.
 
 <!-- include-exit-ticket -->
