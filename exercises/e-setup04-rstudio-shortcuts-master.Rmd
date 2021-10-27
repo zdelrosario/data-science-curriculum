@@ -78,6 +78,36 @@ Insert chunk.
 Run current chunk.
 <!-- solution-end -->
 
+    * `Ctrl` + `I` (`Cmd` + `I`)
+
+<!-- solution-begin -->
+Re-indent selected lines.
+<!-- solution-end -->
+
+Try this below!
+
+```{r}
+# task-begin
+## Re-indent these lines
+c(
+  "foo",
+    "bar",
+      "goo",
+        "gah"
+)
+# task-end
+# solution-begin
+## This is what it should look like
+c(
+  "foo",
+  "bar",
+  "goo",
+  "gah"
+)
+# solution-end
+```
+
+
 __q2__ For a chunk, what header option do you use to
 
 * Run the code, don't display it, but show its results?
