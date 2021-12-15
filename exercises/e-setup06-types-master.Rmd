@@ -32,7 +32,7 @@ __q1__ Describe what is wrong with the code below.
 airport <- "BOS"
 
 ## Check our airport value
-airport == ATL
+# airport == ATL # Uncomment and run
 ```
 
 **Observations**:

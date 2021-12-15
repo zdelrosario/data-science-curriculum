@@ -61,7 +61,7 @@ __q4__ Load and clean the table you extracted above. Use the column names `categ
 
 *Note*: In accounting practice, numbers in parentheses are understood to be negative, e.g. `(1000) = -1000`.
 
-```{r q4-task}
+```{r q4-task, eval=FALSE}
 # task-begin
 ## TODO: Load and clean the data
 df_2019 <- NA
@@ -127,7 +127,7 @@ df_2019 %>% glimpse()
 
 Use the following to check your work:
 
-```{r q4-tests}
+```{r q4-tests, eval=FALSE}
 ## NOTE: No need to edit; check a couple problematic values
 assertthat::assert_that(
   (

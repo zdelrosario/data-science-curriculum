@@ -312,16 +312,16 @@ df_q4
 
 Now we have a clean dataset we can use for EDA and modeling---great! Before we finish this exercise, let's do some standard checks to understand these data:
 
-__q5__ Perform your *first checks* on `df_heart_disease`. Answer the questions below.
+__q5__ Perform your *first checks* on `df_q4`. Answer the questions below.
 
 *Hint*: You may need to do some "deeper checks" to answer some of the questions below.
 
 ```{r q5-task}
 # task-begin
-## TODO: Perform your first checks on df_heart_disease
+## TODO: Perform your first checks on df_q4
 # task-end
 # solution-begin
-df_heart_disease %>% summary()
+df_q4 %>% summary()
 # solution-end
 ```
 
@@ -342,7 +342,7 @@ Missingness:
 
 ```{r sol-missingness}
 map(
-  df_heart_disease,
+  df_q4,
   ~ sum(is.na(.))
 )
 ```
@@ -352,7 +352,7 @@ From this, we can see that most variables have no missing values, but `ca` has `
 Missingness pattern:
 
 ```{r sol-missingness-pattern}
-df_heart_disease %>%
+df_q4 %>%
   filter(is.na(ca) | is.na(thal)) %>%
   select(ca, thal, everything())
 ```
@@ -367,11 +367,11 @@ __q6__ Filter out the rows with missing values.
 ```{r q6-task}
 # task-begin
 df_q6 <-
-  df_heart_disease
+  df_q4
 # task-end
 # solution-begin
 df_q6 <-
-  df_heart_disease %>%
+  df_q4 %>%
   filter(!is.na(ca), !is.na(thal))
 # solution-end
 

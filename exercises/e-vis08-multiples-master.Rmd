@@ -15,6 +15,8 @@ reading: 0
 what?*" Edward Tufte on small multiples.
 
 ```{r setup, include=FALSE}
+library(tidyverse)
+
 # knitr options
 knitr::opts_chunk$set(echo = TRUE)
 ```

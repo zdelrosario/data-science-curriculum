@@ -176,13 +176,13 @@ str_extract(
 )
 ```
 
-We can also use the `[:alpha:]` special symbol to select alphabetic characters only:
+We can also use the `[[:alpha:]]` special symbol to select alphabetic characters only:
 
 ```{r ex-extract4}
 ## NOTE: No need to change this!
 str_extract(
   string = c("abc", "xyz", "123"),
-  pattern = "[:alpha:]+"
+  pattern = "[[:alpha:]]+"
 )
 ```
 
@@ -196,7 +196,7 @@ str_extract(
 )
 ```
 
-__q3__ Notice that the `trans` column of `mpg` has many entries of the form `auto|manual\\([:alpha:]\\d\\)`; use `str_mutate()` to create a new column `tmp` with just the code inside the parentheses extracting `[:alpha:]\\d`.
+__q3__ Notice that the `trans` column of `mpg` has many entries of the form `auto|manual\\([[:alpha:]]\\d\\)`; use `str_mutate()` to create a new column `tmp` with just the code inside the parentheses extracting `[[:alpha:]]\\d`.
 
 ```{r q3-task}
 ## TASK: Mutate `trans` to extract
@@ -207,7 +207,7 @@ df_q3 <-
 # solution-begin
 df_q3 <-
   mpg %>%
-  mutate(tmp = str_extract(trans, "[:alpha:]\\d"))
+  mutate(tmp = str_extract(trans, "[[:alpha:]]\\d"))
 # solution-end
 df_q3 %>%
   select(tmp)
@@ -371,7 +371,7 @@ df_q6 <-
   alloys %>%
   pivot_longer(
     names_to = c("property", "angle"),
-    names_pattern = "([:alpha:]+)(\\d+)",
+    names_pattern = "([[:alpha:]]+)(\\d+)",
     values_to = "value",
     cols = matches("\\d")
   ) %>%

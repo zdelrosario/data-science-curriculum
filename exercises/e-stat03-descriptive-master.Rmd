@@ -209,8 +209,8 @@ It may not seem like it, but we're actually *making an assumption* when we use t
 bind_rows(
   tibble(X = rnorm(300, mean = -2)),
   tibble(X = rnorm(300, mean = +2))
-) %>% 
-  
+) %>%
+
   ggplot(aes(X)) +
   geom_histogram(bins = 60) +
   geom_vline(aes(xintercept = mean(X), color = "Mean")) +
@@ -248,7 +248,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
 
 *Note*: The function `qnorm` returns the quantiles of a normal distribution. We'll focus on quantiles of *samples* in this exercise.
 
-We'll use the quartiles to define the *innerquartile range*. First, the `quantile()` function computes quantiles of a sample. For example:
+We'll use the quartiles to define the *interquartile range*. First, the `quantile()` function computes quantiles of a sample. For example:
 
 ```{r quant-ex}
 ## NOTE: No need to change this! Run for an example
@@ -259,13 +259,13 @@ flights %>%
 
 Like with `mean, median`, we need to specify if we want to remove `NA`s. We can provide a list of `probs` to specify the probabilities of the quantiles. Remember: a *probability* is a value between $[0, 1]$, while a *quantile* is a value that probably has units, like minutes in the case of `dep_delay`.
 
-Now we can define the innerquartile range:
+Now we can define the interquartile range:
 
 $$IQR[D] = Q_{0.75}[D] - Q_{0.25}[D]$$,
 
 where $Q_{p}[D]$ is the $p$-th quantile of a sample $D$.
 
-__q3__ Using the function `quantile`, compute the *innerquartile range*; this is the difference between the $75%$ and $25%$ quantiles.
+__q3__ Using the function `quantile`, compute the *interquartile range*; this is the difference between the $75%$ and $25%$ quantiles.
 
 ```{r q3-task}
 ## NOTE: No need to change this!
@@ -273,7 +273,7 @@ set.seed(101)
 v_test_iqr <- rnorm(n = 10)
 
 # task-begin
-## TASK: Compute the innerquartile range
+## TASK: Compute the interquartile range
 test_iqr <- NA_real_
 # task-end
 # solution-begin
@@ -292,7 +292,7 @@ print("Great job!")
 ## Spread
 <!-- ------------------------- -->
 
-*Spread* is the concept of how tightly or widely data are *spread out*. There are two primary measures of spread: the *standard deviation*, and the *innerquartile range*.
+*Spread* is the concept of how tightly or widely data are *spread out*. There are two primary measures of spread: the *standard deviation*, and the *interquartile range*.
 
 The [standard deviation](https://en.wikipedia.org/wiki/Standard_deviation) (SD) is denoted by $s$ and defined by
 
@@ -316,7 +316,7 @@ tibble(
 ) %>% glimpse
 ```
 
-__q4__ Using the code from q2 as a starting point, compute the standard deviation (`sd()`) and innerquartile range (`IQR()`), and rank the top five carriers, this time by sd and IQR. Report your observations on which carriers are in both lists, and which are different. Also note and comment on which carrier (among your top-ranked) has the largest difference between `sd` and `IQR`.
+__q4__ Using the code from q2 as a starting point, compute the standard deviation (`sd()`) and interquartile range (`IQR()`), and rank the top five carriers, this time by sd and IQR. Report your observations on which carriers are in both lists, and which are different. Also note and comment on which carrier (among your top-ranked) has the largest difference between `sd` and `IQR`.
 
 ```{r q4-task}
 ## TODO: Use code from q2 to compute the sd and IQR, rank as before

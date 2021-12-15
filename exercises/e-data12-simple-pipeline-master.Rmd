@@ -69,7 +69,7 @@ __q2__ Navigate to the `Responses` tab and click `Create Spreadsheet`. Select `C
 
 __q3__ Copy the URL for your new sheet and copy it below. Run the following chunk to load your (probably empy) sheet.
 
-```{r qZ-task}
+```{r qZ-task, eval=FALSE}
 # task-begin
 ## TODO: 
 url_custom_sheet <- NA_character_

@@ -410,10 +410,13 @@ __q6__ Using a single pivot on `df_base` create your own *challenge* dataframe. 
 ```{r q6-task}
 ## NOTE: No need to edit; this is setup for the exercise
 df_q6 <-
-  df_base %>%
+  df_base %>% 
 # task-begin
 ## NOTE: Add your pivot here!
 # task-end
+# solution-begin
+  glimpse()
+# solution-end
 
 df_q6
 ```
@@ -422,10 +425,13 @@ Don't forget to create a solution!
 
 ```{r q6-solution}
 df_q6_res <-
-  df_q6 %>%
+  df_q6 %>% 
 # task-begin
 ## NOTE: Add your pivot here!
 # task-end
+# solution-begin
+  glimpse()
+# solution-end
 
 df_q6_res
 all_equal(df_base, df_q6_res) # Checks equality; returns TRUE if equal

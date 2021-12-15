@@ -88,7 +88,7 @@ __q3__ Create an empty file called `.gitignore` under your `data` folder. You
 can do this from the root of your data science repo by using the following from
 your command line:
 
-```{bash}
+```{bash, eval=FALSE}
 # Move to your data science directory
 $ ~/path/to/your/data-science-work # Replace with your real directory!
 # Add the special .gitignore file
@@ -101,7 +101,7 @@ tells git what kinds of files to *ignore* when it comes to tracking files. We're
 using it here for a different purpose; we can now *commit* that `.gitignore` in
 order to commit our directory structure.
 
-```{bash}
+```{bash, eval=FALSE}
 $ git add p01-name/data/.gitignore
 $ git commit -m "add p01 directory structure"
 ```

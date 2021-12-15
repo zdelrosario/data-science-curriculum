@@ -106,17 +106,17 @@ This phenomenon is called [*underfitting*](https://en.wikipedia.org/wiki/Overfit
 
 Let's increase the polynomial order and re-fit the data to try to solve the underfitting problem.
 
-__q2__ Copy the code from above to fit a `degree = 19` polynomial to the measurements.
+__q2__ Copy the code from above to fit a `degree = 18` polynomial to the measurements.
 
 ```{r q2-task}
-## TASK: Fit a ninth-degree polynomial to df_measurements
+## TASK: Fit a high-degree polynomial to df_measurements
 # task-begin
-fit_d19 <- NA
+fit_over <- NA
 # task-end
 # solution-begin
-fit_d19 <-
+fit_over <-
   df_measurements %>%
-  lm(data = ., formula = y_meas ~ poly(x, degree = 19))
+  lm(data = ., formula = y_meas ~ poly(x, degree = 18))
 # solution-end
 
 ## NOTE: No need to modify code below
@@ -127,7 +127,7 @@ y_limits <-
   )
 
 df_truth %>%
-  add_predictions(fit_d19, var = "y_pred") %>%
+  add_predictions(fit_over, var = "y_pred") %>%
 
   ggplot(aes(x)) +
   geom_line(aes(y = y, color = "True")) +
@@ -150,7 +150,7 @@ df_truth %>%
 - The predictions are *terrible* outside the measured points.
 <!-- solution-end -->
 
-The phenomenon we see with the `degree = 19` case above is called [*overfitting*](https://en.wikipedia.org/wiki/Overfitting). Overfitting tends to occur when our model is "too flexible"; this excess flexibility allows the model to fit to extraneous patterns, such as measurement noise or data artifacts due to sampling.
+The phenomenon we see with the `degree = 18` case above is called [*overfitting*](https://en.wikipedia.org/wiki/Overfitting). Overfitting tends to occur when our model is "too flexible"; this excess flexibility allows the model to fit to extraneous patterns, such as measurement noise or data artifacts due to sampling.
 
 So we have a "Goldilocks" problem:
 
@@ -161,28 +161,28 @@ Quantities such as polynomial order that control model flexibility are called [h
 
 However, if we try to set the hyperparameters based on the *training error*, we're going to make some bad choices. The next task gives us a hint why.
 
-__q3__ Compute the `mse` for the 2nd and 19th-degree polynomial models on `df_measurements`. Which model has the lower error? Which hyperparameter value (polynomial degree) would you choose, based *solely* on these numbers?
+__q3__ Compute the `mse` for the 2nd and 18th-degree polynomial models on `df_measurements`. Which model has the lower error? Which hyperparameter value (polynomial degree) would you choose, based *solely* on these numbers?
 
 *Hint*: We learned how to do this in `e-stat11-models-intro`.
 
 ```{r q3-task}
-# TASK: Compute the mse for fit_d2 and fit_d19 on df_measurements
+# TASK: Compute the mse for fit_d2 and fit_over on df_measurements
 # solution-begin
 mse(fit_d2, df_measurements)
-mse(fit_d19, df_measurements)
+mse(fit_over, df_measurements)
 # solution-end
 ```
 
 **Observations**:
 
 <!-- task-begin -->
-- Which model---`fit_d2` or `fit_d19`---has lower error on `df_measurements`?
+- Which model---`fit_d2` or `fit_over`---has lower error on `df_measurements`?
 - Based *solely* on these results, which hyperparameter value (polynomial order) would you choose?
 - Would that be a good choice? Why or why not?
 <!-- task-end -->
 <!-- solution-begin -->
-- `fit_d19` has lower error on `df_measurements`.
-- Based *solely* on these results, we would be inclined to choose `degree = 19`.
+- `fit_over` has lower error on `df_measurements`.
+- Based *solely* on these results, we would be inclined to choose `degree = 18`.
 - However, this would be a poor decision, as we have a highly biased measure of model error. We would be better served by studying the error on a *validation* set.
 <!-- solution-end -->
 

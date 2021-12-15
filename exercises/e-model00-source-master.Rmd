@@ -4,10 +4,9 @@ author: Zachary del Rosario
 date: 2021-08-06
 output: pdf_document
 time: 40
-reading: 0
+reading: 30
 prerequisites:
   - e-stat03-descriptive
-  - c08-structures
 ---
 
 *Purpose*: All real data have variability: repeated measurements of "the same" quantity tend to result in different values. To help you recognize different kinds of variability and choose a reasonable analysis procedure based on the kind of variability, you will learn about different *sources* of variability in this exercise.
