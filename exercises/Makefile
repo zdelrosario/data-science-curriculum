@@ -33,6 +33,7 @@ endif
 
 %solution.Rmd: %master.Rmd
 	sed -E \
+	-e '/^---/,/---/d' \
 	-e '/<!-- task-begin -->/,/<!-- task-end -->/d' \
 	-e '/# task-begin/,/# task-end/d' \
 	-e '/# solution-(begin|end)/d' \
