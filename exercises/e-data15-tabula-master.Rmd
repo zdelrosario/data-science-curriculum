@@ -1,11 +1,13 @@
 ---
-title: "Data Liberation: Tabula"
+title: "Data: Liberating data with Tabula"
 author: Zachary del Rosario
 date: 2020-08-14
 output: github_document
 time: 40
 reading: 0
 ---
+
+# Data: Liberating data with Tabula
 
 *Purpose*: Sometimes data are messy---we know how to deal with that. Other times data are "locked up" in a format we can't easily analyze, such as in a PDF. In this exercise you'll learn how to *liberate* data from a PDF table using Tabula.
 
@@ -17,21 +19,27 @@ library(tidyverse)
 
 *Background*: [Tabula](https://tabula.technology/) is a piece of software developed for journalists carrying out investigative reporting. It was developed with support from organizations like [ProPublica](http://propublica.org/) and [The New York Times](http://www.nytimes.com/). This tool is meant to help investigators parse unwieldy PDFs and liberate useful information.
 
-# Setup
+## Setup
 
-__q1__ Download and install [Tabula](https://tabula.technology/); the webpage has installation instructions.
+### __q1__ Install Tabula.
+
+Download and install [Tabula](https://tabula.technology/); the webpage has installation instructions.
 
 *Note*: Tabula's interface is through a locally-hosted server; it should automatically open a browser window for Tabula. If it does not, then open [http://localhost:8080/](http://localhost:8080/) after you've launched Tabula.
 
-# Liberating Data
+## Liberating Data
 
-__q2.1__ Download `FY2019 independent financial audit report (PDF)` from the Needham, MA [financial reports page](https://www.needhamma.gov/1673/Financial-Reports).
+### __q2.1__ Obtain the data.
 
-__q2.2__ Try copy-pasting from the FY2019 report the table `Government-Wide Financial Analysis` into a text document or your favorite spreadsheet editor. **This is unlikely to produce the desired result.** (Please don't spend any time trying to format this copied data---you're about to learn a better way!)
+Download `FY2019 independent financial audit report (PDF)` from the Needham, MA [financial reports page](https://www.needhamma.gov/1673/Financial-Reports).
+
+### __q2.2__ Try it the hard way.
+
+Try copy-pasting from the FY2019 report the table `Government-Wide Financial Analysis` into a text document or your favorite spreadsheet editor. **This is unlikely to produce the desired result.** (Please don't spend any time trying to format this copied data---you're about to learn a better way!)
 
 Tabula is a tool that will help us *liberate* the data; basically, it's a copy-paste for PDF tables *that actually works*.
 
-__q3__ Extract from the FY2019 report the `Government-Wide Financial Analysis` table.
+### __q3__ Extract from the FY2019 report the `Government-Wide Financial Analysis` table.
 
 We'll do this in steps:
 
@@ -57,11 +65,13 @@ We'll do this in steps:
 
 6. Once you have a preview that matches the columns above, select the CSV filetype and click the *Export* button. Download the file to your `data` folder and give it a sensible filename.
 
-__q4__ Load and clean the table you extracted above. Use the column names `category` and `[government|business|total]_[2019|2018]`. Do not *tidy* (pivot) the data yet, but make sure the appropriate columns are numeric.
+### __q4__ Load and clean the data.
+
+Load and clean the table you extracted above. Use the column names `category` and `[government|business|total]_[2019|2018]`. Do not *tidy* (pivot) the data yet, but make sure the appropriate columns are numeric.
 
 *Note*: In accounting practice, numbers in parentheses are understood to be negative, e.g. `(1000) = -1000`.
 
-```{r q4-task}
+```{r q4-task, eval=FALSE}
 # task-begin
 ## TODO: Load and clean the data
 df_2019 <- NA
@@ -127,7 +137,7 @@ df_2019 %>% glimpse()
 
 Use the following to check your work:
 
-```{r q4-tests}
+```{r q4-tests, eval=FALSE}
 ## NOTE: No need to edit; check a couple problematic values
 assertthat::assert_that(
   (

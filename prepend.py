@@ -18,6 +18,7 @@ with open("./scripts/schedule.csv", "r") as file_schedule:
 ## Copy the exercises
 dir_base = os.path.dirname(__file__)
 
+# Assignment exercises
 for i in range(len(names)):
     source = os.path.join(dir_base, "exercises", names[i] + "-assignment.Rmd")
     target = os.path.join(
@@ -26,6 +27,19 @@ for i in range(len(names)):
         "d{0:02d}-".format(days[i]) + \
         names[i] + \
         "-assignment.Rmd"
+    )
+
+    copyfile(source, target)
+
+# Solutions (book)
+for i in range(len(names)):
+    source = os.path.join(dir_base, "exercises", names[i] + "-solution.Rmd")
+    target = os.path.join(
+        dir_base,
+        "book",
+        "d{0:02d}-".format(days[i]) + \
+        names[i] + \
+        "-solution.Rmd"
     )
 
     copyfile(source, target)

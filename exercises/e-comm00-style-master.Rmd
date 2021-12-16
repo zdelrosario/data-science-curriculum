@@ -7,6 +7,8 @@ time: 10
 reading: 10
 ---
 
+# Communication: Code Style
+
 *Purpose*: From the tidyverse style guide "Good coding style is like correct
 punctuation: you can manage without it, butitsuremakesthingseasiertoread." We
 will follow the [tidyverse style guide](https://style.tidyverse.org/); Google's
@@ -21,7 +23,7 @@ actually based on these guidelines!
 library(tidyverse)
 ```
 
-__q1__ Re-write according to the style guide
+### __q1__ Re-write according to the style guide
 
 *Hint*: The pipe operator `%>%` will help make this code more readable.
 
@@ -43,7 +45,7 @@ diamonds %>%
 # solution-end
 ```
 
-__q2__ Re-write according to the style guide
+### __q2__ Re-write according to the style guide
 
 *Hint*: There are *particular rules* about spacing!
 
@@ -73,7 +75,7 @@ iris %>%
 # solution-end
 ```
 
-__q3__ Re-write according to the style guide
+### __q3__ Re-write according to the style guide
 
 *Hint*: What do we do about long lines?
 
@@ -146,7 +148,7 @@ diamonds %>%
 I'll enforce this "data first" style, but after this class you are (of course)
 free to write code however you like!
 
-__q4__ Re-write according to the style guide
+### __q4__ Re-write according to the style guide
 
 *Hint*: Put the data first!
 

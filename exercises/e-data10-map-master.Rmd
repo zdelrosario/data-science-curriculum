@@ -7,6 +7,8 @@ time: 10
 reading: 30
 ---
 
+# Data: Map Basics
+
 *Purpose*: The `map()` function and its variants are extremely useful for automating iterative tasks. We'll learn the basics through this short exercise.
 
 *Reading*: [Introduction to Iteration](https://rstudio.cloud/learn/primers/5.1) and [Map](https://rstudio.cloud/learn/primers/5.2) (you can skip the Case Study).
@@ -41,7 +43,7 @@ pow10 <- function(x) {10 ^ x}
 
 And defining a more compact version with `~ 10 ^ x.`. We've actually already seen this formula notation when we use `facet_grid()` and `facet_wrap()`, though it's used in a very different way in that context.
 
-__q1__ Use `map_chr()` to prepend the string `"N: "` to the numbers in `v_nums`. Use formula notation with `str_c()` as your map function.
+### __q1__ Use `map_chr()` to prepend the string `"N: "` to the numbers in `v_nums`. Use formula notation with `str_c()` as your map function.
 
 *Hint*: The function `str_c()` combines two or more objects into one string.
 
@@ -68,7 +70,7 @@ print("Great job!")
 
 Formula notation is another way to pass arguments to functions; I find this a little more readable than passing arguments to `map()`.
 
-__q2__ Use `map_dbl()` to compute the `log` with `base = 2` of the numbers in `v_nums`. Use formula notation with `log()` as your map function.
+### __q2__ Use `map_dbl()` to compute the `log` with `base = 2` of the numbers in `v_nums`. Use formula notation with `log()` as your map function.
 
 ```{r q2-task}
 # task-begin

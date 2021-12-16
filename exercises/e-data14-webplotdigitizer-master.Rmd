@@ -1,5 +1,5 @@
 ---
-title: "Data Liberation: WebPlotDigitizer"
+title: "Data: Extracting data with WebPlotDigitizer"
 author: Zachary del Rosario
 date: 2020-08-14
 output: github_document
@@ -7,9 +7,11 @@ time: 40
 reading: 0
 ---
 
+# Data: Liberating data with WebPlotDigitizer
+
 *Purpose*: Sometimes data are messy---we know how to deal with that. Other times data are "locked up" in a format we can't easily analyze, such as in an image. In this exercise you'll learn how to *liberate* data from a plot using WebPlotDigitizer.
 
-*Reading*: (*None*, this exercise *is* the reading.) 
+*Reading*: (*None*, this exercise *is* the reading.)
 
 *Optional Reading*: [WebPlotDigitizer tutorial video](https://youtu.be/P7GbGdMvopU) ~ 19 minutes. (I recommend you give this a watch if you want some inspiration on other use cases: There are a lot of very clever ways to use this tool!)
 
@@ -21,21 +23,23 @@ library(tidyverse)
 
 *Note*: I originally extracted these data from an [Economist](https://www.economist.com/graphic-detail/2020/05/13/the-spread-of-covid-has-caused-a-surge-in-american-meat-prices) article on American meat prices and production in 2020.
 
-# Setup
+## Setup
 
-__q1__ Go to the [WebPlotDigitizer](https://automeris.io/WebPlotDigitizer/) website and download the desktop version (matching your operating system).
+### __q1__ Get WebPlotDigitizer.
+
+Go to the [WebPlotDigitizer](https://automeris.io/WebPlotDigitizer/) website and download the desktop version (matching your operating system).
 
 *Note*: On Mac OS X you may have to open `Security & Privacy` in order to launch WebPlotDigitizer on your machine.
 
-# Extract
+## Extract
 
-__q2__ Extract the data from the following image:
+### __q2__ Extract the data from the following image:
 
 ![Beef production](./images/beef_production.png)
 
 This image shows the percent change in US beef production as reported in this [Economist](https://www.economist.com/graphic-detail/2020/05/13/the-spread-of-covid-has-caused-a-surge-in-american-meat-prices) article. We'll go through extraction step-by-step:
 
-1. Click the `Load Image(s)` button, and select `./images/beef_production.png`. 
+1. Click the `Load Image(s)` button, and select `./images/beef_production.png`.
 
 ![Load image](./images/e-data14-load-image.png)
 2. Choose the `2D (X-Y) Plot` type.
@@ -71,11 +75,13 @@ This image shows the percent change in US beef production as reported in this [E
 ![Load image](./images/e-data14-download.png)
 Congrats! You just *liberated* data from a plot!
 
-__q3__ Extract the data from the following plot. This will give you price data to compare against the production data.
+### __q3__ Extract the data from the following plot. This will give you price data to compare against the production data.
 
 ![Beef price](./images/beef_price.png)
 
-__q4__ Load the price and production datasets you extracted. Join and plot price vs production; what kind of relationship do you see?
+## Use the extracted data
+
+### __q4__ Load the price and production datasets you extracted. Join and plot price vs production; what kind of relationship do you see?
 
 ```{r q4-task}
 # task-begin
@@ -96,14 +102,14 @@ df_production <- read_csv(
 ## NOTE: I'm relying on WebPlotDigitizer to produce dates in order to
 ## make this join work. This will probably fail if you have numbers
 ## rather than dates.
-df_both <- 
+df_both <-
   inner_join(
     df_price,
     df_production,
     by = "date"
   )
 
-df_both %>% 
+df_both %>%
   ggplot(aes(production_percent, price_percent, color = date)) +
   geom_point()
 # solution-end

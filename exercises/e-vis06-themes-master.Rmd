@@ -1,11 +1,13 @@
 ---
-title: "Visualization: Themes"
+title: "Vis: Themes"
 author: Zach del Rosario
 date: 2020-07-10
 output: github_document
 time: 30
 reading: 0
 ---
+
+# Vis: Themes
 
 *Purpose*: Themes are key for aesthetic purposes; to make really good-looking graphs, we'll need to use `theme()`.
 
@@ -18,7 +20,7 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-__q1__ Use `theme_void()` and `guides()` (with an argument) to remove everything in this plot except the points.
+### __q1__ Use `theme_void()` and `guides()` (with an argument) to remove everything in this plot except the points.
 
 ```{r q1-task}
 mpg %>%
@@ -70,7 +72,7 @@ theme_common <- function() {
 
 The `%+replace` magic above allows you to use `theme_common()` within your own ggplot calls.
 
-__q2__ Use `theme_common()` with the following graph. Document what's changed by the `theme()` arguments.
+### __q2__ Use `theme_common()` with the following graph. Document what's changed by the `theme()` arguments.
 
 ```{r q2-task}
 mpg %>%
@@ -108,7 +110,7 @@ mpg %>%
 
 Calling `theme_common()`, along with settings `labs()` and making some smart choices about geoms and annotations is often all you need to make a *really high-quality graph*.
 
-__q3__ Make the following plot as *ugly as possible*; the more `theme()` arguments you use, the better!
+### __q3__ Make the following plot as *ugly as possible*; the more `theme()` arguments you use, the better!
 
 *Hint*: Use the `theme()` settings from q2 above as a starting point, and read the documentation for `theme()` to learn how to do more horrible things to this graph.
 

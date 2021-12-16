@@ -7,6 +7,8 @@ time: 30
 reading: 0
 ---
 
+# Setup: RStudio
+
 *Purpose*: We're going to make extensive use of the [R programming
 language](https://www.r-project.org/about.html); in particular, the
 [Tidyverse](https://www.tidyverse.org/) packages. This first exercise
@@ -21,14 +23,14 @@ will guide you through setting up the necessary software.
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-__q1__ Install Rstudio
+### __q1__ Install Rstudio
 
 Download [RStudio Desktop](https://rstudio.com/products/rstudio/download/) and
 install the [R programming language](https://cran.rstudio.com/). Both are free!
 
 Once installed, you can [download the source](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-setup00-install-master.Rmd) for this exercise and open open it in RStudio (or you can follow `e-rep01-intro-git` and *clone* the repository). This is an `R Markdown` file, which is a combination of human-readable text and machine-readable code. Think of it as a modern take on a lab notebook.
 
-__q2__ Install packages
+### __q2__ Install packages
 
 Next, run RStudio. When the program opens, you should see a console tab, as in
 the image below.
@@ -45,7 +47,7 @@ extensively in this class.
 
 ![RStudio package install](./images/rstudio-cli-install.png)
 
-__q3__ Test your install
+### __q3__ Test your install
 
 Once your installation has finished, return to your console and use the command
 `library(tidyverse)`. If your installation is complete, this command should
@@ -55,7 +57,7 @@ return a list of packages and version numbers, similar to the image below.
 
 If you have any issues with installation, __please__ let me know!
 
-__q4__ Download extras
+### __q4__ Download extras
 
 We'll use a number of extras for this class. To that end, please install the following packages. Note that you can install multiple packages with the syntax `install.packages(c("curl", "mvtnorm"))`, extending the arguments inside `c()` as desired.
 
@@ -72,7 +74,7 @@ We'll use a number of extras for this class. To that end, please install the fol
 - `Rtsne`
 - `viridis`
 
-__q5__ Download cheatsheets
+### __q5__ Download cheatsheets
 
 The `tidyverse` is essentially a language built on top of R. As such, there are
 a lot of functions to remember. To that end, RStudio has put together a number

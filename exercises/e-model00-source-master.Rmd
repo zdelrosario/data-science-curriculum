@@ -1,14 +1,15 @@
 ---
-title: "Variability Quadrants: Source"
+title: "Model: Variability Quadrants"
 author: Zachary del Rosario
 date: 2021-08-06
 output: pdf_document
 time: 40
-reading: 0
+reading: 30
 prerequisites:
   - e-stat03-descriptive
-  - c08-structures
 ---
+
+# Model: Variability Quadrants
 
 *Purpose*: All real data have variability: repeated measurements of "the same" quantity tend to result in different values. To help you recognize different kinds of variability and choose a reasonable analysis procedure based on the kind of variability, you will learn about different *sources* of variability in this exercise.
 
@@ -19,7 +20,7 @@ prerequisites:
 library(tidyverse)
 ```
 
-# Variability
+## Variability
 
 As we've seen in this course, real data exhibit *variability*; that is, repeated measurements of "the same" quantity that result in different values. Variability can arise due to a variety of reasons, and different kinds of variability should be analyzed in different ways. To help make this determination, we're going to study a theoretical framework for variability.
 
@@ -44,7 +45,7 @@ Conversely, our current understanding of physics is that quantum phenomena are [
 
 Other physical quantities exhibit both real and induced variability. Since the concept of *source* relies on a choice of scopus, the only way we can make progress with this concept is to consider a specific scenario in detail.
 
-# Manufacturing structural steel components
+## Manufacturing structural steel components
 
 *The Context*: A manufacturer is producing cast steel parts for a landing gear. The part in question takes a heavy load, and if it fails it will disable the aircraft on the ground. These parts will be manufactured in bulk; approximately 500 will be made and installed in commercial aircraft that will operate for decades.
 
@@ -92,14 +93,14 @@ The following generates data with both *noise* and *deviation*
 
 ```{r gen-data}
 set.seed(101)
-df_meas <- 
+df_meas <-
   map_dfr(
     1:30,
     function(i) {
       Y_deviation <- rlnorm(n = 1, meanlog = 2)
       Y_noise <- rnorm(n = 5, sd = 1)
-      
-      tibble(Y = Y_deviation + Y_noise) %>% 
+
+      tibble(Y = Y_deviation + Y_noise) %>%
         mutate(id_sample = i, id_meas = row_number())
     }
   )
@@ -112,7 +113,7 @@ df_meas <-
 If we make a simple histogram, we can see that the measured value `Y` is highly variable:
 
 ```{r vis-data}
-df_meas %>% 
+df_meas %>%
   ggplot(aes(Y)) +
   geom_histogram(bins = 30)
 ```
@@ -123,11 +124,11 @@ However, these data exhibit multiple *sources* of variability. The following que
 
 ```{r q4-task}
 ## NOTE: No need to edit; run and inspect
-df_meas %>% 
+df_meas %>%
   ggplot(aes(id_sample, Y)) +
   geom_point(
-    data = . %>% 
-      group_by(id_sample) %>% 
+    data = . %>%
+      group_by(id_sample) %>%
       summarize(Y = mean(Y)),
     color = "red",
     size = 1
@@ -147,8 +148,8 @@ df_meas %>%
 We can make this quantitative with an *analysis of variance*:
 
 ```{r q4-anova}
-fit_meas <- 
-  df_meas %>% 
+fit_meas <-
+  df_meas %>%
   lm(formula = Y ~ id_sample + id_meas)
 anova(fit_meas)
 ```
@@ -171,18 +172,18 @@ A [random effects model](https://en.wikipedia.org/wiki/Random_effects_model) wou
 ```{r q6-task}
 ## TODO: Compute the 0.01 quantile of the `Y` values; complete the code below
 # For comparison, here's the mean of the data
-Y_mean <- 
-  df_meas %>% 
-  summarize(Y_mean = mean(Y)) %>% 
+Y_mean <-
+  df_meas %>%
+  summarize(Y_mean = mean(Y)) %>%
   pull(Y_mean)
 
 # task-begin
 Y_lo <- NA_real_ # Complete the quantile calculation
 # task-end
 # solution-begin
-Y_lo <- 
-  df_meas %>% 
-  summarize(Y_lo = quantile(Y, p = 0.1)) %>% 
+Y_lo <-
+  df_meas %>%
+  summarize(Y_lo = quantile(Y, p = 0.1)) %>%
   pull(Y_lo)
 # solution-end
 
@@ -217,13 +218,13 @@ print("Nice!")
 
 ```{r q7-task}
 ## NOTE: No need to edit; run and answer the questions below
-Y_lo_improved <- 
-  df_meas %>% 
+Y_lo_improved <-
+  df_meas %>%
   ## Take average within each sample's measurements
-  group_by(id_sample) %>% 
-  summarize(Y_sample = mean(Y)) %>% 
+  group_by(id_sample) %>%
+  summarize(Y_sample = mean(Y)) %>%
   ## Take quantile over all the samples
-  summarize(Y_lo = quantile(Y_sample, p = 0.1)) %>% 
+  summarize(Y_lo = quantile(Y_sample, p = 0.1)) %>%
   pull(Y_lo)
 Y_lo_improved
 

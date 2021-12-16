@@ -1,5 +1,5 @@
 ---
-title: "Statistics: Confidence vs Prediction Intervals"
+title: "Stats: Confidence vs Prediction Intervals"
 author: Zachary del Rosario
 date: 2020-07-30
 output: github_document
@@ -7,7 +7,9 @@ time: 60
 reading: 0
 ---
 
-*Purpose*: There are multiple kinds of statistical intervals, and different intervals are useful for answering different questions. In this exercise, we'll learn about *prediction intervals*: How they differ from confidence intervals, and when we would use a CI versus a PI. 
+# Stats: Confidence vs Prediction Intervals
+
+*Purpose*: There are multiple kinds of statistical intervals, and different intervals are useful for answering different questions. In this exercise, we'll learn about *prediction intervals*: How they differ from confidence intervals, and when we would use a CI versus a PI.
 
 *Reading*: (None, this is the reading)
 
@@ -27,7 +29,7 @@ add_uncertainties <- function(data, model, prefix = "pred", ...) {
 }
 ```
 
-# Introduction: Confidence vs Prediction Intervals
+## Introduction: Confidence vs Prediction Intervals
 <!-- -------------------------------------------------- -->
 
 There are multiple kinds of statistical intervals: We have already discussed [confidence intervals](https://en.wikipedia.org/wiki/Confidence_interval) (in e-stat06-clt), now we'll discuss [prediction intervals](https://en.wikipedia.org/wiki/Prediction_interval).
@@ -50,7 +52,7 @@ $$P = \mathbb{P}\left[l < X < u\right] = \mathbb{P}\left[\frac{l - \mu}{\sigma} 
 - Note that the CI equation above has a dependence on $n$; as we gather more data the interval will tend to narrow.
 - Note that the PI equation above have *no dependence* on $n$; when we turn the "magic" off and have to estimate `mean, sd` from data a dependence on $n$ shows up. However, even if we had infinite data (recovering the "magic" equation above), the interval would still not collapse to zero width.
 
-__q1__ Check your understanding; I provide code below to compute a confidence interval for the sample mean when sampling from `rnorm(mean = 1, sd = 2)` with `n = 400`. Modify the code to compute a prediction interval for the same underlying normal distribution.
+### __q1__ Check your understanding; I provide code below to compute a confidence interval for the sample mean when sampling from `rnorm(mean = 1, sd = 2)` with `n = 400`. Modify the code to compute a prediction interval for the same underlying normal distribution.
 
 ```{r q1-task}
 ## NOTE: No need to edit this setup
@@ -131,7 +133,7 @@ bind_rows(
 ```
 Take a quick look at the plot above, and make a prediction (to yourself) whether the normally-approximated CI and PI will behave well in this case. Then continue on to q2.
 
-__q2__ Using the formulas above, estimate CI and PI using `diamonds_train`. Visualize the results using the chunk `q2-vis` below, and answer the questions under *observations*.
+### __q2__ Using the formulas above, estimate CI and PI using `diamonds_train`. Visualize the results using the chunk `q2-vis` below, and answer the questions under *observations*.
 
 ```{r q2-task}
 # task-begin
@@ -198,7 +200,7 @@ df_q2 %>%
 - Both the CI and PI above assume a normal distribution and perfectly-known parameters `mean, sd`. The assumption of perfectly-known parameters is probably ok here (since we have *a lot* of data), but based on EDA we've done before, the assumption of normality is quite poor.
 <!-- solution-end -->
 
-__q3__ Test whether your CI and PI are constructed correctly: Remember the definitions of what CI and PI are meant to accomplish, and check how closely your intervals agree with the validation data.
+### __q3__ Test whether your CI and PI are constructed correctly: Remember the definitions of what CI and PI are meant to accomplish, and check how closely your intervals agree with the validation data.
 
 ```{r q3-task}
 ## TODO: Devise a test to see if your CI and PI are correctly reflecting

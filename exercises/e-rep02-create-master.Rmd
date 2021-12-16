@@ -7,7 +7,9 @@ time: 5
 reading: 10
 ---
 
-*Purpose*: In this class you'll turn in all your work using GitHub. To do this, you'll need to create a repository. This short exercise will walk you through doing this.
+# Reproducibility: Creating a GitHub Repository
+
+*Purpose*: In this class you'll turn in all your work using GitHub. I created a repo for you at the beginning of class, but you should know how to make your own, e.g. for future projects you might do.
 
 *Reading*: Follow all the steps in [Creating a Repository](https://swcarpentry.github.io/git-novice/03-create/index.html). *Hint*: You can `Ctrl + Click` (`CMD + Click`) to follow links in RStudio.
 
@@ -15,7 +17,7 @@ reading: 10
 
 *Topics*: Creating a GitHub repository
 
-# Set Up Your Repository
+## Set Up Your Repository
 <!-- -------------------------------------------------- -->
 
 - Log into [GitHub](https://github.com/) and click the "New" button to start creating a new repository.
@@ -29,7 +31,5 @@ reading: 10
 ![Info](./images/rep02-info-readme.png)
 
 Next, follow the steps in [e-rep01-intro-git](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-rep01-intro-git.md) to clone your new repository (make sure to target your new repository, though!).
-
-*Finishing*: When you complete this exercise, [fill out this survey](https://forms.gle/Cvr8tUt3hRoLFb4C7) with your new repo url.
 
 <!-- include-exit-ticket -->

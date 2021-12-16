@@ -1,5 +1,5 @@
 ---
-title: "Statistics: Moment Arithmetic"
+title: "Stats: Moment Arithmetic"
 author: Zach del Rosario
 date: 2020-06-23
 output: github_document
@@ -7,13 +7,15 @@ time: 15
 reading: 0
 ---
 
+# Stats: Moment Arithmetic
+
 *Purpose*: In a future exercise, we will need to be able to do some basic arithmetic with *moments* of a distribution. To prepare for this later exercise, we'll do some practice now.
 
 *Reading*: (None, this is the reading)
 
 *Topics*: Moments, moment arithmetic, standardization
 
-# Moments
+## Moments
 <!-- -------------------------------------------------- -->
 
 Moments are a particular kind of statistic. There is a general, mathematical definition of a [moment](https://en.wikipedia.org/wiki/Moment_(mathematics)), but we will only need to talk about two in this class.
@@ -34,12 +36,12 @@ $$ \begin{aligned}
 
 For future exercises, we'll need to learn how to do basic arithmetic with these two moments.
 
-# Moment Arithmetic
+## Moment Arithmetic
 <!-- -------------------------------------------------- -->
 
 We will need to be able to do some basic arithmetic with the mean and variance. The following exercises will help you remember this basic arithmetic.
 
-### Expectation
+## Expectation
 <!-- ------------------------- -->
 
 The expectation is *linear*, that is
@@ -48,7 +50,7 @@ $$\mathbb{E}[aX + c] = a \mathbb{E}[X] + c.$$
 
 We can use this fact to compute the mean of simply transformed random variables.
 
-__q1__ Compute the mean of $2 Z + 3$, where $Z$ is a standard normal.
+### __q1__ Compute the mean of $2 Z + 3$, where $Z$ is a standard normal.
 
 ```{r q1-task}
 ## TASK: Compute the mean of 2 Z + 3
@@ -71,7 +73,8 @@ print("Nice!")
 Since the expectation is linear, it also satisfies
 
 $$\mathbb{E}[aX + bY] = a \mathbb{E}[X] + b \mathbb{E}[Y].$$
-__q2__ Compute the mean of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are separate standard normals.
+
+### __q2__ Compute the mean of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are separate standard normals.
 
 ```{r q2-task}
 ## TASK: Compute the mean of 2 Z1 + 3 Z2
@@ -91,14 +94,14 @@ assertthat::assert_that(assertthat::are_equal(E_q2, 0))
 print("Great!")
 ```
 
-### Variance
+## Variance
 <!-- ------------------------- -->
 
 Remember that variance is the square of standard deviation. Variance satisfies the property
 
 $$\mathbb{V}[aX + c] = a^2 \mathbb{V}[X].$$
 
-__q3__ Compute the variance of $2 Z + 3$, where $Z$ is a standard normal.
+### __q3__ Compute the variance of $2 Z + 3$, where $Z$ is a standard normal.
 
 ```{r q3-task}
 ## TASK: Compute the mean of 2 Z + 3
@@ -123,7 +126,7 @@ The variance of a *sum* of random variables is a bit more complicated
 $$\mathbb{V}[aX + bY] = a^2 \mathbb{V}[X] + b^2 \mathbb{V}[Y] + 2ab \text{Cov}[X, Y],$$
 where $\text{Cov}[X, Y]$ denotes the [covariance](https://en.wikipedia.org/wiki/Covariance) of $X, Y$. Covariance is closely related to correlation, which we discussed in `e-stat03-descriptive`. If two random variables $X, Y$ are *uncorrelated*, then $\text{Cov}[X, Y] = 0$.
 
-__q4__ Compute the variance of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are *uncorrelated* standard normals.
+### __q4__ Compute the variance of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are *uncorrelated* standard normals.
 
 ```{r q4-task}
 ## TASK: Compute the variance of 2 Z1 + 3 Z2
@@ -143,12 +146,12 @@ assertthat::assert_that(assertthat::are_equal(V_q4, 13))
 print("Well done!")
 ```
 
-### Standardization
+## Standardization
 <!-- ------------------------- -->
 
 The following two exercises illustrate two important transformations.
 
-__q5__ Compute the mean and variance of $(X - 1) / 2$, where
+### __q5__ Compute the mean and variance of $(X - 1) / 2$, where
 
 $$\mathbb{E}[X] = 1, \mathbb{V}[X] = 4$$.
 
@@ -175,7 +178,7 @@ print("Well done!")
 
 This process of centering (setting the mean to zero) and scaling a random variable is called *standardization*. For instance, if $X$ is a normal random variable, then $(X - \mu) / \sigma = Z$ is a standard normal.
 
-__q6__ Compute the mean and variance of $1 + 2 Z$, where $Z$ is a standard normal.
+### __q6__ Compute the mean and variance of $1 + 2 Z$, where $Z$ is a standard normal.
 
 ```{r q6-task}
 ## TASK: Compute the mean and variance
@@ -200,7 +203,7 @@ print("Excellent!")
 
 This example illustrates that we can create a normal with desired mean and standard deviation by transforming a standard normal $\mu + \sigma Z = X$.
 
-### Standard Error
+## Standard Error
 <!-- ------------------------- -->
 
 The variance satisfies the property
@@ -215,7 +218,7 @@ is the *covariance* between $X$ and $Y$. If $X, Y$ are independent, then the cov
 
 Using this expression, we can prove that the standard error of the sample mean $\overline{X}$ is $\sigma / \sqrt{n}$.
 
-__q7__ (Bonus) Use the identity above to prove that
+### __q7__ (Bonus) Use the identity above to prove that
 
 $$\mathbb{V}[\overline{X}] = \sigma^2 / n,$$
 

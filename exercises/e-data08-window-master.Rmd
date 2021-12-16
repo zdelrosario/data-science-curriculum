@@ -7,6 +7,8 @@ time: 20
 reading: 10
 ---
 
+# Data: Window Functions
+
 *Purpose*: Window functions are another family of `dplyr` verbs that are related to aggregates like `mean` and `sd`. These functions are useful for building up more complicated filters, enabling aesthetic tricks in plots, and some advanced data wrangling we'll do next exercise.
 
 *Reading*: [Window Functions](https://dplyr.tidyverse.org/articles/window-functions.html#cumulative-aggregates-1), *Types of window functions*, *Ranking functions*, and *Lead and lag*
@@ -16,7 +18,7 @@ library(tidyverse)
 library(ggrepel)
 ```
 
-### Lead and Lag
+## Lead and Lag
 <!-- ------------------------- -->
 
 The lead and lag functions simply provide a "shifted" copy of a vector.
@@ -42,7 +44,7 @@ df_dx
 
 Make sure to order your data or use the `order_by` argument when using `lead` or `lag`! GGplot automatically reorders your data when making a line plot, but `lead` and `lag` will use the order of the data you provide.
 
-__q1__ Use a window function modify the following visual to color each segment differently based on whether the period of time was increasing or decreasing.
+### __q1__ Use a window function modify the following visual to color each segment differently based on whether the period of time was increasing or decreasing.
 
 ```{r q1-task}
 # task-begin
@@ -72,7 +74,7 @@ economics %>%
 # solution-end
 ```
 
-### Ranks
+## Ranks
 <!-- ------------------------- -->
 
 The rank functions allow you to assign (integer) ranks to smallest (or largest) values of a vector.
@@ -141,7 +143,7 @@ tribble(
   )
 ```
 
-__q2__ Use a rank function to filter the largest 3 `hwy` values and **all** vehicles that have those values.
+### __q2__ Use a rank function to filter the largest 3 `hwy` values and **all** vehicles that have those values.
 
 ```{r q2-task}
 # task-begin

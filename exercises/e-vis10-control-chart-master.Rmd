@@ -1,11 +1,13 @@
 ---
-title: "Visualization: Control Charts"
+title: "Vis: Control Charts"
 author: Zach del Rosario
 date: 2020-08-06
 output: github_document
 time: 30
 reading: 0
 ---
+
+# Vis: Control Charts
 
 *Purpose*: Remember in c02-michelson (q4) when you studied a *control chart*? Now that we've learned about confidence intervals, we can more formally study control charts. These are a key tool in [statistical process control](https://en.wikipedia.org/wiki/Statistical_process_control), which is how manufacturers rigorously track and control the quality of manufactured goods. Control charts help a process manager track when something has gone wrong in a manufacturing line, and are used to determine when a process is running smoothly.
 
@@ -17,7 +19,7 @@ reading: 0
 library(tidyverse)
 ```
 
-# Control Chart: Example
+## Control Chart: Example
 
 Below is an example of a control chart: A control chart is used to help detect when something out-of-the-ordinary occurred. Essentially, it is a tool to help us determine when something non-random happened so we can plan a follow-up study and prevent that non-random event from happening in the future. To do that detection work, we look for patterns.
 
@@ -49,7 +51,7 @@ To illustrate the control chart concept, let's first generate some data that is 
 
 ```{r generate-data}
 set.seed(101)
-df_data <- 
+df_data <-
   tibble(X = rnorm(n = 1000))
 ```
 
@@ -61,15 +63,15 @@ Following Step 1, we need to assign batch identifiers to group the data.
 
 ```{r q1-task}
 # task-begin
-## TODO: Edit the code below to create an `id` column where 
+## TODO: Edit the code below to create an `id` column where
 #        consecutive groups of 4 rows have the same id
-df_q1 <- 
-  df_data %>% 
+df_q1 <-
+  df_data %>%
   mutate(id = row_number())
 # task-end
 # solution-begin
-df_q1 <- 
-  df_data %>% 
+df_q1 <-
+  df_data %>%
   mutate(id = (row_number() - 1) %/% 4)
 # solution-end
 df_q1
@@ -80,15 +82,15 @@ Use the following to check your work.
 ```{r q1-tests}
 ## NOTE: No need to change this
 assertthat::assert_that(
-df_q1 %>% 
-  filter(row_number() <= 4) %>% 
-  summarize(sd = sd(id)) %>% 
+df_q1 %>%
+  filter(row_number() <= 4) %>%
+  summarize(sd = sd(id)) %>%
   pull(sd) == 0
 )
 assertthat::assert_that(
-df_q1 %>% 
-  filter(row_number() >= 997) %>% 
-  summarize(sd = sd(id)) %>% 
+df_q1 %>%
+  filter(row_number() >= 997) %>%
+  summarize(sd = sd(id)) %>%
   pull(sd) == 0
 )
 
@@ -107,20 +109,20 @@ Next, we'll use our knowledge about confidence intervals and the CLT to set the 
 
 ```{r q2-task}
 # task-begin
-## TODO: Edit the code below to create an `id` column where 
+## TODO: Edit the code below to create an `id` column where
 #        consecutive groups of 4 rows have the same id
 X_grand <- NA_real_
 X_g4_lo <- NA_real_
 X_g4_up <- NA_real_
 # task-end
 # solution-begin
-X_grand <- 
-  df_data %>% 
-  summarize(X_mean = mean(X)) %>% 
+X_grand <-
+  df_data %>%
+  summarize(X_mean = mean(X)) %>%
   pull(X_mean)
-X_sd <- 
-  df_data %>% 
-  summarize(X_sd = sd(X)) %>% 
+X_sd <-
+  df_data %>%
+  summarize(X_sd = sd(X)) %>%
   pull(X_sd)
 
 X_g4_lo <- X_grand - 3 * X_sd / sqrt(4)
@@ -148,10 +150,10 @@ print("Excellent!")
 
 ```{r q3-task}
 ## NOTE: No need to edit; run and inspect
-df_q1 %>% 
-  group_by(id) %>% 
-  summarize(X_batch = mean(X)) %>% 
-  
+df_q1 %>%
+  group_by(id) %>%
+  summarize(X_batch = mean(X)) %>%
+
   ggplot(aes(id, X_batch)) +
   geom_hline(yintercept = X_g4_lo, linetype = "dashed") +
   geom_hline(yintercept = X_grand) +
@@ -179,7 +181,7 @@ df_q1 %>%
 - I don't see any coherent pattern in the points. This makes sense, as these points *are* random (by construction).
 <!-- solution-end -->
 
-# Control Chart: Application
+## Control Chart: Application
 
 Next you will construct a control chart for a real dataset. The following code downloads and parses a dataset from the NIST website studying [proof masses](https://en.wikipedia.org/wiki/Proof_mass). These are comparative measurements between "exact" 1 kilogram masses, carried out by one of the world's most-rigorous measurement societies.
 
@@ -188,7 +190,7 @@ Next you will construct a control chart for a real dataset. The following code d
 url <- "https://www.itl.nist.gov/div898/handbook/datasets/MASS.DAT"
 filename <- "./data/nist-mass.dat"
 download.file(url, filename)
-df_mass <- 
+df_mass <-
   read_table(
     filename,
     skip = 25,
@@ -213,7 +215,7 @@ First, try plotting and interpreting the data without a control chart.
 ```{r q4-task}
 ## TASK: Plot Y vs date
 # task-begin
-df_mass %>% 
+df_mass %>%
   ggplot(aes(date, Y)) +
   geom_point() +
   theme_minimal() +
@@ -246,9 +248,9 @@ n_group <- 10
 # task-begin
 ## TODO: Complete the following code to prepare the data for a control chart
 ## Batched data; edit this code
-df_q4 <- 
-  df_mass %>% 
-  group_by(date) %>% 
+df_q4 <-
+  df_mass %>%
+  group_by(date) %>%
   summarize(
     Y_mean = mean(Y),
     date = min(date)
@@ -260,22 +262,22 @@ Y_g_lo <- NA_real_
 Y_g_up <- NA_real_
 # task-end
 # solution-begin
-df_q4 <- 
-  df_mass %>% 
-  mutate(group_id = (row_number() - 1) %/% n_group) %>% 
-  group_by(group_id) %>% 
+df_q4 <-
+  df_mass %>%
+  mutate(group_id = (row_number() - 1) %/% n_group) %>%
+  group_by(group_id) %>%
   summarize(
     Y_mean = mean(Y),
     date = min(date)
   )
 
-Y_mean <- 
-  df_mass %>% 
-  summarize(Y_mean = mean(Y)) %>% 
+Y_mean <-
+  df_mass %>%
+  summarize(Y_mean = mean(Y)) %>%
   pull(Y_mean)
-Y_sd <- 
-  df_mass %>% 
-  summarize(Y_sd = sd(Y)) %>% 
+Y_sd <-
+  df_mass %>%
+  summarize(Y_sd = sd(Y)) %>%
   pull(Y_sd)
 
 Y_g_lo <- Y_mean - 3 * Y_sd / sqrt(n_group)
@@ -303,7 +305,7 @@ Next, plot the control chart data and inspect.
 
 ```{r q6-task}
 ## NOTE: No need to edit; run and inspect
-df_q4 %>% 
+df_q4 %>%
   ggplot(aes(date, Y_mean)) +
   geom_hline(yintercept = Y_g_lo, linetype = "dashed") +
   geom_hline(yintercept = Y_mean) +
@@ -332,7 +334,7 @@ df_q4 %>%
   - This is a bit harder to see in the control chart; we have to keep in mind that each batch represents multiple measurements.
 - Something odd seems to have happened after 1985; the measurements seem to shift upward.
   - More visually obvious in the control chart.
-  
+
 - We can also make quantitative statements with the control chart: There are three points violating the control limits in the late 80's. There is also one batch violating the control limit before 1985.
 - From 1980 to 1985, many of the batches lay below the grand mean; something seems off here.
 <!-- solution-end -->

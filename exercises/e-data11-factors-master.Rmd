@@ -7,6 +7,8 @@ time: 10
 reading: 0
 ---
 
+# Data: Factors
+
 *Purpose*: Factors are an important type of variables. Since they're largely in
 a class of their own, there are special tools available in the package `forcats`
 to help wrangle factors.
@@ -21,10 +23,10 @@ library(gapminder)
 A *factor* is a variable that only takes fixed, often non-numeric, values.
 Factors are sometimes called *categorical variables*. We've already seen
 
-# Organization
+## Organization
 <!-- -------------------------------------------------- -->
 
-__q1__ The following chunk displays the levels of the factor `continent`. Run
+### __q1__ The following chunk displays the levels of the factor `continent`. Run
 the following code chunk and note in what *order* they are listed.
 
 ```{r q1-task}
@@ -47,7 +49,7 @@ diamonds %>%
 - The levels are essentially a measure of quality; we would expect price to (generally) increase with improved cut.
 <!-- solution-end -->
 
-__q2__ Determine the levels for the `continent` variable in the `gapminder` dataset. Note the *order* of the levels.
+### __q2__ Determine the levels for the `continent` variable in the `gapminder` dataset. Note the *order* of the levels.
 
 ```{r q2-task}
 ## TASK: Determine the levels of the variable
@@ -79,10 +81,9 @@ factors. For instance, we can assign manual factor levels with the function
 `fct_relevel()`. This is generally used in a `mutate()`; for instance `mutate(x
 = fct_relevel(x, "a", "b", "c")`.
 
-__q3__ Copy your code from q2 and introduce a mutate using `fct_relevel()` to
-reorder `continent`. Choose which levels to reorder and what order in which to
-put them. Note how the resulting order is changed when you call `levels()` at
-the end of the pipe.
+### __q3__ Relevel the continents.
+
+Copy your code from q2 and introduce a mutate using `fct_relevel()` to reorder `continent`. Choose which levels to reorder and what order in which to put them. Note how the resulting order is changed when you call `levels()` at the end of the pipe.
 
 ```{r q3-task}
 # solution-begin
@@ -108,7 +109,7 @@ gapminder %>%
 - Calling `fct_reorder()` as I do in the solution brings "Oceania" to the front, but leaves the other factors alone.
 <!-- solution-end -->
 
-# Visual Tricks
+## Visual Tricks
 <!-- -------------------------------------------------- -->
 
 When factors do no have any *meaningful* order, it is generally better to
@@ -126,7 +127,7 @@ mpg %>%
 The function `fct_reorder(f, x)` allows you to reorder the factor `f` based on
 another variable `x`. This will "match" the order between the two.
 
-__q4__ Use `fct_reorder()` to sort `manufacturer` to match the order of `cty`.
+### __q4__ Use `fct_reorder()` to sort `manufacturer` to match the order of `cty`.
 
 ```{r q4-task}
 ## TASK: Modify the following code to sort the factor `manufacturer` based on
@@ -162,7 +163,9 @@ mpg %>%
 The function `fct_reorder2(f, x, y)` allows us to sort on *two* variables; this
 is most useful when making line plots.
 
-__q5__ Use `fct_reorder2()` to sort `country` to match the order of `x = year, y = pop`. Pay attention to the rightmost edge of the curves and the legend order. How does `fct_reorder2()` sort factors?
+### __q5__ Sort the countries by values.
+
+Use `fct_reorder2()` to sort `country` to match the order of `x = year, y = pop`. Pay attention to the rightmost edge of the curves and the legend order. How does `fct_reorder2()` sort factors?
 
 ```{r q5-task}
 ## TASK: Modify the following code to sort the factor `country` based on `year`

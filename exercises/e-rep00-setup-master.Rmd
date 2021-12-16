@@ -7,6 +7,8 @@ time: 10
 reading: 0
 ---
 
+# Reproducibility: Setup
+
 *Purpose*: We're going to need a lot of tools to make it through this class, you and I. This pre-class exercise will get you signed up for all the (free) accounts you'll need for the class.
 
 *Reading*: (None)
@@ -15,7 +17,7 @@ reading: 0
 
 *Note*: If you're reading this file in RStudio, you can Shift + Click (CMD + Click) to follow a link.
 
-# Setup
+## Setup
 <!-- -------------------------------------------------- -->
 
 ## Git
