@@ -709,12 +709,6 @@
       "Repository": "CRAN",
       "Hash": "74b905b0076e1de6e27f540c95ba68d5"
     },
-    "rzdr": {
-      "Package": "rzdr",
-      "Version": "0.0.0.1",
-      "Source": "unknown",
-      "Hash": "7949d0cbcbb9ffb7095ac7fba8190c0b"
-    },
     "scales": {
       "Package": "scales",
       "Version": "1.1.1",
