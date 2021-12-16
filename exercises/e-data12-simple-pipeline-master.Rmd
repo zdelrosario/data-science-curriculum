@@ -51,7 +51,7 @@ But what if we want to load one of our own *private* data sheets?
 
 In order to load a private data sheet, you'll need to *authorize* googlesheets4 to use your Google account. The following line should open a browser window that will ask for your permissions.
 
-```{r recipe-auth}
+```{r recipe-auth, eval=FALSE}
 ## NOTE: No need to edit; run to authorize R to use your google account
 gs4_auth()
 
