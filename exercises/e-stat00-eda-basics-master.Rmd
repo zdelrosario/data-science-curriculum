@@ -1,11 +1,13 @@
 ---
-title: "EDA Basics"
+title: "Stats: EDA Basics"
 # yaml-author
 date: 2020-05-07
 output: github_document
 time: 20
 reading: 45
 ---
+
+# Stats: EDA Basics
 
 *Purpose*: *Exploratory Data Analysis* (EDA) is a __crucial__ skill for a
 practicing data scientist. Unfortunately, much like human-centered design EDA is
@@ -38,7 +40,7 @@ library(tidyverse)
 
 ```
 
-__q0__ Remember from `e02-data-basics` there were *simple checks* we're supposed
+### __q0__ Remember from `e02-data-basics` there were *simple checks* we're supposed
 to do? Do those simple checks on the diamonds dataset below.
 
 ```{r q0-task}
@@ -58,13 +60,13 @@ There are four standard "C's" of
 are `carat, cut, color` and `clarity`, all of which are in the `diamonds`
 dataset.
 
-### Hypothesis 1
+## Hypothesis 1
 
 **Here's a hypothesis**: `Ideal` is the "best" value of `cut` for a diamond.
 Since an `Ideal` cut seems more labor-intensive, I hypothesize that `Ideal` cut
 diamonds are less numerous than other cuts.
 
-__q1__ Run the chunk below, and study the plot. Was hypothesis 1 correct? Why
+### __q1__ Run the chunk below, and study the plot. Was hypothesis 1 correct? Why
 or why not?
 
 ```{r q1-task}
@@ -81,11 +83,11 @@ diamonds %>%
 - The truth is actually the opposite! `Ideal` cut diamonds are *more* numerous than all other cuts! Perhaps because cutting a diamond is easier than mining a new one, gemcutters add value to a diamond by striving for an ideal cut.
 <!-- solution-end -->
 
-### Hypothesis 2
+## Hypothesis 2
 
 **Another hypothesis**: The `Ideal` cut diamonds should be the most pricey.
 
-__q2.1__ Study the following graph; does it support, contradict, or not relate to hypothesis 2?
+### __q2.1__ Study the following graph; does it support, contradict, or not relate to hypothesis 2?
 
 *Hint*: Is this an effective graph? Why or why not?
 
@@ -107,7 +109,7 @@ The following is a set of *boxplots*; the middle bar denotes the median, the
 boxes denote the *quartiles* (upper and lower "quarters" of the data), and the
 lines and dots denote large values and outliers.
 
-__q2.2__ Study the following graph; does it support or contradict hypothesis 2?
+### __q2.2__ Study the following graph; does it support or contradict hypothesis 2?
 
 ```{r q2.2-task}
 diamonds %>%
@@ -123,14 +125,14 @@ diamonds %>%
 - Surprisingly, `Ideal` diamonds tend to be the *least* pricey! This was very surprising to me.
 <!-- solution-end -->
 
-### Unraveling Hypothesis 2
+## Unraveling Hypothesis 2
 
 Upon making the graph in __q2.2__, I was very surprised. So I did some reading
 on diamond cuts. It turns out that some gemcutters [sacrifice cut for
 carat](https://en.wikipedia.org/wiki/Diamond_(gemstone)#Cut). Could this effect
 explain the surprising pattern above?
 
-__q3__ Study the following graph; does it support a "carat over cut" hypothesis? How might this relate to price?
+### __q3__ Study the following graph; does it support a "carat over cut" hypothesis? How might this relate to price?
 
 *Hint*: The article linked above will help you answer these questions!
 
@@ -150,7 +152,7 @@ diamonds %>%
 - It seems that many diamond purchasers are more interested in carat than fine cut. This provides some rationale for why `Ideal` diamonds are cheaper; they are necessarily lower-carat.
 <!-- solution-end -->
 
-### Footnotes
+## Footnotes
 
 [1] Don't mistake my focus on `diamonds` as an endorsement of the diamond
 industry. In my opinion aesthetic diamonds are a morally dubious scam.

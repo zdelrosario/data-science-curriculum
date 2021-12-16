@@ -1,11 +1,13 @@
 ---
-title: "Visualization: Bar Charts"
+title: "Vis: Bar Charts"
 author: Zach del Rosario
 date: 2020-05-13
 output: github_document
 time: 30
 reading: 30
 ---
+
+# Vis: Bar Charts
 
 *Purpose*: *Bar charts* are a key tool for EDA. In this exercise, we'll learn
 how to construct a variety of different bar charts, as well as when---and when
@@ -25,7 +27,7 @@ library(tidyverse)
 
 ```
 
-__q1__ In the reading, you learned the relation between `geom_bar()` and
+### __q1__ In the reading, you learned the relation between `geom_bar()` and
 `geom_col()`. Use that knowledge to convert the following `geom_bar()` plot into
 the same visual using `geom_col()`.
 
@@ -55,7 +57,7 @@ that the pairs `cty, hwy` clearly don't have this one-to-one property:
 mpg %>% filter(cty == 20)
 ```
 
-__q2__ The following code attempts to visualize `cty, hwy` from `mpg` using
+### __q2__ The following code attempts to visualize `cty, hwy` from `mpg` using
 `geom_col()`. There's something fishy about the `hwy` values; what's wrong here?
 
 *Hint*: Try changing the `position` parameter for `geom_col()`.
@@ -92,7 +94,7 @@ mpg %>%
   geom_point()
 ```
 
-__q3__ The following are two different visualizations of the `mpg` dataset.
+### __q3__ The following are two different visualizations of the `mpg` dataset.
 Document your observations between the `v1` and `v2` visuals. Then, determine
 which---`v1` or `v2`---enabled you to make more observations. What was the
 difference between the two visuals?
@@ -146,7 +148,7 @@ In this dataset:
   - `v2` showed two variables `class` and `drv` using two aesthetics
 <!-- solution-end -->
 
-__q4__ The following code has a bug; it does not do what its author intended.
+### __q4__ The following code has a bug; it does not do what its author intended.
 Identify and fix the bug. What does the resulting graph tell you about the
 relation between `manufacturer` and `class` of cars in this dataset?
 
@@ -180,7 +182,7 @@ mpg %>%
   - Dodge favors `pickup`
 <!-- solution-end -->
 
-__q5__ The following graph is hard to read. What other form of faceting would
+### __q5__ The following graph is hard to read. What other form of faceting would
 make the visual more convenient to read? Modify the code below with your
 suggested improvement.
 

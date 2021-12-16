@@ -7,6 +7,8 @@ time: 30
 reading: 0
 ---
 
+# Data: Reading Excel Sheets
+
 *Purpose*: The Tidyverse is built to work with tidy data. Unfortunately, most data in the wild are not tidy. The good news is that we have a lot of tools for *wrangling* data into tidy form. The bad news is that "every untidy dataset is untidy in its own way." I can't show you you every crazy way people decide to store their data. But I can walk you through a worked example to show some common techniques.
 
 In this case study, I'll take you through the process of *wrangling* a messy Excel spreadsheet into machine-readable form. You will both learn some general tools for wrangling data, and you can keep this notebook as a *recipe* for future messy datasets of similar form.
@@ -41,7 +43,7 @@ curl::curl_download(
 ## Wrangling Basics
 <!-- ------------------------- -->
 
-__q1__ Run the following code and pay attention to the column names. Open the downloaded Excel sheet and compare. Why are the column names so weird?
+### __q1__ Run the following code and pay attention to the column names. Open the downloaded Excel sheet and compare. Why are the column names so weird?
 
 ```{r q1-task}
 ## NOTE: No need to edit; run and inspect
@@ -60,7 +62,9 @@ df_q1 %>% glimpse
 
 Most `read_` functions have a *skip* argument you can use to skip over the first few lines. Use this argument in the next task to deal with the top of the Excel sheet.
 
-__q2__ Open the target Excel sheet (located at `./data/undoc.xlsx`) and find which line (row) at which the year column headers are located. Use the `skip` keyword to start your read at that line.
+### __q2__ Read the Excel sheet.
+
+Open the target Excel sheet (located at `./data/undoc.xlsx`) and find which line (row) at which the year column headers are located. Use the `skip` keyword to start your read at that line.
 
 ```{r q2-task}
 ## TODO:
@@ -101,7 +105,9 @@ We still have problems:
 - The first few columns don't have sensible names. The `col_names` argument allows us to set manual names at the read phase.
 - Some of the columns are of the wrong type; for instance `2012` is a `chr` vector. We can use the `col_types` argument to set manual column types.
 
-__q3__ Use the provided names in `col_names_undoc` with the `col_names` argument to set *manual* column names. Use the `col_types` argument to set all years to `"numeric"`, and the rest to `"text"`.
+### __q3__ Change the column names and types.
+
+Use the provided names in `col_names_undoc` with the `col_names` argument to set *manual* column names. Use the `col_types` argument to set all years to `"numeric"`, and the rest to `"text"`.
 
 *Hint 1*: Since you're providing manual `col_names`, you will have to *adjust* your `skip` value!
 
@@ -238,7 +244,7 @@ We can see that `lagfill` has filled the `Africa` value in row 2, as well as a n
 
 What we'll do is continually run `lagfill` until we reduce `countna` to zero. We could do this by repeatedly running the function *manually*, but that would be silly. Instead, we'll run a `while` loop to automatically run the function until `countna` reaches zero.
 
-__q4__ I have already provided the `while` loop below; fill in `vars_lagged` with the names of the columns where cell values are *implicit*.
+### __q4__ I have already provided the `while` loop below; fill in `vars_lagged` with the names of the columns where cell values are *implicit*.
 
 *Hint*: Think about which columns have implicit values, and which truly have missing values.
 

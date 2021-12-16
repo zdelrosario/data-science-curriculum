@@ -9,6 +9,9 @@ main:
 	cp -rf exercises/data/beef_price.csv book/data/.
 	cp -rf exercises/data/beef_production.csv book/data/.
 
+book: main
+	cd book; Rscript -e 'bookdown::render_book("index.Rmd")'
+
 test:
 	Rscript -e 'testthat::test_dir("./tests/")'
 
@@ -22,5 +25,9 @@ clean:
 	rm -f exercises/*-assignment.Rmd
 	rm -f exercises/*-solution.Rmd
 	rm -f exercises_sequenced/*-assignment.Rmd
+	rm -f book/*-solution.Rmd
+	rm -fr book/_book
+	rm -fr book/_book_files
+	rm -f book/_main.*
 
 .PHONY: clean challenges

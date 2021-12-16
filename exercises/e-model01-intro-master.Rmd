@@ -1,11 +1,13 @@
 ---
-title: "Statistics: Introduction to Modeling"
+title: "Model: Introduction to Modeling"
 author: Zachary del Rosario
 date: 2020-07-23
 output: github_document
 time: 60
 reading: 0
 ---
+
+# Model: Introduction to Modeling
 
 *Purpose*: Modeling is a key tool for data science: We will use models to understand the relationships between variables and to make predictions. **Building models is subtle and difficult**. To that end, this will be a high-level tour through the key parts of building and assessing a model. In this exercise, you'll learn what a model is, how to *fit* a model, how to *assess* a fitted model, some ways to *improve* a model, and how to *quantify* how trustworthy a model is.
 
@@ -135,9 +137,12 @@ $$\widehat{\text{price}} = \beta_0 + \beta_{\text{carat}} (\text{carat}) + \epsi
 
 This slightly-mysterious formula notation `price ~ carat` is convenient for defining many kinds of models, as we'll see in the following task.
 
-__q1__ Copy the code above to fit a model of the form
+### __q1__ Fit a basic model.
+
+Copy the code above to fit a model of the form
 
 $$\widehat{\text{price}} = \beta_0 + \beta_{\text{carat}} (\text{carat}) + \beta_{\text{cut}} (\text{cut}) + \epsilon.$$
+
 Answer the questions below to investigate how this model form handles the variable `cut`.
 
 ```{r q1-task}
@@ -176,14 +181,14 @@ fit_q1 %>% tidy()
 
 ```{r fitting-factors}
 ## NOTE: No need to edit; just run and inspect
-fit_cut <- 
+fit_cut <-
   lm(
     data = df_train,
     formula = price ~ cut
   )
 
-df_train %>% 
-  add_predictions(fit_cut, var = "price_pred") %>% 
+df_train %>%
+  add_predictions(fit_cut, var = "price_pred") %>%
   ggplot(aes(cut)) +
   geom_errorbar(aes(ymin = price_pred, ymax = price_pred), color = "salmon") +
   geom_point(aes(y = price))
@@ -212,7 +217,7 @@ df_train %>%
 
 Frankly, these model predictions don't look very good! We know that diamond prices probably depend on the "4 C's"; maybe your model using more predictors will be more effective?
 
-__q2__ Repeat the code above from chunk `vis-carat` to produce a similar visual with your model `fit_q1`. *This visual is unlikely to be effective*, note in your observations why that might be.
+### __q2__ Repeat the code above from chunk `vis-carat` to produce a similar visual with your model `fit_q1`. *This visual is unlikely to be effective*, note in your observations why that might be.
 
 ```{r q2-task}
 # task-begin
@@ -263,7 +268,7 @@ rsquare(fit_carat, df_train)
 - `rsquare`, also known as the [*coefficient of determination*](https://en.wikipedia.org/wiki/Coefficient_of_determination), lies between `[0, 1]`. Higher values are more accurate.
   - The `rsquare` has bounded values, so we can think about it in absolute terms: a model with `rsquare == 1` is essentially perfect, and values closer to `1` are better.
 
-__q3__ Compute the `mse` and `rsquare` for your model `fit_q1`, and compare the values against those for `fit_carat`. Is your model more accurate?
+### __q3__ Compute the `mse` and `rsquare` for your model `fit_q1`, and compare the values against those for `fit_carat`. Is your model more accurate?
 
 ```{r q3-task}
 # solution-begin
@@ -305,9 +310,12 @@ This fit looks quite poor---there is a great deal of scatter of actual values aw
 
 The plot above suggests there may be some patterns we're not accounting for in our model: Let's build another model to use that intuition.
 
-__q4__ Fit a model `fit_4c` of the form:
+### __q4__ Fit an updated model.
+
+Fit a model `fit_4c` of the form:
 
 $$\widehat{\text{price}} = \beta_0 + \beta_{\text{carat}} (\text{carat}) + \beta_{\text{cut}} (\text{cut}) + \beta_{\text{color}} (\text{color}) + \beta_{\text{clarity}} (\text{clarity}) + \epsilon.$$
+
 Compute the `mse` and `rsquare` of your new model, and compare against the previous models.
 
 ```{r q4-task}
@@ -349,16 +357,16 @@ We've talked about **confidence intervals** before for estimates like the sample
 ## NOTE: No need to edit this chunk
 ## Helper function to compute uncertainty bounds
 add_uncertainties <- function(data, model, prefix = "pred", ...) {
-  df_fit <- 
-    stats::predict(model, data, ...) %>% 
-    as_tibble() %>% 
+  df_fit <-
+    stats::predict(model, data, ...) %>%
+    as_tibble() %>%
     rename_with(~ str_c(prefix, "_", .))
-  
+
   bind_cols(data, df_fit)
 }
 
 ## Generate predictions with uncertainties
-df_pred_uq <- 
+df_pred_uq <-
   df_train %>%
   add_uncertainties(
     model = fit_carat,
@@ -379,14 +387,14 @@ Since we have access to the true values `price`, we can assess whether the true 
 ```{r pred-vis}
 ## NOTE: No need to edit this chunk
 # Visualize
-df_pred_uq %>% 
-  filter(price < 1000) %>% 
-  
+df_pred_uq %>%
+  filter(price < 1000) %>%
+
   ggplot(aes(price)) +
   geom_abline(slope = 1, intercept = 0, size = 2, color = "grey50") +
   geom_errorbar(
     data = . %>% filter(pred_lwr <= price & price <= pred_upr),
-    aes(ymin = pred_lwr, ymax = pred_upr), 
+    aes(ymin = pred_lwr, ymax = pred_upr),
     width = 0,
     size = 0.5,
     alpha = 1 / 2,
@@ -394,7 +402,7 @@ df_pred_uq %>%
   ) +
   geom_errorbar(
     data = . %>% filter(price < pred_lwr | pred_upr < price),
-    aes(ymin = pred_lwr, ymax = pred_upr), 
+    aes(ymin = pred_lwr, ymax = pred_upr),
     width = 0,
     size = 0.5,
     color = "salmon"
@@ -404,17 +412,17 @@ df_pred_uq %>%
 ```
 
 Ideally these prediction intervals should include a desired fraction of observed values; let's compute the *empirical coverage* to see if this matches our desired `level = 0.95`.
-  
+
 ```{r pred-coverage}
 ## NOTE: No need to edit this chunk
 # Compute empirical coverage
-df_pred_uq %>% 
+df_pred_uq %>%
   summarize(coverage = mean(pred_lwr <= price & price <= pred_upr))
 ```
 
 The empirical coverage is quite close to our desired level.
 
-__q6__ Use the helper function `add_uncertainties()` to add prediction intervals to `df_train` based on the model `fit_4c`.
+### __q6__ Use the helper function `add_uncertainties()` to add prediction intervals to `df_train` based on the model `fit_4c`.
 
 ```{r q6-task}
 # task-begin
@@ -422,7 +430,7 @@ __q6__ Use the helper function `add_uncertainties()` to add prediction intervals
 df_q6 <- NA
 # task-end
 # solution-begin
-df_q6 <- 
+df_q6 <-
   df_train %>%
   add_uncertainties(
     model = fit_4c,
@@ -434,16 +442,16 @@ df_q6 <-
 
 ## NOTE: No need to edit code below
 # Compute empirical coverage
-df_q6 %>% 
+df_q6 %>%
   summarize(coverage = mean(pred_lwr <= price & price <= pred_upr))
 
 # Visualize
-df_q6 %>% 
+df_q6 %>%
   ggplot(aes(price)) +
   geom_abline(slope = 1, intercept = 0, size = 2, color = "grey50") +
   geom_errorbar(
     data = . %>% filter(pred_lwr <= price & price <= pred_upr),
-    aes(ymin = pred_lwr, ymax = pred_upr), 
+    aes(ymin = pred_lwr, ymax = pred_upr),
     width = 0,
     size = 0.1,
     alpha = 1 / 5,
@@ -451,7 +459,7 @@ df_q6 %>%
   ) +
   geom_errorbar(
     data = . %>% filter(price < pred_lwr | pred_upr < price),
-    aes(ymin = pred_lwr, ymax = pred_upr), 
+    aes(ymin = pred_lwr, ymax = pred_upr),
     width = 0,
     size = 0.1,
     color = "salmon"

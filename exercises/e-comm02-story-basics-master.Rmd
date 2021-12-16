@@ -8,6 +8,8 @@ time: 20
 reading: 10
 ---
 
+# Communication: Narrative Basics
+
 *Purpose*: The point of data science is not to gather a random pile of facts;
 it's to *do something* with those facts. One of our key goals in data science is
 to help drive decisions and action---we accomplish this by communicating our
@@ -131,7 +133,7 @@ theme_common <- function() {
 }
 ```
 
-__q1__ Identify the point on the narrative spectrum, and justify your answer.
+### __q1__ Identify the point on the narrative spectrum, and justify your answer.
 
 *Hint*: Try telling yourself a story based on the graph! This can be your
 **justification** for the narrative spectrum point you select.
@@ -179,8 +181,7 @@ This graph conveys a small amount of information, but still manages to
 introduce some conflict.
 <!-- solution-end -->
 
-\newpage
-__q2__ Identify the point on the narrative spectrum, and justify your answer.
+### __q2__ Identify the point on the narrative spectrum, and justify your answer.
 
 ```{r q2-vis, dpi=128, dev="png", cache=TRUE, echo=FALSE}
 diamonds %>%
@@ -221,8 +222,7 @@ the `Fair` diamonds tend to be most pricey. Yet `Good`, `Very Good` and
 in this graph to quickly tell a compelling story.
 <!-- solution-end -->
 
-\newpage
-__q3__ Identify the point on the narrative spectrum, and justify your answer.
+### __q3__ Identify the point on the narrative spectrum, and justify your answer.
 
 ```{r q3-vis, dpi=128, dev="png", cache=TRUE, echo=FALSE}
 diamonds %>%
@@ -260,8 +260,7 @@ to vary a lot in `depth`, and `price` varies widely for all `cut` values,
 and some diamonds have `x, y, z` values at zero....
 <!-- solution-end -->
 
-\newpage
-__q4__ Turn in all your answers via google forms. [Link](https://forms.gle/kHuT5oufUQA7jRWG8)
+### __q4__ Turn in all your answers via google forms. [Link](https://forms.gle/kHuT5oufUQA7jRWG8)
 
 <!-- include-exit-ticket -->
 

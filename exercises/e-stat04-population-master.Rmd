@@ -1,11 +1,13 @@
 ---
-title: "Statistics: Populations and Estimation"
+title: "Stats: Populations and Estimation"
 author: Zach del Rosario
 date: 2020-06-23
 output: github_document
 time: 50
 reading: 10
 ---
+
+# Stats: Populations and Estimation
 
 *Purpose*: Often, our data do not include all the facts that are relevant to the decision we are trying to make. Statistics is the science of determining the conclusions we can confidently make, based on our available data. To make sense of this, we need to understand the distinction between a *sample* and a *population*, and how this distinction leads to *estimation*.
 
@@ -25,7 +27,7 @@ When using descriptive statistics to help us answer a question, there are (at le
 
 We already discussed (1) by learning about descriptive statistics and their meaning. Now we'll discuss (2) by learning the distinction between populations and samples.
 
-# Population
+## Population
 <!-- -------------------------------------------------- -->
 
 Let's start by looking at an artificial population:
@@ -80,7 +82,7 @@ As we saw in the reading, the choice of the "correct" population is not an exerc
 
 When your data are not the entire population, any statistic you compute is an *estimate*.
 
-# Estimates
+## Estimates
 <!-- -------------------------------------------------- -->
 
 When we don't have all the facts and instead only have a sample, we perform *estimation* to extrapolate from our available data to the population we care about.
@@ -112,9 +114,9 @@ Some terminology:
 The chunk `compute-samples` generated `n_samples = 5e3` of `n_observations = 3` each. You can think of each sample as an "alternative universe" where we happened to pick `3` particular values. The following chunk visualizes just the first few samples:
 
 ```{r vis-samples}
-df_sample %>% 
-  filter(id <= 6) %>% 
-  
+df_sample %>%
+  filter(id <= 6) %>%
+
   ggplot(aes(Z, "")) +
   geom_point() +
   facet_grid(id ~ .) +
@@ -127,9 +129,9 @@ df_sample %>%
 Every one of these samples has its own sample mean; let's add that as an additional point:
 
 ```{r vis-samples-wmean}
-df_sample %>% 
-  filter(id <= 6) %>% 
-  
+df_sample %>%
+  filter(id <= 6) %>%
+
   ggplot(aes(Z, "")) +
   geom_point() +
   geom_point(
@@ -207,7 +209,7 @@ df_sample %>%
 
 Note that this doesn't look much like a normal distribution. This should make some intuitive sense: The standard deviation is guaranteed to be non-negative, so it can't possibly follow a normal distribution, which can take values anywhere from $-\infty$ to $+\infty$.
 
-__q1__ Modify the code below to draw samples from a uniform distribution (rather than a normal). Describe (in words) what the resulting sampling distribution looks like. Does the sampling distribution look like a normal distribution?
+### __q1__ Modify the code below to draw samples from a uniform distribution (rather than a normal). Describe (in words) what the resulting sampling distribution looks like. Does the sampling distribution look like a normal distribution?
 
 ```{r q1-task}
 ## TASK: Modify the code below to sample from a uniform distribution
@@ -259,12 +261,12 @@ df_samp_unif %>%
 - The sampling distribution looks roughly normal in shape
 <!-- task-end -->
 
-### Intermediate conclusion
+## Intermediate conclusion
 <!-- ------------------------- -->
 
 A *sampling distribution* is the distribution for a *sample estimate*. It is induced by the population, but is also a function of the specific statistic we're considering. We will use statistics to help make sense of sampling distributions.
 
-### Standard Error
+## Standard Error
 <!-- ------------------------- -->
 
 The standard deviation of a sampling distribution gets a special name: the [*standard error*](https://en.wikipedia.org/wiki/Sampling_distribution#Standard_error). The standard error of an estimated mean is
@@ -275,7 +277,7 @@ This is a formula worth memorizing; it implies that doubling the precision of an
 
 The standard error is a convenient way to summarize the accuracy of an estimation setting; the larger our standard error, the less accurate our estimates will tend to be.
 
-__q2__ Compute the standard error for the sample mean under the following settings. Which setting will tend to produce more accurate estimates?
+### __q2__ Compute the standard error for the sample mean under the following settings. Which setting will tend to produce more accurate estimates?
 
 ```{r q2-task}
 ## TASK: Compute the standard error
@@ -309,7 +311,7 @@ print("Nice!")
 
 Two notes:
 
-1. Note the language above: The standard error tells us about *settings* (population $\sigma$ and sample count $n$), not *estimates* themselves. The accuracy of *an individual estimate* would depend on $\hat{\mu} - \mu$, but we in practice never know $\mu$ exactly. The standard error will tell us how variable $\hat{\mu}$ will be on average, but does not give us any information about the specific value of $\hat{\mu} - \mu$ for any given estimate $\hat{\mu}$. 
+1. Note the language above: The standard error tells us about *settings* (population $\sigma$ and sample count $n$), not *estimates* themselves. The accuracy of *an individual estimate* would depend on $\hat{\mu} - \mu$, but we in practice never know $\mu$ exactly. The standard error will tell us how variable $\hat{\mu}$ will be on average, but does not give us any information about the specific value of $\hat{\mu} - \mu$ for any given estimate $\hat{\mu}$.
 
 The standard error gives us an idea of how accurate our estimate will tend to be, but due to randomness we don't know the true accuracy of our estimate.
 
@@ -319,7 +321,7 @@ $$\hat{\text{SE}} = s / \sqrt{n},$$
 
 where the hat on $\text{SE}$ denotes that this quantity is an estimate, and $s$ is the sample standard deviation.
 
-__q3__ Compute the sample standard error of the sample mean for the sample below. Compare your estimate against the true value `se_q2.1`. State how similar or different the values are, and explain the difference.
+### __q3__ Compute the sample standard error of the sample mean for the sample below. Compare your estimate against the true value `se_q2.1`. State how similar or different the values are, and explain the difference.
 
 ```{r q3-task}
 ## NOTE: No need to change this!
@@ -359,7 +361,7 @@ print("Well done!")
 - The value `se_sample` is just an estimate; it is inaccurate due to randomness.
 <!-- solution-end -->
 
-# Fast Summary
+## Fast Summary
 <!-- -------------------------------------------------- -->
 
 The *population* is the set of all things we care about. No amount of math can help you here: *You* are responsible for defining your population. If we have the whole population, we don't need statistics!

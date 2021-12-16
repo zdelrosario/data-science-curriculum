@@ -1,11 +1,13 @@
 ---
-title: "Separate and Unite Columns"
+title: "Data: Separate and Unite Columns"
 # yaml-author
 date: 2020-06-05
 output: github_document
 time: 20
 reading: 30
 ---
+
+# Data: Separate and Unite Columns
 
 *Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse
 (including ggplot, dplyr, etc.) is specifically designed to use tidy data. Last
@@ -59,8 +61,7 @@ genes <-
 genes
 ```
 
-__q1__ Use a combination of `unite` and pivoting to turn `genes` into the same
-dataframe as `punnett`.
+### __q1__ Use a combination of `unite` and pivoting to turn `genes` into the same dataframe as `punnett`.
 
 ```{r q1-task}
 df_q1 <-
@@ -110,7 +111,7 @@ This *slightly modified* version of the data no longer has a convenient
 separator to help with pivoting. We'll use a combination of pivoting and
 separate to tidy these data.
 
-__q2__ Use a combination of `separate` and pivoting to tidy `alloys_mod`.
+### __q2__ Use a combination of `separate` and pivoting to tidy `alloys_mod`.
 
 ```{r q2-task}
 df_q2 <-

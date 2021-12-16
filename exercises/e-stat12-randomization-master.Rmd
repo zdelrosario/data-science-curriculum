@@ -1,5 +1,5 @@
 ---
-title: "Statistics: Randomization"
+title: "Stats: Randomization"
 author: Zachary del Rosario
 date: 2021-08-10
 output: github_document
@@ -9,6 +9,8 @@ prerequisites:
   - e-data02-derive
   - e-stat03-descriptive
 ---
+
+# Stats: Randomization
 
 *Purpose*: You've probably heard that a "control" is important for doing science. If you're lucky, you may have also heard about randomization. These two ideas are the *backbone* of sound data collection. In this exercise, you'll learn the basics about how to plan data collection.
 
@@ -32,7 +34,7 @@ simulate_yield <- function(v) {
     stop("Design must contain at least one 'T' and at least one 'C'")
   }
   ## Simulate data
-  tibble(condition = v) %>% 
+  tibble(condition = v) %>%
     mutate(
       condition = fct_relevel(condition, "T", "C"),
       plot = row_number(),
@@ -41,7 +43,7 @@ simulate_yield <- function(v) {
 }
 ```
 
-# An Example: Fertilizer and Crop Yield
+## An Example: Fertilizer and Crop Yield
 
 It's difficult to explain the ideas behind data collection without talking about data to collect, so let's consider a specific example:
 
@@ -64,13 +66,13 @@ The following code visualizes the scenario: how experimental conditions are arra
 tibble(
   condition = experimental_design,
   plot = 1:length(experimental_design)
-) %>% 
+) %>%
   ggplot(aes(plot, 1)) +
   geom_label(
     aes(label = condition, fill = condition),
     size = 10
   ) +
-  
+
   scale_x_continuous(breaks = 1:6) +
   scale_y_continuous(breaks = NULL) +
   theme_minimal() +
@@ -90,10 +92,10 @@ Now let's simulate the results of the experiment!
 ## For reproducibility, set the seed
 set.seed(101)
 ## Simulate the experimental yields
-experimental_design %>% 
-  simulate_yield() %>% 
+experimental_design %>%
+  simulate_yield() %>%
   ## Analyze the data
-  group_by(condition) %>% 
+  group_by(condition) %>%
   summarize(
     yield_mean = mean(yield),
     yield_sd = sd(yield)
@@ -124,7 +126,7 @@ What I didn't tell you about the experimental setup is that there's a *river* on
 tibble(
   condition = experimental_design,
   plot = 1:length(experimental_design)
-) %>% 
+) %>%
   ggplot(aes(plot, 1)) +
   geom_label(
     aes(label = condition, fill = condition),
@@ -140,7 +142,7 @@ tibble(
     x = 6.7, y = 1.25, label = "River",
     hjust = 1
   ) +
-  
+
   scale_x_continuous(breaks = 1:6) +
   scale_y_continuous(breaks = NULL, limits = c(0.5, 1.5)) +
   theme_minimal() +
@@ -169,9 +171,9 @@ your_design <- c("C", "C", "C", "T", "T", "T")
 # solution-end
 
 ## NOTE: No need to edit; use this to simulate your design
-your_design %>% 
-  simulate_yield() %>% 
-  group_by(condition) %>% 
+your_design %>%
+  simulate_yield() %>%
+  group_by(condition) %>%
   summarize(
     yield_mean = mean(yield),
     yield_sd = sd(yield)
@@ -207,7 +209,7 @@ The `sample()` function will randomize the order of a vector, as the following c
 ```{r randomize}
 ## NOTE: No need to edit; run and inspect
 ## Start with a simple arrangement
-experimental_design %>% 
+experimental_design %>%
   ## Randomize the order
   sample()
 ```
@@ -222,16 +224,16 @@ If we randomize the order of treatment and control plots, then we *transform* th
 set.seed(101)
 
 ## Simulate the experimental results
-experimental_design %>% 
+experimental_design %>%
 # task-begin
   ## TODO: Randomize the plot order
 # task-end
 # solution-begin
   ## Randomize the plot order
-  sample() %>% 
+  sample() %>%
 # solution-end
-  simulate_yield() %>% 
-  group_by(condition) %>% 
+  simulate_yield() %>%
+  group_by(condition) %>%
   summarize(
     yield_mean = mean(yield),
     yield_sd = sd(yield)
@@ -261,15 +263,15 @@ Let's visually compare a naive (sequential) design with a randomized design, and
 ```{r vis-cf}
 set.seed(101)
 bind_rows(
-  experimental_design %>% 
-    simulate_yield() %>% 
+  experimental_design %>%
+    simulate_yield() %>%
     mutate(design = "Naive"),
-  experimental_design %>% 
-    sample() %>% 
-    simulate_yield() %>% 
+  experimental_design %>%
+    sample() %>%
+    simulate_yield() %>%
     mutate(design = "Randomized"),
-) %>% 
-  
+) %>%
+
   ggplot(aes(plot, yield)) +
   geom_line(aes(y = plot / 3), color = "cornflowerblue") +
   geom_segment(
@@ -293,19 +295,18 @@ It's not randomization alone that's saving us from confounds: The river will boo
 
 Using both ideas together---randomization with a control---is the foundation of sound experimental design. A similar idea---[random assignment](https://en.wikipedia.org/wiki/Random_assignment)---is used in medical science to determine the effects of new drugs and other medical interventions.
 
-# Conclusion
+## Conclusion
 
 Here are the key takeaways from this lesson:
 
 - "More data" is not enough for sound science; the *right* data is what you need to understand an effect.
 - Getting the right data is a matter of carefully planning your data collection; *designing an experiment*.
-- Confounds can confuse our analysis of data, and lead us to make incorrect conclusions. 
+- Confounds can confuse our analysis of data, and lead us to make incorrect conclusions.
   - **No amount of fancy math can overcome poorly-collected data**.
 - Randomization, paired with a treatment-to-control comparison, is our best tool to deal with confounds.
 
 <!-- include-exit-ticket -->
 
-# References
+## References
 
 Joiner, B., "Lurking Variables: Some Examples" (1979) [link](https://www.tandfonline.com/doi/abs/10.1080/00031305.1981.10479361?casa_token=g1ULzOrGeEcAAAAA:5NqMGZtV_fNFTJ55UYlH1m9WhKI5ZYDe6fN8799XCk2pXOuTXWzlUC-ODrLnOoCf_2dyx1wIKoxn)
-

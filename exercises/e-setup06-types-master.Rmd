@@ -1,11 +1,13 @@
 ---
-title: "Types"
+title: "Setup: Types"
 author: Zachary del Rosario
 date: 2020-06-26
 output: github_document
 time: 10
 reading: 5
 ---
+
+# Setup: Types
 
 *Purpose*: Vectors can hold data of only one *type*. While this isn't a course on computer science, there are some type "gotchas" to look out for when doing data science. This exercise will help us get ahead of those issues.
 
@@ -21,18 +23,18 @@ library(tidyverse)
 
 ```
 
-# Objects vs Strings
+## Objects vs Strings
 <!-- -------------------------------------------------- -->
 
-__q1__ Describe what is wrong with the code below.
+### __q1__ Describe what is wrong with the code below.
 
-```{r q1-task}
+```{r q1-task, eval=FALSE}
 ## TASK: Describe what went wrong here
 ## Set our airport
 airport <- "BOS"
 
 ## Check our airport value
-# airport == ATL # Uncomment and run
+airport == ATL
 ```
 
 **Observations**:
@@ -44,7 +46,7 @@ airport <- "BOS"
 - `ATL` (without quotes) is trying to refer to an object (variable); we would need to write `"ATL"` (with quotes) to produce a string.
 <!-- solution-end -->
 
-# Casting
+## Casting
 <!-- -------------------------------------------------- -->
 
 Sometimes our data will not be in the form we want; in this case we may need to *cast* the data to another format.
@@ -54,7 +56,7 @@ Sometimes our data will not be in the form we want; in this case we may need to 
 - `as.character(x)` converts to character (string)
 - `as.logical(x)` converts to logical (boolean)
 
-__q2__ Cast the following vector `v_string` to integers.
+### __q2__ Cast the following vector `v_string` to integers.
 
 ```{r q2-task}
 v_string <- c("00", "45", "90")

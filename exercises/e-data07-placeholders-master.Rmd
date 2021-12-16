@@ -7,6 +7,8 @@ time: 15
 reading: 10
 ---
 
+# Data: Pipes and Placeholders
+
 *Purpose*: The pipe `%>%` has additional functionality than what we've used so far. In this exercise we'll learn about the *placeholder* `.`, which will give us more control over how data flows between our functions.
 
 *Reading*: [The Pipe](https://magrittr.tidyverse.org/reference/pipe.html)
@@ -21,7 +23,7 @@ library(tidyverse)
 
 ```
 
-__q1__ Re-write the following code to use the *placeholder*.
+### __q1__ Re-write the following code to use the *placeholder*.
 
 *Hint*: This may feel very simple, in which case good. This is not a trick question.
 
@@ -35,7 +37,9 @@ diamonds %>% glimpse(.)
 # solution-end
 ```
 
-__q2__ The reading discussed *Using lambda expressions with `%>%`*; use this part of the reading to explain why the following code fails. Then fix the code so it runs without error.
+### __q2__ Fix the lambda expression
+
+The reading discussed *Using lambda expressions with `%>%`*; use this part of the reading to explain why the following code fails. Then fix the code so it runs without error.
 
 ```{r q2-task}
 # task-begin
@@ -51,7 +55,7 @@ __q2__ The reading discussed *Using lambda expressions with `%>%`*; use this par
 
 ```
 
-__q3__ Re-write the following code using the placeholder `.` operator to simplify the second filter.
+### __q3__ Re-write the following code using the placeholder `.` operator to simplify the second filter.
 
 *Hint*: You should be able to simplify the second call to `filter` down to just
 `filter(cut == "Fair")`.

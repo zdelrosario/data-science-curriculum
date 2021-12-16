@@ -1,11 +1,13 @@
 ---
-title: "Data Visualization Basics"
+title: "Vis: Data Visualization Basics"
 author: Zach del Rosario
 date: 2020-05-03
 output: github_document
 time: 10
 reading: 30
 ---
+
+# Vis: Data Visualization Basics
 
 *Purpose*: The most powerful way for us to learn about a dataset is to
 _visualize the data_. Throughout this class we will make extensive use of the
@@ -18,24 +20,22 @@ allow us to create just about any graph you can imagine!
 
 
 ```{r setup, include=FALSE}
+library(tidyverse)
 # knitr options
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-__q1__ Load the `tidyverse` and inspect the `diamonds` dataset. What do the
-`cut`, `color`, and `clarity` variables mean?
+### __q1__ Inspect the `diamonds` dataset. What do the `cut`, `color`, and `clarity` variables mean?
 
 *Hint*: We learned how to inspect a dataset in `e-data-00-basics`!
 
-```{r library}
+```{r q1-task, eval=FALSE}
 # solution-begin
-library(tidyverse)
-
 ?diamonds
 # solution-end
 ```
 
-__q2__ Use your "standard checks" to determine what variables the dataset has.
+### __q2__ Use your "standard checks" to determine what variables the dataset has.
 
 <!-- solution-begin -->
 ```{r q2-task}
@@ -48,7 +48,7 @@ price, x, y, z`.
 
 Now that we have the list of variables in the dataset, we know what we can visualize!
 
-__q3__ Using `ggplot`, visualize `price` vs `carat` with points. What trend do
+### __q3__ Using `ggplot`, visualize `price` vs `carat` with points. What trend do
 you observe?
 
 *Hint*: Usually the language `y` vs `x` refers to the `vertical axis` vs
@@ -85,7 +85,7 @@ instance, in the plot above you assigned `carat` to the `x` aesthetic, and
 some of which vary based on the `geom_` you are using to visualize. The next
 question will explore this idea more.
 
-__q4__ Create a new graph to visualize `price`, `carat`, and `cut`
+### __q4__ Create a new graph to visualize `price`, `carat`, and `cut`
 simultaneously.
 
 *Hint*: Remember that you can add additional aesthetic mappings in `aes()`. Some options include `size`, `color`, and `shape`.

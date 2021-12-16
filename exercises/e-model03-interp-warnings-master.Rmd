@@ -1,11 +1,13 @@
 ---
-title: "Statistics: Warnings When Interpreting Linear Models"
+title: "Model: Warnings When Interpreting Linear Models"
 author: Zachary del Rosario
 date: 2020-07-30
 output: github_document
 time: 30
 reading: 0
 ---
+
+# Model: Warnings when interpreting linear models
 
 *Purpose*: When fitting a model, we might like to use that model to interpret how predictors affect some outcome of interest. This is a useful thing to do, but interpreting models is also *very challenging*. This exercise will give you a *couple warnings* about interpreting models.
 
@@ -54,7 +56,9 @@ diamonds_train %>%
 
 The trend in `cut` is what we'd expect at upper values (`carat > 1`), but reversed at lower values (`carat <= 1`)! Let's see how this affects *model predictions*.
 
-__q1__ Fit two models on `diamonds_train`, one for `carat <= 1` and one for `carat > 1`. Use only `cut` as the predictor. First, make a prediction about how the predictions for the two models will compare, and then inspect the model results below.
+### __q1__ Compare two models.
+
+Fit two models on `diamonds_train`, one for `carat <= 1` and one for `carat > 1`. Use only `cut` as the predictor. First, make a prediction about how the predictions for the two models will compare, and then inspect the model results below.
 
 ```{r q1-task}
 # task-begin
@@ -108,7 +112,9 @@ tibble(cut = c("Fair", "Good", "Very Good", "Premium", "Ideal")) %>%
 
 *Why is this happening?* Let's investigate!
 
-__q2__ Repeat the same exercise above, but instead of `price ~ cut` fit `carat ~ cut`. Interpret the model results: Can the behavior we see below help explain the behavior above?
+### __q2__ Change the model
+
+Repeat the same exercise above, but instead of `price ~ cut` fit `carat ~ cut`. Interpret the model results: Can the behavior we see below help explain the behavior above?
 
 ```{r q2-task}
 # task-begin
@@ -168,7 +174,7 @@ Our models are not just a function of the population, but also of the *specific 
 
 The following task will demonstrate this effect.
 
-__q3__ Fit two models, one with both carat and cut, and another with cut only. Fit only to the low-carat diamonds (`carat <= 1`). Use the provided code to compare the model behavior with `cut`, and answer the questions under *observations* below.
+### __q3__ Fit two models, one with both carat and cut, and another with cut only. Fit only to the low-carat diamonds (`carat <= 1`). Use the provided code to compare the model behavior with `cut`, and answer the questions under *observations* below.
 
 ```{r q3-task}
 # task-begin
@@ -233,7 +239,7 @@ tibble(
 - We saw above that `cut` predicts `carat` at low carat values; when we don't include `carat` in the model, the `cut` variable acts as a surrogate for `carat`. When we do include `carat` in the model, the model uses `carat` to predict the price, and can more correctly account for the behavior of `cut.
 <!-- solution-end -->
 
-**Main Punchline**:
+## Main Punchline
 
 When fitting a model, we might be tempted to interpret the model parameters. Sometimes this can be helpful, but as we've seen above the model behavior is a complex function of the population, the available data, and the specific predictors we choose for the model.
 

@@ -1,11 +1,13 @@
 ---
-title: "Vector Basics"
+title: "Setup: Vector Basics"
 author: Zachary del Rosario
 date: 2020-06-05
 output: github_document
 time: 5
 reading: 10
 ---
+
+# Setup: Vector Basics
 
 *Purpose*: *Vectors* are the most important object we'll work with when doing
 data science. To that end, let's learn some basics about vectors.
@@ -24,7 +26,7 @@ library(tidyverse)
 
 ```
 
-__q1__ What single-letter `R` function do you use to create vectors with specific entries? Use that function to create a vector with the numbers `1, 2, 3` below.
+### __q1__ What single-letter `R` function do you use to create vectors with specific entries? Use that function to create a vector with the numbers `1, 2, 3` below.
 
 ```{r q1-task}
 # task-begin
@@ -46,7 +48,7 @@ assertthat::assert_that(mean(vec_q1) == 2)
 print("Nice!")
 ```
 
-__q2__ Did you know that you can use `c()` to *extend* a vector as well? Use this to add the extra entry `4` to `vec_q1`.
+### __q2__ Did you know that you can use `c()` to *extend* a vector as well? Use this to add the extra entry `4` to `vec_q1`.
 
 ```{r q2-task}
 # task-begin

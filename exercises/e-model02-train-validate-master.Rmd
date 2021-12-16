@@ -1,11 +1,13 @@
 ---
-title: "Statistics: Model Selection and the Test-Validate Framework"
+title: "Model: Model Selection and the Test-Validate Framework"
 author: Zachary del Rosario
 date: 2020-07-30
 output: github_document
 time: 60
 reading: 0
 ---
+
+# Model: Model Selection and the Test-Validate Framework
 
 *Purpose*: When designing a model, we need to make choices about the model form. However, since we are *optimizing* the model to fit our data, we need to be careful not to bias our assessments and make poor modeling choices. We can use a *training* and *validation* split of our data to help make these choices. To understand these issues, we'll discuss underfitting, overfitting, and the test-validate framework.
 
@@ -19,13 +21,14 @@ library(broom)
 
 We'll look at two cases: First a simple problem studying polynomials, then a more realistic case using the `diamonds` dataset.
 
-# Illustrative Case: Polynomial Regression
+## Illustrative Case: Polynomial Regression
 <!-- -------------------------------------------------- -->
 
 To illustrate the ideas behind the test-validate framework, let's study a very simple problem: Fitting a polynomial. The following code sets up this example.
 
 ```{r polynomial-setup}
 ## NOTE: No need to edit this chunk
+set.seed(101)
 
 # Ground-truth function we seek to approximate
 fcn_true <- function(x) {12 * (x - 0.5)^3 - 2 * x + 1}
@@ -65,7 +68,7 @@ where the $\beta_i$ are coefficients, and $x^0 = 1$ is a constant.
 
 The following code fits a polynomial of degree 2 to the available data `df_measurements`.
 
-__q1__ Run the following code and inspect the (visual) results. Describe whether the model (`Predicted`) captures the "trends" in the measured data (black dots).
+### __q1__ Run the following code and inspect the (visual) results. Describe whether the model (`Predicted`) captures the "trends" in the measured data (black dots).
 
 ```{r q1-task}
 ## NOTE: No need to edit this code; run and inspect
@@ -106,7 +109,7 @@ This phenomenon is called [*underfitting*](https://en.wikipedia.org/wiki/Overfit
 
 Let's increase the polynomial order and re-fit the data to try to solve the underfitting problem.
 
-__q2__ Copy the code from above to fit a `degree = 18` polynomial to the measurements.
+### __q2__ Copy the code from above to fit a `degree = 17` polynomial to the measurements.
 
 ```{r q2-task}
 ## TASK: Fit a high-degree polynomial to df_measurements
@@ -116,7 +119,7 @@ fit_over <- NA
 # solution-begin
 fit_over <-
   df_measurements %>%
-  lm(data = ., formula = y_meas ~ poly(x, degree = 18))
+  lm(data = ., formula = y_meas ~ poly(x, degree = 17))
 # solution-end
 
 ## NOTE: No need to modify code below
@@ -150,7 +153,7 @@ df_truth %>%
 - The predictions are *terrible* outside the measured points.
 <!-- solution-end -->
 
-The phenomenon we see with the `degree = 18` case above is called [*overfitting*](https://en.wikipedia.org/wiki/Overfitting). Overfitting tends to occur when our model is "too flexible"; this excess flexibility allows the model to fit to extraneous patterns, such as measurement noise or data artifacts due to sampling.
+The phenomenon we see with the high-degree case above is called [*overfitting*](https://en.wikipedia.org/wiki/Overfitting). Overfitting tends to occur when our model is "too flexible"; this excess flexibility allows the model to fit to extraneous patterns, such as measurement noise or data artifacts due to sampling.
 
 So we have a "Goldilocks" problem:
 
@@ -161,7 +164,7 @@ Quantities such as polynomial order that control model flexibility are called [h
 
 However, if we try to set the hyperparameters based on the *training error*, we're going to make some bad choices. The next task gives us a hint why.
 
-__q3__ Compute the `mse` for the 2nd and 18th-degree polynomial models on `df_measurements`. Which model has the lower error? Which hyperparameter value (polynomial degree) would you choose, based *solely* on these numbers?
+### __q3__ Compute the `mse` for the 2nd and high-degree polynomial models on `df_measurements`. Which model has the lower error? Which hyperparameter value (polynomial degree) would you choose, based *solely* on these numbers?
 
 *Hint*: We learned how to do this in `e-stat11-models-intro`.
 
@@ -182,7 +185,7 @@ mse(fit_over, df_measurements)
 <!-- task-end -->
 <!-- solution-begin -->
 - `fit_over` has lower error on `df_measurements`.
-- Based *solely* on these results, we would be inclined to choose `degree = 18`.
+- Based *solely* on these results, we would be inclined to choose high-degree polynomial model.
 - However, this would be a poor decision, as we have a highly biased measure of model error. We would be better served by studying the error on a *validation* set.
 <!-- solution-end -->
 
@@ -261,7 +264,7 @@ df_sweep <-
 
 In the next task, you will compare the resulting error metrics.
 
-__q4__ Inspect the results of the degree sweep, and answer the questions below.
+### __q4__ Inspect the results of the degree sweep, and answer the questions below.
 
 ```{r q4-task}
 ## NOTE: No need to edit; inspect and write your observations
@@ -302,7 +305,7 @@ We've seen a few ideas:
 - The *training error* is an optimistic measure of accuracy, it is not an appropriate metric for setting hyperparameter values.
 - To set hyperparameter values, we are better off "holding out" a *validation set* from our data, and using the *validation error* to make model decisions.
 
-# More Challenging Case: Modeling Diamond Prices
+## More Challenging Case: Modeling Diamond Prices
 <!-- -------------------------------------------------- -->
 
 Above we made our model more flexible by changing the polynomial order. For instance, a 2nd-order polynomial model would be
@@ -329,8 +332,8 @@ Let's put the train-validation idea to work! Below I set up training and validat
 ## NOTE: No need to edit this setup
 # Create a test-validate split
 set.seed(101)
-diamonds_randomized <- 
-  diamonds %>% 
+diamonds_randomized <-
+  diamonds %>%
   slice(sample(dim(diamonds)[1]))
 
 diamonds_train <-
@@ -349,7 +352,9 @@ fit_full <-
   )
 ```
 
-__q5__ Build your own model! Choose which predictors to include by modifying the `formula` argument below. Use the validation data to help guide your choice. Answer the questions below.
+### __q5__ Build your own model!
+
+Choose which predictors to include by modifying the `formula` argument below. Use the validation data to help guide your choice. Answer the questions below.
 
 *Hint*: We've done EDA on `diamonds` before. *Use your knowledge* from that past EDA to choose variables you think will be informative for predicting the `price`.
 
@@ -398,7 +403,7 @@ mse(fit_full, diamonds_validate)
 
 One last thing: Note above that I first *randomized* the diamonds before selecting training and validation data. *This is really important!* Let's see what happens if we *don't randomize* the data before splitting:
 
-__q6__ Visualize a histogram for the prices of `diamonds_train_bad` and `diamonds_validate_bad`. Answer the questions below.
+### __q6__ Visualize a histogram for the prices of `diamonds_train_bad` and `diamonds_validate_bad`. Answer the questions below.
 
 ```{r q6-task}
 ## NOTE: No need to edit this part
@@ -415,10 +420,10 @@ diamonds_validate_bad <-
 bind_rows(
   diamonds_train_bad %>% mutate(source = "Train"),
   diamonds_validate_bad %>% mutate(source = "Validate")
-) %>% 
+) %>%
   ggplot(aes(price)) +
   geom_histogram(bins = 100) +
-  
+
   facet_grid(source ~ .)
 # solution-end
 ```

@@ -1,11 +1,13 @@
 ---
-title: "Function Basics"
+title: "Setup: Function Basics"
 # yaml-author
 date: 2020-05-03
 output: github_document
 time: 10
 reading: 10
 ---
+
+# Setup: Function Basics
 
 *Purpose*: Functions are our primary tool in carying out data analysis with the
 `tidyverse`. It is unreasonable to expect yourself to memorize every function
@@ -17,9 +19,9 @@ function's use.
 *Topics*: `functions`, `arguments`
 *Reading Time*: ~ 10 minutes
 
-__q1__ How do you find help on a function? Get help on the built-in `rnorm` function.
+### __q1__ How do you find help on a function? Get help on the built-in `rnorm` function.
 
-```{r rnorm-help}
+```{r rnorm-help, eval=FALSE}
 # solution-begin
 ?rnorm
 # solution-end
@@ -28,7 +30,7 @@ __q1__ How do you find help on a function? Get help on the built-in `rnorm` func
 # task-end
 ```
 
-__q2__ How do you show the source code for a function?
+### __q2__ How do you show the source code for a function?
 
 ```{r rnorm-source}
 # solution-begin
@@ -39,7 +41,7 @@ rnorm
 # task-end
 ```
 
-__q3__ Using either the documentation or the source, determine the arguments for `rnorm`.
+### __q3__ Using either the documentation or the source, determine the arguments for `rnorm`.
 
 <!-- solution-begin -->
 The arguments for `rnorm` are:
@@ -49,7 +51,7 @@ The arguments for `rnorm` are:
 - `sd`: The standard deviation of the normal
 <!-- solution-end -->
 
-__q4__ Scroll to the bottom of the help for the `library()` function. How do you
+### __q4__ Scroll to the bottom of the help for the `library()` function. How do you
 list all available packages?
 
 <!-- solution-begin -->

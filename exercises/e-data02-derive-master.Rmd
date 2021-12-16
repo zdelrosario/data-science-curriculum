@@ -1,11 +1,13 @@
 ---
-title: "Deriving Data"
+title: "Data: Deriving Quantities"
 author: Zachary del Rosario
 date: 2020-05-07
 output: github_document
 time: 15
 reading: 60
 ---
+
+# Data: Deriving Quantities
 
 *Purpose*: Often our data will not tell us *directly* what we want to know; in
 these cases we need to *derive* new quantities from our data. In this exercise,
@@ -30,8 +32,7 @@ library(tidyverse)
 
 ```
 
-__q1__ What is the difference between these two versions? How are they the same?
-How are they different?
+### __q1__ What is the difference between these two versions? How are they the same? How are they different?
 
 ```{r q1-task}
 ## Version 1
@@ -49,7 +50,7 @@ the right-hand-side (RHS).
 The reading mentioned various kinds of *summary functions*, which are summarized
 in the table below:
 
-### Summary Functions
+## Summary Functions
 
 | Type | Functions |
 | ---- | --------- |
@@ -59,8 +60,7 @@ in the table below:
 | Counts | `n_distinct(x), n()` |
 | Logical | `sum(!is.na(x)), mean(y == 0)` |
 
-__q2__ Using `summarize()` and a logical summary function, determine the number
-of rows with `Ideal` `cut`. Save this value to a column called `n_ideal`.
+### __q2__ Using `summarize()` and a logical summary function, determine the number of rows with `Ideal` `cut`. Save this value to a column called `n_ideal`.
 
 ```{r q2-task}
 # solution-begin
@@ -84,8 +84,7 @@ assertthat::assert_that(
 print("Great job!")
 ```
 
-__q3__ The function `group_by()` modifies how other dplyr verbs function.
-Uncomment the `group_by()` below, and describe how the result changes.
+### __q3__ The function `group_by()` modifies how other dplyr verbs function. Uncomment the `group_by()` below, and describe how the result changes.
 
 ```{r q3-task}
 diamonds %>%
@@ -110,8 +109,10 @@ diamonds %>%
 | Cumulants | `cumsum(x), cumprod(x), cummin(x), cummax(x), cummean(x)` |
 | Ranking | `min_rank(x), row_number(x), dense_rank(x), percent_rank(x), cume_dist(x), ntile(x)` |
 
-__q4__ The `depth` variable is supposedly computed via `depth_computed = 100 *
-2 * z / (x + y)`. Compute `diff = depth - depth_computed`: This is a measure of
+### __q4__ Comment on why the difference is so large.
+
+The `depth` variable is supposedly computed via `depth_computed = 100 * 2 * z /
+(x + y)`. Compute `diff = depth - depth_computed`: This is a measure of
 discrepancy between the given and computed depth. Additionally, compute the
 *coefficient of variation* `cov = sd(x) / mean(x)` for both `depth` and `diff`:
 This is a dimensionless measure of variation in a variable. Assign the resulting
@@ -173,9 +174,11 @@ raises some questions about how `depth` was actually computed! It's often a good
 idea to try to check derived quantities in your data, if possible. These can
 sometimes uncover errors in the data!
 
-__q5__ Compute the `price_mean = mean(price)`, `price_sd = sd(price)`, and
-`price_cov = price_sd / price_mean` for each `cut` of diamond. What observations
-can you make about the various cuts? Do those observations match your expectations?
+### __q5__ Compute and observe
+
+Compute the `price_mean = mean(price)`, `price_sd = sd(price)`, and `price_cov =
+price_sd / price_mean` for each `cut` of diamond. What observations can you make
+about the various cuts? Do those observations match your expectations?
 
 ```{r q5-task}
 # task-begin

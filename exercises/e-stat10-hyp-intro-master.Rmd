@@ -1,11 +1,13 @@
 ---
-title: "Statistics: Introduction to Hypothesis Testing"
+title: "Stats: Introduction to Hypothesis Testing"
 author: Zachary del Rosario
 date: 2020-07-23
 output: github_document
 time: 30
 reading: 10
 ---
+
+# Stats: Introduction to Hypothesis Testing
 
 *Purpose*: Part of the payoff of statistics is to support making *decisions
 under uncertainty*. To frame these decisions we will use the framework of
@@ -19,7 +21,7 @@ library(tidyverse)
 library(rsample)
 ```
 
-# A Full Example
+## A Full Example
 <!-- -------------------------------------------------- -->
 
 You are considering buying a set of diamonds in bulk. The prospective vendor is
@@ -112,7 +114,7 @@ less than the threshold `price_threshold`.
 
 ## Compute
 
-__q1__ Based on your results, can you reject the null hypothesis **H_0** for the population with a 95-percent confidence interval?
+### __q1__ Based on your results, can you reject the null hypothesis **H_0** for the population with a 95-percent confidence interval?
 
 ```{r q1-task}
 ## TASK: Compute a confidence interval on the mean, use to answer the question
@@ -144,7 +146,7 @@ price_threshold
 - Since we do not reject **H_0** we take our default action of buying no diamonds from the vendor.
 <!-- solution-end -->
 
-# Different Scenario, Different Hypotheses
+## Different Scenario, Different Hypotheses
 <!-- -------------------------------------------------- -->
 
 ## Proportion Ideal
@@ -163,7 +165,7 @@ proportion](https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interva
 *the bootstrap*. Let's put that to work to estimate a confidence interval for
 the proportion of high-cut diamonds in the population.
 
-### Hypotheses and Actions
+## Hypotheses and Actions
 
 Let's redefine our hypotheses to match the new scenario.
 
@@ -177,7 +179,7 @@ is less than 50 percent.
 Furthermore, let's change our decision threshold from 95-percent confidence to a
 higher 99-percent confidence.
 
-__q2__ Use the techniques you learned in `e-stat09-bootstrap` to estimate a 99-percent confidence interval for the population proportion of high-cut diamonds. Can you reject the null hypothesis? What decision do you take?
+### __q2__ Use the techniques you learned in `e-stat09-bootstrap` to estimate a 99-percent confidence interval for the population proportion of high-cut diamonds. Can you reject the null hypothesis? What decision do you take?
 
 *Hint 1*: Remember that you can use `mean(X == "value")` to compute the proportion
 of cases in a sample with variable `X` equal to `"value"`. You'll need to figure out how to combine the cases of `Premium` and `Ideal`.
@@ -216,7 +218,7 @@ int_pctl(df_resample_total_price, estimates, alpha = 0.01)
 - Since we reject **H_0** we take our alternative action and buy the diamonds!
 <!-- solution-end -->
 
-# Closing Thoughts
+## Closing Thoughts
 <!-- -------------------------------------------------- -->
 
 ## The big reveal
@@ -224,7 +226,7 @@ int_pctl(df_resample_total_price, estimates, alpha = 0.01)
 To close this exercise, let's reveal whether our chosen hypotheses matched the
 underlying population.
 
-__q3__ Compute the population mean price for the diamonds. Did you reject the
+### __q3__ Compute the population mean price for the diamonds. Did you reject the
 null hypothesis?
 
 ```{r q3-task}
@@ -258,7 +260,7 @@ nothing."
 Learning nothing isn't a bad thing though! It's an important part of statistics
 to recognize when we've learned nothing.
 
-__q4__ Compute the proportion of high-cut diamonds in the population. Did you
+### __q4__ Compute the proportion of high-cut diamonds in the population. Did you
 reject the null hypothesis?
 
 ```{r q4-task}

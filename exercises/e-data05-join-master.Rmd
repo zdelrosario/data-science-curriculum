@@ -1,11 +1,13 @@
 ---
-title: "Join Datasets"
+title: "Data: Joining Datasets"
 author: Zachary del Rosario
 date: 2020-06-05
 output: github_document
 time: 30
 reading: 30
 ---
+
+# Data: Joining Datasets
 
 *Purpose*: Often our data are scattered across multiple sets. In this case, we
 need to be able to *join* data.
@@ -53,7 +55,7 @@ beatles2 <-
 bind_cols(beatles1, beatles2)
 ```
 
-__q1__ Describe what is wrong with the result of `bind_cols` above and how it happened.
+### __q1__ Describe what is wrong with the result of `bind_cols` above and how it happened.
 
 <!-- task-begin -->
 - Write your answer here
@@ -85,9 +87,9 @@ beatles_joined <-
   )
 ```
 
-__q2__ Use the following `beatles3` to *correctly* join `beatles1`
+### __q2__ Use the following `beatles3` to *correctly* join `beatles1`
 
-```{r qY-task}
+```{r q2-task}
 df_q2 <-
 # task-begin
 ## TODO: Join beatles1 and beatles2 using beatles3 to match rows
@@ -129,9 +131,11 @@ especially helpful because you can first inspect what *criteria* you'll filter
 on, then perform the filter. We'll use the tidyr tool `expand_grid` to make such
 a criteria dataframe, then apply it to filter the `flights` data.
 
-__q3__ Use `expand_grid` to create a `criteria` dataframe with the `month` equal
-to `8, 9` and the airport identifiers in `dest` for the San Francisco, San Jose,
-and Oakland airports.
+### __q3__ Create a "grid" of values
+
+Use `expand_grid` to create a `criteria` dataframe with the `month` equal to `8,
+9` and the airport identifiers in `dest` for the San Francisco, San Jose, and
+Oakland airports.
 
 *Hint 1*: To find the airport identifiers, you can either use `str_detect` to
 filter the `airports` dataset, or use Google!
@@ -183,8 +187,7 @@ assertthat::assert_that(
 print("Well done!")
 ```
 
-__q4__ Use the `criteria` dataframe you produced above to filter `flights` on
-`dest` and `month`.
+### __q4__ Use the `criteria` dataframe you produced above to filter `flights` on `dest` and `month`.
 
 *Hint*: Remember to use a *filtering join* to take advantage of the `criteria`
 dataset we built above!
