@@ -87,7 +87,7 @@ df_z %>%
 ## # A tibble: 1 x 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      92  0.92
+## 1         100      93  0.93
 ```
 
 Now it's your turn!
@@ -108,7 +108,7 @@ df_z %>%
 ## # A tibble: 1 x 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      61  0.61
+## 1         100      53  0.53
 ```
 
 **Observations**:
@@ -159,10 +159,10 @@ map_dfr(
 ## # A tibble: 4 x 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1          10       2 0.2  
-## 2         100      56 0.56 
-## 3        1000     485 0.485
-## 4       10000    4913 0.491
+## 1          10       9 0.9  
+## 2         100      51 0.51 
+## 3        1000     490 0.49 
+## 4       10000    4980 0.498
 ```
 
 This is because *probability* is actually defined[1] in terms of the limit
@@ -194,9 +194,9 @@ map_dfr(
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
 ## 1          10       9 0.9  
-## 2         100      93 0.93 
-## 3        1000     948 0.948
-## 4       10000    9512 0.951
+## 2         100      97 0.97 
+## 3        1000     945 0.945
+## 4       10000    9489 0.949
 ```
 
 **Observations**:

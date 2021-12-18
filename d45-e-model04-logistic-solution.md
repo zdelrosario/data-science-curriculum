@@ -412,7 +412,7 @@ df_basic %>%
 ## # A tibble: 1 x 4
 ##      TP    FP    TN    FN
 ##   <int> <int> <int> <int>
-## 1    31    30    25    11
+## 1    37    25    28     7
 ```
 
 These numbers don't mean a whole lot on their own; we'll use them to compare performance across models. Next you'll practice using R functions to carry out logistic regression for classification, and build a model to compare against this basic one.
@@ -535,7 +535,7 @@ df_q4 %>%
 ## # A tibble: 1 x 4
 ##      TP    FP    TN    FN
 ##   <int> <int> <int> <int>
-## 1    33     5    50     9
+## 1    29     3    50    15
 ```
 
 **Observations**:
