@@ -1,4 +1,6 @@
 data-science-exercise-solutions
+how-to-set-up-these-materials
+how-to-use-this-guide
 reproducibility-setup
 setup
 git
