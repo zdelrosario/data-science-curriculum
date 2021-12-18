@@ -1,0 +1,287 @@
+---
+title: "US Income"
+author: "(Your name here)"
+date: 2020-
+output:
+  github_document:
+    toc: true
+---
+
+*Purpose*: We've been learning how to quantify uncertainty in estimates through the exercises; now its time to put those skills to use studying real data. In this challenge we'll use concepts like confidence intervals to help us make sense of census data.
+
+*Reading*:
+- [Using ACS Estimates and Margin of Error](https://www.census.gov/programs-surveys/acs/guidance/training-presentations/acs-moe.html) (Optional)
+- [Patterns and Causes of Uncertainty in the American Community Survey](https://www.sciencedirect.com/science/article/pii/S0143622813002518?casa_token=VddzQ1-spHMAAAAA:FTq92LXgiPVloJUVjnHs8Ma1HwvPigisAYtzfqaGbbRRwoknNq56Y2IzszmGgIGH4JAPzQN0) (Optional, particularly the *Uncertainty in surveys* section under the Introduction.)
+
+<!-- include-rubric -->
+# Grading Rubric
+<!-- -------------------------------------------------- -->
+
+Unlike exercises, **challenges will be graded**. The following rubrics define how you will be graded, both on an individual and team basis.
+
+## Individual
+<!-- ------------------------- -->
+
+| Category | Needs Improvement | Satisfactory |
+|----------|----------------|--------------|
+| Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
+| Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
+| Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
+| Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
+
+## Team
+<!-- ------------------------- -->
+
+| Category | Needs Improvement | Satisfactory |
+|----------|----------------|--------------|
+| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
+| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
+| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
+
+## Due Date
+<!-- ------------------------- -->
+
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+
+# Setup
+<!-- ----------------------------------------------------------------------- -->
+
+```{r setup}
+library(tidyverse)
+```
+
+__q1__ Load the population data from c06; simply replace `filename_pop` below.
+
+```{r q1-task}
+## TODO: Give the filename for your copy of Table B01003
+filename_pop <- NA_character_
+
+## NOTE: No need to edit
+df_pop <-
+  read_csv(
+    filename_pop,
+    skip = 2,
+    col_names = c(
+      "id",
+      "geographic_area_name",
+      "population_estimate",
+      "population_moe"
+    )
+  )
+
+df_pop
+```
+
+You might wonder why the `Margin of Error` in the population estimates is listed as `*****`. From the [documentation (PDF link)](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwj81Omy16TrAhXsguAKHTzKDQEQFjABegQIBxAB&url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Ftech_docs%2Faccuracy%2FMultiyearACSAccuracyofData2018.pdf%3F&usg=AOvVaw2TOrVuBDlkDI2gde6ugce_) for the ACS:
+
+> If the margin of error is displayed as ‘*****’ (five asterisks), the estimate has been controlled to be equal to a fixed value and so it has no sampling error. A standard error of zero should be used for these controlled estimates when completing calculations, such as those in the following section.
+
+This means that for cases listed as `*****` the US Census Bureau recommends treating the margin of error (and thus standard error) as zero.
+
+__q2__ Obtain median income data from the Census Bureau:
+
+- `Filter > Topics > Income and Poverty > Income and Poverty`
+- `Filter > Geography > County > All counties in United States`
+- Look for `Median Income in the Past 12 Months` (Table S1903)
+- Download the 5-year ACS estimates; save to your `data` folder and add the filename below.
+
+```{r q2-task}
+## TODO: Give the filename for your copy of Table S1903
+filename_income <- NA_character_
+
+## NOTE: No need to edit
+df_income <-
+  read_csv(filename_income, skip = 1)
+df_income
+```
+
+Use the following test to check that you downloaded the correct file:
+
+```{r q2-tests}
+## NOTE: No need to edit, use to check you got the right file.
+assertthat::assert_that(
+  df_income %>%
+    filter(id == "0500000US01001") %>%
+    pull(`Estimate!!Percent Distribution!!FAMILY INCOME BY FAMILY SIZE!!2-person families`)
+  == 45.6
+)
+
+print("Well done!")
+```
+
+
+This dataset is in desperate need of some *tidying*. To simplify the task, we'll start by considering the `\\d-person families` columns first.
+
+__q3__ Tidy the `df_income` dataset by completing the code below. Pivot and rename the columns to arrive at the column names `id, geographic_area_name, category, income_estimate, income_moe`.
+
+```{r q3-task}
+  glimpse()
+```
+
+Use the following tests to check your work:
+
+```{r q3-tests}
+## NOTE: No need to edit
+assertthat::assert_that(setequal(
+  names(df_q3),
+  c("id", "geographic_area_name", "category", "income_estimate", "income_moe")
+))
+
+assertthat::assert_that(
+  df_q3 %>%
+    filter(id == "0500000US01001", category == "2-person families") %>%
+    pull(income_moe)
+  == 6663
+)
+
+print("Nice!")
+```
+
+
+The data gives finite values for the Margin of Error, which is closely related to the Standard Error. The Census Bureau documentation gives the following relationship between Margin of Error and Standard Error:
+
+$$\text{MOE} = 1.645 \times \text{SE}.$$
+
+__q4__ Convert the margin of error to standard error. Additionally, compute a 99% confidence interval on income, and compute the coefficient of variation `CV`. Provide these columns with the names `income_SE, income_lo, income_hi, income_CV`.
+
+```{r q4-task}
+
+df_q4
+```
+
+Use the following tests to check your work:
+
+```{r q4-tests}
+## NOTE: No need to edit
+assertthat::assert_that(setequal(
+  names(df_q4),
+  c("id", "geographic_area_name", "category", "income_estimate", "income_moe",
+    "income_SE", "income_lo", "income_hi", "income_CV")
+))
+
+assertthat::assert_that(
+  abs(
+    df_q4 %>%
+    filter(id == "0500000US01001", category == "2-person families") %>%
+    pull(income_SE) - 4050.456
+  ) / 4050.456 < 1e-3
+)
+
+assertthat::assert_that(
+  abs(
+    df_q4 %>%
+    filter(id == "0500000US01001", category == "2-person families") %>%
+    pull(income_lo) - 54513.72
+  ) / 54513.72 < 1e-3
+)
+
+assertthat::assert_that(
+  abs(
+    df_q4 %>%
+    filter(id == "0500000US01001", category == "2-person families") %>%
+    pull(income_hi) - 75380.28
+  ) / 75380.28 < 1e-3
+)
+
+assertthat::assert_that(
+  abs(
+    df_q4 %>%
+    filter(id == "0500000US01001", category == "2-person families") %>%
+    pull(income_CV) - 0.06236556
+  ) / 0.06236556 < 1e-3
+)
+
+print("Nice!")
+```
+
+
+One last wrangling step: We need to join the two datasets so we can compare population with income.
+
+__q5__ Join `df_q4` and `df_pop`.
+
+```{r q5-task}
+## TODO: Join df_q4 and df_pop by the appropriate column
+
+df_data
+```
+
+# Analysis
+<!-- ----------------------------------------------------------------------- -->
+
+We now have both estimates and confidence intervals for `\\d-person families`. Now we can compare cases with quantified uncertainties: Let's practice!
+
+__q6__ Study the following graph, making sure to note what you can *and can't* conclude based on the estimates and confidence intervals. Document your observations below and answer the questions.
+
+```{r q6-task}
+## NOTE: No need to edit; run and inspect
+wid <- 0.5
+
+df_data %>%
+  filter(str_detect(geographic_area_name, "Massachusetts")) %>%
+  mutate(
+    county = str_remove(geographic_area_name, " County,.*$"),
+    county = fct_reorder(county, income_estimate)
+  ) %>%
+
+  ggplot(aes(county, income_estimate, color = category)) +
+  geom_errorbar(
+    aes(ymin = income_lo, ymax = income_hi),
+    position = position_dodge(width = wid)
+  ) +
+  geom_point(position = position_dodge(width = wid)) +
+
+  coord_flip() +
+  labs(
+    x = "County",
+    y = "Median Household Income"
+  )
+```
+
+**Observations**:
+
+- Document your observations here.
+- Can you confidently distinguish between household incomes in Suffolk county? Why or why not?
+- Which counties have the widest confidence intervals?
+
+In the next task you'll investigate the relationship between population and uncertainty.
+
+__q7__ Plot the standard error against population for all counties. Create a visual that effectively highlights the trends in the data. Answer the questions under *observations* below.
+
+*Hint*: Remember that standard error is a function of *both* variability (e.g. variance) and sample size.
+
+```{r q7-task}
+```
+
+**Observations**:
+
+- What *overall* trend do you see between `SE` and population? Why might this trend exist?
+- What does this *overall* trend tell you about the relative ease of studying small vs large counties?
+
+# Going Further
+<!-- ----------------------------------------------------------------------- -->
+
+Now it's your turn! You have income data for every county in the United States: Pose your own question and try to answer it with the data.
+
+__q8__ Pose your own question about the data. Create a visualization (or table) here, and document your observations.
+
+```{r q8-task}
+## TODO: Pose and answer your own question about the data
+```
+
+**Observations**:
+
+- Document your observations here
+
+Ideas:
+
+- Compare trends across counties that are relevant to you; e.g. places you've lived, places you've been, places in the US that are interesting to you.
+- In q3 we tidied the median `\\d-person families` columns only.
+  - Tidy the other median columns to learn about other people groups.
+  - Tidy the percentage columns to learn about how many households of each category are in each county.
+- Your own idea!
+
+# References
+<!-- ----------------------------------------------------------------------- -->
+
+[1] Spielman SE, Folch DC, Nagle NN (2014) Patterns and causes of uncertainty in the American Community Survey. Applied Geography 46: 147–157. pmid:25404783 [link](https://www.sciencedirect.com/science/article/pii/S0143622813002518?casa_token=VddzQ1-spHMAAAAA:FTq92LXgiPVloJUVjnHs8Ma1HwvPigisAYtzfqaGbbRRwoknNqZ6Y2IzszmGgIGH4JAPzQN0)
