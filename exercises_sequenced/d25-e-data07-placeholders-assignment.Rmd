@@ -1,0 +1,76 @@
+---
+title: "Data: Pipes and Placeholders"
+author: Zachary del Rosario
+date: 2020-06-24
+output: github_document
+time: 15
+reading: 10
+---
+
+# Data: Pipes and Placeholders
+
+*Purpose*: The pipe `%>%` has additional functionality than what we've used so far. In this exercise we'll learn about the *placeholder* `.`, which will give us more control over how data flows between our functions.
+
+*Reading*: [The Pipe](https://magrittr.tidyverse.org/reference/pipe.html)
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+### __q1__ Re-write the following code to use the *placeholder*.
+
+*Hint*: This may feel very simple, in which case good. This is not a trick question.
+
+```{r q1-task}
+## NOTE: Re-write this code to use the placeholder
+diamonds %>% glimpse()
+```
+
+### __q2__ Fix the lambda expression
+
+The reading discussed *Using lambda expressions with `%>%`*; use this part of the reading to explain why the following code fails. Then fix the code so it runs without error.
+
+```{r q2-task}
+## TASK: Uncomment and run this code; explain
+##       why it fails and fix it.
+# 2 %>%
+#   . * .
+
+```
+
+### __q3__ Re-write the following code using the placeholder `.` operator to simplify the second filter.
+
+*Hint*: You should be able to simplify the second call to `filter` down to just
+`filter(cut == "Fair")`.
+
+```{r q3-task}
+diamonds %>%
+  filter(carat <= 0.3) %>%
+
+  ggplot(aes(carat, price)) +
+  geom_point() +
+  geom_point(
+    ## TODO: Re-write this section
+    data = diamonds %>%
+      filter(
+        carat <= 0.3,
+        cut == "Fair"
+      ),
+    color = "red"
+  )
+```
+
+The placeholder even works at "later" points in a pipeline. We can use it to
+help simplify code, as you did above.
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data07-placeholders-assignment.Rmd).

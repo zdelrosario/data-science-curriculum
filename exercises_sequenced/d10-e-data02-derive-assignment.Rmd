@@ -1,0 +1,175 @@
+---
+title: "Data: Deriving Quantities"
+author: Zachary del Rosario
+date: 2020-05-07
+output: github_document
+time: 15
+reading: 60
+---
+
+# Data: Deriving Quantities
+
+*Purpose*: Often our data will not tell us *directly* what we want to know; in
+these cases we need to *derive* new quantities from our data. In this exercise,
+we'll work with `mutate()` to create new columns by operating on existing
+variables, and use `group_by()` with `summarize()` to compute aggregate
+statistics (summaries!) of our data.
+
+*Reading*: [Derive Information with dplyr](https://rstudio.cloud/learn/primers/2.3)
+*Topics*: (All topics, except *Challenges*)
+*Reading Time*: ~60 minutes
+
+*Note*: I'm considering splitting this exercise into two parts; I welcome
+feedback on this idea.
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+### __q1__ What is the difference between these two versions? How are they the same? How are they different?
+
+```{r q1-task}
+## Version 1
+filter(diamonds, cut == "Ideal")
+## Version 2
+diamonds %>% filter(cut == "Ideal")
+```
+
+
+The reading mentioned various kinds of *summary functions*, which are summarized
+in the table below:
+
+## Summary Functions
+
+| Type | Functions |
+| ---- | --------- |
+| Location | `mean(x), median(x), quantile(x, p), min(x), max(x)` |
+| Spread | `sd(x), var(x), IQR(x), mad(x)` |
+| Position | `first(x), nth(x, n), last(x)` |
+| Counts | `n_distinct(x), n()` |
+| Logical | `sum(!is.na(x)), mean(y == 0)` |
+
+### __q2__ Using `summarize()` and a logical summary function, determine the number of rows with `Ideal` `cut`. Save this value to a column called `n_ideal`.
+
+```{r q2-task}
+df_q2
+```
+
+The following test will verify that your `df_q2` is correct:
+
+```{r q2-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+  assertthat::are_equal(
+    df_q2 %>% pull(n_ideal),
+    21551
+  )
+)
+print("Great job!")
+```
+
+### __q3__ The function `group_by()` modifies how other dplyr verbs function. Uncomment the `group_by()` below, and describe how the result changes.
+
+```{r q3-task}
+diamonds %>%
+  ## group_by(color, clarity) %>%
+  summarize(price = mean(price))
+```
+
+
+### Vectorized Functions
+
+| Type | Functions |
+| ---- | --------- |
+| Arithmetic ops. | `+, -, *, /, ^` |
+| Modular arith. | `%/%, %%` |
+| Logical comp. | `<, <=, >, >=, !=, ==` |
+| Logarithms | `log(x), log2(x), log10(x)` |
+| Offsets | `lead(x), lag(x)` |
+| Cumulants | `cumsum(x), cumprod(x), cummin(x), cummax(x), cummean(x)` |
+| Ranking | `min_rank(x), row_number(x), dense_rank(x), percent_rank(x), cume_dist(x), ntile(x)` |
+
+### __q4__ Comment on why the difference is so large.
+
+The `depth` variable is supposedly computed via `depth_computed = 100 * 2 * z /
+(x + y)`. Compute `diff = depth - depth_computed`: This is a measure of
+discrepancy between the given and computed depth. Additionally, compute the
+*coefficient of variation* `cov = sd(x) / mean(x)` for both `depth` and `diff`:
+This is a dimensionless measure of variation in a variable. Assign the resulting
+tibble to `df_q4`, and assign the appropriate values to `cov_depth` and
+`cov_diff`. Comment on the relative values of `cov_depth` and `cov_diff`; why is
+`cov_diff` so large?
+
+*Note*: Confusingly, the documentation for `diamonds` leaves out the factor of `100` in the computation of `depth`.
+
+```{r q4-task}
+## TODO: Compute the `cov_depth` and `cov_diff` and assign the result to df_q4
+df_q4 <-
+  diamonds
+df_q4
+```
+
+**Observations**
+
+- Comment on the relative values of `cov_depth` and `cov_diff`.
+- Why is `cov_diff` so large?
+
+The following test will verify that your `df_q4` is correct:
+
+```{r q4-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(abs(df_q4 %>% pull(cov_depth) - 0.02320057) < 1e-3)
+assertthat::assert_that(abs(df_q4 %>% pull(cov_diff) - 497.5585) < 1e-3)
+print("Nice!")
+```
+
+There is nonzero difference between `depth` and the computed `depth`; this
+raises some questions about how `depth` was actually computed! It's often a good
+idea to try to check derived quantities in your data, if possible. These can
+sometimes uncover errors in the data!
+
+### __q5__ Compute and observe
+
+Compute the `price_mean = mean(price)`, `price_sd = sd(price)`, and `price_cov =
+price_sd / price_mean` for each `cut` of diamond. What observations can you make
+about the various cuts? Do those observations match your expectations?
+
+```{r q5-task}
+## TODO: Assign result to df_q5
+df_q5
+```
+
+The following test will verify that your `df_q5` is correct:
+
+```{r q5-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+  assertthat::are_equal(
+    df_q5 %>%
+      select(cut, price_cov) %>%
+      mutate(price_cov = round(price_cov, digits = 3)),
+    tibble(
+      cut = c("Fair", "Good", "Very Good", "Premium", "Ideal"),
+      price_cov = c(0.817, 0.937, 0.988, 0.949, 1.101)
+    ) %>%
+    mutate(cut = fct_inorder(cut, ordered = TRUE))
+  )
+)
+print("Excellent!")
+```
+
+**Observations**:
+
+- Write your observations here!
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data02-derive-assignment.Rmd).

@@ -1,0 +1,83 @@
+---
+title: "Vis: Data Visualization Basics"
+author: Zach del Rosario
+date: 2020-05-03
+output: github_document
+time: 10
+reading: 30
+---
+
+# Vis: Data Visualization Basics
+
+*Purpose*: The most powerful way for us to learn about a dataset is to
+_visualize the data_. Throughout this class we will make extensive use of the
+_grammar of graphics_, a powerful graphical programming _grammar_ that will
+allow us to create just about any graph you can imagine!
+
+*Reading*: [Data Visualization Basics](https://rstudio.cloud/learn/primers/1.1). *Note*: In RStudio use `Ctrl + Click` (Mac `Command + Click`) to follow the link.
+*Topics*: `Welcome`, `A code template`, `Aesthetic mappings`.
+*Reading Time*: ~ 30 minutes
+
+
+```{r setup, include=FALSE}
+library(tidyverse)
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### __q1__ Inspect the `diamonds` dataset. What do the `cut`, `color`, and `clarity` variables mean?
+
+*Hint*: We learned how to inspect a dataset in `e-data-00-basics`!
+
+```{r q1-task, eval=FALSE}
+```
+
+### __q2__ Use your "standard checks" to determine what variables the dataset has.
+
+
+Now that we have the list of variables in the dataset, we know what we can visualize!
+
+### __q3__ Using `ggplot`, visualize `price` vs `carat` with points. What trend do
+you observe?
+
+*Hint*: Usually the language `y` vs `x` refers to the `vertical axis` vs
+`horizontal axis`. This is the opposite order from the way we often specify `x,
+y` pairs. Language is hard!
+
+```{r q3-task}
+## TODO: Complete this code
+ggplot(diamonds)
+```
+
+**Observations**:
+
+- (Write your observations here!)
+
+## A note on *aesthetics*
+
+The function `aes()` is short for *aesthetics*. Aesthetics in ggplot are the
+mapping of variables in a dataframe to visual elements in the graph. For
+instance, in the plot above you assigned `carat` to the `x` aesthetic, and
+`price` to the `y` aesthetic. But there are *many more* aesthetics you can set,
+some of which vary based on the `geom_` you are using to visualize. The next
+question will explore this idea more.
+
+### __q4__ Create a new graph to visualize `price`, `carat`, and `cut`
+simultaneously.
+
+*Hint*: Remember that you can add additional aesthetic mappings in `aes()`. Some options include `size`, `color`, and `shape`.
+
+```{r q4-task}
+## TODO: Complete this code
+ggplot(diamonds)
+```
+
+**Observations**:
+
+- (Write your observations here!)
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-vis00-basics-assignment.Rmd).

@@ -1,0 +1,335 @@
+---
+title: "Stats: Populations and Estimation"
+author: Zach del Rosario
+date: 2020-06-23
+output: github_document
+time: 50
+reading: 10
+---
+
+# Stats: Populations and Estimation
+
+*Purpose*: Often, our data do not include all the facts that are relevant to the decision we are trying to make. Statistics is the science of determining the conclusions we can confidently make, based on our available data. To make sense of this, we need to understand the distinction between a *sample* and a *population*, and how this distinction leads to *estimation*.
+
+*Reading*: [Statistician proves that statistics are boring](https://towardsdatascience.com/statistician-proves-that-statistics-are-boring-4fc22c95031b)
+
+*Topics*: Population, sample, estimate, sampling distribution, standard error
+
+```{r setup}
+library(tidyverse)
+library(nycflights13)
+```
+
+When using descriptive statistics to help us answer a question, there are (at least) two questions we should ask ourselves:
+
+1. Does the statistic we chose relate to the problem we care about?
+2. Do we have all the facts we need (the population) or do we have limited information (a sample from some well-defined population)?
+
+We already discussed (1) by learning about descriptive statistics and their meaning. Now we'll discuss (2) by learning the distinction between populations and samples.
+
+## Population
+<!-- -------------------------------------------------- -->
+
+Let's start by looking at an artificial population:
+
+```{r ex-population-normal}
+## NOTE: No need to change this!
+tibble(z = seq(-4, +4, length.out = 500)) %>%
+  mutate(d = dnorm(z)) %>%
+
+  ggplot(aes(z, d)) +
+  geom_line()
+```
+
+Here our population is an infinite pool of observations all following the standard normal distribution. If this sounds abstract and unrealistic, good! Remember that the normal distribution (and indeed all named distributions) are *abstract, mathematical objects* that we use to model real phenomena.
+
+Remember that a *sample* is a set of observations "drawn" from the population. The following is an example of three different samples from the same normal distribution, with different sample sizes.
+
+```{r ex-samples-normal}
+## NOTE: No need to change this!
+set.seed(101)
+
+tibble(z = seq(-4, +4, length.out = 500)) %>%
+  mutate(d = dnorm(z)) %>%
+
+  ggplot() +
+  geom_histogram(
+    data = map_dfr(
+      c(10, 1e2, 1e3),
+      function(n) {tibble(Z = rnorm(n), n = n)}
+     ),
+    mapping = aes(Z, y = ..density.., color = "Sample")
+  ) +
+  geom_line(aes(z, d, color = "Population")) +
+  facet_grid(~n)
+```
+
+As we've seen before, as we draw more samples, their histogram tends to look more like the underlying population.
+
+Now let's look at a real example of a population:
+
+```{r ex-population-flights}
+## NOTE: No need to change this!
+flights %>%
+  ggplot() +
+  geom_freqpoly(aes(air_time, color = "(All)")) +
+  geom_freqpoly(aes(air_time, color = origin))
+```
+
+This is the set of **all** flights originating from `EWR`, `LGA`, and `JFK` in 2013, in terms of their `air_time`. Note that this distribution is decidedly *not normal*; we would be foolish to try to model it as such!
+
+As we saw in the reading, the choice of the "correct" population is not an exercise in math. This is a decision that you must make based on the problem you are trying to solve. For instance, if we care about all flights into the NYC area, then the `(All)` population is correct. But if we care only about flights out of `LGA`, the population is different. No amount of math can save you if you can't pick the appropriate population for your problem!
+
+When your data are not the entire population, any statistic you compute is an *estimate*.
+
+## Estimates
+<!-- -------------------------------------------------- -->
+
+When we don't have all the facts and instead only have a sample, we perform *estimation* to extrapolate from our available data to the population we care about.
+
+The following code draws multiple samples from a standard normal of size `n_observations`, and does so `n_samples` times. We'll visualize these data in a later chunk.
+
+```{r compute-samples}
+## NOTE: No need to change this!
+n_observations <- 3
+n_samples <- 5e3
+
+df_sample <-
+  map_dfr(
+    1:n_samples,
+    function(id) {
+      tibble(
+        Z = rnorm(n_observations),
+        id = id
+      )
+    }
+  )
+```
+
+Some terminology:
+
+- We call a statistic of a population a *population statistic*; for instance, the population mean. A population statistic is also called a *parameter*.
+- We call a statistics of a sample a *sample statistic*; for instance, the sample mean. A sample statistic is also called an *estimate*.
+
+The chunk `compute-samples` generated `n_samples = 5e3` of `n_observations = 3` each. You can think of each sample as an "alternative universe" where we happened to pick `3` particular values. The following chunk visualizes just the first few samples:
+
+```{r vis-samples}
+df_sample %>%
+  filter(id <= 6) %>%
+
+  ggplot(aes(Z, "")) +
+  geom_point() +
+  facet_grid(id ~ .) +
+  labs(
+    x = "Realized Values",
+    y = "Samples"
+  )
+```
+
+Every one of these samples has its own sample mean; let's add that as an additional point:
+
+```{r vis-samples-wmean}
+df_sample %>%
+  filter(id <= 6) %>%
+
+  ggplot(aes(Z, "")) +
+  geom_point() +
+  geom_point(
+    data = . %>% group_by(id) %>% summarize(Z = mean(Z)),
+    mapping = aes(color = "Sample Mean"),
+    size = 4
+  ) +
+  scale_color_discrete(name = "") +
+  theme(legend.position = "bottom") +
+  facet_grid(id ~ .) +
+  labs(
+    x = "Realized Values",
+    y = "Samples"
+  )
+```
+
+Thus, there is a "red dot" associated with each of the 5,000 samples. Let's visualize the individual sample mean values as a histogram:
+
+```{r mean-estimates-vis}
+## NOTE: No need to change this!
+df_sample %>%
+  group_by(id) %>%
+  summarize(mean = mean(Z)) %>%
+
+  ggplot(aes(mean)) +
+  geom_histogram() +
+  geom_vline(xintercept = 0, linetype = 2) +
+  labs(
+    x = "Sample Mean"
+  )
+```
+
+Remember that the standard normal has population mean zero (vertical line); the distribution we see here is of the sample mean values. These results indicate that we frequently land near zero (the true population value) but we obtain values as wide as `-2` and `+2`. This is because we have limited data from our population, and our estimate is not guaranteed to be close to its population value. As we gather more data, we'll tend to produce better estimates.
+
+To illustrate the effects of more data, I use a little mathematical theory to quickly visualize estimates of the mean at different sample sizes.
+
+```{r mean-estimates-converge}
+## NOTE: No need to change this!
+map_dfr(
+  c(3, 12, 48, 192),
+  function(n) {
+    tibble(z = seq(-4, +4, length.out = 500)) %>%
+      mutate(
+        d = dnorm(z, sd = 1 / sqrt(n)),
+        n = n
+      )
+  }
+) %>%
+  ggplot() +
+  geom_line(aes(z, d, color = as.factor(n), group = as.factor(n))) +
+  scale_color_discrete(name = "Samples") +
+  labs(
+    x = "Estimated Mean",
+    title = "Sampling Distributions: Estimated Mean",
+    caption = "Population: Normal"
+  )
+```
+
+As we might expect, the distribution of estimated means concentrates on the true value of zero as we increase the sample size $n$. As we gather more data, our estimate has a greater probability of landing close to the true value.
+
+The distribution for an estimate is called a *sampling distribution*; the visualization above is a lineup of sampling distributions for the estimated mean. It happens that all of those distributions are normal. However, the sampling distribution is *not guaranteed* to look like the underlying population. For example, let's look at the sample standard deviation.
+
+```{r sd-estimates-vis}
+## NOTE: No need to change this!
+df_sample %>%
+  group_by(id) %>%
+  summarize(sd = sd(Z)) %>%
+
+  ggplot(aes(sd)) +
+  geom_histogram() +
+  labs(
+    x = "Estimated Standard Deviation"
+  )
+```
+
+Note that this doesn't look much like a normal distribution. This should make some intuitive sense: The standard deviation is guaranteed to be non-negative, so it can't possibly follow a normal distribution, which can take values anywhere from $-\infty$ to $+\infty$.
+
+### __q1__ Modify the code below to draw samples from a uniform distribution (rather than a normal). Describe (in words) what the resulting sampling distribution looks like. Does the sampling distribution look like a normal distribution?
+
+```{r q1-task}
+## TASK: Modify the code below to sample from a uniform distribution
+df_samp_unif <-
+  map_dfr(
+    1:n_samples,
+    function(id) {
+      tibble(
+        Z = rnorm(n_observations),
+        id = id
+      )
+    }
+  )
+df_samp_unif %>%
+  group_by(id) %>%
+  summarize(stat = mean(Z)) %>%
+
+  ggplot(aes(stat)) +
+  geom_histogram() +
+  labs(
+    x = "Estimated Mean",
+    title = "Sampling Distribution: Estimated Mean",
+    caption = "Population: Uniform"
+  )
+```
+
+**Observations**:
+
+- (Describe the shape of the sampling distribution)
+- The sampling distribution is concentrated around the mean of `0.5`.
+- The sampling distribution stretches from `0` to `1`.
+- The sampling distribution looks roughly normal in shape
+
+## Intermediate conclusion
+<!-- ------------------------- -->
+
+A *sampling distribution* is the distribution for a *sample estimate*. It is induced by the population, but is also a function of the specific statistic we're considering. We will use statistics to help make sense of sampling distributions.
+
+## Standard Error
+<!-- ------------------------- -->
+
+The standard deviation of a sampling distribution gets a special name: the [*standard error*](https://en.wikipedia.org/wiki/Sampling_distribution#Standard_error). The standard error of an estimated mean is
+
+$$\text{SE} = \sigma / \sqrt{n}.$$
+
+This is a formula worth memorizing; it implies that doubling the precision of an estimated mean requires *quadrupling* the sample size. It also tells us that a more variable population (larger $\sigma$) will make estimation more difficult (larger $\text{SE}$).
+
+The standard error is a convenient way to summarize the accuracy of an estimation setting; the larger our standard error, the less accurate our estimates will tend to be.
+
+### __q2__ Compute the standard error for the sample mean under the following settings. Which setting will tend to produce more accurate estimates?
+
+```{r q2-task}
+## TASK: Compute the standard error
+se_q2.1 <- NA_real_ # Population: norm(mean = 2, sd = 4), samples: n = 16
+se_q2.2 <- NA_real_ # Population: norm(mean =-2, sd = 8), samples: n = 32
+```
+
+Use the following tests to check your work.
+
+```{r q2-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(assertthat::are_equal(se_q2.1, 1))
+assertthat::assert_that(assertthat::are_equal(se_q2.2, sqrt(2)))
+print("Nice!")
+```
+
+**Observations**:
+
+- Which setting---q2.1 or q2.2---will tend to produce more accurate estimates? Why?
+
+Two notes:
+
+1. Note the language above: The standard error tells us about *settings* (population $\sigma$ and sample count $n$), not *estimates* themselves. The accuracy of *an individual estimate* would depend on $\hat{\mu} - \mu$, but we in practice never know $\mu$ exactly. The standard error will tell us how variable $\hat{\mu}$ will be on average, but does not give us any information about the specific value of $\hat{\mu} - \mu$ for any given estimate $\hat{\mu}$.
+
+The standard error gives us an idea of how accurate our estimate will tend to be, but due to randomness we don't know the true accuracy of our estimate.
+
+2. Note that we used the *population* standard deviation above; in practice we'll only have a *sample* standard deviation. In this case we can use a *plug-in* estimate for the standard error
+
+$$\hat{\text{SE}} = s / \sqrt{n},$$
+
+where the hat on $\text{SE}$ denotes that this quantity is an estimate, and $s$ is the sample standard deviation.
+
+### __q3__ Compute the sample standard error of the sample mean for the sample below. Compare your estimate against the true value `se_q2.1`. State how similar or different the values are, and explain the difference.
+
+```{r q3-task}
+## NOTE: No need to change this!
+set.seed(101)
+n_sample <- 20
+z_sample <- rnorm(n = n_sample, mean = 2, sd = 4)
+## TASK: Compute the sample standard error for `z_sample`
+se_sample <- NA_real_
+```
+
+Use the following tests to check your work.
+
+```{r q3-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+              assertthat::are_equal(
+                            se_sample,
+                            sd(z_sample) / sqrt(n_sample)
+                          )
+            )
+print("Well done!")
+```
+
+**Observations**:
+
+- How close is your estimate `se_sample` to the true `se_q2.1`?
+- What accounts for the difference between these values?
+
+## Fast Summary
+<!-- -------------------------------------------------- -->
+
+The *population* is the set of all things we care about. No amount of math can help you here: *You* are responsible for defining your population. If we have the whole population, we don't need statistics!
+
+When we *don't* have all the data from the population, we need to *estimate*. The combined effects of random sampling, the shape of the population, and our chosen statistic all give rise to a *sampling distribution* for our estimated statistic. The standard deviation of the sampling distribution is called the *standard error*; it is a measure of accuracy of the *sampling procedure*, not the estimate itself.
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-stat04-population-assignment.Rmd).

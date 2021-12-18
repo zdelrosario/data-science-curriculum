@@ -1,0 +1,195 @@
+---
+title: "Model: Variability Quadrants"
+author: Zachary del Rosario
+date: 2021-08-06
+output: pdf_document
+time: 40
+reading: 30
+prerequisites:
+  - e-stat03-descriptive
+---
+
+# Model: Variability Quadrants
+
+*Purpose*: All real data have variability: repeated measurements of "the same" quantity tend to result in different values. To help you recognize different kinds of variability and choose a reasonable analysis procedure based on the kind of variability, you will learn about different *sources* of variability in this exercise.
+
+*Reading*: [Conceptual Tools for Handling Uncertainty](https://drive.google.com/file/d/1FCvHiag25zqN6WdKoisaMUh35pSQU-0M/view?usp=sharing) (a draft chapter from a textbook I'm writing)
+
+```{r library}
+## Note: No need to edit this chunk!
+library(tidyverse)
+```
+
+## Variability
+
+As we've seen in this course, real data exhibit *variability*; that is, repeated measurements of "the same" quantity that result in different values. Variability can arise due to a variety of reasons, and different kinds of variability should be analyzed in different ways. To help make this determination, we're going to study a theoretical framework for variability.
+
+## The Cause-Source Quadrants
+
+As descrinbed in the reading, the *cause-source quadrants* organize variability into four distinct categories. Today, we're going to focus on the *source* axis, and limit our attention to *chance causes*.
+
+![Variability quadrants](./images/cause-source-quadrants.png)
+
+- *Cause* is an idea from statistical quality control (manufacturing); a *chance cause* is modeled as random, while an *assignable cause* is thought to be traceable and preventable.
+- *Source* is an idea from statistics education theory; this concept is explained further below.
+
+## Real vs Induced Source
+
+The idea of *source* can only be understood in the distinction between a *scopus* and a *measurement*: The *scopus* is the quantity that we are seeking to study, while the *measurement* is a possibly-corrupted version of our scopus. The key insight is that **variability can occur both in the scopus value, and in the measurement**.
+
+![Variability quadrants](./images/noise-v-deviation.png)
+
+As a simple example: based on our current understanding of physics, the speed of light `c` is a [constant value](https://en.wikipedia.org/wiki/Speed_of_light). Therefore, any variability we see in measurements of `c` are understood to be *induced variability*; real variability in `c` is not considered to be possible.
+
+Conversely, our current understanding of physics is that quantum phenomena are [fundamentally unpredictable](https://en.wikipedia.org/wiki/Quantum_mechanics), and can only be described in a statistical sense. This means that quantum phenomena exhibit real variability.
+
+Other physical quantities exhibit both real and induced variability. Since the concept of *source* relies on a choice of scopus, the only way we can make progress with this concept is to consider a specific scenario in detail.
+
+## Manufacturing structural steel components
+
+*The Context*: A manufacturer is producing cast steel parts for a landing gear. The part in question takes a heavy load, and if it fails it will disable the aircraft on the ground. These parts will be manufactured in bulk; approximately 500 will be made and installed in commercial aircraft that will operate for decades.
+
+*The Scopus*: The strength of each steel component---as-manufactured---will ultimately determine whether each aircraft is safe. As we learned in `c08-structures`, a structure is safe if its applied stress is less than its strength. Therefore, a smaller material strength is a more conservative value for design purposes.
+
+## Scenarios
+
+### __q1__ Imagine the manufacturer selects one part and performs multiple non-destructive tensile tests on that single part, under similar conditions. The measured elasticity from each test is slightly different. Is this variability real or induced?
+
+- real or induced?
+- (Why?)
+
+### __q2__ Imagine the manufacturer selects multiple parts and---for each part---performs multiple non-destructive tensile tests, all under similar conditions. The measured elasticity values for each part are averaged to provide a more reliable estimate for each part. Upon comparing the parts, each averaged value is fairly different. Is this variability real or induced?
+
+- real or induced?
+- (Why?)
+
+### __q3__ Now the manufacturer selects multiple parts and performs a destructive tensile test to characterize the strength of each part, with tests carried out under similar conditions. The measured strength values exhibit a fair amount of variability. Is this variability real or induced?
+
+- real or induced?
+- (Why?)
+
+## Analyzing Data
+
+The following generates data with both *noise* and *deviation*
+
+```{r gen-data}
+set.seed(101)
+df_meas <-
+  map_dfr(
+    1:30,
+    function(i) {
+      Y_deviation <- rlnorm(n = 1, meanlog = 2)
+      Y_noise <- rnorm(n = 5, sd = 1)
+
+      tibble(Y = Y_deviation + Y_noise) %>%
+        mutate(id_sample = i, id_meas = row_number())
+    }
+  )
+```
+
+`id_sample` - represents an individual part
+`id_meas` - represents an individual measurement, with multiple carried out on each part
+`Y` - an individual measurement, identified by `id_sample` and `id_meas`
+
+If we make a simple histogram, we can see that the measured value `Y` is highly variable:
+
+```{r vis-data}
+df_meas %>%
+  ggplot(aes(Y)) +
+  geom_histogram(bins = 30)
+```
+
+However, these data exhibit multiple *sources* of variability. The following questions will help you learn how to analyze data in light of this mixed variability.
+
+### __q4__ Inspect the following graph. Answer the questions under *observations* below.
+
+```{r q4-task}
+## NOTE: No need to edit; run and inspect
+df_meas %>%
+  ggplot(aes(id_sample, Y)) +
+  geom_point(
+    data = . %>%
+      group_by(id_sample) %>%
+      summarize(Y = mean(Y)),
+    color = "red",
+    size = 1
+  ) +
+  geom_point(size = 0.2) +
+  theme_minimal()
+```
+
+*Observations*
+- Which is larger: The variability due to noise, or the variability due to deviation?
+  - (Your response here)
+
+### __q5__ Imagine `Y` represents the measured strength of the cast steel. Would it be safe to simply average all of the values and use that as the material strength for design?
+
+- (Your response here)
+
+### __q6__ Compute the `0.1` quantile of the `Y` measurements. Would this be a conservative value to use as a material strength for design?
+
+```{r q6-task}
+## TODO: Compute the 0.01 quantile of the `Y` values; complete the code below
+# For comparison, here's the mean of the data
+Y_mean <-
+  df_meas %>%
+  summarize(Y_mean = mean(Y)) %>%
+  pull(Y_mean)
+
+Y_lo <- NA_real_ # Complete the quantile calculation
+
+# Compare the values
+Y_mean
+Y_lo
+```
+
+Use the following to check your work.
+
+```{r q6-tests}
+## NO NEED TO EDIT; use this to check your work
+assertthat::assert_that(abs(as.numeric(Y_lo) - 2.0117) < 1e-3)
+
+print("Nice!")
+```
+
+*Observations*
+
+- How does `Y_lo` compare with `Y_mean`?
+  - (Your response here)
+- Would the 10% quantile `Y_lo` be a conservative material strength for design?
+  - (Your response here)
+
+### __q7__ The following code reduces the variability due to noise before computing the quantile. Run the code below, and answer the questions under *Observations* below.
+
+```{r q7-task}
+## NOTE: No need to edit; run and answer the questions below
+Y_lo_improved <-
+  df_meas %>%
+  ## Take average within each sample's measurements
+  group_by(id_sample) %>%
+  summarize(Y_sample = mean(Y)) %>%
+  ## Take quantile over all the samples
+  summarize(Y_lo = quantile(Y_sample, p = 0.1)) %>%
+  pull(Y_lo)
+Y_lo_improved
+
+```
+
+*Observations*
+
+- Is the new value `Y_lo_improved` more or less conservative than the original `Y_lo`?
+  - (Your response here)
+- What features about the data collection / dataset `df_meas` enable the calculation of `Y_lo_improved`?
+  - (Your response here)
+- Measuring the strength of a part is a *destructive* experiment. Would it be possible to gather a dataset like `df_meas` in reality?
+  - (Your response here)
+- For what real properties (material, or otherwise) would it be possible to collect data like `df_meas`?
+  - (Your response here)
+
+*Aside*: This kind of statistical experimental design is sometimes called a [nested design](https://online.stat.psu.edu/stat503/lesson/14/14.1).
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-model00-source-assignment.Rmd).

@@ -1,0 +1,103 @@
+---
+title: "Vis: Improving Graphs"
+author: Zach del Rosario
+date: 2020-08-06
+output: github_document
+time: 40
+reading: 0
+---
+
+# Vis: Improving Graphs
+
+*Purpose*: Creating a *presentation-quality* graph is an *iterative exercise*. There are many different ways to show the same data, some of which are more effective for communication than others. Let's return to the ideas from "How Humans See Data" and use them to improve upon some graphs: This will give you practice iterating on visuals.
+
+*Reading*: [How Humans See Data](https://www.youtube.com/watch?v=fSgEeI2Xpdc&list=PLluqivwOH1ouKkbM0c6x-g7DQnXF0UmC0&index=37&t=0s) (Video from prior exercise, for reference)
+
+```{r setup}
+library(tidyverse)
+```
+
+## Improve these graphs!
+<!-- -------------------------------------------------- -->
+
+Using the ideas from the reading (video), state some issues with the following graphs. Remember the *visual hierarchy*:
+
+1. Position along a common scale
+2. Position on identical but nonaligned scales
+3. Length
+4. Angle; Slope (With slope not too close to 0, $\pi/2$, or $\pi$.)
+5. Area
+6. Volume; Density; Color saturation
+7. Color hue
+
+### __q1__ Use concepts from the reading to improve the following graph. *Make sure your graph shows all the same variables*, no more and no fewer.
+
+```{r q1-vis}
+## NOTE: No need to edit; run and inspect
+mpg %>%
+  ggplot(aes(manufacturer, cty)) +
+  geom_boxplot() +
+  coord_flip()
+```
+
+Create your improved graph here
+
+```{r q1-task}
+## TODO: Create an improved version of the graph above
+```
+
+### __q2__ Use concepts from the reading to improve the following graph. *Make sure your graph shows all the same variables*, no more and no fewer.
+
+```{r q2-vis}
+## NOTE: No need to edit; run and inspect
+as_tibble(mtcars) %>%
+  mutate(model = rownames(mtcars)) %>%
+
+  ggplot(aes(x = "", y = "", size = mpg)) +
+  geom_point() +
+  facet_wrap(~model)
+```
+
+Create your improved graph here
+
+```{r q2-task}
+## TODO: Create an improved version of the graph above
+```
+
+### __q3__ Use concepts from the reading to improve the following graph. *Make sure your graph shows all the same variables*, no more and no fewer.
+
+```{r q3-vis}
+## NOTE: No need to edit; run and inspect
+diamonds %>%
+  ggplot(aes(clarity, fill = cut)) +
+  geom_bar()
+```
+
+Create your improved graph here
+
+```{r q3-task}
+## TODO: Create an improved version of the graph above
+```
+
+### __q4__ Use concepts from the reading to improve the following graph. *Make sure your graph shows all the same variables*, no more and no fewer.
+
+```{r q4-vis}
+## NOTE: No need to edit; run and inspect
+diamonds %>%
+  ggplot(aes(x = "", fill = cut)) +
+  geom_bar() +
+  coord_polar("y") +
+  labs(x = "")
+```
+
+Create your improved graph here
+
+```{r q4-task}
+## TODO: Create an improved version of the graph above
+```
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-vis09-improve-assignment.Rmd).

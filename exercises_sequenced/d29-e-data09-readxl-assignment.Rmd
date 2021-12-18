@@ -1,0 +1,232 @@
+---
+title: "Data: Reading Excel Sheets"
+author: Zachary del Rosario
+date: 2020-07-20
+output: github_document
+time: 30
+reading: 0
+---
+
+# Data: Reading Excel Sheets
+
+*Purpose*: The Tidyverse is built to work with tidy data. Unfortunately, most data in the wild are not tidy. The good news is that we have a lot of tools for *wrangling* data into tidy form. The bad news is that "every untidy dataset is untidy in its own way." I can't show you you every crazy way people decide to store their data. But I can walk you through a worked example to show some common techniques.
+
+In this case study, I'll take you through the process of *wrangling* a messy Excel spreadsheet into machine-readable form. You will both learn some general tools for wrangling data, and you can keep this notebook as a *recipe* for future messy datasets of similar form.
+
+*Reading*: (None)
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+library(readxl) # For reading Excel sheets
+library(httr) # For downloading files
+
+## Use my tidy-exercises copy of UNDOC data for stability
+url_undoc <- "https://github.com/zdelrosario/tidy-exercises/blob/master/2019/2019-12-10-news-plots/GSH2013_Homicide_count_and_rate.xlsx?raw=true"
+filename <- "./data/undoc.xlsx"
+```
+
+I keep a copy of the example data in a personal repo; download a local copy.
+
+```{r download}
+## NOTE: No need to edit
+curl::curl_download(
+        url_undoc,
+        filename
+      )
+```
+
+## Wrangling Basics
+<!-- ------------------------- -->
+
+### __q1__ Run the following code and pay attention to the column names. Open the downloaded Excel sheet and compare. Why are the column names so weird?
+
+```{r q1-task}
+## NOTE: No need to edit; run and inspect
+df_q1 <- read_excel(filename)
+df_q1 %>% glimpse
+```
+
+**Observations**:
+
+- Based on reading the Excel sheet, why do you think the columns are so weird?
+
+Most `read_` functions have a *skip* argument you can use to skip over the first few lines. Use this argument in the next task to deal with the top of the Excel sheet.
+
+### __q2__ Read the Excel sheet.
+
+Open the target Excel sheet (located at `./data/undoc.xlsx`) and find which line (row) at which the year column headers are located. Use the `skip` keyword to start your read at that line.
+
+```{r q2-task}
+## TODO:
+df_q2 <- read_excel(
+  filename,
+  skip = 1
+)
+df_q2 %>% glimpse
+```
+
+Use the following test to check your work.
+
+```{r q2-tests}
+## NOTE: No need to change this
+assertthat::assert_that(setequal(
+              (df_q2 %>% names() %>% .[7:19]),
+              as.character(seq(2000, 2012))
+            ))
+print("Nice!")
+```
+
+Let's take stock of where we are:
+
+```{r q2-glimpse}
+df_q2 %>% head()
+```
+
+We still have problems:
+
+- The first few columns don't have sensible names. The `col_names` argument allows us to set manual names at the read phase.
+- Some of the columns are of the wrong type; for instance `2012` is a `chr` vector. We can use the `col_types` argument to set manual column types.
+
+### __q3__ Change the column names and types.
+
+Use the provided names in `col_names_undoc` with the `col_names` argument to set *manual* column names. Use the `col_types` argument to set all years to `"numeric"`, and the rest to `"text"`.
+
+*Hint 1*: Since you're providing manual `col_names`, you will have to *adjust* your `skip` value!
+
+*Hint 2*: You can use a named vector for `col_types` to help keep type of which type is assigned to which variable, for instance `c("variable" = "type")`.
+
+```{r q3-task}
+## NOTE: Use these column names
+col_names_undoc <-
+  c(
+    "region",
+    "sub_region",
+    "territory",
+    "source",
+    "org",
+    "indicator",
+    "2000",
+    "2001",
+    "2002",
+    "2003",
+    "2004",
+    "2005",
+    "2006",
+    "2007",
+    "2008",
+    "2009",
+    "2010",
+    "2011",
+    "2012"
+  )
+
+## TASK: Use the arguments `skip`, `col_names`, and `col_types`
+df_q3 <-
+  read_excel(filename, sheet = 1)
+```
+
+Use the following test to check your work.
+
+```{r q3-tests}
+## NOTE: No need to change this
+assertthat::assert_that(setequal(
+              (df_q3 %>% names()),
+              col_names_undoc
+            ))
+
+assertthat::assert_that((df_q3 %>% slice(1) %>% pull(`2012`)) == 8)
+
+print("Great!")
+```
+
+## Danger Zone
+<!-- ------------------------- -->
+
+Now let's take a look at the head of the data:
+
+```{r glimpse-q3}
+df_q3 %>% head()
+```
+
+Irritatingly, many of the cell values are left *implicit*; as humans reading these data, we can tell that the entries in `region` under `Africa` also have the value `Africa`. However, the computer can't tell this! We need to make these values *explicit* by filling them in.
+
+To that end, I'm going to *guide* you through some slightly advanced Tidyverse code to *lag-fill* the missing values. To that end, I'll define and demonstrate two helper functions:
+
+First, the following function counts the number of rows with `NA` entries in a chosen set of columns:
+
+```{r q4-setup-count}
+## Helper function to count num rows w/ NA in vars_lagged
+rowAny <- function(x) rowSums(x) > 0
+countna <- function(df, vars_lagged) {
+  df %>%
+    filter(rowAny(across(vars_lagged, is.na))) %>%
+    dim %>%
+    .[[1]]
+}
+
+countna(df_q3, c("region"))
+```
+
+Ideally we want this count to be *zero*. To fill-in values, we will use the following function to do one round of *lag-filling*:
+
+```{r q4-setup-lagfill}
+lagfill <- function(df, vars_lagged) {
+  df %>%
+    mutate(across(
+      vars_lagged,
+      function(var) {
+        if_else(
+          is.na(var) & !is.na(lag(var)),
+          lag(var),
+          var
+        )
+      }
+    ))
+}
+
+df_tmp <-
+  df_q3 %>%
+  lagfill(c("region"))
+
+countna(df_tmp, c("region"))
+```
+
+We can see that `lagfill` has filled the `Africa` value in row 2, as well as a number of other rows as evidenced by the reduced value returned by `countna`.
+
+What we'll do is continually run `lagfill` until we reduce `countna` to zero. We could do this by repeatedly running the function *manually*, but that would be silly. Instead, we'll run a `while` loop to automatically run the function until `countna` reaches zero.
+
+### __q4__ I have already provided the `while` loop below; fill in `vars_lagged` with the names of the columns where cell values are *implicit*.
+
+*Hint*: Think about which columns have implicit values, and which truly have missing values.
+
+```{r q4-task}
+## Choose variables to lag-fill
+## TASK: Choose the appropriate variables to lag-fill
+vars_lagged <- c()
+
+## NOTE: No need to edit this
+## Trim head and notes
+df_q4 <-
+  df_q3 %>%
+  slice(-(n()-5:-n()))
+
+## Repeatedly lag-fill until NA's are gone
+while (countna(df_q4, vars_lagged) > 0) {
+  df_q4 <-
+    df_q4 %>%
+    lagfill(vars_lagged)
+}
+```
+
+And we're done! All of the particularly tricky wrangling is now done. You could now use pivoting to tidy the data into long form.
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data09-readxl-assignment.Rmd).

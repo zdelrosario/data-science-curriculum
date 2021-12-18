@@ -1,0 +1,164 @@
+---
+title: "Isolating Data"
+author: Zachary del Rosario
+date: 2020-05-05
+output: github_document
+time: 20
+reading: 40
+---
+
+# Data: Isolating Data
+
+*Purpose*: One of the keys to a successful analysis is the ability to *focus* on
+particular topics. When analyzing a dataset, our ability to focus is tied to our
+facility at *isolating data*. In this exercise, you will practice isolating
+columns with `select()`, picking specific rows with `filter()`, and sorting your
+data with `arrange()` to see what rises to the top.
+
+*Reading*: [Isolating Data with dplyr](https://rstudio.cloud/learn/primers/2.2) (All topics)
+
+```{r setup}
+library(tidyverse)
+library(nycflights13) # For `flights` data
+```
+
+We'll use the `nycflights13` dataset for this exercise; upon loading the
+package, the data are stored in the variable name `flights`. For instance:
+
+```{r glimpse}
+flights %>% glimpse
+```
+
+### __q1__ Select all the variables whose name ends with `_time`.
+
+```{r q1-task}
+## df_q1 <- TODO: Your code goes here!
+df_q1
+```
+
+The following is a *unit test* of your code; if you managed to solve task __q2__
+correctly, the following code will execute without error.
+
+```{r q1-tests}
+## NOTE: No need to change this
+assertthat::assert_that(
+  all(names(df_q1) %>% str_detect(., "_time$"))
+)
+print("Nice!")
+```
+
+### __q2__ Re-arrange the columns to place `dest, origin, carrier` at the front, but retain all other columns.
+
+*Hint*: The function `everything()` will be useful!
+
+```{r q2-task}
+df_q2 <- flights %>% select(everything()) # TODO: Modify to move columns to the front
+df_q2
+```
+
+Use the following to check your code.
+
+```{r q2-tests}
+## NOTE: No need to change this
+assertthat::assert_that(
+  assertthat::are_equal(names(df_q2)[1:5], c("dest", "origin", "carrier", "year", "month"))
+)
+print("Well done!")
+```
+
+Since R will only show the first few columns of a tibble, using `select()` in
+this fashion will help us see the values of particular columns.
+
+### __q3__ Fix the following code. What is the mistake here? What is the code trying to accomplish?
+
+```{r q3-task}
+## flights %>% filter(dest = LAX) # Uncomment and run to see error
+```
+
+The next error is *far more insidious*....
+
+### __q4__ This code doesn't quite what the user intended. What went wrong?
+
+```{r q4-task}
+BOS <- "LGA"
+flights %>% filter(dest == BOS)
+```
+
+It will take practice to get used to when and when not to use quotations. Don't
+worry---we'll get lots of practice!
+
+This dataset is called `nycflights`; in what sense is it focused on New York
+city? Let's do a quick check to get an idea:
+
+### __q5__ Perform **two** filters; first
+
+```{r q5-task}
+## df_q5a <- dest is JFK, LGA, or EWR
+## df_q5b <- origin is JFK, LGA, or EWR
+```
+
+Use the following code to check your answer.
+
+```{r q5-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+  df_q5a %>%
+  mutate(flag = dest %in% c("JFK", "LGA", "EWR")) %>%
+  summarize(flag = all(flag)) %>%
+  pull(flag)
+)
+assertthat::assert_that(
+  df_q5b %>%
+  mutate(flag = origin %in% c("JFK", "LGA", "EWR")) %>%
+  summarize(flag = all(flag)) %>%
+  pull(flag)
+)
+print("Nice!")
+```
+
+
+*Aside*: Data are not just numbers. Data are *numbers with context*. Every
+dataset is put together for some reason. This reason will inform what
+observations (rows) and variables (columns) are *in the data*, and which are
+*not in the data*. Conversely, thinking carefully about what data a person or
+organization bothered to collect---and what they ignored---can tell you
+something about the *perspective* of those who collected the data. Thinking
+about these issues is partly what separates __data science__ from programming or
+machine learning. (`end-rant`)
+
+### __q6__ Sort the flights in *descending* order by their `air_time`. Bring `air_time, dest` to the front. What can you tell about the longest flights?
+
+```{r q6-task}
+## df_q6 <- TODO: Your code here!
+df_q6
+```
+
+```{r q6-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+  assertthat::are_equal(
+    df_q6 %>% head(1) %>% pull(air_time),
+    flights %>% pull(air_time) %>% max(na.rm = TRUE)
+  )
+)
+assertthat::assert_that(
+  assertthat::are_equal(
+    df_q6 %>% filter(!is.na(air_time)) %>% tail(1) %>% pull(air_time),
+    flights %>% pull(air_time) %>% min(na.rm = TRUE)
+  )
+)
+assertthat::assert_that(
+  assertthat::are_equal(
+    names(df_q6)[1:2],
+    c("air_time", "dest")
+  )
+)
+print("Great job!")
+```
+
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data01-isolate-assignment.Rmd).

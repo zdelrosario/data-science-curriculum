@@ -1,0 +1,87 @@
+---
+title: "Setup: Documentation"
+# yaml-author
+date: 2020-05-05
+output: github_document
+time: 15
+reading: 3
+---
+
+# Setup: Documentation
+
+*Purpose*: No programmer memorizes every fact about every function. Expert
+programmers get used to quickly reading *documentation*, which allows them to
+look up the facts they need, when they need them. Just as you had to learn how
+to read English, you will have to learn how to consult documentation. This
+exercise will get you started.
+
+*Reading*: [Getting help with R](https://www.r-project.org/help.html) (Vignettes and Code Demonstrations)
+
+```{r setup}
+library(tidyverse)
+```
+
+The `vignette()` function allows us to look up
+[vignettes](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/vignette.html);
+short narrative-form tutorials associated with a package, written by its
+developers.
+
+### __q1__ Use `vignette(package = ???)` (fill in the ???) to look up vignettes
+associated with `"dplyr"`. What vignettes are available?
+
+```{r q1-task, eval=FALSE}
+## TODO: Re-write the code above following the tidyverse style guide
+```
+
+
+Once we know *what* vignettes are available, we can use the same function to
+read a particular vignette.
+
+### __q2__ Use `vignette(???, package = "dplyr")` to read the vignette on `dplyr`.
+Read this vignette up to the first note on `filter()`. Use `filter()` to select
+only those rows of the `iris` dataset where `Species == "setosa"`.
+
+*Note*: This should open up your browser.
+
+```{r q2-task}
+iris %>%
+  as_tibble() %>%
+  filter(
+    # TODO: Filter on Species "setosa"
+  )
+```
+
+Vignettes are useful when we only know *generally* what we're looking for. Once
+we know the verbs (functions) we want to use, we need more specific help.
+
+### __q3__ Remember back to `e-setup02-functions`; how do we look up help for a
+specific function?
+
+
+Sometimes we'll be working with a function, but we won't *quite* know how to get
+it to do what we need. In this case, consulting the function's documentation can
+be *extremely* helpful.
+
+### __q4__ Use your knowledge of documentation lookup to answer the following
+question: How could we `filter` the `iris` dataset to return only those rows
+with `Sepal.Length` between `5.1` and `6.4`?
+
+```{r q3-task}
+## TODO: Consult the docs; Write your code here
+```
+
+
+On other occasions we'll know a function, but would like to know about other,
+related functions. In this case, it's useful to be able to trace the `function`
+back to its parent `package`. Then we can read the vignettes on the package to
+learn more.
+
+### __q5__ Look up the documentation on `cut_number`; what package does it come
+from? What about `parse_number()`? What about `row_number()`?
+
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-setup03-docs-assignment.Rmd).

@@ -1,0 +1,136 @@
+---
+title: "Stats: Fitting Distributions"
+author: Zachary del Rosario
+date: 2020-07-20
+output: github_document
+time: 20
+reading: 0
+---
+
+# Stats: Fitting Distributions
+
+*Purpose*: We use distributions to model random quantities. However, in order to model physical phenomena, we should *fit* the distributions using data. In this short exercise you'll learn some functions for fitting distributions to data.
+
+```{r setup}
+library(tidyverse)
+library(MASS)
+library(broom)
+```
+
+## Aside: Masking
+
+Note that when we load the `MASS` and `tidyverse` packages, we will find that their functions *conflict*. To deal with this, we'll need to learn how to specify a *namespace* when calling a function. To do this, use the `::` notation; i.e. `namespace::function`. For instance, to call `filter` from `dplyr`, we would write `dplyr::filter()`.
+
+One of the specific conflicts between `MASS` and `tidyverse` is the `select` function. Try running the chunk below; it will throw an error:
+
+```{r eval=FALSE}
+diamonds %>%
+  select(carat, cut) %>%
+  glimpse()
+```
+
+This error occurs because `MASS` *also* provides a `select` function.
+
+### __q0__ Fix the following code!
+
+Use the namespace `::` operator to use the correct `select()` function.
+
+```{r q0-task}
+diamonds %>%
+  select(carat, cut) %>%
+  glimpse()
+```
+
+
+## Distribution Parameters and Fitting
+
+The function `rnorm()` requires values for `mean` and `sd`; while `rnorm()` has
+defaults for these arguments, if we are trying to model a random event in the
+real world, we should set `mean, sd` based on data. The process of estimating
+parameters such as `mean, sd` for a distribution is called *fitting*. Fitting a
+distribution is often accomplished through [*maximum likelihood
+estimation*](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) (MLE);
+rather than discuss the gory details of MLE, we will simply use MLE as a
+technology to do useful work.
+
+First, let's look at an example of MLE carried out with the function `MASS::fitdistr()`.
+
+```{r demo-fitdistr}
+## NOTE: No need to edit this setup
+set.seed(101)
+df_data_norm <- tibble(x = rnorm(50, mean = 2, sd = 1))
+
+## NOTE: Example use of fitdistr()
+df_est_norm <-
+  df_data_norm %>%
+  pull(x) %>%
+  fitdistr(densfun = "normal") %>%
+  tidy()
+
+df_est_norm
+```
+
+*Notes*:
+
+- `fitdistr()` takes a *vector*; I use the function `pull(x)` to pull the vector `x` out of the dataframe.
+- `fitdistr()` returns a messy output; the function `broom::tidy()` automagically cleans up the output and provides a tibble.
+
+### __q1__ Compute the sample mean and standard deviation of `x` in `df_data_norm`. Compare these values to those you computed with `fitdistr()`.
+
+```{r q1-task}
+## TASK: Compute the sample mean and sd of `df_data_norm %>% pull(x)`
+mean_est <- NA_real_
+sd_est <- NA_real_
+mean_est
+sd_est
+```
+
+**Observations**:
+
+- How do the values in `df_est_norm` compare with `mean_est` and `sd_est`?
+
+Estimating parameters for a normal distribution is easy because it is parameterized in terms of the mean and standard deviation. The advantage of using `fitdistr()` is that it will allow us to work with a much wider selection of distribution models.
+
+### __q2__ Use the function `fitdistr()` to fit a `"weibull"` distribution to the realizations `y` in `df_data_weibull`.
+
+*Note*: The [weibull distribution](https://en.wikipedia.org/wiki/Weibull_distribution) is used to model many physical phenomena, including the strength of composite materials.
+
+```{r q2-task}
+## NOTE: No need to edit this setup
+set.seed(101)
+df_data_weibull <- tibble(y = rweibull(50, shape = 2, scale = 4))
+
+## TASK: Use the `fitdistr()` function to estimate parameters
+df_q2 <- NA
+df_q2
+```
+
+Once we've fit a distribution, we can use the estimated parameters to approximate quantities like probabilities. If we were using the distribution for `y` to model a material strength, we would estimate probabilities to compute the rate of failure for mechanical components---we could then use this information to make design decisions.
+
+### __q3__ Extract the estimates `shape_est` and `scale_est` from `df_q2`, and use them to estimate the probability that `Y <= 2`.
+
+*Hint*: `pr_true` contains the true probability; modify that code to compute the estimated probability.
+
+```{r q3-task}
+## NOTE: No need to modify this line
+pr_true <- pweibull(q = 2, shape = 2, scale = 4)
+
+## TASK: Extract the parameter estimates from df_q2 and estimate Pr[Y <= 2]
+pr_est <- NA_real_
+
+pr_true
+pr_est
+```
+
+You'll probably find that `pr_true != pr_est`! As we saw in `e-stat06-clt` we should really compute a *confidence interval* to assess our degree of confidence in this probability estimate. However, it's not obvious how we can use the ideas of the Central Limit Theorem to put a confidence interval around `pr_est. In the next exercise we'll learn a very general technique for estimating confidence intervals.
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-stat08-fit-dist-assignment.Rmd).
+
+## Notes
+<!-- -------------------------------------------------- -->
+
+[1] For another tutorial on fitting distributions in R, see this [R-bloggers](https://www.r-bloggers.com/fitting-distributions-with-r/) post.

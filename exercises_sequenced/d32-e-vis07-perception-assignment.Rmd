@@ -1,0 +1,89 @@
+---
+title: "Vis: Perceptual Basics"
+author: Zach del Rosario
+date: 2020-08-06
+output: github_document
+time: 20
+reading: 40
+---
+
+# Vis: Perceptual Basics
+
+*Purpose*: Creating a *presentation-quality* graph is an exercise in *communication*. In order to create graphs that other people can understand, we should know some stuff about *how humans see data*. Through the required "reading" (video) you'll learn about visual perception, then put these ideas to use criticizing some graphs. Later, you'll use these ideas to *improve* some graphs.
+
+*Reading*: [How Humans See Data](https://www.youtube.com/watch?v=fSgEeI2Xpdc&list=PLluqivwOH1ouKkbM0c6x-g7DQnXF0UmC0&index=37&t=0s) (Video)
+
+```{r setup}
+library(tidyverse)
+```
+
+## Criticize these graphs!
+<!-- -------------------------------------------------- -->
+
+Using the ideas from the reading (video), state some issues with the following graphs. As a reminder, the *visual hierarchy* is:
+
+1. Position along a common scale
+2. Position on identical but nonaligned scales
+3. Length
+4. Angle; Slope (With slope not too close to 0, $\pi/2$, or $\pi$.)
+5. Area
+6. Volume; Density; Color saturation
+7. Color hue
+
+### __q1__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+
+```{r q1-vis}
+## NOTE: No need to edit; run and criticize
+mpg %>%
+  ggplot(aes(manufacturer, cty)) +
+  geom_boxplot() +
+  coord_flip()
+```
+
+**Observations**:
+
+- What are some issues with this graph?
+
+### __q2__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+
+```{r q2-vis}
+## NOTE: No need to edit; run and criticize
+as_tibble(mtcars) %>%
+  mutate(model = rownames(mtcars)) %>%
+
+  ggplot(aes(x = "", y = "", size = mpg)) +
+  geom_point() +
+  facet_wrap(~model)
+```
+
+- What are some issues with this graph?
+
+### __q3__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+
+```{r q3-vis}
+## NOTE: No need to edit; run and criticize
+diamonds %>%
+  ggplot(aes(clarity, fill = cut)) +
+  geom_bar()
+```
+
+- What are some issues with this graph?
+
+### __q4__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+
+```{r q4-vis}
+## NOTE: No need to edit; run and criticize
+diamonds %>%
+  ggplot(aes(x = "", fill = cut)) +
+  geom_bar() +
+  coord_polar("y") +
+  labs(x = "")
+```
+
+- What are some issues with this graph?
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-vis07-perception-assignment.Rmd).

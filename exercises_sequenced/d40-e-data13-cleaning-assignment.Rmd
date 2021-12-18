@@ -1,0 +1,264 @@
+---
+title: "Data: Cleaning"
+author: Zachary del Rosario
+date: 2020-08-09
+output: github_document
+time: 40
+reading: 0
+---
+
+# Data: Cleaning
+
+*Purpose*: Most of the data you'll find in the wild is *messy*; you'll need to clean those data before you can do useful work. In this case study, you'll learn some more tricks for cleaning data. We'll use these data for a future exercise on modeling, so we'll build on the work you do here today.
+
+*Reading*: (*None*, this exercise *is* the reading.)
+
+```{r setup}
+library(tidyverse)
+```
+
+*Background*: This exercise's data comes from the UCI Machine Learning Database; specifically their [Heart Disease Data Set](https://archive.ics.uci.edu/ml/datasets/Heart+Disease). These data consist of clinical measurements on patients, and are intended to help predict heart disease.
+
+```{r uci-download}
+## NOTE: No need to edit; run and inspect
+url_disease <- "http://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data"
+filename_disease <- "./data/uci_heart_disease.csv"
+
+## Download the data locally
+curl::curl_download(
+        url_disease,
+        destfile = filename_disease
+      )
+```
+
+This is a *messy* dataset; one we'll have to clean if we want to make sense of it. Let's load the data and document the ways in which it's messy:
+
+```{r look-no-names}
+## NOTE: No need to edit; run and inspect
+read_csv(filename_disease) %>% glimpse()
+```
+
+*Observations*:
+
+- The CSV comes without column names! `read_csv()` got confused and assigned the first row of data as names.
+- Some of the numerical columns were incorrectly assigned `character` type.
+- Some of the columns are coded as binary values `0, 1`, but they really represent variables like `sex %in% c("male", "female")`.
+
+Let's tackle these problems one at a time:
+
+## Problem 1: No column names
+
+We'll have a hard time making sense of these data without column names. Let's fix that.
+
+### __q1__ Obtain the data.
+
+Following the [dataset documentation](https://archive.ics.uci.edu/ml/datasets/Heart+Disease), transcribe the correct column names and assign them as a character vector. You will use this to give the dataset sensible column names when you load it in q2.
+
+*Hint 1*: The relevant section from the dataset documentation is quoted here:
+
+> Only 14 attributes used:
+> 1. #3 (age)
+> 2. #4 (sex)
+> 3. #9 (cp)
+> 4. #10 (trestbps)
+> 5. #12 (chol)
+> 6. #16 (fbs)
+> 7. #19 (restecg)
+> 8. #32 (thalach)
+> 9. #38 (exang)
+> 10. #40 (oldpeak)
+> 11. #41 (slope)
+> 12. #44 (ca)
+> 13. #51 (thal)
+> 14. #58 (num) (the predicted attribute)
+
+*Hint 2*: A "copy-paste-edit" is probably the most effective approach here!
+
+```{r q1-task}
+## TODO: Assign the column names to col_names; make sure they are strings
+col_names <- c()
+```
+
+Use the following to check your code.
+
+```{r q1-tests}
+## NOTE: No need to change this
+assertthat::assert_that(col_names[1] == "age")
+assertthat::assert_that(col_names[2] == "sex")
+assertthat::assert_that(col_names[3] == "cp")
+assertthat::assert_that(col_names[4] == "trestbps")
+assertthat::assert_that(col_names[5] == "chol")
+assertthat::assert_that(col_names[6] == "fbs")
+assertthat::assert_that(col_names[7] == "restecg")
+assertthat::assert_that(col_names[8] == "thalach")
+assertthat::assert_that(col_names[9] == "exang")
+assertthat::assert_that(col_names[10] == "oldpeak")
+assertthat::assert_that(col_names[11] == "slope")
+assertthat::assert_that(col_names[12] == "ca")
+assertthat::assert_that(col_names[13] == "thal")
+assertthat::assert_that(col_names[14] == "num")
+
+print("Well done!")
+```
+
+## Problem 2: Incorrect types
+
+We saw above that `read_csv()` incorrectly guessed some of the column types. Let's fix that by manually specifying each column's type.
+
+### __q2__ Call `read_csv()` with the `col_names` and `col_types` arguments. Use the column names you assigned above, and set all column types to `col_number()`.
+
+*Hint*: Remember that you can always read the documentation to learn how to use a new argument!
+
+```{r q2-task}
+## TODO: Use the col_names and col_types arguments to give the data the
+##       correct column names, and to set their types to col_number()
+df_q2 <- NA
+
+df_q2 %>% glimpse()
+```
+
+Use the following to check your code.
+
+```{r q2-tests}
+## NOTE: No need to change this
+assertthat::assert_that(assertthat::are_equal(names(df_q2), col_names))
+assertthat::assert_that(all(map_chr(df_q2, class) == "numeric"))
+print("Nice!")
+```
+
+## Problem 3: Uninformative values
+
+The numeric codes given for some of the variables are uninformative; let's replace those with more human-readable values.
+
+Rather than go and modify our raw data, we will instead *recode* the variables in our loaded dataset. *It is bad practice to modify your raw data!* Modifying your data in code provides *traceable documentation* for the edits you made; this is a key part of doing [reproducible science](https://www.nature.com/articles/s41562-016-0021). It takes more work, but *your results will be more trustworthy if you do things the right way!*
+
+### __q3__ Create *conversion functions* to recode factor values as human-readable strings. I have provided one function (`convert_sex`) as an example.
+
+*Note*: "In the wild" you would be responsible for devising your own sensible level names. However, I'm going to provide specific codes such that I can write unittests to check your answers:
+
+| Variable  | Levels |
+|-----------|--------|
+| `sex`     | `1 = "male", 0 = "female"` |
+| `fbs`     | `1 = TRUE, 0 = FALSE` |
+| `restecg` | `0 = "normal", 1 = "ST-T wave abnormality", 2 = "Estes' criteria"` |
+| `exang`   | `1 = TRUE, 0 = FALSE` |
+| `slope`   | `1 = "upsloping", 2 = "flat", 3 = "downsloping"` |
+| `thal`    | `3 = "normal", 6 = "fixed defect", 7 = "reversible defect"` |
+
+```{r q3-task}
+## NOTE: This is an example conversion
+convert_sex <- function(x) {
+  case_when(
+    x == 1 ~ "male",
+    x == 0 ~ "female",
+    TRUE ~ NA_character_
+  )
+}
+## TODO: Complete the remaining conversion functions
+convert_cp <- NA
+convert_fbs <- NA
+convert_restecv <- NA
+convert_exang <- NA
+convert_slope <- NA
+convert_thal <- NA
+```
+
+Use the following to check your code.
+
+```{r q3-tests}
+## NOTE: No need to change this
+assertthat::assert_that(assertthat::are_equal(
+  convert_cp(c(1, 2, 3, 4)),
+  c("typical angina", "atypical angina", "non-anginal pain", "asymptomatic")
+))
+
+assertthat::assert_that(assertthat::are_equal(
+  convert_fbs(c(1, 0)),
+  c(TRUE, FALSE)
+))
+
+assertthat::assert_that(assertthat::are_equal(
+  convert_restecv(c(0, 1, 2)),
+  c("normal", "ST-T wave abnormality", "Estes' criteria")
+))
+
+assertthat::assert_that(assertthat::are_equal(
+  convert_exang(c(1, 0)),
+  c(TRUE, FALSE)
+))
+
+assertthat::assert_that(assertthat::are_equal(
+  convert_slope(c(1, 2, 3)),
+  c("upsloping", "flat", "downsloping")
+))
+
+assertthat::assert_that(assertthat::are_equal(
+  convert_thal(c(3, 6, 7)),
+  c("normal", "fixed defect", "reversible defect")
+))
+
+print("Excellent!")
+```
+
+### __q4__ Use your `convert_` functions from q3 to mutate the columns and recode the variables.
+
+```{r q4-task}
+## TODO: Convert the appropriate columns using your helper functions
+df_q4 <-
+  df_q2
+df_q4
+```
+
+## Prepare the Data for Modeling
+
+Now we have a clean dataset we can use for EDA and modeling---great! Before we finish this exercise, let's do some standard checks to understand these data:
+
+### __q5__ Perform your *first checks* on `df_q4`. Answer the questions below.
+
+*Hint*: You may need to do some "deeper checks" to answer some of the questions below.
+
+```{r q5-task}
+## TODO: Perform your first checks on df_q4
+```
+
+**Observations**:
+
+- Which variables are numerical? Which are factors? Which are logical?
+- How many missing values (`NA`'s) does each variable have?
+- How many rows have *any* missing values in any of the columns?
+
+If we were just doing EDA, we could stop here. However we're going to use these data for *modeling* in a future exercise. Most models can't deal with `NA` values, so we must choose how to handle rows with `NA`'s. In cases where only a few observations are missing values, we can simply *filter out* those rows.
+
+### __q6__ Filter out the rows with missing values.
+
+```{r q6-task}
+df_q6 <-
+  df_q4
+
+df_q6
+```
+
+Use the following to check your code.
+
+```{r q6-tests}
+## NOTE: No need to change this
+assertthat::assert_that(
+  dim(
+    df_q6 %>%
+      filter(rowSums(across(everything(), is.na)) > 0)
+  )[1] == 0
+)
+
+print("Well done!")
+```
+
+## In summary
+
+- We cleaned the dataset by giving it sensible names and recoding factors with human-readable values.
+- We filtered out rows with missing values (`NA`'s) *because we intend to use these data for modeling*.
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data13-cleaning-assignment.Rmd).

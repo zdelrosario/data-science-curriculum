@@ -1,0 +1,139 @@
+---
+title: "Vis: Bar Charts"
+author: Zach del Rosario
+date: 2020-05-13
+output: github_document
+time: 30
+reading: 30
+---
+
+# Vis: Bar Charts
+
+*Purpose*: *Bar charts* are a key tool for EDA. In this exercise, we'll learn
+how to construct a variety of different bar charts, as well as when---and when
+*not*---to use various charts.
+
+*Reading*: [Bar Charts](https://rstudio.cloud/learn/primers/3.2)
+*Topics*: (All topics)
+*Reading Time*: ~30 minutes
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+### __q1__ In the reading, you learned the relation between `geom_bar()` and
+`geom_col()`. Use that knowledge to convert the following `geom_bar()` plot into
+the same visual using `geom_col()`.
+
+```{r q1-task}
+mpg %>%
+  ggplot(aes(trans)) +
+  geom_bar()
+```
+
+The reading mentioned that when using `geom_col()` our x-y data should be
+`1-to-1`. This next exercise will probe what happens when our data are not
+`1-to-1`, and yet we use a `geom_col()`. Note that a
+[one-to-one](https://en.wikipedia.org/wiki/Injective_function) function is one
+where each input leads to a single output. For the `mpg` dataset, we can see
+that the pairs `cty, hwy` clearly don't have this one-to-one property:
+
+```{r mpg-not-1-to-1}
+## NOTE: Run this chunk for an illustration
+mpg %>% filter(cty == 20)
+```
+
+### __q2__ The following code attempts to visualize `cty, hwy` from `mpg` using
+`geom_col()`. There's something fishy about the `hwy` values; what's wrong here?
+
+*Hint*: Try changing the `position` parameter for `geom_col()`.
+
+```{r q2-task}
+mpg %>%
+  ggplot(aes(x = cty, y = hwy)) +
+  geom_col()
+```
+
+**Observations**:
+- Write your observations here!
+
+A more standard way to visualize this kind of data is a *scatterplot*, which
+we'll study later. For now, here's an example of a more effective way to
+visualize `cty` vs `hwy`:
+
+```{r q2-compare}
+## NOTE: Run this chunk for an illustration
+mpg %>%
+  ggplot(aes(cty, hwy)) +
+  geom_point()
+```
+
+### __q3__ The following are two different visualizations of the `mpg` dataset.
+Document your observations between the `v1` and `v2` visuals. Then, determine
+which---`v1` or `v2`---enabled you to make more observations. What was the
+difference between the two visuals?
+
+```{r q4-v1}
+## TODO: Run this code without changing, describe your observations on the data
+mpg %>%
+  ggplot(aes(class, fill = class)) +
+  geom_bar()
+```
+
+**Observations**:
+- Write your observations here!
+
+```{r q4-v2}
+## TODO: Run this code without changing, describe your observations on the data
+mpg %>%
+  ggplot(aes(class, fill = drv)) +
+  geom_bar()
+```
+
+**Observations**:
+- Write your observations here!
+
+**Compare `v1` and `v2`**:
+
+- Which visualization---`v1` or `v2`---enabled you to make more observations?
+- What was the difference between `v1` and `v2`?
+
+### __q4__ The following code has a bug; it does not do what its author intended.
+Identify and fix the bug. What does the resulting graph tell you about the
+relation between `manufacturer` and `class` of cars in this dataset?
+
+*Note*: I use a `theme()` call to rotate the x-axis labels. We'll learn how to
+do this in a future exercise.
+
+```{r q4-task}
+mpg %>%
+  ggplot(aes(x = manufacturer, fill = class), position = "dodge") +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 270, vjust = 0.5, hjust = 0))
+```
+
+**Observations**
+- Your observations here!
+
+### __q5__ The following graph is hard to read. What other form of faceting would
+make the visual more convenient to read? Modify the code below with your
+suggested improvement.
+
+```{r q5-task}
+mpg %>%
+  ggplot(aes(x = cyl)) +
+  geom_bar() +
+  facet_grid(~ manufacturer)
+```
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-vis01-bar-charts-assignment.Rmd).

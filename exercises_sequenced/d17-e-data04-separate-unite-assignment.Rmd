@@ -1,0 +1,129 @@
+---
+title: "Data: Separate and Unite Columns"
+# yaml-author
+date: 2020-06-05
+output: github_document
+time: 20
+reading: 30
+---
+
+# Data: Separate and Unite Columns
+
+*Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse
+(including ggplot, dplyr, etc.) is specifically designed to use tidy data. Last
+time we learned how to pivot data, but data can be untidy in other ways.
+Pivoting helped us when data were locked up in the *column headers*: This time,
+we'll learn how to use *separate* and *unite* to deal with *cell values* that
+are untidy.
+
+*Reading*: [Separate and Unite Columns](https://rstudio.cloud/learn/primers/4.2)
+*Topics*: Welcome, separate(), unite(), Case study
+*Reading Time*: ~30 minutes
+
+*Notes*:
+- I had trouble running the Case study in my browser. Note that the `who` dataset is loaded by the `tidyverse`. You can run the Case study locally if you need to!
+- The case study uses `gather` instead of `pivot_longer`; feel free to use `pivot_longer` in place.
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+The Case study was already a fair bit of work! Let's do some simple review with
+`separate` and `unite`.
+
+## Punnett Square
+<!-- ------------------------- -->
+
+Let's make a [Punnett square](https://en.wikipedia.org/wiki/Punnett_square) with
+`unite` and some pivoting. You don't need to remember any biology for this
+example: Your task is to take `genes` and turn the data into `punnett`.
+
+```{r q1-setup}
+punnett <-
+  tribble(
+    ~parent1,   ~a,   ~A,
+         "a", "aa", "aA",
+         "A", "Aa", "AA"
+  )
+punnett
+
+genes <-
+  expand_grid(
+    parent1 = c("a", "A"),
+    parent2 = c("a", "A")
+  )
+genes
+```
+
+### __q1__ Use a combination of `unite` and pivoting to turn `genes` into the same dataframe as `punnett`.
+
+```{r q1-task}
+df_q1 <-
+  genes %>%
+## TODO: pivot and unite here!
+
+df_q1
+```
+
+Use the following test to check your answer:
+
+```{r q1-tests}
+## NOTE: No need to change this
+assertthat::assert_that(
+              all_equal(df_q1, punnett)
+)
+print("Well done!")
+```
+
+## Alloys, Revisited
+<!-- ------------------------- -->
+
+In the previous data exercise, we studied an alloys dataset:
+
+```{r stang-setup}
+## NOTE: No need to edit; execute
+alloys_mod <- tribble(
+  ~thick,  ~E00,  ~mu00,  ~E45,  ~mu45, ~rep,
+   0.022, 10600,  0.321, 10700,  0.329,    1,
+   0.022, 10600,  0.323, 10500,  0.331,    2,
+   0.032, 10400,  0.329, 10400,  0.318,    1,
+   0.032, 10300,  0.319, 10500,  0.326,    2
+)
+alloys_mod
+```
+
+This *slightly modified* version of the data no longer has a convenient
+separator to help with pivoting. We'll use a combination of pivoting and
+separate to tidy these data.
+
+### __q2__ Use a combination of `separate` and pivoting to tidy `alloys_mod`.
+
+```{r q2-task}
+df_q2 <-
+  alloys_mod %>%
+## TODO: pivot and separate here!
+
+df_q2
+```
+
+Use the following tests to check your work:
+
+```{r q2-tests}
+## NOTE: No need to change this
+assertthat::assert_that(
+              (dim(df_q2)[1] == 8) & (dim(df_q2)[2] == 5)
+)
+print("Nice!")
+```
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data04-separate-unite-assignment.Rmd).

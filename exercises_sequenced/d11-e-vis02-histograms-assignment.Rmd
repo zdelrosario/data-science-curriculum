@@ -1,0 +1,84 @@
+---
+title: "Vis: Histograms"
+author: Zach del Rosario
+date: 2020-05-22
+output: github_document
+time: 30
+reading: 20
+---
+
+# Vis: Histograms
+
+*Purpose*: *Histograms* are a key tool for EDA. In this exercise we'll get a little more practice constructing and interpreting histograms and densities.
+
+*Reading*: [Histograms](https://rstudio.cloud/learn/primers/3.3)
+*Topics*: (All topics)
+*Reading Time*: ~20 minutes
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+### __q1__ Using the graphs generated in the chunks `q1-vis1` and `q1-vis2` below, answer:
+
+- Which `class` has the most vehicles?
+- Which `class` has the broadest distribution of `cty` values?
+- Which graph---`vis1` or `vis2`---best helps you answer each question?
+
+```{r q1-vis1}
+## NOTE: No need to modify
+mpg %>%
+  ggplot(aes(cty, color = class)) +
+  geom_freqpoly(bins = 10)
+```
+
+
+```{r q1-vis2}
+## NOTE: No need to modify
+mpg %>%
+  ggplot(aes(cty, color = class)) +
+  geom_density()
+```
+
+
+In the previous exercise, we learned how to *facet* a graph. Let's use that part of the grammar of graphics to clean up the graph above.
+
+### __q2__ Modify `q1-vis2` to use a `facet_wrap()` on the `class`. "Free" the vertical axis with the `scales` keyword to allow for a different y scale in each facet.
+
+```{r q2-task}
+mpg %>%
+  ggplot(aes(cty, color = class)) +
+  geom_density()
+```
+
+In the reading, we learned that the "most important thing" to keep in mind with `geom_histogram()` and `geom_freqpoly()` is to _explore different binwidths_. We'll explore this idea in the next question.
+
+### __q3__ Analyze the following graph; make sure to test different binwidths. What patterns do you see? Which patterns remain as you change the binwidth?
+
+```{r q3-task}
+## TODO: Run this chunk; play with differnet bin widths
+diamonds %>%
+  filter(carat < 1.1) %>%
+
+  ggplot(aes(carat)) +
+  geom_histogram(binwidth = 0.01, boundary = 0.005) +
+  scale_x_continuous(
+    breaks = seq(0, 1, by = 0.1)
+
+  )
+```
+
+**Observations**
+- Write your observations here!
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-vis02-histograms-assignment.Rmd).

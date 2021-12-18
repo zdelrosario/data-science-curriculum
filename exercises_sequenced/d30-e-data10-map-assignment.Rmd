@@ -1,0 +1,87 @@
+---
+title: "Map Basics"
+author: Zachary del Rosario
+date: 2020-05-07
+output: github_document
+time: 10
+reading: 30
+---
+
+# Data: Map Basics
+
+*Purpose*: The `map()` function and its variants are extremely useful for automating iterative tasks. We'll learn the basics through this short exercise.
+
+*Reading*: [Introduction to Iteration](https://rstudio.cloud/learn/primers/5.1) and [Map](https://rstudio.cloud/learn/primers/5.2) (you can skip the Case Study).
+
+```{r library}
+library(tidyverse)
+```
+
+## Formulas
+<!-- ------------------------- -->
+
+The primer introduced `map()` as a way to apply a function to a list.
+
+```{r ex1}
+# NOTE: No need to change this example
+map_dbl(c(1, 2, 3), log)
+```
+
+This is very helpful when we have a builtin or otherwise defined function, but what about when we need a more special-purpose function for a specific case? In this instance we can use R's *formula notation*. For example, to compute powers of `10`, we could do:
+
+```{r ex2}
+# NOTE: No need to change this example
+map_dbl(c(1, 2, 3), ~ 10 ^ .x)
+```
+
+The tilde `~` operator signals to R that we're doing something special: defining a formula. The `.x` symbol is the argument for this new function. Basically, we are taking a formal function definition, such as
+
+```{r def-fun}
+# NOTE: No need to change this example
+pow10 <- function(x) {10 ^ x}
+```
+
+And defining a more compact version with `~ 10 ^ x.`. We've actually already seen this formula notation when we use `facet_grid()` and `facet_wrap()`, though it's used in a very different way in that context.
+
+### __q1__ Use `map_chr()` to prepend the string `"N: "` to the numbers in `v_nums`. Use formula notation with `str_c()` as your map function.
+
+*Hint*: The function `str_c()` combines two or more objects into one string.
+
+```{r q1-task}
+v_nums <- c(1, 2, 3)
+## TASK: Prepend "N: " with a map to v_nums
+v_q1 <- NA_character_
+
+v_q1
+```
+
+Use the following test to check your work.
+
+```{r q1-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(setequal(v_q1, c("N: 1", "N: 2", "N: 3")))
+print("Great job!")
+```
+
+Formula notation is another way to pass arguments to functions; I find this a little more readable than passing arguments to `map()`.
+
+### __q2__ Use `map_dbl()` to compute the `log` with `base = 2` of the numbers in `v_nums`. Use formula notation with `log()` as your map function.
+
+```{r q2-task}
+## TASK: Compute the log base = 2 with a map
+v_q2 <- NA_character_
+
+v_q2
+```
+
+```{r q2-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(setequal(v_q2, log(v_nums, base = 2)))
+print("Nice!")
+```
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data10-map-assignment.Rmd).

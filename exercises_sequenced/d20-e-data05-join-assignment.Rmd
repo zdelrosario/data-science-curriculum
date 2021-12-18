@@ -1,0 +1,199 @@
+---
+title: "Data: Joining Datasets"
+author: Zachary del Rosario
+date: 2020-06-05
+output: github_document
+time: 30
+reading: 30
+---
+
+# Data: Joining Datasets
+
+*Purpose*: Often our data are scattered across multiple sets. In this case, we
+need to be able to *join* data.
+
+*Reading*: [Join Data Sets](https://rstudio.cloud/learn/primers/4.3)
+*Topics*: Welcome, mutating joins, filtering joins, Binds and set operations
+*Reading Time*: ~30 minutes
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+library(nycflights13)
+
+```
+
+## Dangers of Binding!
+<!-- ------------------------- -->
+
+In the reading we learned about `bind_cols` and `bind_rows`.
+
+```{r beatles-setup}
+## NOTE: No need to change this; setup
+beatles1 <-
+  tribble(
+    ~band, ~name,
+    "Beatles", "John",
+    "Beatles", "Paul",
+    "Beatles", "George",
+    "Beatles", "Ringo"
+  )
+
+beatles2 <-
+  tribble(
+       ~surname, ~instrument,
+    "McCartney",      "bass",
+     "Harrison",    "guitar",
+        "Starr",     "drums",
+       "Lennon",    "guitar"
+  )
+
+bind_cols(beatles1, beatles2)
+```
+
+### __q1__ Describe what is wrong with the result of `bind_cols` above and how it happened.
+
+- Write your answer here
+
+We'll use the following `beatles3` to *correctly* join the data.
+
+```{r beatles-full}
+## NOTE: No need to change this; setup
+beatles3 <-
+  tribble(
+    ~name, ~surname,
+    "John", "Lennon",
+    "Paul", "McCartney",
+    "George", "Harrison",
+    "Ringo", "Starr"
+  )
+
+beatles_joined <-
+  tribble(
+    ~band, ~name, ~surname, ~instrument,
+    "Beatles", "John", "Lennon", "guitar",
+    "Beatles", "Paul", "McCartney", "bass",
+    "Beatles", "George", "Harrison", "guitar",
+    "Beatles", "Ringo", "Starr", "drums"
+  )
+```
+
+### __q2__ Use the following `beatles3` to *correctly* join `beatles1`
+
+```{r q2-task}
+df_q2 <-
+## TODO: Join beatles1 and beatles2 using beatles3 to match rows
+
+df_q2
+```
+
+Use the following test to check your work:
+
+```{r q2-tests}
+## NOTE: No need to change this
+assertthat::assert_that(all_equal(df_q2, beatles_joined))
+print("Nice!")
+```
+
+There's a **very important lesson** here: In general, don't trust `bind_cols`.
+It's easy in the example above to tell there's a problem because the data are
+*small*; when working with larger datasets, R will happily give you the wrong
+answer if you give it the wrong instructions. Whenever possible, use some form
+of join to combine datasets.
+
+## Utility of Filtering Joins
+<!-- ------------------------- -->
+
+Filtering joins are an elegant way to produce complicated filters. They are
+especially helpful because you can first inspect what *criteria* you'll filter
+on, then perform the filter. We'll use the tidyr tool `expand_grid` to make such
+a criteria dataframe, then apply it to filter the `flights` data.
+
+### __q3__ Create a "grid" of values
+
+Use `expand_grid` to create a `criteria` dataframe with the `month` equal to `8,
+9` and the airport identifiers in `dest` for the San Francisco, San Jose, and
+Oakland airports.
+
+*Hint 1*: To find the airport identifiers, you can either use `str_detect` to
+filter the `airports` dataset, or use Google!
+
+*Hint 2*: Remember to look up the documentation for a function you don't yet know!
+
+```{r q3-task}
+criteria <-
+## TODO: Use expand_grid to create a criteria dataframe
+
+criteria
+```
+
+Use the following test to check your work:
+
+```{r q3-tests}
+## NOTE: No need to change this
+assertthat::assert_that(
+              all_equal(
+                criteria,
+                criteria %>%
+                semi_join(
+                  airports %>%
+                  filter(
+                    str_detect(name, "San Jose") |
+                    str_detect(name, "San Francisco") |
+                    str_detect(name, "Metropolitan Oakland")
+                ),
+                by = c("dest" = "faa")
+              )
+            )
+          )
+
+assertthat::assert_that(
+              all_equal(
+                criteria,
+                criteria %>% filter(month %in% c(8, 9))
+              )
+            )
+
+print("Well done!")
+```
+
+### __q4__ Use the `criteria` dataframe you produced above to filter `flights` on `dest` and `month`.
+
+*Hint*: Remember to use a *filtering join* to take advantage of the `criteria`
+dataset we built above!
+
+```{r q4-task}
+df_q4 <-
+  flights %>%
+## TODO: Use expand_grid to create a criteria dataframe
+
+df_q4
+```
+
+Use the following test to check your work:
+
+```{r q4-tests}
+## NOTE: No need to change this
+assertthat::assert_that(
+              all_equal(
+                df_q4,
+                df_q4 %>%
+                filter(
+                  month %in% c(8, 9),
+                  dest %in% c("SJC", "SFO", "OAK")
+                )
+              )
+            )
+
+print("Nice!")
+```
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data05-join-assignment.Rmd).

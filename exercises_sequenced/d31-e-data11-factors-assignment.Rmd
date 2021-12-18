@@ -1,0 +1,144 @@
+---
+title: "Factors"
+author: Zachary del Rosario
+date: 2020-07-24
+output: github_document
+time: 10
+reading: 0
+---
+
+# Data: Factors
+
+*Purpose*: Factors are an important type of variables. Since they're largely in
+a class of their own, there are special tools available in the package `forcats`
+to help wrangle factors.
+
+*Reading*: (None)
+
+```{r library}
+library(tidyverse)
+library(gapminder)
+```
+
+A *factor* is a variable that only takes fixed, often non-numeric, values.
+Factors are sometimes called *categorical variables*. We've already seen
+
+## Organization
+<!-- -------------------------------------------------- -->
+
+### __q1__ The following chunk displays the levels of the factor `continent`. Run
+the following code chunk and note in what *order* they are listed.
+
+```{r q1-task}
+## NOTE: No need to edit this
+diamonds %>%
+  pull(cut) %>%
+  levels()
+
+## TASK: Determine what order the factors are listed in.
+```
+
+**Observations**:
+
+- How are the factor levels ordered?
+- What---if any---relation does the order of the factor levels have to trends in the data?
+
+### __q2__ Determine the levels for the `continent` variable in the `gapminder` dataset. Note the *order* of the levels.
+
+```{r q2-task}
+## TASK: Determine the levels of the variable
+## TODO: Your code here!
+
+## TASK: Determine what order the factors are listed in.
+```
+
+**Observations**:
+
+- How are the factor levels ordered?
+- What---if any---relation does the order of the factor levels have to trends in the data?
+
+
+The [forcats](https://forcats.tidyverse.org/) package has tools for working with
+factors. For instance, we can assign manual factor levels with the function
+`fct_relevel()`. This is generally used in a `mutate()`; for instance `mutate(x
+= fct_relevel(x, "a", "b", "c")`.
+
+### __q3__ Relevel the continents.
+
+Copy your code from q2 and introduce a mutate using `fct_relevel()` to reorder `continent`. Choose which levels to reorder and what order in which to put them. Note how the resulting order is changed when you call `levels()` at the end of the pipe.
+
+```{r q3-task}
+
+```
+
+**Observations**:
+
+- How are the factor levels (re)ordered?
+
+## Visual Tricks
+<!-- -------------------------------------------------- -->
+
+When factors do no have any *meaningful* order, it is generally better to
+sort them on another variable, rather
+
+```{r mpg-unsorted}
+mpg %>%
+  mutate(manufacturer = fct_reorder(manufacturer, cty)) %>%
+
+  ggplot(aes(manufacturer, cty)) +
+  geom_boxplot() +
+  coord_flip()
+```
+
+The function `fct_reorder(f, x)` allows you to reorder the factor `f` based on
+another variable `x`. This will "match" the order between the two.
+
+### __q4__ Use `fct_reorder()` to sort `manufacturer` to match the order of `cty`.
+
+```{r q4-task}
+## TASK: Modify the following code to sort the factor `manufacturer` based on
+## `cty`.
+mpg %>%
+
+  ggplot(aes(manufacturer, cty)) +
+  geom_boxplot() +
+  coord_flip()
+```
+
+**Observations**:
+
+*Before*
+- Document your observations before sorting.
+*Sorted*
+- Modify the code to sort `manufacturer`, then note any additional observations you make.
+
+The function `fct_reorder2(f, x, y)` allows us to sort on *two* variables; this
+is most useful when making line plots.
+
+### __q5__ Sort the countries by values.
+
+Use `fct_reorder2()` to sort `country` to match the order of `x = year, y = pop`. Pay attention to the rightmost edge of the curves and the legend order. How does `fct_reorder2()` sort factors?
+
+```{r q5-task}
+## TASK: Modify the following code to sort the factor `country` based on `year`
+## and `pop`.
+gapminder %>%
+  filter(dense_rank(country) <= 7) %>%
+
+  ggplot(aes(year, pop, color = country)) +
+  geom_line() +
+  scale_y_log10()
+```
+
+**Observations**:
+
+- How does `fct_reorder2()` sort factors?
+
+This *small, simple trick* is extremely helpful for creating easily-readable
+line graphs.
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data11-factors-assignment.Rmd).

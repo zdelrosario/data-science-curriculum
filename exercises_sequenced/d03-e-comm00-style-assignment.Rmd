@@ -1,0 +1,144 @@
+---
+title: "Code Style"
+author: Zachary del Rosario
+date: 2020-05-05
+output: github_document
+time: 10
+reading: 10
+---
+
+# Communication: Code Style
+
+*Purpose*: From the tidyverse style guide "Good coding style is like correct
+punctuation: you can manage without it, butitsuremakesthingseasiertoread." We
+will follow the [tidyverse style guide](https://style.tidyverse.org/); Google's
+internal [R style guide](https://google.github.io/styleguide/Rguide.html) is
+actually based on these guidelines!
+
+*Reading*: [tidyverse style guide](https://style.tidyverse.org/).
+*Topics*: [Spacing](https://style.tidyverse.org/syntax.html#spacing) (subsection only), [Pipes](https://style.tidyverse.org/pipes.html) (whole section)
+*Reading Time*: ~ 10 minutes
+
+```{r setup}
+library(tidyverse)
+```
+
+### __q1__ Re-write according to the style guide
+
+*Hint*: The pipe operator `%>%` will help make this code more readable.
+
+```{r q1-task}
+## Original code; hard to read
+summarize(group_by(diamonds, cut), mean_price = mean(price))
+```
+
+```{r q1-solution}
+## TODO: Re-write the code above following the tidyverse style guide
+```
+
+### __q2__ Re-write according to the style guide
+
+*Hint*: There are *particular rules* about spacing!
+
+```{r q2-task}
+## NOTE: You can copy this code to the chunk below
+iris %>%
+  mutate(Sepal.Area=Sepal.Length*Sepal.Width) %>%
+  group_by( Species ) %>%
+  summarize_if(is.numeric,mean)%>%
+  ungroup() %>%
+  pivot_longer( names_to="measure",values_to="value",cols=-Species ) %>%
+  arrange(value )
+```
+
+```{r q2-solution}
+## TODO: Re-write the code above following the tidyverse style guide
+```
+
+### __q3__ Re-write according to the style guide
+
+*Hint*: What do we do about long lines?
+
+```{r q3-description}
+iris %>%
+  group_by(Species) %>%
+  summarize(Sepal.Length = mean(Sepal.Length), Sepal.Width = mean(Sepal.Width), Petal.Length = mean(Petal.Length), Petal.Width = mean(Petal.Width))
+```
+
+```{r q3-task}
+## TODO: Re-write the code above following the tidyverse style guide
+```
+
+The following is an *addition* I'm making to the "effective styleguide" for the
+class: Rather than doing this:
+
+```{r nopipe}
+## NOTE: No need to edit, just an example
+ggplot(diamonds, aes(carat, price)) +
+  geom_point()
+```
+
+Instead, do this:
+
+```{r withpipe}
+## NOTE: No need to edit, just an example
+diamonds %>%
+  ggplot(aes(carat, price)) +
+  geom_point()
+```
+
+This may seem like a small difference (it is), but getting in this habit will
+pay off when we start combining data operations with plotting; for instance:
+
+```{r withpipe-ops}
+## NOTE: No need to edit, just an example
+diamonds %>%
+  filter(1.5 <= carat, carat <= 2.0) %>%
+
+  ggplot(aes(carat, price)) +
+  geom_point()
+```
+
+Getting in the habit of "putting the data first" will make it easier for you to
+add preprocessing steps. Also, you can easily "disable" the plot to inspect your
+preprocessing while debugging; that is:
+
+```{r withpipe-ops-glimpse}
+## NOTE: No need to edit, just an example
+diamonds %>%
+  filter(1.5 <= carat, carat <= 2.0) %>%
+  glimpse()
+
+  ## ggplot(aes(carat, price)) +
+  ## geom_point()
+```
+
+I'll enforce this "data first" style, but after this class you are (of course)
+free to write code however you like!
+
+### __q4__ Re-write according to the style guide
+
+*Hint*: Put the data first!
+
+```{r q4-description}
+ggplot(
+  iris %>%
+  pivot_longer(
+    names_to = c("Part", ".value"),
+    names_sep = "\\.",
+    cols = -Species
+  ),
+  aes(Width, Length, color = Part)
+) +
+  geom_point() +
+  facet_wrap(~Species)
+```
+
+```{r q4-task}
+```
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-comm00-style-assignment.Rmd).

@@ -1,0 +1,124 @@
+---
+title: "Data Basics"
+author: Zach del Rosario
+date: 2020-05-03
+output: github_document
+time: 10
+reading: 0
+---
+
+# Data: Basics
+
+*Purpose*: When first studying a new dataset, there are very simple checks we
+should perform first. These are those checks.
+
+Additionally, we'll have our first look at the *pipe operator*, which will be
+super useful for writing code that's readable.
+
+*Reading*: (None)
+
+```{r setup}
+library(tidyverse)
+```
+
+```{r options, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## First Checks
+<!-- -------------------------------------------------- -->
+
+### __q0__ Run the following chunk:
+
+*Hint*: You can do this either by clicking the green arrow at the top-right of
+the chunk, or by using the keybaord shortcut `Shift` + `Cmd/Ctrl` + `Enter`.
+
+```{r }
+head(iris)
+```
+
+This is a *dataset*; the fundamental object we'll study throughout this course.
+Some nomenclature:
+
+- The `1, 2, 3, ...` on the left enumerate the **rows** of the dataset
+- The names `Sepal.Length`, `Sepal.Width`, `...` name the **columns** of the dataset
+- The column `Sepal.Length` takes **numeric** values
+- The column `Species` takes **string** values
+
+### __q1__ Load the `tidyverse` and inspect the `diamonds` dataset. What do the
+`cut`, `color`, and `clarity` variables mean?
+
+*Hint*: You can run `?diamonds` to get information on a built-in dataset.
+
+```{r load-packages, eval=FALSE}
+```
+
+### __q2__ Run `glimpse(diamonds)`; what variables does `diamonds` have?
+
+
+### __q3__ Run `summary(diamonds)`; what are the common values for each of the
+variables? How widely do each of the variables vary?
+
+*Hint*: The `Median` and `Mean` are common values, while `Min` and `Max` give us
+a sense of variation.
+
+```{r q3-task}
+summary(diamonds)
+```
+
+**Observations**:
+
+- (Write your observations here!)
+
+You should always analyze your dataset in the simplest way possible, build
+hypotheses, and devise more specific analyses to probe those hypotheses. The
+`glimpse()` and `summary()` functions are two of the simplest tools we have.
+
+## The Pipe Operator
+<!-- -------------------------------------------------- -->
+
+Throughout this class we're going to make heavy use of the *pipe operator*
+`%>%`. This handy little function will help us make our code more readable.
+Whenever you see `%>%`, you can translate that into the word "then". For
+instance
+
+```{r pipe-example}
+diamonds %>%
+  group_by(cut) %>%
+  summarize(carat_mean = mean(carat))
+```
+
+Would translate into the tiny "story"
+
+- Take the `diamonds` dataset, *then*
+- Group it by the variable `cut`, *then*
+- summarize it by computing the `mean` of `carat`
+
+*What the pipe actually does*. The pipe operator `LHS %>% RHS` takes its
+left-hand side (LHS) and inserts it as an the first argument to the function on
+its right-hand side (RHS). So the pipe will let us take `glimpse(diamonds)` and
+turn it into `diamonds %>% glimpse()`.
+
+### __q4__ Use the pipe operator to re-write `summary(diamonds)`.
+
+```{r q4-task}
+```
+
+## Reading Data
+<!-- -------------------------------------------------- -->
+
+So far we've only been looking at built-in datasets. Ultimately, we'll want to read in our own data. We'll get to the art of loading and *wrangling* data later, but for now, know that the `readr` package provides us tools to read data. Let's quickly practice loading data below.
+
+### __q5__ Use the function `read_csv()` to load the file `"./data/tiny.csv"`.
+
+```{r q5-task}
+
+df_q5
+```
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data00-basics-assignment.Rmd).

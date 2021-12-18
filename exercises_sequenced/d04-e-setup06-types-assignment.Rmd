@@ -1,0 +1,78 @@
+---
+title: "Setup: Types"
+author: Zachary del Rosario
+date: 2020-06-26
+output: github_document
+time: 10
+reading: 5
+---
+
+# Setup: Types
+
+*Purpose*: Vectors can hold data of only one *type*. While this isn't a course on computer science, there are some type "gotchas" to look out for when doing data science. This exercise will help us get ahead of those issues.
+
+*Reading*: [Types](https://rstudio.cloud/learn/primers/1.2)
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+## Objects vs Strings
+<!-- -------------------------------------------------- -->
+
+### __q1__ Describe what is wrong with the code below.
+
+```{r q1-task, eval=FALSE}
+## TASK: Describe what went wrong here
+## Set our airport
+airport <- "BOS"
+
+## Check our airport value
+airport == ATL
+```
+
+**Observations**:
+
+- Write your explanation here
+
+## Casting
+<!-- -------------------------------------------------- -->
+
+Sometimes our data will not be in the form we want; in this case we may need to *cast* the data to another format.
+
+- `as.integer(x)` converts to integer
+- `as.numeric(x)` converts to real (floating point)
+- `as.character(x)` converts to character (string)
+- `as.logical(x)` converts to logical (boolean)
+
+### __q2__ Cast the following vector `v_string` to integers.
+
+```{r q2-task}
+v_string <- c("00", "45", "90")
+v_integer <- NA_real_
+```
+
+Use the following test to check your work.
+
+```{r q2-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+  assertthat::are_equal(
+                v_integer,
+                c(0L, 45L, 90L)
+  )
+)
+print("Great job!")
+```
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-setup06-types-assignment.Rmd).

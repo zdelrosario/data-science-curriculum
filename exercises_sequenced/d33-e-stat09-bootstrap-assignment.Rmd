@@ -1,0 +1,278 @@
+---
+title: "Stats: The Bootstrap, Some Recipies"
+author: Zachary del Rosario
+date: 2020-07-20
+output: github_document
+time: 30
+reading: 0
+---
+
+# Stats: The Bootstrap, Some Recipies
+
+*Purpose*: Confidence intervals are an important tool for assessing our estimates. However, our tools so far for estimating confidence intervals rely on assumptions (normality, applicability of the CLT) that limit the statistics we can study. In this exercise we'll learn about a general-purpose tool we can use to approximate CI---the *bootstrap*.
+
+```{r setup}
+library(MASS)
+library(tidyverse)
+library(broom)
+library(rsample)
+```
+
+## A Simple Example: Estimating the Mean
+<!-- ------------------------- -->
+
+first, imagine that we have a sample from some population.
+
+```{r gen-data}
+## NOTE: No need to edit this setup
+set.seed(101)
+df_data_norm <- tibble(x = rnorm(50))
+
+df_data_norm %>%
+  ggplot(aes(x)) +
+  geom_histogram()
+```
+
+The set of samples---so long as it is representative of the population---is our *best available approximation* of the population. What the bootstrap does is operationalize this observation: We treat our sample as a population, and sample from it randomly. What that means is we generate some number of new *bootstrap samples* from our available sample. Visually, that looks like the following:
+
+```{r resamples-vis}
+## NOTE: No need to edit this setup
+df_resample_norm <-
+  bootstraps(df_data_norm, times = 1000) %>%
+  mutate(df = map(splits, ~ analysis(.x)))
+
+df_resample_norm %>%
+  slice(1:9) %>%
+  unnest(df) %>%
+  ggplot(aes(x)) +
+  geom_histogram() +
+  facet_wrap(~ id)
+```
+
+Every panel in this figure depicts a single *bootstrap resample*, drawn from our original sample. Each bootstrap resample plays the role of a single sample; we construct a resample, compute a single statistic for each bootstrap resample, and we do this whole process some number of `times`. In the example above, I set `times = 1000`; generally larger is better, but a good rule of thumb is to do `1000` resamples.
+
+*Notes*:
+
+- The `bootstraps()` function comes from the `rsample` package, which implements many different resampling strategies (beyond the bootstrap).
+- The `analysis()` function also comes from `rsample`; this is a special function we need to call when working with a resampling of the data [1].
+- We saw the `map()` function in `e-data10-map`; using `map()` above is necessary in part because we need to call `analysis()`. Since `analysis()` is not vectorized, we need the map to use this function on every split in `splits`.
+
+```{r demo-map}
+## NOTE: No need to edit this example
+v_mean_est <-
+  map_dbl(
+    df_resample_norm %>% pull(df),
+    ~ summarize(.x, mean_est = mean(x)) %>% pull(mean_est)
+  )
+
+v_mean_est[1:9]
+```
+
+### __q1__ Modify the code above to use within a `mutate()` call on `df_resample_norm`. Assign the mean estimates to the new column `mean_est`.
+
+```{r q1-task}
+## TASK: Use the demo-map code above to mutate df_resample_norm, create the column mean_est
+df_q1 <-
+  df_resample_norm
+
+df_q1
+```
+
+The following test will verify that your `df_q1` is correct:
+
+```{r q1-test}
+## NOTE: No need to change this!
+assertthat::assert_that(
+  assertthat::are_equal(
+    df_q1 %>% pull(mean_est),
+    v_mean_est
+  )
+)
+print("Great job!")
+```
+
+What we have now in `df_q1 %>% pull(mean_est)` is an approximation of the *sampling distribution* for the mean estimate. Remember that a confidence interval is a construction based on the sampling distribution, so this is the object we need! From this point, our job would be to work the mathematical manipulations necessary to construct a confidence interval from the quantiles of `df_q1 %>% pull(mean_est)`. Thankfully, the `rsample` package has already worked out those details for us!
+
+The `rsample` function `int_pctl()` will compute (percentile) confidence intervals from a bootstrap resampling, but we need to compute our own statistics. Remember the `fitdistr()` function from the previous exercise?
+
+```{r recall-fitdistr}
+# NOTE: No need to change this demo code
+df_data_norm %>%
+  pull(x) %>%
+  fitdistr(densfun = "normal") %>%
+  tidy()
+```
+
+The output of `fitdistr()`, after run through `tidy()`, is exactly what `int_pctl()` expects. Note that the output here is a tibble with a `term` column and two statistics: the  `estimate` and the `std.error`. To use `int_pctl()`, we'll have to provide statistics in this compatible form.
+
+### __q2__ Modify the code below following `recall-fitdistr` to provide tidy results to `int_pctl()`.
+
+*Hint*: You should only have to modify the formula (`~`) line.
+
+```{r q2-task}
+## TASK: Edit this code to produce results that work with `int_pctl()`
+df_q2 <-
+  df_resample_norm %>%
+  mutate(
+    estimates = map(
+      splits,
+      ~ analysis(.x) %>% summarize(mean_est = mean(x)) %>% pull(mean_est)
+    )
+  )
+
+# NOTE: The following function call will work once you correctly edit the code above
+int_pctl(df_q2, estimates)
+```
+
+Once you learn how to provide statistics in the form that `int_pctl()` is expecting, you're off to the races! You can use the bootstrap to compute confidence intervals for very general settings.
+
+One of the important things to remember is that the bootstrap is an *approximation*. The bootstrap relies on a number of assumptions; there are many, but two important ones are:
+
+1. The data are representative of the population
+2. Resampling is performed sufficiently many times
+
+The next two tasks will study what happens when these two assumptions are not met.
+
+### __q3__ (Representative sample) Read the following code before running it, and make a hypothesis about the result. Is the sample entering `bootstraps()` representative of the population `rnorm(mean = 0, sd = 1)`? How are the bootstrap results affected?
+
+```{r q3-task}
+## TASK: Read this code; will the data be representative of the population
+## rnorm(mean = 0, sd = 1)?
+tibble(x = rnorm(n = 100)) %>%
+  filter(x < 0) %>%
+
+  bootstraps(times = 1000) %>%
+  mutate(
+    estimates = map(
+      splits,
+      ~ analysis(.x) %>% pull(x) %>% fitdistr(densfun = "normal") %>% tidy()
+    )
+  ) %>%
+  int_pctl(estimates)
+```
+
+**Observations**:
+
+- Write your hypothesis about what will happen
+- Is the sample representative of the population?
+- How are the bootstrap results affected?
+
+The following code generates `100` different samples from a normal distribution (each with `n = 10`), and computes a very coarse bootstrap for each one.
+
+### __q4__ (Number of replicates) First run this code, and comment on whether the approximate coverage probability is close to the nominal `0.95`. Increase the value of `n_boot` and re-run; at what point does the coverage probability approach the desired `0.95`?
+
+*Note*: At higher values of `n_boot`, the following code can take a long while to run. I recommend keeping `n_boot <= 1000`.
+
+```{r q4-task}
+## TASK: Run this code,
+set.seed(101)
+times <- 10
+
+df_q4 <-
+  map_dfr(
+    seq(1, 100), # Number of replicates
+    function(repl) {
+      tibble(x = rnorm(10)) %>%
+        bootstraps(times = times) %>%
+        mutate(
+          estimates = map(
+            splits,
+            ~ analysis(.x) %>% pull(x) %>% fitdistr(densfun = "normal") %>% tidy()
+          )
+        ) %>%
+        int_pctl(estimates, alpha = 1 - 0.95) %>%
+        mutate(repl = repl)
+    }
+  )
+
+## Estimate the coverage probability of the bootstrap intervals
+df_q4 %>%
+  filter(term == "mean") %>%
+  mutate(cover = (.lower <= 0) & (0 <= .upper)) %>%
+  summarize(mean(cover))
+```
+
+**Observations**:
+
+- How does the observed coverage probability compare to the nominal `0.95` the procedure is seeking?
+- What setting of `n_boot` do you need to set such that the coverage probability approaches the desired `0.95`?
+
+*Aside*: The `rsample` function `int_pctl` actually complains when you give it fewer than `1000` replicates. Since you'll usually be running the bootstrap only a handful of times (rather than `100` above), you need not be stingy with bootstrap replicates. Do at least `1000` in most cases.
+
+## A Worked Example: Probability Estimate
+<!-- ------------------------- -->
+
+To finish, I'll present some example code on how you can apply the bootstrap to a more complicated problem. In the previous exercise `e-stat08-fit-dist` we estimated a probability based on a fitted distribution. Now we have the tools to produce a bootstrap-approximated a confidence interval for that probability estimate.
+
+Remember that we had the following setup: sampling from a weibull distribution and estimating parameters with `fitdistr()`.
+
+```{r pr-setup}
+## NOTE: No need to change this example code
+set.seed(101)
+
+df_data_w <- tibble(y = rweibull(50, shape = 2, scale = 4))
+pr_true <- pweibull(q = 2, shape = 2, scale = 4)
+
+df_data_w %>%
+  pull(y) %>%
+  fitdistr(densfun = "weibull") %>%
+  tidy()
+```
+
+In order to approximate a confidence interval for our probability estimate, we'll need to provide the probability value in the form that `int_pctl()` expects. Below I define a helper function that takes each split, extracts the estimated parameters, and uses them to compute a probability estimate. I then add that value as a new row to the output of `tidy()`, making sure to populate the columns `estimate` and `term`.
+
+```{r pr-bootstrap}
+## NOTE: No need to change this example code; but feel free to adapt it!
+fit_fun <- function(split) {
+  ## Fit distribution
+  df_tmp <-
+    analysis(split) %>%
+    pull(y) %>%
+    fitdistr(densfun = "weibull") %>%
+    tidy()
+
+  ## Extract statistics
+  scale_est <-
+    df_tmp %>%
+    filter(term == "scale") %>%
+    pull(estimate)
+  shape_est <-
+    df_tmp %>%
+    filter(term == "shape") %>%
+    pull(estimate)
+
+  ## Add probability estimate in tidy form
+  df_tmp %>%
+    bind_rows(tibble(
+      estimate = pweibull(q = 2, scale = scale_est, shape = shape_est),
+      term = "pr"
+    ))
+}
+
+df_resample_pr <-
+  bootstraps(df_data_w, times = 1000) %>%
+  mutate(estimates = map(splits, fit_fun))
+```
+
+Now I've got all the information I need to pass to `df_resample_pr`:
+
+```{r pr-ci}
+## NOTE: No need to change this example code
+int_pctl(df_resample_pr, estimates)
+pr_true
+```
+
+When I run this, I find that the confidence interval contains `pr_true` as one might hope!
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-stat09-bootstrap-assignment.Rmd).
+
+## Notes
+<!-- -------------------------------------------------- -->
+
+[1] This is because `rsample` does some fancy stuff under the hood. Basically `bootstraps` does not make any additional copies of the data; the price we pay for this efficiency is the need to call `analysis()`.
+
+[2] For a slightly more mathematical treatment of the bootstrap, try [these MIT course notes](https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading24.pdf)

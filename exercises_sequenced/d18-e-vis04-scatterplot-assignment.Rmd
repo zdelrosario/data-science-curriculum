@@ -1,0 +1,208 @@
+---
+title: "Vis: Scatterplots and Layers"
+author: Zach del Rosario
+date: 2020-06-04
+output: github_document
+time: 20
+reading: 40
+---
+
+# Vis: Scatterplots and Layers
+
+*Purpose*: *Scatterplots* are a key tool for EDA. Scatteplots help us inspect the relationship between two variables. To enhance our scatterplots, we'll learn how to use *layers* in ggplot to add multiple pieces of information to our plots.
+
+*Reading*: [Scatterplots](https://rstudio.cloud/learn/primers/3.5)
+*Topics*: (All topics)
+*Reading Time*: ~40 minutes
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+## A Note on Layers
+<!-- -------------------------------------------------- -->
+
+In the reading we learned about *layers* in ggplot. Formally, ggplot is a
+"layered grammar of graphics"; each layer has the option to use built-in or
+inherited defaults, or override those defaults. There are two major settings we
+might want to change: the source of `data` or the `mapping` which defines the
+aesthetics. If we're being verbose, we write a ggplot call like:
+
+```{r exposition-1}
+## NOTE: No need to modify! Just example code
+ggplot(
+  data = mpg,
+  mapping = aes(x = displ, y = hwy)
+) +
+  geom_point()
+```
+
+However, ggplot makes a number of sensible defaults to help save us typing.
+Ggplot assumes an order for `data, mapping`, so we can drop the keywords:
+
+```{r exposition-2}
+## NOTE: No need to modify! Just example code
+ggplot(
+  mpg,
+  aes(x = displ, y = hwy)
+) +
+  geom_point()
+```
+
+Similarly the aesthetic function `aes()` assumes the first two arguments will be
+`x, y`, so we can drop those arguments as well
+
+```{r exposition-3}
+## NOTE: No need to modify! Just example code
+ggplot(
+  mpg,
+  aes(displ, hwy)
+) +
+  geom_point()
+```
+
+Above `geom_point()` inherits the `mapping` from the base `ggplot` call;
+however, we can override this. This can be helpful for a number of different
+purposes:
+
+```{r exposition-4}
+## NOTE: No need to modify! Just example code
+ggplot(mpg, aes(x = displ)) +
+  geom_point(aes(y = hwy, color = "hwy")) +
+  geom_point(aes(y = cty, color = "cty"))
+```
+
+Later, we'll learn more concise ways to construct graphs like the one above. But
+for now, we'll practice using layers to add more information to scatterplots.
+
+## Exercises
+<!-- -------------------------------------------------- -->
+
+### __q1__ Add two `geom_smooth` trends to the following plot. Use "gam" for one
+trend and "lm" for the other. Comment on how linear or nonlinear the "gam" trend
+looks.
+
+```{r q1-task}
+## TODO: Add a "gam" and "lm" smooth to the following plot
+diamonds %>%
+  ggplot(aes(carat, price)) +
+  geom_point()
+```
+
+**Observations**:
+- Does the "gam" trend look linear?
+
+### __q2__ Add non-overlapping labels to the following scattterplot using the
+provided `df_annotate`.
+
+*Hint 1*: `geom_label_repel` comes from the `ggrepel` package. Make sure to load
+it, and adhere to best-practices!
+
+*Hint 2*: You'll have to use the `data` keyword to override the data layer!
+
+```{r q2-task}
+## TODO: Use df_annotate below to add text labels to the scatterplot
+df_annotate <-
+  mpg %>%
+  group_by(class) %>%
+  summarize(
+    displ = mean(displ),
+    hwy = mean(hwy)
+  )
+
+mpg %>%
+  ggplot(aes(displ, hwy)) +
+  geom_point(aes(color = class))
+```
+
+### __q3__ Study the following scatterplot: Note whether city (`cty`) or highway
+(`hwy`) mileage tends to be greater. Describe the trend (visualized by
+`geom_smooth`) in mileage with engine displacement (a measure of engine size).
+
+*Note*: The grey region around the smooth trend is a *confidence bound*; we'll
+discuss these further as we get deeper into statistical literacy.
+
+```{r q3-task}
+## NOTE: No need to modify! Just analyze the scatterplot
+mpg %>%
+  pivot_longer(names_to = "source", values_to = "mpg", c(hwy, cty)) %>%
+  ggplot(aes(displ, mpg, color = source)) +
+  geom_point() +
+  geom_smooth() +
+  scale_color_discrete(name = "Mileage Type") +
+  labs(
+    x = "Engine displacement (liters)",
+    y = "Mileage (mpg)"
+  )
+```
+
+**Observations**:
+- Which tends to be larger? `cty` or `hwy` mileage?
+- What is the trend of mileage with `displ`?
+
+## Aside: Scatterplot vs bar chart
+<!-- -------------------------------------------------- -->
+
+Why use a scatterplot vs a bar chart? A bar chart is useful for emphasizing some *threshold*. Let's look at a few examples:
+
+## Raw populations
+<!-- ------------------------- -->
+
+Two visuals of the same data:
+
+```{r vis-bar-raw}
+economics %>%
+  filter(date > lubridate::ymd("2010-01-01")) %>%
+  ggplot(aes(date, pop)) +
+  geom_col()
+```
+
+Here we're emphasizing zero, so we don't see much of a change
+
+```{r vis-point-raw}
+economics %>%
+  filter(date > lubridate::ymd("2010-01-01")) %>%
+  ggplot(aes(date, pop)) +
+  geom_point()
+```
+
+Here's we're not emphasizing zero; the scale is adjusted to emphasize the trend in the data.
+
+## Population changes
+<!-- ------------------------- -->
+
+Two visuals of the same data:
+
+```{r vis-bar-change}
+economics %>%
+  mutate(pop_delta = pop - lag(pop)) %>%
+  filter(date > lubridate::ymd("2005-01-01")) %>%
+  ggplot(aes(date, pop_delta)) +
+  geom_col()
+```
+
+Here we're emphasizing zero, so we can easily see the month of negative change.
+
+```{r vis-point-change}
+economics %>%
+  mutate(pop_delta = pop - lag(pop)) %>%
+  filter(date > lubridate::ymd("2005-01-01")) %>%
+  ggplot(aes(date, pop_delta)) +
+  geom_point()
+```
+
+Here we're not emphasizing zero; we can easily see the outlier month, but we have to read the axis to see that this is a case of negative growth.
+
+For more, see [Bars vs Dots](https://dcl-data-vis.stanford.edu/discrete-continuous.html#bars-vs.-dots).
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-vis04-scatterplot-assignment.Rmd).

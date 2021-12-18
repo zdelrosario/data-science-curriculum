@@ -1,0 +1,124 @@
+---
+title: "Reproducibility: Structuring Directories"
+author: Zachary del Rosario
+date: 2020-07-23
+output: github_document
+time: 10
+reading: 10
+---
+
+# Reproducibility: Structuring Directories
+
+*Purpose*: A key part of being successful in data science is *getting
+organized*. In this exercise, you'll set yourself up for future success by
+learning how to *structure* a project in terms of its folder hierarchy: its
+*directories*. You'll learn how to isolate your projects, structure your
+subdirectories, and protect your raw data.
+
+*Reading*: [Project Structure](https://reproducible-science-curriculum.github.io/organization-RR-Jupyter/02-directories/) (Skim: Provided so you can see an example of a well-structured project directory)
+
+## Reading: Structuring a Project
+<!-- -------------------------------------------------- -->
+
+In this exercise, we'll assume that you are working on a project.
+
+## Isolate your project
+
+While there are [many
+ways](https://medium.com/javascript-in-plain-english/how-to-organize-project-files-4b9d9fd02e73)
+to *organize* a given project, you should **definitely** organize your work into
+individual *projects*. Each project should have its own directory, and should
+generally have all its related files under that directory.
+
+For instance, `data-science-curriculum` is in my mind an entire project, containing both exercises and challenges. Thus for me, it makes sense to organize all of these *subdirectories* under `data-science-curriculum`.
+
+## Structure your subdirectories
+
+Subdirectories are folders (directories!) *under* the main (root) project
+folder. For instance, the `data-science-curriculum` has subdirectories
+`exercises`, `challenges`, and more.
+
+Each subdirectory should have some *purpose*. For instance, there are both
+`exercises` and `exercises_sequenced` directories. I build the exercises in
+`exercises` out-of-sequence, because I don't want to have to decide on which
+specific day each exercise should occur *before* I start building it. However,
+it's useful for you the student to be able to see all the exercises in daily
+order, so I have an additional directory where I can place the sequenced
+exercises.
+
+Knitr will *automatically* create some sensible subdirectories for report files;
+for instance, when you knit a document knitr will automatically create a
+`filename_files` directory with image files. This helps prevent clutter in your
+directory, and places the file adjacent to the source file in your
+(sub)directory.
+
+Your project can have deeper levels of *hierarchy*: *subdirectors under
+subdirectories*. For instance, the `exercises` folder has a subdirectory
+`exercises/data`; this is where exercise datasets live. In your own projects,
+you should keep your data *unaltered* in some kind of data directory.
+
+## Protect your data!
+
+**Never** make alterations to your raw data! Even if your data have errors, it's
+far better to *document* those errors somewhere, such that you have a papertrail
+for what changed and why. It is far better practice to keep your data unedited,
+and simply write *processed* data to an additional file.
+
+If your data needs preprocessing---say to fix errors or simply to wrangle
+data---write a preprocessing Rmarkdown file that takes in the raw data, and
+writes out a processed version of the data. You can then load the processed data
+in later scripts, and all of your processing steps will be permanently
+documented.
+
+## Practice: Set up a project
+<!-- -------------------------------------------------- -->
+
+Let's set you up for future success by creating a directory for your Project 1.
+
+### __q1__ Create a project directory in your personal data science rep called
+`p01-name`. If you already know what you're going to work on, feel free to
+replace `name` with something sensible. If you don't know what to call it yet,
+don't worry---you can change it later!
+
+### __q2__ Create a `data` directory under `p01-name`; you should then have
+`p01-name/data`. This is where you will put any data files you read or write in the project.
+
+There's a *trick* to committing an empty folder with Git. We'll need to
+introduce some kind of file to preserve an empty directory structure.
+
+### __q3__ Create an empty file called `.gitignore` under your `data` folder. You
+can do this from the root of your data science repo by using the following from
+your command line:
+
+```{bash, eval=FALSE}
+# Move to your data science directory
+$ ~/path/to/your/data-science-work # Replace with your real directory!
+# Add the special .gitignore file
+$ touch p01-name/data/.gitignore
+```
+
+A `.gitignore` file is a [useful
+tool](https://www.atlassian.com/git/tutorials/saving-changes/gitignore); it
+tells git what kinds of files to *ignore* when it comes to tracking files. We're
+using it here for a different purpose; we can now *commit* that `.gitignore` in
+order to commit our directory structure.
+
+```{bash, eval=FALSE}
+$ git add p01-name/data/.gitignore
+$ git commit -m "add p01 directory structure"
+```
+
+Commit and push your directory structure. You can fill this in once you start
+Project 1.
+
+**Key Takeaways**:
+
+- **Isolate** your project by making a folder *for that specific project*.
+- **Structure** your project by creating directories for different filetypes: data, analysis code, and outputs.
+- **Protect** your raw data somewhere, **do not** make irreversible edits to the raw data.
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-rep04-directories-assignment.Rmd).

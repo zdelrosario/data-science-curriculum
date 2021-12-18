@@ -1,0 +1,270 @@
+---
+title: "Vis: Control Charts"
+author: Zach del Rosario
+date: 2020-08-06
+output: github_document
+time: 30
+reading: 0
+---
+
+# Vis: Control Charts
+
+*Purpose*: Remember in c02-michelson (q4) when you studied a *control chart*? Now that we've learned about confidence intervals, we can more formally study control charts. These are a key tool in [statistical process control](https://en.wikipedia.org/wiki/Statistical_process_control), which is how manufacturers rigorously track and control the quality of manufactured goods. Control charts help a process manager track when something has gone wrong in a manufacturing line, and are used to determine when a process is running smoothly.
+
+*Reading*: [Example use](https://www.itl.nist.gov/div898/handbook/mpc/section3/mpc3521.htm) of a control chart, based on NIST mass calibration data. (Optional)
+
+*Prerequisites*: c02-michelson, e-stat06-clt
+
+```{r setup}
+library(tidyverse)
+```
+
+## Control Chart: Example
+
+Below is an example of a control chart: A control chart is used to help detect when something out-of-the-ordinary occurred. Essentially, it is a tool to help us determine when something non-random happened so we can plan a follow-up study and prevent that non-random event from happening in the future. To do that detection work, we look for patterns.
+
+Note that two kinds of patterns have been highlighted below: an outlier that lies outside the *control limits*, and a "run" of batch means that all lie off-center (to one side of the "grand mean," the solid line).
+
+![control chart](./images/control-chart.png)
+
+## Control chart steps
+
+To construct and use a control chart, follow these steps:
+
+1. Group individual observations into consecutive batches, say 4 to 10 observations. If parts are manufactured in batches, then use those groups.
+2. Take the mean of each batch, compute the "grand mean" based on all of the data, and establish "control limits" based on a confidence interval for the batch means (where $n$ is your batch size).
+3. Plot each batch mean sequentially, and visually indicate the control limits and grand mean on your plot.
+4. Compare each batch mean against the control limits and grand mean. Look for patterns to suggest batches where something out-of-the-ordinary happened. Some examples include:
+- Batches that fall outside the control limits
+- Consecutive batches that lie above or below the mean
+- Persistent up-and-down patterns
+
+If there are no coherent patterns and if only an expected number of batch means fall outside the control limits, then there is no evidence for non-random behavior. A process free of any obvious non-random behavior is said to be under *statistical control*, or to be a  [stable process](https://en.wikipedia.org/wiki/Statistical_process_control#Stable_process).
+
+If you *do* detect something out-of-the-ordinary, use the batch index to go investigate those cases in greater detail. **A control chart helps you *detect* when something went wrong---it does *not* tell you what went wrong.**
+
+Like any form of EDA, it is also a good idea to experiment with different batch sizes.
+
+## Data Preparation
+
+To illustrate the control chart concept, let's first generate some data that is completely random.
+
+```{r generate-data}
+set.seed(101)
+df_data <-
+  tibble(X = rnorm(n = 1000))
+```
+
+Following Step 1, we need to assign batch identifiers to group the data.
+
+### __q1__ Use integer division `%/%` and the `row_number()` helper to group consecutive observations into groups of `4` with a common identifier `id`.
+
+*Hint*: Since `R` is a one-based index language, you will need to adjust the output of `row_number()` before performing the integer division `%/%`.
+
+```{r q1-task}
+## TODO: Edit the code below to create an `id` column where
+#        consecutive groups of 4 rows have the same id
+df_q1 <-
+  df_data %>%
+  mutate(id = row_number())
+df_q1
+```
+
+Use the following to check your work.
+
+```{r q1-tests}
+## NOTE: No need to change this
+assertthat::assert_that(
+df_q1 %>%
+  filter(row_number() <= 4) %>%
+  summarize(sd = sd(id)) %>%
+  pull(sd) == 0
+)
+assertthat::assert_that(
+df_q1 %>%
+  filter(row_number() >= 997) %>%
+  summarize(sd = sd(id)) %>%
+  pull(sd) == 0
+)
+
+print("Nice!")
+```
+
+## Generate Control Limits
+
+Next, we'll use our knowledge about confidence intervals and the CLT to set the *control limits*, based on our batch size.
+
+### __q2__ Use a central limit theorem (CLT) approximation to set 3 sigma confidence interval limits on the group mean you computed above.
+
+*Note*: A 3 sigma bound corresponds to a coverage probability of `1 - pnorm(-3) * 2`; approximately $99.7%$.
+
+*Hint*: Think carefully about how many samples will be in each *group*, not in your dataset in total.
+
+```{r q2-task}
+## TODO: Edit the code below to create an `id` column where
+#        consecutive groups of 4 rows have the same id
+X_grand <- NA_real_
+X_g4_lo <- NA_real_
+X_g4_up <- NA_real_
+X_g4_lo
+X_grand
+X_g4_up
+```
+
+Use the following to check your work.
+
+```{r q2-tests}
+## NOTE: No need to change this
+assertthat::assert_that(abs(X_g4_lo + 3 / sqrt(4)) < 0.1)
+assertthat::assert_that(abs(X_grand) < 0.05)
+assertthat::assert_that(abs(X_g4_up - 3 / sqrt(4)) < 0.1)
+
+print("Excellent!")
+```
+
+## Visualize and Interpret
+
+### __q3__ Inspect the following control chart, and answer the questions under *observe* below.
+
+```{r q3-task}
+## NOTE: No need to edit; run and inspect
+df_q1 %>%
+  group_by(id) %>%
+  summarize(X_batch = mean(X)) %>%
+
+  ggplot(aes(id, X_batch)) +
+  geom_hline(yintercept = X_g4_lo, linetype = "dashed") +
+  geom_hline(yintercept = X_grand) +
+  geom_hline(yintercept = X_g4_up, linetype = "dashed") +
+  geom_point() +
+  theme_minimal() +
+  labs(
+    x = "Batch Index",
+    y = "Batch Mean"
+  )
+```
+
+**Observations**:
+- How many points would you *expect* to lie outside the control limits, assume the data were completely random?
+  - (Your response here)
+- How many points lie *outside* the control limits? Is this about as many as you would expect if the data were random?
+  - (Your response here)
+- Do you see any coherent patterns in the points? Does this make sense?
+  - (Your response here)
+
+## Control Chart: Application
+
+Next you will construct a control chart for a real dataset. The following code downloads and parses a dataset from the NIST website studying [proof masses](https://en.wikipedia.org/wiki/Proof_mass). These are comparative measurements between "exact" 1 kilogram masses, carried out by one of the world's most-rigorous measurement societies.
+
+```{r read-nist}
+## NO NEED TO EDIT; the following will download and read the data
+url <- "https://www.itl.nist.gov/div898/handbook/datasets/MASS.DAT"
+filename <- "./data/nist-mass.dat"
+download.file(url, filename)
+df_mass <-
+  read_table(
+    filename,
+    skip = 25,
+    col_names = c(
+      "date",
+      "standard_id",
+      "Y",
+      "balance_id",
+      "residual_sd",
+      "design_id"
+    )
+  )
+df_mass
+```
+
+Note that `Y` denotes a kind of comparison between multiple "exact" 1 kilogram masses (with `Y` measured in micrograms), while `date` denotes the (fractional) years since 1900.
+
+First, try plotting and interpreting the data without a control chart.
+
+### __q4__ Plot the measured values `Y` against their date of measurement `date`. Answer the questions under *Observations* below.
+
+```{r q4-task}
+## TASK: Plot Y vs date
+df_mass %>%
+  ggplot(aes(date, Y)) +
+  geom_point() +
+  theme_minimal() +
+  labs(y = "Measurement (micrograms)")
+```
+
+**Observations**:
+- These measurement were carried out by some of the most experienced measurement scientists in the world. Are professional measurements *exactly* repeatable?
+  - (Your response here)
+- What patterns do you notice?
+  - (Your observation here)
+  - (Your observation here)
+  - ...
+
+Next, prepare the data for a control chart of the NIST data.
+
+### __q5__ Generate control chart data for a batch size of `10`.
+
+```{r q5-task}
+n_group <- 10
+## TODO: Complete the following code to prepare the data for a control chart
+## Batched data; edit this code
+df_q4 <-
+  df_mass %>%
+  group_by(date) %>%
+  summarize(
+    Y_mean = mean(Y),
+    date = min(date)
+  )
+## Control limits and grand mean; complete this code
+Y_mean <- NA_real_
+Y_sd <- NA_real_
+Y_g_lo <- NA_real_
+Y_g_up <- NA_real_
+Y_g_lo
+Y_mean
+Y_g_up
+```
+
+Use the following to check your work.
+
+```{r q5-tests}
+## NOTE: No need to change this
+assertthat::assert_that(abs(Y_g_lo + 19.49853) < 1e-4)
+assertthat::assert_that(abs(Y_mean + 19.46452) < 1e-4)
+assertthat::assert_that(abs(Y_g_up + 19.43051) < 1e-4)
+
+print("Excellent!")
+```
+
+Next, plot the control chart data and inspect.
+
+### __q6__ Run the following chunk and answer the questions under *Observations* below.
+
+```{r q6-task}
+## NOTE: No need to edit; run and inspect
+df_q4 %>%
+  ggplot(aes(date, Y_mean)) +
+  geom_hline(yintercept = Y_g_lo, linetype = "dashed") +
+  geom_hline(yintercept = Y_mean) +
+  geom_hline(yintercept = Y_g_up, linetype = "dashed") +
+  geom_point() +
+  theme_minimal() +
+  labs(
+    x = "Batch Year",
+    y = "Measurement (micrograms)"
+  )
+```
+
+**Observations**:
+- Copy the patterns you noticed above down here; compare those against this new control chart.
+  - (Your responses here)
+- What additional observations can you make, based on the control chart?
+  - (Your response here)
+
+Remember that a control chart is only a *detection* tool; to say more, you would need to go investigate the data collection process.
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-vis10-control-chart-assignment.Rmd).

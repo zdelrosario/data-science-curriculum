@@ -1,0 +1,408 @@
+---
+title: "Model: Logistic Regression"
+author: Zachary del Rosario
+date: 2020-08-09
+output: github_document
+time: 40
+reading: 11
+---
+
+# Model: Logistic Regression
+
+*Purpose*: So far we've talked about models to predict continuous values. However, we can also use models to make predictions about *binary outcomes*---classification. Classifiers are useful for a variety of uses, but they introduce a fair bit more complexity than simple linear models. In this exercise you'll learn about *logistic regression*: a variation on linear regression that is useful for classification.
+
+*Reading*: [StatQuest: Logistic Regression](https://www.youtube.com/watch?v=vN5cNN2-HWE) (Required, just watch up to 10:47 and dont' worry about the p-value stuff).
+
+```{r setup}
+library(tidyverse)
+library(modelr)
+library(broom)
+```
+
+*Note*: This exercise is heavily inspired by Josh Starmer's [logistic regression](https://github.com/StatQuest/logistic_regression_demo/blob/master/logistic_regression_demo.R) example.
+
+*Background*: This exercise's data comes from the UCI Machine Learning Database; specifically their [Heart Disease Data Set](https://archive.ics.uci.edu/ml/datasets/Heart+Disease). These data consist of clinical measurements on patients, and are intended to help study heart disease.
+
+## Setup
+<!-- ------------------------- -->
+
+Note: The following chunk contains *a lot of stuff*, but you already did this in e-data13-cleaning!
+
+```{r uci-data}
+## NOTE: No need to edit; you did all this in a previous exercise!
+url_disease <- "http://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data"
+filename_disease <- "./data/uci_heart_disease.csv"
+
+## Download the data locally
+curl::curl_download(
+        url_disease,
+        destfile = filename_disease
+      )
+
+## Wrangle the data
+col_names <- c(
+  "age",
+  "sex",
+  "cp",
+  "trestbps",
+  "chol",
+  "fbs",
+  "restecg",
+  "thalach",
+  "exang",
+  "oldpeak",
+  "slope",
+  "ca",
+  "thal",
+  "num"
+)
+
+## Recoding functions
+convert_sex <- function(x) {
+  case_when(
+    x == 1 ~ "male",
+    x == 0 ~ "female",
+    TRUE ~ NA_character_
+  )
+}
+convert_cp <- function(x) {
+  case_when(
+    x == 1 ~ "typical angina",
+    x == 2 ~ "atypical angina",
+    x == 3 ~ "non-anginal pain",
+    x == 4 ~ "asymptomatic",
+    TRUE ~ NA_character_
+  )
+}
+convert_fbs <- function(x) {
+  if_else(x == 1, TRUE, FALSE)
+}
+convert_restecv <- function(x) {
+  case_when(
+    x == 0 ~ "normal",
+    x == 1 ~ "ST-T wave abnormality",
+    x == 2 ~ "Estes' criteria",
+    TRUE ~ NA_character_
+  )
+}
+convert_exang <- function(x) {
+  if_else(x == 1, TRUE, FALSE)
+}
+convert_slope <- function(x) {
+  case_when(
+    x == 1 ~ "upsloping",
+    x == 2 ~ "flat",
+    x == 3 ~ "downsloping",
+    TRUE ~ NA_character_
+  )
+}
+convert_thal <- function(x) {
+  case_when(
+    x == 3 ~ "normal",
+    x == 6 ~ "fixed defect",
+    x == 7 ~ "reversible defect",
+    TRUE ~ NA_character_
+  )
+}
+
+## Load and wrangle
+df_heart_disease <-
+  read_csv(
+    filename_disease,
+    col_names = col_names,
+    col_types = cols(
+      "age" = col_number(),
+      "sex" = col_number(),
+      "cp" = col_number(),
+      "trestbps" = col_number(),
+      "chol" = col_number(),
+      "fbs" = col_number(),
+      "restecg" = col_number(),
+      "thalach" = col_number(),
+      "exang" = col_number(),
+      "oldpeak" = col_number(),
+      "slope" = col_number(),
+      "ca" = col_number(),
+      "thal" = col_number(),
+      "num" = col_number()
+    )
+  ) %>%
+  mutate(
+    sex = convert_sex(sex),
+    cp = convert_cp(cp),
+    fbs = convert_fbs(fbs),
+    restecg = convert_restecv(restecg),
+    exang = convert_exang(exang),
+    slope = convert_slope(slope),
+    thal = convert_thal(thal)
+  )
+
+df_heart_disease
+```
+
+The data above are *clean*, but we still need to prepare them for *modeling*. Remember from e-data13-cleaning that we had to filter out rows with `NA` values. Additionally, we're going to convert `num` (a numerical factor) into a binary outcome indicating the presence of heart disease:
+
+```{r prep-data}
+## NOTE: No need to edit; preparing the data for modeling
+df_data <-
+  df_heart_disease %>%
+  rowid_to_column() %>%
+  ## Filter rows with NA's (you did this in e-data13-cleaning)
+  filter(!is.na(ca), !is.na(thal)) %>%
+  ## Create binary outcome for heart disease
+  mutate(heart_disease = num > 0)
+```
+
+The last step of data setup is up to you!
+
+### __q1__ Perform a train-validate split of `df_data`. Make sure to *shuffle* the data when splitting, and ensure that `df_train` and `df_validate` together contain the entire dataset.
+
+```{r q1-task}
+n_train <- 200
+
+## TODO: Perform a test-validate split
+df_train <-
+  df_data
+
+df_validate <-
+  df_data
+```
+
+Use the following to check your code.
+
+```{r q1-tests}
+## NOTE: No need to change this
+# Correct size
+assertthat::assert_that(
+  dim(bind_rows(df_train, df_validate))[1] == dim(df_data)[1]
+)
+# All rowid's appear exactly once
+assertthat::assert_that(all(
+  bind_rows(df_train, df_validate) %>% count(rowid) %>% pull(n) == 1
+))
+# Data shuffled
+assertthat::assert_that(
+  !all(
+    bind_rows(df_train, df_validate) %>% pull(rowid) ==
+    df_data %>% pull(rowid)
+  )
+)
+
+print("Well done!")
+```
+
+## Logistic Regression
+<!-- ------------------------- -->
+
+As the required video introduced, logistic regression bears some resemblance to linear regression. However, rather than predicting *continuous* outcomes (such as the price of a diamond), we will instead predict a *binary* outcome (in the present exercise: whether or not a given patient has heart disease).
+
+In order to "fit a line" to this kind of binary data, we make a careful choice about what to model: Rather than model the binary outcome directly, we instead model the *probability* (a continuous value) that a given observation falls into one category or the other. We can then categorize observations based on predicted probabilities with some user-specified threshold (which we'll talk more about in a future exercise).
+
+There's one more trick we need to make this scheme work: Probabilities lie between $p \in [0, 1]$, but the response of linear regression can be any real value between $x \in (-\infty, +\infty)$. To deal with this, we use the *logit function* to "warp space" and transform between the interval $p \in [0, 1]$ and the whole real line $x \in (-\infty, +\infty)$.
+
+```{r def-logit}
+## We'll need the logit and inverse-logit functions to "warp space"
+logit <- function(p) {
+  odds_ratio <- p / (1 - p)
+  log(odds_ratio)
+}
+
+inv.logit <- function(x) {
+  exp(x) / (1 + exp(x))
+}
+```
+
+The result of the logit function is a [log-odds ratio](https://www.youtube.com/watch?v=ARfXDSkQf1Y), which is just a different way of expressing a probability. This is what it looks like to map from probabilities `p` to log-odds ratios:
+
+```{r vis-logit}
+tibble(p = seq(0, 1, length.out = 100)) %>%
+  mutate(x = logit(p)) %>%
+
+  ggplot(aes(p, x)) +
+  geom_vline(xintercept = 0, linetype = 2) +
+  geom_vline(xintercept = 1, linetype = 2) +
+  geom_line() +
+
+  labs(x = "Probability", y = "Logit Value (log-odds ratio)")
+```
+
+And this is what it looks like to carry out the *inverse mapping* from log-odds ratios to probabilities:
+
+```{r vis-invlogit}
+tibble(p = seq(0, 1, length.out = 100)) %>%
+  mutate(x = logit(p)) %>%
+
+  ggplot(aes(x, p)) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  geom_hline(yintercept = 1, linetype = 2) +
+  geom_line() +
+
+  labs(y = "Probability", x = "Logit Value (log-odds ratio)")
+```
+
+This curve (the inverse-logit) is the one we'll stretch and shift in order to fit a logistic regression.
+
+## A Worked Example
+<!-- ------------------------- -->
+
+The following code chunk fits a logistic regression model to your training data, predicts classification probabilities on the validation data, and visualizes the results so we can assess the model. You'll practice carrying out these steps soon: First let's practice interpreting a logistic regression model's outputs.
+
+### __q2__ Run the following code and study the results. Answer the questions under *observations* below.
+
+```{r q2-task}
+## NOTE: No need to edit; just run and answer the questions below
+
+## Fit a basic logistic regression model: biological-sex only
+fit_basic <- glm(
+  formula = heart_disease ~ sex,
+  data = df_train,
+  family = "binomial"
+)
+
+## Predict the heart disease probabilities on the validation data
+df_basic <-
+  df_validate %>%
+  add_predictions(fit_basic, var = "log_odds_ratio") %>%
+  arrange(log_odds_ratio) %>%
+  rowid_to_column(var = "order") %>%
+  ## Remember that logistic regression fits the log_odds_ratio;
+  ## convert this to a probability with inv.logit()
+  mutate(pr_heart_disease = inv.logit(log_odds_ratio))
+
+## Plot the predicted probabilities and actual classes
+df_basic %>%
+  ggplot(aes(order, pr_heart_disease, color = heart_disease)) +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_point() +
+
+  facet_grid(~ sex, scales = "free_x") +
+  coord_cartesian(ylim = c(0, 1)) +
+  theme(legend.position = "bottom") +
+  labs(
+    x = "Rank-ordering of Predicted Probability",
+    y = "Predicted Probability of Heart Disease"
+  )
+```
+
+**Observations**:
+
+- Suppose we chose to classify predictions with probability `pr_heart_disease > 0.5` as persons having heart disease, and those below `pr_heart_disease <= 0.5` as not having heart disease. Would this model perform well or poorly?
+  - *Hint*: Think about how many persons with `heart_disease` would be correctly identified as having the disease, and how many would truly have `heart_disease` but whom we would not detect.
+- The probabilities are all at one of two levels; what about the model structure `heart_disease ~ sex` explains this behavior?
+
+In the next modeling exercise we'll discuss how to *quantitatively* assess the results of a classifier. For the moment, know that our objective is usually to maximize the rates of true positives (TP) and true negatives (TN). In our example, true positives are when we correctly identify the presence of heart disease, and true negatives are when we correctly flag the absence of heart disease. Note that we can make errors in "either direction": a false positive (FP) or a false negative (FN), depending on the underlying true class.
+
+```{r hit-miss}
+## NOTE: No need to edit; run and inspect
+pr_threshold <- 0.5
+
+df_basic %>%
+  mutate(
+    true_positive = (pr_heart_disease > pr_threshold) & heart_disease,
+    false_positive = (pr_heart_disease > pr_threshold) & !heart_disease,
+    true_negative = (pr_heart_disease <= pr_threshold) & !heart_disease,
+    false_negative = (pr_heart_disease <= pr_threshold) & heart_disease
+  ) %>%
+  summarize(
+    TP = sum(true_positive),
+    FP = sum(false_positive),
+    TN = sum(true_negative),
+    FN = sum(false_negative)
+  )
+```
+
+These numbers don't mean a whole lot on their own; we'll use them to compare performance across models. Next you'll practice using R functions to carry out logistic regression for classification, and build a model to compare against this basic one.
+
+## Doing Logistic Regression
+<!-- ------------------------- -->
+
+### __q3__ Using the code from q2 as a pattern, fit a logistic regression model to `df_train`.
+
+```{r q3-task}
+## TODO: Fit a logistic regression; choose your own predictor variables
+fit_q3 <- NA
+```
+
+Use the following to check your work.
+
+```{r q3-test}
+## NOTE: No need to change this
+# Correct size
+assertthat::assert_that(dim(
+              df_validate %>%
+              add_predictions(fit_q3)
+)[1] > 0)
+
+print("Nice!")
+```
+
+### __q4__ Recall that logistic regression predicts log-odds-ratio values; add these predictions to `df_validate` and convert them to probabilities `pr_heart_disease`.
+
+```{r q4-task}
+## TODO: Predict with your model fit_q3; convert log_odds_ratio to probabilities
+##       using inv.logit(), assign this to the column pr_heart_disease
+df_q4 <-
+  df_validate
+
+## Plot the predicted probabilities and actual classes
+df_q4 %>%
+  arrange(pr_heart_disease) %>%
+  rowid_to_column(var = "order") %>%
+
+  ggplot(aes(order, pr_heart_disease, color = heart_disease)) +
+  geom_point() +
+
+  coord_cartesian(ylim = c(0, 1)) +
+  theme(legend.position = "bottom") +
+  labs(
+    x = "Rank-ordering of Predicted Probability",
+    y = "Predicted Probability of Heart Disease"
+  )
+```
+
+Use the following to check your code.
+
+```{r q4-test}
+## NOTE: No need to change this
+# Correct size
+assertthat::assert_that(all(
+      df_q4 %>%
+        mutate(check = (0 <= pr_heart_disease) & (pr_heart_disease <= 1)) %>%
+        pull(check)
+))
+
+print("Excellent!")
+```
+
+### __q5__ Inspect your graph from q4 and choose a threshold for classification. Compare your count of true positives (TP) and true negatives (TN) to the model above.
+
+```{r q5-task}
+## TODO: Choose a threshold value
+pr_threshold <- NA_real_
+
+## NOTE: No need to edit this; just inspect the results
+df_q4 %>%
+  mutate(
+    true_positive = (pr_heart_disease > pr_threshold) & heart_disease,
+    false_positive = (pr_heart_disease > pr_threshold) & !heart_disease,
+    true_negative = (pr_heart_disease <= pr_threshold) & !heart_disease,
+    false_negative = (pr_heart_disease <= pr_threshold) & heart_disease
+  ) %>%
+  summarize(
+    TP = sum(true_positive),
+    FP = sum(false_positive),
+    TN = sum(true_negative),
+    FN = sum(false_negative)
+  )
+```
+
+**Observations**:
+
+- How does your classification model compare to `fit_basic` in terms of true positives (TP)?
+- How does your classification model compare to `fit_basic` in terms of true negatives (TN)?
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-model04-logistic-assignment.Rmd).

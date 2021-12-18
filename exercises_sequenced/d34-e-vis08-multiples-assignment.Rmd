@@ -1,0 +1,137 @@
+---
+title: "Vis: Small Multiples"
+author: Zach del Rosario
+date: 2020-07-10
+output: github_document
+time: 30
+reading: 0
+---
+
+# Vis: Small Multiples
+
+*Purpose*: A powerful idea in visualization is the *small multiple*. In this exercise you'll learn how to design and create small multiple graphs.
+
+*Reading*: (None; there's a bit of reading here.)
+
+"At the heart of quantitative reasoning is a single question: *Compared to
+what?*" Edward Tufte on small multiples.
+
+```{r setup, include=FALSE}
+library(tidyverse)
+
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Small Multiples
+<!-- -------------------------------------------------- -->
+
+Facets in ggplot allow us to apply the ideas of [small
+multiples](https://en.wikipedia.org/wiki/Small_multiple). As an example,
+consider the following graph:
+
+```{r ex-economics-multiples}
+economics %>%
+  pivot_longer(
+    names_to = "variable",
+    values_to = "value",
+    cols = c(pce, pop, psavert, uempmed, unemploy)
+  ) %>%
+
+  ggplot(aes(date, value)) +
+  geom_line() +
+  facet_wrap(~variable, scales = "free_y")
+```
+
+The "multiples" are the different panels; above we've separated the different variables into their own panel. This allows us to compare trends simply by lookin across at different panels. The faceting above works well for comparing trends: It's clear by inspection whether the various trends are increasing, decreasing, etc.
+
+The next example with the `mpg` data is not so effective:
+
+```{r ex-mpg-multiples}
+## NOTE: No need to edit; study this example
+mpg %>%
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+  facet_wrap(~class)
+```
+
+With these scatterplots it's more difficult to "keep in our heads" the absolute positions of the other points as we look across the multiples. Instead we could add some "ghost" points:
+
+```{r ex-mpg-multiples-ghosts}
+## NOTE: No need to edit; study this example
+mpg %>%
+  ggplot(aes(displ, hwy)) +
+  ## A bit of a trick; remove the facet variable to prevent faceting
+  geom_point(
+    data = . %>% select(-class),
+    color = "grey80"
+  ) +
+  geom_point() +
+  facet_wrap(~class) +
+  theme_minimal()
+```
+
+There's a trick to getting the visual above; removing the facet variable from an internal dataframe prevents the faceting of that layer. This combined with a second point layer gives the "ghost" point effect.
+
+The presence of these "ghost" points provides more context; they facilitate the "Compared to what?" question that Tufte puts at the center of quantitative reasoning.
+
+### __q1__ Edit the following figure to use the "ghost" point trick above.
+
+```{r q1-task}
+## TODO: Edit this code to facet on `cut`, but keep "ghost" points to aid in
+## comparison.
+diamonds %>%
+  ggplot(aes(carat, price)) +
+  geom_point()
+```
+
+
+## Organizing Factors
+<!-- -------------------------------------------------- -->
+
+Sometimes your observations will organize into natural categories. In this case facets are a great way to group your observations. For example, consider the following figure:
+
+```{r ex-mpg-manufacturers}
+mpg %>%
+  group_by(model) %>%
+  filter(row_number(desc(year)) == 1) %>%
+  ungroup() %>%
+  mutate(
+    manufacturer = fct_reorder(manufacturer, hwy),
+    model = fct_reorder(model, desc(hwy))
+  ) %>%
+
+  ggplot(aes(hwy, model)) +
+  geom_point() +
+  facet_grid(manufacturer~., scale = "free_y", space = "free") +
+  theme(
+    strip.text.y = element_text(angle = 0)
+  )
+```
+
+There's *a lot* going on this figure, including a number of subtle points. Let's list them out:
+
+- I filter on the latest model with the `row_number` call (not strictly necessary).
+- I'm re-ordering both the `manufacturer` and `model` on `hwy`.
+  - However, I reverse the order of `model` to get a consistent "descending" pattern.
+- I set both the `scale` and `space` arguments of the facet call; without those the spacing would be messed up (try it!).
+- I rotate the facet labels to make them more readable.
+
+### __q2__ Create a small multiple plot like `ex-mpg-manufacturer` above. Keep in mind the idea of "compared to what?" when deciding which variables to place close to one another.
+
+```{r q2-task}
+## TODO: Create a set of small multiples plot from these data
+as_tibble(iris) %>%
+  pivot_longer(
+    names_to = "part",
+    values_to = "length",
+    cols = -Species
+  )
+```
+
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-vis08-multiples-assignment.Rmd).

@@ -1,0 +1,87 @@
+---
+title: "Vis: Boxplots and Counts"
+author: Zach del Rosario
+date: 2020-06-04
+output: github_document
+dep: e-data02-derive
+time: 20
+reading: 20
+---
+
+# Vis: Boxplots and Counts
+
+*Purpose*: *Boxplots* are a key tool for EDA. Like histograms, boxplots give us a sense of "shape" for a distribution. However, a boxplot is a *careful summary* of shape. This helps us pick out key features of a distribution, and enables easier comparison of different distributions.
+
+*Reading*: [Boxplots and Counts](https://rstudio.cloud/learn/primers/3.4)
+*Topics*: (All topics)
+*Reading Time*: ~20 minutes
+
+```{r setup, include=FALSE}
+# knitr options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+
+```
+
+A *subtle point* from the primer is that we can use `dplyr` to generate new
+facts about our data, then use `ggplot2` to visualize those facts. We'll
+practice this idea in a number of ways.
+
+### __q1__ Use a `cut_*` verb to create a categorical variable out of `carat`. Tweak
+the settings in your cut and document your observations.
+
+*Hint*: Recall that we learned about `cut_interval, cut_number, cut_width`. Take
+your pick!
+
+```{r q1-task}
+diamonds %>%
+  ## TODO: Use mutate to add the column `carat_cut`
+  ggplot(aes(x = carat_cut, y = price)) +
+  geom_boxplot()
+```
+
+**Observations**
+- Write your observations here!
+- Make sure to distinguish between the trend in median (bar), quantiles (box edges), and whiskers (vertical lines)
+
+### __q2__ The following code visualizes the count of diamonds of *all* carats according to their cut and color. Modify the code to consider *only* diamonds with `carat >= 2`. Does the most common group of cut and color change?
+
+```{r q2-ref}
+## NOTE: No need to modify; run and inspect
+diamonds %>%
+  count(cut, color) %>%
+  ggplot(aes(cut, color, fill = n)) +
+  geom_tile()
+```
+
+Modify the following code:
+
+```{r q2-task}
+## TODO: Modify the code below to consider only diamonds with carat >= 2
+diamonds %>%
+  count(cut, color) %>%
+  ggplot(aes(cut, color, fill = n)) +
+  geom_tile()
+```
+
+**Observations**:
+- Did the most common group of cut and color change?
+
+### __q3__ The following plot has overlapping x-axis labels. Use a verb from the reading to `flip` the coordinates and improve readability.
+
+```{r q3-task}
+mpg %>%
+  ggplot(aes(manufacturer, hwy)) +
+  geom_boxplot()
+```
+
+This is a simple---but important---trick to remember when visualizing data with many categories.
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-vis03-boxplots-assignment.Rmd).

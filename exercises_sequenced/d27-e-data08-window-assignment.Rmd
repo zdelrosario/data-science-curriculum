@@ -1,0 +1,150 @@
+---
+title: "Data: Window Functions"
+author: Zachary del Rosario
+date: 2020-07-10
+output: github_document
+time: 20
+reading: 10
+---
+
+# Data: Window Functions
+
+*Purpose*: Window functions are another family of `dplyr` verbs that are related to aggregates like `mean` and `sd`. These functions are useful for building up more complicated filters, enabling aesthetic tricks in plots, and some advanced data wrangling we'll do next exercise.
+
+*Reading*: [Window Functions](https://dplyr.tidyverse.org/articles/window-functions.html#cumulative-aggregates-1), *Types of window functions*, *Ranking functions*, and *Lead and lag*
+
+```{r setup}
+library(tidyverse)
+library(ggrepel)
+```
+
+## Lead and Lag
+<!-- ------------------------- -->
+
+The lead and lag functions simply provide a "shifted" copy of a vector.
+
+```{r ex-lead-lag}
+## NOTE: No need to edit this; just an example
+v <- c(1, 2, 3, 4, 5)
+lead(v)
+lag(v)
+```
+
+These are particularly useful for computing things like differences:
+
+```{r ex-finite-differences}
+## NOTE: No need to edit this; just an example
+x <- seq(-1, +1, length.out = 6)
+f <- x ^ 2
+
+## Forward finite difference
+df_dx <- (lead(f) - f) / (lead(x) - x)
+df_dx
+```
+
+Make sure to order your data or use the `order_by` argument when using `lead` or `lag`! GGplot automatically reorders your data when making a line plot, but `lead` and `lag` will use the order of the data you provide.
+
+### __q1__ Use a window function modify the following visual to color each segment differently based on whether the period of time was increasing or decreasing.
+
+```{r q1-task}
+## TASK: Modify the following code to color each segment based on whether the
+##       trend is increasing or decreasing in time
+economics %>%
+
+  ggplot(aes(date, unemploy)) +
+  geom_segment(aes(
+    xend = lead(date, order_by = date),
+    yend = lead(unemploy, order_by = date)
+  ))
+```
+
+## Ranks
+<!-- ------------------------- -->
+
+The rank functions allow you to assign (integer) ranks to smallest (or largest) values of a vector.
+
+```{r ex-ranks}
+## NOTE: No need to edit this; just an example
+v <- c(1, 1, 2, 3, 5)
+row_number(v)
+min_rank(v)
+dense_rank(v)
+```
+
+You can use the `desc()` function (or a negative sign) to reverse the ranking order.
+
+```{r ex-ranks-rev}
+## NOTE: No need to edit this; just an example
+v <- c(1, 1, 2, 3, 5)
+row_number(desc(v))
+min_rank(desc(v))
+dense_rank(-v)
+```
+
+I find it difficult to remember how the rank functions behave, so I created the following visual to help remind myself how they function..
+
+```{r ex-ranks-vis}
+## NOTE: No need to edit this; just an example
+set.seed(101)
+tribble(
+  ~x, ~y,
+  0,  0,
+  1,  0,
+  1,  1,
+  0,  2,
+  2,  2,
+  0,  3,
+  2,  3,
+  3,  3
+) %>%
+  mutate(
+    rk_row = row_number(y),
+    rk_min = min_rank(y),
+    rk_dense = dense_rank(y)
+  ) %>%
+  pivot_longer(
+    names_to = "fcn",
+    names_prefix = "rk_",
+    values_to = "rk",
+    cols = c(-x, -y)
+  ) %>%
+
+  ggplot(aes(x, y)) +
+  geom_point(size = 4) +
+  geom_point(
+    data = . %>% filter(rk <= 3),
+    size = 3,
+    color = "orange"
+  ) +
+  geom_label(aes(label = rk), nudge_x = 0.2, nudge_y = 0.2) +
+
+  facet_wrap(~fcn) +
+  theme_minimal() +
+  theme(panel.border = element_rect(color = "black", fill = NA, size = 1)) +
+  labs(
+    x = "",
+    y = "Minimum Three Ranks"
+  )
+```
+
+### __q2__ Use a rank function to filter the largest 3 `hwy` values and **all** vehicles that have those values.
+
+```{r q2-task}
+## TASK: Use a rank function to filter the `mpg` data
+q2 <- mpg
+q2
+```
+
+Use the following test to check your work.
+
+```{r q2-test}
+## NOTE: No need to change this
+assertthat::assert_that(dim(q2)[1] == 4)
+print("Nice!")
+```
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data08-window-assignment.Rmd).
