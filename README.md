@@ -4,6 +4,20 @@
 
 This is a curriculum of **open-source** data science exercises, intended to take a student from zero coding experience to basic data science literacy. These exercises are heavily inspired by the (discontinued) [Data Challenge Lab](https://dcl-docs.stanford.edu/home/) at Stanford University and rely on the [Tidyverse](https://www.tidyverse.org/).
 
+## How to Use This Repo
+
+1. (Setup) Complete [this exercise](https://zdelrosario.github.io/data-science-curriculum/setup-rstudio.html) to install RStudio.
+2. (Setup) Download and unzip [this archive](https://github.com/zdelrosario/data-science-curriculum/archive/refs/heads/build.zip) to obtain the curriculum materials.
+3. (Setup) Open the folder you unzipped as a project in RStudio (`File > Open Project...`).
+4. (Learn) Work through the exercise files in the `exercises_sequenced/` folder at your own pace to learn data science skills.
+5. (Learn) Use the challenges in the `challenges/` folder to put your new skills to use.
+
+**Suggested order**: The exercises filenames start with a numerical `dXY` prefix to denote
+their suggested day-order. This is provided to
+[interleave](https://academicaffairs.arizona.edu/l2l-strategy-interleaving)
+topics and provide about an hour of work per day. I recommend working 5 days a
+week on the exercises and taking weekends off!
+
 ## Table of Contents
 
 - [Curriculum](https://github.com/zdelrosario/data-science-curriculum/blob/master/curriculum.md) contains the desired learning outcomes of this material
@@ -14,20 +28,6 @@ This is a curriculum of **open-source** data science exercises, intended to take
 ## Course Description
 
 Data Science is a powerful toolkit to extract usable insights from data. In this class, you will learn tools and gain understanding. You will use software tools to *liberate* data from published images and tables, wrangle messy datasets into machine learning (ML)-ready form, fit and interpret ML models, and visualize to extract meaning. You will also speak the language of uncertainty---statistics---to avoid getting fooled by models. You will criticize published findings and ask what is, and what is not, in the data. Assignments will include regular practice exercises, progressively puzzling real-data challenges, and a final project of your choice where you obtain, wrangle, and understand a dataset.
-
-## How to Use This Repo
-
-1. (Setup) Complete [this exercise](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-setup00-install.md) to install RStudio
-2. (Setup) Complete [this](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-rep01-intro-git.md) exercise to set up Git(Hub) in order to *clone* this repository
-3. (Setup) Clone this repo
-4. (Setup) Navigate to the root directory (`data-science-curriculum`), run `$ make` to build the assignments in the `exercises_sequenced` directory
-5. (Learn) Work through the exercise `assignment` files at your own pace to learn Data Science!
-
-**Suggested order**: The exercises filenames start with a `dXY` prefix to denote
-their suggested day-order. This is provided to
-[interleave](https://academicaffairs.arizona.edu/l2l-strategy-interleaving)
-topics and provide about an hour of work per day. I recommend working 5 days a
-week on the exercises and taking weekends off!
 
 # Contributing
 I welcome suggestions and contributions! If you want to contribute, please see
