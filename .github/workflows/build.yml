@@ -20,7 +20,7 @@ jobs:
           mkdir build # Collect the build
           cp -r challenges build/.
           cp -r exercises_sequenced build/.
-          rm exercises_sequenced/.gitignore # Ensure push of Rmd for build
+          rm build/exercises_sequenced/.gitignore # Ensure push of Rmd for build
           cp data-science-curriculum.Rproj build/.
           cp README.md build/.
     
