@@ -145,14 +145,65 @@ discourage cheating---instructors may contact the author to obtain the challenge
 solution files. Providing the challenges without solutions is intended as an
 opportunity for summative feedback.
 
-## Guidance on Use of Materials
+The exercises are provided in a recommended sequence that rotates through the
+broad learning outcomes listed above; this is to leverage the benefits of
+interleaving topics [@lang2016small]. For convenience, the exercises are renamed to follow this sequence and hosted in a [build branch](https://github.com/zdelrosario/data-science-curriculum/tree/build/exercises_sequenced) in the repository. However, tools are provided to re-sequence the materials as-desired (see next section).
 
-I have used the curriculum exercises in place of lectures in a flipped-classroom
-model [@bishop2013flipped]. Students complete exercises outside class, so their
-first introduction to course content includes a hands-on component. Introducing
-content outside the classroom frees in-class time to focus on active learning
-activities; I choose to use in-class time to discuss student findings on the
-challenges.
+## Use of Materials in an Undergraduate Data Science Course
+
+I have used this content to teach a semester-long Data Science course at Olin
+College for engineering undergraduates. This course satisfies their probability
+and statistics degree requirement, and is typically taken by students in their
+second or third year, with some senior students.
+
+These materials are designed for use in a course model similar to a
+flipped-classroom [@bishop2013flipped]. Students complete exercises outside
+class and during unstructured class time, so their first introduction to course
+content includes an active learning component. During class time students
+continue work on exercises and challenges; members of the teaching team (the
+instructor and course assistants) serve as coaches to help students with
+assignments.
+
+Students are assigned to small learning teams (4--5 members) to form social
+units: This was particularly helpful during remote teaching at the height of the
+covid-19 pandemic. Additionally, learning teams rotate a responsibility to
+facilitate a discussion about each challenge: Each team is assigned one
+challenge to present. The presenting team must give a short background on the
+challenge dataset, formulate a "central claim" about the data, and provide
+evidence supporting their claim. These conversations serve as an opportunity for
+students to practice productive communication skills; including dialogue (active
+and constructive responding) and visual communication. I have found these
+discussions to be extremely motivating for students; past teams have contacted
+the original authors for datasets to learn more, and often discover new and
+interesting insights into the datasets. I use these discussions to get students
+to practice talking about data analyses and asking good questions, and use each
+discussion as a segue into a mini-lecture to clarify course content in a
+specific context.
+
+I have run this course with additional open-ended projects to encourage students
+to apply their skills to new areas. In previous offerings, I have assigned a
+project at the midpoint of the semester that builds off of c06-covid: Students
+are responsible for identifying an additional dataset of covid-19 data and
+studying another aspect of the pandemic. In the past students have investigated
+data disaggregated by demographic features to study racial gaps in disease
+outcomes, and economic data to see how the pandemic related to increases in
+demand for various products (e.g. meat, toilet paper).
+
+## Adapting These Materials
+
+These materials can be used as-presented for a semester-long (14 week) Data
+Science course for engineering students. However, the modular nature of the
+content lends itself to remixing and adapting materials for other uses. The
+challenges are designed to highlight engineering topics; one could replace a few
+of the challenges to highlight topics from other disciplines. Alternatively, one
+could subset the materials to teach a shorter course, say on data and
+visualization basics by extracting the `data` and `vis` exercises.
+
+Tools are provided in the [scripts](https://github.com/zdelrosario/data-science-curriculum/tree/master/scripts) directory to work with the materials. Most importantly, the notebook `make-schedule.Rmd` can be used to re-sequence the exercises; this is accomplished by changing the `day` column in the `df_schedule` tibble. Running this notebook produces a `schedule.csv`, which is then used by the `prepend.py` script in the root directory to produce the sequenced exercises. The build steps are automated with `Makefile`(s) in the various directories: To re-sequence the curriculum, one need only:
+
+1. Modify the `df_schedule` tibble in `make-schedule.Rmd`.
+2. Run the `make-schedule.Rmd` notebook to modify the `schedule.csv` data.
+3. Run the root-level `Makefile` to update the sequenced exercise curriculum.
 
 ## Inspiration and Dependencies
 
