@@ -125,13 +125,13 @@ introductions to particular topics; for instance, exercise `e-data01-isolate`
 introduces the concept of isolating rows and columns of a dataset. While many
 exercises point to an external reading, exercises mainly provide students with
 hands-on practice on new concepts; for instance `e-data01-isolate` has students
-work with a dataset of flights to select columns matching the pattern `"_time"`
+work with a dataset of flights to select columns matching the pattern `"*_time"`
 and rows matching the destination `"LAX"`. The exercise solutions are available
 in a [web-based solution
 manual](https://zdelrosario.github.io/data-science-curriculum/index.html), and
 are intended to be provided to students *from the beginning of the course*. Many
 of these exercises contain unit tests, which allow students to check the
-correctness of their work immediately---this provides immediate formative
+correctness of their work immediately---this provides instantaneous formative
 feedback.
 
 **Challenges** are designed to be substantial (~3 hours or longer) hands-on
