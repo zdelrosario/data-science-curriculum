@@ -69,30 +69,68 @@ materials herein are released under a permissive open-source license, other
 instructors are welcome (and encouraged) to rearrange and modify the content
 provided.
 
+## Story: How This Was Made
+
+As a PhD student I took a course called *The Data Challenge Lab* (DCL) [@dcl].
+This was one of the most inspiring courses I've ever taken, both for the direct
+learning I gained and for the pedagogical innovations the course employed. The
+original DCL course focused on *exploratory data analysis*
+(EDA) [@tukey1977eda]: a subfield of statistics that emphasizes hypothesis
+*generation* over hypothesis *testing*. Having taken several traditional
+statistics courses prior to the DCL, I found the skillset to be a beautiful
+complement to the largely mathematical treatment of statistical ideas I had
+encountered.
+
+Pedagogically, the DCL was based on many sound principles from the learning
+sciences. There were essentially no lectures; the course leaned heavily into
+active learning [@freeman2014active]. Content was presented in a sequence of
+small, hands-on exercises and applied in more difficult challenges. Exercises
+were sequenced to rotate through topics, leveraging the benefits of interleaving
+[@lang2016small]. Students were assigned to small groups (4--5) to form
+"learning teams," which promoted motivation to learn through making the learning
+social [@lang2016small]. The basic design of the present materials is based
+heavily on this DCL design.
+
+Now as a faculty member at Olin College, my teaching and research aims are to
+help engineers reason about uncertainty: I designed a Data Science course to
+give undergraduate engineers a solid foundation in EDA and statistical thinking.
+Since Olin students (and most engineers) only take a single course in
+statistics, I used the DCL design as a starting point and exchanged some of the
+data-manipulation content for statistical ideas. The result is a Data Science
+course that focuses less on a traditional introduction to probability theory,
+but instead gives students lots of practice studying real datasets, builds an
+"informal" understanding of probability to ground statistical inference
+[@moore1997new], and contextualizes inferential ideas in real scenarios.
+
 ## Pedagogical Design
 
-The full set of desired learning outcomes is documented in the project
-repository, but at a high level the learning goals of this content are for
-students to develop:
+The full set of desired learning outcomes is documented [in the project
+repository](https://github.com/zdelrosario/data-science-curriculum/blob/master/curriculum.md),
+but at a high level the learning goals of this content are for students to
+develop:
 
 1. The ability to set up and maintain a scientifically reproducible data science workflow,
-2. The skills and self-efficacy to access, clean, and tidy data,
+2. The skills and self-efficacy to load, tidy, and access data,
 3. The skills to visualize data, for both exploration and communication,
-4. The mindset to think statistically, and
-5. The skills and understanding to fit and interpret data-driven models.
+4. The tools and mindset to think statistically,
+5. The skills and understanding to fit and interpret data-driven models, and
+6. The skills to communicate results clearly and productively.
 
 The content is organized into two levels: *exercises* and *challenges*.
 
 **Exercises** are designed to be small (1/2 to an hour long) hands-on
 introductions to particular topics; for instance, exercise `e-data01-isolate`
 introduces the concept of isolating rows and columns of a dataset. While many
-point to an external reading, exercises mainly provide hands-on practice for
-students on new concepts; for instance `e-data01-isolate` has students work with
-a dataset of flights to select columns matching the pattern `"_time"` and rows
-matching the destination `"LAX"`. The exercise source files are available in the
-project repository, and are intended to be provided to students *with
-solutions*. Many of these exercises contain unit tests, which allow students to
-check the correctness of their work immediately.
+exercises point to an external reading, exercises mainly provide students with
+hands-on practice on new concepts; for instance `e-data01-isolate` has students
+work with a dataset of flights to select columns matching the pattern `"_time"`
+and rows matching the destination `"LAX"`. The exercise solutions are available
+in a [web-based solution
+manual](https://zdelrosario.github.io/data-science-curriculum/index.html), and
+are intended to be provided to students *from the beginning of the course*. Many
+of these exercises contain unit tests, which allow students to check the
+correctness of their work immediately---this provides immediate formative
+feedback.
 
 **Challenges** are designed to be substantial (~3 hours or longer) hands-on
 elaborations of concepts learned in the exercises. Each challenge has students
@@ -100,9 +138,14 @@ explore and answer questions about a dataset, with subsequent challenges
 increasing in complexity. For instance `c01-titanic` has students study the
 built-in Titanic dataset, while `c06-covid19` has students pull and join data
 from the New York Times and the US Census Bureau. While the challenge
-*assignment* files are openly available in the repository, the challenge
-solutions are witheld to discourage cheating---instructors may contact the
-author to obtain the challenge solution files.
+[assignment
+files](https://github.com/zdelrosario/data-science-curriculum/tree/build/challenges)
+are openly available in the repository, the challenge solutions are witheld to
+discourage cheating---instructors may contact the author to obtain the challenge
+solution files. Providing the challenges without solutions is intended as an
+opportunity for summative feedback.
+
+## Guidance on Use of Materials
 
 I have used the curriculum exercises in place of lectures in a flipped-classroom
 model [@bishop2013flipped]. Students complete exercises outside class, so their
