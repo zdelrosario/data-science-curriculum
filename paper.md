@@ -199,7 +199,60 @@ of the challenges to highlight topics from other disciplines. Alternatively, one
 could subset the materials to teach a shorter course, say on data and
 visualization basics by extracting the `data` and `vis` exercises.
 
-Tools are provided in the [scripts](https://github.com/zdelrosario/data-science-curriculum/tree/master/scripts) directory to work with the materials. Most importantly, the notebook `make-schedule.Rmd` can be used to re-sequence the exercises; this is accomplished by changing the `day` column in the `df_schedule` tibble. Running this notebook produces a `schedule.csv`, which is then used by the `prepend.py` script in the root directory to produce the sequenced exercises. The build steps are automated with `Makefile`(s) in the various directories: To re-sequence the curriculum, one need only:
+The materials themselves can also be freely edited and adapted, as all materials
+are released under a [CC-SA
+License](https://github.com/zdelrosario/data-science-curriculum/blob/master/LICENSE).
+To edit the materials themselves, make changes to the `*-master.Rmd` files in
+the `exercises/` directory. Note that these source files include `begin|end`
+comment annotations to denote materials for either the `task|solution` files.
+Assignment and solution files can be generated using the `Makefile` in the
+`exercises/` directory.
+
+The following is an example of `R` comment tags.
+
+```{r}
+## Code for both assignment and solution document
+
+# task-begin
+## Code for the assignment document
+# task-end
+
+# solution-begin
+## Code for the solution document
+# solution-end
+```
+
+The following is an example of markdown comment tags.
+
+```{markdown}
+This text for inclusion in both the assignment and solution documents.
+
+<!-- task-begin -->
+- This text for inclusion in the assignment only.
+<!-- task-end -->
+<!-- solution-begin -->
+- This text for inclusion in the solution only.
+<!-- solution-end -->
+```
+
+An important adaptation that all instructors **should** make when using these
+materials is to update the setup instructions. Most importantly: `e-rep00-setup`
+covers instructions about course-specific tools (I use GitHub and Discord in
+place of a traditional learning management system), `e-setup00-install` lists
+the R packages necessary for the course, and `c00-diamonds` takes students
+through the process of submitting an assignment. Instructors should tailor these
+instructions to the particular workflow for their course, e.g. point to their
+institutions' LMS (such as Canvas).
+
+Tools are provided in the
+[scripts](https://github.com/zdelrosario/data-science-curriculum/tree/master/scripts)
+directory to work with the materials. Most importantly, the notebook
+`make-schedule.Rmd` can be used to re-sequence the exercises; this is
+accomplished by changing the `day` column in the `df_schedule` tibble. Running
+this notebook produces a `schedule.csv`, which is then used by the `prepend.py`
+script in the root directory to produce the sequenced exercises. The build steps
+are automated with `Makefile`(s) in the various directories: To re-sequence the
+curriculum, one need only:
 
 1. Modify the `df_schedule` tibble in `make-schedule.Rmd`.
 2. Run the `make-schedule.Rmd` notebook to modify the `schedule.csv` data.
