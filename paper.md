@@ -34,7 +34,7 @@ students seek to learn how to obtain, wrangle, and make sense of data, and
 instructors are working to both define and teach this field. An explosion of
 resources is available to both teachers and learners---to name just a
 few---published books [@grolemund2018r], course materials
-[adhikari2021data8,timbers2021introduction], and YouTube channels such as
+[@adhikari2021data8,@timbers2021introduction], and YouTube channels such as
 StatQuest [@statquest]. Much of this content is excellent and informative, and
 the broader proliferation of open educational resources contributes positively
 to a more equitable learning environment.
