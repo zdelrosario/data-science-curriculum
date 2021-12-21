@@ -96,11 +96,13 @@ help engineers reason about uncertainty: I designed a Data Science course to
 give undergraduate engineers a solid foundation in EDA and statistical thinking.
 Since Olin students (and most engineers) only take a single course in
 statistics, I used the DCL design as a starting point and exchanged some of the
-data-manipulation content for statistical ideas. The result is a Data Science
-course that focuses less on a traditional introduction to probability theory,
-but instead gives students lots of practice studying real datasets, builds an
-"informal" understanding of probability to ground statistical inference
-[@moore1997new], and contextualizes inferential ideas in real scenarios.
+data-manipulation content for statistical ideas. In the summer of 2020, I built
+a set of exercises and challenges inspired by---but distinct from---the DCL
+course. The result is a Data Science course that focuses less on a traditional
+introduction to probability theory, but instead gives students lots of practice
+studying real datasets, builds an "informal" understanding of probability to
+ground statistical inference [@moore1997new], and contextualizes inferential
+ideas in real scenarios.
 
 ## Pedagogical Design
 
