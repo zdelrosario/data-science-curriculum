@@ -7,6 +7,8 @@ time: 10
 reading: 0
 ---
 
+# Data: Basics
+
 *Purpose*: When first studying a new dataset, there are very simple checks we
 should perform first. These are those checks.
 
@@ -15,15 +17,19 @@ super useful for writing code that's readable.
 
 *Reading*: (None)
 
-```{r setup, include=FALSE}
+```{r setup}
+library(tidyverse)
+```
+
+```{r options, include=FALSE}
 # knitr options
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# First Checks
+## First Checks
 <!-- -------------------------------------------------- -->
 
-__q0__ Run the following chunk:
+### __q0__ Run the following chunk:
 
 *Hint*: You can do this either by clicking the green arrow at the top-right of
 the chunk, or by using the keybaord shortcut `Shift` + `Cmd/Ctrl` + `Enter`.
@@ -40,20 +46,18 @@ Some nomenclature:
 - The column `Sepal.Length` takes **numeric** values
 - The column `Species` takes **string** values
 
-__q1__ Load the `tidyverse` and inspect the `diamonds` dataset. What do the
+### __q1__ Load the `tidyverse` and inspect the `diamonds` dataset. What do the
 `cut`, `color`, and `clarity` variables mean?
 
 *Hint*: You can run `?diamonds` to get information on a built-in dataset.
 
-```{r load-packages}
+```{r load-packages, eval=FALSE}
 # solution-begin
-library(tidyverse)
-
 ?diamonds
 # solution-end
 ```
 
-__q2__ Run `glimpse(diamonds)`; what variables does `diamonds` have?
+### __q2__ Run `glimpse(diamonds)`; what variables does `diamonds` have?
 
 <!-- solution-begin -->
 ```{r glimpse}
@@ -64,7 +68,7 @@ The `diamonds` dataset has variables `carat, cut, color, clarity, depth, table,
 price, x, y, z`.
 <!-- solution-end -->
 
-__q3__ Run `summary(diamonds)`; what are the common values for each of the
+### __q3__ Run `summary(diamonds)`; what are the common values for each of the
 variables? How widely do each of the variables vary?
 
 *Hint*: The `Median` and `Mean` are common values, while `Min` and `Max` give us
@@ -84,7 +88,6 @@ summary(diamonds)
 <!-- solution-begin -->
 - `carat` seems to be bounded between `0` and `5`
 - The highest-priced diamond in this set is $18,823!
--
 - Some of the variables do not have `min, max` etc. values. These are *factors*; variables that take one of a finite set of possible values.
 <!-- solution-end -->
 
@@ -92,7 +95,7 @@ You should always analyze your dataset in the simplest way possible, build
 hypotheses, and devise more specific analyses to probe those hypotheses. The
 `glimpse()` and `summary()` functions are two of the simplest tools we have.
 
-# The Pipe Operator
+## The Pipe Operator
 <!-- -------------------------------------------------- -->
 
 Throughout this class we're going to make heavy use of the *pipe operator*
@@ -117,7 +120,7 @@ left-hand side (LHS) and inserts it as an the first argument to the function on
 its right-hand side (RHS). So the pipe will let us take `glimpse(diamonds)` and
 turn it into `diamonds %>% glimpse()`.
 
-__q4__ Use the pipe operator to re-write `summary(diamonds)`.
+### __q4__ Use the pipe operator to re-write `summary(diamonds)`.
 
 ```{r q4-task}
 # solution-begin
@@ -125,12 +128,12 @@ diamonds %>% summary()
 # solution-end
 ```
 
-# Reading Data
+## Reading Data
 <!-- -------------------------------------------------- -->
 
 So far we've only been looking at built-in datasets. Ultimately, we'll want to read in our own data. We'll get to the art of loading and *wrangling* data later, but for now, know that the `readr` package provides us tools to read data. Let's quickly practice loading data below.
 
-__q5__ Use the function `read_csv()` to load the file `"./data/tiny.csv"`.
+### __q5__ Use the function `read_csv()` to load the file `"./data/tiny.csv"`.
 
 ```{r q5-task}
 # solution-begin

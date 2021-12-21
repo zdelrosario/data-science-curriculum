@@ -1,11 +1,13 @@
 ---
-title: "Data Cleaning"
+title: "Data: Cleaning"
 author: Zachary del Rosario
 date: 2020-08-09
 output: github_document
 time: 40
 reading: 0
 ---
+
+# Data: Cleaning
 
 *Purpose*: Most of the data you'll find in the wild is *messy*; you'll need to clean those data before you can do useful work. In this case study, you'll learn some more tricks for cleaning data. We'll use these data for a future exercise on modeling, so we'll build on the work you do here today.
 
@@ -48,7 +50,9 @@ Let's tackle these problems one at a time:
 
 We'll have a hard time making sense of these data without column names. Let's fix that.
 
-__q1__ Following the [dataset documentation](https://archive.ics.uci.edu/ml/datasets/Heart+Disease), transcribe the correct column names and assign them as a character vector. You will use this to give the dataset sensible column names when you load it in q2.
+### __q1__ Obtain the data.
+
+Following the [dataset documentation](https://archive.ics.uci.edu/ml/datasets/Heart+Disease), transcribe the correct column names and assign them as a character vector. You will use this to give the dataset sensible column names when you load it in q2.
 
 *Hint 1*: The relevant section from the dataset documentation is quoted here:
 
@@ -121,7 +125,7 @@ print("Well done!")
 
 We saw above that `read_csv()` incorrectly guessed some of the column types. Let's fix that by manually specifying each column's type.
 
-__q2__ Call `read_csv()` with the `col_names` and `col_types` arguments. Use the column names you assigned above, and set all column types to `col_number()`.
+### __q2__ Call `read_csv()` with the `col_names` and `col_types` arguments. Use the column names you assigned above, and set all column types to `col_number()`.
 
 *Hint*: Remember that you can always read the documentation to learn how to use a new argument!
 
@@ -173,7 +177,7 @@ The numeric codes given for some of the variables are uninformative; let's repla
 
 Rather than go and modify our raw data, we will instead *recode* the variables in our loaded dataset. *It is bad practice to modify your raw data!* Modifying your data in code provides *traceable documentation* for the edits you made; this is a key part of doing [reproducible science](https://www.nature.com/articles/s41562-016-0021). It takes more work, but *your results will be more trustworthy if you do things the right way!*
 
-__q3__ Create *conversion functions* to recode factor values as human-readable strings. I have provided one function (`convert_sex`) as an example.
+### __q3__ Create *conversion functions* to recode factor values as human-readable strings. I have provided one function (`convert_sex`) as an example.
 
 *Note*: "In the wild" you would be responsible for devising your own sensible level names. However, I'm going to provide specific codes such that I can write unittests to check your answers:
 
@@ -284,7 +288,7 @@ assertthat::assert_that(assertthat::are_equal(
 print("Excellent!")
 ```
 
-__q4__ Use your `convert_` functions from q3 to mutate the columns and recode the variables.
+### __q4__ Use your `convert_` functions from q3 to mutate the columns and recode the variables.
 
 ```{r q4-task}
 # task-begin
@@ -312,16 +316,16 @@ df_q4
 
 Now we have a clean dataset we can use for EDA and modeling---great! Before we finish this exercise, let's do some standard checks to understand these data:
 
-__q5__ Perform your *first checks* on `df_heart_disease`. Answer the questions below.
+### __q5__ Perform your *first checks* on `df_q4`. Answer the questions below.
 
 *Hint*: You may need to do some "deeper checks" to answer some of the questions below.
 
 ```{r q5-task}
 # task-begin
-## TODO: Perform your first checks on df_heart_disease
+## TODO: Perform your first checks on df_q4
 # task-end
 # solution-begin
-df_heart_disease %>% summary()
+df_q4 %>% summary()
 # solution-end
 ```
 
@@ -342,7 +346,7 @@ Missingness:
 
 ```{r sol-missingness}
 map(
-  df_heart_disease,
+  df_q4,
   ~ sum(is.na(.))
 )
 ```
@@ -352,7 +356,7 @@ From this, we can see that most variables have no missing values, but `ca` has `
 Missingness pattern:
 
 ```{r sol-missingness-pattern}
-df_heart_disease %>%
+df_q4 %>%
   filter(is.na(ca) | is.na(thal)) %>%
   select(ca, thal, everything())
 ```
@@ -362,16 +366,16 @@ There are six rows with missing values.
 
 If we were just doing EDA, we could stop here. However we're going to use these data for *modeling* in a future exercise. Most models can't deal with `NA` values, so we must choose how to handle rows with `NA`'s. In cases where only a few observations are missing values, we can simply *filter out* those rows.
 
-__q6__ Filter out the rows with missing values.
+### __q6__ Filter out the rows with missing values.
 
 ```{r q6-task}
 # task-begin
 df_q6 <-
-  df_heart_disease
+  df_q4
 # task-end
 # solution-begin
 df_q6 <-
-  df_heart_disease %>%
+  df_q4 %>%
   filter(!is.na(ca), !is.na(thal))
 # solution-end
 

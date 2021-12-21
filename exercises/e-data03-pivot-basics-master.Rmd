@@ -7,6 +7,8 @@ time: 40
 reading: 10
 ---
 
+# Data: Pivoting Data
+
 *Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse
 (including ggplot, dplyr, etc.) is specifically designed to use tidy data. But
 not all data we'll encounter is tidy! To that end, in this exercise we'll learn
@@ -49,7 +51,7 @@ Not all data are presented in tidy form; in this case it can be difficult to
 tell what the variables are. Let's practice distinguishing between the *columns*
 and the *variables*.
 
-__q1__ What are the variables in the following dataset?
+### __q1__ What are the variables in the following dataset?
 
 ```{r cases-setup}
 ## NOTE: No need to edit; execute
@@ -78,7 +80,7 @@ if (((q1_answer + 56) %% 3 == 1) & (q1_answer > 0)) {
 }
 ```
 
-__q2__ What are the variables in the following dataset?
+### __q2__ What are the variables in the following dataset?
 
 ```{r stang-setup}
 ## NOTE: No need to edit; execute
@@ -294,7 +296,7 @@ df_base <-
 We're going to play a game: I'm going to modify the data, and your job is to
 pivot it back to equal `df_base`.
 
-__q3__ Recover `df_base` from `df_q3` by using a *single* pivot and no other functions.
+### __q3__ Recover `df_base` from `df_q3` by using a *single* pivot and no other functions.
 
 ```{r q3-setup}
 ## NOTE: No need to edit; this is setup for the exercise
@@ -330,7 +332,7 @@ df_q3_res
 all_equal(df_base, df_q3_res) # Checks equality; returns TRUE if equal
 ```
 
-__q4__ Recover `df_base` from `df_q4` by using a *single* pivot and no other functions.
+### __q4__ Recover `df_base` from `df_q4` by using a *single* pivot and no other functions.
 
 ```{r q4-setup}
 ## NOTE: No need to edit; this is setup for the exercise
@@ -367,7 +369,7 @@ df_q4_res
 all_equal(df_base, df_q4_res) # Checks equality; returns TRUE if equal
 ```
 
-__q5__ Recover `df_base` from `df_q5` by using a *single* pivot and no other functions.
+### __q5__ Recover `df_base` from `df_q5` by using a *single* pivot and no other functions.
 
 ```{r q5-setup}
 ## NOTE: No need to edit; this is setup for the exercise
@@ -402,10 +404,9 @@ df_q5_res
 all_equal(df_base, df_q5_res) # Checks equality; returns TRUE if equal
 ```
 
-### Make Your Own!
-<!-- ------------------------- -->
+### __q6__ Make your own!
 
-__q6__ Using a single pivot on `df_base` create your own *challenge* dataframe. You will share this with the rest of the class as a puzzle, so make sure to solve your own challenge so you have a solution!
+Using a single pivot on `df_base` create your own *challenge* dataframe. You will share this with the rest of the class as a puzzle, so make sure to solve your own challenge so you have a solution!
 
 ```{r q6-task}
 ## NOTE: No need to edit; this is setup for the exercise
@@ -414,6 +415,9 @@ df_q6 <-
 # task-begin
 ## NOTE: Add your pivot here!
 # task-end
+# solution-begin
+  glimpse()
+# solution-end
 
 df_q6
 ```
@@ -426,6 +430,9 @@ df_q6_res <-
 # task-begin
 ## NOTE: Add your pivot here!
 # task-end
+# solution-begin
+  glimpse()
+# solution-end
 
 df_q6_res
 all_equal(df_base, df_q6_res) # Checks equality; returns TRUE if equal

@@ -1,11 +1,13 @@
 ---
-title: "Visualization: Lines"
+title: "Vis: Lines"
 author: Zach del Rosario
 date: 2020-06-04
 output: github_document
 time: 15
 reading: 30
 ---
+
+# Vis: Lines
 
 *Purpose*: *Line plots* are a key tool for EDA. In contrast with a scatterplot,
 a line plot assumes the data have a *function* relation. This can create an
@@ -27,8 +29,7 @@ library(gapminder)
 
 ```
 
-__q1__ The following graph doesn't work as its author intended. Based on what we
-learned in the reading, fix the following code.
+### __q1__ The following graph doesn't work as its author intended. Based on what we learned in the reading, fix the following code.
 
 ```{r q1-task}
 # task-begin
@@ -46,9 +47,7 @@ gapminder %>%
 # solution-end
 ```
 
-__q2__ A line plot makes *a certain assumption* about the underlying data. What
-assumption is this? How does that assumption relate to the following graph? Put
-differently, why is the use of `geom_line` a bad idea for the following dataset?
+### __q2__ A line plot makes *a certain assumption* about the underlying data. What assumption is this? How does that assumption relate to the following graph? Put differently, why is the use of `geom_line` a bad idea for the following dataset?
 
 ```{r q2-vis}
 ## TODO: No need to edit; just answer the questions
@@ -68,8 +67,7 @@ mpg %>%
 - The `mpg` dataset does not have a function relation between `displ` and `hwy`; there are cars with identical values of `displ` but different values of `hwy`
 <!-- solution-end -->
 
-__q3__ The following graph shows both the raw data and a smoothed version.
-Describe the trends that you can see in the different curves.
+### __q3__ The following graph shows both the raw data and a smoothed version. Describe the trends that you can see in the different curves.
 
 ```{r q3-task}
 ## TODO: No need to edit; just interpret the graph

@@ -1,11 +1,13 @@
 ---
-title: "A Simple Data Pipeline"
+title: "Data: A Simple Data Pipeline"
 author: Zachary del Rosario
 date: 2020-07-24
 output: github_document
 time: 20
 reading: 0
 ---
+
+# Data: A Simple Data Pipeline
 
 *Purpose*: Analyzing existing data is helpful, but it's even more important to be able to *obtain relevant data*. One kind of data is survey data, which is helpful for understanding things about people. In this short exercise you'll learn how to set up your own survey, link it to a cloud-based sheet, and automatically download that sheet for local data analysis.
 
@@ -16,7 +18,7 @@ library(tidyverse)
 library(googlesheets4)
 ```
 
-# Reading a Sheet with `googlesheets4`
+## Reading a Sheet with `googlesheets4`
 
 The [googlesheets4](https://googlesheets4.tidyverse.org/) package provides a convenient interface to Google Sheet's API [1]. We'll use this to set up a *very simple* data pipeline: A means to collect data at some user-facing point, and load that data for analysis.
 
@@ -49,7 +51,7 @@ But what if we want to load one of our own *private* data sheets?
 
 In order to load a private data sheet, you'll need to *authorize* googlesheets4 to use your Google account. The following line should open a browser window that will ask for your permissions.
 
-```{r recipe-auth}
+```{r recipe-auth, eval=FALSE}
 ## NOTE: No need to edit; run to authorize R to use your google account
 gs4_auth()
 
@@ -57,25 +59,27 @@ gs4_auth()
 
 Now that you've authorized your account, let's create a very simple data-collection pipeline.
 
-# Setting up a Form + Sheet
+## Setting up a Form + Sheet
 
 One convenient feature of Google Sheets is that it nicely integrates with Google Forms: We can create a form (a survey) and link it to a sheet. Let's do that!
 
-__q1__ Go to [Google Forms](https://www.google.com/forms/about/) and create a new form. Add at least one question.
+### __q1__ Create your own form.
 
-__q2__ Navigate to the `Responses` tab and click `Create Spreadsheet`. Select `Create a new spreadsheet` and accept the default name.
+Go to [Google Forms](https://www.google.com/forms/about/) and create a new form. Add at least one question.
+
+### __q2__ Navigate to the `Responses` tab and click `Create Spreadsheet`. Select `Create a new spreadsheet` and accept the default name.
 
 ![Create spreadsheet linked to form](./images/e-data12-responses.png)
 
-__q3__ Copy the URL for your new sheet and copy it below. Run the following chunk to load your (probably empy) sheet.
+### __q3__ Copy the URL for your new sheet and copy it below. Run the following chunk to load your (probably empy) sheet.
 
-```{r qZ-task}
+```{r qZ-task, eval=FALSE}
 # task-begin
-## TODO: 
+## TODO:
 url_custom_sheet <- NA_character_
 # task-end
 # solution-begin
-## NOTE: I'm not going to put a URL here, as one of my personal sheets 
+## NOTE: I'm not going to put a URL here, as one of my personal sheets
 ##       won't work for you....
 url_custom_sheet <- ""
 # solution-end
@@ -90,6 +94,6 @@ This is *very simple* but *surprisingly powerful*: I use a pipeline exactly like
 
 <!-- include-exit-ticket -->
 
-# Notes
+## Notes
 
 [1] It's `googlesheets4` because the package is designed for V4 of Google Sheet's API.

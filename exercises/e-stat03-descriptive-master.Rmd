@@ -1,11 +1,13 @@
 ---
-title: "Statistics: Descriptive Statistics"
+title: "Stats: Descriptive Statistics"
 author: Zach del Rosario
 date: 2020-06-08
 output: github_document
 time: 60
 reading: 0
 ---
+
+# Stats: Descriptive Statistics
 
 *Purpose*: We will use *descriptive statistics* to make quantitative summaries of a dataset. Descriptive statistics provide a much more compact description than a visualization, and are important when a data consumer wants "just one number".
 
@@ -36,7 +38,7 @@ vis_central <- function(df, var) {
 }
 ```
 
-# Statistics
+## Statistics
 <!-- -------------------------------------------------- -->
 
 A *statistic* is a numerical summary of a sample. Statistics are useful because they provide a useful summary about our data. A histogram gives us a rich summary of a datset: for example the departure delay time in the NYC flight data.
@@ -80,7 +82,7 @@ flights %>%
 
 Let's learn how to handle this:
 
-__q1__ The following code returns `NA`. Look up the documentation for `mean` and use an additional argument to strip the `NA` values in the dataset before computing the mean. Make this modification to the code below and report the mean departure delay time.
+### __q1__ The following code returns `NA`. Look up the documentation for `mean` and use an additional argument to strip the `NA` values in the dataset before computing the mean. Make this modification to the code below and report the mean departure delay time.
 
 ```{r q1-task}
 ## TASK: Edit to drop all NAs before computing the mean
@@ -159,7 +161,7 @@ gapminder %>%
 
 the mean and median `gdpPercap` disagree.[2]
 
-__q2__ The following code computes the mean and median `dep_delay` for each carrier, and sorts based on mean. Duplicate the code, and sort by median instead. Report your observations on which carriers are in both lists, and which are different. Also comment on what negative `dep_delay` values mean.
+### __q2__ The following code computes the mean and median `dep_delay` for each carrier, and sorts based on mean. Duplicate the code, and sort by median instead. Report your observations on which carriers are in both lists, and which are different. Also comment on what negative `dep_delay` values mean.
 
 *Hint*: Remember you can check the documentation of a built-in dataset with `?flights`!
 
@@ -200,7 +202,7 @@ flights %>%
 - Negative values of `dep_delay` signal early departures
 <!-- solution-end -->
 
-### Multi-modality
+## Multi-modality
 <!-- ------------------------- -->
 
 It may not seem like it, but we're actually *making an assumption* when we use the mean (or median) as a typical value. Imagine we had the following data:
@@ -209,8 +211,8 @@ It may not seem like it, but we're actually *making an assumption* when we use t
 bind_rows(
   tibble(X = rnorm(300, mean = -2)),
   tibble(X = rnorm(300, mean = +2))
-) %>% 
-  
+) %>%
+
   ggplot(aes(X)) +
   geom_histogram(bins = 60) +
   geom_vline(aes(xintercept = mean(X), color = "Mean")) +
@@ -248,7 +250,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
 
 *Note*: The function `qnorm` returns the quantiles of a normal distribution. We'll focus on quantiles of *samples* in this exercise.
 
-We'll use the quartiles to define the *innerquartile range*. First, the `quantile()` function computes quantiles of a sample. For example:
+We'll use the quartiles to define the *interquartile range*. First, the `quantile()` function computes quantiles of a sample. For example:
 
 ```{r quant-ex}
 ## NOTE: No need to change this! Run for an example
@@ -259,13 +261,13 @@ flights %>%
 
 Like with `mean, median`, we need to specify if we want to remove `NA`s. We can provide a list of `probs` to specify the probabilities of the quantiles. Remember: a *probability* is a value between $[0, 1]$, while a *quantile* is a value that probably has units, like minutes in the case of `dep_delay`.
 
-Now we can define the innerquartile range:
+Now we can define the interquartile range:
 
 $$IQR[D] = Q_{0.75}[D] - Q_{0.25}[D]$$,
 
 where $Q_{p}[D]$ is the $p$-th quantile of a sample $D$.
 
-__q3__ Using the function `quantile`, compute the *innerquartile range*; this is the difference between the $75%$ and $25%$ quantiles.
+### __q3__ Using the function `quantile`, compute the *interquartile range*; this is the difference between the $75%$ and $25%$ quantiles.
 
 ```{r q3-task}
 ## NOTE: No need to change this!
@@ -273,7 +275,7 @@ set.seed(101)
 v_test_iqr <- rnorm(n = 10)
 
 # task-begin
-## TASK: Compute the innerquartile range
+## TASK: Compute the interquartile range
 test_iqr <- NA_real_
 # task-end
 # solution-begin
@@ -292,7 +294,7 @@ print("Great job!")
 ## Spread
 <!-- ------------------------- -->
 
-*Spread* is the concept of how tightly or widely data are *spread out*. There are two primary measures of spread: the *standard deviation*, and the *innerquartile range*.
+*Spread* is the concept of how tightly or widely data are *spread out*. There are two primary measures of spread: the *standard deviation*, and the *interquartile range*.
 
 The [standard deviation](https://en.wikipedia.org/wiki/Standard_deviation) (SD) is denoted by $s$ and defined by
 
@@ -316,7 +318,7 @@ tibble(
 ) %>% glimpse
 ```
 
-__q4__ Using the code from q2 as a starting point, compute the standard deviation (`sd()`) and innerquartile range (`IQR()`), and rank the top five carriers, this time by sd and IQR. Report your observations on which carriers are in both lists, and which are different. Also note and comment on which carrier (among your top-ranked) has the largest difference between `sd` and `IQR`.
+### __q4__ Using the code from q2 as a starting point, compute the standard deviation (`sd()`) and interquartile range (`IQR()`), and rank the top five carriers, this time by sd and IQR. Report your observations on which carriers are in both lists, and which are different. Also note and comment on which carrier (among your top-ranked) has the largest difference between `sd` and `IQR`.
 
 ```{r q4-task}
 ## TODO: Use code from q2 to compute the sd and IQR, rank as before
@@ -402,7 +404,7 @@ flights %>%
 
 In the case of a *perfect linear relationships* the Pearson correlation takes the value $+1$ (for a positive slope) or $-1$ for a negative slope.
 
-__q5__ Compute the Pearson correlation between `x, y` below. Play with the `slope` and observe the change in the correlation.
+### __q5__ Compute the Pearson correlation between `x, y` below. Play with the `slope` and observe the change in the correlation.
 
 ```{r ex-cor-line}
 slope <- 0.5 # Play with this value; observe the correlation
@@ -485,7 +487,7 @@ df_monotone %>%
 
 One more note about functional relationships: Neither Pearson nor Spearman can pick up on arbitrary dependencies.
 
-__q6__ Run the code chunk below and look at the visualization: Make a prediction about what you think the correlation will be. Then compute the Pearson correlation between `x, y` below.
+### __q6__ Run the code chunk below and look at the visualization: Make a prediction about what you think the correlation will be. Then compute the Pearson correlation between `x, y` below.
 
 ```{r ex-data-quad}
 ## NOTE: No need to change this!
@@ -547,7 +549,7 @@ df_cor_outliers %>%
 
 <!-- include-exit-ticket -->
 
-# Notes
+## Notes
 <!-- -------------------------------------------------- -->
 
 [1] So then why bother with the mean? It turns out the mean is a fundamental idea in statistics, as it's a key component of *a lot* of other statistical procedures. You'll end up using the mean in countless different ways, so it's worth recognizing its weakness to outliers.

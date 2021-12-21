@@ -1,11 +1,13 @@
 ---
-title: "The Bootstrap: Some Recipies"
+title: "Stats: The Bootstrap, Some Recipies"
 author: Zachary del Rosario
 date: 2020-07-20
 output: github_document
 time: 30
 reading: 0
 ---
+
+# Stats: The Bootstrap, Some Recipies
 
 *Purpose*: Confidence intervals are an important tool for assessing our estimates. However, our tools so far for estimating confidence intervals rely on assumptions (normality, applicability of the CLT) that limit the statistics we can study. In this exercise we'll learn about a general-purpose tool we can use to approximate CI---the *bootstrap*.
 
@@ -66,7 +68,7 @@ v_mean_est <-
 v_mean_est[1:9]
 ```
 
-__q1__ Modify the code above to use within a `mutate()` call on `df_resample_norm`. Assign the mean estimates to the new column `mean_est`.
+### __q1__ Modify the code above to use within a `mutate()` call on `df_resample_norm`. Assign the mean estimates to the new column `mean_est`.
 
 ```{r q1-task}
 # task-begin
@@ -115,7 +117,7 @@ df_data_norm %>%
 
 The output of `fitdistr()`, after run through `tidy()`, is exactly what `int_pctl()` expects. Note that the output here is a tibble with a `term` column and two statistics: the  `estimate` and the `std.error`. To use `int_pctl()`, we'll have to provide statistics in this compatible form.
 
-__q2__ Modify the code below following `recall-fitdistr` to provide tidy results to `int_pctl()`.
+### __q2__ Modify the code below following `recall-fitdistr` to provide tidy results to `int_pctl()`.
 
 *Hint*: You should only have to modify the formula (`~`) line.
 
@@ -155,7 +157,7 @@ One of the important things to remember is that the bootstrap is an *approximati
 
 The next two tasks will study what happens when these two assumptions are not met.
 
-__q3__ (Representative sample) Read the following code before running it, and make a hypothesis about the result. Is the sample entering `bootstraps()` representative of the population `rnorm(mean = 0, sd = 1)`? How are the bootstrap results affected?
+### __q3__ (Representative sample) Read the following code before running it, and make a hypothesis about the result. Is the sample entering `bootstraps()` representative of the population `rnorm(mean = 0, sd = 1)`? How are the bootstrap results affected?
 
 ```{r q3-task}
 ## TASK: Read this code; will the data be representative of the population
@@ -187,7 +189,7 @@ tibble(x = rnorm(n = 100)) %>%
 
 The following code generates `100` different samples from a normal distribution (each with `n = 10`), and computes a very coarse bootstrap for each one.
 
-__q4__ (Number of replicates) First run this code, and comment on whether the approximate coverage probability is close to the nominal `0.95`. Increase the value of `n_boot` and re-run; at what point does the coverage probability approach the desired `0.95`?
+### __q4__ (Number of replicates) First run this code, and comment on whether the approximate coverage probability is close to the nominal `0.95`. Increase the value of `n_boot` and re-run; at what point does the coverage probability approach the desired `0.95`?
 
 *Note*: At higher values of `n_boot`, the following code can take a long while to run. I recommend keeping `n_boot <= 1000`.
 
@@ -305,7 +307,7 @@ When I run this, I find that the confidence interval contains `pr_true` as one m
 
 <!-- include-exit-ticket -->
 
-# Notes
+## Notes
 <!-- -------------------------------------------------- -->
 
 [1] This is because `rsample` does some fancy stuff under the hood. Basically `bootstraps` does not make any additional copies of the data; the price we pay for this efficiency is the need to call `analysis()`.

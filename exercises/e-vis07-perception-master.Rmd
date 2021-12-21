@@ -1,11 +1,13 @@
 ---
-title: "Visualization: Perceptual Basics"
+title: "Vis: Perceptual Basics"
 author: Zach del Rosario
 date: 2020-08-06
 output: github_document
 time: 20
 reading: 40
 ---
+
+# Vis: Perceptual Basics
 
 *Purpose*: Creating a *presentation-quality* graph is an exercise in *communication*. In order to create graphs that other people can understand, we should know some stuff about *how humans see data*. Through the required "reading" (video) you'll learn about visual perception, then put these ideas to use criticizing some graphs. Later, you'll use these ideas to *improve* some graphs.
 
@@ -15,7 +17,7 @@ reading: 40
 library(tidyverse)
 ```
 
-# Criticize these graphs!
+## Criticize these graphs!
 <!-- -------------------------------------------------- -->
 
 Using the ideas from the reading (video), state some issues with the following graphs. As a reminder, the *visual hierarchy* is:
@@ -28,7 +30,7 @@ Using the ideas from the reading (video), state some issues with the following g
 6. Volume; Density; Color saturation
 7. Color hue
 
-__q1__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+### __q1__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
 
 ```{r q1-vis}
 ## NOTE: No need to edit; run and criticize
@@ -56,13 +58,13 @@ mpg %>%
 ```
 <!-- solution-end -->
 
-__q2__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+### __q2__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
 
 ```{r q2-vis}
 ## NOTE: No need to edit; run and criticize
-as_tibble(mtcars) %>% 
-  mutate(model = rownames(mtcars)) %>% 
-  
+as_tibble(mtcars) %>%
+  mutate(model = rownames(mtcars)) %>%
+
   ggplot(aes(x = "", y = "", size = mpg)) +
   geom_point() +
   facet_wrap(~model)
@@ -75,11 +77,11 @@ as_tibble(mtcars) %>%
 - Area is *low* on the visual hierarchy; it is difficult to see the difference between mpg values.
 <!-- solution-end -->
 
-__q3__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+### __q3__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
 
 ```{r q3-vis}
 ## NOTE: No need to edit; run and criticize
-diamonds %>% 
+diamonds %>%
   ggplot(aes(clarity, fill = cut)) +
   geom_bar()
 ```
@@ -91,11 +93,11 @@ diamonds %>%
 - Stacked bar charts force us to make comparisons using length, rather than position along a common axis.
 <!-- solution-end -->
 
-__q4__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+### __q4__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
 
 ```{r q4-vis}
 ## NOTE: No need to edit; run and criticize
-diamonds %>% 
+diamonds %>%
   ggplot(aes(x = "", fill = cut)) +
   geom_bar() +
   coord_polar("y") +

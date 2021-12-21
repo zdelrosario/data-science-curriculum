@@ -7,6 +7,8 @@ time: 30
 reading: 10
 ---
 
+# Reproducibility: Git and Our Curriculum
+
 *Purpose*: Git is a powerful tool to manage our work, but it can be confusing at first. Here we will read some introductory materials about Git, and use the software to download and set up the exercises for the course.
 
 *Reading*: [Automated Version Control](https://swcarpentry.github.io/git-novice/01-basics/index.html), complete the steps in [Setting Up Git](https://swcarpentry.github.io/git-novice/02-setup/index.html)
@@ -17,19 +19,19 @@ reading: 10
 
 *Note*: If you're reading this file in RStudio, you can Shift + Click (CMD + Click) to follow a link.
 
-# Windows-specific Instructions
+## Windows-specific Instructions
 <!-- -------------------------------------------------- -->
 
 If you are on a Windows computer, you will need to complete some additional steps. Please follow [these instructions](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-windows-gitbash.md) before continuing.
 
-# Set Up SSH Key
+## Set Up SSH Key
 <!-- -------------------------------------------------- -->
 
 Before you can "clone" (download) the repository of exercises, you'll need to set up `ssh` with GitHub. Follow these instructions to [add an SSH key](https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account) to your account. This will allow you to work with GitHub without typing in your password.
 
 *Note*: This can be a bit confusing if you've never worked with SSH before; *please do ask questions* if you are stuck!
 
-# Downloading Our Exercises
+## Downloading Our Exercises
 <!-- -------------------------------------------------- -->
 
 Using RStudio, we will download a local copy of the [data-science-curriculum](https://github.com/zdelrosario/data-science-curriculum). Follow these instructions:

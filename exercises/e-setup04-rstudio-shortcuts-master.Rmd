@@ -1,11 +1,13 @@
 ---
-title: "RStudio: Shortcuts"
+title: "Setup: RStudio Shortcuts"
 author: Zachary del Rosario
 date: 2020-05-07
 output: github_document
 time: 10
 reading: 5
 ---
+
+# Setup: RStudio Shortcuts
 
 *Purpose*: Your ability to get stuff done is highly dependent on your fluency
 with your tools. One aspect of fluency is knowing and *using* keyboard
@@ -25,7 +27,7 @@ perfect!
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-__q1__ What do the following keyboard shortcuts do?
+### __q1__ What do the following keyboard shortcuts do?
 
 * Within the script editor or a chunk
 
@@ -108,7 +110,7 @@ c(
 ```
 
 
-__q2__ For a chunk, what header option do you use to
+### __q2__ For a chunk, what header option do you use to
 
 * Run the code, don't display it, but show its results?
 
@@ -122,13 +124,13 @@ __q2__ For a chunk, what header option do you use to
 `include=FALSE`
 <!-- solution-end -->
 
-__q3__ How do stop the code in a chunk from running once it has started?
+### __q3__ How do stop the code in a chunk from running once it has started?
 
 <!-- solution-begin -->
 Click the red square in the top right corner of the chunk.
 <!-- solution-end -->
 
-__q4__ How do you show the "Document Outline" in RStudio?
+### __q4__ How do you show the "Document Outline" in RStudio?
 
 *Hint*: Try googling "rstudio document outline"
 

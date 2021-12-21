@@ -1,5 +1,5 @@
 ---
-title: "Fitting Distributions"
+title: "Stats: Fitting Distributions"
 author: Zachary del Rosario
 date: 2020-07-20
 output: github_document
@@ -7,13 +7,47 @@ time: 20
 reading: 0
 ---
 
+# Stats: Fitting Distributions
+
 *Purpose*: We use distributions to model random quantities. However, in order to model physical phenomena, we should *fit* the distributions using data. In this short exercise you'll learn some functions for fitting distributions to data.
 
 ```{r setup}
-library(MASS)
 library(tidyverse)
+library(MASS)
 library(broom)
 ```
+
+## Aside: Masking
+
+Note that when we load the `MASS` and `tidyverse` packages, we will find that their functions *conflict*. To deal with this, we'll need to learn how to specify a *namespace* when calling a function. To do this, use the `::` notation; i.e. `namespace::function`. For instance, to call `filter` from `dplyr`, we would write `dplyr::filter()`.
+
+One of the specific conflicts between `MASS` and `tidyverse` is the `select` function. Try running the chunk below; it will throw an error:
+
+```{r eval=FALSE}
+diamonds %>%
+  select(carat, cut) %>%
+  glimpse()
+```
+
+This error occurs because `MASS` *also* provides a `select` function.
+
+### __q0__ Fix the following code!
+
+Use the namespace `::` operator to use the correct `select()` function.
+
+```{r q0-task}
+diamonds %>%
+# task-begin
+  select(carat, cut) %>%
+# task-end
+# solution-begin
+  dplyr::select(carat, cut) %>%
+# solution-end
+  glimpse()
+```
+
+
+## Distribution Parameters and Fitting
 
 The function `rnorm()` requires values for `mean` and `sd`; while `rnorm()` has
 defaults for these arguments, if we are trying to model a random event in the
@@ -46,7 +80,7 @@ df_est_norm
 - `fitdistr()` takes a *vector*; I use the function `pull(x)` to pull the vector `x` out of the dataframe.
 - `fitdistr()` returns a messy output; the function `broom::tidy()` automagically cleans up the output and provides a tibble.
 
-__q1__ Compute the sample mean and standard deviation of `x` in `df_data_norm`. Compare these values to those you computed with `fitdistr()`.
+### __q1__ Compute the sample mean and standard deviation of `x` in `df_data_norm`. Compare these values to those you computed with `fitdistr()`.
 
 ```{r q1-task}
 ## TASK: Compute the sample mean and sd of `df_data_norm %>% pull(x)`
@@ -73,7 +107,7 @@ sd_est
 
 Estimating parameters for a normal distribution is easy because it is parameterized in terms of the mean and standard deviation. The advantage of using `fitdistr()` is that it will allow us to work with a much wider selection of distribution models.
 
-__q2__ Use the function `fitdistr()` to fit a `"weibull"` distribution to the realizations `y` in `df_data_weibull`.
+### __q2__ Use the function `fitdistr()` to fit a `"weibull"` distribution to the realizations `y` in `df_data_weibull`.
 
 *Note*: The [weibull distribution](https://en.wikipedia.org/wiki/Weibull_distribution) is used to model many physical phenomena, including the strength of composite materials.
 
@@ -98,7 +132,7 @@ df_q2
 
 Once we've fit a distribution, we can use the estimated parameters to approximate quantities like probabilities. If we were using the distribution for `y` to model a material strength, we would estimate probabilities to compute the rate of failure for mechanical components---we could then use this information to make design decisions.
 
-__q3__ Extract the estimates `shape_est` and `scale_est` from `df_q2`, and use them to estimate the probability that `Y <= 2`.
+### __q3__ Extract the estimates `shape_est` and `scale_est` from `df_q2`, and use them to estimate the probability that `Y <= 2`.
 
 *Hint*: `pr_true` contains the true probability; modify that code to compute the estimated probability.
 
@@ -132,7 +166,7 @@ You'll probably find that `pr_true != pr_est`! As we saw in `e-stat06-clt` we sh
 
 <!-- include-exit-ticket -->
 
-# Notes
+## Notes
 <!-- -------------------------------------------------- -->
 
 [1] For another tutorial on fitting distributions in R, see this [R-bloggers](https://www.r-bloggers.com/fitting-distributions-with-r/) post.

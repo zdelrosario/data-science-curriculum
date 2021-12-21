@@ -1,11 +1,13 @@
 ---
-title: "Error and Bias"
+title: "Stats: Error and Bias"
 author: Zachary del Rosario
 date: 2020-07-19
 output: github_document
 time: 20
 reading: 0
 ---
+
+# Stats: Error and Bias
 
 *Purpose*: *Error* is a subtle concept. Often statistics concepts are introduced
 with a host of assumptions on the errors. In this short exercise, we'll reminder
@@ -43,7 +45,7 @@ df_michelson <-
   )
 ```
 
-# Errors
+## Errors
 <!-- -------------------------------------------------- -->
 
 Let's re-examine the Michelson speed of light data to discuss the concept of *error*. Let $c$ denote the true speed of light, and let $\hat{c}_i$ denote the i-th measurement by Michelson. Then the error $\epsilon_{c,i}$ is:
@@ -55,7 +57,7 @@ differences against the true value $c$. Very frequently in statistics, we
 *assume* that the errors are *unbiased*; that is we assume $\mathbb{E}[\epsilon]
 = 0$. Let's take a look at what happens when that assumption is violated.
 
-__q1__ Compute the errors $\epsilon_c$ using Michelson's measurements `c_meas` and the true speed of light `c_true`.
+### __q1__ Compute the errors $\epsilon_c$ using Michelson's measurements `c_meas` and the true speed of light `c_true`.
 
 ```{r q1-task}
 ## TASK: Compute `epsilon_c`
@@ -76,7 +78,7 @@ df_q1 %>%
 
 We can use descriptive statistics in order to summarize the errors. This will give us a quantification of the *uncertainty* in our measurements: remember that uncertainty is our assessment of the error.
 
-__q2__ Estimate the mean and standard deviation of $\epsilon_c$ from `df_q1.` Is the error mean large or small, compared to its standard deviation? How about compared to Michelson's uncertainty `c_michelson_uncertainty`?
+### __q2__ Estimate the mean and standard deviation of $\epsilon_c$ from `df_q1.` Is the error mean large or small, compared to its standard deviation? How about compared to Michelson's uncertainty `c_michelson_uncertainty`?
 
 ```{r q2-task}
 ## TASK: Estimate `epsilon_mean` and `epsilon_sd` from df_q1
@@ -119,7 +121,7 @@ Generally, we want our errors to have *zero mean*---the case where the errors ha
 
 What can happen when our estimates are biased? In that case, increased data *may not* improve our estimate, and our statistical tools---such as confidence intervals---may give us a false impression of the true error. The next example will show us what happens if we apply confidence intervals in a biased-data setting like Michelson's data.
 
-__q3__ Use a CLT approximation to construct a $99%$ confidence interval on the mean of `c_meas`. Check (with the provided code) if your CI includes the true speed of light.
+### __q3__ Use a CLT approximation to construct a $99%$ confidence interval on the mean of `c_meas`. Check (with the provided code) if your CI includes the true speed of light.
 
 *Hint*: This computation should **not** use the true speed of light $c_true$ in any way.
 

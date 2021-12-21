@@ -1,11 +1,13 @@
 ---
-title: "Visualization: Histograms"
+title: "Vis: Histograms"
 author: Zach del Rosario
 date: 2020-05-22
 output: github_document
 time: 30
 reading: 20
 ---
+
+# Vis: Histograms
 
 *Purpose*: *Histograms* are a key tool for EDA. In this exercise we'll get a little more practice constructing and interpreting histograms and densities.
 
@@ -23,7 +25,7 @@ library(tidyverse)
 
 ```
 
-__q1__ Using the graphs generated in the chunks `q1-vis1` and `q1-vis2` below, answer:
+### __q1__ Using the graphs generated in the chunks `q1-vis1` and `q1-vis2` below, answer:
 
 - Which `class` has the most vehicles?
 - Which `class` has the broadest distribution of `cty` values?
@@ -55,7 +57,7 @@ In my opinion, it's easier to see the broadness of `subcompact` by the density p
 
 In the previous exercise, we learned how to *facet* a graph. Let's use that part of the grammar of graphics to clean up the graph above.
 
-__q2__ Modify `q1-vis2` to use a `facet_wrap()` on the `class`. "Free" the vertical axis with the `scales` keyword to allow for a different y scale in each facet.
+### __q2__ Modify `q1-vis2` to use a `facet_wrap()` on the `class`. "Free" the vertical axis with the `scales` keyword to allow for a different y scale in each facet.
 
 ```{r q2-task}
 # task-begin
@@ -73,7 +75,7 @@ mpg %>%
 
 In the reading, we learned that the "most important thing" to keep in mind with `geom_histogram()` and `geom_freqpoly()` is to _explore different binwidths_. We'll explore this idea in the next question.
 
-__q3__ Analyze the following graph; make sure to test different binwidths. What patterns do you see? Which patterns remain as you change the binwidth?
+### __q3__ Analyze the following graph; make sure to test different binwidths. What patterns do you see? Which patterns remain as you change the binwidth?
 
 ```{r q3-task}
 ## TODO: Run this chunk; play with differnet bin widths

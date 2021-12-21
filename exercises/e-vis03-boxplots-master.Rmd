@@ -1,5 +1,5 @@
 ---
-title: "Visualization: Boxplots and Counts"
+title: "Vis: Boxplots and Counts"
 author: Zach del Rosario
 date: 2020-06-04
 output: github_document
@@ -7,6 +7,8 @@ dep: e-data02-derive
 time: 20
 reading: 20
 ---
+
+# Vis: Boxplots and Counts
 
 *Purpose*: *Boxplots* are a key tool for EDA. Like histograms, boxplots give us a sense of "shape" for a distribution. However, a boxplot is a *careful summary* of shape. This helps us pick out key features of a distribution, and enables easier comparison of different distributions.
 
@@ -28,7 +30,7 @@ A *subtle point* from the primer is that we can use `dplyr` to generate new
 facts about our data, then use `ggplot2` to visualize those facts. We'll
 practice this idea in a number of ways.
 
-__q1__ Use a `cut_*` verb to create a categorical variable out of `carat`. Tweak
+### __q1__ Use a `cut_*` verb to create a categorical variable out of `carat`. Tweak
 the settings in your cut and document your observations.
 
 *Hint*: Recall that we learned about `cut_interval, cut_number, cut_width`. Take
@@ -59,7 +61,7 @@ diamonds %>%
 - The IQR is quite small at low carat, but increases with carat; the prices become more variable at higher carat
 <!-- solution-end -->
 
-__q2__ The following code visualizes the count of diamonds of *all* carats according to their cut and color. Modify the code to consider *only* diamonds with `carat >= 2`. Does the most common group of cut and color change?
+### __q2__ The following code visualizes the count of diamonds of *all* carats according to their cut and color. Modify the code to consider *only* diamonds with `carat >= 2`. Does the most common group of cut and color change?
 
 ```{r q2-ref}
 ## NOTE: No need to modify; run and inspect
@@ -96,7 +98,7 @@ diamonds %>%
 - Yes, it used to be `G, Ideal`, but is now `I, Premium`
 <!-- solution-end -->
 
-__q3__ The following plot has overlapping x-axis labels. Use a verb from the reading to `flip` the coordinates and improve readability.
+### __q3__ The following plot has overlapping x-axis labels. Use a verb from the reading to `flip` the coordinates and improve readability.
 
 ```{r q3-task}
 # task-begin

@@ -1,11 +1,13 @@
 ---
-title: "Statistics: The Central Limit Theorem and Confidence Intervals"
+title: "Stats: The Central Limit Theorem and Confidence Intervals"
 author: Zach del Rosario
 date: 2020-06-23
 output: github_document
 time: 45
 reading: 0
 ---
+
+# Stats: The Central Limit Theorem and Confidence Intervals
 
 *Purpose*: When studying sampled data, we need a principled way to report our results with their uncertainties. Confidence intervals (CI) are an excellent way to summarize results, and the central limit theorem (CLT) helps us to construct these intervals.
 
@@ -18,7 +20,7 @@ library(tidyverse)
 library(nycflights13)
 ```
 
-# Central Limit Theorem
+## Central Limit Theorem
 <!-- -------------------------------------------------- -->
 
 Let's return to a result from `e-stat04-population`:
@@ -103,7 +105,7 @@ The CLT doesn't work for *all* problems. The CLT is often used for sums of rando
 
 Note that the CLT tells us about estimates like the sample mean, it does *not* tell us anything about the distribution of the underlying population. We will use the CLT to help construct *confidence intervals*.
 
-# Confidence Intervals
+## Confidence Intervals
 <!-- -------------------------------------------------- -->
 
 Let's learn about confidence intervals by way of example. I'll lay out a procedure, then explain how it works.
@@ -182,7 +184,7 @@ Some observations to note:
 
 [This animation](https://seeing-theory.brown.edu/frequentist-inference/index.html) is the best visual explain I've found on how confidence intervals are constructed [2].
 
-__q1__ Using the CLT, approximate a $99\%$ confidence interval for the population mean using the sample `z_q1`.
+### __q1__ Using the CLT, approximate a $99\%$ confidence interval for the population mean using the sample `z_q1`.
 
 ```{r q1-task}
 ## TASK: Estimate a 99% confidence interval with the sample below
@@ -207,7 +209,7 @@ assertthat::assert_that(abs(hi_q1 - 1.406819) < 1e-6)
 print("Nice!")
 ```
 
-# Making Comparisons with CI
+## Making Comparisons with CI
 <!-- -------------------------------------------------- -->
 
 Why would we bother with constructing a confidence interval? Let's take a look at a real example with the NYC flight data.
@@ -290,7 +292,7 @@ These confidence intervals illustrate a number of different sampling scenarios. 
 
 However, combining all our available information to form a confidence interval is a principled way to report our results. A confidence interval gives us a plausible range of values for the population value, and by its width gives us a sense of how accurate our estimate is likely to be.
 
-# (Bonus) Deriving an Approximate Confidence Interval
+## (Bonus) Deriving an Approximate Confidence Interval
 <!-- -------------------------------------------------- -->
 
 (This is bonus content provided for the curious reader.)
@@ -315,7 +317,7 @@ Using a plug-in estimate for $\sigma$ gives the procedure defined above.
 
 <!-- include-exit-ticket -->
 
-# Notes
+## Notes
 <!-- -------------------------------------------------- -->
 
 [1] Namely, the population must have finite mean and finite variance.

@@ -7,6 +7,8 @@ time: 20
 reading: 40
 ---
 
+# Data: Isolating Data
+
 *Purpose*: One of the keys to a successful analysis is the ability to *focus* on
 particular topics. When analyzing a dataset, our ability to focus is tied to our
 facility at *isolating data*. In this exercise, you will practice isolating
@@ -27,7 +29,7 @@ package, the data are stored in the variable name `flights`. For instance:
 flights %>% glimpse
 ```
 
-__q1__ Select all the variables whose name ends with `_time`.
+### __q1__ Select all the variables whose name ends with `_time`.
 
 ```{r q1-task}
 # task-begin
@@ -50,8 +52,7 @@ assertthat::assert_that(
 print("Nice!")
 ```
 
-__q2__ Re-arrange the columns to place `dest, origin, carrier` at the front, but
-retain all other columns.
+### __q2__ Re-arrange the columns to place `dest, origin, carrier` at the front, but retain all other columns.
 
 *Hint*: The function `everything()` will be useful!
 
@@ -78,8 +79,7 @@ print("Well done!")
 Since R will only show the first few columns of a tibble, using `select()` in
 this fashion will help us see the values of particular columns.
 
-__q3__ Fix the following code. What is the mistake here? What is the code trying
-to accomplish?
+### __q3__ Fix the following code. What is the mistake here? What is the code trying to accomplish?
 
 ```{r q3-task}
 # task-begin
@@ -92,7 +92,7 @@ flights %>% filter(dest == "LAX")
 
 The next error is *far more insidious*....
 
-__q4__ This code doesn't quite what the user intended. What went wrong?
+### __q4__ This code doesn't quite what the user intended. What went wrong?
 
 ```{r q4-task}
 # task-begin
@@ -110,7 +110,7 @@ worry---we'll get lots of practice!
 This dataset is called `nycflights`; in what sense is it focused on New York
 city? Let's do a quick check to get an idea:
 
-__q5__ Perform **two** filters; first
+### __q5__ Perform **two** filters; first
 
 ```{r q5-task}
 # task-begin
@@ -166,8 +166,7 @@ something about the *perspective* of those who collected the data. Thinking
 about these issues is partly what separates __data science__ from programming or
 machine learning. (`end-rant`)
 
-__q6__ Sort the flights in *descending* order by their `air_time`. Bring
-`air_time, dest` to the front. What can you tell about the longest flights?
+### __q6__ Sort the flights in *descending* order by their `air_time`. Bring `air_time, dest` to the front. What can you tell about the longest flights?
 
 ```{r q6-task}
 # task-begin

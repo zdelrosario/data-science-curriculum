@@ -1,11 +1,13 @@
 ---
-title: "Visualization: Small Multiples"
+title: "Vis: Small Multiples"
 author: Zach del Rosario
 date: 2020-07-10
 output: github_document
 time: 30
 reading: 0
 ---
+
+# Vis: Small Multiples
 
 *Purpose*: A powerful idea in visualization is the *small multiple*. In this exercise you'll learn how to design and create small multiple graphs.
 
@@ -15,11 +17,13 @@ reading: 0
 what?*" Edward Tufte on small multiples.
 
 ```{r setup, include=FALSE}
+library(tidyverse)
+
 # knitr options
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Small Multiples
+## Small Multiples
 <!-- -------------------------------------------------- -->
 
 Facets in ggplot allow us to apply the ideas of [small
@@ -71,7 +75,7 @@ There's a trick to getting the visual above; removing the facet variable from an
 
 The presence of these "ghost" points provides more context; they facilitate the "Compared to what?" question that Tufte puts at the center of quantitative reasoning.
 
-__q1__ Edit the following figure to use the "ghost" point trick above.
+### __q1__ Edit the following figure to use the "ghost" point trick above.
 
 ```{r q1-task}
 ## TODO: Edit this code to facet on `cut`, but keep "ghost" points to aid in
@@ -94,7 +98,7 @@ diamonds %>%
 ```
 <!-- solution-end -->
 
-# Organizing Factors
+## Organizing Factors
 <!-- -------------------------------------------------- -->
 
 Sometimes your observations will organize into natural categories. In this case facets are a great way to group your observations. For example, consider the following figure:
@@ -125,7 +129,7 @@ There's *a lot* going on this figure, including a number of subtle points. Let's
 - I set both the `scale` and `space` arguments of the facet call; without those the spacing would be messed up (try it!).
 - I rotate the facet labels to make them more readable.
 
-__q2__ Create a small multiple plot like `ex-mpg-manufacturer` above. Keep in mind the idea of "compared to what?" when deciding which variables to place close to one another.
+### __q2__ Create a small multiple plot like `ex-mpg-manufacturer` above. Keep in mind the idea of "compared to what?" when deciding which variables to place close to one another.
 
 ```{r q2-task}
 ## TODO: Create a set of small multiples plot from these data

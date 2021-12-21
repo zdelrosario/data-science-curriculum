@@ -1,11 +1,13 @@
 ---
-title: "Modeling: Logistic Regression"
+title: "Model: Logistic Regression"
 author: Zachary del Rosario
 date: 2020-08-09
 output: github_document
 time: 40
 reading: 11
 ---
+
+# Model: Logistic Regression
 
 *Purpose*: So far we've talked about models to predict continuous values. However, we can also use models to make predictions about *binary outcomes*---classification. Classifiers are useful for a variety of uses, but they introduce a fair bit more complexity than simple linear models. In this exercise you'll learn about *logistic regression*: a variation on linear regression that is useful for classification.
 
@@ -153,7 +155,7 @@ df_data <-
 
 The last step of data setup is up to you!
 
-__q1__ Perform a train-validate split of `df_data`. Make sure to *shuffle* the data when splitting, and ensure that `df_train` and `df_validate` together contain the entire dataset.
+### __q1__ Perform a train-validate split of `df_data`. Make sure to *shuffle* the data when splitting, and ensure that `df_train` and `df_validate` together contain the entire dataset.
 
 ```{r q1-task}
 n_train <- 200
@@ -259,7 +261,7 @@ This curve (the inverse-logit) is the one we'll stretch and shift in order to fi
 
 The following code chunk fits a logistic regression model to your training data, predicts classification probabilities on the validation data, and visualizes the results so we can assess the model. You'll practice carrying out these steps soon: First let's practice interpreting a logistic regression model's outputs.
 
-__q2__ Run the following code and study the results. Answer the questions under *observations* below.
+### __q2__ Run the following code and study the results. Answer the questions under *observations* below.
 
 ```{r q2-task}
 ## NOTE: No need to edit; just run and answer the questions below
@@ -334,7 +336,7 @@ These numbers don't mean a whole lot on their own; we'll use them to compare per
 ## Doing Logistic Regression
 <!-- ------------------------- -->
 
-__q3__ Using the code from q2 as a pattern, fit a logistic regression model to `df_train`.
+### __q3__ Using the code from q2 as a pattern, fit a logistic regression model to `df_train`.
 
 ```{r q3-task}
 # task-begin
@@ -363,7 +365,7 @@ assertthat::assert_that(dim(
 print("Nice!")
 ```
 
-__q4__ Recall that logistic regression predicts log-odds-ratio values; add these predictions to `df_validate` and convert them to probabilities `pr_heart_disease`.
+### __q4__ Recall that logistic regression predicts log-odds-ratio values; add these predictions to `df_validate` and convert them to probabilities `pr_heart_disease`.
 
 ```{r q4-task}
 # task-begin
@@ -409,7 +411,7 @@ assertthat::assert_that(all(
 print("Excellent!")
 ```
 
-__q5__ Inspect your graph from q4 and choose a threshold for classification. Compare your count of true positives (TP) and true negatives (TN) to the model above.
+### __q5__ Inspect your graph from q4 and choose a threshold for classification. Compare your count of true positives (TP) and true negatives (TN) to the model above.
 
 ```{r q5-task}
 # task-begin

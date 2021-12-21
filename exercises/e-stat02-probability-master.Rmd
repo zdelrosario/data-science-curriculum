@@ -1,11 +1,13 @@
 ---
-title: "Statistics: Probability"
+title: "Stats: Probability"
 author: Zach del Rosario
 date: 2020-06-08
 output: github_document
 time: 40
 reading: 0
 ---
+
+# Stats: Probability
 
 *Purpose*: *Probability* is a quantitative measure of uncertainty. It is intimately tied to how we use *distributions* to model data and to how we express uncertainty. In order to do all these useful things, we'll need to learn some basics about probability.
 
@@ -20,10 +22,10 @@ nobody has the slightest notion what it means." --- Bertrand Russell
 library(tidyverse)
 ```
 
-# Intuitive Definition
+## Intuitive Definition
 <!-- -------------------------------------------------- -->
 
-In the previous stats exercise, we learned about *densities*. In this exercise, we're going to learn a more formal definition using probability. To introduce the idea of probability, let's first think about *frequency*. 
+In the previous stats exercise, we learned about *densities*. In this exercise, we're going to learn a more formal definition using probability. To introduce the idea of probability, let's first think about *frequency*.
 
 Imagine we have some set of events $X$, and we're considering some *particular* subset of cases that we're interested in $A$. For instance, imagine we're rolling a 6-sided die, and we're interested in cases when the number rolled is even. Then the subset of cases is $A = \{2, 4, 6\}$, and an *example run* of rolls might be $X = \{3, 5, 5, 2, 6, 1, 3, 3\}$.
 
@@ -32,8 +34,8 @@ The *frequency* with which events in $A$ occurred for a run $X$ is
 $$F_X(A) \equiv \sum \frac{\text{Cases in set }A}{\text{Total Cases in }X}.$$
 For the example above, we have
 
-$$\begin{aligned} 
-  A &= \{2, 4, 6\}, \\ 
+$$\begin{aligned}
+  A &= \{2, 4, 6\}, \\
   X &= \{3, 5, 5, \mathbf{2}, \mathbf{6}, 1, 3, 3\}, \\
   F_X(A) &= \frac{2}{8} = 1/4
   \end{aligned}$$
@@ -69,7 +71,7 @@ df_z %>%
 
 Now it's your turn!
 
-__q1__ Let $A = {Z | Z <= 0}$. Complete the following code to compute `count_total`, `count_A`, and `fr`. Before executing the code, **make a prediction** about the value of `fr`. Did the computed `fr` value match your prediction?
+### __q1__ Let $A = {Z | Z <= 0}$. Complete the following code to compute `count_total`, `count_A`, and `fr`. Before executing the code, **make a prediction** about the value of `fr`. Did the computed `fr` value match your prediction?
 
 ```{r q1-task}
 ## NOTE: No need to change this!
@@ -137,7 +139,7 @@ $$\mathbb{P}_{\rho}[X \in A] = \lim_{n \to \infty} F_{X_n}(A),$$
 
 where $X_n$ is a sample of size $n$ drawn from the density $\rho$.[2]
 
-__q2__: Modify the code below to consider the set $A = {z | -1.96 <= z <= +1.96}$. What value does `fr` appear to be limiting towards?
+### __q2__: Modify the code below to consider the set $A = {z | -1.96 <= z <= +1.96}$. What value does `fr` appear to be limiting towards?
 
 ```{r q2-task}
 ## TASK: Modify the code below
@@ -170,7 +172,7 @@ map_dfr(
 
 Now that we know what probability is; let's connect the idea to *distributions*.
 
-# Relation to Distributions
+## Relation to Distributions
 <!-- -------------------------------------------------- -->
 
 A continuous *distribution* models probability in terms of an integral
@@ -188,7 +190,7 @@ Before concluding this reading, let's talk about two sticking points about distr
 
 Note that for continuous distributions, the probability of a single point is *zero*. First, let's gather some empirical evidence.
 
-__q3__ Modify the code below to consider the set $A = {z | z = 2}$.
+### __q3__ Modify the code below to consider the set $A = {z | z = 2}$.
 
 *Hint*: Remember the difference between `=` and `==`!
 
@@ -279,7 +281,7 @@ tibble(z = seq(-3, +3, length.out = 1000)) %>%
 
 Note that, by definition, the CDF gives the probability over the set $A = {x | x <= 0}$. Thus the CDF returns a probability (which explains the `p` prefix for R functions).
 
-__q4__ Use `pnorm` to compute the probability that `Z ~ norm(mean = 0, sd = 1)` is less than or equal to zero. Compare this against your frequency prediction from __q1__.
+### __q4__ Use `pnorm` to compute the probability that `Z ~ norm(mean = 0, sd = 1)` is less than or equal to zero. Compare this against your frequency prediction from __q1__.
 
 ```{r q4-task}
 ## TASK: Compute the probability that Z <= 0, assign to p0
@@ -313,7 +315,7 @@ Note that when our set $A$ is an *interval*, we can use the CDF to express the a
 
 $$\mathbb{P}_{\rho}[a <= X <= b] = \int_a^b \rho(x) dx = \int_{-\infty}^b \rho(x) dx - \int_{-\infty}^a \rho(x) dx.$$
 
-__q5__ Using the identity above, use `pnorm` to compute the probability that $-1.96 <= Z <= +1.96$ with `Z ~ norm(mean = 0, sd = 1)`.
+### __q5__ Using the identity above, use `pnorm` to compute the probability that $-1.96 <= Z <= +1.96$ with `Z ~ norm(mean = 0, sd = 1)`.
 
 ```{r p5-task}
 ## TASK: Compute the probability that -1.96 <= Z <= +1.96, assign to pI
@@ -336,7 +338,7 @@ print("Nice!")
 
 <!-- include-exit-ticket -->
 
-# Notes
+## Notes
 <!-- -------------------------------------------------- -->
 
 [1] This is where things get confusing and potentially controversial. This "limit of frequencies" definition of probability is called "Frequentist probability", to distinguish it from a "Bayesian probability". The distinction is meaningful but slippery. We won't cover this distinction in this course. If you're curious to learn more, my favorite video on Bayes vs Frequentist is by [Kristin Lennox](https://www.youtube.com/watch?v=eDMGDhyDxuY&list=WL&index=131&t=0s).

@@ -1,11 +1,13 @@
 ---
-title: "Visualization: Scatterplots and Layers"
+title: "Vis: Scatterplots and Layers"
 author: Zach del Rosario
 date: 2020-06-04
 output: github_document
 time: 20
 reading: 40
 ---
+
+# Vis: Scatterplots and Layers
 
 *Purpose*: *Scatterplots* are a key tool for EDA. Scatteplots help us inspect the relationship between two variables. To enhance our scatterplots, we'll learn how to use *layers* in ggplot to add multiple pieces of information to our plots.
 
@@ -85,7 +87,7 @@ for now, we'll practice using layers to add more information to scatterplots.
 ## Exercises
 <!-- -------------------------------------------------- -->
 
-__q1__ Add two `geom_smooth` trends to the following plot. Use "gam" for one
+### __q1__ Add two `geom_smooth` trends to the following plot. Use "gam" for one
 trend and "lm" for the other. Comment on how linear or nonlinear the "gam" trend
 looks.
 
@@ -113,7 +115,7 @@ diamonds %>%
 - No; the "gam" trend curves below then above the linear trend
 <!-- solution-end -->
 
-__q2__ Add non-overlapping labels to the following scattterplot using the
+### __q2__ Add non-overlapping labels to the following scattterplot using the
 provided `df_annotate`.
 
 *Hint 1*: `geom_label_repel` comes from the `ggrepel` package. Make sure to load
@@ -147,7 +149,7 @@ mpg %>%
 # solution-end
 ```
 
-__q3__ Study the following scatterplot: Note whether city (`cty`) or highway
+### __q3__ Study the following scatterplot: Note whether city (`cty`) or highway
 (`hwy`) mileage tends to be greater. Describe the trend (visualized by
 `geom_smooth`) in mileage with engine displacement (a measure of engine size).
 
@@ -178,7 +180,7 @@ mpg %>%
 - Mileage tends to decrease with engine size; cars with larger engines tend to be less efficient
 <!-- solution-end -->
 
-# Aside: Scatterplot vs bar chart
+## Aside: Scatterplot vs bar chart
 <!-- -------------------------------------------------- -->
 
 Why use a scatterplot vs a bar chart? A bar chart is useful for emphasizing some *threshold*. Let's look at a few examples:

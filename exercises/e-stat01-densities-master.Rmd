@@ -1,11 +1,13 @@
 ---
-title: "Statistics: Intro to Densities"
+title: "Stats: Intro to Densities"
 author: Zach del Rosario
 date: 2020-05-22
 output: github_document
 time: 40
 reading: 0
 ---
+
+# Stats: Intro to Densities
 
 *Purpose*: We will use *densities* to model and understand data. To that end, we'll need to understand some key ideas about densities. Namely, we'll discuss *random variables*, how we model random variables with densities, and the importance of *random seeds*. We're not going to learn everything we need to work with data in this single exercise, but this will be our starting point.
 
@@ -62,7 +64,7 @@ However, note that the normal density is quite a bit simpler than the density of
 
 In `R` we access a density by prefixing its name with the letter `d`.
 
-__q1__ Modify the code below to evaluate a uniform density with `min = -1` and `max = +1`. Assign this value to `d`.
+### __q1__ Modify the code below to evaluate a uniform density with `min = -1` and `max = +1`. Assign this value to `d`.
 
 ```{r q1-task}
 # task-begin
@@ -149,7 +151,7 @@ To clarify some terms:
 - A **sample** is a set of realizations. A sample is a set of values, e.g. `rnorm(n = 10)`.
 - A **density** is a function that describes the relative chance of all the values a random variable might take. A density is a function, e.g. `dnorm(x)`.
 
-__q2__ Plot densities for `Z` values in `df_q2`. Use aesthetics to plot a separate curve for different values of `n`. Comment on which values of `n` give a density closer to "normal".
+### __q2__ Plot densities for `Z` values in `df_q2`. Use aesthetics to plot a separate curve for different values of `n`. Comment on which values of `n` give a density closer to "normal".
 
 *Hint*: You may need to use the `group` aesthetic, in addition to `color` or `fill`.
 
@@ -182,7 +184,7 @@ df_q2 %>%
 
 A *very common misconception* is that drawing more samples will make *anything* look like a normal density. **This is not the case!** The following exercise will help us understand that the normal density is *just a model*, and *not* what we should expect all randomness to look like.
 
-__q3__ Run the code below and inspect the resulting histogram. Increase `n_diamonds` below to increase the number of samples drawn: Do this a few times for an increasing number of samples. Answer the questions under *observations* below.
+### __q3__ Run the code below and inspect the resulting histogram. Increase `n_diamonds` below to increase the number of samples drawn: Do this a few times for an increasing number of samples. Answer the questions under *observations* below.
 
 ```{r q3-task}
 # task-begin

@@ -2,11 +2,13 @@
 title: "Communication: Active and Constructive Responding"
 author: Zach del Rosario
 date: 2020-08-14
-output: pdf_document
+output: github_document
 urlcolor: cyan
 time: 30
 reading: 10
 ---
+
+# Communication: Active and Constructive Responding
 
 *Purpose*: We're going to spend **a lot** of time in this class discussing datasets. To help prepare ourselves for productive discussions, we're going to use some ideas from [positive psychology](https://en.wikipedia.org/wiki/Positive_psychology) to help make our discussions more pleasant and productive.
 
@@ -18,7 +20,7 @@ reading: 10
 library(tidyverse)
 ```
 
-# Review: Active and Constructive Responding (ACR)
+## Review: Active and Constructive Responding (ACR)
 <!-- -------------------------------------------------- -->
 
 The reading introduces the idea of *active and constructive responding* (ACR) to *good news*. The following table summarizes the four primary ways of responding to someone when presented with good news:
@@ -52,7 +54,7 @@ For example, if your friend tells you "Hey, I just got an A on my exam!", you co
 
 Active and constructive responding (ACR) has been shown to be associated with more positive interpersonal relationships [1]. If you want want to have better platonic or romantic relationships, you sould practice ACR!
 
-# Having Productive Discussions
+## Having Productive Discussions
 <!-- -------------------------------------------------- -->
 
 What does ACR have to do with data science? Imagine you're in a meeting with some data science colleagues, and the presenter shows the following graph.
@@ -81,7 +83,7 @@ Let's use the active-passive-constructive-destructive (APCD) response framework 
 
 Here the bolded response is *actively* engaging with your colleague's question, but is doing so in a very *destructive* way. It's likely your colleague feels hurt, and is less likely now to speak up in meetings. That's a bad thing!
 
-__q1__ Identify the nature of the bolded line below, rating it as either **active vs passive** and **constructive vs destructive**.
+### __q1__ Identify the nature of the bolded line below, rating it as either **active vs passive** and **constructive vs destructive**.
 
 > *Presenter*: "Clearly, we can see a positive correlation between price and carat."
 >
@@ -101,7 +103,7 @@ __q1__ Identify the nature of the bolded line below, rating it as either **activ
 - This response is **constructive** as it validates the colleague's question before providing an answer.
 <!-- solution-end -->
 
-__q2__ Identify the nature of the bolded line below, rating it as either **active vs passive** and **constructive vs destructive**.
+### __q2__ Identify the nature of the bolded line below, rating it as either **active vs passive** and **constructive vs destructive**.
 
 > *Presenter*: "Clearly, we can see a positive correlation between price and carat."
 >
@@ -174,7 +176,7 @@ In this second version the colleague is making a value-judgment about **the grap
 
 Let's practice once more!
 
-__q3__ Identify the nature of the bolded line below, rating it as either **active vs passive** and **constructive vs destructive**.
+### __q3__ Identify the nature of the bolded line below, rating it as either **active vs passive** and **constructive vs destructive**.
 
 > *Presenter*: "Clearly, we can see a positive correlation between price and carat."
 >
@@ -195,7 +197,7 @@ __q3__ Identify the nature of the bolded line below, rating it as either **activ
 
 <!-- include-exit-ticket -->
 
-# Refrences
+## Refrences
 <!-- -------------------------------------------------- -->
 
 - [1] Gable, S. L., Reis, H. T., Impett, E. A., & Asher, E. R. (2004). What do you do when things go right? The intrapersonal and interpersonal benefits of sharing positive events. Journal of Personality and Social Psychology, 87, 228-245.
