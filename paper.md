@@ -48,7 +48,7 @@ of instruction [@freeman2014active]. Passive resources are an essential
 component of self-study and are useful for reference, but curricular materials
 for active learning-based instruction are necessary for an instructor seeking to
 maximize student learning. This project seeks to provide active learning
-materials for an intructor seeking to teach data science *to engineers*.
+materials for an instructor seeking to teach data science *to engineers*.
 
 The content in this project has been used to teach a Data Science course at Olin
 College of Engineering; a small engineering college outside Boston that
@@ -77,7 +77,7 @@ learning I gained and for the pedagogical innovations the course employed. The
 original DCL course focused on *exploratory data analysis*
 (EDA) [@tukey1977eda]: a subfield of statistics that emphasizes hypothesis
 *generation* over hypothesis *testing*. Having taken several traditional
-statistics courses prior to the DCL, I found the skillset to be a beautiful
+statistics courses prior to the DCL, I found the skill set to be a beautiful
 complement to the largely mathematical treatment of statistical ideas I had
 encountered.
 
@@ -140,7 +140,7 @@ built-in Titanic dataset, while `c06-covid19` has students pull and join data
 from the New York Times and the US Census Bureau. While the challenge
 [assignment
 files](https://github.com/zdelrosario/data-science-curriculum/tree/build/challenges)
-are openly available in the repository, the challenge solutions are witheld to
+are openly available in the repository, the challenge solutions are withheld to
 discourage cheating---instructors may contact the author to obtain the challenge
 solution files. Providing the challenges without solutions is intended as an
 opportunity for summative feedback.
@@ -242,7 +242,7 @@ place of a traditional learning management system), `e-setup00-install` lists
 the R packages necessary for the course, and `c00-diamonds` takes students
 through the process of submitting an assignment. Instructors should tailor these
 instructions to the particular workflow for their course, e.g. point to their
-institutions' LMS (such as Canvas).
+institution's LMS (such as Canvas).
 
 Tools are provided in the
 [scripts](https://github.com/zdelrosario/data-science-curriculum/tree/master/scripts)
