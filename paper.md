@@ -147,7 +147,11 @@ opportunity for summative feedback.
 
 The exercises are provided in a recommended sequence that rotates through the
 broad learning outcomes listed above; this is to leverage the benefits of
-interleaving topics [@lang2016small]. For convenience, the exercises are renamed to follow this sequence and hosted in a [build branch](https://github.com/zdelrosario/data-science-curriculum/tree/build/exercises_sequenced) in the repository. However, tools are provided to re-sequence the materials as-desired (see next section).
+interleaving topics [@lang2016small]. For convenience, the exercises are renamed
+to follow this sequence and hosted in a [build
+branch](https://github.com/zdelrosario/data-science-curriculum/tree/build/exercises_sequenced)
+in the repository. However, tools are provided to re-sequence the materials
+as-desired (see 'Adapting These Materials').
 
 ## Use of Materials in an Undergraduate Data Science Course
 
