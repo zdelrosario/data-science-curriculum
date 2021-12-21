@@ -186,6 +186,14 @@ to practice talking about data analyses and asking good questions, and use each
 discussion as a segue into a mini-lecture to clarify course content in a
 specific context.
 
+The challenges in the materials are an opportunity for summative assessment.
+However, in Data Science at Olin College I use challenges for additional
+formative feedback through a revision system. Feedback on student work is
+provided through a GitHub Issue, and students have an opportunity to edit and
+re-submit their work through their repository (similar to an academic peer
+review process). Anecdotally, I have found that this approach incentivizes
+students to read and engage with instructor feedback.
+
 I have run this course with additional open-ended projects to encourage students
 to apply their skills to new areas. In previous offerings, I have assigned a
 project at the midpoint of the semester that builds off of c06-covid: Students
