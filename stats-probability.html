@@ -1034,7 +1034,7 @@ For the example above, we have</p>
 <pre><code>## # A tibble: 1 x 3
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
-## 1         100      94  0.94</code></pre>
+## 1         100      95  0.95</code></pre>
 <p>Now it’s your turn!</p>
 <div id="q1-let-a-z-z-0.-complete-the-following-code-to-compute-count_total-count_a-and-fr.-before-executing-the-code-make-a-prediction-about-the-value-of-fr.-did-the-computed-fr-value-match-your-prediction" class="section level3" number="27.1.1">
 <h3><span class="header-section-number">27.1.1</span> <strong>q1</strong> Let <span class="math inline">\(A = {Z | Z &lt;= 0}\)</span>. Complete the following code to compute <code>count_total</code>, <code>count_A</code>, and <code>fr</code>. Before executing the code, <strong>make a prediction</strong> about the value of <code>fr</code>. Did the computed <code>fr</code> value match your prediction?</h3>
@@ -1047,7 +1047,7 @@ For the example above, we have</p>
 <pre><code>## # A tibble: 1 x 3
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
-## 1         100      62  0.62</code></pre>
+## 1         100      44  0.44</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>I predicted <code>fr = 0.5</code></li>
@@ -1083,10 +1083,10 @@ For the example above, we have</p>
 <pre><code>## # A tibble: 4 x 3
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
-## 1          10       1 0.1  
-## 2         100      62 0.62 
-## 3        1000     514 0.514
-## 4       10000    4900 0.49</code></pre>
+## 1          10       4 0.4  
+## 2         100      46 0.46 
+## 3        1000     521 0.521
+## 4       10000    5068 0.507</code></pre>
 <p>This is because <em>probability</em> is actually defined[1] in terms of the limit</p>
 <p><span class="math display">\[\mathbb{P}_{\rho}[X \in A] = \lim_{n \to \infty} F_{X_n}(A),\]</span></p>
 <p>where <span class="math inline">\(X_n\)</span> is a sample of size <span class="math inline">\(n\)</span> drawn from the density <span class="math inline">\(\rho\)</span>.[2]</p>
@@ -1109,9 +1109,9 @@ For the example above, we have</p>
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
 ## 1          10      10 1    
-## 2         100      95 0.95 
-## 3        1000     950 0.95 
-## 4       10000    9512 0.951</code></pre>
+## 2         100      96 0.96 
+## 3        1000     942 0.942
+## 4       10000    9474 0.947</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li><code>fr</code> is limiting towards <code>~0.95</code></li>
