@@ -11,7 +11,7 @@ jobs:
     runs-on: macOS-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@master
+      - uses: actions/checkout@master
 
       - name: Setup R
       - uses: r-lib/actions/setup-r@v2
