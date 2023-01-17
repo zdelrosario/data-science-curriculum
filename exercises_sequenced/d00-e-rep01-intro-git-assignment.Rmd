@@ -34,9 +34,9 @@ Before you can "clone" (download) the repository of exercises, you'll need to se
 ## Downloading Our Exercises
 <!-- -------------------------------------------------- -->
 
-Using RStudio, we will download a local copy of the [data-science-curriculum](https://github.com/zdelrosario/data-science-curriculum). Follow these instructions:
+Using RStudio, we will download a local copy of the [data-science-curriculum](https://github.com/zdelrosario/data-science-curriculum/tree/build). Follow these instructions:
 
-- Open [data-science-curriculum](https://github.com/zdelrosario/data-science-curriculum) in your browser, and click the "Clone" button. Make sure you have "SSH" selected, and click the "clipboard" button to copy the `git@github:...` url.
+- Open [data-science-curriculum](https://github.com/zdelrosario/data-science-curriculum/tree/build) in your browser, and click the "Clone" button. Make sure you have "SSH" selected, and click the "clipboard" button to copy the `git@github:...` url.
 
 - Open the `Terminal` tab
 
