@@ -142,13 +142,6 @@
       "Repository": "CRAN",
       "Hash": "ebaa97ac99cc2daf04e77eecc7b781d7"
     },
-    "codetools": {
-      "Package": "codetools",
-      "Version": "0.2-16",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "89cf4b8207269ccf82fbeb6473fd662b"
-    },
     "colorspace": {
       "Package": "colorspace",
       "Version": "2.0-1",
@@ -268,20 +261,6 @@
       "Repository": "CRAN",
       "Hash": "7c89603d81793f0d5486d91ab1fc6f1d"
     },
-    "furrr": {
-      "Package": "furrr",
-      "Version": "0.1.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "c1f60eafdbcbea57078aa6f501974d2a"
-    },
-    "future": {
-      "Package": "future",
-      "Version": "1.19.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "224cbc34a2c97606b0e6311e3bd19e05"
-    },
     "gapminder": {
       "Package": "gapminder",
       "Version": "0.3.0",
@@ -316,13 +295,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "c013a50b19695daf04853679e1bc105a"
-    },
-    "globals": {
-      "Package": "globals",
-      "Version": "0.13.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "0195566df9ebe00c615c097a778fe943"
     },
     "glue": {
       "Package": "glue",
@@ -443,13 +415,6 @@
       "Repository": "CRAN",
       "Hash": "001cecbeac1cff9301bdc3775ee46a86"
     },
-    "listenv": {
-      "Package": "listenv",
-      "Version": "0.8.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "0bde42ee282efb18c7c4e63822f5b4f7"
-    },
     "lubridate": {
       "Package": "lubridate",
       "Version": "1.7.9",
@@ -477,13 +442,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "18e9c28c1d3ca1560ce30658b22ce104"
-    },
-    "modeldata": {
-      "Package": "modeldata",
-      "Version": "0.0.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "e2825d34267ad27d30d9ce71dc23bde8"
     },
     "modelr": {
       "Package": "modelr",
@@ -660,13 +618,6 @@
       "Repository": "CRAN",
       "Hash": "249d8cd1e74a8f6a26194a91b47f21d1"
     },
-    "rsample": {
-      "Package": "rsample",
-      "Version": "0.0.8",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "a05b5f1136fb3e22efe51e85369c041c"
-    },
     "rstudioapi": {
       "Package": "rstudioapi",
       "Version": "0.13",
@@ -694,13 +645,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "3838071b66e0c566d55cc26bd6e27bf4"
-    },
-    "slider": {
-      "Package": "slider",
-      "Version": "0.1.5",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "ac1eb08941cacd8ff16f0041ca60a3de"
     },
     "stringi": {
       "Package": "stringi",
@@ -827,13 +771,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "20c45f1d511a3f730b7b469f4d11e104"
-    },
-    "warp": {
-      "Package": "warp",
-      "Version": "0.1.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "5c786a8883c9f49f6d137ee76558ceef"
     },
     "whisker": {
       "Package": "whisker",
