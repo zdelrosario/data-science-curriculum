@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>13 Setup: Vector Basics | Data Science: Exercise Solutions</title>
   <meta name="description" content="13 Setup: Vector Basics | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="13 Setup: Vector Basics | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="setup-rstudio-shortcuts.html"/>
 <link rel="next" href="setup-types.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,24 +980,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setup-vector-basics" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> Setup: Vector Basics</h1>
+<div id="setup-vector-basics" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">13</span> Setup: Vector Basics<a href="setup-vector-basics.html#setup-vector-basics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: <em>Vectors</em> are the most important object we’ll work with when doing
 data science. To that end, let’s learn some basics about vectors.</p>
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/1.2">Programming Basics</a>.
 <em>Topics</em>: <code>vectors</code>
 <em>Reading Time</em>: ~10 minutes</p>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="setup-vector-basics.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div id="q1-what-single-letter-r-function-do-you-use-to-create-vectors-with-specific-entries-use-that-function-to-create-a-vector-with-the-numbers-1-2-3-below." class="section level3" number="13.0.1">
-<h3><span class="header-section-number">13.0.1</span> <strong>q1</strong> What single-letter <code>R</code> function do you use to create vectors with specific entries? Use that function to create a vector with the numbers <code>1, 2, 3</code> below.</h3>
+<div id="q1-what-single-letter-r-function-do-you-use-to-create-vectors-with-specific-entries-use-that-function-to-create-a-vector-with-the-numbers-1-2-3-below." class="section level3 hasAnchor" number="13.0.1">
+<h3><span class="header-section-number">13.0.1</span> <strong>q1</strong> What single-letter <code>R</code> function do you use to create vectors with specific entries? Use that function to create a vector with the numbers <code>1, 2, 3</code> below.<a href="setup-vector-basics.html#q1-what-single-letter-r-function-do-you-use-to-create-vectors-with-specific-entries-use-that-function-to-create-a-vector-with-the-numbers-1-2-3-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="setup-vector-basics.html#cb69-1" aria-hidden="true" tabindex="-1"></a>vec_q1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
 <span id="cb69-2"><a href="setup-vector-basics.html#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-3"><a href="setup-vector-basics.html#cb69-3" aria-hidden="true" tabindex="-1"></a>vec_q1</span></code></pre></div>
@@ -1012,8 +1011,8 @@ data science. To that end, let’s learn some basics about vectors.</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="setup-vector-basics.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 </div>
-<div id="q2-did-you-know-that-you-can-use-c-to-extend-a-vector-as-well-use-this-to-add-the-extra-entry-4-to-vec_q1." class="section level3" number="13.0.2">
-<h3><span class="header-section-number">13.0.2</span> <strong>q2</strong> Did you know that you can use <code>c()</code> to <em>extend</em> a vector as well? Use this to add the extra entry <code>4</code> to <code>vec_q1</code>.</h3>
+<div id="q2-did-you-know-that-you-can-use-c-to-extend-a-vector-as-well-use-this-to-add-the-extra-entry-4-to-vec_q1." class="section level3 hasAnchor" number="13.0.2">
+<h3><span class="header-section-number">13.0.2</span> <strong>q2</strong> Did you know that you can use <code>c()</code> to <em>extend</em> a vector as well? Use this to add the extra entry <code>4</code> to <code>vec_q1</code>.<a href="setup-vector-basics.html#q2-did-you-know-that-you-can-use-c-to-extend-a-vector-as-well-use-this-to-add-the-extra-entry-4-to-vec_q1." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="setup-vector-basics.html#cb77-1" aria-hidden="true" tabindex="-1"></a>vec_q2 <span class="ot">&lt;-</span> <span class="fu">c</span>(vec_q1, <span class="dv">4</span>)</span>
 <span id="cb77-2"><a href="setup-vector-basics.html#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-3"><a href="setup-vector-basics.html#cb77-3" aria-hidden="true" tabindex="-1"></a>vec_q2</span></code></pre></div>
@@ -1096,7 +1095,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

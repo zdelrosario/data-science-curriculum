@@ -13,14 +13,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -117,7 +117,7 @@ experimental_design %>%
 ```
 
 ```
-## # A tibble: 2 x 3
+## # A tibble: 2 × 3
 ##   condition yield_mean yield_sd
 ##   <fct>          <dbl>    <dbl>
 ## 1 T               2.59    0.391
@@ -166,6 +166,11 @@ tibble(
   )
 ```
 
+```
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+```
+
 <img src="d46-e-stat12-randomization-solution_files/figure-html/vis-design-river-1.png" width="672" />
 
 While fertilizer leads to an increase in crop yield, additional water also leads to a higher crop yield. These are the only plots we have available for planting, and it's too expensive to move the river, so we'll have to figure out how to place the plots to deal with this experimental reality.
@@ -192,7 +197,7 @@ your_design %>%
 ```
 
 ```
-## # A tibble: 2 x 3
+## # A tibble: 2 × 3
 ##   condition yield_mean yield_sd
 ##   <fct>          <dbl>    <dbl>
 ## 1 T               3.58    0.354
@@ -251,7 +256,7 @@ experimental_design %>%
 ```
 
 ```
-## # A tibble: 2 x 3
+## # A tibble: 2 × 3
 ##   condition yield_mean yield_sd
 ##   <fct>          <dbl>    <dbl>
 ## 1 T               3.22    0.679

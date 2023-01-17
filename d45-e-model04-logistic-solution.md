@@ -11,14 +11,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -164,15 +164,10 @@ df_heart_disease <-
 ```
 
 ```
-## Warning: 6 parsing failures.
-## row  col expected actual                           file
-##  88 thal a number      ? './data/uci_heart_disease.csv'
-## 167 ca   a number      ? './data/uci_heart_disease.csv'
-## 193 ca   a number      ? './data/uci_heart_disease.csv'
-## 267 thal a number      ? './data/uci_heart_disease.csv'
-## 288 ca   a number      ? './data/uci_heart_disease.csv'
-## ... .... ........ ...... ..............................
-## See problems(...) for more details.
+## Warning: One or more parsing issues, call `problems()` on your data frame for details,
+## e.g.:
+##   dat <- vroom(...)
+##   problems(dat)
 ```
 
 ```r
@@ -180,20 +175,21 @@ df_heart_disease
 ```
 
 ```
-## # A tibble: 303 x 14
-##      age sex    cp      trestbps  chol fbs   restecg thalach exang oldpeak slope
+## # A tibble: 303 × 14
+##      age sex    cp       trest…¹  chol fbs   restecg thalach exang oldpeak slope
 ##    <dbl> <chr>  <chr>      <dbl> <dbl> <lgl> <chr>     <dbl> <lgl>   <dbl> <chr>
-##  1    63 male   typica…      145   233 TRUE  Estes'…     150 FALSE     2.3 down…
-##  2    67 male   asympt…      160   286 FALSE Estes'…     108 TRUE      1.5 flat 
-##  3    67 male   asympt…      120   229 FALSE Estes'…     129 TRUE      2.6 flat 
-##  4    37 male   non-an…      130   250 FALSE normal      187 FALSE     3.5 down…
-##  5    41 female atypic…      130   204 FALSE Estes'…     172 FALSE     1.4 upsl…
-##  6    56 male   atypic…      120   236 FALSE normal      178 FALSE     0.8 upsl…
-##  7    62 female asympt…      140   268 FALSE Estes'…     160 FALSE     3.6 down…
-##  8    57 female asympt…      120   354 FALSE normal      163 TRUE      0.6 upsl…
-##  9    63 male   asympt…      130   254 FALSE Estes'…     147 FALSE     1.4 flat 
-## 10    53 male   asympt…      140   203 TRUE  Estes'…     155 TRUE      3.1 down…
-## # … with 293 more rows, and 3 more variables: ca <dbl>, thal <chr>, num <dbl>
+##  1    63 male   typical…     145   233 TRUE  Estes'…     150 FALSE     2.3 down…
+##  2    67 male   asympto…     160   286 FALSE Estes'…     108 TRUE      1.5 flat 
+##  3    67 male   asympto…     120   229 FALSE Estes'…     129 TRUE      2.6 flat 
+##  4    37 male   non-ang…     130   250 FALSE normal      187 FALSE     3.5 down…
+##  5    41 female atypica…     130   204 FALSE Estes'…     172 FALSE     1.4 upsl…
+##  6    56 male   atypica…     120   236 FALSE normal      178 FALSE     0.8 upsl…
+##  7    62 female asympto…     140   268 FALSE Estes'…     160 FALSE     3.6 down…
+##  8    57 female asympto…     120   354 FALSE normal      163 TRUE      0.6 upsl…
+##  9    63 male   asympto…     130   254 FALSE Estes'…     147 FALSE     1.4 flat 
+## 10    53 male   asympto…     140   203 TRUE  Estes'…     155 TRUE      3.1 down…
+## # … with 293 more rows, 3 more variables: ca <dbl>, thal <chr>, num <dbl>, and
+## #   abbreviated variable name ¹​trestbps
 ```
 
 The data above are *clean*, but we still need to prepare them for *modeling*. Remember from e-data13-cleaning that we had to filter out rows with `NA` values. Additionally, we're going to convert `num` (a numerical factor) into a binary outcome indicating the presence of heart disease:
@@ -409,10 +405,10 @@ df_basic %>%
 ```
 
 ```
-## # A tibble: 1 x 4
+## # A tibble: 1 × 4
 ##      TP    FP    TN    FN
 ##   <int> <int> <int> <int>
-## 1    38    28    25     6
+## 1    37    22    31     7
 ```
 
 These numbers don't mean a whole lot on their own; we'll use them to compare performance across models. Next you'll practice using R functions to carry out logistic regression for classification, and build a model to compare against this basic one.
@@ -532,10 +528,10 @@ df_q4 %>%
 ```
 
 ```
-## # A tibble: 1 x 4
+## # A tibble: 1 × 4
 ##      TP    FP    TN    FN
 ##   <int> <int> <int> <int>
-## 1    28     2    51    16
+## 1    30     3    50    14
 ```
 
 **Observations**:

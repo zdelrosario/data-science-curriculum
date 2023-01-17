@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Setup: RStudio | Data Science: Exercise Solutions</title>
   <meta name="description" content="4 Setup: RStudio | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Setup: RStudio | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="reproducibility-git-and-our-curriculum.html"/>
 <link rel="next" href="reproducibility-creating-a-github-repository.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,22 +980,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setup-rstudio" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Setup: RStudio</h1>
+<div id="setup-rstudio" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Setup: RStudio<a href="setup-rstudio.html#setup-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: We’re going to make extensive use of the <a href="https://www.r-project.org/about.html">R programming
 language</a>; in particular, the
 <a href="https://www.tidyverse.org/">Tidyverse</a> packages. This first exercise
 will guide you through setting up the necessary software.</p>
 <p><em>Reading</em>: (None)</p>
 <p><em>Note</em>: If you’re reading this file in RStudio, you can Shift + Click (CMD + Click) to follow a link.</p>
-<div id="q1-install-rstudio" class="section level3" number="4.0.1">
-<h3><span class="header-section-number">4.0.1</span> <strong>q1</strong> Install Rstudio</h3>
+<div id="q1-install-rstudio" class="section level3 hasAnchor" number="4.0.1">
+<h3><span class="header-section-number">4.0.1</span> <strong>q1</strong> Install Rstudio<a href="setup-rstudio.html#q1-install-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Download <a href="https://rstudio.com/products/rstudio/download/">RStudio Desktop</a> and
 install the <a href="https://cran.rstudio.com/">R programming language</a>. Both are free!</p>
 <p>Once installed, you can <a href="https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-setup00-install-master.Rmd">download the source</a> for this exercise and open open it in RStudio (or you can follow <code>e-rep01-intro-git</code> and <em>clone</em> the repository). This is an <code>R Markdown</code> file, which is a combination of human-readable text and machine-readable code. Think of it as a modern take on a lab notebook.</p>
 </div>
-<div id="q2-install-packages" class="section level3" number="4.0.2">
-<h3><span class="header-section-number">4.0.2</span> <strong>q2</strong> Install packages</h3>
+<div id="q2-install-packages" class="section level3 hasAnchor" number="4.0.2">
+<h3><span class="header-section-number">4.0.2</span> <strong>q2</strong> Install packages<a href="setup-rstudio.html#q2-install-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Next, run RStudio. When the program opens, you should see a console tab, as in
 the image below.</p>
 <div class="figure">
@@ -1014,8 +1013,8 @@ extensively in this class.</p>
 <p class="caption">RStudio package install</p>
 </div>
 </div>
-<div id="q3-test-your-install" class="section level3" number="4.0.3">
-<h3><span class="header-section-number">4.0.3</span> <strong>q3</strong> Test your install</h3>
+<div id="q3-test-your-install" class="section level3 hasAnchor" number="4.0.3">
+<h3><span class="header-section-number">4.0.3</span> <strong>q3</strong> Test your install<a href="setup-rstudio.html#q3-test-your-install" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Once your installation has finished, return to your console and use the command
 <code>library(tidyverse)</code>. If your installation is complete, this command should
 return a list of packages and version numbers, similar to the image below.</p>
@@ -1025,8 +1024,8 @@ return a list of packages and version numbers, similar to the image below.</p>
 </div>
 <p>If you have any issues with installation, <strong>please</strong> let me know!</p>
 </div>
-<div id="q4-download-extras" class="section level3" number="4.0.4">
-<h3><span class="header-section-number">4.0.4</span> <strong>q4</strong> Download extras</h3>
+<div id="q4-download-extras" class="section level3 hasAnchor" number="4.0.4">
+<h3><span class="header-section-number">4.0.4</span> <strong>q4</strong> Download extras<a href="setup-rstudio.html#q4-download-extras" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We’ll use a number of extras for this class. To that end, please install the following packages. Note that you can install multiple packages with the syntax <code>install.packages(c("curl", "mvtnorm"))</code>, extending the arguments inside <code>c()</code> as desired.</p>
 <ul>
 <li><code>broom</code></li>
@@ -1043,8 +1042,8 @@ return a list of packages and version numbers, similar to the image below.</p>
 <li><code>viridis</code></li>
 </ul>
 </div>
-<div id="q5-download-cheatsheets" class="section level3" number="4.0.5">
-<h3><span class="header-section-number">4.0.5</span> <strong>q5</strong> Download cheatsheets</h3>
+<div id="q5-download-cheatsheets" class="section level3 hasAnchor" number="4.0.5">
+<h3><span class="header-section-number">4.0.5</span> <strong>q5</strong> Download cheatsheets<a href="setup-rstudio.html#q5-download-cheatsheets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>tidyverse</code> is essentially a language built on top of R. As such, there are
 a lot of functions to remember. To that end, RStudio has put together a number
 of <a href="https://rstudio.com/resources/cheatsheets/">cheatsheets</a> to reference when
@@ -1132,7 +1131,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

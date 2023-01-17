@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>25 Reproducibility: Collaborating with GitHub | Data Science: Exercise Solutions</title>
   <meta name="description" content="25 Reproducibility: Collaborating with GitHub | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="25 Reproducibility: Collaborating with GitHub | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="data-pivoting-data.html"/>
 <link rel="next" href="vis-boxplots-and-counts.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,21 +980,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reproducibility-collaborating-with-github" class="section level1" number="25">
-<h1><span class="header-section-number">25</span> Reproducibility: Collaborating with GitHub</h1>
+<div id="reproducibility-collaborating-with-github" class="section level1 hasAnchor" number="25">
+<h1><span class="header-section-number">25</span> Reproducibility: Collaborating with GitHub<a href="reproducibility-collaborating-with-github.html#reproducibility-collaborating-with-github" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Git and GitHub are extremely useful for collaboration, but they take
 some getting used to. In this <em>partner exercise</em>, you will learn how to
 contribute to a partner’s work, and how to merge contributions to your own work.
 This will be your first taste of using Git not just as a way to track changes,
 but also as a powerful collaboration tool.</p>
 <p><em>Reading</em>: <a href="https://gist.github.com/Chaser324/ce0505fbed06b947d962">GitHub Forking</a> (Optional / Reference)</p>
-<div id="overview" class="section level2" number="25.1">
-<h2><span class="header-section-number">25.1</span> Overview</h2>
+<div id="overview" class="section level2 hasAnchor" number="25.1">
+<h2><span class="header-section-number">25.1</span> Overview<a href="reproducibility-collaborating-with-github.html#overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>At a <em>high level</em>, what you and your partner are going to do is create a copy of each others’ public repos, make a change, and request that your partner <em>merge</em> those changes into their own repo. Using this workflow, you and your partner will be able to collaborate asynchronously on the same documents, all while maintaining safe version control of your work.</p>
 <p>In this case you’ll make <em>trivial edits</em> to the <strong>TODO</strong> items below, but in practice you can use an identical process to edit things like software and reports.</p>
 </div>
-<div id="partner-team" class="section level2" number="25.2">
-<h2><span class="header-section-number">25.2</span> Partner Team</h2>
+<div id="partner-team" class="section level2 hasAnchor" number="25.2">
+<h2><span class="header-section-number">25.2</span> Partner Team<a href="reproducibility-collaborating-with-github.html#partner-team" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>(You and your partner will edit the <em>TODO</em> items <em>separately</em> and <em>combine</em>, through the magic of <em>git</em>!)</p>
 <table>
 <thead>
@@ -1016,14 +1015,14 @@ but also as a powerful collaboration tool.</p>
 </tbody>
 </table>
 <p><em>Note</em>: All instructions below are coded for either the <em>Forking</em> partner, the <em>Merging</em> partner, or <em>Both</em>. Note that you will both do all of these steps, but you will take turns being <em>Forking</em> and <em>Merging</em>. Pay attention to when these flags change—that indicates where you and your partner need to take different actions.</p>
-<div id="q1-both-pick-a-partner-in-the-class-preferably-from-your-learning-team.-you-must-mutually-agree-to-complete-this-exercise-together-which-will-involve-forking-your-partners-public-repo-and-making-a-pull-request." class="section level3" number="25.2.1">
-<h3><span class="header-section-number">25.2.1</span> <strong>q1</strong> (<em>Both</em>) Pick a partner in the class, preferably from your learning team. You must mutually agree to complete this exercise together, which will involve <em>forking</em> your partner’s public repo and making a <em>pull request</em>.</h3>
+<div id="q1-both-pick-a-partner-in-the-class-preferably-from-your-learning-team.-you-must-mutually-agree-to-complete-this-exercise-together-which-will-involve-forking-your-partners-public-repo-and-making-a-pull-request." class="section level3 hasAnchor" number="25.2.1">
+<h3><span class="header-section-number">25.2.1</span> <strong>q1</strong> (<em>Both</em>) Pick a partner in the class, preferably from your learning team. You must mutually agree to complete this exercise together, which will involve <em>forking</em> your partner’s public repo and making a <em>pull request</em>.<a href="reproducibility-collaborating-with-github.html#q1-both-pick-a-partner-in-the-class-preferably-from-your-learning-team.-you-must-mutually-agree-to-complete-this-exercise-together-which-will-involve-forking-your-partners-public-repo-and-making-a-pull-request." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 </div>
 </div>
-<div id="forking-partner" class="section level2" number="25.3">
-<h2><span class="header-section-number">25.3</span> Forking Partner</h2>
-<div id="q2-forking-navigate-to-your-partners-github-repo-page-and-click-the-fork-button-on-the-top-right-of-the-page." class="section level3" number="25.3.1">
-<h3><span class="header-section-number">25.3.1</span> <strong>q2</strong> (<em>Forking</em>) Navigate to your partner’s GitHub repo page, and click the <em>Fork</em> button on the top-right of the page.</h3>
+<div id="forking-partner" class="section level2 hasAnchor" number="25.3">
+<h2><span class="header-section-number">25.3</span> Forking Partner<a href="reproducibility-collaborating-with-github.html#forking-partner" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="q2-forking-navigate-to-your-partners-github-repo-page-and-click-the-fork-button-on-the-top-right-of-the-page." class="section level3 hasAnchor" number="25.3.1">
+<h3><span class="header-section-number">25.3.1</span> <strong>q2</strong> (<em>Forking</em>) Navigate to your partner’s GitHub repo page, and click the <em>Fork</em> button on the top-right of the page.<a href="reproducibility-collaborating-with-github.html#q2-forking-navigate-to-your-partners-github-repo-page-and-click-the-fork-button-on-the-top-right-of-the-page." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="figure">
 <img src="images/rep05-fork.png" alt="" />
 <p class="caption">Fork button on a repo, near the top-right of the page</p>
@@ -1044,31 +1043,31 @@ but also as a powerful collaboration tool.</p>
 <p class="caption">Clone</p>
 </div>
 <p>Then use the command below to clone your fork:</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb293-1"><a href="reproducibility-collaborating-with-github.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You should be able to paste the git@github.com part you copied above</span></span>
-<span id="cb293-2"><a href="reproducibility-collaborating-with-github.html#cb293-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone git@github.com:YOUR-USERNAME/YOUR-FORKED-REPO</span>
-<span id="cb293-3"><a href="reproducibility-collaborating-with-github.html#cb293-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd YOUR-FORKED-REPO</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb292-1"><a href="reproducibility-collaborating-with-github.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You should be able to paste the git@github.com part you copied above</span></span>
+<span id="cb292-2"><a href="reproducibility-collaborating-with-github.html#cb292-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone git@github.com:YOUR-USERNAME/YOUR-FORKED-REPO</span>
+<span id="cb292-3"><a href="reproducibility-collaborating-with-github.html#cb292-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd YOUR-FORKED-REPO</span></code></pre></div>
 </div>
-<div id="q3-forking-add-your-partners-repository-as-a-remote.-the-reading-described-how-to-do-this-from-the-command-line-use-the-command-within-your-forked-repository" class="section level3" number="25.3.2">
-<h3><span class="header-section-number">25.3.2</span> <strong>q3</strong> (<em>Forking</em>) Add your partner’s repository as a <em>remote</em>. The reading described how to do this from the command line; use the command <em>within your forked repository</em></h3>
-<div class="sourceCode" id="cb294"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb294-1"><a href="reproducibility-collaborating-with-github.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git remote add upstream https://github.com/UPSTREAM-USER/ORIGINAL-PROJECT.git</span></code></pre></div>
+<div id="q3-forking-add-your-partners-repository-as-a-remote.-the-reading-described-how-to-do-this-from-the-command-line-use-the-command-within-your-forked-repository" class="section level3 hasAnchor" number="25.3.2">
+<h3><span class="header-section-number">25.3.2</span> <strong>q3</strong> (<em>Forking</em>) Add your partner’s repository as a <em>remote</em>. The reading described how to do this from the command line; use the command <em>within your forked repository</em><a href="reproducibility-collaborating-with-github.html#q3-forking-add-your-partners-repository-as-a-remote.-the-reading-described-how-to-do-this-from-the-command-line-use-the-command-within-your-forked-repository" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb293"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb293-1"><a href="reproducibility-collaborating-with-github.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git remote add upstream https://github.com/UPSTREAM-USER/ORIGINAL-PROJECT.git</span></code></pre></div>
 <p>where you should replace <code>UPSTREAM-USER</code> with your partner’s GitHub username, and <code>ORIGINAL-PROJECT</code> with the name of your partner’s GitHub public repo (the one you forked). What this does is allow you to pull any changes your partner makes in their own repo using the command <code>git fetch upstream</code>. We won’t use that command in this exercise, but it’s good to be aware of.</p>
 </div>
-<div id="q5-forking-inspect-your-partners-repository-your-forked-and-cloned-version-if-they-dont-have-an-exercises-directory-create-a-new-one.-within-that-exercise-directory-either-open-their-existing-e-rep-05-collab-assignment.rmd-or-copy-this-file-into-the-exercises-directory.-edit-the-todo-above-under-forking-partner-to-be-your-own-name." class="section level3" number="25.3.3">
-<h3><span class="header-section-number">25.3.3</span> <strong>q5</strong> (<em>Forking</em>) Inspect your partner’s repository (your forked-and-cloned version); if they don’t have an <code>exercises</code> directory, create a new one. Within that <code>exercise</code> directory either open their existing <code>e-rep-05-collab-assignment.Rmd</code>, or copy this file into the <code>exercises</code> directory. Edit the <strong>TODO</strong> above under <em>Forking Partner</em> to be your own name.</h3>
+<div id="q5-forking-inspect-your-partners-repository-your-forked-and-cloned-version-if-they-dont-have-an-exercises-directory-create-a-new-one.-within-that-exercise-directory-either-open-their-existing-e-rep-05-collab-assignment.rmd-or-copy-this-file-into-the-exercises-directory.-edit-the-todo-above-under-forking-partner-to-be-your-own-name." class="section level3 hasAnchor" number="25.3.3">
+<h3><span class="header-section-number">25.3.3</span> <strong>q5</strong> (<em>Forking</em>) Inspect your partner’s repository (your forked-and-cloned version); if they don’t have an <code>exercises</code> directory, create a new one. Within that <code>exercise</code> directory either open their existing <code>e-rep-05-collab-assignment.Rmd</code>, or copy this file into the <code>exercises</code> directory. Edit the <strong>TODO</strong> above under <em>Forking Partner</em> to be your own name.<a href="reproducibility-collaborating-with-github.html#q5-forking-inspect-your-partners-repository-your-forked-and-cloned-version-if-they-dont-have-an-exercises-directory-create-a-new-one.-within-that-exercise-directory-either-open-their-existing-e-rep-05-collab-assignment.rmd-or-copy-this-file-into-the-exercises-directory.-edit-the-todo-above-under-forking-partner-to-be-your-own-name." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 </div>
-<div id="q6-forking-commit-your-changes-and-push-them-to-your-forked-repository.-if-you-do-git-push-you-will-probably-see-something-like" class="section level3" number="25.3.4">
-<h3><span class="header-section-number">25.3.4</span> <strong>q6</strong> (<em>Forking</em>) Commit your changes, and push them to your forked repository. If you do <code>$ git push</code>, you will probably see something like:</h3>
-<div class="sourceCode" id="cb295"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb295-1"><a href="reproducibility-collaborating-with-github.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fatal:</span> The current branch dev_addname has no upstream branch.</span>
-<span id="cb295-2"><a href="reproducibility-collaborating-with-github.html#cb295-2" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> push the current branch and set the remote as upstream, use</span>
-<span id="cb295-3"><a href="reproducibility-collaborating-with-github.html#cb295-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-4"><a href="reproducibility-collaborating-with-github.html#cb295-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">git</span> push <span class="at">--set-upstream</span> origin master</span></code></pre></div>
+<div id="q6-forking-commit-your-changes-and-push-them-to-your-forked-repository.-if-you-do-git-push-you-will-probably-see-something-like" class="section level3 hasAnchor" number="25.3.4">
+<h3><span class="header-section-number">25.3.4</span> <strong>q6</strong> (<em>Forking</em>) Commit your changes, and push them to your forked repository. If you do <code>$ git push</code>, you will probably see something like:<a href="reproducibility-collaborating-with-github.html#q6-forking-commit-your-changes-and-push-them-to-your-forked-repository.-if-you-do-git-push-you-will-probably-see-something-like" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb294"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb294-1"><a href="reproducibility-collaborating-with-github.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fatal:</span> The current branch dev_addname has no upstream branch.</span>
+<span id="cb294-2"><a href="reproducibility-collaborating-with-github.html#cb294-2" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> push the current branch and set the remote as upstream, use</span>
+<span id="cb294-3"><a href="reproducibility-collaborating-with-github.html#cb294-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb294-4"><a href="reproducibility-collaborating-with-github.html#cb294-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">git</span> push <span class="at">--set-upstream</span> origin master</span></code></pre></div>
 <p>If you see this, it’s because Git is not willing to make assumptions about <em>where you want to push</em>. The <code>--set-upstream origin master</code> tells Git to push to <code>origin</code> (which should be set to your forked repository if you cloned it in q2 above), while <code>master</code> tells Git to push the changes to the <code>master</code> branch.</p>
 <p>Follow the instructions by running</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb296-1"><a href="reproducibility-collaborating-with-github.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git push <span class="at">--set-upstream</span> origin master</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb295-1"><a href="reproducibility-collaborating-with-github.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git push <span class="at">--set-upstream</span> origin master</span></code></pre></div>
 <p>This will push your commit(s) to your forked repo. Now you have the changes in your <em>personal</em> copy of your partner’s work. Our task is now to request that our partner incorporate these changes in their own repository.</p>
 </div>
-<div id="q7-forking-navigate-your-browser-to-your-forked-repository-on-github.-you-should-see-a-banner-like-the-following" class="section level3" number="25.3.5">
-<h3><span class="header-section-number">25.3.5</span> <strong>q7</strong> (<em>Forking</em>) Navigate your browser to your forked repository on GitHub. You should see a banner like the following:</h3>
+<div id="q7-forking-navigate-your-browser-to-your-forked-repository-on-github.-you-should-see-a-banner-like-the-following" class="section level3 hasAnchor" number="25.3.5">
+<h3><span class="header-section-number">25.3.5</span> <strong>q7</strong> (<em>Forking</em>) Navigate your browser to your forked repository on GitHub. You should see a banner like the following:<a href="reproducibility-collaborating-with-github.html#q7-forking-navigate-your-browser-to-your-forked-repository-on-github.-you-should-see-a-banner-like-the-following" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="figure">
 <img src="images/rep05-pr.png" alt="" />
 <p class="caption">Pull request</p>
@@ -1076,8 +1075,8 @@ but also as a powerful collaboration tool.</p>
 <p>Click the <strong>Pull request</strong> to start the process of making a pull request (PR). Add a comment justifying the PR, and click <strong>Create pull request</strong>. Your partner will now be able to see your PR. Your <em>merging</em> partner will finish the rest of the exercise (though you should still complete the <em>merging</em> part on your own repo!).</p>
 </div>
 </div>
-<div id="merging-partner" class="section level2" number="25.4">
-<h2><span class="header-section-number">25.4</span> Merging Partner</h2>
+<div id="merging-partner" class="section level2 hasAnchor" number="25.4">
+<h2><span class="header-section-number">25.4</span> Merging Partner<a href="reproducibility-collaborating-with-github.html#merging-partner" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>q8</strong> (<em>Merging</em>) Open your public repo GitHub page; you should see that your partner has an open pull request.You can see the list of pull requests by clicking on the <code>Pull requests</code> tab towards the top of your repo.</p>
 <div class="figure">
 <img src="images/rep05-list-pr.png" alt="" />
@@ -1108,24 +1107,24 @@ as shown below:</p>
 <p><strong>q8</strong> (<em>Merging</em>) Now you will pull the most recent changes to your local copy
 of your repo. before pulling. Navigate to the directory of your repo. Make sure
 to commit any stray changes (e.g. in-progress exercises!). Then run <code>git pull</code>.</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb297-1"><a href="reproducibility-collaborating-with-github.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd /path/to/your/repo</span>
-<span id="cb297-2"><a href="reproducibility-collaborating-with-github.html#cb297-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git pull</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb296-1"><a href="reproducibility-collaborating-with-github.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd /path/to/your/repo</span>
+<span id="cb296-2"><a href="reproducibility-collaborating-with-github.html#cb296-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git pull</span></code></pre></div>
 <p>This will pull down the latest changes that your partner made.</p>
-<div id="q9-merging-replace-todo-above-under-merging-partner-to-complete-the-exercise.-commit-and-push-these-changes-to-your-repo." class="section level3" number="25.4.1">
-<h3><span class="header-section-number">25.4.1</span> <strong>q9</strong> (<em>Merging</em>) Replace <strong>TODO</strong> above under <em>Merging partner</em> to complete the exercise. Commit and push these changes to your repo.</h3>
+<div id="q9-merging-replace-todo-above-under-merging-partner-to-complete-the-exercise.-commit-and-push-these-changes-to-your-repo." class="section level3 hasAnchor" number="25.4.1">
+<h3><span class="header-section-number">25.4.1</span> <strong>q9</strong> (<em>Merging</em>) Replace <strong>TODO</strong> above under <em>Merging partner</em> to complete the exercise. Commit and push these changes to your repo.<a href="reproducibility-collaborating-with-github.html#q9-merging-replace-todo-above-under-merging-partner-to-complete-the-exercise.-commit-and-push-these-changes-to-your-repo." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 </div>
 </div>
-<div id="forking-partner-1" class="section level2" number="25.5">
-<h2><span class="header-section-number">25.5</span> Forking Partner</h2>
-<div id="q10-forking-now-your-partner-has-successfully-merged-your-edits-but-in" class="section level3" number="25.5.1">
-<h3><span class="header-section-number">25.5.1</span> <strong>q10</strong> (<em>Forking</em>) Now your partner has successfully merged your edits, but in</h3>
+<div id="forking-partner-1" class="section level2 hasAnchor" number="25.5">
+<h2><span class="header-section-number">25.5</span> Forking Partner<a href="reproducibility-collaborating-with-github.html#forking-partner-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="q10-forking-now-your-partner-has-successfully-merged-your-edits-but-in" class="section level3 hasAnchor" number="25.5.1">
+<h3><span class="header-section-number">25.5.1</span> <strong>q10</strong> (<em>Forking</em>) Now your partner has successfully merged your edits, but in<a href="reproducibility-collaborating-with-github.html#q10-forking-now-your-partner-has-successfully-merged-your-edits-but-in" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>order to keep collaborating, you’ll need to update your fork based on your
 partner’s current (and future!) edits.</p>
 <p>Use the following command to <em>fetch</em> your partner’s edits.</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb298-1"><a href="reproducibility-collaborating-with-github.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git fetch upstream</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb297-1"><a href="reproducibility-collaborating-with-github.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git fetch upstream</span></code></pre></div>
 <p>Note that this hasn’t actually changed your local repo; to see this check out
 your <em>branches</em>.</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb299-1"><a href="reproducibility-collaborating-with-github.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git branch <span class="at">-va</span></span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb298-1"><a href="reproducibility-collaborating-with-github.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git branch <span class="at">-va</span></span></code></pre></div>
 <p>Note that I have my own master branch, and also have my partner’s
 <code>upstream/master</code> that has the merged pull request from q8.</p>
 <div class="figure">
@@ -1133,10 +1132,10 @@ your <em>branches</em>.</p>
 <p class="caption">Branches for forked repo</p>
 </div>
 <p>In order to keep your forked copy of your partner’s repo current, run the following commands.</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb300-1"><a href="reproducibility-collaborating-with-github.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure you&#39;re on the master branch</span></span>
-<span id="cb300-2"><a href="reproducibility-collaborating-with-github.html#cb300-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git checkout master</span>
-<span id="cb300-3"><a href="reproducibility-collaborating-with-github.html#cb300-3" aria-hidden="true" tabindex="-1"></a><span class="co"># merge your master with your partner&#39;s upstream/master</span></span>
-<span id="cb300-4"><a href="reproducibility-collaborating-with-github.html#cb300-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git merge upstream/master</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb299-1"><a href="reproducibility-collaborating-with-github.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure you&#39;re on the master branch</span></span>
+<span id="cb299-2"><a href="reproducibility-collaborating-with-github.html#cb299-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git checkout master</span>
+<span id="cb299-3"><a href="reproducibility-collaborating-with-github.html#cb299-3" aria-hidden="true" tabindex="-1"></a><span class="co"># merge your master with your partner&#39;s upstream/master</span></span>
+<span id="cb299-4"><a href="reproducibility-collaborating-with-github.html#cb299-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git merge upstream/master</span></code></pre></div>
 <p>If you do this <em>after</em> your partner has changed and pushed the assignment in q9,
 you should see both your and your partner’s name in the assignment document.</p>
 <p><em>Aside</em>: That was <em>a lot</em> of work just to get two names in one document. But the
@@ -1215,7 +1214,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

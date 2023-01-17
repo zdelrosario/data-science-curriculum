@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Reproducibility: Git and Our Curriculum | Data Science: Exercise Solutions</title>
   <meta name="description" content="3 Reproducibility: Git and Our Curriculum | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Reproducibility: Git and Our Curriculum | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="reproducibility-setup.html"/>
 <link rel="next" href="setup-rstudio.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,26 +980,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reproducibility-git-and-our-curriculum" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Reproducibility: Git and Our Curriculum</h1>
+<div id="reproducibility-git-and-our-curriculum" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> Reproducibility: Git and Our Curriculum<a href="reproducibility-git-and-our-curriculum.html#reproducibility-git-and-our-curriculum" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Git is a powerful tool to manage our work, but it can be confusing at first. Here we will read some introductory materials about Git, and use the software to download and set up the exercises for the course.</p>
 <p><em>Reading</em>: <a href="https://swcarpentry.github.io/git-novice/01-basics/index.html">Automated Version Control</a>, complete the steps in <a href="https://swcarpentry.github.io/git-novice/02-setup/index.html">Setting Up Git</a></p>
 <p><em>Note</em>: For the steps in the reading, I recommend using the Terminal in RStudio. This should help ensure you have access to Git.</p>
 <p><em>Topics</em>: version control, git setup, working with our exercises, ssh keys</p>
 <p><em>Note</em>: If you’re reading this file in RStudio, you can Shift + Click (CMD + Click) to follow a link.</p>
-<div id="windows-specific-instructions" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Windows-specific Instructions</h2>
+<div id="windows-specific-instructions" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Windows-specific Instructions<a href="reproducibility-git-and-our-curriculum.html#windows-specific-instructions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>If you are on a Windows computer, you will need to complete some additional steps. Please follow <a href="https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-windows-gitbash.md">these instructions</a> before continuing.</p>
 </div>
-<div id="set-up-ssh-key" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Set Up SSH Key</h2>
+<div id="set-up-ssh-key" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Set Up SSH Key<a href="reproducibility-git-and-our-curriculum.html#set-up-ssh-key" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Before you can “clone” (download) the repository of exercises, you’ll need to set up <code>ssh</code> with GitHub. Follow these instructions to <a href="https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account">add an SSH key</a> to your account. This will allow you to work with GitHub without typing in your password.</p>
 <p><em>Note</em>: This can be a bit confusing if you’ve never worked with SSH before; <em>please do ask questions</em> if you are stuck!</p>
 </div>
-<div id="downloading-our-exercises" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Downloading Our Exercises</h2>
+<div id="downloading-our-exercises" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Downloading Our Exercises<a href="reproducibility-git-and-our-curriculum.html#downloading-our-exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Using RStudio, we will download a local copy of the <a href="https://github.com/zdelrosario/data-science-curriculum">data-science-curriculum</a>. Follow these instructions:</p>
 <ul>
@@ -1108,7 +1107,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

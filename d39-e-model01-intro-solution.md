@@ -11,14 +11,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -168,7 +168,7 @@ fit_carat %>% tidy()
 ```
 
 ```
-## # A tibble: 2 x 5
+## # A tibble: 2 × 5
 ##   term        estimate std.error statistic   p.value
 ##   <chr>          <dbl>     <dbl>     <dbl>     <dbl>
 ## 1 (Intercept)    -84.6      21.0     -4.04 0.0000546
@@ -202,7 +202,7 @@ fit_q1 %>% tidy()
 ```
 
 ```
-## # A tibble: 6 x 5
+## # A tibble: 6 × 5
 ##   term        estimate std.error statistic  p.value
 ##   <chr>          <dbl>     <dbl>     <dbl>    <dbl>
 ## 1 (Intercept)   -294.       22.1    -13.3  3.39e-40
@@ -363,6 +363,11 @@ df_train %>%
   geom_point()
 ```
 
+```
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+```
+
 <img src="d39-e-model01-intro-solution_files/figure-html/predicted-vs-actual-1.png" width="672" />
 
 This fit looks quite poor---there is a great deal of scatter of actual values away from the predicted values. What's more, the scatter doesn't look random; there seem to be some consistent patterns (e.g. "stripes") in the plot that suggest there may be additional patterns we could incorporate in our model, if we added more variables. Let's try that!
@@ -506,7 +511,7 @@ df_pred_uq %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   coverage
 ##      <dbl>
 ## 1    0.959
@@ -534,7 +539,7 @@ df_q6 %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   coverage
 ##      <dbl>
 ## 1    0.956

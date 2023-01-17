@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>43 Stats: Error and Bias | Data Science: Exercise Solutions</title>
   <meta name="description" content="43 Stats: Error and Bias | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="43 Stats: Error and Bias | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="data-reading-excel-sheets.html"/>
 <link rel="next" href="data-map-basics.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,113 +980,113 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="stats-error-and-bias" class="section level1" number="43">
-<h1><span class="header-section-number">43</span> Stats: Error and Bias</h1>
+<div id="stats-error-and-bias" class="section level1 hasAnchor" number="43">
+<h1><span class="header-section-number">43</span> Stats: Error and Bias<a href="stats-error-and-bias.html#stats-error-and-bias" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: <em>Error</em> is a subtle concept. Often statistics concepts are introduced
 with a host of assumptions on the errors. In this short exercise, we’ll reminder
 ourselves what errors are and learn what happens when one standard
 assumption—<em>unbiasedness</em>—is violated.</p>
 <p><em>Prerequisites</em>: <code>c02-michelson</code>, <code>e-stat06-clt</code></p>
-<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb742-1"><a href="stats-error-and-bias.html#cb742-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Note: No need to edit this chunk!</span></span>
-<span id="cb742-2"><a href="stats-error-and-bias.html#cb742-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="stats-error-and-bias.html#cb744-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Note: No need to edit this chunk!</span></span>
+<span id="cb744-2"><a href="stats-error-and-bias.html#cb744-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="stats-error-and-bias.html#cb746-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googlesheets4)</span>
-<span id="cb746-2"><a href="stats-error-and-bias.html#cb746-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb746-3"><a href="stats-error-and-bias.html#cb746-3" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://docs.google.com/spreadsheets/d/1av_SXn4j0-4Rk0mQFik3LLr-uf0YdA06i3ugE6n-Zdo/edit?usp=sharing&quot;</span></span>
-<span id="cb746-4"><a href="stats-error-and-bias.html#cb746-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb746-5"><a href="stats-error-and-bias.html#cb746-5" aria-hidden="true" tabindex="-1"></a>c_true <span class="ot">&lt;-</span> <span class="fl">299792.458</span> <span class="co"># Exact speed of light in a vacuum (km / s)</span></span>
-<span id="cb746-6"><a href="stats-error-and-bias.html#cb746-6" aria-hidden="true" tabindex="-1"></a>c_michelson <span class="ot">&lt;-</span> <span class="fl">299944.00</span>  <span class="co"># Michelson&#39;s speed estimate (km / s)</span></span>
-<span id="cb746-7"><a href="stats-error-and-bias.html#cb746-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb746-8"><a href="stats-error-and-bias.html#cb746-8" aria-hidden="true" tabindex="-1"></a>meas_adjust <span class="ot">&lt;-</span> <span class="sc">+</span><span class="dv">92</span> <span class="co"># Michelson&#39;s speed of light adjustment (km / s)</span></span>
-<span id="cb746-9"><a href="stats-error-and-bias.html#cb746-9" aria-hidden="true" tabindex="-1"></a>c_michelson_uncertainty <span class="ot">&lt;-</span> <span class="dv">51</span> <span class="co"># Michelson&#39;s measurement uncertainty (km / s)</span></span>
-<span id="cb746-10"><a href="stats-error-and-bias.html#cb746-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb746-11"><a href="stats-error-and-bias.html#cb746-11" aria-hidden="true" tabindex="-1"></a><span class="fu">gs4_deauth</span>()</span>
-<span id="cb746-12"><a href="stats-error-and-bias.html#cb746-12" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">gs4_get</span>(url)</span>
-<span id="cb746-13"><a href="stats-error-and-bias.html#cb746-13" aria-hidden="true" tabindex="-1"></a>df_michelson <span class="ot">&lt;-</span></span>
-<span id="cb746-14"><a href="stats-error-and-bias.html#cb746-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_sheet</span>(ss) <span class="sc">%&gt;%</span></span>
-<span id="cb746-15"><a href="stats-error-and-bias.html#cb746-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Date, Distinctness, Temp, Velocity) <span class="sc">%&gt;%</span></span>
-<span id="cb746-16"><a href="stats-error-and-bias.html#cb746-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb746-17"><a href="stats-error-and-bias.html#cb746-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">Distinctness =</span> <span class="fu">as_factor</span>(Distinctness),</span>
-<span id="cb746-18"><a href="stats-error-and-bias.html#cb746-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_meas =</span> Velocity <span class="sc">+</span> meas_adjust</span>
-<span id="cb746-19"><a href="stats-error-and-bias.html#cb746-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## Reading from &quot;michelson1879&quot;</code></pre>
-<pre><code>## Range &quot;Sheet1&quot;</code></pre>
-<div id="errors" class="section level2" number="43.1">
-<h2><span class="header-section-number">43.1</span> Errors</h2>
+<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="stats-error-and-bias.html#cb748-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googlesheets4)</span>
+<span id="cb748-2"><a href="stats-error-and-bias.html#cb748-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb748-3"><a href="stats-error-and-bias.html#cb748-3" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://docs.google.com/spreadsheets/d/1av_SXn4j0-4Rk0mQFik3LLr-uf0YdA06i3ugE6n-Zdo/edit?usp=sharing&quot;</span></span>
+<span id="cb748-4"><a href="stats-error-and-bias.html#cb748-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb748-5"><a href="stats-error-and-bias.html#cb748-5" aria-hidden="true" tabindex="-1"></a>c_true <span class="ot">&lt;-</span> <span class="fl">299792.458</span> <span class="co"># Exact speed of light in a vacuum (km / s)</span></span>
+<span id="cb748-6"><a href="stats-error-and-bias.html#cb748-6" aria-hidden="true" tabindex="-1"></a>c_michelson <span class="ot">&lt;-</span> <span class="fl">299944.00</span>  <span class="co"># Michelson&#39;s speed estimate (km / s)</span></span>
+<span id="cb748-7"><a href="stats-error-and-bias.html#cb748-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb748-8"><a href="stats-error-and-bias.html#cb748-8" aria-hidden="true" tabindex="-1"></a>meas_adjust <span class="ot">&lt;-</span> <span class="sc">+</span><span class="dv">92</span> <span class="co"># Michelson&#39;s speed of light adjustment (km / s)</span></span>
+<span id="cb748-9"><a href="stats-error-and-bias.html#cb748-9" aria-hidden="true" tabindex="-1"></a>c_michelson_uncertainty <span class="ot">&lt;-</span> <span class="dv">51</span> <span class="co"># Michelson&#39;s measurement uncertainty (km / s)</span></span>
+<span id="cb748-10"><a href="stats-error-and-bias.html#cb748-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb748-11"><a href="stats-error-and-bias.html#cb748-11" aria-hidden="true" tabindex="-1"></a><span class="fu">gs4_deauth</span>()</span>
+<span id="cb748-12"><a href="stats-error-and-bias.html#cb748-12" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">gs4_get</span>(url)</span>
+<span id="cb748-13"><a href="stats-error-and-bias.html#cb748-13" aria-hidden="true" tabindex="-1"></a>df_michelson <span class="ot">&lt;-</span></span>
+<span id="cb748-14"><a href="stats-error-and-bias.html#cb748-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_sheet</span>(ss) <span class="sc">%&gt;%</span></span>
+<span id="cb748-15"><a href="stats-error-and-bias.html#cb748-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Date, Distinctness, Temp, Velocity) <span class="sc">%&gt;%</span></span>
+<span id="cb748-16"><a href="stats-error-and-bias.html#cb748-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb748-17"><a href="stats-error-and-bias.html#cb748-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">Distinctness =</span> <span class="fu">as_factor</span>(Distinctness),</span>
+<span id="cb748-18"><a href="stats-error-and-bias.html#cb748-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_meas =</span> Velocity <span class="sc">+</span> meas_adjust</span>
+<span id="cb748-19"><a href="stats-error-and-bias.html#cb748-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## ✔ Reading from &quot;michelson1879&quot;.</code></pre>
+<pre><code>## ✔ Range &#39;Sheet1&#39;.</code></pre>
+<div id="errors" class="section level2 hasAnchor" number="43.1">
+<h2><span class="header-section-number">43.1</span> Errors<a href="stats-error-and-bias.html#errors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Let’s re-examine the Michelson speed of light data to discuss the concept of <em>error</em>. Let <span class="math inline">\(c\)</span> denote the true speed of light, and let <span class="math inline">\(\hat{c}_i\)</span> denote the i-th measurement by Michelson. Then the error <span class="math inline">\(\epsilon_{c,i}\)</span> is:</p>
 <p><span class="math display">\[\epsilon_{c,i} \equiv \hat{c}_i - c.\]</span></p>
 <p>Note that these are <em>errors</em> (and not some other quantity) because they are
 differences against the true value <span class="math inline">\(c\)</span>. Very frequently in statistics, we
 <em>assume</em> that the errors are <em>unbiased</em>; that is we assume <span class="math inline">\(\mathbb{E}[\epsilon] = 0\)</span>. Let’s take a look at what happens when that assumption is violated.</p>
-<div id="q1-compute-the-errors-epsilon_c-using-michelsons-measurements-c_meas-and-the-true-speed-of-light-c_true." class="section level3" number="43.1.1">
-<h3><span class="header-section-number">43.1.1</span> <strong>q1</strong> Compute the errors <span class="math inline">\(\epsilon_c\)</span> using Michelson’s measurements <code>c_meas</code> and the true speed of light <code>c_true</code>.</h3>
-<div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb749-1"><a href="stats-error-and-bias.html#cb749-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute `epsilon_c`</span></span>
-<span id="cb749-2"><a href="stats-error-and-bias.html#cb749-2" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
-<span id="cb749-3"><a href="stats-error-and-bias.html#cb749-3" aria-hidden="true" tabindex="-1"></a>  df_michelson <span class="sc">%&gt;%</span></span>
-<span id="cb749-4"><a href="stats-error-and-bias.html#cb749-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">epsilon_c =</span> c_meas <span class="sc">-</span> c_true)</span>
-<span id="cb749-5"><a href="stats-error-and-bias.html#cb749-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb749-6"><a href="stats-error-and-bias.html#cb749-6" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span></span>
-<span id="cb749-7"><a href="stats-error-and-bias.html#cb749-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(epsilon_c)) <span class="sc">+</span></span>
-<span id="cb749-8"><a href="stats-error-and-bias.html#cb749-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<div id="q1-compute-the-errors-epsilon_c-using-michelsons-measurements-c_meas-and-the-true-speed-of-light-c_true." class="section level3 hasAnchor" number="43.1.1">
+<h3><span class="header-section-number">43.1.1</span> <strong>q1</strong> Compute the errors <span class="math inline">\(\epsilon_c\)</span> using Michelson’s measurements <code>c_meas</code> and the true speed of light <code>c_true</code>.<a href="stats-error-and-bias.html#q1-compute-the-errors-epsilon_c-using-michelsons-measurements-c_meas-and-the-true-speed-of-light-c_true." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb751-1"><a href="stats-error-and-bias.html#cb751-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute `epsilon_c`</span></span>
+<span id="cb751-2"><a href="stats-error-and-bias.html#cb751-2" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
+<span id="cb751-3"><a href="stats-error-and-bias.html#cb751-3" aria-hidden="true" tabindex="-1"></a>  df_michelson <span class="sc">%&gt;%</span></span>
+<span id="cb751-4"><a href="stats-error-and-bias.html#cb751-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">epsilon_c =</span> c_meas <span class="sc">-</span> c_true)</span>
+<span id="cb751-5"><a href="stats-error-and-bias.html#cb751-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb751-6"><a href="stats-error-and-bias.html#cb751-6" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span></span>
+<span id="cb751-7"><a href="stats-error-and-bias.html#cb751-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(epsilon_c)) <span class="sc">+</span></span>
+<span id="cb751-8"><a href="stats-error-and-bias.html#cb751-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="d29-e-stat07-error-bias-solution_files/figure-html/q1-task-1.png" width="672" /></p>
 <p>We can use descriptive statistics in order to summarize the errors. This will give us a quantification of the <em>uncertainty</em> in our measurements: remember that uncertainty is our assessment of the error.</p>
 </div>
-<div id="q2-estimate-the-mean-and-standard-deviation-of-epsilon_c-from-df_q1.-is-the-error-mean-large-or-small-compared-to-its-standard-deviation-how-about-compared-to-michelsons-uncertainty-c_michelson_uncertainty" class="section level3" number="43.1.2">
-<h3><span class="header-section-number">43.1.2</span> <strong>q2</strong> Estimate the mean and standard deviation of <span class="math inline">\(\epsilon_c\)</span> from <code>df_q1.</code> Is the error mean large or small, compared to its standard deviation? How about compared to Michelson’s uncertainty <code>c_michelson_uncertainty</code>?</h3>
-<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb751-1"><a href="stats-error-and-bias.html#cb751-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Estimate `epsilon_mean` and `epsilon_sd` from df_q1</span></span>
-<span id="cb751-2"><a href="stats-error-and-bias.html#cb751-2" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
-<span id="cb751-3"><a href="stats-error-and-bias.html#cb751-3" aria-hidden="true" tabindex="-1"></a>  df_q1 <span class="sc">%&gt;%</span></span>
-<span id="cb751-4"><a href="stats-error-and-bias.html#cb751-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb751-5"><a href="stats-error-and-bias.html#cb751-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">epsilon_mean =</span> <span class="fu">mean</span>(epsilon_c),</span>
-<span id="cb751-6"><a href="stats-error-and-bias.html#cb751-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">epsilon_sd =</span> <span class="fu">sd</span>(epsilon_c)</span>
-<span id="cb751-7"><a href="stats-error-and-bias.html#cb751-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div id="q2-estimate-the-mean-and-standard-deviation-of-epsilon_c-from-df_q1.-is-the-error-mean-large-or-small-compared-to-its-standard-deviation-how-about-compared-to-michelsons-uncertainty-c_michelson_uncertainty" class="section level3 hasAnchor" number="43.1.2">
+<h3><span class="header-section-number">43.1.2</span> <strong>q2</strong> Estimate the mean and standard deviation of <span class="math inline">\(\epsilon_c\)</span> from <code>df_q1.</code> Is the error mean large or small, compared to its standard deviation? How about compared to Michelson’s uncertainty <code>c_michelson_uncertainty</code>?<a href="stats-error-and-bias.html#q2-estimate-the-mean-and-standard-deviation-of-epsilon_c-from-df_q1.-is-the-error-mean-large-or-small-compared-to-its-standard-deviation-how-about-compared-to-michelsons-uncertainty-c_michelson_uncertainty" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb753-1"><a href="stats-error-and-bias.html#cb753-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Estimate `epsilon_mean` and `epsilon_sd` from df_q1</span></span>
+<span id="cb753-2"><a href="stats-error-and-bias.html#cb753-2" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
+<span id="cb753-3"><a href="stats-error-and-bias.html#cb753-3" aria-hidden="true" tabindex="-1"></a>  df_q1 <span class="sc">%&gt;%</span></span>
+<span id="cb753-4"><a href="stats-error-and-bias.html#cb753-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb753-5"><a href="stats-error-and-bias.html#cb753-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">epsilon_mean =</span> <span class="fu">mean</span>(epsilon_c),</span>
+<span id="cb753-6"><a href="stats-error-and-bias.html#cb753-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">epsilon_sd =</span> <span class="fu">sd</span>(epsilon_c)</span>
+<span id="cb753-7"><a href="stats-error-and-bias.html#cb753-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p><strong>Observations</strong>:</p>
 <p>Use the following tests to check your answers.</p>
-<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb752-1"><a href="stats-error-and-bias.html#cb752-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb752-2"><a href="stats-error-and-bias.html#cb752-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>((df_q2 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(epsilon_mean)) <span class="sc">-</span> <span class="fl">151.942</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb754-1"><a href="stats-error-and-bias.html#cb754-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb754-2"><a href="stats-error-and-bias.html#cb754-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>((df_q2 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(epsilon_mean)) <span class="sc">-</span> <span class="fl">151.942</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb754-1"><a href="stats-error-and-bias.html#cb754-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>((df_q2 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(epsilon_sd)) <span class="sc">-</span> <span class="fl">79.01055</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="stats-error-and-bias.html#cb756-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>((df_q2 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(epsilon_sd)) <span class="sc">-</span> <span class="fl">79.01055</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="stats-error-and-bias.html#cb756-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="stats-error-and-bias.html#cb758-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great job!&quot;</code></pre>
 <p>Generally, we want our errors to have <em>zero mean</em>—the case where the errors have zero mean is called <em>unbiased</em>. The quantity <span class="math inline">\(\mathbb{E}[\epsilon]\)</span> is called <em>bias</em>, and an estimate such as <span class="math inline">\(\hat{c}\)</span> with <span class="math inline">\(\mathbb{E}[\epsilon] \neq 0\)</span> is called <em>biased</em>.</p>
 <p>What can happen when our estimates are biased? In that case, increased data <em>may not</em> improve our estimate, and our statistical tools—such as confidence intervals—may give us a false impression of the true error. The next example will show us what happens if we apply confidence intervals in a biased-data setting like Michelson’s data.</p>
 </div>
-<div id="q3-use-a-clt-approximation-to-construct-a-99-confidence-interval-on-the-mean-of-c_meas.-check-with-the-provided-code-if-your-ci-includes-the-true-speed-of-light." class="section level3" number="43.1.3">
-<h3><span class="header-section-number">43.1.3</span> <strong>q3</strong> Use a CLT approximation to construct a <span class="math inline">\(99%\)</span> confidence interval on the mean of <code>c_meas</code>. Check (with the provided code) if your CI includes the true speed of light.</h3>
+<div id="q3-use-a-clt-approximation-to-construct-a-99-confidence-interval-on-the-mean-of-c_meas.-check-with-the-provided-code-if-your-ci-includes-the-true-speed-of-light." class="section level3 hasAnchor" number="43.1.3">
+<h3><span class="header-section-number">43.1.3</span> <strong>q3</strong> Use a CLT approximation to construct a <span class="math inline">\(99%\)</span> confidence interval on the mean of <code>c_meas</code>. Check (with the provided code) if your CI includes the true speed of light.<a href="stats-error-and-bias.html#q3-use-a-clt-approximation-to-construct-a-99-confidence-interval-on-the-mean-of-c_meas.-check-with-the-provided-code-if-your-ci-includes-the-true-speed-of-light." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: This computation should <strong>not</strong> use the true speed of light <span class="math inline">\(c_true\)</span> in any way.</p>
-<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="stats-error-and-bias.html#cb758-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute a 99% confidence interval on the mean of c_meas</span></span>
-<span id="cb758-2"><a href="stats-error-and-bias.html#cb758-2" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fl">0.99</span></span>
-<span id="cb758-3"><a href="stats-error-and-bias.html#cb758-3" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">qnorm</span>( <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> C) <span class="sc">/</span> <span class="dv">2</span> )</span>
-<span id="cb758-4"><a href="stats-error-and-bias.html#cb758-4" aria-hidden="true" tabindex="-1"></a>df_q3 <span class="ot">&lt;-</span></span>
-<span id="cb758-5"><a href="stats-error-and-bias.html#cb758-5" aria-hidden="true" tabindex="-1"></a>  df_q1 <span class="sc">%&gt;%</span></span>
-<span id="cb758-6"><a href="stats-error-and-bias.html#cb758-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb758-7"><a href="stats-error-and-bias.html#cb758-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_meas_mean =</span> <span class="fu">mean</span>(c_meas),</span>
-<span id="cb758-8"><a href="stats-error-and-bias.html#cb758-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_meas_sd =</span> <span class="fu">sd</span>(c_meas),</span>
-<span id="cb758-9"><a href="stats-error-and-bias.html#cb758-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_samp =</span> <span class="fu">n</span>(),</span>
-<span id="cb758-10"><a href="stats-error-and-bias.html#cb758-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_lo =</span> c_meas_mean <span class="sc">-</span> q <span class="sc">*</span> c_meas_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_samp),</span>
-<span id="cb758-11"><a href="stats-error-and-bias.html#cb758-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_hi =</span> c_meas_mean <span class="sc">+</span> q <span class="sc">*</span> c_meas_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_samp)</span>
-<span id="cb758-12"><a href="stats-error-and-bias.html#cb758-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb758-13"><a href="stats-error-and-bias.html#cb758-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb758-14"><a href="stats-error-and-bias.html#cb758-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This checks if the CI contains c_true</span></span>
-<span id="cb758-15"><a href="stats-error-and-bias.html#cb758-15" aria-hidden="true" tabindex="-1"></a>(df_q3 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(c_lo) <span class="sc">&lt;=</span> c_true) <span class="sc">&amp;</span> (c_true <span class="sc">&lt;=</span> df_q3 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(c_hi))</span></code></pre></div>
+<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="stats-error-and-bias.html#cb760-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute a 99% confidence interval on the mean of c_meas</span></span>
+<span id="cb760-2"><a href="stats-error-and-bias.html#cb760-2" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fl">0.99</span></span>
+<span id="cb760-3"><a href="stats-error-and-bias.html#cb760-3" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">qnorm</span>( <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> C) <span class="sc">/</span> <span class="dv">2</span> )</span>
+<span id="cb760-4"><a href="stats-error-and-bias.html#cb760-4" aria-hidden="true" tabindex="-1"></a>df_q3 <span class="ot">&lt;-</span></span>
+<span id="cb760-5"><a href="stats-error-and-bias.html#cb760-5" aria-hidden="true" tabindex="-1"></a>  df_q1 <span class="sc">%&gt;%</span></span>
+<span id="cb760-6"><a href="stats-error-and-bias.html#cb760-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb760-7"><a href="stats-error-and-bias.html#cb760-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_meas_mean =</span> <span class="fu">mean</span>(c_meas),</span>
+<span id="cb760-8"><a href="stats-error-and-bias.html#cb760-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_meas_sd =</span> <span class="fu">sd</span>(c_meas),</span>
+<span id="cb760-9"><a href="stats-error-and-bias.html#cb760-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_samp =</span> <span class="fu">n</span>(),</span>
+<span id="cb760-10"><a href="stats-error-and-bias.html#cb760-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_lo =</span> c_meas_mean <span class="sc">-</span> q <span class="sc">*</span> c_meas_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_samp),</span>
+<span id="cb760-11"><a href="stats-error-and-bias.html#cb760-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_hi =</span> c_meas_mean <span class="sc">+</span> q <span class="sc">*</span> c_meas_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_samp)</span>
+<span id="cb760-12"><a href="stats-error-and-bias.html#cb760-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb760-13"><a href="stats-error-and-bias.html#cb760-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb760-14"><a href="stats-error-and-bias.html#cb760-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This checks if the CI contains c_true</span></span>
+<span id="cb760-15"><a href="stats-error-and-bias.html#cb760-15" aria-hidden="true" tabindex="-1"></a>(df_q3 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(c_lo) <span class="sc">&lt;=</span> c_true) <span class="sc">&amp;</span> (c_true <span class="sc">&lt;=</span> df_q3 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(c_hi))</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>Use the following tests to check your answers.</p>
-<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="stats-error-and-bias.html#cb760-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb760-2"><a href="stats-error-and-bias.html#cb760-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>((df_q3 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(c_lo)) <span class="sc">-</span> <span class="fl">299924.048</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="stats-error-and-bias.html#cb762-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb762-2"><a href="stats-error-and-bias.html#cb762-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>((df_q3 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(c_lo)) <span class="sc">-</span> <span class="fl">299924.048</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="stats-error-and-bias.html#cb762-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>((df_q3 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(c_hi)) <span class="sc">-</span> <span class="fl">299964.752</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="stats-error-and-bias.html#cb764-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>((df_q3 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(c_hi)) <span class="sc">-</span> <span class="fl">299964.752</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="stats-error-and-bias.html#cb764-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="stats-error-and-bias.html#cb766-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 <p>Once you correctly compute a CI for <code>c_meas</code>, you should find that the interval <em>does not</em> include <code>c_true</code>. CI is never guaranteed to include its true value—it is a probabilistic construction, after all. However, we saw above that the errors are <em>biased</em>; even if we were to gather more data, our confidence intervals would converge on the <em>wrong</em> value. Statistics are not a cure-all!</p>
 <!-- include-exit-ticket -->
@@ -1161,7 +1160,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>28 Data: Separate and Unite Columns | Data Science: Exercise Solutions</title>
   <meta name="description" content="28 Data: Separate and Unite Columns | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="28 Data: Separate and Unite Columns | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="stats-probability.html"/>
 <link rel="next" href="vis-scatterplots-and-layers.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,8 +980,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-separate-and-unite-columns" class="section level1" number="28">
-<h1><span class="header-section-number">28</span> Data: Separate and Unite Columns</h1>
+<div id="data-separate-and-unite-columns" class="section level1 hasAnchor" number="28">
+<h1><span class="header-section-number">28</span> Data: Separate and Unite Columns<a href="data-separate-and-unite-columns.html#data-separate-and-unite-columns" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Data is easiest to use when it is <em>tidy</em>. In fact, the tidyverse
 (including ggplot, dplyr, etc.) is specifically designed to use tidy data. Last
 time we learned how to pivot data, but data can be untidy in other ways.
@@ -995,88 +994,88 @@ are untidy.</p>
 <p><em>Notes</em>:
 - I had trouble running the Case study in my browser. Note that the <code>who</code> dataset is loaded by the <code>tidyverse</code>. You can run the Case study locally if you need to!
 - The case study uses <code>gather</code> instead of <code>pivot_longer</code>; feel free to use <code>pivot_longer</code> in place.</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="data-separate-and-unite-columns.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="data-separate-and-unite-columns.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <p>The Case study was already a fair bit of work! Let’s do some simple review with
 <code>separate</code> and <code>unite</code>.</p>
-<div id="punnett-square" class="section level2" number="28.1">
-<h2><span class="header-section-number">28.1</span> Punnett Square</h2>
+<div id="punnett-square" class="section level2 hasAnchor" number="28.1">
+<h2><span class="header-section-number">28.1</span> Punnett Square<a href="data-separate-and-unite-columns.html#punnett-square" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>Let’s make a <a href="https://en.wikipedia.org/wiki/Punnett_square">Punnett square</a> with
 <code>unite</code> and some pivoting. You don’t need to remember any biology for this
 example: Your task is to take <code>genes</code> and turn the data into <code>punnett</code>.</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="data-separate-and-unite-columns.html#cb344-1" aria-hidden="true" tabindex="-1"></a>punnett <span class="ot">&lt;-</span></span>
-<span id="cb344-2"><a href="data-separate-and-unite-columns.html#cb344-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb344-3"><a href="data-separate-and-unite-columns.html#cb344-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>parent1,   <span class="sc">~</span>a,   <span class="sc">~</span>A,</span>
-<span id="cb344-4"><a href="data-separate-and-unite-columns.html#cb344-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;a&quot;</span>, <span class="st">&quot;aa&quot;</span>, <span class="st">&quot;aA&quot;</span>,</span>
-<span id="cb344-5"><a href="data-separate-and-unite-columns.html#cb344-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;A&quot;</span>, <span class="st">&quot;Aa&quot;</span>, <span class="st">&quot;AA&quot;</span></span>
-<span id="cb344-6"><a href="data-separate-and-unite-columns.html#cb344-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb344-7"><a href="data-separate-and-unite-columns.html#cb344-7" aria-hidden="true" tabindex="-1"></a>punnett</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 3
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="data-separate-and-unite-columns.html#cb343-1" aria-hidden="true" tabindex="-1"></a>punnett <span class="ot">&lt;-</span></span>
+<span id="cb343-2"><a href="data-separate-and-unite-columns.html#cb343-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb343-3"><a href="data-separate-and-unite-columns.html#cb343-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>parent1,   <span class="sc">~</span>a,   <span class="sc">~</span>A,</span>
+<span id="cb343-4"><a href="data-separate-and-unite-columns.html#cb343-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;a&quot;</span>, <span class="st">&quot;aa&quot;</span>, <span class="st">&quot;aA&quot;</span>,</span>
+<span id="cb343-5"><a href="data-separate-and-unite-columns.html#cb343-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;A&quot;</span>, <span class="st">&quot;Aa&quot;</span>, <span class="st">&quot;AA&quot;</span></span>
+<span id="cb343-6"><a href="data-separate-and-unite-columns.html#cb343-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb343-7"><a href="data-separate-and-unite-columns.html#cb343-7" aria-hidden="true" tabindex="-1"></a>punnett</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
 ##   parent1 a     A    
 ##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;
 ## 1 a       aa    aA   
 ## 2 A       Aa    AA</code></pre>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="data-separate-and-unite-columns.html#cb346-1" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span></span>
-<span id="cb346-2"><a href="data-separate-and-unite-columns.html#cb346-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(</span>
-<span id="cb346-3"><a href="data-separate-and-unite-columns.html#cb346-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">parent1 =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;A&quot;</span>),</span>
-<span id="cb346-4"><a href="data-separate-and-unite-columns.html#cb346-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">parent2 =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;A&quot;</span>)</span>
-<span id="cb346-5"><a href="data-separate-and-unite-columns.html#cb346-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb346-6"><a href="data-separate-and-unite-columns.html#cb346-6" aria-hidden="true" tabindex="-1"></a>genes</span></code></pre></div>
-<pre><code>## # A tibble: 4 x 2
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="data-separate-and-unite-columns.html#cb345-1" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span></span>
+<span id="cb345-2"><a href="data-separate-and-unite-columns.html#cb345-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(</span>
+<span id="cb345-3"><a href="data-separate-and-unite-columns.html#cb345-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">parent1 =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;A&quot;</span>),</span>
+<span id="cb345-4"><a href="data-separate-and-unite-columns.html#cb345-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">parent2 =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;A&quot;</span>)</span>
+<span id="cb345-5"><a href="data-separate-and-unite-columns.html#cb345-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb345-6"><a href="data-separate-and-unite-columns.html#cb345-6" aria-hidden="true" tabindex="-1"></a>genes</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 2
 ##   parent1 parent2
 ##   &lt;chr&gt;   &lt;chr&gt;  
 ## 1 a       a      
 ## 2 a       A      
 ## 3 A       a      
 ## 4 A       A</code></pre>
-<div id="q1-use-a-combination-of-unite-and-pivoting-to-turn-genes-into-the-same-dataframe-as-punnett." class="section level3" number="28.1.1">
-<h3><span class="header-section-number">28.1.1</span> <strong>q1</strong> Use a combination of <code>unite</code> and pivoting to turn <code>genes</code> into the same dataframe as <code>punnett</code>.</h3>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="data-separate-and-unite-columns.html#cb348-1" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
-<span id="cb348-2"><a href="data-separate-and-unite-columns.html#cb348-2" aria-hidden="true" tabindex="-1"></a>  genes <span class="sc">%&gt;%</span></span>
-<span id="cb348-3"><a href="data-separate-and-unite-columns.html#cb348-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="at">col =</span> <span class="st">&quot;offspring&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>, parent1, parent2) <span class="sc">%&gt;%</span></span>
-<span id="cb348-4"><a href="data-separate-and-unite-columns.html#cb348-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb348-5"><a href="data-separate-and-unite-columns.html#cb348-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> parent2,</span>
-<span id="cb348-6"><a href="data-separate-and-unite-columns.html#cb348-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> offspring</span>
-<span id="cb348-7"><a href="data-separate-and-unite-columns.html#cb348-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb348-8"><a href="data-separate-and-unite-columns.html#cb348-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb348-9"><a href="data-separate-and-unite-columns.html#cb348-9" aria-hidden="true" tabindex="-1"></a>df_q1</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 3
+<div id="q1-use-a-combination-of-unite-and-pivoting-to-turn-genes-into-the-same-dataframe-as-punnett." class="section level3 hasAnchor" number="28.1.1">
+<h3><span class="header-section-number">28.1.1</span> <strong>q1</strong> Use a combination of <code>unite</code> and pivoting to turn <code>genes</code> into the same dataframe as <code>punnett</code>.<a href="data-separate-and-unite-columns.html#q1-use-a-combination-of-unite-and-pivoting-to-turn-genes-into-the-same-dataframe-as-punnett." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="data-separate-and-unite-columns.html#cb347-1" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
+<span id="cb347-2"><a href="data-separate-and-unite-columns.html#cb347-2" aria-hidden="true" tabindex="-1"></a>  genes <span class="sc">%&gt;%</span></span>
+<span id="cb347-3"><a href="data-separate-and-unite-columns.html#cb347-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="at">col =</span> <span class="st">&quot;offspring&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>, parent1, parent2) <span class="sc">%&gt;%</span></span>
+<span id="cb347-4"><a href="data-separate-and-unite-columns.html#cb347-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb347-5"><a href="data-separate-and-unite-columns.html#cb347-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> parent2,</span>
+<span id="cb347-6"><a href="data-separate-and-unite-columns.html#cb347-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> offspring</span>
+<span id="cb347-7"><a href="data-separate-and-unite-columns.html#cb347-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb347-8"><a href="data-separate-and-unite-columns.html#cb347-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb347-9"><a href="data-separate-and-unite-columns.html#cb347-9" aria-hidden="true" tabindex="-1"></a>df_q1</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
 ##   parent1 a     A    
 ##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;
 ## 1 a       aa    aA   
 ## 2 A       Aa    AA</code></pre>
 <p>Use the following test to check your answer:</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="data-separate-and-unite-columns.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb350-2"><a href="data-separate-and-unite-columns.html#cb350-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb350-3"><a href="data-separate-and-unite-columns.html#cb350-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">all_equal</span>(df_q1, punnett)</span>
-<span id="cb350-4"><a href="data-separate-and-unite-columns.html#cb350-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="data-separate-and-unite-columns.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb349-2"><a href="data-separate-and-unite-columns.html#cb349-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb349-3"><a href="data-separate-and-unite-columns.html#cb349-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">all_equal</span>(df_q1, punnett)</span>
+<span id="cb349-4"><a href="data-separate-and-unite-columns.html#cb349-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="data-separate-and-unite-columns.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="data-separate-and-unite-columns.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 </div>
 </div>
-<div id="alloys-revisited" class="section level2" number="28.2">
-<h2><span class="header-section-number">28.2</span> Alloys, Revisited</h2>
+<div id="alloys-revisited" class="section level2 hasAnchor" number="28.2">
+<h2><span class="header-section-number">28.2</span> Alloys, Revisited<a href="data-separate-and-unite-columns.html#alloys-revisited" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>In the previous data exercise, we studied an alloys dataset:</p>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="data-separate-and-unite-columns.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb354-2"><a href="data-separate-and-unite-columns.html#cb354-2" aria-hidden="true" tabindex="-1"></a>alloys_mod <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb354-3"><a href="data-separate-and-unite-columns.html#cb354-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>thick,  <span class="sc">~</span>E00,  <span class="sc">~</span>mu00,  <span class="sc">~</span>E45,  <span class="sc">~</span>mu45, <span class="sc">~</span>rep,</span>
-<span id="cb354-4"><a href="data-separate-and-unite-columns.html#cb354-4" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.321</span>, <span class="dv">10700</span>,  <span class="fl">0.329</span>,    <span class="dv">1</span>,</span>
-<span id="cb354-5"><a href="data-separate-and-unite-columns.html#cb354-5" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.323</span>, <span class="dv">10500</span>,  <span class="fl">0.331</span>,    <span class="dv">2</span>,</span>
-<span id="cb354-6"><a href="data-separate-and-unite-columns.html#cb354-6" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10400</span>,  <span class="fl">0.329</span>, <span class="dv">10400</span>,  <span class="fl">0.318</span>,    <span class="dv">1</span>,</span>
-<span id="cb354-7"><a href="data-separate-and-unite-columns.html#cb354-7" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10300</span>,  <span class="fl">0.319</span>, <span class="dv">10500</span>,  <span class="fl">0.326</span>,    <span class="dv">2</span></span>
-<span id="cb354-8"><a href="data-separate-and-unite-columns.html#cb354-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb354-9"><a href="data-separate-and-unite-columns.html#cb354-9" aria-hidden="true" tabindex="-1"></a>alloys_mod</span></code></pre></div>
-<pre><code>## # A tibble: 4 x 6
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="data-separate-and-unite-columns.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb353-2"><a href="data-separate-and-unite-columns.html#cb353-2" aria-hidden="true" tabindex="-1"></a>alloys_mod <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb353-3"><a href="data-separate-and-unite-columns.html#cb353-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>thick,  <span class="sc">~</span>E00,  <span class="sc">~</span>mu00,  <span class="sc">~</span>E45,  <span class="sc">~</span>mu45, <span class="sc">~</span>rep,</span>
+<span id="cb353-4"><a href="data-separate-and-unite-columns.html#cb353-4" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.321</span>, <span class="dv">10700</span>,  <span class="fl">0.329</span>,    <span class="dv">1</span>,</span>
+<span id="cb353-5"><a href="data-separate-and-unite-columns.html#cb353-5" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.323</span>, <span class="dv">10500</span>,  <span class="fl">0.331</span>,    <span class="dv">2</span>,</span>
+<span id="cb353-6"><a href="data-separate-and-unite-columns.html#cb353-6" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10400</span>,  <span class="fl">0.329</span>, <span class="dv">10400</span>,  <span class="fl">0.318</span>,    <span class="dv">1</span>,</span>
+<span id="cb353-7"><a href="data-separate-and-unite-columns.html#cb353-7" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10300</span>,  <span class="fl">0.319</span>, <span class="dv">10500</span>,  <span class="fl">0.326</span>,    <span class="dv">2</span></span>
+<span id="cb353-8"><a href="data-separate-and-unite-columns.html#cb353-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb353-9"><a href="data-separate-and-unite-columns.html#cb353-9" aria-hidden="true" tabindex="-1"></a>alloys_mod</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 6
 ##   thick   E00  mu00   E45  mu45   rep
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 0.022 10600 0.321 10700 0.329     1
@@ -1086,28 +1085,28 @@ example: Your task is to take <code>genes</code> and turn the data into <code>pu
 <p>This <em>slightly modified</em> version of the data no longer has a convenient
 separator to help with pivoting. We’ll use a combination of pivoting and
 separate to tidy these data.</p>
-<div id="q2-use-a-combination-of-separate-and-pivoting-to-tidy-alloys_mod." class="section level3" number="28.2.1">
-<h3><span class="header-section-number">28.2.1</span> <strong>q2</strong> Use a combination of <code>separate</code> and pivoting to tidy <code>alloys_mod</code>.</h3>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="data-separate-and-unite-columns.html#cb356-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
-<span id="cb356-2"><a href="data-separate-and-unite-columns.html#cb356-2" aria-hidden="true" tabindex="-1"></a>  alloys_mod <span class="sc">%&gt;%</span></span>
-<span id="cb356-3"><a href="data-separate-and-unite-columns.html#cb356-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb356-4"><a href="data-separate-and-unite-columns.html#cb356-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;varang&quot;</span>,</span>
-<span id="cb356-5"><a href="data-separate-and-unite-columns.html#cb356-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>,</span>
-<span id="cb356-6"><a href="data-separate-and-unite-columns.html#cb356-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>thick, <span class="sc">-</span>rep)</span>
-<span id="cb356-7"><a href="data-separate-and-unite-columns.html#cb356-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb356-8"><a href="data-separate-and-unite-columns.html#cb356-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
-<span id="cb356-9"><a href="data-separate-and-unite-columns.html#cb356-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> varang,</span>
-<span id="cb356-10"><a href="data-separate-and-unite-columns.html#cb356-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;ang&quot;</span>),</span>
-<span id="cb356-11"><a href="data-separate-and-unite-columns.html#cb356-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="sc">-</span><span class="dv">2</span>,</span>
-<span id="cb356-12"><a href="data-separate-and-unite-columns.html#cb356-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">convert =</span> <span class="cn">TRUE</span></span>
-<span id="cb356-13"><a href="data-separate-and-unite-columns.html#cb356-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb356-14"><a href="data-separate-and-unite-columns.html#cb356-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb356-15"><a href="data-separate-and-unite-columns.html#cb356-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> var,</span>
-<span id="cb356-16"><a href="data-separate-and-unite-columns.html#cb356-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
-<span id="cb356-17"><a href="data-separate-and-unite-columns.html#cb356-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb356-18"><a href="data-separate-and-unite-columns.html#cb356-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb356-19"><a href="data-separate-and-unite-columns.html#cb356-19" aria-hidden="true" tabindex="-1"></a>df_q2</span></code></pre></div>
-<pre><code>## # A tibble: 8 x 5
+<div id="q2-use-a-combination-of-separate-and-pivoting-to-tidy-alloys_mod." class="section level3 hasAnchor" number="28.2.1">
+<h3><span class="header-section-number">28.2.1</span> <strong>q2</strong> Use a combination of <code>separate</code> and pivoting to tidy <code>alloys_mod</code>.<a href="data-separate-and-unite-columns.html#q2-use-a-combination-of-separate-and-pivoting-to-tidy-alloys_mod." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="data-separate-and-unite-columns.html#cb355-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
+<span id="cb355-2"><a href="data-separate-and-unite-columns.html#cb355-2" aria-hidden="true" tabindex="-1"></a>  alloys_mod <span class="sc">%&gt;%</span></span>
+<span id="cb355-3"><a href="data-separate-and-unite-columns.html#cb355-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb355-4"><a href="data-separate-and-unite-columns.html#cb355-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;varang&quot;</span>,</span>
+<span id="cb355-5"><a href="data-separate-and-unite-columns.html#cb355-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>,</span>
+<span id="cb355-6"><a href="data-separate-and-unite-columns.html#cb355-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>thick, <span class="sc">-</span>rep)</span>
+<span id="cb355-7"><a href="data-separate-and-unite-columns.html#cb355-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb355-8"><a href="data-separate-and-unite-columns.html#cb355-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
+<span id="cb355-9"><a href="data-separate-and-unite-columns.html#cb355-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> varang,</span>
+<span id="cb355-10"><a href="data-separate-and-unite-columns.html#cb355-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;ang&quot;</span>),</span>
+<span id="cb355-11"><a href="data-separate-and-unite-columns.html#cb355-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="sc">-</span><span class="dv">2</span>,</span>
+<span id="cb355-12"><a href="data-separate-and-unite-columns.html#cb355-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">convert =</span> <span class="cn">TRUE</span></span>
+<span id="cb355-13"><a href="data-separate-and-unite-columns.html#cb355-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb355-14"><a href="data-separate-and-unite-columns.html#cb355-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb355-15"><a href="data-separate-and-unite-columns.html#cb355-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> var,</span>
+<span id="cb355-16"><a href="data-separate-and-unite-columns.html#cb355-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
+<span id="cb355-17"><a href="data-separate-and-unite-columns.html#cb355-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb355-18"><a href="data-separate-and-unite-columns.html#cb355-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-19"><a href="data-separate-and-unite-columns.html#cb355-19" aria-hidden="true" tabindex="-1"></a>df_q2</span></code></pre></div>
+<pre><code>## # A tibble: 8 × 5
 ##   thick   rep   ang     E    mu
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 0.022     1     0 10600 0.321
@@ -1119,12 +1118,12 @@ separate to tidy these data.</p>
 ## 7 0.032     2     0 10300 0.319
 ## 8 0.032     2    45 10500 0.326</code></pre>
 <p>Use the following tests to check your work:</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="data-separate-and-unite-columns.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb358-2"><a href="data-separate-and-unite-columns.html#cb358-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb358-3"><a href="data-separate-and-unite-columns.html#cb358-3" aria-hidden="true" tabindex="-1"></a>              (<span class="fu">dim</span>(df_q2)[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">8</span>) <span class="sc">&amp;</span> (<span class="fu">dim</span>(df_q2)[<span class="dv">2</span>] <span class="sc">==</span> <span class="dv">5</span>)</span>
-<span id="cb358-4"><a href="data-separate-and-unite-columns.html#cb358-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="data-separate-and-unite-columns.html#cb357-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb357-2"><a href="data-separate-and-unite-columns.html#cb357-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb357-3"><a href="data-separate-and-unite-columns.html#cb357-3" aria-hidden="true" tabindex="-1"></a>              (<span class="fu">dim</span>(df_q2)[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">8</span>) <span class="sc">&amp;</span> (<span class="fu">dim</span>(df_q2)[<span class="dv">2</span>] <span class="sc">==</span> <span class="dv">5</span>)</span>
+<span id="cb357-4"><a href="data-separate-and-unite-columns.html#cb357-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="data-separate-and-unite-columns.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="data-separate-and-unite-columns.html#cb359-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <!-- include-exit-ticket -->
 
@@ -1197,7 +1196,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

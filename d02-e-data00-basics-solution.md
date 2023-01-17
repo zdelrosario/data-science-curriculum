@@ -15,14 +15,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -133,7 +133,7 @@ diamonds %>%
 ```
 
 ```
-## # A tibble: 5 x 2
+## # A tibble: 5 × 2
 ##   cut       carat_mean
 ##   <ord>          <dbl>
 ## 1 Fair           1.05 
@@ -202,12 +202,13 @@ df_q5 <-
 ```
 
 ```
-## 
+## Rows: 2 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   x = col_double(),
-##   y = col_double()
-## )
+## Delimiter: ","
+## dbl (2): x, y
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 ```r
@@ -215,7 +216,7 @@ df_q5
 ```
 
 ```
-## # A tibble: 2 x 2
+## # A tibble: 2 × 2
 ##       x     y
 ##   <dbl> <dbl>
 ## 1     1     2

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>38 Stats: Populations and Estimation | Data Science: Exercise Solutions</title>
   <meta name="description" content="38 Stats: Populations and Estimation | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="38 Stats: Populations and Estimation | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="data-pipes-and-placeholders.html"/>
 <link rel="next" href="data-window-functions.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,56 +980,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="stats-populations-and-estimation" class="section level1" number="38">
-<h1><span class="header-section-number">38</span> Stats: Populations and Estimation</h1>
+<div id="stats-populations-and-estimation" class="section level1 hasAnchor" number="38">
+<h1><span class="header-section-number">38</span> Stats: Populations and Estimation<a href="stats-populations-and-estimation.html#stats-populations-and-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Often, our data do not include all the facts that are relevant to the decision we are trying to make. Statistics is the science of determining the conclusions we can confidently make, based on our available data. To make sense of this, we need to understand the distinction between a <em>sample</em> and a <em>population</em>, and how this distinction leads to <em>estimation</em>.</p>
 <p><em>Reading</em>: <a href="https://towardsdatascience.com/statistician-proves-that-statistics-are-boring-4fc22c95031b">Statistician proves that statistics are boring</a></p>
 <p><em>Topics</em>: Population, sample, estimate, sampling distribution, standard error</p>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="stats-populations-and-estimation.html#cb572-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="stats-populations-and-estimation.html#cb571-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="stats-populations-and-estimation.html#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code></pre></div>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="stats-populations-and-estimation.html#cb575-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code></pre></div>
 <p>When using descriptive statistics to help us answer a question, there are (at least) two questions we should ask ourselves:</p>
 <ol style="list-style-type: decimal">
 <li>Does the statistic we chose relate to the problem we care about?</li>
 <li>Do we have all the facts we need (the population) or do we have limited information (a sample from some well-defined population)?</li>
 </ol>
 <p>We already discussed (1) by learning about descriptive statistics and their meaning. Now we’ll discuss (2) by learning the distinction between populations and samples.</p>
-<div id="population" class="section level2" number="38.1">
-<h2><span class="header-section-number">38.1</span> Population</h2>
+<div id="population" class="section level2 hasAnchor" number="38.1">
+<h2><span class="header-section-number">38.1</span> Population<a href="stats-populations-and-estimation.html#population" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Let’s start by looking at an artificial population:</p>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="stats-populations-and-estimation.html#cb577-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb577-2"><a href="stats-populations-and-estimation.html#cb577-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">+</span><span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb577-3"><a href="stats-populations-and-estimation.html#cb577-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
-<span id="cb577-4"><a href="stats-populations-and-estimation.html#cb577-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb577-5"><a href="stats-populations-and-estimation.html#cb577-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
-<span id="cb577-6"><a href="stats-populations-and-estimation.html#cb577-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="stats-populations-and-estimation.html#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb576-2"><a href="stats-populations-and-estimation.html#cb576-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">+</span><span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb576-3"><a href="stats-populations-and-estimation.html#cb576-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
+<span id="cb576-4"><a href="stats-populations-and-estimation.html#cb576-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb576-5"><a href="stats-populations-and-estimation.html#cb576-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
+<span id="cb576-6"><a href="stats-populations-and-estimation.html#cb576-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 <p><img src="d26-e-stat04-population-solution_files/figure-html/ex-population-normal-1.png" width="672" /></p>
 <p>Here our population is an infinite pool of observations all following the standard normal distribution. If this sounds abstract and unrealistic, good! Remember that the normal distribution (and indeed all named distributions) are <em>abstract, mathematical objects</em> that we use to model real phenomena.</p>
 <p>Remember that a <em>sample</em> is a set of observations “drawn” from the population. The following is an example of three different samples from the same normal distribution, with different sample sizes.</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="stats-populations-and-estimation.html#cb578-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb578-2"><a href="stats-populations-and-estimation.html#cb578-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb578-3"><a href="stats-populations-and-estimation.html#cb578-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb578-4"><a href="stats-populations-and-estimation.html#cb578-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">+</span><span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb578-5"><a href="stats-populations-and-estimation.html#cb578-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
-<span id="cb578-6"><a href="stats-populations-and-estimation.html#cb578-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb578-7"><a href="stats-populations-and-estimation.html#cb578-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb578-8"><a href="stats-populations-and-estimation.html#cb578-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb578-9"><a href="stats-populations-and-estimation.html#cb578-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">map_dfr</span>(</span>
-<span id="cb578-10"><a href="stats-populations-and-estimation.html#cb578-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="dv">10</span>, <span class="fl">1e2</span>, <span class="fl">1e3</span>),</span>
-<span id="cb578-11"><a href="stats-populations-and-estimation.html#cb578-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">function</span>(n) {<span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(n), <span class="at">n =</span> n)}</span>
-<span id="cb578-12"><a href="stats-populations-and-estimation.html#cb578-12" aria-hidden="true" tabindex="-1"></a>     ),</span>
-<span id="cb578-13"><a href="stats-populations-and-estimation.html#cb578-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(Z, <span class="at">y =</span> ..density.., <span class="at">color =</span> <span class="st">&quot;Sample&quot;</span>)</span>
-<span id="cb578-14"><a href="stats-populations-and-estimation.html#cb578-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb578-15"><a href="stats-populations-and-estimation.html#cb578-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(z, d, <span class="at">color =</span> <span class="st">&quot;Population&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb578-16"><a href="stats-populations-and-estimation.html#cb578-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>n)</span></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="stats-populations-and-estimation.html#cb577-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb577-2"><a href="stats-populations-and-estimation.html#cb577-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb577-3"><a href="stats-populations-and-estimation.html#cb577-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb577-4"><a href="stats-populations-and-estimation.html#cb577-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">+</span><span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb577-5"><a href="stats-populations-and-estimation.html#cb577-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
+<span id="cb577-6"><a href="stats-populations-and-estimation.html#cb577-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb577-7"><a href="stats-populations-and-estimation.html#cb577-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb577-8"><a href="stats-populations-and-estimation.html#cb577-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb577-9"><a href="stats-populations-and-estimation.html#cb577-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">map_dfr</span>(</span>
+<span id="cb577-10"><a href="stats-populations-and-estimation.html#cb577-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="dv">10</span>, <span class="fl">1e2</span>, <span class="fl">1e3</span>),</span>
+<span id="cb577-11"><a href="stats-populations-and-estimation.html#cb577-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">function</span>(n) {<span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(n), <span class="at">n =</span> n)}</span>
+<span id="cb577-12"><a href="stats-populations-and-estimation.html#cb577-12" aria-hidden="true" tabindex="-1"></a>     ),</span>
+<span id="cb577-13"><a href="stats-populations-and-estimation.html#cb577-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(Z, <span class="at">y =</span> ..density.., <span class="at">color =</span> <span class="st">&quot;Sample&quot;</span>)</span>
+<span id="cb577-14"><a href="stats-populations-and-estimation.html#cb577-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb577-15"><a href="stats-populations-and-estimation.html#cb577-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(z, d, <span class="at">color =</span> <span class="st">&quot;Population&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb577-16"><a href="stats-populations-and-estimation.html#cb577-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>n)</span></code></pre></div>
+<pre><code>## Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+## ℹ Please use `after_stat(density)` instead.</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="d26-e-stat04-population-solution_files/figure-html/ex-samples-normal-1.png" width="672" /></p>
 <p>As we’ve seen before, as we draw more samples, their histogram tends to look more like the underlying population.</p>
@@ -1041,16 +1042,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb580-4"><a href="stats-populations-and-estimation.html#cb580-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="fu">aes</span>(air_time, <span class="at">color =</span> <span class="st">&quot;(All)&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb580-5"><a href="stats-populations-and-estimation.html#cb580-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="fu">aes</span>(air_time, <span class="at">color =</span> origin))</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>## Warning: Removed 9430 rows containing non-finite values (stat_bin).</code></pre>
+<pre><code>## Warning: Removed 9430 rows containing non-finite values (`stat_bin()`).</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>## Warning: Removed 9430 rows containing non-finite values (stat_bin).</code></pre>
+<pre><code>## Warning: Removed 9430 rows containing non-finite values (`stat_bin()`).</code></pre>
 <p><img src="d26-e-stat04-population-solution_files/figure-html/ex-population-flights-1.png" width="672" /></p>
 <p>This is the set of <strong>all</strong> flights originating from <code>EWR</code>, <code>LGA</code>, and <code>JFK</code> in 2013, in terms of their <code>air_time</code>. Note that this distribution is decidedly <em>not normal</em>; we would be foolish to try to model it as such!</p>
 <p>As we saw in the reading, the choice of the “correct” population is not an exercise in math. This is a decision that you must make based on the problem you are trying to solve. For instance, if we care about all flights into the NYC area, then the <code>(All)</code> population is correct. But if we care only about flights out of <code>LGA</code>, the population is different. No amount of math can save you if you can’t pick the appropriate population for your problem!</p>
 <p>When your data are not the entire population, any statistic you compute is an <em>estimate</em>.</p>
 </div>
-<div id="estimates" class="section level2" number="38.2">
-<h2><span class="header-section-number">38.2</span> Estimates</h2>
+<div id="estimates" class="section level2 hasAnchor" number="38.2">
+<h2><span class="header-section-number">38.2</span> Estimates<a href="stats-populations-and-estimation.html#estimates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>When we don’t have all the facts and instead only have a sample, we perform <em>estimation</em> to extrapolate from our available data to the population we care about.</p>
 <p>The following code draws multiple samples from a standard normal of size <code>n_observations</code>, and does so <code>n_samples</code> times. We’ll visualize these data in a later chunk.</p>
@@ -1155,8 +1156,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="d26-e-stat04-population-solution_files/figure-html/sd-estimates-vis-1.png" width="672" /></p>
 <p>Note that this doesn’t look much like a normal distribution. This should make some intuitive sense: The standard deviation is guaranteed to be non-negative, so it can’t possibly follow a normal distribution, which can take values anywhere from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(+\infty\)</span>.</p>
-<div id="q1-modify-the-code-below-to-draw-samples-from-a-uniform-distribution-rather-than-a-normal.-describe-in-words-what-the-resulting-sampling-distribution-looks-like.-does-the-sampling-distribution-look-like-a-normal-distribution" class="section level3" number="38.2.1">
-<h3><span class="header-section-number">38.2.1</span> <strong>q1</strong> Modify the code below to draw samples from a uniform distribution (rather than a normal). Describe (in words) what the resulting sampling distribution looks like. Does the sampling distribution look like a normal distribution?</h3>
+<div id="q1-modify-the-code-below-to-draw-samples-from-a-uniform-distribution-rather-than-a-normal.-describe-in-words-what-the-resulting-sampling-distribution-looks-like.-does-the-sampling-distribution-look-like-a-normal-distribution" class="section level3 hasAnchor" number="38.2.1">
+<h3><span class="header-section-number">38.2.1</span> <strong>q1</strong> Modify the code below to draw samples from a uniform distribution (rather than a normal). Describe (in words) what the resulting sampling distribution looks like. Does the sampling distribution look like a normal distribution?<a href="stats-populations-and-estimation.html#q1-modify-the-code-below-to-draw-samples-from-a-uniform-distribution-rather-than-a-normal.-describe-in-words-what-the-resulting-sampling-distribution-looks-like.-does-the-sampling-distribution-look-like-a-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="stats-populations-and-estimation.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Modify the code below to sample from a uniform distribution</span></span>
 <span id="cb593-2"><a href="stats-populations-and-estimation.html#cb593-2" aria-hidden="true" tabindex="-1"></a>df_samp_unif <span class="ot">&lt;-</span></span>
 <span id="cb593-3"><a href="stats-populations-and-estimation.html#cb593-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
@@ -1184,20 +1185,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Observations</strong>:</p>
 </div>
 </div>
-<div id="intermediate-conclusion" class="section level2" number="38.3">
-<h2><span class="header-section-number">38.3</span> Intermediate conclusion</h2>
+<div id="intermediate-conclusion" class="section level2 hasAnchor" number="38.3">
+<h2><span class="header-section-number">38.3</span> Intermediate conclusion<a href="stats-populations-and-estimation.html#intermediate-conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>A <em>sampling distribution</em> is the distribution for a <em>sample estimate</em>. It is induced by the population, but is also a function of the specific statistic we’re considering. We will use statistics to help make sense of sampling distributions.</p>
 </div>
-<div id="standard-error" class="section level2" number="38.4">
-<h2><span class="header-section-number">38.4</span> Standard Error</h2>
+<div id="standard-error" class="section level2 hasAnchor" number="38.4">
+<h2><span class="header-section-number">38.4</span> Standard Error<a href="stats-populations-and-estimation.html#standard-error" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>The standard deviation of a sampling distribution gets a special name: the <a href="https://en.wikipedia.org/wiki/Sampling_distribution#Standard_error"><em>standard error</em></a>. The standard error of an estimated mean is</p>
 <p><span class="math display">\[\text{SE} = \sigma / \sqrt{n}.\]</span></p>
 <p>This is a formula worth memorizing; it implies that doubling the precision of an estimated mean requires <em>quadrupling</em> the sample size. It also tells us that a more variable population (larger <span class="math inline">\(\sigma\)</span>) will make estimation more difficult (larger <span class="math inline">\(\text{SE}\)</span>).</p>
 <p>The standard error is a convenient way to summarize the accuracy of an estimation setting; the larger our standard error, the less accurate our estimates will tend to be.</p>
-<div id="q2-compute-the-standard-error-for-the-sample-mean-under-the-following-settings.-which-setting-will-tend-to-produce-more-accurate-estimates" class="section level3" number="38.4.1">
-<h3><span class="header-section-number">38.4.1</span> <strong>q2</strong> Compute the standard error for the sample mean under the following settings. Which setting will tend to produce more accurate estimates?</h3>
+<div id="q2-compute-the-standard-error-for-the-sample-mean-under-the-following-settings.-which-setting-will-tend-to-produce-more-accurate-estimates" class="section level3 hasAnchor" number="38.4.1">
+<h3><span class="header-section-number">38.4.1</span> <strong>q2</strong> Compute the standard error for the sample mean under the following settings. Which setting will tend to produce more accurate estimates?<a href="stats-populations-and-estimation.html#q2-compute-the-standard-error-for-the-sample-mean-under-the-following-settings.-which-setting-will-tend-to-produce-more-accurate-estimates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="stats-populations-and-estimation.html#cb595-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the standard error</span></span>
 <span id="cb595-2"><a href="stats-populations-and-estimation.html#cb595-2" aria-hidden="true" tabindex="-1"></a>se_q2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">16</span>)</span>
 <span id="cb595-3"><a href="stats-populations-and-estimation.html#cb595-3" aria-hidden="true" tabindex="-1"></a>se_q2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="dv">8</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">32</span>)</span></code></pre></div>
@@ -1224,8 +1225,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[\hat{\text{SE}} = s / \sqrt{n},\]</span></p>
 <p>where the hat on <span class="math inline">\(\text{SE}\)</span> denotes that this quantity is an estimate, and <span class="math inline">\(s\)</span> is the sample standard deviation.</p>
 </div>
-<div id="q3-compute-the-sample-standard-error-of-the-sample-mean-for-the-sample-below.-compare-your-estimate-against-the-true-value-se_q2.1.-state-how-similar-or-different-the-values-are-and-explain-the-difference." class="section level3" number="38.4.2">
-<h3><span class="header-section-number">38.4.2</span> <strong>q3</strong> Compute the sample standard error of the sample mean for the sample below. Compare your estimate against the true value <code>se_q2.1</code>. State how similar or different the values are, and explain the difference.</h3>
+<div id="q3-compute-the-sample-standard-error-of-the-sample-mean-for-the-sample-below.-compare-your-estimate-against-the-true-value-se_q2.1.-state-how-similar-or-different-the-values-are-and-explain-the-difference." class="section level3 hasAnchor" number="38.4.2">
+<h3><span class="header-section-number">38.4.2</span> <strong>q3</strong> Compute the sample standard error of the sample mean for the sample below. Compare your estimate against the true value <code>se_q2.1</code>. State how similar or different the values are, and explain the difference.<a href="stats-populations-and-estimation.html#q3-compute-the-sample-standard-error-of-the-sample-mean-for-the-sample-below.-compare-your-estimate-against-the-true-value-se_q2.1.-state-how-similar-or-different-the-values-are-and-explain-the-difference." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="stats-populations-and-estimation.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
 <span id="cb602-2"><a href="stats-populations-and-estimation.html#cb602-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
 <span id="cb602-3"><a href="stats-populations-and-estimation.html#cb602-3" aria-hidden="true" tabindex="-1"></a>n_sample <span class="ot">&lt;-</span> <span class="dv">20</span></span>
@@ -1250,8 +1251,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 </div>
-<div id="fast-summary" class="section level2" number="38.5">
-<h2><span class="header-section-number">38.5</span> Fast Summary</h2>
+<div id="fast-summary" class="section level2 hasAnchor" number="38.5">
+<h2><span class="header-section-number">38.5</span> Fast Summary<a href="stats-populations-and-estimation.html#fast-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>The <em>population</em> is the set of all things we care about. No amount of math can help you here: <em>You</em> are responsible for defining your population. If we have the whole population, we don’t need statistics!</p>
 <p>When we <em>don’t</em> have all the data from the population, we need to <em>estimate</em>. The combined effects of random sampling, the shape of the population, and our chosen statistic all give rise to a <em>sampling distribution</em> for our estimated statistic. The standard deviation of the sampling distribution is called the <em>standard error</em>; it is a measure of accuracy of the <em>sampling procedure</em>, not the estimate itself.</p>
@@ -1325,7 +1326,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

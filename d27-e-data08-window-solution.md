@@ -11,14 +11,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -94,7 +94,7 @@ economics %>%
 ```
 
 ```
-## Warning: Removed 1 rows containing missing values (geom_segment).
+## Warning: Removed 1 rows containing missing values (`geom_segment()`).
 ```
 
 <img src="d27-e-data08-window-solution_files/figure-html/q1-task-1.png" width="672" />
@@ -207,6 +207,11 @@ tribble(
   )
 ```
 
+```
+## Warning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.
+## ℹ Please use the `linewidth` argument instead.
+```
+
 <img src="d27-e-data08-window-solution_files/figure-html/ex-ranks-vis-1.png" width="672" />
 
 ### __q2__ Use a rank function to filter the largest 3 `hwy` values and **all** vehicles that have those values.
@@ -220,13 +225,13 @@ q2
 ```
 
 ```
-## # A tibble: 4 x 11
-##   manufacturer model   displ  year   cyl trans   drv     cty   hwy fl    class  
-##   <chr>        <chr>   <dbl> <int> <int> <chr>   <chr> <int> <int> <chr> <chr>  
-## 1 toyota       corolla   1.8  2008     4 manual… f        28    37 r     compact
-## 2 volkswagen   jetta     1.9  1999     4 manual… f        33    44 d     compact
-## 3 volkswagen   new be…   1.9  1999     4 manual… f        35    44 d     subcom…
-## 4 volkswagen   new be…   1.9  1999     4 auto(l… f        29    41 d     subcom…
+## # A tibble: 4 × 11
+##   manufacturer model      displ  year   cyl trans  drv     cty   hwy fl    class
+##   <chr>        <chr>      <dbl> <int> <int> <chr>  <chr> <int> <int> <chr> <chr>
+## 1 toyota       corolla      1.8  2008     4 manua… f        28    37 r     comp…
+## 2 volkswagen   jetta        1.9  1999     4 manua… f        33    44 d     comp…
+## 3 volkswagen   new beetle   1.9  1999     4 manua… f        35    44 d     subc…
+## 4 volkswagen   new beetle   1.9  1999     4 auto(… f        29    41 d     subc…
 ```
 
 Use the following test to check your work.

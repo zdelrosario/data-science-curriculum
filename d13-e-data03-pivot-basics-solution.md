@@ -28,14 +28,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -72,7 +72,7 @@ cases
 ```
 
 ```
-## # A tibble: 3 x 4
+## # A tibble: 3 × 4
 ##   Country `2011` `2012` `2013`
 ##   <chr>    <dbl>  <dbl>  <dbl>
 ## 1 FR        7000   6900   7000
@@ -117,7 +117,7 @@ alloys
 ```
 
 ```
-## # A tibble: 4 x 6
+## # A tibble: 4 × 6
 ##   thick  E_00 mu_00  E_45 mu_45   rep
 ##   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
 ## 1 0.022 10600 0.321 10700 0.329     1
@@ -173,7 +173,7 @@ cases %>%
 ```
 
 ```
-## # A tibble: 9 x 3
+## # A tibble: 9 × 3
 ##   Country Year      n
 ##   <chr>   <chr> <dbl>
 ## 1 FR      2011   7000
@@ -218,7 +218,7 @@ cases %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##    Year
 ##   <dbl>
 ## 1    NA
@@ -241,7 +241,7 @@ cases %>%
 ```
 
 ```
-## # A tibble: 9 x 3
+## # A tibble: 9 × 3
 ##   Country  Year     n
 ##   <chr>   <int> <dbl>
 ## 1 FR       2011  7000
@@ -281,7 +281,7 @@ ansc
 ```
 
 ```
-## # A tibble: 11 x 4
+## # A tibble: 11 × 4
 ##    `x-1` `x-2` `y-1` `y-2`
 ##    <dbl> <dbl> <dbl> <dbl>
 ##  1    10    10  8.04  9.14
@@ -314,7 +314,7 @@ ansc %>%
 ```
 
 ```
-## # A tibble: 22 x 3
+## # A tibble: 22 × 3
 ##    set       x     y
 ##    <chr> <dbl> <dbl>
 ##  1 1        10  8.04
@@ -349,7 +349,7 @@ alloys %>%
 ```
 
 ```
-## # A tibble: 16 x 5
+## # A tibble: 16 × 5
 ##    thick   rep var   angle       val
 ##    <dbl> <dbl> <chr> <chr>     <dbl>
 ##  1 0.022     1 E     00    10600    
@@ -404,7 +404,7 @@ alloys %>%
 ```
 
 ```
-## # A tibble: 8 x 5
+## # A tibble: 8 × 5
 ##   thick   rep angle     E    mu
 ##   <dbl> <dbl> <chr> <dbl> <dbl>
 ## 1 0.022     1 00    10600 0.321
@@ -470,7 +470,7 @@ df_q3
 ```
 
 ```
-## # A tibble: 6 x 3
+## # A tibble: 6 × 3
 ##   key      id value
 ##   <chr> <int> <dbl>
 ## 1 A         0     1
@@ -497,7 +497,7 @@ df_q3_res
 ```
 
 ```
-## # A tibble: 3 x 3
+## # A tibble: 3 × 3
 ##   key   `X-0` `X-1`
 ##   <chr> <dbl> <dbl>
 ## 1 A         1     9
@@ -511,11 +511,9 @@ all_equal(df_base, df_q3_res) # Checks equality; returns TRUE if equal
 
 ```
 ## New names:
-## * `X-0` -> X.0
-## * `X-1` -> X.1
 ## New names:
-## * `X-0` -> X.0
-## * `X-1` -> X.1
+## • `X-0` -> `X.0`
+## • `X-1` -> `X.1`
 ```
 
 ```
@@ -537,7 +535,7 @@ df_q4
 ```
 
 ```
-## # A tibble: 3 x 4
+## # A tibble: 3 × 4
 ##   `X-1`     A     B     C
 ##   <dbl> <dbl> <dbl> <dbl>
 ## 1     9     1    NA    NA
@@ -565,7 +563,7 @@ df_q4_res
 ```
 
 ```
-## # A tibble: 3 x 3
+## # A tibble: 3 × 3
 ##   `X-1` key   `X-0`
 ##   <dbl> <chr> <dbl>
 ## 1     9 A         1
@@ -579,14 +577,9 @@ all_equal(df_base, df_q4_res) # Checks equality; returns TRUE if equal
 
 ```
 ## New names:
-## * `X-0` -> X.0
-## * `X-1` -> X.1
-```
-
-```
 ## New names:
-## * `X-1` -> X.1
-## * `X-0` -> X.0
+## • `X-0` -> `X.0`
+## • `X-1` -> `X.1`
 ```
 
 ```
@@ -608,7 +601,7 @@ df_q5
 ```
 
 ```
-## # A tibble: 1 x 6
+## # A tibble: 1 × 6
 ##   `X-0_A` `X-0_B` `X-0_C` `X-1_A` `X-1_B` `X-1_C`
 ##     <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
 ## 1       1       2       3       9       8       7
@@ -632,7 +625,7 @@ df_q5_res
 ```
 
 ```
-## # A tibble: 3 x 3
+## # A tibble: 3 × 3
 ##   key   `X-0` `X-1`
 ##   <chr> <dbl> <dbl>
 ## 1 A         1     9
@@ -646,11 +639,9 @@ all_equal(df_base, df_q5_res) # Checks equality; returns TRUE if equal
 
 ```
 ## New names:
-## * `X-0` -> X.0
-## * `X-1` -> X.1
 ## New names:
-## * `X-0` -> X.0
-## * `X-1` -> X.1
+## • `X-0` -> `X.0`
+## • `X-1` -> `X.1`
 ```
 
 ```
@@ -682,7 +673,7 @@ df_q6
 ```
 
 ```
-## # A tibble: 3 x 3
+## # A tibble: 3 × 3
 ##   `X-0` `X-1` key  
 ##   <dbl> <dbl> <chr>
 ## 1     1     9 A    
@@ -712,7 +703,7 @@ df_q6_res
 ```
 
 ```
-## # A tibble: 3 x 3
+## # A tibble: 3 × 3
 ##   `X-0` `X-1` key  
 ##   <dbl> <dbl> <chr>
 ## 1     1     9 A    
@@ -726,11 +717,9 @@ all_equal(df_base, df_q6_res) # Checks equality; returns TRUE if equal
 
 ```
 ## New names:
-## * `X-0` -> X.0
-## * `X-1` -> X.1
 ## New names:
-## * `X-0` -> X.0
-## * `X-1` -> X.1
+## • `X-0` -> `X.0`
+## • `X-1` -> `X.1`
 ```
 
 ```

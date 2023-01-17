@@ -15,14 +15,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -64,12 +64,24 @@ df_q1 <- read_excel(filename)
 
 ```
 ## New names:
-## * `` -> ...2
-## * `` -> ...3
-## * `` -> ...4
-## * `` -> ...5
-## * `` -> ...6
-## * ...
+## • `` -> `...2`
+## • `` -> `...3`
+## • `` -> `...4`
+## • `` -> `...5`
+## • `` -> `...6`
+## • `` -> `...7`
+## • `` -> `...8`
+## • `` -> `...9`
+## • `` -> `...10`
+## • `` -> `...11`
+## • `` -> `...12`
+## • `` -> `...13`
+## • `` -> `...14`
+## • `` -> `...15`
+## • `` -> `...16`
+## • `` -> `...17`
+## • `` -> `...18`
+## • `` -> `...19`
 ```
 
 ```r
@@ -121,12 +133,12 @@ df_q2 <- read_excel(
 
 ```
 ## New names:
-## * `` -> ...1
-## * `` -> ...2
-## * `` -> ...3
-## * `` -> ...4
-## * `` -> ...5
-## * ...
+## • `` -> `...1`
+## • `` -> `...2`
+## • `` -> `...3`
+## • `` -> `...4`
+## • `` -> `...5`
+## • `` -> `...6`
 ```
 
 ```r
@@ -188,7 +200,7 @@ df_q2 %>% head()
 ```
 
 ```
-## # A tibble: 6 x 19
+## # A tibble: 6 × 19
 ##   ...1   ...2  ...3  ...4  ...5  ...6  `2000` `2001` `2002` `2003` `2004` `2005`
 ##   <chr>  <chr> <chr> <chr> <chr> <chr>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
 ## 1 Africa East… Buru… PH    WHO   Rate      NA     NA     NA     NA     NA     NA
@@ -197,8 +209,8 @@ df_q2 %>% head()
 ## 4 <NA>   <NA>  <NA>  <NA>  <NA>  Count     NA     NA     NA     NA     NA     NA
 ## 5 <NA>   <NA>  Djib… PH    WHO   Rate      NA     NA     NA     NA     NA     NA
 ## 6 <NA>   <NA>  <NA>  <NA>  <NA>  Count     NA     NA     NA     NA     NA     NA
-## # … with 7 more variables: 2006 <dbl>, 2007 <dbl>, 2008 <dbl>, 2009 <chr>,
-## #   2010 <chr>, 2011 <chr>, 2012 <chr>
+## # … with 7 more variables: `2006` <dbl>, `2007` <dbl>, `2008` <dbl>,
+## #   `2009` <chr>, `2010` <chr>, `2011` <chr>, `2012` <chr>
 ```
 
 We still have problems:
@@ -271,48 +283,39 @@ df_q3 <- read_excel(
 ```
 
 ```
-## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
-## Expecting numeric in P315 / R315C16: got '2366*'
+## Warning: Expecting numeric in P315 / R315C16: got '2366*'
 ```
 
 ```
-## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
-## Expecting numeric in Q315 / R315C17: got '1923*'
+## Warning: Expecting numeric in Q315 / R315C17: got '1923*'
 ```
 
 ```
-## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
-## Expecting numeric in R315 / R315C18: got '1866*'
+## Warning: Expecting numeric in R315 / R315C18: got '1866*'
 ```
 
 ```
-## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
-## Expecting numeric in S381 / R381C19: got 'x'
+## Warning: Expecting numeric in S381 / R381C19: got 'x'
 ```
 
 ```
-## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
-## Expecting numeric in S431 / R431C19: got 'x'
+## Warning: Expecting numeric in S431 / R431C19: got 'x'
 ```
 
 ```
-## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
-## Expecting numeric in S433 / R433C19: got 'x'
+## Warning: Expecting numeric in S433 / R433C19: got 'x'
 ```
 
 ```
-## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
-## Expecting numeric in S435 / R435C19: got 'x'
+## Warning: Expecting numeric in S435 / R435C19: got 'x'
 ```
 
 ```
-## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
-## Expecting numeric in S439 / R439C19: got 'x'
+## Warning: Expecting numeric in S439 / R439C19: got 'x'
 ```
 
 ```
-## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
-## Expecting numeric in S445 / R445C19: got 'x'
+## Warning: Expecting numeric in S445 / R445C19: got 'x'
 ```
 
 Use the following test to check your work.
@@ -357,17 +360,18 @@ df_q3 %>% head()
 ```
 
 ```
-## # A tibble: 6 x 19
-##   region sub_region territory source org   indicator `2000` `2001` `2002` `2003`
-##   <chr>  <chr>      <chr>     <chr>  <chr> <chr>      <dbl>  <dbl>  <dbl>  <dbl>
-## 1 Africa Eastern A… Burundi   PH     WHO   Rate          NA     NA     NA     NA
-## 2 <NA>   <NA>       <NA>      <NA>   <NA>  Count         NA     NA     NA     NA
-## 3 <NA>   <NA>       Comoros   PH     WHO   Rate          NA     NA     NA     NA
-## 4 <NA>   <NA>       <NA>      <NA>   <NA>  Count         NA     NA     NA     NA
-## 5 <NA>   <NA>       Djibouti  PH     WHO   Rate          NA     NA     NA     NA
-## 6 <NA>   <NA>       <NA>      <NA>   <NA>  Count         NA     NA     NA     NA
-## # … with 9 more variables: 2004 <dbl>, 2005 <dbl>, 2006 <dbl>, 2007 <dbl>,
-## #   2008 <dbl>, 2009 <dbl>, 2010 <dbl>, 2011 <dbl>, 2012 <dbl>
+## # A tibble: 6 × 19
+##   region sub_r…¹ terri…² source org   indic…³ `2000` `2001` `2002` `2003` `2004`
+##   <chr>  <chr>   <chr>   <chr>  <chr> <chr>    <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
+## 1 Africa Easter… Burundi PH     WHO   Rate        NA     NA     NA     NA     NA
+## 2 <NA>   <NA>    <NA>    <NA>   <NA>  Count       NA     NA     NA     NA     NA
+## 3 <NA>   <NA>    Comoros PH     WHO   Rate        NA     NA     NA     NA     NA
+## 4 <NA>   <NA>    <NA>    <NA>   <NA>  Count       NA     NA     NA     NA     NA
+## 5 <NA>   <NA>    Djibou… PH     WHO   Rate        NA     NA     NA     NA     NA
+## 6 <NA>   <NA>    <NA>    <NA>   <NA>  Count       NA     NA     NA     NA     NA
+## # … with 8 more variables: `2005` <dbl>, `2006` <dbl>, `2007` <dbl>,
+## #   `2008` <dbl>, `2009` <dbl>, `2010` <dbl>, `2011` <dbl>, `2012` <dbl>, and
+## #   abbreviated variable names ¹​sub_region, ²​territory, ³​indicator
 ```
 
 Irritatingly, many of the cell values are left *implicit*; as humans reading these data, we can tell that the entries in `region` under `Africa` also have the value `Africa`. However, the computer can't tell this! We need to make these values *explicit* by filling them in.
@@ -391,10 +395,15 @@ countna(df_q3, c("region"))
 ```
 
 ```
-## Note: Using an external vector in selections is ambiguous.
-## ℹ Use `all_of(vars_lagged)` instead of `vars_lagged` to silence this message.
-## ℹ See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-## This message is displayed once per session.
+## Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
+## ℹ Please use `all_of()` or `any_of()` instead.
+##   # Was:
+##   data %>% select(vars_lagged)
+## 
+##   # Now:
+##   data %>% select(all_of(vars_lagged))
+## 
+## See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
 ```
 
 ```

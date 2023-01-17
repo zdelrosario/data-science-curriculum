@@ -24,14 +24,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -62,7 +62,7 @@ punnett
 ```
 
 ```
-## # A tibble: 2 x 3
+## # A tibble: 2 × 3
 ##   parent1 a     A    
 ##   <chr>   <chr> <chr>
 ## 1 a       aa    aA   
@@ -79,7 +79,7 @@ genes
 ```
 
 ```
-## # A tibble: 4 x 2
+## # A tibble: 4 × 2
 ##   parent1 parent2
 ##   <chr>   <chr>  
 ## 1 a       a      
@@ -104,7 +104,7 @@ df_q1
 ```
 
 ```
-## # A tibble: 2 x 3
+## # A tibble: 2 × 3
 ##   parent1 a     A    
 ##   <chr>   <chr> <chr>
 ## 1 a       aa    aA   
@@ -152,7 +152,7 @@ alloys_mod
 ```
 
 ```
-## # A tibble: 4 x 6
+## # A tibble: 4 × 6
 ##   thick   E00  mu00   E45  mu45   rep
 ##   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
 ## 1 0.022 10600 0.321 10700 0.329     1
@@ -191,7 +191,7 @@ df_q2
 ```
 
 ```
-## # A tibble: 8 x 5
+## # A tibble: 8 × 5
 ##   thick   rep   ang     E    mu
 ##   <dbl> <dbl> <int> <dbl> <dbl>
 ## 1 0.022     1     0 10600 0.321

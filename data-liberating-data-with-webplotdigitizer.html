@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>58 Data: Liberating data with WebPlotDigitizer | Data Science: Exercise Solutions</title>
   <meta name="description" content="58 Data: Liberating data with WebPlotDigitizer | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="58 Data: Liberating data with WebPlotDigitizer | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="model-model-selection-and-the-test-validate-framework.html"/>
 <link rel="next" href="model-warnings-when-interpreting-linear-models.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,34 +980,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-liberating-data-with-webplotdigitizer" class="section level1" number="58">
-<h1><span class="header-section-number">58</span> Data: Liberating data with WebPlotDigitizer</h1>
+<div id="data-liberating-data-with-webplotdigitizer" class="section level1 hasAnchor" number="58">
+<h1><span class="header-section-number">58</span> Data: Liberating data with WebPlotDigitizer<a href="data-liberating-data-with-webplotdigitizer.html#data-liberating-data-with-webplotdigitizer" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Sometimes data are messy—we know how to deal with that. Other times data are “locked up” in a format we can’t easily analyze, such as in an image. In this exercise you’ll learn how to <em>liberate</em> data from a plot using WebPlotDigitizer.</p>
 <p><em>Reading</em>: (<em>None</em>, this exercise <em>is</em> the reading.)</p>
 <p><em>Optional Reading</em>: <a href="https://youtu.be/P7GbGdMvopU">WebPlotDigitizer tutorial video</a> ~ 19 minutes. (I recommend you give this a watch if you want some inspiration on other use cases: There are a lot of very clever ways to use this tool!)</p>
-<div class="sourceCode" id="cb1118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1118-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<div class="sourceCode" id="cb1127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1127-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <p><em>Background</em>: <a href="https://automeris.io/WebPlotDigitizer/">WebPlotDigitizer</a> is one of those tools that is <em>insanely useful</em>, but <em>no one ever teaches</em>. I didn’t learn about this until six years into graduate school. You’re going to learn some very practical skills in this exercise!</p>
 <p><em>Note</em>: I originally extracted these data from an <a href="https://www.economist.com/graphic-detail/2020/05/13/the-spread-of-covid-has-caused-a-surge-in-american-meat-prices">Economist</a> article on American meat prices and production in 2020.</p>
-<div id="setup-1" class="section level2" number="58.1">
-<h2><span class="header-section-number">58.1</span> Setup</h2>
-<div id="q1-get-webplotdigitizer." class="section level3" number="58.1.1">
-<h3><span class="header-section-number">58.1.1</span> <strong>q1</strong> Get WebPlotDigitizer.</h3>
+<div id="setup-1" class="section level2 hasAnchor" number="58.1">
+<h2><span class="header-section-number">58.1</span> Setup<a href="data-liberating-data-with-webplotdigitizer.html#setup-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="q1-get-webplotdigitizer." class="section level3 hasAnchor" number="58.1.1">
+<h3><span class="header-section-number">58.1.1</span> <strong>q1</strong> Get WebPlotDigitizer.<a href="data-liberating-data-with-webplotdigitizer.html#q1-get-webplotdigitizer." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Go to the <a href="https://automeris.io/WebPlotDigitizer/">WebPlotDigitizer</a> website and download the desktop version (matching your operating system).</p>
 <p><em>Note</em>: On Mac OS X you may have to open <code>Security &amp; Privacy</code> in order to launch WebPlotDigitizer on your machine.</p>
 </div>
 </div>
-<div id="extract-1" class="section level2" number="58.2">
-<h2><span class="header-section-number">58.2</span> Extract</h2>
-<div id="q2-extract-the-data-from-the-following-image" class="section level3" number="58.2.1">
-<h3><span class="header-section-number">58.2.1</span> <strong>q2</strong> Extract the data from the following image:</h3>
+<div id="extract-1" class="section level2 hasAnchor" number="58.2">
+<h2><span class="header-section-number">58.2</span> Extract<a href="data-liberating-data-with-webplotdigitizer.html#extract-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="q2-extract-the-data-from-the-following-image" class="section level3 hasAnchor" number="58.2.1">
+<h3><span class="header-section-number">58.2.1</span> <strong>q2</strong> Extract the data from the following image:<a href="data-liberating-data-with-webplotdigitizer.html#q2-extract-the-data-from-the-following-image" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="figure">
 <img src="images/beef_production.png" alt="" />
 <p class="caption">Beef production</p>
@@ -1049,52 +1048,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="images/e-data14-download.png" alt="Load image" />
 Congrats! You just <em>liberated</em> data from a plot!</p>
 </div>
-<div id="q3-extract-the-data-from-the-following-plot.-this-will-give-you-price-data-to-compare-against-the-production-data." class="section level3" number="58.2.2">
-<h3><span class="header-section-number">58.2.2</span> <strong>q3</strong> Extract the data from the following plot. This will give you price data to compare against the production data.</h3>
+<div id="q3-extract-the-data-from-the-following-plot.-this-will-give-you-price-data-to-compare-against-the-production-data." class="section level3 hasAnchor" number="58.2.2">
+<h3><span class="header-section-number">58.2.2</span> <strong>q3</strong> Extract the data from the following plot. This will give you price data to compare against the production data.<a href="data-liberating-data-with-webplotdigitizer.html#q3-extract-the-data-from-the-following-plot.-this-will-give-you-price-data-to-compare-against-the-production-data." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="figure">
 <img src="images/beef_price.png" alt="" />
 <p class="caption">Beef price</p>
 </div>
 </div>
 </div>
-<div id="use-the-extracted-data" class="section level2" number="58.3">
-<h2><span class="header-section-number">58.3</span> Use the extracted data</h2>
-<div id="q4-load-the-price-and-production-datasets-you-extracted.-join-and-plot-price-vs-production-what-kind-of-relationship-do-you-see" class="section level3" number="58.3.1">
-<h3><span class="header-section-number">58.3.1</span> <strong>q4</strong> Load the price and production datasets you extracted. Join and plot price vs production; what kind of relationship do you see?</h3>
-<div class="sourceCode" id="cb1122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1122-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1122-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Your filenames may vary!</span></span>
-<span id="cb1122-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1122-2" aria-hidden="true" tabindex="-1"></a>df_price <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1122-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1122-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;./data/beef_price.csv&quot;</span>,</span>
-<span id="cb1122-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1122-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;price_percent&quot;</span>)</span>
-<span id="cb1122-5"><a href="data-liberating-data-with-webplotdigitizer.html#cb1122-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>## 
+<div id="use-the-extracted-data" class="section level2 hasAnchor" number="58.3">
+<h2><span class="header-section-number">58.3</span> Use the extracted data<a href="data-liberating-data-with-webplotdigitizer.html#use-the-extracted-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="q4-load-the-price-and-production-datasets-you-extracted.-join-and-plot-price-vs-production-what-kind-of-relationship-do-you-see" class="section level3 hasAnchor" number="58.3.1">
+<h3><span class="header-section-number">58.3.1</span> <strong>q4</strong> Load the price and production datasets you extracted. Join and plot price vs production; what kind of relationship do you see?<a href="data-liberating-data-with-webplotdigitizer.html#q4-load-the-price-and-production-datasets-you-extracted.-join-and-plot-price-vs-production-what-kind-of-relationship-do-you-see" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb1131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1131-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1131-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Your filenames may vary!</span></span>
+<span id="cb1131-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1131-2" aria-hidden="true" tabindex="-1"></a>df_price <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1131-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1131-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;./data/beef_price.csv&quot;</span>,</span>
+<span id="cb1131-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1131-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;price_percent&quot;</span>)</span>
+<span id="cb1131-5"><a href="data-liberating-data-with-webplotdigitizer.html#cb1131-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Rows: 232 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   date = col_date(format = &quot;&quot;),
-##   price_percent = col_double()
-## )</code></pre>
-<div class="sourceCode" id="cb1124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1124-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1124-1" aria-hidden="true" tabindex="-1"></a>df_production <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1124-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1124-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;./data/beef_production.csv&quot;</span>,</span>
-<span id="cb1124-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1124-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;production_percent&quot;</span>)</span>
-<span id="cb1124-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1124-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>## 
+## Delimiter: &quot;,&quot;
+## dbl  (1): price_percent
+## date (1): date
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb1133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1133-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1133-1" aria-hidden="true" tabindex="-1"></a>df_production <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1133-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1133-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;./data/beef_production.csv&quot;</span>,</span>
+<span id="cb1133-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1133-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;production_percent&quot;</span>)</span>
+<span id="cb1133-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1133-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Rows: 227 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   date = col_date(format = &quot;&quot;),
-##   production_percent = col_double()
-## )</code></pre>
-<div class="sourceCode" id="cb1126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1126-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: I&#39;m relying on WebPlotDigitizer to produce dates in order to</span></span>
-<span id="cb1126-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-2" aria-hidden="true" tabindex="-1"></a><span class="do">## make this join work. This will probably fail if you have numbers</span></span>
-<span id="cb1126-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-3" aria-hidden="true" tabindex="-1"></a><span class="do">## rather than dates.</span></span>
-<span id="cb1126-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-4" aria-hidden="true" tabindex="-1"></a>df_both <span class="ot">&lt;-</span></span>
-<span id="cb1126-5"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
-<span id="cb1126-6"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-6" aria-hidden="true" tabindex="-1"></a>    df_price,</span>
-<span id="cb1126-7"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-7" aria-hidden="true" tabindex="-1"></a>    df_production,</span>
-<span id="cb1126-8"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;date&quot;</span></span>
-<span id="cb1126-9"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1126-10"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1126-11"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-11" aria-hidden="true" tabindex="-1"></a>df_both <span class="sc">%&gt;%</span></span>
-<span id="cb1126-12"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(production_percent, price_percent, <span class="at">color =</span> date)) <span class="sc">+</span></span>
-<span id="cb1126-13"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+## Delimiter: &quot;,&quot;
+## dbl  (1): production_percent
+## date (1): date
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb1135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1135-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: I&#39;m relying on WebPlotDigitizer to produce dates in order to</span></span>
+<span id="cb1135-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-2" aria-hidden="true" tabindex="-1"></a><span class="do">## make this join work. This will probably fail if you have numbers</span></span>
+<span id="cb1135-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-3" aria-hidden="true" tabindex="-1"></a><span class="do">## rather than dates.</span></span>
+<span id="cb1135-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-4" aria-hidden="true" tabindex="-1"></a>df_both <span class="ot">&lt;-</span></span>
+<span id="cb1135-5"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb1135-6"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-6" aria-hidden="true" tabindex="-1"></a>    df_price,</span>
+<span id="cb1135-7"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-7" aria-hidden="true" tabindex="-1"></a>    df_production,</span>
+<span id="cb1135-8"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;date&quot;</span></span>
+<span id="cb1135-9"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1135-10"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1135-11"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-11" aria-hidden="true" tabindex="-1"></a>df_both <span class="sc">%&gt;%</span></span>
+<span id="cb1135-12"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(production_percent, price_percent, <span class="at">color =</span> date)) <span class="sc">+</span></span>
+<span id="cb1135-13"><a href="data-liberating-data-with-webplotdigitizer.html#cb1135-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d42-e-data14-webplotdigitizer-solution_files/figure-html/q4-task-1.png" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1173,7 +1176,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

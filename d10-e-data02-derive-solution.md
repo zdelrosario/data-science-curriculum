@@ -22,14 +22,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -47,7 +47,7 @@ filter(diamonds, cut == "Ideal")
 ```
 
 ```
-## # A tibble: 21,551 x 10
+## # A tibble: 21,551 × 10
 ##    carat cut   color clarity depth table price     x     y     z
 ##    <dbl> <ord> <ord> <ord>   <dbl> <dbl> <int> <dbl> <dbl> <dbl>
 ##  1  0.23 Ideal E     SI2      61.5    55   326  3.95  3.98  2.43
@@ -69,7 +69,7 @@ diamonds %>% filter(cut == "Ideal")
 ```
 
 ```
-## # A tibble: 21,551 x 10
+## # A tibble: 21,551 × 10
 ##    carat cut   color clarity depth table price     x     y     z
 ##    <dbl> <ord> <ord> <ord>   <dbl> <dbl> <int> <dbl> <dbl> <dbl>
 ##  1  0.23 Ideal E     SI2      61.5    55   326  3.95  3.98  2.43
@@ -113,7 +113,7 @@ df_q2
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   n_ideal
 ##     <int>
 ## 1   21551
@@ -154,7 +154,7 @@ diamonds %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   price
 ##   <dbl>
 ## 1 3933.
@@ -210,7 +210,7 @@ df_q4
 ```
 
 ```
-## # A tibble: 1 x 7
+## # A tibble: 1 × 7
 ##   depth_mean depth_sd cov_depth diff_mean diff_sd cov_diff   c_diff
 ##        <dbl>    <dbl>     <dbl>     <dbl>   <dbl>    <dbl>    <dbl>
 ## 1       61.7     1.43    0.0232   0.00528    2.63     498. -7.50e12
@@ -274,7 +274,7 @@ df_q5
 ```
 
 ```
-## # A tibble: 5 x 4
+## # A tibble: 5 × 4
 ##   cut       price_mean price_sd price_cov
 ##   <ord>          <dbl>    <dbl>     <dbl>
 ## 1 Fair           4359.    3560.     0.817

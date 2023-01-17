@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>15 Vis: Data Visualization Basics | Data Science: Exercise Solutions</title>
   <meta name="description" content="15 Vis: Data Visualization Basics | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="15 Vis: Data Visualization Basics | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="setup-types.html"/>
 <link rel="next" href="communication-active-and-constructive-responding.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,8 +980,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="vis-data-visualization-basics" class="section level1" number="15">
-<h1><span class="header-section-number">15</span> Vis: Data Visualization Basics</h1>
+<div id="vis-data-visualization-basics" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">15</span> Vis: Data Visualization Basics<a href="vis-data-visualization-basics.html#vis-data-visualization-basics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: The most powerful way for us to learn about a dataset is to
 <em>visualize the data</em>. Throughout this class we will make extensive use of the
 <em>grammar of graphics</em>, a powerful graphical programming <em>grammar</em> that will
@@ -990,13 +989,13 @@ allow us to create just about any graph you can imagine!</p>
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/1.1">Data Visualization Basics</a>. <em>Note</em>: In RStudio use <code>Ctrl + Click</code> (Mac <code>Command + Click</code>) to follow the link.
 <em>Topics</em>: <code>Welcome</code>, <code>A code template</code>, <code>Aesthetic mappings</code>.
 <em>Reading Time</em>: ~ 30 minutes</p>
-<div id="q1-inspect-the-diamonds-dataset.-what-do-the-cut-color-and-clarity-variables-mean" class="section level3" number="15.0.1">
-<h3><span class="header-section-number">15.0.1</span> <strong>q1</strong> Inspect the <code>diamonds</code> dataset. What do the <code>cut</code>, <code>color</code>, and <code>clarity</code> variables mean?</h3>
+<div id="q1-inspect-the-diamonds-dataset.-what-do-the-cut-color-and-clarity-variables-mean" class="section level3 hasAnchor" number="15.0.1">
+<h3><span class="header-section-number">15.0.1</span> <strong>q1</strong> Inspect the <code>diamonds</code> dataset. What do the <code>cut</code>, <code>color</code>, and <code>clarity</code> variables mean?<a href="vis-data-visualization-basics.html#q1-inspect-the-diamonds-dataset.-what-do-the-cut-color-and-clarity-variables-mean" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: We learned how to inspect a dataset in <code>e-data-00-basics</code>!</p>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="vis-data-visualization-basics.html#cb95-1" aria-hidden="true" tabindex="-1"></a>?diamonds</span></code></pre></div>
 </div>
-<div id="q2-use-your-standard-checks-to-determine-what-variables-the-dataset-has." class="section level3" number="15.0.2">
-<h3><span class="header-section-number">15.0.2</span> <strong>q2</strong> Use your “standard checks” to determine what variables the dataset has.</h3>
+<div id="q2-use-your-standard-checks-to-determine-what-variables-the-dataset-has." class="section level3 hasAnchor" number="15.0.2">
+<h3><span class="header-section-number">15.0.2</span> <strong>q2</strong> Use your “standard checks” to determine what variables the dataset has.<a href="vis-data-visualization-basics.html#q2-use-your-standard-checks-to-determine-what-variables-the-dataset-has." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="vis-data-visualization-basics.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(diamonds)</span></code></pre></div>
 <pre><code>## Rows: 53,940
 ## Columns: 10
@@ -1013,8 +1012,8 @@ allow us to create just about any graph you can imagine!</p>
 <p>The <code>diamonds</code> dataset has variables <code>carat, cut, color, clarity, depth, table, price, x, y, z</code>.</p>
 <p>Now that we have the list of variables in the dataset, we know what we can visualize!</p>
 </div>
-<div id="q3-using-ggplot-visualize-price-vs-carat-with-points.-what-trend-do" class="section level3" number="15.0.3">
-<h3><span class="header-section-number">15.0.3</span> <strong>q3</strong> Using <code>ggplot</code>, visualize <code>price</code> vs <code>carat</code> with points. What trend do</h3>
+<div id="q3-using-ggplot-visualize-price-vs-carat-with-points.-what-trend-do" class="section level3 hasAnchor" number="15.0.3">
+<h3><span class="header-section-number">15.0.3</span> <strong>q3</strong> Using <code>ggplot</code>, visualize <code>price</code> vs <code>carat</code> with points. What trend do<a href="vis-data-visualization-basics.html#q3-using-ggplot-visualize-price-vs-carat-with-points.-what-trend-do" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>you observe?</p>
 <p><em>Hint</em>: Usually the language <code>y</code> vs <code>x</code> refers to the <code>vertical axis</code> vs
 <code>horizontal axis</code>. This is the opposite order from the way we often specify <code>x, y</code> pairs. Language is hard!</p>
@@ -1028,16 +1027,16 @@ allow us to create just about any graph you can imagine!</p>
 <li>The trend is not ‘clean’; there is no single curve in the relationship</li>
 </ul>
 </div>
-<div id="a-note-on-aesthetics" class="section level2" number="15.1">
-<h2><span class="header-section-number">15.1</span> A note on <em>aesthetics</em></h2>
+<div id="a-note-on-aesthetics" class="section level2 hasAnchor" number="15.1">
+<h2><span class="header-section-number">15.1</span> A note on <em>aesthetics</em><a href="vis-data-visualization-basics.html#a-note-on-aesthetics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The function <code>aes()</code> is short for <em>aesthetics</em>. Aesthetics in ggplot are the
 mapping of variables in a dataframe to visual elements in the graph. For
 instance, in the plot above you assigned <code>carat</code> to the <code>x</code> aesthetic, and
 <code>price</code> to the <code>y</code> aesthetic. But there are <em>many more</em> aesthetics you can set,
 some of which vary based on the <code>geom_</code> you are using to visualize. The next
 question will explore this idea more.</p>
-<div id="q4-create-a-new-graph-to-visualize-price-carat-and-cut" class="section level3" number="15.1.1">
-<h3><span class="header-section-number">15.1.1</span> <strong>q4</strong> Create a new graph to visualize <code>price</code>, <code>carat</code>, and <code>cut</code></h3>
+<div id="q4-create-a-new-graph-to-visualize-price-carat-and-cut" class="section level3 hasAnchor" number="15.1.1">
+<h3><span class="header-section-number">15.1.1</span> <strong>q4</strong> Create a new graph to visualize <code>price</code>, <code>carat</code>, and <code>cut</code><a href="vis-data-visualization-basics.html#q4-create-a-new-graph-to-visualize-price-carat-and-cut" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>simultaneously.</p>
 <p><em>Hint</em>: Remember that you can add additional aesthetic mappings in <code>aes()</code>. Some options include <code>size</code>, <code>color</code>, and <code>shape</code>.</p>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="vis-data-visualization-basics.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Complete this code</span></span>
@@ -1124,7 +1123,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

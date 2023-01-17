@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>50 Vis: Small Multiples | Data Science: Exercise Solutions</title>
   <meta name="description" content="50 Vis: Small Multiples | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="50 Vis: Small Multiples | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="data-a-simple-data-pipeline.html"/>
 <link rel="next" href="stats-introduction-to-hypothesis-testing.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,90 +980,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="vis-small-multiples" class="section level1" number="50">
-<h1><span class="header-section-number">50</span> Vis: Small Multiples</h1>
+<div id="vis-small-multiples" class="section level1 hasAnchor" number="50">
+<h1><span class="header-section-number">50</span> Vis: Small Multiples<a href="vis-small-multiples.html#vis-small-multiples" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: A powerful idea in visualization is the <em>small multiple</em>. In this exercise you’ll learn how to design and create small multiple graphs.</p>
 <p><em>Reading</em>: (None; there’s a bit of reading here.)</p>
 <p>“At the heart of quantitative reasoning is a single question: <em>Compared to
 what?</em>” Edward Tufte on small multiples.</p>
-<div id="small-multiples" class="section level2" number="50.1">
-<h2><span class="header-section-number">50.1</span> Small Multiples</h2>
+<div id="small-multiples" class="section level2 hasAnchor" number="50.1">
+<h2><span class="header-section-number">50.1</span> Small Multiples<a href="vis-small-multiples.html#small-multiples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Facets in ggplot allow us to apply the ideas of <a href="https://en.wikipedia.org/wiki/Small_multiple">small
 multiples</a>. As an example,
 consider the following graph:</p>
-<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="vis-small-multiples.html#cb882-1" aria-hidden="true" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
-<span id="cb882-2"><a href="vis-small-multiples.html#cb882-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb882-3"><a href="vis-small-multiples.html#cb882-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>,</span>
-<span id="cb882-4"><a href="vis-small-multiples.html#cb882-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>,</span>
-<span id="cb882-5"><a href="vis-small-multiples.html#cb882-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(pce, pop, psavert, uempmed, unemploy)</span>
-<span id="cb882-6"><a href="vis-small-multiples.html#cb882-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb882-7"><a href="vis-small-multiples.html#cb882-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb882-8"><a href="vis-small-multiples.html#cb882-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, value)) <span class="sc">+</span></span>
-<span id="cb882-9"><a href="vis-small-multiples.html#cb882-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb882-10"><a href="vis-small-multiples.html#cb882-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb891-1"><a href="vis-small-multiples.html#cb891-1" aria-hidden="true" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
+<span id="cb891-2"><a href="vis-small-multiples.html#cb891-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb891-3"><a href="vis-small-multiples.html#cb891-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>,</span>
+<span id="cb891-4"><a href="vis-small-multiples.html#cb891-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>,</span>
+<span id="cb891-5"><a href="vis-small-multiples.html#cb891-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(pce, pop, psavert, uempmed, unemploy)</span>
+<span id="cb891-6"><a href="vis-small-multiples.html#cb891-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb891-7"><a href="vis-small-multiples.html#cb891-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb891-8"><a href="vis-small-multiples.html#cb891-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, value)) <span class="sc">+</span></span>
+<span id="cb891-9"><a href="vis-small-multiples.html#cb891-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb891-10"><a href="vis-small-multiples.html#cb891-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)</span></code></pre></div>
 <p><img src="d34-e-vis08-multiples-solution_files/figure-html/ex-economics-multiples-1.png" width="672" /></p>
 <p>The “multiples” are the different panels; above we’ve separated the different variables into their own panel. This allows us to compare trends simply by lookin across at different panels. The faceting above works well for comparing trends: It’s clear by inspection whether the various trends are increasing, decreasing, etc.</p>
 <p>The next example with the <code>mpg</code> data is not so effective:</p>
-<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="vis-small-multiples.html#cb883-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; study this example</span></span>
-<span id="cb883-2"><a href="vis-small-multiples.html#cb883-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb883-3"><a href="vis-small-multiples.html#cb883-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
-<span id="cb883-4"><a href="vis-small-multiples.html#cb883-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb883-5"><a href="vis-small-multiples.html#cb883-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>class)</span></code></pre></div>
+<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb892-1"><a href="vis-small-multiples.html#cb892-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; study this example</span></span>
+<span id="cb892-2"><a href="vis-small-multiples.html#cb892-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb892-3"><a href="vis-small-multiples.html#cb892-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
+<span id="cb892-4"><a href="vis-small-multiples.html#cb892-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb892-5"><a href="vis-small-multiples.html#cb892-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>class)</span></code></pre></div>
 <p><img src="d34-e-vis08-multiples-solution_files/figure-html/ex-mpg-multiples-1.png" width="672" /></p>
 <p>With these scatterplots it’s more difficult to “keep in our heads” the absolute positions of the other points as we look across the multiples. Instead we could add some “ghost” points:</p>
-<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb884-1"><a href="vis-small-multiples.html#cb884-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; study this example</span></span>
-<span id="cb884-2"><a href="vis-small-multiples.html#cb884-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb884-3"><a href="vis-small-multiples.html#cb884-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
-<span id="cb884-4"><a href="vis-small-multiples.html#cb884-4" aria-hidden="true" tabindex="-1"></a>  <span class="do">## A bit of a trick; remove the facet variable to prevent faceting</span></span>
-<span id="cb884-5"><a href="vis-small-multiples.html#cb884-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb884-6"><a href="vis-small-multiples.html#cb884-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>class),</span>
-<span id="cb884-7"><a href="vis-small-multiples.html#cb884-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;grey80&quot;</span></span>
-<span id="cb884-8"><a href="vis-small-multiples.html#cb884-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb884-9"><a href="vis-small-multiples.html#cb884-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb884-10"><a href="vis-small-multiples.html#cb884-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>class) <span class="sc">+</span></span>
-<span id="cb884-11"><a href="vis-small-multiples.html#cb884-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb893"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb893-1"><a href="vis-small-multiples.html#cb893-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; study this example</span></span>
+<span id="cb893-2"><a href="vis-small-multiples.html#cb893-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb893-3"><a href="vis-small-multiples.html#cb893-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
+<span id="cb893-4"><a href="vis-small-multiples.html#cb893-4" aria-hidden="true" tabindex="-1"></a>  <span class="do">## A bit of a trick; remove the facet variable to prevent faceting</span></span>
+<span id="cb893-5"><a href="vis-small-multiples.html#cb893-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb893-6"><a href="vis-small-multiples.html#cb893-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>class),</span>
+<span id="cb893-7"><a href="vis-small-multiples.html#cb893-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;grey80&quot;</span></span>
+<span id="cb893-8"><a href="vis-small-multiples.html#cb893-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb893-9"><a href="vis-small-multiples.html#cb893-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb893-10"><a href="vis-small-multiples.html#cb893-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>class) <span class="sc">+</span></span>
+<span id="cb893-11"><a href="vis-small-multiples.html#cb893-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="d34-e-vis08-multiples-solution_files/figure-html/ex-mpg-multiples-ghosts-1.png" width="672" /></p>
 <p>There’s a trick to getting the visual above; removing the facet variable from an internal dataframe prevents the faceting of that layer. This combined with a second point layer gives the “ghost” point effect.</p>
 <p>The presence of these “ghost” points provides more context; they facilitate the “Compared to what?” question that Tufte puts at the center of quantitative reasoning.</p>
-<div id="q1-edit-the-following-figure-to-use-the-ghost-point-trick-above." class="section level3" number="50.1.1">
-<h3><span class="header-section-number">50.1.1</span> <strong>q1</strong> Edit the following figure to use the “ghost” point trick above.</h3>
-<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="vis-small-multiples.html#cb885-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Edit this code to facet on `cut`, but keep &quot;ghost&quot; points to aid in</span></span>
-<span id="cb885-2"><a href="vis-small-multiples.html#cb885-2" aria-hidden="true" tabindex="-1"></a><span class="do">## comparison.</span></span>
-<span id="cb885-3"><a href="vis-small-multiples.html#cb885-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb885-4"><a href="vis-small-multiples.html#cb885-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb885-5"><a href="vis-small-multiples.html#cb885-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div id="q1-edit-the-following-figure-to-use-the-ghost-point-trick-above." class="section level3 hasAnchor" number="50.1.1">
+<h3><span class="header-section-number">50.1.1</span> <strong>q1</strong> Edit the following figure to use the “ghost” point trick above.<a href="vis-small-multiples.html#q1-edit-the-following-figure-to-use-the-ghost-point-trick-above." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="vis-small-multiples.html#cb894-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Edit this code to facet on `cut`, but keep &quot;ghost&quot; points to aid in</span></span>
+<span id="cb894-2"><a href="vis-small-multiples.html#cb894-2" aria-hidden="true" tabindex="-1"></a><span class="do">## comparison.</span></span>
+<span id="cb894-3"><a href="vis-small-multiples.html#cb894-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb894-4"><a href="vis-small-multiples.html#cb894-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb894-5"><a href="vis-small-multiples.html#cb894-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d34-e-vis08-multiples-solution_files/figure-html/q1-task-1.png" width="672" /></p>
-<div class="sourceCode" id="cb886"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb886-1"><a href="vis-small-multiples.html#cb886-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb886-2"><a href="vis-small-multiples.html#cb886-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb886-3"><a href="vis-small-multiples.html#cb886-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb886-4"><a href="vis-small-multiples.html#cb886-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>cut),</span>
-<span id="cb886-5"><a href="vis-small-multiples.html#cb886-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;grey80&quot;</span></span>
-<span id="cb886-6"><a href="vis-small-multiples.html#cb886-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb886-7"><a href="vis-small-multiples.html#cb886-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb886-8"><a href="vis-small-multiples.html#cb886-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>cut)</span></code></pre></div>
+<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="vis-small-multiples.html#cb895-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb895-2"><a href="vis-small-multiples.html#cb895-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb895-3"><a href="vis-small-multiples.html#cb895-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb895-4"><a href="vis-small-multiples.html#cb895-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>cut),</span>
+<span id="cb895-5"><a href="vis-small-multiples.html#cb895-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;grey80&quot;</span></span>
+<span id="cb895-6"><a href="vis-small-multiples.html#cb895-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb895-7"><a href="vis-small-multiples.html#cb895-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb895-8"><a href="vis-small-multiples.html#cb895-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>cut)</span></code></pre></div>
 <p><img src="d34-e-vis08-multiples-solution_files/figure-html/q1-solution-1.png" width="672" /></p>
 </div>
 </div>
-<div id="organizing-factors" class="section level2" number="50.2">
-<h2><span class="header-section-number">50.2</span> Organizing Factors</h2>
+<div id="organizing-factors" class="section level2 hasAnchor" number="50.2">
+<h2><span class="header-section-number">50.2</span> Organizing Factors<a href="vis-small-multiples.html#organizing-factors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Sometimes your observations will organize into natural categories. In this case facets are a great way to group your observations. For example, consider the following figure:</p>
-<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="vis-small-multiples.html#cb887-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb887-2"><a href="vis-small-multiples.html#cb887-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">%&gt;%</span></span>
-<span id="cb887-3"><a href="vis-small-multiples.html#cb887-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>(<span class="fu">desc</span>(year)) <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb887-4"><a href="vis-small-multiples.html#cb887-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb887-5"><a href="vis-small-multiples.html#cb887-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb887-6"><a href="vis-small-multiples.html#cb887-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">manufacturer =</span> <span class="fu">fct_reorder</span>(manufacturer, hwy),</span>
-<span id="cb887-7"><a href="vis-small-multiples.html#cb887-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">fct_reorder</span>(model, <span class="fu">desc</span>(hwy))</span>
-<span id="cb887-8"><a href="vis-small-multiples.html#cb887-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb887-9"><a href="vis-small-multiples.html#cb887-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb887-10"><a href="vis-small-multiples.html#cb887-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(hwy, model)) <span class="sc">+</span></span>
-<span id="cb887-11"><a href="vis-small-multiples.html#cb887-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb887-12"><a href="vis-small-multiples.html#cb887-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(manufacturer<span class="sc">~</span>., <span class="at">scale =</span> <span class="st">&quot;free_y&quot;</span>, <span class="at">space =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
-<span id="cb887-13"><a href="vis-small-multiples.html#cb887-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb887-14"><a href="vis-small-multiples.html#cb887-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>)</span>
-<span id="cb887-15"><a href="vis-small-multiples.html#cb887-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb896"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb896-1"><a href="vis-small-multiples.html#cb896-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb896-2"><a href="vis-small-multiples.html#cb896-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">%&gt;%</span></span>
+<span id="cb896-3"><a href="vis-small-multiples.html#cb896-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>(<span class="fu">desc</span>(year)) <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb896-4"><a href="vis-small-multiples.html#cb896-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb896-5"><a href="vis-small-multiples.html#cb896-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb896-6"><a href="vis-small-multiples.html#cb896-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">manufacturer =</span> <span class="fu">fct_reorder</span>(manufacturer, hwy),</span>
+<span id="cb896-7"><a href="vis-small-multiples.html#cb896-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">fct_reorder</span>(model, <span class="fu">desc</span>(hwy))</span>
+<span id="cb896-8"><a href="vis-small-multiples.html#cb896-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb896-9"><a href="vis-small-multiples.html#cb896-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb896-10"><a href="vis-small-multiples.html#cb896-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(hwy, model)) <span class="sc">+</span></span>
+<span id="cb896-11"><a href="vis-small-multiples.html#cb896-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb896-12"><a href="vis-small-multiples.html#cb896-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(manufacturer<span class="sc">~</span>., <span class="at">scale =</span> <span class="st">&quot;free_y&quot;</span>, <span class="at">space =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb896-13"><a href="vis-small-multiples.html#cb896-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb896-14"><a href="vis-small-multiples.html#cb896-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>)</span>
+<span id="cb896-15"><a href="vis-small-multiples.html#cb896-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="d34-e-vis08-multiples-solution_files/figure-html/ex-mpg-manufacturers-1.png" width="672" /></p>
 <p>There’s <em>a lot</em> going on this figure, including a number of subtle points. Let’s list them out:</p>
 <ul>
@@ -1076,16 +1075,16 @@ consider the following graph:</p>
 <li>I set both the <code>scale</code> and <code>space</code> arguments of the facet call; without those the spacing would be messed up (try it!).</li>
 <li>I rotate the facet labels to make them more readable.</li>
 </ul>
-<div id="q2-create-a-small-multiple-plot-like-ex-mpg-manufacturer-above.-keep-in-mind-the-idea-of-compared-to-what-when-deciding-which-variables-to-place-close-to-one-another." class="section level3" number="50.2.1">
-<h3><span class="header-section-number">50.2.1</span> <strong>q2</strong> Create a small multiple plot like <code>ex-mpg-manufacturer</code> above. Keep in mind the idea of “compared to what?” when deciding which variables to place close to one another.</h3>
-<div class="sourceCode" id="cb888"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb888-1"><a href="vis-small-multiples.html#cb888-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create a set of small multiples plot from these data</span></span>
-<span id="cb888-2"><a href="vis-small-multiples.html#cb888-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(iris) <span class="sc">%&gt;%</span></span>
-<span id="cb888-3"><a href="vis-small-multiples.html#cb888-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb888-4"><a href="vis-small-multiples.html#cb888-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;part&quot;</span>,</span>
-<span id="cb888-5"><a href="vis-small-multiples.html#cb888-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;length&quot;</span>,</span>
-<span id="cb888-6"><a href="vis-small-multiples.html#cb888-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>Species</span>
-<span id="cb888-7"><a href="vis-small-multiples.html#cb888-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## # A tibble: 600 x 3
+<div id="q2-create-a-small-multiple-plot-like-ex-mpg-manufacturer-above.-keep-in-mind-the-idea-of-compared-to-what-when-deciding-which-variables-to-place-close-to-one-another." class="section level3 hasAnchor" number="50.2.1">
+<h3><span class="header-section-number">50.2.1</span> <strong>q2</strong> Create a small multiple plot like <code>ex-mpg-manufacturer</code> above. Keep in mind the idea of “compared to what?” when deciding which variables to place close to one another.<a href="vis-small-multiples.html#q2-create-a-small-multiple-plot-like-ex-mpg-manufacturer-above.-keep-in-mind-the-idea-of-compared-to-what-when-deciding-which-variables-to-place-close-to-one-another." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb897-1"><a href="vis-small-multiples.html#cb897-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create a set of small multiples plot from these data</span></span>
+<span id="cb897-2"><a href="vis-small-multiples.html#cb897-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(iris) <span class="sc">%&gt;%</span></span>
+<span id="cb897-3"><a href="vis-small-multiples.html#cb897-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb897-4"><a href="vis-small-multiples.html#cb897-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;part&quot;</span>,</span>
+<span id="cb897-5"><a href="vis-small-multiples.html#cb897-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;length&quot;</span>,</span>
+<span id="cb897-6"><a href="vis-small-multiples.html#cb897-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>Species</span>
+<span id="cb897-7"><a href="vis-small-multiples.html#cb897-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## # A tibble: 600 × 3
 ##    Species part         length
 ##    &lt;fct&gt;   &lt;chr&gt;         &lt;dbl&gt;
 ##  1 setosa  Sepal.Length    5.1
@@ -1099,19 +1098,19 @@ consider the following graph:</p>
 ##  9 setosa  Sepal.Length    4.7
 ## 10 setosa  Sepal.Width     3.2
 ## # … with 590 more rows</code></pre>
-<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="vis-small-multiples.html#cb890-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(iris) <span class="sc">%&gt;%</span></span>
-<span id="cb890-2"><a href="vis-small-multiples.html#cb890-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb890-3"><a href="vis-small-multiples.html#cb890-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;part&quot;</span>,</span>
-<span id="cb890-4"><a href="vis-small-multiples.html#cb890-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;length&quot;</span>,</span>
-<span id="cb890-5"><a href="vis-small-multiples.html#cb890-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>Species</span>
-<span id="cb890-6"><a href="vis-small-multiples.html#cb890-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb890-7"><a href="vis-small-multiples.html#cb890-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb890-8"><a href="vis-small-multiples.html#cb890-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(length, Species)) <span class="sc">+</span></span>
-<span id="cb890-9"><a href="vis-small-multiples.html#cb890-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb890-10"><a href="vis-small-multiples.html#cb890-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(part<span class="sc">~</span>., <span class="at">scale =</span> <span class="st">&quot;free_y&quot;</span>, <span class="at">space =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
-<span id="cb890-11"><a href="vis-small-multiples.html#cb890-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb890-12"><a href="vis-small-multiples.html#cb890-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>)</span>
-<span id="cb890-13"><a href="vis-small-multiples.html#cb890-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb899"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb899-1"><a href="vis-small-multiples.html#cb899-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(iris) <span class="sc">%&gt;%</span></span>
+<span id="cb899-2"><a href="vis-small-multiples.html#cb899-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb899-3"><a href="vis-small-multiples.html#cb899-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;part&quot;</span>,</span>
+<span id="cb899-4"><a href="vis-small-multiples.html#cb899-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;length&quot;</span>,</span>
+<span id="cb899-5"><a href="vis-small-multiples.html#cb899-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>Species</span>
+<span id="cb899-6"><a href="vis-small-multiples.html#cb899-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb899-7"><a href="vis-small-multiples.html#cb899-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb899-8"><a href="vis-small-multiples.html#cb899-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(length, Species)) <span class="sc">+</span></span>
+<span id="cb899-9"><a href="vis-small-multiples.html#cb899-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb899-10"><a href="vis-small-multiples.html#cb899-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(part<span class="sc">~</span>., <span class="at">scale =</span> <span class="st">&quot;free_y&quot;</span>, <span class="at">space =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb899-11"><a href="vis-small-multiples.html#cb899-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb899-12"><a href="vis-small-multiples.html#cb899-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>)</span>
+<span id="cb899-13"><a href="vis-small-multiples.html#cb899-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="d34-e-vis08-multiples-solution_files/figure-html/q2-solution-1.png" width="672" /></p>
 <p>I chose to put the measurements of the same part close together, to facilitate
 comparison of the common plant features across different species.</p>
@@ -1186,7 +1185,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

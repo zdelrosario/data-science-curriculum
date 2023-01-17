@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>54 Vis: Improving Graphs | Data Science: Exercise Solutions</title>
   <meta name="description" content="54 Vis: Improving Graphs | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="54 Vis: Improving Graphs | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="model-variability-quadrants.html"/>
 <link rel="next" href="model-introduction-to-modeling.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,21 +980,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="vis-improving-graphs" class="section level1" number="54">
-<h1><span class="header-section-number">54</span> Vis: Improving Graphs</h1>
+<div id="vis-improving-graphs" class="section level1 hasAnchor" number="54">
+<h1><span class="header-section-number">54</span> Vis: Improving Graphs<a href="vis-improving-graphs.html#vis-improving-graphs" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Creating a <em>presentation-quality</em> graph is an <em>iterative exercise</em>. There are many different ways to show the same data, some of which are more effective for communication than others. Let’s return to the ideas from “How Humans See Data” and use them to improve upon some graphs: This will give you practice iterating on visuals.</p>
 <p><em>Reading</em>: <a href="https://www.youtube.com/watch?v=fSgEeI2Xpdc&amp;list=PLluqivwOH1ouKkbM0c6x-g7DQnXF0UmC0&amp;index=37&amp;t=0s">How Humans See Data</a> (Video from prior exercise, for reference)</p>
-<div class="sourceCode" id="cb959"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb959-1"><a href="vis-improving-graphs.html#cb959-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<div class="sourceCode" id="cb968"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb968-1"><a href="vis-improving-graphs.html#cb968-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div id="improve-these-graphs" class="section level2" number="54.1">
-<h2><span class="header-section-number">54.1</span> Improve these graphs!</h2>
+<div id="improve-these-graphs" class="section level2 hasAnchor" number="54.1">
+<h2><span class="header-section-number">54.1</span> Improve these graphs!<a href="vis-improving-graphs.html#improve-these-graphs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Using the ideas from the reading (video), state some issues with the following graphs. Remember the <em>visual hierarchy</em>:</p>
 <ol style="list-style-type: decimal">
@@ -1007,79 +1006,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Volume; Density; Color saturation</li>
 <li>Color hue</li>
 </ol>
-<div id="q1-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="section level3" number="54.1.1">
-<h3><span class="header-section-number">54.1.1</span> <strong>q1</strong> Use concepts from the reading to improve the following graph. <em>Make sure your graph shows all the same variables</em>, no more and no fewer.</h3>
-<div class="sourceCode" id="cb963"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb963-1"><a href="vis-improving-graphs.html#cb963-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb963-2"><a href="vis-improving-graphs.html#cb963-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb963-3"><a href="vis-improving-graphs.html#cb963-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(manufacturer, cty)) <span class="sc">+</span></span>
-<span id="cb963-4"><a href="vis-improving-graphs.html#cb963-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb963-5"><a href="vis-improving-graphs.html#cb963-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<div id="q1-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="section level3 hasAnchor" number="54.1.1">
+<h3><span class="header-section-number">54.1.1</span> <strong>q1</strong> Use concepts from the reading to improve the following graph. <em>Make sure your graph shows all the same variables</em>, no more and no fewer.<a href="vis-improving-graphs.html#q1-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb972"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb972-1"><a href="vis-improving-graphs.html#cb972-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb972-2"><a href="vis-improving-graphs.html#cb972-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb972-3"><a href="vis-improving-graphs.html#cb972-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(manufacturer, cty)) <span class="sc">+</span></span>
+<span id="cb972-4"><a href="vis-improving-graphs.html#cb972-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb972-5"><a href="vis-improving-graphs.html#cb972-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
 <p><img src="d38-e-vis09-improve-solution_files/figure-html/q1-vis-1.png" width="672" /></p>
 <p>Create your improved graph here</p>
-<div class="sourceCode" id="cb964"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb964-1"><a href="vis-improving-graphs.html#cb964-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create an improved version of the graph above</span></span>
-<span id="cb964-2"><a href="vis-improving-graphs.html#cb964-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is just one possibility</span></span>
-<span id="cb964-3"><a href="vis-improving-graphs.html#cb964-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb964-4"><a href="vis-improving-graphs.html#cb964-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">fct_reorder</span>(manufacturer, cty), cty)) <span class="sc">+</span></span>
-<span id="cb964-5"><a href="vis-improving-graphs.html#cb964-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb964-6"><a href="vis-improving-graphs.html#cb964-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb973"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb973-1"><a href="vis-improving-graphs.html#cb973-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create an improved version of the graph above</span></span>
+<span id="cb973-2"><a href="vis-improving-graphs.html#cb973-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is just one possibility</span></span>
+<span id="cb973-3"><a href="vis-improving-graphs.html#cb973-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb973-4"><a href="vis-improving-graphs.html#cb973-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">fct_reorder</span>(manufacturer, cty), cty)) <span class="sc">+</span></span>
+<span id="cb973-5"><a href="vis-improving-graphs.html#cb973-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb973-6"><a href="vis-improving-graphs.html#cb973-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
 <p><img src="d38-e-vis09-improve-solution_files/figure-html/q1-task-1.png" width="672" /></p>
 </div>
-<div id="q2-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="section level3" number="54.1.2">
-<h3><span class="header-section-number">54.1.2</span> <strong>q2</strong> Use concepts from the reading to improve the following graph. <em>Make sure your graph shows all the same variables</em>, no more and no fewer.</h3>
-<div class="sourceCode" id="cb965"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb965-1"><a href="vis-improving-graphs.html#cb965-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb965-2"><a href="vis-improving-graphs.html#cb965-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(mtcars) <span class="sc">%&gt;%</span></span>
-<span id="cb965-3"><a href="vis-improving-graphs.html#cb965-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="fu">rownames</span>(mtcars)) <span class="sc">%&gt;%</span></span>
-<span id="cb965-4"><a href="vis-improving-graphs.html#cb965-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb965-5"><a href="vis-improving-graphs.html#cb965-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">size =</span> mpg)) <span class="sc">+</span></span>
-<span id="cb965-6"><a href="vis-improving-graphs.html#cb965-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb965-7"><a href="vis-improving-graphs.html#cb965-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model)</span></code></pre></div>
+<div id="q2-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="section level3 hasAnchor" number="54.1.2">
+<h3><span class="header-section-number">54.1.2</span> <strong>q2</strong> Use concepts from the reading to improve the following graph. <em>Make sure your graph shows all the same variables</em>, no more and no fewer.<a href="vis-improving-graphs.html#q2-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb974"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb974-1"><a href="vis-improving-graphs.html#cb974-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb974-2"><a href="vis-improving-graphs.html#cb974-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(mtcars) <span class="sc">%&gt;%</span></span>
+<span id="cb974-3"><a href="vis-improving-graphs.html#cb974-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="fu">rownames</span>(mtcars)) <span class="sc">%&gt;%</span></span>
+<span id="cb974-4"><a href="vis-improving-graphs.html#cb974-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb974-5"><a href="vis-improving-graphs.html#cb974-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">size =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb974-6"><a href="vis-improving-graphs.html#cb974-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb974-7"><a href="vis-improving-graphs.html#cb974-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model)</span></code></pre></div>
 <p><img src="d38-e-vis09-improve-solution_files/figure-html/q2-vis-1.png" width="672" /></p>
 <p>Create your improved graph here</p>
-<div class="sourceCode" id="cb966"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb966-1"><a href="vis-improving-graphs.html#cb966-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create an improved version of the graph above</span></span>
-<span id="cb966-2"><a href="vis-improving-graphs.html#cb966-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is just one possibility</span></span>
-<span id="cb966-3"><a href="vis-improving-graphs.html#cb966-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(mtcars) <span class="sc">%&gt;%</span></span>
-<span id="cb966-4"><a href="vis-improving-graphs.html#cb966-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb966-5"><a href="vis-improving-graphs.html#cb966-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">rownames</span>(mtcars),</span>
-<span id="cb966-6"><a href="vis-improving-graphs.html#cb966-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">fct_reorder</span>(model, mpg)</span>
-<span id="cb966-7"><a href="vis-improving-graphs.html#cb966-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb966-8"><a href="vis-improving-graphs.html#cb966-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb966-9"><a href="vis-improving-graphs.html#cb966-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> model, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
-<span id="cb966-10"><a href="vis-improving-graphs.html#cb966-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb966-11"><a href="vis-improving-graphs.html#cb966-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb975"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb975-1"><a href="vis-improving-graphs.html#cb975-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create an improved version of the graph above</span></span>
+<span id="cb975-2"><a href="vis-improving-graphs.html#cb975-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is just one possibility</span></span>
+<span id="cb975-3"><a href="vis-improving-graphs.html#cb975-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(mtcars) <span class="sc">%&gt;%</span></span>
+<span id="cb975-4"><a href="vis-improving-graphs.html#cb975-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb975-5"><a href="vis-improving-graphs.html#cb975-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">rownames</span>(mtcars),</span>
+<span id="cb975-6"><a href="vis-improving-graphs.html#cb975-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">fct_reorder</span>(model, mpg)</span>
+<span id="cb975-7"><a href="vis-improving-graphs.html#cb975-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb975-8"><a href="vis-improving-graphs.html#cb975-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb975-9"><a href="vis-improving-graphs.html#cb975-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> model, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb975-10"><a href="vis-improving-graphs.html#cb975-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb975-11"><a href="vis-improving-graphs.html#cb975-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
 <p><img src="d38-e-vis09-improve-solution_files/figure-html/q2-task-1.png" width="672" /></p>
 </div>
-<div id="q3-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="section level3" number="54.1.3">
-<h3><span class="header-section-number">54.1.3</span> <strong>q3</strong> Use concepts from the reading to improve the following graph. <em>Make sure your graph shows all the same variables</em>, no more and no fewer.</h3>
-<div class="sourceCode" id="cb967"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb967-1"><a href="vis-improving-graphs.html#cb967-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb967-2"><a href="vis-improving-graphs.html#cb967-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb967-3"><a href="vis-improving-graphs.html#cb967-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(clarity, <span class="at">fill =</span> cut)) <span class="sc">+</span></span>
-<span id="cb967-4"><a href="vis-improving-graphs.html#cb967-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div id="q3-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="section level3 hasAnchor" number="54.1.3">
+<h3><span class="header-section-number">54.1.3</span> <strong>q3</strong> Use concepts from the reading to improve the following graph. <em>Make sure your graph shows all the same variables</em>, no more and no fewer.<a href="vis-improving-graphs.html#q3-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb976"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb976-1"><a href="vis-improving-graphs.html#cb976-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb976-2"><a href="vis-improving-graphs.html#cb976-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb976-3"><a href="vis-improving-graphs.html#cb976-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(clarity, <span class="at">fill =</span> cut)) <span class="sc">+</span></span>
+<span id="cb976-4"><a href="vis-improving-graphs.html#cb976-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <p><img src="d38-e-vis09-improve-solution_files/figure-html/q3-vis-1.png" width="672" /></p>
 <p>Create your improved graph here</p>
-<div class="sourceCode" id="cb968"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb968-1"><a href="vis-improving-graphs.html#cb968-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create an improved version of the graph above</span></span>
-<span id="cb968-2"><a href="vis-improving-graphs.html#cb968-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is just one possibility</span></span>
-<span id="cb968-3"><a href="vis-improving-graphs.html#cb968-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb968-4"><a href="vis-improving-graphs.html#cb968-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(cut, clarity) <span class="sc">%&gt;%</span></span>
-<span id="cb968-5"><a href="vis-improving-graphs.html#cb968-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb968-6"><a href="vis-improving-graphs.html#cb968-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(clarity, n, <span class="at">color =</span> cut, <span class="at">group =</span> cut)) <span class="sc">+</span></span>
-<span id="cb968-7"><a href="vis-improving-graphs.html#cb968-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb977"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb977-1"><a href="vis-improving-graphs.html#cb977-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create an improved version of the graph above</span></span>
+<span id="cb977-2"><a href="vis-improving-graphs.html#cb977-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is just one possibility</span></span>
+<span id="cb977-3"><a href="vis-improving-graphs.html#cb977-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb977-4"><a href="vis-improving-graphs.html#cb977-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(cut, clarity) <span class="sc">%&gt;%</span></span>
+<span id="cb977-5"><a href="vis-improving-graphs.html#cb977-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb977-6"><a href="vis-improving-graphs.html#cb977-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(clarity, n, <span class="at">color =</span> cut, <span class="at">group =</span> cut)) <span class="sc">+</span></span>
+<span id="cb977-7"><a href="vis-improving-graphs.html#cb977-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 <p><img src="d38-e-vis09-improve-solution_files/figure-html/q3-task-1.png" width="672" /></p>
 </div>
-<div id="q4-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="section level3" number="54.1.4">
-<h3><span class="header-section-number">54.1.4</span> <strong>q4</strong> Use concepts from the reading to improve the following graph. <em>Make sure your graph shows all the same variables</em>, no more and no fewer.</h3>
-<div class="sourceCode" id="cb969"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb969-1"><a href="vis-improving-graphs.html#cb969-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb969-2"><a href="vis-improving-graphs.html#cb969-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb969-3"><a href="vis-improving-graphs.html#cb969-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">fill =</span> cut)) <span class="sc">+</span></span>
-<span id="cb969-4"><a href="vis-improving-graphs.html#cb969-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb969-5"><a href="vis-improving-graphs.html#cb969-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">&quot;y&quot;</span>) <span class="sc">+</span></span>
-<span id="cb969-6"><a href="vis-improving-graphs.html#cb969-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div id="q4-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="section level3 hasAnchor" number="54.1.4">
+<h3><span class="header-section-number">54.1.4</span> <strong>q4</strong> Use concepts from the reading to improve the following graph. <em>Make sure your graph shows all the same variables</em>, no more and no fewer.<a href="vis-improving-graphs.html#q4-use-concepts-from-the-reading-to-improve-the-following-graph.-make-sure-your-graph-shows-all-the-same-variables-no-more-and-no-fewer." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb978"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb978-1"><a href="vis-improving-graphs.html#cb978-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb978-2"><a href="vis-improving-graphs.html#cb978-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb978-3"><a href="vis-improving-graphs.html#cb978-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">fill =</span> cut)) <span class="sc">+</span></span>
+<span id="cb978-4"><a href="vis-improving-graphs.html#cb978-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb978-5"><a href="vis-improving-graphs.html#cb978-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">&quot;y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb978-6"><a href="vis-improving-graphs.html#cb978-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="d38-e-vis09-improve-solution_files/figure-html/q4-vis-1.png" width="672" /></p>
 <p>Create your improved graph here</p>
-<div class="sourceCode" id="cb970"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb970-1"><a href="vis-improving-graphs.html#cb970-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create an improved version of the graph above</span></span>
-<span id="cb970-2"><a href="vis-improving-graphs.html#cb970-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is just one possibility</span></span>
-<span id="cb970-3"><a href="vis-improving-graphs.html#cb970-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb970-4"><a href="vis-improving-graphs.html#cb970-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut)) <span class="sc">+</span></span>
-<span id="cb970-5"><a href="vis-improving-graphs.html#cb970-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb979"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb979-1"><a href="vis-improving-graphs.html#cb979-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create an improved version of the graph above</span></span>
+<span id="cb979-2"><a href="vis-improving-graphs.html#cb979-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is just one possibility</span></span>
+<span id="cb979-3"><a href="vis-improving-graphs.html#cb979-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb979-4"><a href="vis-improving-graphs.html#cb979-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut)) <span class="sc">+</span></span>
+<span id="cb979-5"><a href="vis-improving-graphs.html#cb979-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <p><img src="d38-e-vis09-improve-solution_files/figure-html/q4-task-1.png" width="672" /></p>
 <!-- include-exit-ticket -->
 
@@ -1152,7 +1151,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

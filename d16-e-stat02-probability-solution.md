@@ -16,14 +16,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -84,10 +84,10 @@ df_z %>%
 ```
 
 ```
-## # A tibble: 1 x 3
+## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      96  0.96
+## 1         100      94  0.94
 ```
 
 Now it's your turn!
@@ -105,10 +105,10 @@ df_z %>%
 ```
 
 ```
-## # A tibble: 1 x 3
+## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      52  0.52
+## 1         100      44  0.44
 ```
 
 **Observations**:
@@ -156,13 +156,13 @@ map_dfr(
 ```
 
 ```
-## # A tibble: 4 x 3
+## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1          10       1 0.1  
-## 2         100      53 0.53 
-## 3        1000     510 0.51 
-## 4       10000    4972 0.497
+## 1          10       6 0.6  
+## 2         100      50 0.5  
+## 3        1000     501 0.501
+## 4       10000    5102 0.510
 ```
 
 This is because *probability* is actually defined[1] in terms of the limit
@@ -190,13 +190,13 @@ map_dfr(
 ```
 
 ```
-## # A tibble: 4 x 3
+## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
 ## 1          10      10 1    
-## 2         100      91 0.91 
-## 3        1000     953 0.953
-## 4       10000    9498 0.950
+## 2         100      97 0.97 
+## 3        1000     958 0.958
+## 4       10000    9516 0.952
 ```
 
 **Observations**:
@@ -244,7 +244,7 @@ map_dfr(
 ```
 
 ```
-## # A tibble: 4 x 3
+## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
 ## 1          10       0     0

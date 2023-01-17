@@ -11,14 +11,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -196,7 +196,7 @@ df_q2
 ```
 
 ```
-## # A tibble: 1 x 4
+## # A tibble: 1 × 4
 ##   ci_lwr ci_upr pi_lwr pi_upr
 ##    <dbl>  <dbl>  <dbl>  <dbl>
 ## 1  3561.  4340. -3842. 11743.
@@ -228,8 +228,8 @@ df_q2 %>%
 ```
 
 ```
-## Warning: `guides(<scale> = FALSE)` is deprecated. Please use `guides(<scale> =
-## "none")` instead.
+## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
+## of ggplot2 3.3.4.
 ```
 
 <img src="d36-e-stat11-ci-pi-solution_files/figure-html/q2-vis-1.png" width="672" />
@@ -258,7 +258,7 @@ bind_cols(
 ```
 
 ```
-## # A tibble: 1 x 3
+## # A tibble: 1 × 3
 ##   ci_lwr price_mean ci_upr
 ##    <dbl>      <dbl>  <dbl>
 ## 1  3561.      3917.  4340.
@@ -275,7 +275,7 @@ left_join(
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   P_empirical
 ##         <dbl>
 ## 1       0.935

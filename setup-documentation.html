@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10 Setup: Documentation | Data Science: Exercise Solutions</title>
   <meta name="description" content="10 Setup: Documentation | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10 Setup: Documentation | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="data-basics.html"/>
 <link rel="next" href="communication-code-style.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,8 +980,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setup-documentation" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Setup: Documentation</h1>
+<div id="setup-documentation" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">10</span> Setup: Documentation<a href="setup-documentation.html#setup-documentation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: No programmer memorizes every fact about every function. Expert
 programmers get used to quickly reading <em>documentation</em>, which allows them to
 look up the facts they need, when they need them. Just as you had to learn how
@@ -990,11 +989,11 @@ to read English, you will have to learn how to consult documentation. This
 exercise will get you started.</p>
 <p><em>Reading</em>: <a href="https://www.r-project.org/help.html">Getting help with R</a> (Vignettes and Code Demonstrations)</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="setup-documentation.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
@@ -1002,8 +1001,8 @@ exercise will get you started.</p>
 <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/vignette.html">vignettes</a>;
 short narrative-form tutorials associated with a package, written by its
 developers.</p>
-<div id="q1-use-vignettepackage-fill-in-the-to-look-up-vignettes" class="section level3" number="10.0.1">
-<h3><span class="header-section-number">10.0.1</span> <strong>q1</strong> Use <code>vignette(package = ???)</code> (fill in the ???) to look up vignettes</h3>
+<div id="q1-use-vignettepackage-fill-in-the-to-look-up-vignettes" class="section level3 hasAnchor" number="10.0.1">
+<h3><span class="header-section-number">10.0.1</span> <strong>q1</strong> Use <code>vignette(package = ???)</code> (fill in the ???) to look up vignettes<a href="setup-documentation.html#q1-use-vignettepackage-fill-in-the-to-look-up-vignettes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>associated with <code>"dplyr"</code>. What vignettes are available?</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="setup-documentation.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>The <code>dplyr</code> package has vignettes <code>compatibility</code>, <code>dplyr</code>, <code>programming</code>,
@@ -1012,8 +1011,8 @@ in this course!</p>
 <p>Once we know <em>what</em> vignettes are available, we can use the same function to
 read a particular vignette.</p>
 </div>
-<div id="q2-use-vignette-package-dplyr-to-read-the-vignette-on-dplyr." class="section level3" number="10.0.2">
-<h3><span class="header-section-number">10.0.2</span> <strong>q2</strong> Use <code>vignette(???, package = "dplyr")</code> to read the vignette on <code>dplyr</code>.</h3>
+<div id="q2-use-vignette-package-dplyr-to-read-the-vignette-on-dplyr." class="section level3 hasAnchor" number="10.0.2">
+<h3><span class="header-section-number">10.0.2</span> <strong>q2</strong> Use <code>vignette(???, package = "dplyr")</code> to read the vignette on <code>dplyr</code>.<a href="setup-documentation.html#q2-use-vignette-package-dplyr-to-read-the-vignette-on-dplyr." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Read this vignette up to the first note on <code>filter()</code>. Use <code>filter()</code> to select
 only those rows of the <code>iris</code> dataset where <code>Species == "setosa"</code>.</p>
 <p><em>Note</em>: This should open up your browser.</p>
@@ -1023,7 +1022,7 @@ only those rows of the <code>iris</code> dataset where <code>Species == "setosa"
 <span id="cb30-4"><a href="setup-documentation.html#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: Filter on Species &quot;setosa&quot;</span></span>
 <span id="cb30-5"><a href="setup-documentation.html#cb30-5" aria-hidden="true" tabindex="-1"></a>    Species <span class="sc">==</span> <span class="st">&quot;setosa&quot;</span></span>
 <span id="cb30-6"><a href="setup-documentation.html#cb30-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## # A tibble: 50 x 5
+<pre><code>## # A tibble: 50 × 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
 ##  1          5.1         3.5          1.4         0.2 setosa 
@@ -1040,8 +1039,8 @@ only those rows of the <code>iris</code> dataset where <code>Species == "setosa"
 <p>Vignettes are useful when we only know <em>generally</em> what we’re looking for. Once
 we know the verbs (functions) we want to use, we need more specific help.</p>
 </div>
-<div id="q3-remember-back-to-e-setup02-functions-how-do-we-look-up-help-for-a" class="section level3" number="10.0.3">
-<h3><span class="header-section-number">10.0.3</span> <strong>q3</strong> Remember back to <code>e-setup02-functions</code>; how do we look up help for a</h3>
+<div id="q3-remember-back-to-e-setup02-functions-how-do-we-look-up-help-for-a" class="section level3 hasAnchor" number="10.0.3">
+<h3><span class="header-section-number">10.0.3</span> <strong>q3</strong> Remember back to <code>e-setup02-functions</code>; how do we look up help for a<a href="setup-documentation.html#q3-remember-back-to-e-setup02-functions-how-do-we-look-up-help-for-a" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>specific function?</p>
 <p>We have a few options:</p>
 <ul>
@@ -1052,8 +1051,8 @@ we know the verbs (functions) we want to use, we need more specific help.</p>
 it to do what we need. In this case, consulting the function’s documentation can
 be <em>extremely</em> helpful.</p>
 </div>
-<div id="q4-use-your-knowledge-of-documentation-lookup-to-answer-the-following" class="section level3" number="10.0.4">
-<h3><span class="header-section-number">10.0.4</span> <strong>q4</strong> Use your knowledge of documentation lookup to answer the following</h3>
+<div id="q4-use-your-knowledge-of-documentation-lookup-to-answer-the-following" class="section level3 hasAnchor" number="10.0.4">
+<h3><span class="header-section-number">10.0.4</span> <strong>q4</strong> Use your knowledge of documentation lookup to answer the following<a href="setup-documentation.html#q4-use-your-knowledge-of-documentation-lookup-to-answer-the-following" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>question: How could we <code>filter</code> the <code>iris</code> dataset to return only those rows
 with <code>Sepal.Length</code> between <code>5.1</code> and <code>6.4</code>?</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="setup-documentation.html#cb32-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
@@ -1062,7 +1061,7 @@ with <code>Sepal.Length</code> between <code>5.1</code> and <code>6.4</code>?</p
 <span id="cb32-4"><a href="setup-documentation.html#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">5.1</span> <span class="sc">&lt;=</span> Sepal.Length,</span>
 <span id="cb32-5"><a href="setup-documentation.html#cb32-5" aria-hidden="true" tabindex="-1"></a>    Sepal.Length <span class="sc">&lt;=</span> <span class="fl">6.4</span></span>
 <span id="cb32-6"><a href="setup-documentation.html#cb32-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## # A tibble: 83 x 5
+<pre><code>## # A tibble: 83 × 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
 ##  1          5.1         3.5          1.4         0.2 setosa 
@@ -1086,8 +1085,8 @@ related functions. In this case, it’s useful to be able to trace the <code>fun
 back to its parent <code>package</code>. Then we can read the vignettes on the package to
 learn more.</p>
 </div>
-<div id="q5-look-up-the-documentation-on-cut_number-what-package-does-it-come" class="section level3" number="10.0.5">
-<h3><span class="header-section-number">10.0.5</span> <strong>q5</strong> Look up the documentation on <code>cut_number</code>; what package does it come</h3>
+<div id="q5-look-up-the-documentation-on-cut_number-what-package-does-it-come" class="section level3 hasAnchor" number="10.0.5">
+<h3><span class="header-section-number">10.0.5</span> <strong>q5</strong> Look up the documentation on <code>cut_number</code>; what package does it come<a href="setup-documentation.html#q5-look-up-the-documentation-on-cut_number-what-package-does-it-come" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>from? What about <code>parse_number()</code>? What about <code>row_number()</code>?</p>
 <ul>
 <li><code>ggplot2::cut_number()</code></li>
@@ -1164,7 +1163,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>56 Data: Cleaning | Data Science: Exercise Solutions</title>
   <meta name="description" content="56 Data: Cleaning | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="56 Data: Cleaning | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="model-introduction-to-modeling.html"/>
 <link rel="next" href="model-model-selection-and-the-test-validate-framework.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,68 +980,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-cleaning" class="section level1" number="56">
-<h1><span class="header-section-number">56</span> Data: Cleaning</h1>
+<div id="data-cleaning" class="section level1 hasAnchor" number="56">
+<h1><span class="header-section-number">56</span> Data: Cleaning<a href="data-cleaning.html#data-cleaning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Most of the data you’ll find in the wild is <em>messy</em>; you’ll need to clean those data before you can do useful work. In this case study, you’ll learn some more tricks for cleaning data. We’ll use these data for a future exercise on modeling, so we’ll build on the work you do here today.</p>
 <p><em>Reading</em>: (<em>None</em>, this exercise <em>is</em> the reading.)</p>
-<div class="sourceCode" id="cb1014"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1014-1"><a href="data-cleaning.html#cb1014-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<div class="sourceCode" id="cb1024"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1024-1"><a href="data-cleaning.html#cb1024-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <p><em>Background</em>: This exercise’s data comes from the UCI Machine Learning Database; specifically their <a href="https://archive.ics.uci.edu/ml/datasets/Heart+Disease">Heart Disease Data Set</a>. These data consist of clinical measurements on patients, and are intended to help predict heart disease.</p>
-<div class="sourceCode" id="cb1018"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1018-1"><a href="data-cleaning.html#cb1018-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb1018-2"><a href="data-cleaning.html#cb1018-2" aria-hidden="true" tabindex="-1"></a>url_disease <span class="ot">&lt;-</span> <span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data&quot;</span></span>
-<span id="cb1018-3"><a href="data-cleaning.html#cb1018-3" aria-hidden="true" tabindex="-1"></a>filename_disease <span class="ot">&lt;-</span> <span class="st">&quot;./data/uci_heart_disease.csv&quot;</span></span>
-<span id="cb1018-4"><a href="data-cleaning.html#cb1018-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1018-5"><a href="data-cleaning.html#cb1018-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Download the data locally</span></span>
-<span id="cb1018-6"><a href="data-cleaning.html#cb1018-6" aria-hidden="true" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_download</span>(</span>
-<span id="cb1018-7"><a href="data-cleaning.html#cb1018-7" aria-hidden="true" tabindex="-1"></a>        url_disease,</span>
-<span id="cb1018-8"><a href="data-cleaning.html#cb1018-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">destfile =</span> filename_disease</span>
-<span id="cb1018-9"><a href="data-cleaning.html#cb1018-9" aria-hidden="true" tabindex="-1"></a>      )</span></code></pre></div>
+<div class="sourceCode" id="cb1028"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1028-1"><a href="data-cleaning.html#cb1028-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb1028-2"><a href="data-cleaning.html#cb1028-2" aria-hidden="true" tabindex="-1"></a>url_disease <span class="ot">&lt;-</span> <span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data&quot;</span></span>
+<span id="cb1028-3"><a href="data-cleaning.html#cb1028-3" aria-hidden="true" tabindex="-1"></a>filename_disease <span class="ot">&lt;-</span> <span class="st">&quot;./data/uci_heart_disease.csv&quot;</span></span>
+<span id="cb1028-4"><a href="data-cleaning.html#cb1028-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1028-5"><a href="data-cleaning.html#cb1028-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Download the data locally</span></span>
+<span id="cb1028-6"><a href="data-cleaning.html#cb1028-6" aria-hidden="true" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_download</span>(</span>
+<span id="cb1028-7"><a href="data-cleaning.html#cb1028-7" aria-hidden="true" tabindex="-1"></a>        url_disease,</span>
+<span id="cb1028-8"><a href="data-cleaning.html#cb1028-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">destfile =</span> filename_disease</span>
+<span id="cb1028-9"><a href="data-cleaning.html#cb1028-9" aria-hidden="true" tabindex="-1"></a>      )</span></code></pre></div>
 <p>This is a <em>messy</em> dataset; one we’ll have to clean if we want to make sense of it. Let’s load the data and document the ways in which it’s messy:</p>
-<div class="sourceCode" id="cb1019"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1019-1"><a href="data-cleaning.html#cb1019-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb1019-2"><a href="data-cleaning.html#cb1019-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(filename_disease) <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
-<pre><code>## Warning: Duplicated column names deduplicated: &#39;1.0&#39; =&gt; &#39;1.0_1&#39; [3], &#39;1.0&#39; =&gt;
-## &#39;1.0_2&#39; [6], &#39;0.0&#39; =&gt; &#39;0.0_1&#39; [12]</code></pre>
-<pre><code>## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   `63.0` = col_double(),
-##   `1.0` = col_double(),
-##   `1.0_1` = col_double(),
-##   `145.0` = col_double(),
-##   `233.0` = col_double(),
-##   `1.0_2` = col_double(),
-##   `2.0` = col_double(),
-##   `150.0` = col_double(),
-##   `0.0` = col_double(),
-##   `2.3` = col_double(),
-##   `3.0` = col_double(),
-##   `0.0_1` = col_character(),
-##   `6.0` = col_character(),
-##   `0` = col_double()
-## )</code></pre>
+<div class="sourceCode" id="cb1029"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1029-1"><a href="data-cleaning.html#cb1029-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb1029-2"><a href="data-cleaning.html#cb1029-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(filename_disease) <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<pre><code>## New names:
+## Rows: 302 Columns: 14
+## ── Column specification
+## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## (2): 0.0...12, 6.0 dbl (12): 63.0, 1.0...2, 1.0...3, 145.0, 233.0, 1.0...6,
+## 2.0, 150.0, 0.0...9...
+## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## • `1.0` -&gt; `1.0...2`
+## • `1.0` -&gt; `1.0...3`
+## • `1.0` -&gt; `1.0...6`
+## • `0.0` -&gt; `0.0...9`
+## • `0.0` -&gt; `0.0...12`</code></pre>
 <pre><code>## Rows: 302
 ## Columns: 14
-## $ `63.0`  &lt;dbl&gt; 67, 67, 37, 41, 56, 62, 57, 63, 53, 57, 56, 56, 44, 52, 57, 48…
-## $ `1.0`   &lt;dbl&gt; 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,…
-## $ `1.0_1` &lt;dbl&gt; 4, 4, 3, 2, 2, 4, 4, 4, 4, 4, 2, 3, 2, 3, 3, 2, 4, 3, 2, 1, 1,…
-## $ `145.0` &lt;dbl&gt; 160, 120, 130, 130, 120, 140, 120, 130, 140, 140, 140, 130, 12…
-## $ `233.0` &lt;dbl&gt; 286, 229, 250, 204, 236, 268, 354, 254, 203, 192, 294, 256, 26…
-## $ `1.0_2` &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1,…
-## $ `2.0`   &lt;dbl&gt; 2, 2, 0, 2, 0, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2,…
-## $ `150.0` &lt;dbl&gt; 108, 129, 187, 172, 178, 160, 163, 147, 155, 148, 153, 142, 17…
-## $ `0.0`   &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0,…
-## $ `2.3`   &lt;dbl&gt; 1.5, 2.6, 3.5, 1.4, 0.8, 3.6, 0.6, 1.4, 3.1, 0.4, 1.3, 0.6, 0.…
-## $ `3.0`   &lt;dbl&gt; 2, 2, 3, 1, 1, 3, 1, 2, 3, 2, 2, 2, 1, 1, 1, 3, 1, 1, 1, 2, 1,…
-## $ `0.0_1` &lt;chr&gt; &quot;3.0&quot;, &quot;2.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;2.0&quot;, &quot;0.0&quot;, &quot;1.0&quot;, &quot;0.0&quot;,…
-## $ `6.0`   &lt;chr&gt; &quot;3.0&quot;, &quot;7.0&quot;, &quot;3.0&quot;, &quot;3.0&quot;, &quot;3.0&quot;, &quot;3.0&quot;, &quot;3.0&quot;, &quot;7.0&quot;, &quot;7.0&quot;,…
-## $ `0`     &lt;dbl&gt; 2, 1, 0, 0, 0, 3, 0, 2, 1, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0,…</code></pre>
+## $ `63.0`     &lt;dbl&gt; 67, 67, 37, 41, 56, 62, 57, 63, 53, 57, 56, 56, 44, 52, 57,…
+## $ `1.0...2`  &lt;dbl&gt; 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1,…
+## $ `1.0...3`  &lt;dbl&gt; 4, 4, 3, 2, 2, 4, 4, 4, 4, 4, 2, 3, 2, 3, 3, 2, 4, 3, 2, 1,…
+## $ `145.0`    &lt;dbl&gt; 160, 120, 130, 130, 120, 140, 120, 130, 140, 140, 140, 130,…
+## $ `233.0`    &lt;dbl&gt; 286, 229, 250, 204, 236, 268, 354, 254, 203, 192, 294, 256,…
+## $ `1.0...6`  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0,…
+## $ `2.0`      &lt;dbl&gt; 2, 2, 0, 2, 0, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2,…
+## $ `150.0`    &lt;dbl&gt; 108, 129, 187, 172, 178, 160, 163, 147, 155, 148, 153, 142,…
+## $ `0.0...9`  &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1,…
+## $ `2.3`      &lt;dbl&gt; 1.5, 2.6, 3.5, 1.4, 0.8, 3.6, 0.6, 1.4, 3.1, 0.4, 1.3, 0.6,…
+## $ `3.0`      &lt;dbl&gt; 2, 2, 3, 1, 1, 3, 1, 2, 3, 2, 2, 2, 1, 1, 1, 3, 1, 1, 1, 2,…
+## $ `0.0...12` &lt;chr&gt; &quot;3.0&quot;, &quot;2.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;2.0&quot;, &quot;0.0&quot;, &quot;1.0&quot;, &quot;0.…
+## $ `6.0`      &lt;chr&gt; &quot;3.0&quot;, &quot;7.0&quot;, &quot;3.0&quot;, &quot;3.0&quot;, &quot;3.0&quot;, &quot;3.0&quot;, &quot;3.0&quot;, &quot;7.0&quot;, &quot;7.…
+## $ `0`        &lt;dbl&gt; 2, 1, 0, 0, 0, 3, 0, 2, 1, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0,…</code></pre>
 <p><em>Observations</em>:</p>
 <ul>
 <li>The CSV comes without column names! <code>read_csv()</code> got confused and assigned the first row of data as names.</li>
@@ -1050,11 +1042,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Some of the columns are coded as binary values <code>0, 1</code>, but they really represent variables like <code>sex %in% c("male", "female")</code>.</li>
 </ul>
 <p>Let’s tackle these problems one at a time:</p>
-<div id="problem-1-no-column-names" class="section level2" number="56.1">
-<h2><span class="header-section-number">56.1</span> Problem 1: No column names</h2>
+<div id="problem-1-no-column-names" class="section level2 hasAnchor" number="56.1">
+<h2><span class="header-section-number">56.1</span> Problem 1: No column names<a href="data-cleaning.html#problem-1-no-column-names" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ll have a hard time making sense of these data without column names. Let’s fix that.</p>
-<div id="q1-obtain-the-data." class="section level3" number="56.1.1">
-<h3><span class="header-section-number">56.1.1</span> <strong>q1</strong> Obtain the data.</h3>
+<div id="q1-obtain-the-data." class="section level3 hasAnchor" number="56.1.1">
+<h3><span class="header-section-number">56.1.1</span> <strong>q1</strong> Obtain the data.<a href="data-cleaning.html#q1-obtain-the-data." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Following the <a href="https://archive.ics.uci.edu/ml/datasets/Heart+Disease">dataset documentation</a>, transcribe the correct column names and assign them as a character vector. You will use this to give the dataset sensible column names when you load it in q2.</p>
 <p><em>Hint 1</em>: The relevant section from the dataset documentation is quoted here:</p>
 <blockquote>
@@ -1075,96 +1067,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 14. #58 (num) (the predicted attribute)</p>
 </blockquote>
 <p><em>Hint 2</em>: A “copy-paste-edit” is probably the most effective approach here!</p>
-<div class="sourceCode" id="cb1023"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1023-1"><a href="data-cleaning.html#cb1023-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Assign the column names to col_names; make sure they are strings</span></span>
-<span id="cb1023-2"><a href="data-cleaning.html#cb1023-2" aria-hidden="true" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb1023-3"><a href="data-cleaning.html#cb1023-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span>,</span>
-<span id="cb1023-4"><a href="data-cleaning.html#cb1023-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;sex&quot;</span>,</span>
-<span id="cb1023-5"><a href="data-cleaning.html#cb1023-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;cp&quot;</span>,</span>
-<span id="cb1023-6"><a href="data-cleaning.html#cb1023-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;trestbps&quot;</span>,</span>
-<span id="cb1023-7"><a href="data-cleaning.html#cb1023-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;chol&quot;</span>,</span>
-<span id="cb1023-8"><a href="data-cleaning.html#cb1023-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fbs&quot;</span>,</span>
-<span id="cb1023-9"><a href="data-cleaning.html#cb1023-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;restecg&quot;</span>,</span>
-<span id="cb1023-10"><a href="data-cleaning.html#cb1023-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;thalach&quot;</span>,</span>
-<span id="cb1023-11"><a href="data-cleaning.html#cb1023-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;exang&quot;</span>,</span>
-<span id="cb1023-12"><a href="data-cleaning.html#cb1023-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;oldpeak&quot;</span>,</span>
-<span id="cb1023-13"><a href="data-cleaning.html#cb1023-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;slope&quot;</span>,</span>
-<span id="cb1023-14"><a href="data-cleaning.html#cb1023-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ca&quot;</span>,</span>
-<span id="cb1023-15"><a href="data-cleaning.html#cb1023-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;thal&quot;</span>,</span>
-<span id="cb1023-16"><a href="data-cleaning.html#cb1023-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;num&quot;</span></span>
-<span id="cb1023-17"><a href="data-cleaning.html#cb1023-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1032"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1032-1"><a href="data-cleaning.html#cb1032-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Assign the column names to col_names; make sure they are strings</span></span>
+<span id="cb1032-2"><a href="data-cleaning.html#cb1032-2" aria-hidden="true" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1032-3"><a href="data-cleaning.html#cb1032-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span>,</span>
+<span id="cb1032-4"><a href="data-cleaning.html#cb1032-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;sex&quot;</span>,</span>
+<span id="cb1032-5"><a href="data-cleaning.html#cb1032-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;cp&quot;</span>,</span>
+<span id="cb1032-6"><a href="data-cleaning.html#cb1032-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;trestbps&quot;</span>,</span>
+<span id="cb1032-7"><a href="data-cleaning.html#cb1032-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;chol&quot;</span>,</span>
+<span id="cb1032-8"><a href="data-cleaning.html#cb1032-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fbs&quot;</span>,</span>
+<span id="cb1032-9"><a href="data-cleaning.html#cb1032-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;restecg&quot;</span>,</span>
+<span id="cb1032-10"><a href="data-cleaning.html#cb1032-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;thalach&quot;</span>,</span>
+<span id="cb1032-11"><a href="data-cleaning.html#cb1032-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;exang&quot;</span>,</span>
+<span id="cb1032-12"><a href="data-cleaning.html#cb1032-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;oldpeak&quot;</span>,</span>
+<span id="cb1032-13"><a href="data-cleaning.html#cb1032-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;slope&quot;</span>,</span>
+<span id="cb1032-14"><a href="data-cleaning.html#cb1032-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ca&quot;</span>,</span>
+<span id="cb1032-15"><a href="data-cleaning.html#cb1032-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;thal&quot;</span>,</span>
+<span id="cb1032-16"><a href="data-cleaning.html#cb1032-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;num&quot;</span></span>
+<span id="cb1032-17"><a href="data-cleaning.html#cb1032-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Use the following to check your code.</p>
-<div class="sourceCode" id="cb1024"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1024-1"><a href="data-cleaning.html#cb1024-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb1024-2"><a href="data-cleaning.html#cb1024-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">1</span>] <span class="sc">==</span> <span class="st">&quot;age&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1033"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1033-1"><a href="data-cleaning.html#cb1033-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb1033-2"><a href="data-cleaning.html#cb1033-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">1</span>] <span class="sc">==</span> <span class="st">&quot;age&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1026"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1026-1"><a href="data-cleaning.html#cb1026-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">&quot;sex&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1035"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1035-1"><a href="data-cleaning.html#cb1035-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">&quot;sex&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1028"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1028-1"><a href="data-cleaning.html#cb1028-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">3</span>] <span class="sc">==</span> <span class="st">&quot;cp&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1037"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1037-1"><a href="data-cleaning.html#cb1037-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">3</span>] <span class="sc">==</span> <span class="st">&quot;cp&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1030"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1030-1"><a href="data-cleaning.html#cb1030-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">4</span>] <span class="sc">==</span> <span class="st">&quot;trestbps&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1039"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1039-1"><a href="data-cleaning.html#cb1039-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">4</span>] <span class="sc">==</span> <span class="st">&quot;trestbps&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1032"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1032-1"><a href="data-cleaning.html#cb1032-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">5</span>] <span class="sc">==</span> <span class="st">&quot;chol&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1041"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1041-1"><a href="data-cleaning.html#cb1041-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">5</span>] <span class="sc">==</span> <span class="st">&quot;chol&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1034"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1034-1"><a href="data-cleaning.html#cb1034-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">6</span>] <span class="sc">==</span> <span class="st">&quot;fbs&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1043"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1043-1"><a href="data-cleaning.html#cb1043-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">6</span>] <span class="sc">==</span> <span class="st">&quot;fbs&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1036"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1036-1"><a href="data-cleaning.html#cb1036-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">7</span>] <span class="sc">==</span> <span class="st">&quot;restecg&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1045"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1045-1"><a href="data-cleaning.html#cb1045-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">7</span>] <span class="sc">==</span> <span class="st">&quot;restecg&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1038"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1038-1"><a href="data-cleaning.html#cb1038-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">8</span>] <span class="sc">==</span> <span class="st">&quot;thalach&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1047"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1047-1"><a href="data-cleaning.html#cb1047-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">8</span>] <span class="sc">==</span> <span class="st">&quot;thalach&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1040"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1040-1"><a href="data-cleaning.html#cb1040-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">9</span>] <span class="sc">==</span> <span class="st">&quot;exang&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1049"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1049-1"><a href="data-cleaning.html#cb1049-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">9</span>] <span class="sc">==</span> <span class="st">&quot;exang&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1042"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1042-1"><a href="data-cleaning.html#cb1042-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">10</span>] <span class="sc">==</span> <span class="st">&quot;oldpeak&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1051"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1051-1"><a href="data-cleaning.html#cb1051-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">10</span>] <span class="sc">==</span> <span class="st">&quot;oldpeak&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1044"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1044-1"><a href="data-cleaning.html#cb1044-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">11</span>] <span class="sc">==</span> <span class="st">&quot;slope&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1053"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1053-1"><a href="data-cleaning.html#cb1053-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">11</span>] <span class="sc">==</span> <span class="st">&quot;slope&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1046"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1046-1"><a href="data-cleaning.html#cb1046-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">12</span>] <span class="sc">==</span> <span class="st">&quot;ca&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1055"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1055-1"><a href="data-cleaning.html#cb1055-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">12</span>] <span class="sc">==</span> <span class="st">&quot;ca&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1048"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1048-1"><a href="data-cleaning.html#cb1048-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">13</span>] <span class="sc">==</span> <span class="st">&quot;thal&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1057"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1057-1"><a href="data-cleaning.html#cb1057-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">13</span>] <span class="sc">==</span> <span class="st">&quot;thal&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1050"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1050-1"><a href="data-cleaning.html#cb1050-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">14</span>] <span class="sc">==</span> <span class="st">&quot;num&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1059"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1059-1"><a href="data-cleaning.html#cb1059-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(col_names[<span class="dv">14</span>] <span class="sc">==</span> <span class="st">&quot;num&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1052"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1052-1"><a href="data-cleaning.html#cb1052-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1061"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1061-1"><a href="data-cleaning.html#cb1061-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 </div>
 </div>
-<div id="problem-2-incorrect-types" class="section level2" number="56.2">
-<h2><span class="header-section-number">56.2</span> Problem 2: Incorrect types</h2>
+<div id="problem-2-incorrect-types" class="section level2 hasAnchor" number="56.2">
+<h2><span class="header-section-number">56.2</span> Problem 2: Incorrect types<a href="data-cleaning.html#problem-2-incorrect-types" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We saw above that <code>read_csv()</code> incorrectly guessed some of the column types. Let’s fix that by manually specifying each column’s type.</p>
-<div id="q2-call-read_csv-with-the-col_names-and-col_types-arguments.-use-the-column-names-you-assigned-above-and-set-all-column-types-to-col_number." class="section level3" number="56.2.1">
-<h3><span class="header-section-number">56.2.1</span> <strong>q2</strong> Call <code>read_csv()</code> with the <code>col_names</code> and <code>col_types</code> arguments. Use the column names you assigned above, and set all column types to <code>col_number()</code>.</h3>
+<div id="q2-call-read_csv-with-the-col_names-and-col_types-arguments.-use-the-column-names-you-assigned-above-and-set-all-column-types-to-col_number." class="section level3 hasAnchor" number="56.2.1">
+<h3><span class="header-section-number">56.2.1</span> <strong>q2</strong> Call <code>read_csv()</code> with the <code>col_names</code> and <code>col_types</code> arguments. Use the column names you assigned above, and set all column types to <code>col_number()</code>.<a href="data-cleaning.html#q2-call-read_csv-with-the-col_names-and-col_types-arguments.-use-the-column-names-you-assigned-above-and-set-all-column-types-to-col_number." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: Remember that you can always read the documentation to learn how to use a new argument!</p>
-<div class="sourceCode" id="cb1054"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1054-1"><a href="data-cleaning.html#cb1054-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Use the col_names and col_types arguments to give the data the</span></span>
-<span id="cb1054-2"><a href="data-cleaning.html#cb1054-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       correct column names, and to set their types to col_number()</span></span>
-<span id="cb1054-3"><a href="data-cleaning.html#cb1054-3" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
-<span id="cb1054-4"><a href="data-cleaning.html#cb1054-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
-<span id="cb1054-5"><a href="data-cleaning.html#cb1054-5" aria-hidden="true" tabindex="-1"></a>    filename_disease,</span>
-<span id="cb1054-6"><a href="data-cleaning.html#cb1054-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_names =</span> col_names,</span>
-<span id="cb1054-7"><a href="data-cleaning.html#cb1054-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
-<span id="cb1054-8"><a href="data-cleaning.html#cb1054-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-9"><a href="data-cleaning.html#cb1054-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;sex&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-10"><a href="data-cleaning.html#cb1054-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;cp&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-11"><a href="data-cleaning.html#cb1054-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;trestbps&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-12"><a href="data-cleaning.html#cb1054-12" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;chol&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-13"><a href="data-cleaning.html#cb1054-13" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;fbs&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-14"><a href="data-cleaning.html#cb1054-14" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;restecg&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-15"><a href="data-cleaning.html#cb1054-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;thalach&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-16"><a href="data-cleaning.html#cb1054-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;exang&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-17"><a href="data-cleaning.html#cb1054-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;oldpeak&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-18"><a href="data-cleaning.html#cb1054-18" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;slope&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-19"><a href="data-cleaning.html#cb1054-19" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;ca&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-20"><a href="data-cleaning.html#cb1054-20" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;thal&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1054-21"><a href="data-cleaning.html#cb1054-21" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;num&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>()</span>
-<span id="cb1054-22"><a href="data-cleaning.html#cb1054-22" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1054-23"><a href="data-cleaning.html#cb1054-23" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## Warning: 6 parsing failures.
-## row  col expected actual                           file
-##  88 thal a number      ? &#39;./data/uci_heart_disease.csv&#39;
-## 167 ca   a number      ? &#39;./data/uci_heart_disease.csv&#39;
-## 193 ca   a number      ? &#39;./data/uci_heart_disease.csv&#39;
-## 267 thal a number      ? &#39;./data/uci_heart_disease.csv&#39;
-## 288 ca   a number      ? &#39;./data/uci_heart_disease.csv&#39;
-## ... .... ........ ...... ..............................
-## See problems(...) for more details.</code></pre>
-<div class="sourceCode" id="cb1056"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1056-1"><a href="data-cleaning.html#cb1056-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1063"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1063-1"><a href="data-cleaning.html#cb1063-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Use the col_names and col_types arguments to give the data the</span></span>
+<span id="cb1063-2"><a href="data-cleaning.html#cb1063-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       correct column names, and to set their types to col_number()</span></span>
+<span id="cb1063-3"><a href="data-cleaning.html#cb1063-3" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
+<span id="cb1063-4"><a href="data-cleaning.html#cb1063-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb1063-5"><a href="data-cleaning.html#cb1063-5" aria-hidden="true" tabindex="-1"></a>    filename_disease,</span>
+<span id="cb1063-6"><a href="data-cleaning.html#cb1063-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_names =</span> col_names,</span>
+<span id="cb1063-7"><a href="data-cleaning.html#cb1063-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb1063-8"><a href="data-cleaning.html#cb1063-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-9"><a href="data-cleaning.html#cb1063-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;sex&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-10"><a href="data-cleaning.html#cb1063-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;cp&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-11"><a href="data-cleaning.html#cb1063-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;trestbps&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-12"><a href="data-cleaning.html#cb1063-12" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;chol&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-13"><a href="data-cleaning.html#cb1063-13" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;fbs&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-14"><a href="data-cleaning.html#cb1063-14" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;restecg&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-15"><a href="data-cleaning.html#cb1063-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;thalach&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-16"><a href="data-cleaning.html#cb1063-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;exang&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-17"><a href="data-cleaning.html#cb1063-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;oldpeak&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-18"><a href="data-cleaning.html#cb1063-18" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;slope&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-19"><a href="data-cleaning.html#cb1063-19" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;ca&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-20"><a href="data-cleaning.html#cb1063-20" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;thal&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1063-21"><a href="data-cleaning.html#cb1063-21" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;num&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>()</span>
+<span id="cb1063-22"><a href="data-cleaning.html#cb1063-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1063-23"><a href="data-cleaning.html#cb1063-23" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details,
+## e.g.:
+##   dat &lt;- vroom(...)
+##   problems(dat)</code></pre>
+<div class="sourceCode" id="cb1065"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1065-1"><a href="data-cleaning.html#cb1065-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 303
 ## Columns: 14
 ## $ age      &lt;dbl&gt; 63, 67, 67, 37, 41, 56, 62, 57, 63, 53, 57, 56, 56, 44, 52, 5…
@@ -1182,23 +1169,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ thal     &lt;dbl&gt; 6, 3, 7, 3, 3, 3, 3, 3, 7, 7, 6, 3, 6, 7, 7, 3, 7, 3, 3, 3, 3…
 ## $ num      &lt;dbl&gt; 0, 2, 1, 0, 0, 0, 3, 0, 2, 1, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0…</code></pre>
 <p>Use the following to check your code.</p>
-<div class="sourceCode" id="cb1058"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1058-1"><a href="data-cleaning.html#cb1058-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb1058-2"><a href="data-cleaning.html#cb1058-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(<span class="fu">names</span>(df_q2), col_names))</span></code></pre></div>
+<div class="sourceCode" id="cb1067"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1067-1"><a href="data-cleaning.html#cb1067-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb1067-2"><a href="data-cleaning.html#cb1067-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(<span class="fu">names</span>(df_q2), col_names))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1060"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1060-1"><a href="data-cleaning.html#cb1060-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">all</span>(<span class="fu">map_chr</span>(df_q2, class) <span class="sc">==</span> <span class="st">&quot;numeric&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1069"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1069-1"><a href="data-cleaning.html#cb1069-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">all</span>(<span class="fu">map_chr</span>(df_q2, class) <span class="sc">==</span> <span class="st">&quot;numeric&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1062"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1062-1"><a href="data-cleaning.html#cb1062-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1071"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1071-1"><a href="data-cleaning.html#cb1071-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 </div>
 </div>
-<div id="problem-3-uninformative-values" class="section level2" number="56.3">
-<h2><span class="header-section-number">56.3</span> Problem 3: Uninformative values</h2>
+<div id="problem-3-uninformative-values" class="section level2 hasAnchor" number="56.3">
+<h2><span class="header-section-number">56.3</span> Problem 3: Uninformative values<a href="data-cleaning.html#problem-3-uninformative-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The numeric codes given for some of the variables are uninformative; let’s replace those with more human-readable values.</p>
 <p>Rather than go and modify our raw data, we will instead <em>recode</em> the variables in our loaded dataset. <em>It is bad practice to modify your raw data!</em> Modifying your data in code provides <em>traceable documentation</em> for the edits you made; this is a key part of doing <a href="https://www.nature.com/articles/s41562-016-0021">reproducible science</a>. It takes more work, but <em>your results will be more trustworthy if you do things the right way!</em></p>
-<div id="q3-create-conversion-functions-to-recode-factor-values-as-human-readable-strings.-i-have-provided-one-function-convert_sex-as-an-example." class="section level3" number="56.3.1">
-<h3><span class="header-section-number">56.3.1</span> <strong>q3</strong> Create <em>conversion functions</em> to recode factor values as human-readable strings. I have provided one function (<code>convert_sex</code>) as an example.</h3>
+<div id="q3-create-conversion-functions-to-recode-factor-values-as-human-readable-strings.-i-have-provided-one-function-convert_sex-as-an-example." class="section level3 hasAnchor" number="56.3.1">
+<h3><span class="header-section-number">56.3.1</span> <strong>q3</strong> Create <em>conversion functions</em> to recode factor values as human-readable strings. I have provided one function (<code>convert_sex</code>) as an example.<a href="data-cleaning.html#q3-create-conversion-functions-to-recode-factor-values-as-human-readable-strings.-i-have-provided-one-function-convert_sex-as-an-example." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Note</em>: “In the wild” you would be responsible for devising your own sensible level names. However, I’m going to provide specific codes such that I can write unittests to check your answers:</p>
 <table>
+<colgroup>
+<col width="57%" />
+<col width="42%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -1232,125 +1223,126 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb1064"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1064-1"><a href="data-cleaning.html#cb1064-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is an example conversion</span></span>
-<span id="cb1064-2"><a href="data-cleaning.html#cb1064-2" aria-hidden="true" tabindex="-1"></a>convert_sex <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1064-3"><a href="data-cleaning.html#cb1064-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb1064-4"><a href="data-cleaning.html#cb1064-4" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;male&quot;</span>,</span>
-<span id="cb1064-5"><a href="data-cleaning.html#cb1064-5" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;female&quot;</span>,</span>
-<span id="cb1064-6"><a href="data-cleaning.html#cb1064-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb1064-7"><a href="data-cleaning.html#cb1064-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1064-8"><a href="data-cleaning.html#cb1064-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1064-9"><a href="data-cleaning.html#cb1064-9" aria-hidden="true" tabindex="-1"></a>convert_cp <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1064-10"><a href="data-cleaning.html#cb1064-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb1064-11"><a href="data-cleaning.html#cb1064-11" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;typical angina&quot;</span>,</span>
-<span id="cb1064-12"><a href="data-cleaning.html#cb1064-12" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;atypical angina&quot;</span>,</span>
-<span id="cb1064-13"><a href="data-cleaning.html#cb1064-13" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;non-anginal pain&quot;</span>,</span>
-<span id="cb1064-14"><a href="data-cleaning.html#cb1064-14" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;asymptomatic&quot;</span>,</span>
-<span id="cb1064-15"><a href="data-cleaning.html#cb1064-15" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb1064-16"><a href="data-cleaning.html#cb1064-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1064-17"><a href="data-cleaning.html#cb1064-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1064-18"><a href="data-cleaning.html#cb1064-18" aria-hidden="true" tabindex="-1"></a>convert_fbs <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1064-19"><a href="data-cleaning.html#cb1064-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">if_else</span>(x <span class="sc">==</span> <span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb1064-20"><a href="data-cleaning.html#cb1064-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1064-21"><a href="data-cleaning.html#cb1064-21" aria-hidden="true" tabindex="-1"></a>convert_restecv <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1064-22"><a href="data-cleaning.html#cb1064-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb1064-23"><a href="data-cleaning.html#cb1064-23" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;normal&quot;</span>,</span>
-<span id="cb1064-24"><a href="data-cleaning.html#cb1064-24" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;ST-T wave abnormality&quot;</span>,</span>
-<span id="cb1064-25"><a href="data-cleaning.html#cb1064-25" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;Estes&#39; criteria&quot;</span>,</span>
-<span id="cb1064-26"><a href="data-cleaning.html#cb1064-26" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb1064-27"><a href="data-cleaning.html#cb1064-27" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1064-28"><a href="data-cleaning.html#cb1064-28" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1064-29"><a href="data-cleaning.html#cb1064-29" aria-hidden="true" tabindex="-1"></a>convert_exang <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1064-30"><a href="data-cleaning.html#cb1064-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">if_else</span>(x <span class="sc">==</span> <span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb1064-31"><a href="data-cleaning.html#cb1064-31" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1064-32"><a href="data-cleaning.html#cb1064-32" aria-hidden="true" tabindex="-1"></a>convert_slope <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1064-33"><a href="data-cleaning.html#cb1064-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb1064-34"><a href="data-cleaning.html#cb1064-34" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;upsloping&quot;</span>,</span>
-<span id="cb1064-35"><a href="data-cleaning.html#cb1064-35" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;flat&quot;</span>,</span>
-<span id="cb1064-36"><a href="data-cleaning.html#cb1064-36" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;downsloping&quot;</span>,</span>
-<span id="cb1064-37"><a href="data-cleaning.html#cb1064-37" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb1064-38"><a href="data-cleaning.html#cb1064-38" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1064-39"><a href="data-cleaning.html#cb1064-39" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1064-40"><a href="data-cleaning.html#cb1064-40" aria-hidden="true" tabindex="-1"></a>convert_thal <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1064-41"><a href="data-cleaning.html#cb1064-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb1064-42"><a href="data-cleaning.html#cb1064-42" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;normal&quot;</span>,</span>
-<span id="cb1064-43"><a href="data-cleaning.html#cb1064-43" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> <span class="st">&quot;fixed defect&quot;</span>,</span>
-<span id="cb1064-44"><a href="data-cleaning.html#cb1064-44" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">&quot;reversible defect&quot;</span>,</span>
-<span id="cb1064-45"><a href="data-cleaning.html#cb1064-45" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb1064-46"><a href="data-cleaning.html#cb1064-46" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1064-47"><a href="data-cleaning.html#cb1064-47" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1073"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1073-1"><a href="data-cleaning.html#cb1073-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is an example conversion</span></span>
+<span id="cb1073-2"><a href="data-cleaning.html#cb1073-2" aria-hidden="true" tabindex="-1"></a>convert_sex <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1073-3"><a href="data-cleaning.html#cb1073-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb1073-4"><a href="data-cleaning.html#cb1073-4" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;male&quot;</span>,</span>
+<span id="cb1073-5"><a href="data-cleaning.html#cb1073-5" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;female&quot;</span>,</span>
+<span id="cb1073-6"><a href="data-cleaning.html#cb1073-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb1073-7"><a href="data-cleaning.html#cb1073-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1073-8"><a href="data-cleaning.html#cb1073-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1073-9"><a href="data-cleaning.html#cb1073-9" aria-hidden="true" tabindex="-1"></a>convert_cp <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1073-10"><a href="data-cleaning.html#cb1073-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb1073-11"><a href="data-cleaning.html#cb1073-11" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;typical angina&quot;</span>,</span>
+<span id="cb1073-12"><a href="data-cleaning.html#cb1073-12" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;atypical angina&quot;</span>,</span>
+<span id="cb1073-13"><a href="data-cleaning.html#cb1073-13" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;non-anginal pain&quot;</span>,</span>
+<span id="cb1073-14"><a href="data-cleaning.html#cb1073-14" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;asymptomatic&quot;</span>,</span>
+<span id="cb1073-15"><a href="data-cleaning.html#cb1073-15" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb1073-16"><a href="data-cleaning.html#cb1073-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1073-17"><a href="data-cleaning.html#cb1073-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1073-18"><a href="data-cleaning.html#cb1073-18" aria-hidden="true" tabindex="-1"></a>convert_fbs <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1073-19"><a href="data-cleaning.html#cb1073-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">if_else</span>(x <span class="sc">==</span> <span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb1073-20"><a href="data-cleaning.html#cb1073-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1073-21"><a href="data-cleaning.html#cb1073-21" aria-hidden="true" tabindex="-1"></a>convert_restecv <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1073-22"><a href="data-cleaning.html#cb1073-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb1073-23"><a href="data-cleaning.html#cb1073-23" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;normal&quot;</span>,</span>
+<span id="cb1073-24"><a href="data-cleaning.html#cb1073-24" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;ST-T wave abnormality&quot;</span>,</span>
+<span id="cb1073-25"><a href="data-cleaning.html#cb1073-25" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;Estes&#39; criteria&quot;</span>,</span>
+<span id="cb1073-26"><a href="data-cleaning.html#cb1073-26" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb1073-27"><a href="data-cleaning.html#cb1073-27" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1073-28"><a href="data-cleaning.html#cb1073-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1073-29"><a href="data-cleaning.html#cb1073-29" aria-hidden="true" tabindex="-1"></a>convert_exang <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1073-30"><a href="data-cleaning.html#cb1073-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">if_else</span>(x <span class="sc">==</span> <span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb1073-31"><a href="data-cleaning.html#cb1073-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1073-32"><a href="data-cleaning.html#cb1073-32" aria-hidden="true" tabindex="-1"></a>convert_slope <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1073-33"><a href="data-cleaning.html#cb1073-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb1073-34"><a href="data-cleaning.html#cb1073-34" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;upsloping&quot;</span>,</span>
+<span id="cb1073-35"><a href="data-cleaning.html#cb1073-35" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;flat&quot;</span>,</span>
+<span id="cb1073-36"><a href="data-cleaning.html#cb1073-36" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;downsloping&quot;</span>,</span>
+<span id="cb1073-37"><a href="data-cleaning.html#cb1073-37" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb1073-38"><a href="data-cleaning.html#cb1073-38" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1073-39"><a href="data-cleaning.html#cb1073-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1073-40"><a href="data-cleaning.html#cb1073-40" aria-hidden="true" tabindex="-1"></a>convert_thal <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1073-41"><a href="data-cleaning.html#cb1073-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb1073-42"><a href="data-cleaning.html#cb1073-42" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;normal&quot;</span>,</span>
+<span id="cb1073-43"><a href="data-cleaning.html#cb1073-43" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> <span class="st">&quot;fixed defect&quot;</span>,</span>
+<span id="cb1073-44"><a href="data-cleaning.html#cb1073-44" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">&quot;reversible defect&quot;</span>,</span>
+<span id="cb1073-45"><a href="data-cleaning.html#cb1073-45" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb1073-46"><a href="data-cleaning.html#cb1073-46" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1073-47"><a href="data-cleaning.html#cb1073-47" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Use the following to check your code.</p>
-<div class="sourceCode" id="cb1065"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1065-1"><a href="data-cleaning.html#cb1065-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb1065-2"><a href="data-cleaning.html#cb1065-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb1065-3"><a href="data-cleaning.html#cb1065-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_cp</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)),</span>
-<span id="cb1065-4"><a href="data-cleaning.html#cb1065-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;typical angina&quot;</span>, <span class="st">&quot;atypical angina&quot;</span>, <span class="st">&quot;non-anginal pain&quot;</span>, <span class="st">&quot;asymptomatic&quot;</span>)</span>
-<span id="cb1065-5"><a href="data-cleaning.html#cb1065-5" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb1074"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1074-1"><a href="data-cleaning.html#cb1074-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb1074-2"><a href="data-cleaning.html#cb1074-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb1074-3"><a href="data-cleaning.html#cb1074-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_cp</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)),</span>
+<span id="cb1074-4"><a href="data-cleaning.html#cb1074-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;typical angina&quot;</span>, <span class="st">&quot;atypical angina&quot;</span>, <span class="st">&quot;non-anginal pain&quot;</span>, <span class="st">&quot;asymptomatic&quot;</span>)</span>
+<span id="cb1074-5"><a href="data-cleaning.html#cb1074-5" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1067"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1067-1"><a href="data-cleaning.html#cb1067-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb1067-2"><a href="data-cleaning.html#cb1067-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_fbs</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),</span>
-<span id="cb1067-3"><a href="data-cleaning.html#cb1067-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb1067-4"><a href="data-cleaning.html#cb1067-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb1076"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1076-1"><a href="data-cleaning.html#cb1076-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb1076-2"><a href="data-cleaning.html#cb1076-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_fbs</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),</span>
+<span id="cb1076-3"><a href="data-cleaning.html#cb1076-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb1076-4"><a href="data-cleaning.html#cb1076-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1069"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1069-1"><a href="data-cleaning.html#cb1069-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb1069-2"><a href="data-cleaning.html#cb1069-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_restecv</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)),</span>
-<span id="cb1069-3"><a href="data-cleaning.html#cb1069-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;normal&quot;</span>, <span class="st">&quot;ST-T wave abnormality&quot;</span>, <span class="st">&quot;Estes&#39; criteria&quot;</span>)</span>
-<span id="cb1069-4"><a href="data-cleaning.html#cb1069-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb1078"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1078-1"><a href="data-cleaning.html#cb1078-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb1078-2"><a href="data-cleaning.html#cb1078-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_restecv</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)),</span>
+<span id="cb1078-3"><a href="data-cleaning.html#cb1078-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;normal&quot;</span>, <span class="st">&quot;ST-T wave abnormality&quot;</span>, <span class="st">&quot;Estes&#39; criteria&quot;</span>)</span>
+<span id="cb1078-4"><a href="data-cleaning.html#cb1078-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1071"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1071-1"><a href="data-cleaning.html#cb1071-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb1071-2"><a href="data-cleaning.html#cb1071-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_exang</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),</span>
-<span id="cb1071-3"><a href="data-cleaning.html#cb1071-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb1071-4"><a href="data-cleaning.html#cb1071-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb1080"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1080-1"><a href="data-cleaning.html#cb1080-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb1080-2"><a href="data-cleaning.html#cb1080-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_exang</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),</span>
+<span id="cb1080-3"><a href="data-cleaning.html#cb1080-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb1080-4"><a href="data-cleaning.html#cb1080-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1073"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1073-1"><a href="data-cleaning.html#cb1073-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb1073-2"><a href="data-cleaning.html#cb1073-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_slope</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)),</span>
-<span id="cb1073-3"><a href="data-cleaning.html#cb1073-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;upsloping&quot;</span>, <span class="st">&quot;flat&quot;</span>, <span class="st">&quot;downsloping&quot;</span>)</span>
-<span id="cb1073-4"><a href="data-cleaning.html#cb1073-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb1082"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1082-1"><a href="data-cleaning.html#cb1082-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb1082-2"><a href="data-cleaning.html#cb1082-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_slope</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)),</span>
+<span id="cb1082-3"><a href="data-cleaning.html#cb1082-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;upsloping&quot;</span>, <span class="st">&quot;flat&quot;</span>, <span class="st">&quot;downsloping&quot;</span>)</span>
+<span id="cb1082-4"><a href="data-cleaning.html#cb1082-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1075"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1075-1"><a href="data-cleaning.html#cb1075-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb1075-2"><a href="data-cleaning.html#cb1075-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_thal</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>)),</span>
-<span id="cb1075-3"><a href="data-cleaning.html#cb1075-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;normal&quot;</span>, <span class="st">&quot;fixed defect&quot;</span>, <span class="st">&quot;reversible defect&quot;</span>)</span>
-<span id="cb1075-4"><a href="data-cleaning.html#cb1075-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb1084"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1084-1"><a href="data-cleaning.html#cb1084-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb1084-2"><a href="data-cleaning.html#cb1084-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_thal</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>)),</span>
+<span id="cb1084-3"><a href="data-cleaning.html#cb1084-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;normal&quot;</span>, <span class="st">&quot;fixed defect&quot;</span>, <span class="st">&quot;reversible defect&quot;</span>)</span>
+<span id="cb1084-4"><a href="data-cleaning.html#cb1084-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1077"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1077-1"><a href="data-cleaning.html#cb1077-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1086"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1086-1"><a href="data-cleaning.html#cb1086-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Excellent!&quot;</code></pre>
 </div>
-<div id="q4-use-your-convert_-functions-from-q3-to-mutate-the-columns-and-recode-the-variables." class="section level3" number="56.3.2">
-<h3><span class="header-section-number">56.3.2</span> <strong>q4</strong> Use your <code>convert_</code> functions from q3 to mutate the columns and recode the variables.</h3>
-<div class="sourceCode" id="cb1079"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1079-1"><a href="data-cleaning.html#cb1079-1" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
-<span id="cb1079-2"><a href="data-cleaning.html#cb1079-2" aria-hidden="true" tabindex="-1"></a>  df_q2 <span class="sc">%&gt;%</span></span>
-<span id="cb1079-3"><a href="data-cleaning.html#cb1079-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1079-4"><a href="data-cleaning.html#cb1079-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">convert_sex</span>(sex),</span>
-<span id="cb1079-5"><a href="data-cleaning.html#cb1079-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cp =</span> <span class="fu">convert_cp</span>(cp),</span>
-<span id="cb1079-6"><a href="data-cleaning.html#cb1079-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fbs =</span> <span class="fu">convert_fbs</span>(fbs),</span>
-<span id="cb1079-7"><a href="data-cleaning.html#cb1079-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">restecg =</span> <span class="fu">convert_restecv</span>(restecg),</span>
-<span id="cb1079-8"><a href="data-cleaning.html#cb1079-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">exang =</span> <span class="fu">convert_exang</span>(exang),</span>
-<span id="cb1079-9"><a href="data-cleaning.html#cb1079-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">slope =</span> <span class="fu">convert_slope</span>(slope),</span>
-<span id="cb1079-10"><a href="data-cleaning.html#cb1079-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">thal =</span> <span class="fu">convert_thal</span>(thal)</span>
-<span id="cb1079-11"><a href="data-cleaning.html#cb1079-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1079-12"><a href="data-cleaning.html#cb1079-12" aria-hidden="true" tabindex="-1"></a>df_q4</span></code></pre></div>
-<pre><code>## # A tibble: 303 x 14
-##      age sex    cp      trestbps  chol fbs   restecg thalach exang oldpeak slope
+<div id="q4-use-your-convert_-functions-from-q3-to-mutate-the-columns-and-recode-the-variables." class="section level3 hasAnchor" number="56.3.2">
+<h3><span class="header-section-number">56.3.2</span> <strong>q4</strong> Use your <code>convert_</code> functions from q3 to mutate the columns and recode the variables.<a href="data-cleaning.html#q4-use-your-convert_-functions-from-q3-to-mutate-the-columns-and-recode-the-variables." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb1088"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1088-1"><a href="data-cleaning.html#cb1088-1" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
+<span id="cb1088-2"><a href="data-cleaning.html#cb1088-2" aria-hidden="true" tabindex="-1"></a>  df_q2 <span class="sc">%&gt;%</span></span>
+<span id="cb1088-3"><a href="data-cleaning.html#cb1088-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1088-4"><a href="data-cleaning.html#cb1088-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">convert_sex</span>(sex),</span>
+<span id="cb1088-5"><a href="data-cleaning.html#cb1088-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cp =</span> <span class="fu">convert_cp</span>(cp),</span>
+<span id="cb1088-6"><a href="data-cleaning.html#cb1088-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fbs =</span> <span class="fu">convert_fbs</span>(fbs),</span>
+<span id="cb1088-7"><a href="data-cleaning.html#cb1088-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">restecg =</span> <span class="fu">convert_restecv</span>(restecg),</span>
+<span id="cb1088-8"><a href="data-cleaning.html#cb1088-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">exang =</span> <span class="fu">convert_exang</span>(exang),</span>
+<span id="cb1088-9"><a href="data-cleaning.html#cb1088-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">slope =</span> <span class="fu">convert_slope</span>(slope),</span>
+<span id="cb1088-10"><a href="data-cleaning.html#cb1088-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">thal =</span> <span class="fu">convert_thal</span>(thal)</span>
+<span id="cb1088-11"><a href="data-cleaning.html#cb1088-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1088-12"><a href="data-cleaning.html#cb1088-12" aria-hidden="true" tabindex="-1"></a>df_q4</span></code></pre></div>
+<pre><code>## # A tibble: 303 × 14
+##      age sex    cp       trest…¹  chol fbs   restecg thalach exang oldpeak slope
 ##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;   &lt;dbl&gt; &lt;chr&gt;
-##  1    63 male   typica…      145   233 TRUE  Estes&#39;…     150 FALSE     2.3 down…
-##  2    67 male   asympt…      160   286 FALSE Estes&#39;…     108 TRUE      1.5 flat 
-##  3    67 male   asympt…      120   229 FALSE Estes&#39;…     129 TRUE      2.6 flat 
-##  4    37 male   non-an…      130   250 FALSE normal      187 FALSE     3.5 down…
-##  5    41 female atypic…      130   204 FALSE Estes&#39;…     172 FALSE     1.4 upsl…
-##  6    56 male   atypic…      120   236 FALSE normal      178 FALSE     0.8 upsl…
-##  7    62 female asympt…      140   268 FALSE Estes&#39;…     160 FALSE     3.6 down…
-##  8    57 female asympt…      120   354 FALSE normal      163 TRUE      0.6 upsl…
-##  9    63 male   asympt…      130   254 FALSE Estes&#39;…     147 FALSE     1.4 flat 
-## 10    53 male   asympt…      140   203 TRUE  Estes&#39;…     155 TRUE      3.1 down…
-## # … with 293 more rows, and 3 more variables: ca &lt;dbl&gt;, thal &lt;chr&gt;, num &lt;dbl&gt;</code></pre>
+##  1    63 male   typical…     145   233 TRUE  Estes&#39;…     150 FALSE     2.3 down…
+##  2    67 male   asympto…     160   286 FALSE Estes&#39;…     108 TRUE      1.5 flat 
+##  3    67 male   asympto…     120   229 FALSE Estes&#39;…     129 TRUE      2.6 flat 
+##  4    37 male   non-ang…     130   250 FALSE normal      187 FALSE     3.5 down…
+##  5    41 female atypica…     130   204 FALSE Estes&#39;…     172 FALSE     1.4 upsl…
+##  6    56 male   atypica…     120   236 FALSE normal      178 FALSE     0.8 upsl…
+##  7    62 female asympto…     140   268 FALSE Estes&#39;…     160 FALSE     3.6 down…
+##  8    57 female asympto…     120   354 FALSE normal      163 TRUE      0.6 upsl…
+##  9    63 male   asympto…     130   254 FALSE Estes&#39;…     147 FALSE     1.4 flat 
+## 10    53 male   asympto…     140   203 TRUE  Estes&#39;…     155 TRUE      3.1 down…
+## # … with 293 more rows, 3 more variables: ca &lt;dbl&gt;, thal &lt;chr&gt;, num &lt;dbl&gt;, and
+## #   abbreviated variable name ¹​trestbps</code></pre>
 </div>
 </div>
-<div id="prepare-the-data-for-modeling" class="section level2" number="56.4">
-<h2><span class="header-section-number">56.4</span> Prepare the Data for Modeling</h2>
+<div id="prepare-the-data-for-modeling" class="section level2 hasAnchor" number="56.4">
+<h2><span class="header-section-number">56.4</span> Prepare the Data for Modeling<a href="data-cleaning.html#prepare-the-data-for-modeling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now we have a clean dataset we can use for EDA and modeling—great! Before we finish this exercise, let’s do some standard checks to understand these data:</p>
-<div id="q5-perform-your-first-checks-on-df_q4.-answer-the-questions-below." class="section level3" number="56.4.1">
-<h3><span class="header-section-number">56.4.1</span> <strong>q5</strong> Perform your <em>first checks</em> on <code>df_q4</code>. Answer the questions below.</h3>
+<div id="q5-perform-your-first-checks-on-df_q4.-answer-the-questions-below." class="section level3 hasAnchor" number="56.4.1">
+<h3><span class="header-section-number">56.4.1</span> <strong>q5</strong> Perform your <em>first checks</em> on <code>df_q4</code>. Answer the questions below.<a href="data-cleaning.html#q5-perform-your-first-checks-on-df_q4.-answer-the-questions-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: You may need to do some “deeper checks” to answer some of the questions below.</p>
-<div class="sourceCode" id="cb1081"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1081-1"><a href="data-cleaning.html#cb1081-1" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1090"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1090-1"><a href="data-cleaning.html#cb1090-1" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>##       age            sex                 cp               trestbps    
 ##  Min.   :29.00   Length:303         Length:303         Min.   : 94.0  
 ##  1st Qu.:48.00   Class :character   Class :character   1st Qu.:120.0  
@@ -1389,10 +1381,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 - Factors: <code>sex, cp, restecg, slope, thal, heart_disease</code>
 - Logical: <code>fbs, exang, heart_disease</code></p>
 <p>Missingness:</p>
-<div class="sourceCode" id="cb1083"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1083-1"><a href="data-cleaning.html#cb1083-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(</span>
-<span id="cb1083-2"><a href="data-cleaning.html#cb1083-2" aria-hidden="true" tabindex="-1"></a>  df_q4,</span>
-<span id="cb1083-3"><a href="data-cleaning.html#cb1083-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.))</span>
-<span id="cb1083-4"><a href="data-cleaning.html#cb1083-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1092"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1092-1"><a href="data-cleaning.html#cb1092-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(</span>
+<span id="cb1092-2"><a href="data-cleaning.html#cb1092-2" aria-hidden="true" tabindex="-1"></a>  df_q4,</span>
+<span id="cb1092-3"><a href="data-cleaning.html#cb1092-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.))</span>
+<span id="cb1092-4"><a href="data-cleaning.html#cb1092-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## $age
 ## [1] 0
 ## 
@@ -1436,58 +1428,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1] 0</code></pre>
 <p>From this, we can see that most variables have no missing values, but <code>ca</code> has <code>4</code> and <code>thal</code> has <code>2</code>.</p>
 <p>Missingness pattern:</p>
-<div class="sourceCode" id="cb1085"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1085-1"><a href="data-cleaning.html#cb1085-1" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="sc">%&gt;%</span></span>
-<span id="cb1085-2"><a href="data-cleaning.html#cb1085-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(ca) <span class="sc">|</span> <span class="fu">is.na</span>(thal)) <span class="sc">%&gt;%</span></span>
-<span id="cb1085-3"><a href="data-cleaning.html#cb1085-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ca, thal, <span class="fu">everything</span>())</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 14
-##      ca thal       age sex   cp      trestbps  chol fbs   restecg  thalach exang
-##   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;lgl&gt;
-## 1     0 &lt;NA&gt;        53 fema… non-an…      128   216 FALSE Estes&#39; …     115 FALSE
-## 2    NA normal      52 male  non-an…      138   223 FALSE normal       169 FALSE
-## 3    NA reversi…    43 male  asympt…      132   247 TRUE  Estes&#39; …     143 TRUE 
-## 4     0 &lt;NA&gt;        52 male  asympt…      128   204 TRUE  normal       156 TRUE 
-## 5    NA reversi…    58 male  atypic…      125   220 FALSE normal       144 FALSE
-## 6    NA normal      38 male  non-an…      138   175 FALSE normal       173 FALSE
-## # … with 3 more variables: oldpeak &lt;dbl&gt;, slope &lt;chr&gt;, num &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb1094"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1094-1"><a href="data-cleaning.html#cb1094-1" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="sc">%&gt;%</span></span>
+<span id="cb1094-2"><a href="data-cleaning.html#cb1094-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(ca) <span class="sc">|</span> <span class="fu">is.na</span>(thal)) <span class="sc">%&gt;%</span></span>
+<span id="cb1094-3"><a href="data-cleaning.html#cb1094-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ca, thal, <span class="fu">everything</span>())</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 14
+##      ca thal           age sex   cp    trest…¹  chol fbs   restecg thalach exang
+##   &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;
+## 1     0 &lt;NA&gt;            53 fema… non-…     128   216 FALSE Estes&#39;…     115 FALSE
+## 2    NA normal          52 male  non-…     138   223 FALSE normal      169 FALSE
+## 3    NA reversible …    43 male  asym…     132   247 TRUE  Estes&#39;…     143 TRUE 
+## 4     0 &lt;NA&gt;            52 male  asym…     128   204 TRUE  normal      156 TRUE 
+## 5    NA reversible …    58 male  atyp…     125   220 FALSE normal      144 FALSE
+## 6    NA normal          38 male  non-…     138   175 FALSE normal      173 FALSE
+## # … with 3 more variables: oldpeak &lt;dbl&gt;, slope &lt;chr&gt;, num &lt;dbl&gt;, and
+## #   abbreviated variable name ¹​trestbps</code></pre>
 <p>There are six rows with missing values.</p>
 <p>If we were just doing EDA, we could stop here. However we’re going to use these data for <em>modeling</em> in a future exercise. Most models can’t deal with <code>NA</code> values, so we must choose how to handle rows with <code>NA</code>’s. In cases where only a few observations are missing values, we can simply <em>filter out</em> those rows.</p>
 </div>
-<div id="q6-filter-out-the-rows-with-missing-values." class="section level3" number="56.4.2">
-<h3><span class="header-section-number">56.4.2</span> <strong>q6</strong> Filter out the rows with missing values.</h3>
-<div class="sourceCode" id="cb1087"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1087-1"><a href="data-cleaning.html#cb1087-1" aria-hidden="true" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
-<span id="cb1087-2"><a href="data-cleaning.html#cb1087-2" aria-hidden="true" tabindex="-1"></a>  df_q4 <span class="sc">%&gt;%</span></span>
-<span id="cb1087-3"><a href="data-cleaning.html#cb1087-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ca), <span class="sc">!</span><span class="fu">is.na</span>(thal))</span>
-<span id="cb1087-4"><a href="data-cleaning.html#cb1087-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1087-5"><a href="data-cleaning.html#cb1087-5" aria-hidden="true" tabindex="-1"></a>df_q6</span></code></pre></div>
-<pre><code>## # A tibble: 297 x 14
-##      age sex    cp      trestbps  chol fbs   restecg thalach exang oldpeak slope
+<div id="q6-filter-out-the-rows-with-missing-values." class="section level3 hasAnchor" number="56.4.2">
+<h3><span class="header-section-number">56.4.2</span> <strong>q6</strong> Filter out the rows with missing values.<a href="data-cleaning.html#q6-filter-out-the-rows-with-missing-values." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb1096"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1096-1"><a href="data-cleaning.html#cb1096-1" aria-hidden="true" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
+<span id="cb1096-2"><a href="data-cleaning.html#cb1096-2" aria-hidden="true" tabindex="-1"></a>  df_q4 <span class="sc">%&gt;%</span></span>
+<span id="cb1096-3"><a href="data-cleaning.html#cb1096-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ca), <span class="sc">!</span><span class="fu">is.na</span>(thal))</span>
+<span id="cb1096-4"><a href="data-cleaning.html#cb1096-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1096-5"><a href="data-cleaning.html#cb1096-5" aria-hidden="true" tabindex="-1"></a>df_q6</span></code></pre></div>
+<pre><code>## # A tibble: 297 × 14
+##      age sex    cp       trest…¹  chol fbs   restecg thalach exang oldpeak slope
 ##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;   &lt;dbl&gt; &lt;chr&gt;
-##  1    63 male   typica…      145   233 TRUE  Estes&#39;…     150 FALSE     2.3 down…
-##  2    67 male   asympt…      160   286 FALSE Estes&#39;…     108 TRUE      1.5 flat 
-##  3    67 male   asympt…      120   229 FALSE Estes&#39;…     129 TRUE      2.6 flat 
-##  4    37 male   non-an…      130   250 FALSE normal      187 FALSE     3.5 down…
-##  5    41 female atypic…      130   204 FALSE Estes&#39;…     172 FALSE     1.4 upsl…
-##  6    56 male   atypic…      120   236 FALSE normal      178 FALSE     0.8 upsl…
-##  7    62 female asympt…      140   268 FALSE Estes&#39;…     160 FALSE     3.6 down…
-##  8    57 female asympt…      120   354 FALSE normal      163 TRUE      0.6 upsl…
-##  9    63 male   asympt…      130   254 FALSE Estes&#39;…     147 FALSE     1.4 flat 
-## 10    53 male   asympt…      140   203 TRUE  Estes&#39;…     155 TRUE      3.1 down…
-## # … with 287 more rows, and 3 more variables: ca &lt;dbl&gt;, thal &lt;chr&gt;, num &lt;dbl&gt;</code></pre>
+##  1    63 male   typical…     145   233 TRUE  Estes&#39;…     150 FALSE     2.3 down…
+##  2    67 male   asympto…     160   286 FALSE Estes&#39;…     108 TRUE      1.5 flat 
+##  3    67 male   asympto…     120   229 FALSE Estes&#39;…     129 TRUE      2.6 flat 
+##  4    37 male   non-ang…     130   250 FALSE normal      187 FALSE     3.5 down…
+##  5    41 female atypica…     130   204 FALSE Estes&#39;…     172 FALSE     1.4 upsl…
+##  6    56 male   atypica…     120   236 FALSE normal      178 FALSE     0.8 upsl…
+##  7    62 female asympto…     140   268 FALSE Estes&#39;…     160 FALSE     3.6 down…
+##  8    57 female asympto…     120   354 FALSE normal      163 TRUE      0.6 upsl…
+##  9    63 male   asympto…     130   254 FALSE Estes&#39;…     147 FALSE     1.4 flat 
+## 10    53 male   asympto…     140   203 TRUE  Estes&#39;…     155 TRUE      3.1 down…
+## # … with 287 more rows, 3 more variables: ca &lt;dbl&gt;, thal &lt;chr&gt;, num &lt;dbl&gt;, and
+## #   abbreviated variable name ¹​trestbps</code></pre>
 <p>Use the following to check your code.</p>
-<div class="sourceCode" id="cb1089"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1089-1"><a href="data-cleaning.html#cb1089-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb1089-2"><a href="data-cleaning.html#cb1089-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb1089-3"><a href="data-cleaning.html#cb1089-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dim</span>(</span>
-<span id="cb1089-4"><a href="data-cleaning.html#cb1089-4" aria-hidden="true" tabindex="-1"></a>    df_q6 <span class="sc">%&gt;%</span></span>
-<span id="cb1089-5"><a href="data-cleaning.html#cb1089-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), is.na)) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb1089-6"><a href="data-cleaning.html#cb1089-6" aria-hidden="true" tabindex="-1"></a>  )[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">0</span></span>
-<span id="cb1089-7"><a href="data-cleaning.html#cb1089-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1098"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1098-1"><a href="data-cleaning.html#cb1098-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb1098-2"><a href="data-cleaning.html#cb1098-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb1098-3"><a href="data-cleaning.html#cb1098-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dim</span>(</span>
+<span id="cb1098-4"><a href="data-cleaning.html#cb1098-4" aria-hidden="true" tabindex="-1"></a>    df_q6 <span class="sc">%&gt;%</span></span>
+<span id="cb1098-5"><a href="data-cleaning.html#cb1098-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), is.na)) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb1098-6"><a href="data-cleaning.html#cb1098-6" aria-hidden="true" tabindex="-1"></a>  )[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb1098-7"><a href="data-cleaning.html#cb1098-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1091"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1091-1"><a href="data-cleaning.html#cb1091-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1100-1"><a href="data-cleaning.html#cb1100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 </div>
 </div>
-<div id="in-summary" class="section level2" number="56.5">
-<h2><span class="header-section-number">56.5</span> In summary</h2>
+<div id="in-summary" class="section level2 hasAnchor" number="56.5">
+<h2><span class="header-section-number">56.5</span> In summary<a href="data-cleaning.html#in-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>We cleaned the dataset by giving it sensible names and recoding factors with human-readable values.</li>
 <li>We filtered out rows with missing values (<code>NA</code>’s) <em>because we intend to use these data for modeling</em>.</li>
@@ -1562,7 +1556,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

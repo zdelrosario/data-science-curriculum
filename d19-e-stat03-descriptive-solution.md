@@ -13,14 +13,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -74,7 +74,7 @@ flights %>%
 ```
 
 ```
-## Warning: Removed 208344 rows containing non-finite values (stat_bin).
+## Warning: Removed 208344 rows containing non-finite values (`stat_bin()`).
 ```
 
 <img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-distribution-1.png" width="672" />
@@ -160,7 +160,7 @@ flights %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   dep_delay
 ##       <dbl>
 ## 1      12.6
@@ -230,7 +230,7 @@ flights %>% vis_central(dep_delay)
 ```
 
 ```
-## Warning: Removed 8255 rows containing non-finite values (stat_density).
+## Warning: Removed 8255 rows containing non-finite values (`stat_density()`).
 ```
 
 <img src="d19-e-stat03-descriptive-solution_files/figure-html/central-flights-1.png" width="672" />
@@ -267,7 +267,7 @@ flights %>%
 ```
 
 ```
-## # A tibble: 5 x 3
+## # A tibble: 5 × 3
 ##   carrier  mean median
 ##   <chr>   <dbl>  <dbl>
 ## 1 F9       20.2    0.5
@@ -290,7 +290,7 @@ flights %>%
 ```
 
 ```
-## # A tibble: 5 x 3
+## # A tibble: 5 × 3
 ##   carrier  mean median
 ##   <chr>   <dbl>  <dbl>
 ## 1 FL       18.7    1  
@@ -467,7 +467,7 @@ flights %>%
 ```
 
 ```
-## # A tibble: 5 x 3
+## # A tibble: 5 × 3
 ##   carrier    sd   IQR
 ##   <chr>   <dbl> <dbl>
 ## 1 HA       74.1     6
@@ -489,7 +489,7 @@ flights %>%
 ```
 
 ```
-## # A tibble: 5 x 3
+## # A tibble: 5 × 3
 ##   carrier    sd   IQR
 ##   <chr>   <dbl> <dbl>
 ## 1 EV       46.6    30
@@ -514,7 +514,7 @@ flights %>%
 ```
 
 ```
-## Warning: Removed 2949 rows containing non-finite values (stat_boxplot).
+## Warning: Removed 2949 rows containing non-finite values (`stat_boxplot()`).
 ```
 
 <img src="d19-e-stat03-descriptive-solution_files/figure-html/q4-sol-vis-1.png" width="672" />
@@ -534,7 +534,7 @@ flights %>%
 ```
 
 ```
-## Warning: Removed 9430 rows containing missing values (geom_point).
+## Warning: Removed 9430 rows containing missing values (`geom_point()`).
 ```
 
 <img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-corr-1.png" width="672" />
@@ -557,7 +557,7 @@ flights %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##     rho
 ##   <dbl>
 ## 1 0.991
@@ -575,7 +575,7 @@ flights %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##      rho
 ##    <dbl>
 ## 1 0.0109
@@ -661,7 +661,7 @@ df_monotone %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##     rho
 ##   <dbl>
 ## 1 0.846
@@ -673,7 +673,7 @@ df_monotone %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##     rho
 ##   <dbl>
 ## 1     1
@@ -696,7 +696,7 @@ df_quad %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##         rho
 ##       <dbl>
 ## 1 -2.02e-16
@@ -708,7 +708,7 @@ df_quad %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##       rho
 ##     <dbl>
 ## 1 -0.0236
@@ -757,7 +757,7 @@ df_cor_outliers %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##     rho
 ##   <dbl>
 ## 1 0.621
@@ -769,7 +769,7 @@ df_cor_outliers %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##     rho
 ##   <dbl>
 ## 1 0.884

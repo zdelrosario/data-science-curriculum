@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>18 Data: Isolating Data | Data Science: Exercise Solutions</title>
   <meta name="description" content="18 Data: Isolating Data | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="18 Data: Isolating Data | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="stats-eda-basics.html"/>
 <link rel="next" href="vis-bar-charts.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,8 +980,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-isolating-data" class="section level1" number="18">
-<h1><span class="header-section-number">18</span> Data: Isolating Data</h1>
+<div id="data-isolating-data" class="section level1 hasAnchor" number="18">
+<h1><span class="header-section-number">18</span> Data: Isolating Data<a href="data-isolating-data.html#data-isolating-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: One of the keys to a successful analysis is the ability to <em>focus</em> on
 particular topics. When analyzing a dataset, our ability to focus is tied to our
 facility at <em>isolating data</em>. In this exercise, you will practice isolating
@@ -990,11 +989,11 @@ columns with <code>select()</code>, picking specific rows with <code>filter()</c
 data with <code>arrange()</code> to see what rises to the top.</p>
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/2.2">Isolating Data with dplyr</a> (All topics)</p>
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="data-isolating-data.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
@@ -1023,11 +1022,11 @@ package, the data are stored in the variable name <code>flights</code>. For inst
 ## $ hour           &lt;dbl&gt; 5, 5, 5, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6…
 ## $ minute         &lt;dbl&gt; 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59, 0…
 ## $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-01 0…</code></pre>
-<div id="q1-select-all-the-variables-whose-name-ends-with-_time." class="section level3" number="18.0.1">
-<h3><span class="header-section-number">18.0.1</span> <strong>q1</strong> Select all the variables whose name ends with <code>_time</code>.</h3>
+<div id="q1-select-all-the-variables-whose-name-ends-with-_time." class="section level3 hasAnchor" number="18.0.1">
+<h3><span class="header-section-number">18.0.1</span> <strong>q1</strong> Select all the variables whose name ends with <code>_time</code>.<a href="data-isolating-data.html#q1-select-all-the-variables-whose-name-ends-with-_time." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="data-isolating-data.html#cb123-1" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">&quot;_time&quot;</span>))</span>
 <span id="cb123-2"><a href="data-isolating-data.html#cb123-2" aria-hidden="true" tabindex="-1"></a>df_q1</span></code></pre></div>
-<pre><code>## # A tibble: 336,776 x 5
+<pre><code>## # A tibble: 336,776 × 5
 ##    dep_time sched_dep_time arr_time sched_arr_time air_time
 ##       &lt;int&gt;          &lt;int&gt;    &lt;int&gt;          &lt;int&gt;    &lt;dbl&gt;
 ##  1      517            515      830            819      227
@@ -1051,27 +1050,28 @@ correctly, the following code will execute without error.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="data-isolating-data.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 </div>
-<div id="q2-re-arrange-the-columns-to-place-dest-origin-carrier-at-the-front-but-retain-all-other-columns." class="section level3" number="18.0.2">
-<h3><span class="header-section-number">18.0.2</span> <strong>q2</strong> Re-arrange the columns to place <code>dest, origin, carrier</code> at the front, but retain all other columns.</h3>
+<div id="q2-re-arrange-the-columns-to-place-dest-origin-carrier-at-the-front-but-retain-all-other-columns." class="section level3 hasAnchor" number="18.0.2">
+<h3><span class="header-section-number">18.0.2</span> <strong>q2</strong> Re-arrange the columns to place <code>dest, origin, carrier</code> at the front, but retain all other columns.<a href="data-isolating-data.html#q2-re-arrange-the-columns-to-place-dest-origin-carrier-at-the-front-but-retain-all-other-columns." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: The function <code>everything()</code> will be useful!</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="data-isolating-data.html#cb129-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(dest, origin, carrier, <span class="fu">everything</span>())</span>
 <span id="cb129-2"><a href="data-isolating-data.html#cb129-2" aria-hidden="true" tabindex="-1"></a>df_q2</span></code></pre></div>
-<pre><code>## # A tibble: 336,776 x 19
-##    dest  origin carrier  year month   day dep_time sched_dep_time dep_delay
-##    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;
-##  1 IAH   EWR    UA       2013     1     1      517            515         2
-##  2 IAH   LGA    UA       2013     1     1      533            529         4
-##  3 MIA   JFK    AA       2013     1     1      542            540         2
-##  4 BQN   JFK    B6       2013     1     1      544            545        -1
-##  5 ATL   LGA    DL       2013     1     1      554            600        -6
-##  6 ORD   EWR    UA       2013     1     1      554            558        -4
-##  7 FLL   EWR    B6       2013     1     1      555            600        -5
-##  8 IAD   LGA    EV       2013     1     1      557            600        -3
-##  9 MCO   JFK    B6       2013     1     1      557            600        -3
-## 10 ORD   LGA    AA       2013     1     1      558            600        -2
-## # … with 336,766 more rows, and 10 more variables: arr_time &lt;int&gt;,
-## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<pre><code>## # A tibble: 336,776 × 19
+##    dest  origin carrier  year month   day dep_time sched_dep_t…¹ dep_d…² arr_t…³
+##    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;         &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;
+##  1 IAH   EWR    UA       2013     1     1      517           515       2     830
+##  2 IAH   LGA    UA       2013     1     1      533           529       4     850
+##  3 MIA   JFK    AA       2013     1     1      542           540       2     923
+##  4 BQN   JFK    B6       2013     1     1      544           545      -1    1004
+##  5 ATL   LGA    DL       2013     1     1      554           600      -6     812
+##  6 ORD   EWR    UA       2013     1     1      554           558      -4     740
+##  7 FLL   EWR    B6       2013     1     1      555           600      -5     913
+##  8 IAD   LGA    EV       2013     1     1      557           600      -3     709
+##  9 MCO   JFK    B6       2013     1     1      557           600      -3     838
+## 10 ORD   LGA    AA       2013     1     1      558           600      -2     753
+## # … with 336,766 more rows, 9 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated
+## #   variable names ¹​sched_dep_time, ²​dep_delay, ³​arr_time</code></pre>
 <p>Use the following to check your code.</p>
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="data-isolating-data.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
 <span id="cb131-2"><a href="data-isolating-data.html#cb131-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
@@ -1083,53 +1083,55 @@ correctly, the following code will execute without error.</p>
 <p>Since R will only show the first few columns of a tibble, using <code>select()</code> in
 this fashion will help us see the values of particular columns.</p>
 </div>
-<div id="q3-fix-the-following-code.-what-is-the-mistake-here-what-is-the-code-trying-to-accomplish" class="section level3" number="18.0.3">
-<h3><span class="header-section-number">18.0.3</span> <strong>q3</strong> Fix the following code. What is the mistake here? What is the code trying to accomplish?</h3>
+<div id="q3-fix-the-following-code.-what-is-the-mistake-here-what-is-the-code-trying-to-accomplish" class="section level3 hasAnchor" number="18.0.3">
+<h3><span class="header-section-number">18.0.3</span> <strong>q3</strong> Fix the following code. What is the mistake here? What is the code trying to accomplish?<a href="data-isolating-data.html#q3-fix-the-following-code.-what-is-the-mistake-here-what-is-the-code-trying-to-accomplish" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="data-isolating-data.html#cb135-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">&quot;LAX&quot;</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 16,174 x 19
-##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
-##  1  2013     1     1      558            600        -2      924            917
-##  2  2013     1     1      628            630        -2     1016            947
-##  3  2013     1     1      658            700        -2     1027           1025
-##  4  2013     1     1      702            700         2     1058           1014
-##  5  2013     1     1      743            730        13     1107           1100
-##  6  2013     1     1      828            823         5     1150           1143
-##  7  2013     1     1      829            830        -1     1152           1200
-##  8  2013     1     1      856            900        -4     1226           1220
-##  9  2013     1     1      859            900        -1     1223           1225
-## 10  2013     1     1      921            900        21     1237           1227
-## # … with 16,164 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
-## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
-## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<pre><code>## # A tibble: 16,174 × 19
+##     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+##  1  2013     1     1      558        600      -2     924     917       7 UA     
+##  2  2013     1     1      628        630      -2    1016     947      29 UA     
+##  3  2013     1     1      658        700      -2    1027    1025       2 VX     
+##  4  2013     1     1      702        700       2    1058    1014      44 B6     
+##  5  2013     1     1      743        730      13    1107    1100       7 AA     
+##  6  2013     1     1      828        823       5    1150    1143       7 UA     
+##  7  2013     1     1      829        830      -1    1152    1200      -8 UA     
+##  8  2013     1     1      856        900      -4    1226    1220       6 AA     
+##  9  2013     1     1      859        900      -1    1223    1225      -2 VX     
+## 10  2013     1     1      921        900      21    1237    1227      10 DL     
+## # … with 16,164 more rows, 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
+## #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay</code></pre>
 <p>The next error is <em>far more insidious</em>….</p>
 </div>
-<div id="q4-this-code-doesnt-quite-what-the-user-intended.-what-went-wrong" class="section level3" number="18.0.4">
-<h3><span class="header-section-number">18.0.4</span> <strong>q4</strong> This code doesn’t quite what the user intended. What went wrong?</h3>
+<div id="q4-this-code-doesnt-quite-what-the-user-intended.-what-went-wrong" class="section level3 hasAnchor" number="18.0.4">
+<h3><span class="header-section-number">18.0.4</span> <strong>q4</strong> This code doesn’t quite what the user intended. What went wrong?<a href="data-isolating-data.html#q4-this-code-doesnt-quite-what-the-user-intended.-what-went-wrong" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="data-isolating-data.html#cb137-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">&quot;BOS&quot;</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 15,508 x 19
-##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
-##  1  2013     1     1      559            559         0      702            706
-##  2  2013     1     1      639            640        -1      739            749
-##  3  2013     1     1      801            805        -4      900            919
-##  4  2013     1     1      803            810        -7      903            925
-##  5  2013     1     1      820            830       -10      940            954
-##  6  2013     1     1      923            919         4     1026           1030
-##  7  2013     1     1      957            733       144     1056            853
-##  8  2013     1     1     1033           1017        16     1130           1136
-##  9  2013     1     1     1154           1200        -6     1253           1306
-## 10  2013     1     1     1237           1245        -8     1340           1350
-## # … with 15,498 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
-## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
-## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<pre><code>## # A tibble: 15,508 × 19
+##     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+##  1  2013     1     1      559        559       0     702     706      -4 B6     
+##  2  2013     1     1      639        640      -1     739     749     -10 B6     
+##  3  2013     1     1      801        805      -4     900     919     -19 B6     
+##  4  2013     1     1      803        810      -7     903     925     -22 AA     
+##  5  2013     1     1      820        830     -10     940     954     -14 DL     
+##  6  2013     1     1      923        919       4    1026    1030      -4 B6     
+##  7  2013     1     1      957        733     144    1056     853     123 UA     
+##  8  2013     1     1     1033       1017      16    1130    1136      -6 UA     
+##  9  2013     1     1     1154       1200      -6    1253    1306     -13 B6     
+## 10  2013     1     1     1237       1245      -8    1340    1350     -10 AA     
+## # … with 15,498 more rows, 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
+## #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay</code></pre>
 <p>It will take practice to get used to when and when not to use quotations. Don’t
 worry—we’ll get lots of practice!</p>
 <p>This dataset is called <code>nycflights</code>; in what sense is it focused on New York
 city? Let’s do a quick check to get an idea:</p>
 </div>
-<div id="q5-perform-two-filters-first" class="section level3" number="18.0.5">
-<h3><span class="header-section-number">18.0.5</span> <strong>q5</strong> Perform <strong>two</strong> filters; first</h3>
+<div id="q5-perform-two-filters-first" class="section level3 hasAnchor" number="18.0.5">
+<h3><span class="header-section-number">18.0.5</span> <strong>q5</strong> Perform <strong>two</strong> filters; first<a href="data-isolating-data.html#q5-perform-two-filters-first" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="data-isolating-data.html#cb139-1" aria-hidden="true" tabindex="-1"></a>df_q5a <span class="ot">&lt;-</span></span>
 <span id="cb139-2"><a href="data-isolating-data.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
 <span id="cb139-3"><a href="data-isolating-data.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
@@ -1171,29 +1173,30 @@ something about the <em>perspective</em> of those who collected the data. Thinki
 about these issues is partly what separates <strong>data science</strong> from programming or
 machine learning. (<code>end-rant</code>)</p>
 </div>
-<div id="q6-sort-the-flights-in-descending-order-by-their-air_time.-bring-air_time-dest-to-the-front.-what-can-you-tell-about-the-longest-flights" class="section level3" number="18.0.6">
-<h3><span class="header-section-number">18.0.6</span> <strong>q6</strong> Sort the flights in <em>descending</em> order by their <code>air_time</code>. Bring <code>air_time, dest</code> to the front. What can you tell about the longest flights?</h3>
+<div id="q6-sort-the-flights-in-descending-order-by-their-air_time.-bring-air_time-dest-to-the-front.-what-can-you-tell-about-the-longest-flights" class="section level3 hasAnchor" number="18.0.6">
+<h3><span class="header-section-number">18.0.6</span> <strong>q6</strong> Sort the flights in <em>descending</em> order by their <code>air_time</code>. Bring <code>air_time, dest</code> to the front. What can you tell about the longest flights?<a href="data-isolating-data.html#q6-sort-the-flights-in-descending-order-by-their-air_time.-bring-air_time-dest-to-the-front.-what-can-you-tell-about-the-longest-flights" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="data-isolating-data.html#cb146-1" aria-hidden="true" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
 <span id="cb146-2"><a href="data-isolating-data.html#cb146-2" aria-hidden="true" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
 <span id="cb146-3"><a href="data-isolating-data.html#cb146-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(air_time, dest, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
 <span id="cb146-4"><a href="data-isolating-data.html#cb146-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(air_time))</span>
 <span id="cb146-5"><a href="data-isolating-data.html#cb146-5" aria-hidden="true" tabindex="-1"></a>df_q6</span></code></pre></div>
-<pre><code>## # A tibble: 336,776 x 19
-##    air_time dest   year month   day dep_time sched_dep_time dep_delay arr_time
-##       &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1      695 HNL    2013     3    17     1337           1335         2     1937
-##  2      691 HNL    2013     2     6      853            900        -7     1542
-##  3      686 HNL    2013     3    15     1001           1000         1     1551
-##  4      686 HNL    2013     3    17     1006           1000         6     1607
-##  5      683 HNL    2013     3    16     1001           1000         1     1544
-##  6      679 HNL    2013     2     5      900            900         0     1555
-##  7      676 HNL    2013    11    12      936            930         6     1630
-##  8      676 HNL    2013     3    14      958           1000        -2     1542
-##  9      675 HNL    2013    11    20     1006           1000         6     1639
-## 10      671 HNL    2013     3    15     1342           1335         7     1924
-## # … with 336,766 more rows, and 10 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;,
-## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<pre><code>## # A tibble: 336,776 × 19
+##    air_time dest   year month   day dep_time sched_dep…¹ dep_d…² arr_t…³ sched…⁴
+##       &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;       &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;
+##  1      695 HNL    2013     3    17     1337        1335       2    1937    1836
+##  2      691 HNL    2013     2     6      853         900      -7    1542    1540
+##  3      686 HNL    2013     3    15     1001        1000       1    1551    1530
+##  4      686 HNL    2013     3    17     1006        1000       6    1607    1530
+##  5      683 HNL    2013     3    16     1001        1000       1    1544    1530
+##  6      679 HNL    2013     2     5      900         900       0    1555    1540
+##  7      676 HNL    2013    11    12      936         930       6    1630    1530
+##  8      676 HNL    2013     3    14      958        1000      -2    1542    1530
+##  9      675 HNL    2013    11    20     1006        1000       6    1639    1555
+## 10      671 HNL    2013     3    15     1342        1335       7    1924    1836
+## # … with 336,766 more rows, 9 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
+## #   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
+## #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time</code></pre>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="data-isolating-data.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
 <span id="cb148-2"><a href="data-isolating-data.html#cb148-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
 <span id="cb148-3"><a href="data-isolating-data.html#cb148-3" aria-hidden="true" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
@@ -1290,7 +1293,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>48 Stats: The Bootstrap, Some Recipies | Data Science: Exercise Solutions</title>
   <meta name="description" content="48 Stats: The Bootstrap, Some Recipies | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="48 Stats: The Bootstrap, Some Recipies | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="vis-perceptual-basics.html"/>
 <link rel="next" href="data-a-simple-data-pipeline.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,47 +980,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="stats-the-bootstrap-some-recipies" class="section level1" number="48">
-<h1><span class="header-section-number">48</span> Stats: The Bootstrap, Some Recipies</h1>
+<div id="stats-the-bootstrap-some-recipies" class="section level1 hasAnchor" number="48">
+<h1><span class="header-section-number">48</span> Stats: The Bootstrap, Some Recipies<a href="stats-the-bootstrap-some-recipies.html#stats-the-bootstrap-some-recipies" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Confidence intervals are an important tool for assessing our estimates. However, our tools so far for estimating confidence intervals rely on assumptions (normality, applicability of the CLT) that limit the statistics we can study. In this exercise we’ll learn about a general-purpose tool we can use to approximate CI—the <em>bootstrap</em>.</p>
-<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="stats-the-bootstrap-some-recipies.html#cb835-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb835-2"><a href="stats-the-bootstrap-some-recipies.html#cb835-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="stats-the-bootstrap-some-recipies.html#cb837-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb837-2"><a href="stats-the-bootstrap-some-recipies.html#cb837-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ✖ dplyr::select() masks MASS::select()</code></pre>
-<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="stats-the-bootstrap-some-recipies.html#cb839-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb839-2"><a href="stats-the-bootstrap-some-recipies.html#cb839-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span></code></pre></div>
-<div id="a-simple-example-estimating-the-mean" class="section level2" number="48.1">
-<h2><span class="header-section-number">48.1</span> A Simple Example: Estimating the Mean</h2>
+<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="stats-the-bootstrap-some-recipies.html#cb841-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb841-2"><a href="stats-the-bootstrap-some-recipies.html#cb841-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span></code></pre></div>
+<div id="a-simple-example-estimating-the-mean" class="section level2 hasAnchor" number="48.1">
+<h2><span class="header-section-number">48.1</span> A Simple Example: Estimating the Mean<a href="stats-the-bootstrap-some-recipies.html#a-simple-example-estimating-the-mean" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>first, imagine that we have a sample from some population.</p>
-<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb840-1"><a href="stats-the-bootstrap-some-recipies.html#cb840-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
-<span id="cb840-2"><a href="stats-the-bootstrap-some-recipies.html#cb840-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb840-3"><a href="stats-the-bootstrap-some-recipies.html#cb840-3" aria-hidden="true" tabindex="-1"></a>df_data_norm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">50</span>))</span>
-<span id="cb840-4"><a href="stats-the-bootstrap-some-recipies.html#cb840-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb840-5"><a href="stats-the-bootstrap-some-recipies.html#cb840-5" aria-hidden="true" tabindex="-1"></a>df_data_norm <span class="sc">%&gt;%</span></span>
-<span id="cb840-6"><a href="stats-the-bootstrap-some-recipies.html#cb840-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
-<span id="cb840-7"><a href="stats-the-bootstrap-some-recipies.html#cb840-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="stats-the-bootstrap-some-recipies.html#cb842-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
+<span id="cb842-2"><a href="stats-the-bootstrap-some-recipies.html#cb842-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb842-3"><a href="stats-the-bootstrap-some-recipies.html#cb842-3" aria-hidden="true" tabindex="-1"></a>df_data_norm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">50</span>))</span>
+<span id="cb842-4"><a href="stats-the-bootstrap-some-recipies.html#cb842-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb842-5"><a href="stats-the-bootstrap-some-recipies.html#cb842-5" aria-hidden="true" tabindex="-1"></a>df_data_norm <span class="sc">%&gt;%</span></span>
+<span id="cb842-6"><a href="stats-the-bootstrap-some-recipies.html#cb842-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb842-7"><a href="stats-the-bootstrap-some-recipies.html#cb842-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="d33-e-stat09-bootstrap-solution_files/figure-html/gen-data-1.png" width="672" /></p>
 <p>The set of samples—so long as it is representative of the population—is our <em>best available approximation</em> of the population. What the bootstrap does is operationalize this observation: We treat our sample as a population, and sample from it randomly. What that means is we generate some number of new <em>bootstrap samples</em> from our available sample. Visually, that looks like the following:</p>
-<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="stats-the-bootstrap-some-recipies.html#cb842-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
-<span id="cb842-2"><a href="stats-the-bootstrap-some-recipies.html#cb842-2" aria-hidden="true" tabindex="-1"></a>df_resample_norm <span class="ot">&lt;-</span></span>
-<span id="cb842-3"><a href="stats-the-bootstrap-some-recipies.html#cb842-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bootstraps</span>(df_data_norm, <span class="at">times =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb842-4"><a href="stats-the-bootstrap-some-recipies.html#cb842-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">df =</span> <span class="fu">map</span>(splits, <span class="sc">~</span> <span class="fu">analysis</span>(.x)))</span>
-<span id="cb842-5"><a href="stats-the-bootstrap-some-recipies.html#cb842-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb842-6"><a href="stats-the-bootstrap-some-recipies.html#cb842-6" aria-hidden="true" tabindex="-1"></a>df_resample_norm <span class="sc">%&gt;%</span></span>
-<span id="cb842-7"><a href="stats-the-bootstrap-some-recipies.html#cb842-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb842-8"><a href="stats-the-bootstrap-some-recipies.html#cb842-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(df) <span class="sc">%&gt;%</span></span>
-<span id="cb842-9"><a href="stats-the-bootstrap-some-recipies.html#cb842-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
-<span id="cb842-10"><a href="stats-the-bootstrap-some-recipies.html#cb842-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb842-11"><a href="stats-the-bootstrap-some-recipies.html#cb842-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> id)</span></code></pre></div>
+<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="stats-the-bootstrap-some-recipies.html#cb844-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
+<span id="cb844-2"><a href="stats-the-bootstrap-some-recipies.html#cb844-2" aria-hidden="true" tabindex="-1"></a>df_resample_norm <span class="ot">&lt;-</span></span>
+<span id="cb844-3"><a href="stats-the-bootstrap-some-recipies.html#cb844-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bootstraps</span>(df_data_norm, <span class="at">times =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb844-4"><a href="stats-the-bootstrap-some-recipies.html#cb844-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">df =</span> <span class="fu">map</span>(splits, <span class="sc">~</span> <span class="fu">analysis</span>(.x)))</span>
+<span id="cb844-5"><a href="stats-the-bootstrap-some-recipies.html#cb844-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb844-6"><a href="stats-the-bootstrap-some-recipies.html#cb844-6" aria-hidden="true" tabindex="-1"></a>df_resample_norm <span class="sc">%&gt;%</span></span>
+<span id="cb844-7"><a href="stats-the-bootstrap-some-recipies.html#cb844-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb844-8"><a href="stats-the-bootstrap-some-recipies.html#cb844-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(df) <span class="sc">%&gt;%</span></span>
+<span id="cb844-9"><a href="stats-the-bootstrap-some-recipies.html#cb844-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb844-10"><a href="stats-the-bootstrap-some-recipies.html#cb844-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb844-11"><a href="stats-the-bootstrap-some-recipies.html#cb844-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> id)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="d33-e-stat09-bootstrap-solution_files/figure-html/resamples-vis-1.png" width="672" /></p>
 <p>Every panel in this figure depicts a single <em>bootstrap resample</em>, drawn from our original sample. Each bootstrap resample plays the role of a single sample; we construct a resample, compute a single statistic for each bootstrap resample, and we do this whole process some number of <code>times</code>. In the example above, I set <code>times = 1000</code>; generally larger is better, but a good rule of thumb is to do <code>1000</code> resamples.</p>
@@ -1031,30 +1030,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The <code>analysis()</code> function also comes from <code>rsample</code>; this is a special function we need to call when working with a resampling of the data [1].</li>
 <li>We saw the <code>map()</code> function in <code>e-data10-map</code>; using <code>map()</code> above is necessary in part because we need to call <code>analysis()</code>. Since <code>analysis()</code> is not vectorized, we need the map to use this function on every split in <code>splits</code>.</li>
 </ul>
-<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="stats-the-bootstrap-some-recipies.html#cb844-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this example</span></span>
-<span id="cb844-2"><a href="stats-the-bootstrap-some-recipies.html#cb844-2" aria-hidden="true" tabindex="-1"></a>v_mean_est <span class="ot">&lt;-</span></span>
-<span id="cb844-3"><a href="stats-the-bootstrap-some-recipies.html#cb844-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(</span>
-<span id="cb844-4"><a href="stats-the-bootstrap-some-recipies.html#cb844-4" aria-hidden="true" tabindex="-1"></a>    df_resample_norm <span class="sc">%&gt;%</span> <span class="fu">pull</span>(df),</span>
-<span id="cb844-5"><a href="stats-the-bootstrap-some-recipies.html#cb844-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> <span class="fu">summarize</span>(.x, <span class="at">mean_est =</span> <span class="fu">mean</span>(x)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(mean_est)</span>
-<span id="cb844-6"><a href="stats-the-bootstrap-some-recipies.html#cb844-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb844-7"><a href="stats-the-bootstrap-some-recipies.html#cb844-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb844-8"><a href="stats-the-bootstrap-some-recipies.html#cb844-8" aria-hidden="true" tabindex="-1"></a>v_mean_est[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="stats-the-bootstrap-some-recipies.html#cb846-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this example</span></span>
+<span id="cb846-2"><a href="stats-the-bootstrap-some-recipies.html#cb846-2" aria-hidden="true" tabindex="-1"></a>v_mean_est <span class="ot">&lt;-</span></span>
+<span id="cb846-3"><a href="stats-the-bootstrap-some-recipies.html#cb846-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(</span>
+<span id="cb846-4"><a href="stats-the-bootstrap-some-recipies.html#cb846-4" aria-hidden="true" tabindex="-1"></a>    df_resample_norm <span class="sc">%&gt;%</span> <span class="fu">pull</span>(df),</span>
+<span id="cb846-5"><a href="stats-the-bootstrap-some-recipies.html#cb846-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> <span class="fu">summarize</span>(.x, <span class="at">mean_est =</span> <span class="fu">mean</span>(x)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(mean_est)</span>
+<span id="cb846-6"><a href="stats-the-bootstrap-some-recipies.html#cb846-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb846-7"><a href="stats-the-bootstrap-some-recipies.html#cb846-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb846-8"><a href="stats-the-bootstrap-some-recipies.html#cb846-8" aria-hidden="true" tabindex="-1"></a>v_mean_est[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>]</span></code></pre></div>
 <pre><code>## [1] -0.066678997 -0.244149601  0.049938113 -0.074652483  0.008309007
 ## [6] -0.196989467 -0.252095066 -0.238739640 -0.189294459</code></pre>
-<div id="q1-modify-the-code-above-to-use-within-a-mutate-call-on-df_resample_norm.-assign-the-mean-estimates-to-the-new-column-mean_est." class="section level3" number="48.1.1">
-<h3><span class="header-section-number">48.1.1</span> <strong>q1</strong> Modify the code above to use within a <code>mutate()</code> call on <code>df_resample_norm</code>. Assign the mean estimates to the new column <code>mean_est</code>.</h3>
-<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="stats-the-bootstrap-some-recipies.html#cb846-1" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
-<span id="cb846-2"><a href="stats-the-bootstrap-some-recipies.html#cb846-2" aria-hidden="true" tabindex="-1"></a>  df_resample_norm <span class="sc">%&gt;%</span></span>
-<span id="cb846-3"><a href="stats-the-bootstrap-some-recipies.html#cb846-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb846-4"><a href="stats-the-bootstrap-some-recipies.html#cb846-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_est =</span> <span class="fu">map_dbl</span>(</span>
-<span id="cb846-5"><a href="stats-the-bootstrap-some-recipies.html#cb846-5" aria-hidden="true" tabindex="-1"></a>      df,</span>
-<span id="cb846-6"><a href="stats-the-bootstrap-some-recipies.html#cb846-6" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">summarize</span>(.x, <span class="at">mean_est =</span> <span class="fu">mean</span>(x)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(mean_est)</span>
-<span id="cb846-7"><a href="stats-the-bootstrap-some-recipies.html#cb846-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb846-8"><a href="stats-the-bootstrap-some-recipies.html#cb846-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb846-9"><a href="stats-the-bootstrap-some-recipies.html#cb846-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb846-10"><a href="stats-the-bootstrap-some-recipies.html#cb846-10" aria-hidden="true" tabindex="-1"></a>df_q1</span></code></pre></div>
+<div id="q1-modify-the-code-above-to-use-within-a-mutate-call-on-df_resample_norm.-assign-the-mean-estimates-to-the-new-column-mean_est." class="section level3 hasAnchor" number="48.1.1">
+<h3><span class="header-section-number">48.1.1</span> <strong>q1</strong> Modify the code above to use within a <code>mutate()</code> call on <code>df_resample_norm</code>. Assign the mean estimates to the new column <code>mean_est</code>.<a href="stats-the-bootstrap-some-recipies.html#q1-modify-the-code-above-to-use-within-a-mutate-call-on-df_resample_norm.-assign-the-mean-estimates-to-the-new-column-mean_est." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="stats-the-bootstrap-some-recipies.html#cb848-1" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
+<span id="cb848-2"><a href="stats-the-bootstrap-some-recipies.html#cb848-2" aria-hidden="true" tabindex="-1"></a>  df_resample_norm <span class="sc">%&gt;%</span></span>
+<span id="cb848-3"><a href="stats-the-bootstrap-some-recipies.html#cb848-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb848-4"><a href="stats-the-bootstrap-some-recipies.html#cb848-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_est =</span> <span class="fu">map_dbl</span>(</span>
+<span id="cb848-5"><a href="stats-the-bootstrap-some-recipies.html#cb848-5" aria-hidden="true" tabindex="-1"></a>      df,</span>
+<span id="cb848-6"><a href="stats-the-bootstrap-some-recipies.html#cb848-6" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">summarize</span>(.x, <span class="at">mean_est =</span> <span class="fu">mean</span>(x)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(mean_est)</span>
+<span id="cb848-7"><a href="stats-the-bootstrap-some-recipies.html#cb848-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb848-8"><a href="stats-the-bootstrap-some-recipies.html#cb848-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb848-9"><a href="stats-the-bootstrap-some-recipies.html#cb848-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb848-10"><a href="stats-the-bootstrap-some-recipies.html#cb848-10" aria-hidden="true" tabindex="-1"></a>df_q1</span></code></pre></div>
 <pre><code>## # Bootstrap sampling 
-## # A tibble: 1,000 x 4
+## # A tibble: 1,000 × 4
 ##    splits          id            df                mean_est
 ##    &lt;list&gt;          &lt;chr&gt;         &lt;list&gt;               &lt;dbl&gt;
 ##  1 &lt;split [50/16]&gt; Bootstrap0001 &lt;tibble [50 × 1]&gt; -0.0667 
@@ -1069,45 +1068,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 &lt;split [50/18]&gt; Bootstrap0010 &lt;tibble [50 × 1]&gt; -0.136  
 ## # … with 990 more rows</code></pre>
 <p>The following test will verify that your <code>df_q1</code> is correct:</p>
-<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="stats-the-bootstrap-some-recipies.html#cb848-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb848-2"><a href="stats-the-bootstrap-some-recipies.html#cb848-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb848-3"><a href="stats-the-bootstrap-some-recipies.html#cb848-3" aria-hidden="true" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb848-4"><a href="stats-the-bootstrap-some-recipies.html#cb848-4" aria-hidden="true" tabindex="-1"></a>    df_q1 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(mean_est),</span>
-<span id="cb848-5"><a href="stats-the-bootstrap-some-recipies.html#cb848-5" aria-hidden="true" tabindex="-1"></a>    v_mean_est</span>
-<span id="cb848-6"><a href="stats-the-bootstrap-some-recipies.html#cb848-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb848-7"><a href="stats-the-bootstrap-some-recipies.html#cb848-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="stats-the-bootstrap-some-recipies.html#cb850-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb850-2"><a href="stats-the-bootstrap-some-recipies.html#cb850-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb850-3"><a href="stats-the-bootstrap-some-recipies.html#cb850-3" aria-hidden="true" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb850-4"><a href="stats-the-bootstrap-some-recipies.html#cb850-4" aria-hidden="true" tabindex="-1"></a>    df_q1 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(mean_est),</span>
+<span id="cb850-5"><a href="stats-the-bootstrap-some-recipies.html#cb850-5" aria-hidden="true" tabindex="-1"></a>    v_mean_est</span>
+<span id="cb850-6"><a href="stats-the-bootstrap-some-recipies.html#cb850-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb850-7"><a href="stats-the-bootstrap-some-recipies.html#cb850-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="stats-the-bootstrap-some-recipies.html#cb850-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="stats-the-bootstrap-some-recipies.html#cb852-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great job!&quot;</code></pre>
 <p>What we have now in <code>df_q1 %&gt;% pull(mean_est)</code> is an approximation of the <em>sampling distribution</em> for the mean estimate. Remember that a confidence interval is a construction based on the sampling distribution, so this is the object we need! From this point, our job would be to work the mathematical manipulations necessary to construct a confidence interval from the quantiles of <code>df_q1 %&gt;% pull(mean_est)</code>. Thankfully, the <code>rsample</code> package has already worked out those details for us!</p>
 <p>The <code>rsample</code> function <code>int_pctl()</code> will compute (percentile) confidence intervals from a bootstrap resampling, but we need to compute our own statistics. Remember the <code>fitdistr()</code> function from the previous exercise?</p>
-<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="stats-the-bootstrap-some-recipies.html#cb852-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this demo code</span></span>
-<span id="cb852-2"><a href="stats-the-bootstrap-some-recipies.html#cb852-2" aria-hidden="true" tabindex="-1"></a>df_data_norm <span class="sc">%&gt;%</span></span>
-<span id="cb852-3"><a href="stats-the-bootstrap-some-recipies.html#cb852-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span></span>
-<span id="cb852-4"><a href="stats-the-bootstrap-some-recipies.html#cb852-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;normal&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb852-5"><a href="stats-the-bootstrap-some-recipies.html#cb852-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 3
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="stats-the-bootstrap-some-recipies.html#cb854-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this demo code</span></span>
+<span id="cb854-2"><a href="stats-the-bootstrap-some-recipies.html#cb854-2" aria-hidden="true" tabindex="-1"></a>df_data_norm <span class="sc">%&gt;%</span></span>
+<span id="cb854-3"><a href="stats-the-bootstrap-some-recipies.html#cb854-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span></span>
+<span id="cb854-4"><a href="stats-the-bootstrap-some-recipies.html#cb854-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;normal&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb854-5"><a href="stats-the-bootstrap-some-recipies.html#cb854-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
 ##   term  estimate std.error
 ##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
 ## 1 mean    -0.124    0.131 
 ## 2 sd       0.923    0.0923</code></pre>
 <p>The output of <code>fitdistr()</code>, after run through <code>tidy()</code>, is exactly what <code>int_pctl()</code> expects. Note that the output here is a tibble with a <code>term</code> column and two statistics: the <code>estimate</code> and the <code>std.error</code>. To use <code>int_pctl()</code>, we’ll have to provide statistics in this compatible form.</p>
 </div>
-<div id="q2-modify-the-code-below-following-recall-fitdistr-to-provide-tidy-results-to-int_pctl." class="section level3" number="48.1.2">
-<h3><span class="header-section-number">48.1.2</span> <strong>q2</strong> Modify the code below following <code>recall-fitdistr</code> to provide tidy results to <code>int_pctl()</code>.</h3>
+<div id="q2-modify-the-code-below-following-recall-fitdistr-to-provide-tidy-results-to-int_pctl." class="section level3 hasAnchor" number="48.1.2">
+<h3><span class="header-section-number">48.1.2</span> <strong>q2</strong> Modify the code below following <code>recall-fitdistr</code> to provide tidy results to <code>int_pctl()</code>.<a href="stats-the-bootstrap-some-recipies.html#q2-modify-the-code-below-following-recall-fitdistr-to-provide-tidy-results-to-int_pctl." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: You should only have to modify the formula (<code>~</code>) line.</p>
-<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="stats-the-bootstrap-some-recipies.html#cb854-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
-<span id="cb854-2"><a href="stats-the-bootstrap-some-recipies.html#cb854-2" aria-hidden="true" tabindex="-1"></a>  df_resample_norm <span class="sc">%&gt;%</span></span>
-<span id="cb854-3"><a href="stats-the-bootstrap-some-recipies.html#cb854-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb854-4"><a href="stats-the-bootstrap-some-recipies.html#cb854-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimates =</span> <span class="fu">map</span>(</span>
-<span id="cb854-5"><a href="stats-the-bootstrap-some-recipies.html#cb854-5" aria-hidden="true" tabindex="-1"></a>      splits,</span>
-<span id="cb854-6"><a href="stats-the-bootstrap-some-recipies.html#cb854-6" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">analysis</span>(.x) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span> <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;normal&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span>
-<span id="cb854-7"><a href="stats-the-bootstrap-some-recipies.html#cb854-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb854-8"><a href="stats-the-bootstrap-some-recipies.html#cb854-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb854-9"><a href="stats-the-bootstrap-some-recipies.html#cb854-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb854-10"><a href="stats-the-bootstrap-some-recipies.html#cb854-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: The following function call will work once you correctly edit the code above</span></span>
-<span id="cb854-11"><a href="stats-the-bootstrap-some-recipies.html#cb854-11" aria-hidden="true" tabindex="-1"></a><span class="fu">int_pctl</span>(df_q2, estimates)</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 6
+<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="stats-the-bootstrap-some-recipies.html#cb856-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
+<span id="cb856-2"><a href="stats-the-bootstrap-some-recipies.html#cb856-2" aria-hidden="true" tabindex="-1"></a>  df_resample_norm <span class="sc">%&gt;%</span></span>
+<span id="cb856-3"><a href="stats-the-bootstrap-some-recipies.html#cb856-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb856-4"><a href="stats-the-bootstrap-some-recipies.html#cb856-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimates =</span> <span class="fu">map</span>(</span>
+<span id="cb856-5"><a href="stats-the-bootstrap-some-recipies.html#cb856-5" aria-hidden="true" tabindex="-1"></a>      splits,</span>
+<span id="cb856-6"><a href="stats-the-bootstrap-some-recipies.html#cb856-6" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">analysis</span>(.x) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span> <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;normal&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span>
+<span id="cb856-7"><a href="stats-the-bootstrap-some-recipies.html#cb856-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb856-8"><a href="stats-the-bootstrap-some-recipies.html#cb856-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb856-9"><a href="stats-the-bootstrap-some-recipies.html#cb856-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb856-10"><a href="stats-the-bootstrap-some-recipies.html#cb856-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: The following function call will work once you correctly edit the code above</span></span>
+<span id="cb856-11"><a href="stats-the-bootstrap-some-recipies.html#cb856-11" aria-hidden="true" tabindex="-1"></a><span class="fu">int_pctl</span>(df_q2, estimates)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 6
 ##   term  .lower .estimate .upper .alpha .method   
 ##   &lt;chr&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     
 ## 1 mean  -0.378    -0.118  0.124   0.05 percentile
@@ -1120,22 +1119,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>The next two tasks will study what happens when these two assumptions are not met.</p>
 </div>
-<div id="q3-representative-sample-read-the-following-code-before-running-it-and-make-a-hypothesis-about-the-result.-is-the-sample-entering-bootstraps-representative-of-the-population-rnormmean-0-sd-1-how-are-the-bootstrap-results-affected" class="section level3" number="48.1.3">
-<h3><span class="header-section-number">48.1.3</span> <strong>q3</strong> (Representative sample) Read the following code before running it, and make a hypothesis about the result. Is the sample entering <code>bootstraps()</code> representative of the population <code>rnorm(mean = 0, sd = 1)</code>? How are the bootstrap results affected?</h3>
-<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="stats-the-bootstrap-some-recipies.html#cb856-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Read this code; will the data be representative of the population</span></span>
-<span id="cb856-2"><a href="stats-the-bootstrap-some-recipies.html#cb856-2" aria-hidden="true" tabindex="-1"></a><span class="do">## rnorm(mean = 0, sd = 1)?</span></span>
-<span id="cb856-3"><a href="stats-the-bootstrap-some-recipies.html#cb856-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb856-4"><a href="stats-the-bootstrap-some-recipies.html#cb856-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb856-5"><a href="stats-the-bootstrap-some-recipies.html#cb856-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb856-6"><a href="stats-the-bootstrap-some-recipies.html#cb856-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bootstraps</span>(<span class="at">times =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb856-7"><a href="stats-the-bootstrap-some-recipies.html#cb856-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb856-8"><a href="stats-the-bootstrap-some-recipies.html#cb856-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimates =</span> <span class="fu">map</span>(</span>
-<span id="cb856-9"><a href="stats-the-bootstrap-some-recipies.html#cb856-9" aria-hidden="true" tabindex="-1"></a>      splits,</span>
-<span id="cb856-10"><a href="stats-the-bootstrap-some-recipies.html#cb856-10" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">analysis</span>(.x) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span> <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;normal&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span>
-<span id="cb856-11"><a href="stats-the-bootstrap-some-recipies.html#cb856-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb856-12"><a href="stats-the-bootstrap-some-recipies.html#cb856-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb856-13"><a href="stats-the-bootstrap-some-recipies.html#cb856-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">int_pctl</span>(estimates)</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 6
+<div id="q3-representative-sample-read-the-following-code-before-running-it-and-make-a-hypothesis-about-the-result.-is-the-sample-entering-bootstraps-representative-of-the-population-rnormmean-0-sd-1-how-are-the-bootstrap-results-affected" class="section level3 hasAnchor" number="48.1.3">
+<h3><span class="header-section-number">48.1.3</span> <strong>q3</strong> (Representative sample) Read the following code before running it, and make a hypothesis about the result. Is the sample entering <code>bootstraps()</code> representative of the population <code>rnorm(mean = 0, sd = 1)</code>? How are the bootstrap results affected?<a href="stats-the-bootstrap-some-recipies.html#q3-representative-sample-read-the-following-code-before-running-it-and-make-a-hypothesis-about-the-result.-is-the-sample-entering-bootstraps-representative-of-the-population-rnormmean-0-sd-1-how-are-the-bootstrap-results-affected" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="stats-the-bootstrap-some-recipies.html#cb858-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Read this code; will the data be representative of the population</span></span>
+<span id="cb858-2"><a href="stats-the-bootstrap-some-recipies.html#cb858-2" aria-hidden="true" tabindex="-1"></a><span class="do">## rnorm(mean = 0, sd = 1)?</span></span>
+<span id="cb858-3"><a href="stats-the-bootstrap-some-recipies.html#cb858-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb858-4"><a href="stats-the-bootstrap-some-recipies.html#cb858-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb858-5"><a href="stats-the-bootstrap-some-recipies.html#cb858-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb858-6"><a href="stats-the-bootstrap-some-recipies.html#cb858-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bootstraps</span>(<span class="at">times =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb858-7"><a href="stats-the-bootstrap-some-recipies.html#cb858-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb858-8"><a href="stats-the-bootstrap-some-recipies.html#cb858-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimates =</span> <span class="fu">map</span>(</span>
+<span id="cb858-9"><a href="stats-the-bootstrap-some-recipies.html#cb858-9" aria-hidden="true" tabindex="-1"></a>      splits,</span>
+<span id="cb858-10"><a href="stats-the-bootstrap-some-recipies.html#cb858-10" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">analysis</span>(.x) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span> <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;normal&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span>
+<span id="cb858-11"><a href="stats-the-bootstrap-some-recipies.html#cb858-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb858-12"><a href="stats-the-bootstrap-some-recipies.html#cb858-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb858-13"><a href="stats-the-bootstrap-some-recipies.html#cb858-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">int_pctl</span>(estimates)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 6
 ##   term  .lower .estimate .upper .alpha .method   
 ##   &lt;chr&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     
 ## 1 mean  -0.965    -0.770 -0.605   0.05 percentile
@@ -1147,334 +1146,139 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>The following code generates <code>100</code> different samples from a normal distribution (each with <code>n = 10</code>), and computes a very coarse bootstrap for each one.</p>
 </div>
-<div id="q4-number-of-replicates-first-run-this-code-and-comment-on-whether-the-approximate-coverage-probability-is-close-to-the-nominal-0.95.-increase-the-value-of-n_boot-and-re-run-at-what-point-does-the-coverage-probability-approach-the-desired-0.95" class="section level3" number="48.1.4">
-<h3><span class="header-section-number">48.1.4</span> <strong>q4</strong> (Number of replicates) First run this code, and comment on whether the approximate coverage probability is close to the nominal <code>0.95</code>. Increase the value of <code>n_boot</code> and re-run; at what point does the coverage probability approach the desired <code>0.95</code>?</h3>
+<div id="q4-number-of-replicates-first-run-this-code-and-comment-on-whether-the-approximate-coverage-probability-is-close-to-the-nominal-0.95.-increase-the-value-of-n_boot-and-re-run-at-what-point-does-the-coverage-probability-approach-the-desired-0.95" class="section level3 hasAnchor" number="48.1.4">
+<h3><span class="header-section-number">48.1.4</span> <strong>q4</strong> (Number of replicates) First run this code, and comment on whether the approximate coverage probability is close to the nominal <code>0.95</code>. Increase the value of <code>n_boot</code> and re-run; at what point does the coverage probability approach the desired <code>0.95</code>?<a href="stats-the-bootstrap-some-recipies.html#q4-number-of-replicates-first-run-this-code-and-comment-on-whether-the-approximate-coverage-probability-is-close-to-the-nominal-0.95.-increase-the-value-of-n_boot-and-re-run-at-what-point-does-the-coverage-probability-approach-the-desired-0.95" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Note</em>: At higher values of <code>n_boot</code>, the following code can take a long while to run. I recommend keeping <code>n_boot &lt;= 1000</code>.</p>
-<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="stats-the-bootstrap-some-recipies.html#cb858-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Run this code,</span></span>
-<span id="cb858-2"><a href="stats-the-bootstrap-some-recipies.html#cb858-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb858-3"><a href="stats-the-bootstrap-some-recipies.html#cb858-3" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># Number of bootstrap resamples</span></span>
-<span id="cb858-4"><a href="stats-the-bootstrap-some-recipies.html#cb858-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb858-5"><a href="stats-the-bootstrap-some-recipies.html#cb858-5" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
-<span id="cb858-6"><a href="stats-the-bootstrap-some-recipies.html#cb858-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
-<span id="cb858-7"><a href="stats-the-bootstrap-some-recipies.html#cb858-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>), <span class="co"># Number of replicates</span></span>
-<span id="cb858-8"><a href="stats-the-bootstrap-some-recipies.html#cb858-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(repl) {</span>
-<span id="cb858-9"><a href="stats-the-bootstrap-some-recipies.html#cb858-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb858-10"><a href="stats-the-bootstrap-some-recipies.html#cb858-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">bootstraps</span>(<span class="at">times =</span> times) <span class="sc">%&gt;%</span></span>
-<span id="cb858-11"><a href="stats-the-bootstrap-some-recipies.html#cb858-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(</span>
-<span id="cb858-12"><a href="stats-the-bootstrap-some-recipies.html#cb858-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">estimates =</span> <span class="fu">map</span>(</span>
-<span id="cb858-13"><a href="stats-the-bootstrap-some-recipies.html#cb858-13" aria-hidden="true" tabindex="-1"></a>            splits,</span>
-<span id="cb858-14"><a href="stats-the-bootstrap-some-recipies.html#cb858-14" aria-hidden="true" tabindex="-1"></a>            <span class="sc">~</span> <span class="fu">analysis</span>(.x) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span> <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;normal&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span>
-<span id="cb858-15"><a href="stats-the-bootstrap-some-recipies.html#cb858-15" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb858-16"><a href="stats-the-bootstrap-some-recipies.html#cb858-16" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
-<span id="cb858-17"><a href="stats-the-bootstrap-some-recipies.html#cb858-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">int_pctl</span>(estimates, <span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb858-18"><a href="stats-the-bootstrap-some-recipies.html#cb858-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">repl =</span> repl)</span>
-<span id="cb858-19"><a href="stats-the-bootstrap-some-recipies.html#cb858-19" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb858-20"><a href="stats-the-bootstrap-some-recipies.html#cb858-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.</code></pre>
-<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb860-1"><a href="stats-the-bootstrap-some-recipies.html#cb860-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Estimate the coverage probability of the bootstrap intervals</span></span>
-<span id="cb860-2"><a href="stats-the-bootstrap-some-recipies.html#cb860-2" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="sc">%&gt;%</span></span>
-<span id="cb860-3"><a href="stats-the-bootstrap-some-recipies.html#cb860-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;mean&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb860-4"><a href="stats-the-bootstrap-some-recipies.html#cb860-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cover =</span> (.lower <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="sc">&amp;</span> (<span class="dv">0</span> <span class="sc">&lt;=</span> .upper)) <span class="sc">%&gt;%</span></span>
-<span id="cb860-5"><a href="stats-the-bootstrap-some-recipies.html#cb860-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(cover))</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 1
+<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb860-1"><a href="stats-the-bootstrap-some-recipies.html#cb860-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Run this code,</span></span>
+<span id="cb860-2"><a href="stats-the-bootstrap-some-recipies.html#cb860-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb860-3"><a href="stats-the-bootstrap-some-recipies.html#cb860-3" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># Number of bootstrap resamples</span></span>
+<span id="cb860-4"><a href="stats-the-bootstrap-some-recipies.html#cb860-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb860-5"><a href="stats-the-bootstrap-some-recipies.html#cb860-5" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
+<span id="cb860-6"><a href="stats-the-bootstrap-some-recipies.html#cb860-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
+<span id="cb860-7"><a href="stats-the-bootstrap-some-recipies.html#cb860-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>), <span class="co"># Number of replicates</span></span>
+<span id="cb860-8"><a href="stats-the-bootstrap-some-recipies.html#cb860-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(repl) {</span>
+<span id="cb860-9"><a href="stats-the-bootstrap-some-recipies.html#cb860-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb860-10"><a href="stats-the-bootstrap-some-recipies.html#cb860-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">bootstraps</span>(<span class="at">times =</span> times) <span class="sc">%&gt;%</span></span>
+<span id="cb860-11"><a href="stats-the-bootstrap-some-recipies.html#cb860-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(</span>
+<span id="cb860-12"><a href="stats-the-bootstrap-some-recipies.html#cb860-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">estimates =</span> <span class="fu">map</span>(</span>
+<span id="cb860-13"><a href="stats-the-bootstrap-some-recipies.html#cb860-13" aria-hidden="true" tabindex="-1"></a>            splits,</span>
+<span id="cb860-14"><a href="stats-the-bootstrap-some-recipies.html#cb860-14" aria-hidden="true" tabindex="-1"></a>            <span class="sc">~</span> <span class="fu">analysis</span>(.x) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span> <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;normal&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span>
+<span id="cb860-15"><a href="stats-the-bootstrap-some-recipies.html#cb860-15" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb860-16"><a href="stats-the-bootstrap-some-recipies.html#cb860-16" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
+<span id="cb860-17"><a href="stats-the-bootstrap-some-recipies.html#cb860-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">int_pctl</span>(estimates, <span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb860-18"><a href="stats-the-bootstrap-some-recipies.html#cb860-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">repl =</span> repl)</span>
+<span id="cb860-19"><a href="stats-the-bootstrap-some-recipies.html#cb860-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb860-20"><a href="stats-the-bootstrap-some-recipies.html#cb860-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.</code></pre>
+<pre><code>## Warning in bootstraps(., times = times): Some assessment sets contained zero
+## rows.</code></pre>
+<pre><code>## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.</code></pre>
+<pre><code>## Warning in bootstraps(., times = times): Some assessment sets contained zero
+## rows.</code></pre>
+<pre><code>## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.</code></pre>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="stats-the-bootstrap-some-recipies.html#cb866-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Estimate the coverage probability of the bootstrap intervals</span></span>
+<span id="cb866-2"><a href="stats-the-bootstrap-some-recipies.html#cb866-2" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="sc">%&gt;%</span></span>
+<span id="cb866-3"><a href="stats-the-bootstrap-some-recipies.html#cb866-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;mean&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb866-4"><a href="stats-the-bootstrap-some-recipies.html#cb866-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cover =</span> (.lower <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="sc">&amp;</span> (<span class="dv">0</span> <span class="sc">&lt;=</span> .upper)) <span class="sc">%&gt;%</span></span>
+<span id="cb866-5"><a href="stats-the-bootstrap-some-recipies.html#cb866-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(cover))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 1
 ##   `mean(cover)`
 ##           &lt;dbl&gt;
 ## 1           0.9</code></pre>
@@ -1486,57 +1290,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Aside</em>: The <code>rsample</code> function <code>int_pctl</code> actually complains when you give it fewer than <code>1000</code> replicates. Since you’ll usually be running the bootstrap only a handful of times (rather than <code>100</code> above), you need not be stingy with bootstrap replicates. Do at least <code>1000</code> in most cases.</p>
 </div>
 </div>
-<div id="a-worked-example-probability-estimate" class="section level2" number="48.2">
-<h2><span class="header-section-number">48.2</span> A Worked Example: Probability Estimate</h2>
+<div id="a-worked-example-probability-estimate" class="section level2 hasAnchor" number="48.2">
+<h2><span class="header-section-number">48.2</span> A Worked Example: Probability Estimate<a href="stats-the-bootstrap-some-recipies.html#a-worked-example-probability-estimate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>To finish, I’ll present some example code on how you can apply the bootstrap to a more complicated problem. In the previous exercise <code>e-stat08-fit-dist</code> we estimated a probability based on a fitted distribution. Now we have the tools to produce a bootstrap-approximated a confidence interval for that probability estimate.</p>
 <p>Remember that we had the following setup: sampling from a weibull distribution and estimating parameters with <code>fitdistr()</code>.</p>
-<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="stats-the-bootstrap-some-recipies.html#cb862-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this example code</span></span>
-<span id="cb862-2"><a href="stats-the-bootstrap-some-recipies.html#cb862-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb862-3"><a href="stats-the-bootstrap-some-recipies.html#cb862-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb862-4"><a href="stats-the-bootstrap-some-recipies.html#cb862-4" aria-hidden="true" tabindex="-1"></a>df_data_w <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">y =</span> <span class="fu">rweibull</span>(<span class="dv">50</span>, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">4</span>))</span>
-<span id="cb862-5"><a href="stats-the-bootstrap-some-recipies.html#cb862-5" aria-hidden="true" tabindex="-1"></a>pr_true <span class="ot">&lt;-</span> <span class="fu">pweibull</span>(<span class="at">q =</span> <span class="dv">2</span>, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">4</span>)</span>
-<span id="cb862-6"><a href="stats-the-bootstrap-some-recipies.html#cb862-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb862-7"><a href="stats-the-bootstrap-some-recipies.html#cb862-7" aria-hidden="true" tabindex="-1"></a>df_data_w <span class="sc">%&gt;%</span></span>
-<span id="cb862-8"><a href="stats-the-bootstrap-some-recipies.html#cb862-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(y) <span class="sc">%&gt;%</span></span>
-<span id="cb862-9"><a href="stats-the-bootstrap-some-recipies.html#cb862-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;weibull&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb862-10"><a href="stats-the-bootstrap-some-recipies.html#cb862-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 3
+<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="stats-the-bootstrap-some-recipies.html#cb868-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this example code</span></span>
+<span id="cb868-2"><a href="stats-the-bootstrap-some-recipies.html#cb868-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb868-3"><a href="stats-the-bootstrap-some-recipies.html#cb868-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb868-4"><a href="stats-the-bootstrap-some-recipies.html#cb868-4" aria-hidden="true" tabindex="-1"></a>df_data_w <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">y =</span> <span class="fu">rweibull</span>(<span class="dv">50</span>, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">4</span>))</span>
+<span id="cb868-5"><a href="stats-the-bootstrap-some-recipies.html#cb868-5" aria-hidden="true" tabindex="-1"></a>pr_true <span class="ot">&lt;-</span> <span class="fu">pweibull</span>(<span class="at">q =</span> <span class="dv">2</span>, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">4</span>)</span>
+<span id="cb868-6"><a href="stats-the-bootstrap-some-recipies.html#cb868-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb868-7"><a href="stats-the-bootstrap-some-recipies.html#cb868-7" aria-hidden="true" tabindex="-1"></a>df_data_w <span class="sc">%&gt;%</span></span>
+<span id="cb868-8"><a href="stats-the-bootstrap-some-recipies.html#cb868-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(y) <span class="sc">%&gt;%</span></span>
+<span id="cb868-9"><a href="stats-the-bootstrap-some-recipies.html#cb868-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;weibull&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb868-10"><a href="stats-the-bootstrap-some-recipies.html#cb868-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
 ##   term  estimate std.error
 ##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
 ## 1 shape     2.18     0.239
 ## 2 scale     4.00     0.274</code></pre>
 <p>In order to approximate a confidence interval for our probability estimate, we’ll need to provide the probability value in the form that <code>int_pctl()</code> expects. Below I define a helper function that takes each split, extracts the estimated parameters, and uses them to compute a probability estimate. I then add that value as a new row to the output of <code>tidy()</code>, making sure to populate the columns <code>estimate</code> and <code>term</code>.</p>
-<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="stats-the-bootstrap-some-recipies.html#cb864-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this example code; but feel free to adapt it!</span></span>
-<span id="cb864-2"><a href="stats-the-bootstrap-some-recipies.html#cb864-2" aria-hidden="true" tabindex="-1"></a>fit_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(split) {</span>
-<span id="cb864-3"><a href="stats-the-bootstrap-some-recipies.html#cb864-3" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Fit distribution</span></span>
-<span id="cb864-4"><a href="stats-the-bootstrap-some-recipies.html#cb864-4" aria-hidden="true" tabindex="-1"></a>  df_tmp <span class="ot">&lt;-</span></span>
-<span id="cb864-5"><a href="stats-the-bootstrap-some-recipies.html#cb864-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">analysis</span>(split) <span class="sc">%&gt;%</span></span>
-<span id="cb864-6"><a href="stats-the-bootstrap-some-recipies.html#cb864-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(y) <span class="sc">%&gt;%</span></span>
-<span id="cb864-7"><a href="stats-the-bootstrap-some-recipies.html#cb864-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;weibull&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb864-8"><a href="stats-the-bootstrap-some-recipies.html#cb864-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tidy</span>()</span>
-<span id="cb864-9"><a href="stats-the-bootstrap-some-recipies.html#cb864-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb864-10"><a href="stats-the-bootstrap-some-recipies.html#cb864-10" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Extract statistics</span></span>
-<span id="cb864-11"><a href="stats-the-bootstrap-some-recipies.html#cb864-11" aria-hidden="true" tabindex="-1"></a>  scale_est <span class="ot">&lt;-</span></span>
-<span id="cb864-12"><a href="stats-the-bootstrap-some-recipies.html#cb864-12" aria-hidden="true" tabindex="-1"></a>    df_tmp <span class="sc">%&gt;%</span></span>
-<span id="cb864-13"><a href="stats-the-bootstrap-some-recipies.html#cb864-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;scale&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb864-14"><a href="stats-the-bootstrap-some-recipies.html#cb864-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(estimate)</span>
-<span id="cb864-15"><a href="stats-the-bootstrap-some-recipies.html#cb864-15" aria-hidden="true" tabindex="-1"></a>  shape_est <span class="ot">&lt;-</span></span>
-<span id="cb864-16"><a href="stats-the-bootstrap-some-recipies.html#cb864-16" aria-hidden="true" tabindex="-1"></a>    df_tmp <span class="sc">%&gt;%</span></span>
-<span id="cb864-17"><a href="stats-the-bootstrap-some-recipies.html#cb864-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;shape&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb864-18"><a href="stats-the-bootstrap-some-recipies.html#cb864-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(estimate)</span>
-<span id="cb864-19"><a href="stats-the-bootstrap-some-recipies.html#cb864-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb864-20"><a href="stats-the-bootstrap-some-recipies.html#cb864-20" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Add probability estimate in tidy form</span></span>
-<span id="cb864-21"><a href="stats-the-bootstrap-some-recipies.html#cb864-21" aria-hidden="true" tabindex="-1"></a>  df_tmp <span class="sc">%&gt;%</span></span>
-<span id="cb864-22"><a href="stats-the-bootstrap-some-recipies.html#cb864-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(</span>
-<span id="cb864-23"><a href="stats-the-bootstrap-some-recipies.html#cb864-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">estimate =</span> <span class="fu">pweibull</span>(<span class="at">q =</span> <span class="dv">2</span>, <span class="at">scale =</span> scale_est, <span class="at">shape =</span> shape_est),</span>
-<span id="cb864-24"><a href="stats-the-bootstrap-some-recipies.html#cb864-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">term =</span> <span class="st">&quot;pr&quot;</span></span>
-<span id="cb864-25"><a href="stats-the-bootstrap-some-recipies.html#cb864-25" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb864-26"><a href="stats-the-bootstrap-some-recipies.html#cb864-26" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb864-27"><a href="stats-the-bootstrap-some-recipies.html#cb864-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb864-28"><a href="stats-the-bootstrap-some-recipies.html#cb864-28" aria-hidden="true" tabindex="-1"></a>df_resample_pr <span class="ot">&lt;-</span></span>
-<span id="cb864-29"><a href="stats-the-bootstrap-some-recipies.html#cb864-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bootstraps</span>(df_data_w, <span class="at">times =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb864-30"><a href="stats-the-bootstrap-some-recipies.html#cb864-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimates =</span> <span class="fu">map</span>(splits, fit_fun))</span></code></pre></div>
+<div class="sourceCode" id="cb870"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb870-1"><a href="stats-the-bootstrap-some-recipies.html#cb870-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this example code; but feel free to adapt it!</span></span>
+<span id="cb870-2"><a href="stats-the-bootstrap-some-recipies.html#cb870-2" aria-hidden="true" tabindex="-1"></a>fit_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(split) {</span>
+<span id="cb870-3"><a href="stats-the-bootstrap-some-recipies.html#cb870-3" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Fit distribution</span></span>
+<span id="cb870-4"><a href="stats-the-bootstrap-some-recipies.html#cb870-4" aria-hidden="true" tabindex="-1"></a>  df_tmp <span class="ot">&lt;-</span></span>
+<span id="cb870-5"><a href="stats-the-bootstrap-some-recipies.html#cb870-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">analysis</span>(split) <span class="sc">%&gt;%</span></span>
+<span id="cb870-6"><a href="stats-the-bootstrap-some-recipies.html#cb870-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(y) <span class="sc">%&gt;%</span></span>
+<span id="cb870-7"><a href="stats-the-bootstrap-some-recipies.html#cb870-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;weibull&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb870-8"><a href="stats-the-bootstrap-some-recipies.html#cb870-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tidy</span>()</span>
+<span id="cb870-9"><a href="stats-the-bootstrap-some-recipies.html#cb870-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb870-10"><a href="stats-the-bootstrap-some-recipies.html#cb870-10" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Extract statistics</span></span>
+<span id="cb870-11"><a href="stats-the-bootstrap-some-recipies.html#cb870-11" aria-hidden="true" tabindex="-1"></a>  scale_est <span class="ot">&lt;-</span></span>
+<span id="cb870-12"><a href="stats-the-bootstrap-some-recipies.html#cb870-12" aria-hidden="true" tabindex="-1"></a>    df_tmp <span class="sc">%&gt;%</span></span>
+<span id="cb870-13"><a href="stats-the-bootstrap-some-recipies.html#cb870-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;scale&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb870-14"><a href="stats-the-bootstrap-some-recipies.html#cb870-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(estimate)</span>
+<span id="cb870-15"><a href="stats-the-bootstrap-some-recipies.html#cb870-15" aria-hidden="true" tabindex="-1"></a>  shape_est <span class="ot">&lt;-</span></span>
+<span id="cb870-16"><a href="stats-the-bootstrap-some-recipies.html#cb870-16" aria-hidden="true" tabindex="-1"></a>    df_tmp <span class="sc">%&gt;%</span></span>
+<span id="cb870-17"><a href="stats-the-bootstrap-some-recipies.html#cb870-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;shape&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb870-18"><a href="stats-the-bootstrap-some-recipies.html#cb870-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(estimate)</span>
+<span id="cb870-19"><a href="stats-the-bootstrap-some-recipies.html#cb870-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb870-20"><a href="stats-the-bootstrap-some-recipies.html#cb870-20" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Add probability estimate in tidy form</span></span>
+<span id="cb870-21"><a href="stats-the-bootstrap-some-recipies.html#cb870-21" aria-hidden="true" tabindex="-1"></a>  df_tmp <span class="sc">%&gt;%</span></span>
+<span id="cb870-22"><a href="stats-the-bootstrap-some-recipies.html#cb870-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(</span>
+<span id="cb870-23"><a href="stats-the-bootstrap-some-recipies.html#cb870-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">estimate =</span> <span class="fu">pweibull</span>(<span class="at">q =</span> <span class="dv">2</span>, <span class="at">scale =</span> scale_est, <span class="at">shape =</span> shape_est),</span>
+<span id="cb870-24"><a href="stats-the-bootstrap-some-recipies.html#cb870-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">term =</span> <span class="st">&quot;pr&quot;</span></span>
+<span id="cb870-25"><a href="stats-the-bootstrap-some-recipies.html#cb870-25" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb870-26"><a href="stats-the-bootstrap-some-recipies.html#cb870-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb870-27"><a href="stats-the-bootstrap-some-recipies.html#cb870-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb870-28"><a href="stats-the-bootstrap-some-recipies.html#cb870-28" aria-hidden="true" tabindex="-1"></a>df_resample_pr <span class="ot">&lt;-</span></span>
+<span id="cb870-29"><a href="stats-the-bootstrap-some-recipies.html#cb870-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bootstraps</span>(df_data_w, <span class="at">times =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb870-30"><a href="stats-the-bootstrap-some-recipies.html#cb870-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimates =</span> <span class="fu">map</span>(splits, fit_fun))</span></code></pre></div>
 <pre><code>## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
 
 ## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
@@ -1837,21 +1641,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 ## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced</code></pre>
 <p>Now I’ve got all the information I need to pass to <code>df_resample_pr</code>:</p>
-<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="stats-the-bootstrap-some-recipies.html#cb866-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this example code</span></span>
-<span id="cb866-2"><a href="stats-the-bootstrap-some-recipies.html#cb866-2" aria-hidden="true" tabindex="-1"></a><span class="fu">int_pctl</span>(df_resample_pr, estimates)</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 6
+<div class="sourceCode" id="cb872"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb872-1"><a href="stats-the-bootstrap-some-recipies.html#cb872-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this example code</span></span>
+<span id="cb872-2"><a href="stats-the-bootstrap-some-recipies.html#cb872-2" aria-hidden="true" tabindex="-1"></a><span class="fu">int_pctl</span>(df_resample_pr, estimates)</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 6
 ##   term  .lower .estimate .upper .alpha .method   
 ##   &lt;chr&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     
 ## 1 pr     0.121     0.197  0.278   0.05 percentile
 ## 2 scale  3.50      3.99   4.51    0.05 percentile
 ## 3 shape  1.87      2.23   2.68    0.05 percentile</code></pre>
-<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="stats-the-bootstrap-some-recipies.html#cb868-1" aria-hidden="true" tabindex="-1"></a>pr_true</span></code></pre></div>
+<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="stats-the-bootstrap-some-recipies.html#cb874-1" aria-hidden="true" tabindex="-1"></a>pr_true</span></code></pre></div>
 <pre><code>## [1] 0.2211992</code></pre>
 <p>When I run this, I find that the confidence interval contains <code>pr_true</code> as one might hope!</p>
 <!-- include-exit-ticket -->
 </div>
-<div id="notes-5" class="section level2" number="48.3">
-<h2><span class="header-section-number">48.3</span> Notes</h2>
+<div id="notes-5" class="section level2 hasAnchor" number="48.3">
+<h2><span class="header-section-number">48.3</span> Notes<a href="stats-the-bootstrap-some-recipies.html#notes-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>[1] This is because <code>rsample</code> does some fancy stuff under the hood. Basically <code>bootstraps</code> does not make any additional copies of the data; the price we pay for this efficiency is the need to call <code>analysis()</code>.</p>
 <p>[2] For a slightly more mathematical treatment of the bootstrap, try <a href="https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading24.pdf">these MIT course notes</a></p>
@@ -1924,7 +1728,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

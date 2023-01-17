@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>45 Data: Factors | Data Science: Exercise Solutions</title>
   <meta name="description" content="45 Data: Factors | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="45 Data: Factors | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="data-map-basics.html"/>
 <link rel="next" href="stats-fitting-distributions.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,50 +980,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-factors" class="section level1" number="45">
-<h1><span class="header-section-number">45</span> Data: Factors</h1>
+<div id="data-factors" class="section level1 hasAnchor" number="45">
+<h1><span class="header-section-number">45</span> Data: Factors<a href="data-factors.html#data-factors" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Factors are an important type of variables. Since they’re largely in
 a class of their own, there are special tools available in the package <code>forcats</code>
 to help wrangle factors.</p>
 <p><em>Reading</em>: (None)</p>
-<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb787-1"><a href="data-factors.html#cb787-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb789-1"><a href="data-factors.html#cb789-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb791-1"><a href="data-factors.html#cb791-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code></pre></div>
+<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="data-factors.html#cb793-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code></pre></div>
 <p>A <em>factor</em> is a variable that only takes fixed, often non-numeric, values.
 Factors are sometimes called <em>categorical variables</em>. We’ve already seen</p>
-<div id="organization" class="section level2" number="45.1">
-<h2><span class="header-section-number">45.1</span> Organization</h2>
+<div id="organization" class="section level2 hasAnchor" number="45.1">
+<h2><span class="header-section-number">45.1</span> Organization<a href="data-factors.html#organization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
-<div id="q1-the-following-chunk-displays-the-levels-of-the-factor-continent.-run" class="section level3" number="45.1.1">
-<h3><span class="header-section-number">45.1.1</span> <strong>q1</strong> The following chunk displays the levels of the factor <code>continent</code>. Run</h3>
+<div id="q1-the-following-chunk-displays-the-levels-of-the-factor-continent.-run" class="section level3 hasAnchor" number="45.1.1">
+<h3><span class="header-section-number">45.1.1</span> <strong>q1</strong> The following chunk displays the levels of the factor <code>continent</code>. Run<a href="data-factors.html#q1-the-following-chunk-displays-the-levels-of-the-factor-continent.-run" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>the following code chunk and note in what <em>order</em> they are listed.</p>
-<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb792-1"><a href="data-factors.html#cb792-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this</span></span>
-<span id="cb792-2"><a href="data-factors.html#cb792-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb792-3"><a href="data-factors.html#cb792-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(cut) <span class="sc">%&gt;%</span></span>
-<span id="cb792-4"><a href="data-factors.html#cb792-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="data-factors.html#cb794-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this</span></span>
+<span id="cb794-2"><a href="data-factors.html#cb794-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb794-3"><a href="data-factors.html#cb794-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(cut) <span class="sc">%&gt;%</span></span>
+<span id="cb794-4"><a href="data-factors.html#cb794-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;Fair&quot;      &quot;Good&quot;      &quot;Very Good&quot; &quot;Premium&quot;   &quot;Ideal&quot;</code></pre>
-<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="data-factors.html#cb794-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Determine what order the factors are listed in.</span></span></code></pre></div>
+<div class="sourceCode" id="cb796"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb796-1"><a href="data-factors.html#cb796-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Determine what order the factors are listed in.</span></span></code></pre></div>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>The factor levels are ordered in terms of increasing quality of diamond cut.</li>
 <li>The levels are essentially a measure of quality; we would expect price to (generally) increase with improved cut.</li>
 </ul>
 </div>
-<div id="q2-determine-the-levels-for-the-continent-variable-in-the-gapminder-dataset.-note-the-order-of-the-levels." class="section level3" number="45.1.2">
-<h3><span class="header-section-number">45.1.2</span> <strong>q2</strong> Determine the levels for the <code>continent</code> variable in the <code>gapminder</code> dataset. Note the <em>order</em> of the levels.</h3>
-<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb795-1"><a href="data-factors.html#cb795-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Determine the levels of the variable</span></span>
-<span id="cb795-2"><a href="data-factors.html#cb795-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
-<span id="cb795-3"><a href="data-factors.html#cb795-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(continent) <span class="sc">%&gt;%</span></span>
-<span id="cb795-4"><a href="data-factors.html#cb795-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>()</span></code></pre></div>
+<div id="q2-determine-the-levels-for-the-continent-variable-in-the-gapminder-dataset.-note-the-order-of-the-levels." class="section level3 hasAnchor" number="45.1.2">
+<h3><span class="header-section-number">45.1.2</span> <strong>q2</strong> Determine the levels for the <code>continent</code> variable in the <code>gapminder</code> dataset. Note the <em>order</em> of the levels.<a href="data-factors.html#q2-determine-the-levels-for-the-continent-variable-in-the-gapminder-dataset.-note-the-order-of-the-levels." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="data-factors.html#cb797-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Determine the levels of the variable</span></span>
+<span id="cb797-2"><a href="data-factors.html#cb797-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb797-3"><a href="data-factors.html#cb797-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(continent) <span class="sc">%&gt;%</span></span>
+<span id="cb797-4"><a href="data-factors.html#cb797-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;Africa&quot;   &quot;Americas&quot; &quot;Asia&quot;     &quot;Europe&quot;   &quot;Oceania&quot;</code></pre>
-<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="data-factors.html#cb797-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Determine what order the factors are listed in.</span></span></code></pre></div>
+<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="data-factors.html#cb799-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Determine what order the factors are listed in.</span></span></code></pre></div>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>The factor levels are ordered alphabetically.</li>
@@ -1033,18 +1032,18 @@ Factors are sometimes called <em>categorical variables</em>. We’ve already see
 factors. For instance, we can assign manual factor levels with the function
 <code>fct_relevel()</code>. This is generally used in a <code>mutate()</code>; for instance <code>mutate(x = fct_relevel(x, "a", "b", "c")</code>.</p>
 </div>
-<div id="q3-relevel-the-continents." class="section level3" number="45.1.3">
-<h3><span class="header-section-number">45.1.3</span> <strong>q3</strong> Relevel the continents.</h3>
+<div id="q3-relevel-the-continents." class="section level3 hasAnchor" number="45.1.3">
+<h3><span class="header-section-number">45.1.3</span> <strong>q3</strong> Relevel the continents.<a href="data-factors.html#q3-relevel-the-continents." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Copy your code from q2 and introduce a mutate using <code>fct_relevel()</code> to reorder <code>continent</code>. Choose which levels to reorder and what order in which to put them. Note how the resulting order is changed when you call <code>levels()</code> at the end of the pipe.</p>
-<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="data-factors.html#cb798-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
-<span id="cb798-2"><a href="data-factors.html#cb798-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb798-3"><a href="data-factors.html#cb798-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">continent =</span> <span class="fu">fct_relevel</span>(</span>
-<span id="cb798-4"><a href="data-factors.html#cb798-4" aria-hidden="true" tabindex="-1"></a>      continent,</span>
-<span id="cb798-5"><a href="data-factors.html#cb798-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Oceania&quot;</span></span>
-<span id="cb798-6"><a href="data-factors.html#cb798-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb798-7"><a href="data-factors.html#cb798-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb798-8"><a href="data-factors.html#cb798-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(continent) <span class="sc">%&gt;%</span></span>
-<span id="cb798-9"><a href="data-factors.html#cb798-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="data-factors.html#cb800-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb800-2"><a href="data-factors.html#cb800-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb800-3"><a href="data-factors.html#cb800-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">continent =</span> <span class="fu">fct_relevel</span>(</span>
+<span id="cb800-4"><a href="data-factors.html#cb800-4" aria-hidden="true" tabindex="-1"></a>      continent,</span>
+<span id="cb800-5"><a href="data-factors.html#cb800-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Oceania&quot;</span></span>
+<span id="cb800-6"><a href="data-factors.html#cb800-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb800-7"><a href="data-factors.html#cb800-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb800-8"><a href="data-factors.html#cb800-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(continent) <span class="sc">%&gt;%</span></span>
+<span id="cb800-9"><a href="data-factors.html#cb800-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;Oceania&quot;  &quot;Africa&quot;   &quot;Americas&quot; &quot;Asia&quot;     &quot;Europe&quot;</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1052,30 +1051,30 @@ factors. For instance, we can assign manual factor levels with the function
 </ul>
 </div>
 </div>
-<div id="visual-tricks" class="section level2" number="45.2">
-<h2><span class="header-section-number">45.2</span> Visual Tricks</h2>
+<div id="visual-tricks" class="section level2 hasAnchor" number="45.2">
+<h2><span class="header-section-number">45.2</span> Visual Tricks<a href="data-factors.html#visual-tricks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>When factors do no have any <em>meaningful</em> order, it is generally better to
 sort them on another variable, rather</p>
-<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="data-factors.html#cb800-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb800-2"><a href="data-factors.html#cb800-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">manufacturer =</span> <span class="fu">fct_reorder</span>(manufacturer, cty)) <span class="sc">%&gt;%</span></span>
-<span id="cb800-3"><a href="data-factors.html#cb800-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb800-4"><a href="data-factors.html#cb800-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(manufacturer, cty)) <span class="sc">+</span></span>
-<span id="cb800-5"><a href="data-factors.html#cb800-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb800-6"><a href="data-factors.html#cb800-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="data-factors.html#cb802-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb802-2"><a href="data-factors.html#cb802-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">manufacturer =</span> <span class="fu">fct_reorder</span>(manufacturer, cty)) <span class="sc">%&gt;%</span></span>
+<span id="cb802-3"><a href="data-factors.html#cb802-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb802-4"><a href="data-factors.html#cb802-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(manufacturer, cty)) <span class="sc">+</span></span>
+<span id="cb802-5"><a href="data-factors.html#cb802-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb802-6"><a href="data-factors.html#cb802-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
 <p><img src="d31-e-data11-factors-solution_files/figure-html/mpg-unsorted-1.png" width="672" /></p>
 <p>The function <code>fct_reorder(f, x)</code> allows you to reorder the factor <code>f</code> based on
 another variable <code>x</code>. This will “match” the order between the two.</p>
-<div id="q4-use-fct_reorder-to-sort-manufacturer-to-match-the-order-of-cty." class="section level3" number="45.2.1">
-<h3><span class="header-section-number">45.2.1</span> <strong>q4</strong> Use <code>fct_reorder()</code> to sort <code>manufacturer</code> to match the order of <code>cty</code>.</h3>
-<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="data-factors.html#cb801-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Modify the following code to sort the factor `manufacturer` based on</span></span>
-<span id="cb801-2"><a href="data-factors.html#cb801-2" aria-hidden="true" tabindex="-1"></a><span class="do">## `cty`.</span></span>
-<span id="cb801-3"><a href="data-factors.html#cb801-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb801-4"><a href="data-factors.html#cb801-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">manufacturer =</span> <span class="fu">fct_reorder</span>(manufacturer, cty)) <span class="sc">%&gt;%</span></span>
-<span id="cb801-5"><a href="data-factors.html#cb801-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb801-6"><a href="data-factors.html#cb801-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(manufacturer, cty)) <span class="sc">+</span></span>
-<span id="cb801-7"><a href="data-factors.html#cb801-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb801-8"><a href="data-factors.html#cb801-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<div id="q4-use-fct_reorder-to-sort-manufacturer-to-match-the-order-of-cty." class="section level3 hasAnchor" number="45.2.1">
+<h3><span class="header-section-number">45.2.1</span> <strong>q4</strong> Use <code>fct_reorder()</code> to sort <code>manufacturer</code> to match the order of <code>cty</code>.<a href="data-factors.html#q4-use-fct_reorder-to-sort-manufacturer-to-match-the-order-of-cty." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="data-factors.html#cb803-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Modify the following code to sort the factor `manufacturer` based on</span></span>
+<span id="cb803-2"><a href="data-factors.html#cb803-2" aria-hidden="true" tabindex="-1"></a><span class="do">## `cty`.</span></span>
+<span id="cb803-3"><a href="data-factors.html#cb803-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb803-4"><a href="data-factors.html#cb803-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">manufacturer =</span> <span class="fu">fct_reorder</span>(manufacturer, cty)) <span class="sc">%&gt;%</span></span>
+<span id="cb803-5"><a href="data-factors.html#cb803-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb803-6"><a href="data-factors.html#cb803-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(manufacturer, cty)) <span class="sc">+</span></span>
+<span id="cb803-7"><a href="data-factors.html#cb803-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb803-8"><a href="data-factors.html#cb803-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
 <p><img src="d31-e-data11-factors-solution_files/figure-html/q4-task-1.png" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <p><em>Before</em>
@@ -1088,18 +1087,18 @@ another variable <code>x</code>. This will “match” the order between the two
 <p>The function <code>fct_reorder2(f, x, y)</code> allows us to sort on <em>two</em> variables; this
 is most useful when making line plots.</p>
 </div>
-<div id="q5-sort-the-countries-by-values." class="section level3" number="45.2.2">
-<h3><span class="header-section-number">45.2.2</span> <strong>q5</strong> Sort the countries by values.</h3>
+<div id="q5-sort-the-countries-by-values." class="section level3 hasAnchor" number="45.2.2">
+<h3><span class="header-section-number">45.2.2</span> <strong>q5</strong> Sort the countries by values.<a href="data-factors.html#q5-sort-the-countries-by-values." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Use <code>fct_reorder2()</code> to sort <code>country</code> to match the order of <code>x = year, y = pop</code>. Pay attention to the rightmost edge of the curves and the legend order. How does <code>fct_reorder2()</code> sort factors?</p>
-<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="data-factors.html#cb802-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Modify the following code to sort the factor `country` based on `year`</span></span>
-<span id="cb802-2"><a href="data-factors.html#cb802-2" aria-hidden="true" tabindex="-1"></a><span class="do">## and `pop`.</span></span>
-<span id="cb802-3"><a href="data-factors.html#cb802-3" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
-<span id="cb802-4"><a href="data-factors.html#cb802-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">dense_rank</span>(country) <span class="sc">&lt;=</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb802-5"><a href="data-factors.html#cb802-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">fct_reorder2</span>(country, year, pop)) <span class="sc">%&gt;%</span></span>
-<span id="cb802-6"><a href="data-factors.html#cb802-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb802-7"><a href="data-factors.html#cb802-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, pop, <span class="at">color =</span> country)) <span class="sc">+</span></span>
-<span id="cb802-8"><a href="data-factors.html#cb802-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb802-9"><a href="data-factors.html#cb802-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="data-factors.html#cb804-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Modify the following code to sort the factor `country` based on `year`</span></span>
+<span id="cb804-2"><a href="data-factors.html#cb804-2" aria-hidden="true" tabindex="-1"></a><span class="do">## and `pop`.</span></span>
+<span id="cb804-3"><a href="data-factors.html#cb804-3" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb804-4"><a href="data-factors.html#cb804-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">dense_rank</span>(country) <span class="sc">&lt;=</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb804-5"><a href="data-factors.html#cb804-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">fct_reorder2</span>(country, year, pop)) <span class="sc">%&gt;%</span></span>
+<span id="cb804-6"><a href="data-factors.html#cb804-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb804-7"><a href="data-factors.html#cb804-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, pop, <span class="at">color =</span> country)) <span class="sc">+</span></span>
+<span id="cb804-8"><a href="data-factors.html#cb804-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb804-9"><a href="data-factors.html#cb804-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code></pre></div>
 <p><img src="d31-e-data11-factors-solution_files/figure-html/q5-task-1.png" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1178,7 +1177,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

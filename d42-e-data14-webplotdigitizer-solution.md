@@ -13,14 +13,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -103,12 +103,14 @@ df_price <- read_csv(
 ```
 
 ```
-## 
+## Rows: 232 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   date = col_date(format = ""),
-##   price_percent = col_double()
-## )
+## Delimiter: ","
+## dbl  (1): price_percent
+## date (1): date
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 ```r
@@ -119,12 +121,14 @@ df_production <- read_csv(
 ```
 
 ```
-## 
+## Rows: 227 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   date = col_date(format = ""),
-##   production_percent = col_double()
-## )
+## Delimiter: ","
+## dbl  (1): production_percent
+## date (1): date
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 ```r

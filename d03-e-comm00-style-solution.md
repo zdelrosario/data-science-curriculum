@@ -17,14 +17,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -44,7 +44,7 @@ summarize(group_by(diamonds, cut), mean_price = mean(price))
 ```
 
 ```
-## # A tibble: 5 x 2
+## # A tibble: 5 × 2
 ##   cut       mean_price
 ##   <ord>          <dbl>
 ## 1 Fair           4359.
@@ -64,7 +64,7 @@ diamonds %>%
 ```
 
 ```
-## # A tibble: 5 x 2
+## # A tibble: 5 × 2
 ##   cut       mean_price
 ##   <ord>          <dbl>
 ## 1 Fair           4359.
@@ -91,7 +91,7 @@ iris %>%
 ```
 
 ```
-## # A tibble: 15 x 3
+## # A tibble: 15 × 3
 ##    Species    measure       value
 ##    <fct>      <chr>         <dbl>
 ##  1 setosa     Petal.Width   0.246
@@ -123,7 +123,7 @@ iris %>%
 ```
 
 ```
-## # A tibble: 15 x 3
+## # A tibble: 15 × 3
 ##    Species    measure       value
 ##    <fct>      <chr>         <dbl>
 ##  1 setosa     Petal.Width   0.246
@@ -155,7 +155,7 @@ iris %>%
 ```
 
 ```
-## # A tibble: 3 x 5
+## # A tibble: 3 × 5
 ##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##   <fct>             <dbl>       <dbl>        <dbl>       <dbl>
 ## 1 setosa             5.01        3.43         1.46       0.246
@@ -176,7 +176,7 @@ iris %>%
 ```
 
 ```
-## # A tibble: 3 x 5
+## # A tibble: 3 × 5
 ##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##   <fct>             <dbl>       <dbl>        <dbl>       <dbl>
 ## 1 setosa             5.01        3.43         1.46       0.246

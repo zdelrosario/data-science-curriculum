@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11 Communication: Code Style | Data Science: Exercise Solutions</title>
   <meta name="description" content="11 Communication: Code Style | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="11 Communication: Code Style | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="setup-documentation.html"/>
 <link rel="next" href="setup-rstudio-shortcuts.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,8 +980,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="communication-code-style" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Communication: Code Style</h1>
+<div id="communication-code-style" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">11</span> Communication: Code Style<a href="communication-code-style.html#communication-code-style" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: From the tidyverse style guide “Good coding style is like correct
 punctuation: you can manage without it, butitsuremakesthingseasiertoread.” We
 will follow the <a href="https://style.tidyverse.org/">tidyverse style guide</a>; Google’s
@@ -992,20 +991,20 @@ actually based on these guidelines!</p>
 <em>Topics</em>: <a href="https://style.tidyverse.org/syntax.html#spacing">Spacing</a> (subsection only), <a href="https://style.tidyverse.org/pipes.html">Pipes</a> (whole section)
 <em>Reading Time</em>: ~ 10 minutes</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="communication-code-style.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div id="q1-re-write-according-to-the-style-guide" class="section level3" number="11.0.1">
-<h3><span class="header-section-number">11.0.1</span> <strong>q1</strong> Re-write according to the style guide</h3>
+<div id="q1-re-write-according-to-the-style-guide" class="section level3 hasAnchor" number="11.0.1">
+<h3><span class="header-section-number">11.0.1</span> <strong>q1</strong> Re-write according to the style guide<a href="communication-code-style.html#q1-re-write-according-to-the-style-guide" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: The pipe operator <code>%&gt;%</code> will help make this code more readable.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="communication-code-style.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Original code; hard to read</span></span>
 <span id="cb38-2"><a href="communication-code-style.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="fu">group_by</span>(diamonds, cut), <span class="at">mean_price =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
-<pre><code>## # A tibble: 5 x 2
+<pre><code>## # A tibble: 5 × 2
 ##   cut       mean_price
 ##   &lt;ord&gt;          &lt;dbl&gt;
 ## 1 Fair           4359.
@@ -1018,7 +1017,7 @@ actually based on these guidelines!</p>
 <span id="cb40-3"><a href="communication-code-style.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
 <span id="cb40-4"><a href="communication-code-style.html#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_price =</span> <span class="fu">mean</span>(price)</span>
 <span id="cb40-5"><a href="communication-code-style.html#cb40-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## # A tibble: 5 x 2
+<pre><code>## # A tibble: 5 × 2
 ##   cut       mean_price
 ##   &lt;ord&gt;          &lt;dbl&gt;
 ## 1 Fair           4359.
@@ -1027,8 +1026,8 @@ actually based on these guidelines!</p>
 ## 4 Premium        4584.
 ## 5 Ideal          3458.</code></pre>
 </div>
-<div id="q2-re-write-according-to-the-style-guide" class="section level3" number="11.0.2">
-<h3><span class="header-section-number">11.0.2</span> <strong>q2</strong> Re-write according to the style guide</h3>
+<div id="q2-re-write-according-to-the-style-guide" class="section level3 hasAnchor" number="11.0.2">
+<h3><span class="header-section-number">11.0.2</span> <strong>q2</strong> Re-write according to the style guide<a href="communication-code-style.html#q2-re-write-according-to-the-style-guide" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: There are <em>particular rules</em> about spacing!</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="communication-code-style.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: You can copy this code to the chunk below</span></span>
 <span id="cb42-2"><a href="communication-code-style.html#cb42-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
@@ -1038,7 +1037,7 @@ actually based on these guidelines!</p>
 <span id="cb42-6"><a href="communication-code-style.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb42-7"><a href="communication-code-style.html#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>( <span class="at">names_to=</span><span class="st">&quot;measure&quot;</span>,<span class="at">values_to=</span><span class="st">&quot;value&quot;</span>,<span class="at">cols=</span><span class="sc">-</span>Species ) <span class="sc">%&gt;%</span></span>
 <span id="cb42-8"><a href="communication-code-style.html#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(value )</span></code></pre></div>
-<pre><code>## # A tibble: 15 x 3
+<pre><code>## # A tibble: 15 × 3
 ##    Species    measure       value
 ##    &lt;fct&gt;      &lt;chr&gt;         &lt;dbl&gt;
 ##  1 setosa     Petal.Width   0.246
@@ -1063,7 +1062,7 @@ actually based on these guidelines!</p>
 <span id="cb44-5"><a href="communication-code-style.html#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb44-6"><a href="communication-code-style.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">&quot;measure&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>, <span class="at">cols =</span> <span class="sc">-</span>Species) <span class="sc">%&gt;%</span></span>
 <span id="cb44-7"><a href="communication-code-style.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(value)</span></code></pre></div>
-<pre><code>## # A tibble: 15 x 3
+<pre><code>## # A tibble: 15 × 3
 ##    Species    measure       value
 ##    &lt;fct&gt;      &lt;chr&gt;         &lt;dbl&gt;
 ##  1 setosa     Petal.Width   0.246
@@ -1082,13 +1081,13 @@ actually based on these guidelines!</p>
 ## 14 setosa     Sepal.Area   17.3  
 ## 15 virginica  Sepal.Area   19.7</code></pre>
 </div>
-<div id="q3-re-write-according-to-the-style-guide" class="section level3" number="11.0.3">
-<h3><span class="header-section-number">11.0.3</span> <strong>q3</strong> Re-write according to the style guide</h3>
+<div id="q3-re-write-according-to-the-style-guide" class="section level3 hasAnchor" number="11.0.3">
+<h3><span class="header-section-number">11.0.3</span> <strong>q3</strong> Re-write according to the style guide<a href="communication-code-style.html#q3-re-write-according-to-the-style-guide" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: What do we do about long lines?</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="communication-code-style.html#cb46-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
 <span id="cb46-2"><a href="communication-code-style.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
 <span id="cb46-3"><a href="communication-code-style.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Sepal.Length =</span> <span class="fu">mean</span>(Sepal.Length), <span class="at">Sepal.Width =</span> <span class="fu">mean</span>(Sepal.Width), <span class="at">Petal.Length =</span> <span class="fu">mean</span>(Petal.Length), <span class="at">Petal.Width =</span> <span class="fu">mean</span>(Petal.Width))</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 5
+<pre><code>## # A tibble: 3 × 5
 ##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
 ## 1 setosa             5.01        3.43         1.46       0.246
@@ -1102,7 +1101,7 @@ actually based on these guidelines!</p>
 <span id="cb48-6"><a href="communication-code-style.html#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Petal.Length =</span> <span class="fu">mean</span>(Petal.Length),</span>
 <span id="cb48-7"><a href="communication-code-style.html#cb48-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Petal.Width  =</span> <span class="fu">mean</span>(Petal.Width)</span>
 <span id="cb48-8"><a href="communication-code-style.html#cb48-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 5
+<pre><code>## # A tibble: 3 × 5
 ##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
 ## 1 setosa             5.01        3.43         1.46       0.246
@@ -1153,8 +1152,8 @@ preprocessing while debugging; that is:</p>
 <p>I’ll enforce this “data first” style, but after this class you are (of course)
 free to write code however you like!</p>
 </div>
-<div id="q4-re-write-according-to-the-style-guide" class="section level3" number="11.0.4">
-<h3><span class="header-section-number">11.0.4</span> <strong>q4</strong> Re-write according to the style guide</h3>
+<div id="q4-re-write-according-to-the-style-guide" class="section level3 hasAnchor" number="11.0.4">
+<h3><span class="header-section-number">11.0.4</span> <strong>q4</strong> Re-write according to the style guide<a href="communication-code-style.html#q4-re-write-according-to-the-style-guide" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: Put the data first!</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="communication-code-style.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb56-2"><a href="communication-code-style.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  iris <span class="sc">%&gt;%</span></span>
@@ -1249,7 +1248,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

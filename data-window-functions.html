@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>39 Data: Window Functions | Data Science: Exercise Solutions</title>
   <meta name="description" content="39 Data: Window Functions | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="39 Data: Window Functions | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="stats-populations-and-estimation.html"/>
 <link rel="next" href="stats-moment-arithmetic.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,22 +980,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-window-functions" class="section level1" number="39">
-<h1><span class="header-section-number">39</span> Data: Window Functions</h1>
+<div id="data-window-functions" class="section level1 hasAnchor" number="39">
+<h1><span class="header-section-number">39</span> Data: Window Functions<a href="data-window-functions.html#data-window-functions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Window functions are another family of <code>dplyr</code> verbs that are related to aggregates like <code>mean</code> and <code>sd</code>. These functions are useful for building up more complicated filters, enabling aesthetic tricks in plots, and some advanced data wrangling we’ll do next exercise.</p>
 <p><em>Reading</em>: <a href="https://dplyr.tidyverse.org/articles/window-functions.html#cumulative-aggregates-1">Window Functions</a>, <em>Types of window functions</em>, <em>Ranking functions</em>, and <em>Lead and lag</em></p>
 <div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="data-window-functions.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="data-window-functions.html#cb611-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span></code></pre></div>
-<div id="lead-and-lag" class="section level2" number="39.1">
-<h2><span class="header-section-number">39.1</span> Lead and Lag</h2>
+<div id="lead-and-lag" class="section level2 hasAnchor" number="39.1">
+<h2><span class="header-section-number">39.1</span> Lead and Lag<a href="data-window-functions.html#lead-and-lag" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>The lead and lag functions simply provide a “shifted” copy of a vector.</p>
 <div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="data-window-functions.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
@@ -1016,8 +1015,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] -1.600000e+00 -8.000000e-01  2.255141e-16  8.000000e-01  1.600000e+00
 ## [6]            NA</code></pre>
 <p>Make sure to order your data or use the <code>order_by</code> argument when using <code>lead</code> or <code>lag</code>! GGplot automatically reorders your data when making a line plot, but <code>lead</code> and <code>lag</code> will use the order of the data you provide.</p>
-<div id="q1-use-a-window-function-modify-the-following-visual-to-color-each-segment-differently-based-on-whether-the-period-of-time-was-increasing-or-decreasing." class="section level3" number="39.1.1">
-<h3><span class="header-section-number">39.1.1</span> <strong>q1</strong> Use a window function modify the following visual to color each segment differently based on whether the period of time was increasing or decreasing.</h3>
+<div id="q1-use-a-window-function-modify-the-following-visual-to-color-each-segment-differently-based-on-whether-the-period-of-time-was-increasing-or-decreasing." class="section level3 hasAnchor" number="39.1.1">
+<h3><span class="header-section-number">39.1.1</span> <strong>q1</strong> Use a window function modify the following visual to color each segment differently based on whether the period of time was increasing or decreasing.<a href="data-window-functions.html#q1-use-a-window-function-modify-the-following-visual-to-color-each-segment-differently-based-on-whether-the-period-of-time-was-increasing-or-decreasing." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="data-window-functions.html#cb618-1" aria-hidden="true" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
 <span id="cb618-2"><a href="data-window-functions.html#cb618-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(date) <span class="sc">%&gt;%</span></span>
 <span id="cb618-3"><a href="data-window-functions.html#cb618-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -1030,12 +1029,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb618-10"><a href="data-window-functions.html#cb618-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xend =</span> <span class="fu">lead</span>(date, <span class="at">order_by =</span> date),</span>
 <span id="cb618-11"><a href="data-window-functions.html#cb618-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fu">lead</span>(unemploy, <span class="at">order_by =</span> date)</span>
 <span id="cb618-12"><a href="data-window-functions.html#cb618-12" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
-<pre><code>## Warning: Removed 1 rows containing missing values (geom_segment).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (`geom_segment()`).</code></pre>
 <p><img src="d27-e-data08-window-solution_files/figure-html/q1-task-1.png" width="672" /></p>
 </div>
 </div>
-<div id="ranks" class="section level2" number="39.2">
-<h2><span class="header-section-number">39.2</span> Ranks</h2>
+<div id="ranks" class="section level2 hasAnchor" number="39.2">
+<h2><span class="header-section-number">39.2</span> Ranks<a href="data-window-functions.html#ranks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>The rank functions allow you to assign (integer) ranks to smallest (or largest) values of a vector.</p>
 <div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="data-window-functions.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
@@ -1097,25 +1096,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb632-39"><a href="data-window-functions.html#cb632-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;&quot;</span>,</span>
 <span id="cb632-40"><a href="data-window-functions.html#cb632-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Minimum Three Ranks&quot;</span></span>
 <span id="cb632-41"><a href="data-window-functions.html#cb632-41" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## Warning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.
+## ℹ Please use the `linewidth` argument instead.</code></pre>
 <p><img src="d27-e-data08-window-solution_files/figure-html/ex-ranks-vis-1.png" width="672" /></p>
-<div id="q2-use-a-rank-function-to-filter-the-largest-3-hwy-values-and-all-vehicles-that-have-those-values." class="section level3" number="39.2.1">
-<h3><span class="header-section-number">39.2.1</span> <strong>q2</strong> Use a rank function to filter the largest 3 <code>hwy</code> values and <strong>all</strong> vehicles that have those values.</h3>
-<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="data-window-functions.html#cb633-1" aria-hidden="true" tabindex="-1"></a>q2 <span class="ot">&lt;-</span></span>
-<span id="cb633-2"><a href="data-window-functions.html#cb633-2" aria-hidden="true" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
-<span id="cb633-3"><a href="data-window-functions.html#cb633-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">dense_rank</span>(<span class="fu">desc</span>(hwy)) <span class="sc">&lt;=</span> <span class="dv">3</span>)</span>
-<span id="cb633-4"><a href="data-window-functions.html#cb633-4" aria-hidden="true" tabindex="-1"></a>q2</span></code></pre></div>
-<pre><code>## # A tibble: 4 x 11
-##   manufacturer model   displ  year   cyl trans   drv     cty   hwy fl    class  
-##   &lt;chr&gt;        &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  
-## 1 toyota       corolla   1.8  2008     4 manual… f        28    37 r     compact
-## 2 volkswagen   jetta     1.9  1999     4 manual… f        33    44 d     compact
-## 3 volkswagen   new be…   1.9  1999     4 manual… f        35    44 d     subcom…
-## 4 volkswagen   new be…   1.9  1999     4 auto(l… f        29    41 d     subcom…</code></pre>
+<div id="q2-use-a-rank-function-to-filter-the-largest-3-hwy-values-and-all-vehicles-that-have-those-values." class="section level3 hasAnchor" number="39.2.1">
+<h3><span class="header-section-number">39.2.1</span> <strong>q2</strong> Use a rank function to filter the largest 3 <code>hwy</code> values and <strong>all</strong> vehicles that have those values.<a href="data-window-functions.html#q2-use-a-rank-function-to-filter-the-largest-3-hwy-values-and-all-vehicles-that-have-those-values." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="data-window-functions.html#cb634-1" aria-hidden="true" tabindex="-1"></a>q2 <span class="ot">&lt;-</span></span>
+<span id="cb634-2"><a href="data-window-functions.html#cb634-2" aria-hidden="true" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
+<span id="cb634-3"><a href="data-window-functions.html#cb634-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">dense_rank</span>(<span class="fu">desc</span>(hwy)) <span class="sc">&lt;=</span> <span class="dv">3</span>)</span>
+<span id="cb634-4"><a href="data-window-functions.html#cb634-4" aria-hidden="true" tabindex="-1"></a>q2</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 11
+##   manufacturer model      displ  year   cyl trans  drv     cty   hwy fl    class
+##   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 toyota       corolla      1.8  2008     4 manua… f        28    37 r     comp…
+## 2 volkswagen   jetta        1.9  1999     4 manua… f        33    44 d     comp…
+## 3 volkswagen   new beetle   1.9  1999     4 manua… f        35    44 d     subc…
+## 4 volkswagen   new beetle   1.9  1999     4 auto(… f        29    41 d     subc…</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="data-window-functions.html#cb635-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb635-2"><a href="data-window-functions.html#cb635-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">dim</span>(q2)[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="data-window-functions.html#cb636-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb636-2"><a href="data-window-functions.html#cb636-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">dim</span>(q2)[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="data-window-functions.html#cb637-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="data-window-functions.html#cb638-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <!-- include-exit-ticket -->
 
@@ -1188,7 +1189,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

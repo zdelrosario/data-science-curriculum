@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>36 Vis: Themes | Data Science: Exercise Solutions</title>
   <meta name="description" content="36 Vis: Themes | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="36 Vis: Themes | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="data-working-with-strings.html"/>
 <link rel="next" href="data-pipes-and-placeholders.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,70 +980,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="vis-themes" class="section level1" number="36">
-<h1><span class="header-section-number">36</span> Vis: Themes</h1>
+<div id="vis-themes" class="section level1 hasAnchor" number="36">
+<h1><span class="header-section-number">36</span> Vis: Themes<a href="vis-themes.html#vis-themes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Themes are key for aesthetic purposes; to make really good-looking graphs, we’ll need to use <code>theme()</code>.</p>
 <p><em>Reading</em>: <a href="https://ggplot2.tidyverse.org/reference/theme.html"><code>theme()</code> documentation</a> (Use as a reference; don’t read the whole thing!)</p>
-<div id="q1-use-theme_void-and-guides-with-an-argument-to-remove-everything-in-this-plot-except-the-points." class="section level3" number="36.0.1">
-<h3><span class="header-section-number">36.0.1</span> <strong>q1</strong> Use <code>theme_void()</code> and <code>guides()</code> (with an argument) to remove everything in this plot except the points.</h3>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="vis-themes.html#cb556-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb556-2"><a href="vis-themes.html#cb556-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb556-3"><a href="vis-themes.html#cb556-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div id="q1-use-theme_void-and-guides-with-an-argument-to-remove-everything-in-this-plot-except-the-points." class="section level3 hasAnchor" number="36.0.1">
+<h3><span class="header-section-number">36.0.1</span> <strong>q1</strong> Use <code>theme_void()</code> and <code>guides()</code> (with an argument) to remove everything in this plot except the points.<a href="vis-themes.html#q1-use-theme_void-and-guides-with-an-argument-to-remove-everything-in-this-plot-except-the-points." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="vis-themes.html#cb554-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb554-2"><a href="vis-themes.html#cb554-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb554-3"><a href="vis-themes.html#cb554-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d24-e-vis06-themes-solution_files/figure-html/q1-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="vis-themes.html#cb555-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb555-2"><a href="vis-themes.html#cb555-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb555-3"><a href="vis-themes.html#cb555-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb555-4"><a href="vis-themes.html#cb555-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb555-5"><a href="vis-themes.html#cb555-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code></pre></div>
+<p><img src="d24-e-vis06-themes-solution_files/figure-html/q1-solution-1.png" width="672" /></p>
+<p>When I make presentation-quality figures, I often start with the following stub code:</p>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="vis-themes.html#cb556-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; feel free to re-use this code!</span></span>
+<span id="cb556-2"><a href="vis-themes.html#cb556-2" aria-hidden="true" tabindex="-1"></a>theme_common <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb556-3"><a href="vis-themes.html#cb556-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">%+replace%</span></span>
+<span id="cb556-4"><a href="vis-themes.html#cb556-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb556-5"><a href="vis-themes.html#cb556-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb556-6"><a href="vis-themes.html#cb556-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb556-7"><a href="vis-themes.html#cb556-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>), <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb556-8"><a href="vis-themes.html#cb556-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>), <span class="at">size =</span> <span class="dv">16</span>, <span class="at">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb556-9"><a href="vis-themes.html#cb556-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-10"><a href="vis-themes.html#cb556-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb556-11"><a href="vis-themes.html#cb556-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb556-12"><a href="vis-themes.html#cb556-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-13"><a href="vis-themes.html#cb556-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb556-14"><a href="vis-themes.html#cb556-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb556-15"><a href="vis-themes.html#cb556-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-16"><a href="vis-themes.html#cb556-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&quot;grey90&quot;</span>),</span>
+<span id="cb556-17"><a href="vis-themes.html#cb556-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&quot;grey90&quot;</span>),</span>
+<span id="cb556-18"><a href="vis-themes.html#cb556-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-19"><a href="vis-themes.html#cb556-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">aspect.ratio =</span> <span class="dv">4</span> <span class="sc">/</span> <span class="dv">4</span>,</span>
+<span id="cb556-20"><a href="vis-themes.html#cb556-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-21"><a href="vis-themes.html#cb556-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="at">t =</span> <span class="sc">+</span><span class="dv">0</span>, <span class="at">b =</span> <span class="sc">+</span><span class="dv">0</span>, <span class="at">r =</span> <span class="sc">+</span><span class="dv">0</span>, <span class="at">l =</span> <span class="sc">+</span><span class="dv">0</span>), <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb556-22"><a href="vis-themes.html#cb556-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>),</span>
+<span id="cb556-23"><a href="vis-themes.html#cb556-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">&quot;plot&quot;</span>,</span>
+<span id="cb556-24"><a href="vis-themes.html#cb556-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb556-25"><a href="vis-themes.html#cb556-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>)</span>
+<span id="cb556-26"><a href="vis-themes.html#cb556-26" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb556-27"><a href="vis-themes.html#cb556-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The <code>%+replace</code> magic above allows you to use <code>theme_common()</code> within your own ggplot calls.</p>
+</div>
+<div id="q2-use-theme_common-with-the-following-graph.-document-whats-changed-by-the-theme-arguments." class="section level3 hasAnchor" number="36.0.2">
+<h3><span class="header-section-number">36.0.2</span> <strong>q2</strong> Use <code>theme_common()</code> with the following graph. Document what’s changed by the <code>theme()</code> arguments.<a href="vis-themes.html#q2-use-theme_common-with-the-following-graph.-document-whats-changed-by-the-theme-arguments." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="vis-themes.html#cb557-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
 <span id="cb557-2"><a href="vis-themes.html#cb557-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
 <span id="cb557-3"><a href="vis-themes.html#cb557-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb557-4"><a href="vis-themes.html#cb557-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
-<span id="cb557-5"><a href="vis-themes.html#cb557-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code></pre></div>
-<p><img src="d24-e-vis06-themes-solution_files/figure-html/q1-solution-1.png" width="672" /></p>
-<p>When I make presentation-quality figures, I often start with the following stub code:</p>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="vis-themes.html#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; feel free to re-use this code!</span></span>
-<span id="cb558-2"><a href="vis-themes.html#cb558-2" aria-hidden="true" tabindex="-1"></a>theme_common <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb558-3"><a href="vis-themes.html#cb558-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">%+replace%</span></span>
-<span id="cb558-4"><a href="vis-themes.html#cb558-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb558-5"><a href="vis-themes.html#cb558-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb558-6"><a href="vis-themes.html#cb558-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb558-7"><a href="vis-themes.html#cb558-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>), <span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb558-8"><a href="vis-themes.html#cb558-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>), <span class="at">size =</span> <span class="dv">16</span>, <span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb558-9"><a href="vis-themes.html#cb558-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb558-10"><a href="vis-themes.html#cb558-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb558-11"><a href="vis-themes.html#cb558-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb558-12"><a href="vis-themes.html#cb558-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb558-13"><a href="vis-themes.html#cb558-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb558-14"><a href="vis-themes.html#cb558-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb558-15"><a href="vis-themes.html#cb558-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb558-16"><a href="vis-themes.html#cb558-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&quot;grey90&quot;</span>),</span>
-<span id="cb558-17"><a href="vis-themes.html#cb558-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&quot;grey90&quot;</span>),</span>
-<span id="cb558-18"><a href="vis-themes.html#cb558-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb558-19"><a href="vis-themes.html#cb558-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">aspect.ratio =</span> <span class="dv">4</span> <span class="sc">/</span> <span class="dv">4</span>,</span>
-<span id="cb558-20"><a href="vis-themes.html#cb558-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb558-21"><a href="vis-themes.html#cb558-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="at">t =</span> <span class="sc">+</span><span class="dv">0</span>, <span class="at">b =</span> <span class="sc">+</span><span class="dv">0</span>, <span class="at">r =</span> <span class="sc">+</span><span class="dv">0</span>, <span class="at">l =</span> <span class="sc">+</span><span class="dv">0</span>), <span class="st">&quot;cm&quot;</span>),</span>
-<span id="cb558-22"><a href="vis-themes.html#cb558-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>),</span>
-<span id="cb558-23"><a href="vis-themes.html#cb558-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">&quot;plot&quot;</span>,</span>
-<span id="cb558-24"><a href="vis-themes.html#cb558-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb558-25"><a href="vis-themes.html#cb558-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>)</span>
-<span id="cb558-26"><a href="vis-themes.html#cb558-26" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb558-27"><a href="vis-themes.html#cb558-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>The <code>%+replace</code> magic above allows you to use <code>theme_common()</code> within your own ggplot calls.</p>
-</div>
-<div id="q2-use-theme_common-with-the-following-graph.-document-whats-changed-by-the-theme-arguments." class="section level3" number="36.0.2">
-<h3><span class="header-section-number">36.0.2</span> <strong>q2</strong> Use <code>theme_common()</code> with the following graph. Document what’s changed by the <code>theme()</code> arguments.</h3>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="vis-themes.html#cb559-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb559-2"><a href="vis-themes.html#cb559-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb559-3"><a href="vis-themes.html#cb559-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb559-4"><a href="vis-themes.html#cb559-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb559-5"><a href="vis-themes.html#cb559-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Engine Displacement (L)&quot;</span>,</span>
-<span id="cb559-6"><a href="vis-themes.html#cb559-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Highway Fuel Economy (mpg)&quot;</span></span>
-<span id="cb559-7"><a href="vis-themes.html#cb559-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<span id="cb557-4"><a href="vis-themes.html#cb557-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb557-5"><a href="vis-themes.html#cb557-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Engine Displacement (L)&quot;</span>,</span>
+<span id="cb557-6"><a href="vis-themes.html#cb557-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Highway Fuel Economy (mpg)&quot;</span></span>
+<span id="cb557-7"><a href="vis-themes.html#cb557-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="d24-e-vis06-themes-solution_files/figure-html/q2-task-1.png" width="672" /></p>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="vis-themes.html#cb560-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb560-2"><a href="vis-themes.html#cb560-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb560-3"><a href="vis-themes.html#cb560-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb560-4"><a href="vis-themes.html#cb560-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_common</span>() <span class="sc">+</span></span>
-<span id="cb560-5"><a href="vis-themes.html#cb560-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb560-6"><a href="vis-themes.html#cb560-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Engine Displacement (L)&quot;</span>,</span>
-<span id="cb560-7"><a href="vis-themes.html#cb560-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Highway Fuel Economy (mpg)&quot;</span></span>
-<span id="cb560-8"><a href="vis-themes.html#cb560-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="vis-themes.html#cb558-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb558-2"><a href="vis-themes.html#cb558-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb558-3"><a href="vis-themes.html#cb558-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb558-4"><a href="vis-themes.html#cb558-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_common</span>() <span class="sc">+</span></span>
+<span id="cb558-5"><a href="vis-themes.html#cb558-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb558-6"><a href="vis-themes.html#cb558-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Engine Displacement (L)&quot;</span>,</span>
+<span id="cb558-7"><a href="vis-themes.html#cb558-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Highway Fuel Economy (mpg)&quot;</span></span>
+<span id="cb558-8"><a href="vis-themes.html#cb558-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="d24-e-vis06-themes-solution_files/figure-html/q2-solution-1.png" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1054,29 +1053,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Calling <code>theme_common()</code>, along with settings <code>labs()</code> and making some smart choices about geoms and annotations is often all you need to make a <em>really high-quality graph</em>.</p>
 </div>
-<div id="q3-make-the-following-plot-as-ugly-as-possible-the-more-theme-arguments-you-use-the-better" class="section level3" number="36.0.3">
-<h3><span class="header-section-number">36.0.3</span> <strong>q3</strong> Make the following plot as <em>ugly as possible</em>; the more <code>theme()</code> arguments you use, the better!</h3>
+<div id="q3-make-the-following-plot-as-ugly-as-possible-the-more-theme-arguments-you-use-the-better" class="section level3 hasAnchor" number="36.0.3">
+<h3><span class="header-section-number">36.0.3</span> <strong>q3</strong> Make the following plot as <em>ugly as possible</em>; the more <code>theme()</code> arguments you use, the better!<a href="vis-themes.html#q3-make-the-following-plot-as-ugly-as-possible-the-more-theme-arguments-you-use-the-better" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: Use the <code>theme()</code> settings from q2 above as a starting point, and read the documentation for <code>theme()</code> to learn how to do more horrible things to this graph.</p>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="vis-themes.html#cb561-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb561-2"><a href="vis-themes.html#cb561-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb561-3"><a href="vis-themes.html#cb561-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb561-4"><a href="vis-themes.html#cb561-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb561-5"><a href="vis-themes.html#cb561-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">32</span>)</span>
-<span id="cb561-6"><a href="vis-themes.html#cb561-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="vis-themes.html#cb559-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb559-2"><a href="vis-themes.html#cb559-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb559-3"><a href="vis-themes.html#cb559-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb559-4"><a href="vis-themes.html#cb559-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb559-5"><a href="vis-themes.html#cb559-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">32</span>)</span>
+<span id="cb559-6"><a href="vis-themes.html#cb559-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="d24-e-vis06-themes-solution_files/figure-html/q3-task-1.png" width="672" /></p>
 <p>Here’s one possible graph:</p>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="vis-themes.html#cb562-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb562-2"><a href="vis-themes.html#cb562-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb562-3"><a href="vis-themes.html#cb562-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb562-4"><a href="vis-themes.html#cb562-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
-<span id="cb562-5"><a href="vis-themes.html#cb562-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb562-6"><a href="vis-themes.html#cb562-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">line =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">&quot;purple&quot;</span>),</span>
-<span id="cb562-7"><a href="vis-themes.html#cb562-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">rect =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;red&quot;</span>),</span>
-<span id="cb562-8"><a href="vis-themes.html#cb562-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">32</span>, <span class="at">angle =</span> <span class="dv">117</span>),</span>
-<span id="cb562-9"><a href="vis-themes.html#cb562-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">32</span>, <span class="at">angle =</span> <span class="dv">129</span>),</span>
-<span id="cb562-10"><a href="vis-themes.html#cb562-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">32</span>, <span class="at">family =</span> <span class="st">&quot;Comic Sans MS&quot;</span>),</span>
-<span id="cb562-11"><a href="vis-themes.html#cb562-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">32</span>, <span class="at">family =</span> <span class="st">&quot;Comic Sans MS&quot;</span>)</span>
-<span id="cb562-12"><a href="vis-themes.html#cb562-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="vis-themes.html#cb560-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb560-2"><a href="vis-themes.html#cb560-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb560-3"><a href="vis-themes.html#cb560-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb560-4"><a href="vis-themes.html#cb560-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb560-5"><a href="vis-themes.html#cb560-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb560-6"><a href="vis-themes.html#cb560-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">line =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">&quot;purple&quot;</span>),</span>
+<span id="cb560-7"><a href="vis-themes.html#cb560-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">rect =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb560-8"><a href="vis-themes.html#cb560-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">32</span>, <span class="at">angle =</span> <span class="dv">117</span>),</span>
+<span id="cb560-9"><a href="vis-themes.html#cb560-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">32</span>, <span class="at">angle =</span> <span class="dv">129</span>),</span>
+<span id="cb560-10"><a href="vis-themes.html#cb560-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">32</span>, <span class="at">family =</span> <span class="st">&quot;Comic Sans MS&quot;</span>),</span>
+<span id="cb560-11"><a href="vis-themes.html#cb560-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">32</span>, <span class="at">family =</span> <span class="st">&quot;Comic Sans MS&quot;</span>)</span>
+<span id="cb560-12"><a href="vis-themes.html#cb560-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+## ℹ Please use the `linewidth` argument instead.</code></pre>
 <p><img src="d24-e-vis06-themes-solution_files/figure-html/q3-solution-1.png" width="672" /></p>
 <!-- include-exit-ticket -->
 
@@ -1148,7 +1149,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

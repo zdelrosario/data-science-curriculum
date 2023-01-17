@@ -16,14 +16,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -66,7 +66,7 @@ bind_cols(beatles1, beatles2)
 ```
 
 ```
-## # A tibble: 4 x 4
+## # A tibble: 4 × 4
 ##   band    name   surname   instrument
 ##   <chr>   <chr>  <chr>     <chr>     
 ## 1 Beatles John   McCartney bass      
@@ -122,7 +122,7 @@ df_q2
 ```
 
 ```
-## # A tibble: 4 x 4
+## # A tibble: 4 × 4
 ##   band    name   surname   instrument
 ##   <chr>   <chr>  <chr>     <chr>     
 ## 1 Beatles John   Lennon    guitar    
@@ -188,7 +188,7 @@ criteria
 ```
 
 ```
-## # A tibble: 6 x 2
+## # A tibble: 6 × 2
 ##   month dest 
 ##   <dbl> <chr>
 ## 1     8 SJC  
@@ -264,22 +264,23 @@ df_q4
 ```
 
 ```
-## # A tibble: 2,584 x 19
-##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
-##    <int> <int> <int>    <int>          <int>     <dbl>    <int>          <int>
-##  1  2013     8     1      554            559        -5      909            902
-##  2  2013     8     1      601            601         0      916            915
-##  3  2013     8     1      657            700        -3     1016           1016
-##  4  2013     8     1      723            730        -7     1040           1045
-##  5  2013     8     1      738            740        -2     1111           1055
-##  6  2013     8     1      745            743         2     1117           1103
-##  7  2013     8     1      810            755        15     1120           1115
-##  8  2013     8     1      825            829        -4     1156           1143
-##  9  2013     8     1      838            840        -2     1230           1143
-## 10  2013     8     1      851            853        -2     1227           1212
-## # … with 2,574 more rows, and 11 more variables: arr_delay <dbl>,
-## #   carrier <chr>, flight <int>, tailnum <chr>, origin <chr>, dest <chr>,
-## #   air_time <dbl>, distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>
+## # A tibble: 2,584 × 19
+##     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
+##    <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  
+##  1  2013     8     1      554        559      -5     909     902       7 UA     
+##  2  2013     8     1      601        601       0     916     915       1 UA     
+##  3  2013     8     1      657        700      -3    1016    1016       0 DL     
+##  4  2013     8     1      723        730      -7    1040    1045      -5 VX     
+##  5  2013     8     1      738        740      -2    1111    1055      16 VX     
+##  6  2013     8     1      745        743       2    1117    1103      14 UA     
+##  7  2013     8     1      810        755      15    1120    1115       5 AA     
+##  8  2013     8     1      825        829      -4    1156    1143      13 UA     
+##  9  2013     8     1      838        840      -2    1230    1143      47 UA     
+## 10  2013     8     1      851        853      -2    1227    1212      15 B6     
+## # … with 2,574 more rows, 9 more variables: flight <int>, tailnum <chr>,
+## #   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,
+## #   minute <dbl>, time_hour <dttm>, and abbreviated variable names
+## #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay
 ```
 
 Use the following test to check your work:

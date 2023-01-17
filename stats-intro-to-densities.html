@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>23 Stats: Intro to Densities | Data Science: Exercise Solutions</title>
   <meta name="description" content="23 Stats: Intro to Densities | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="23 Stats: Intro to Densities | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="reproducibility-structuring-directories.html"/>
 <link rel="next" href="data-pivoting-data.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,21 +980,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="stats-intro-to-densities" class="section level1" number="23">
-<h1><span class="header-section-number">23</span> Stats: Intro to Densities</h1>
+<div id="stats-intro-to-densities" class="section level1 hasAnchor" number="23">
+<h1><span class="header-section-number">23</span> Stats: Intro to Densities<a href="stats-intro-to-densities.html#stats-intro-to-densities" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: We will use <em>densities</em> to model and understand data. To that end, we’ll need to understand some key ideas about densities. Namely, we’ll discuss <em>random variables</em>, how we model random variables with densities, and the importance of <em>random seeds</em>. We’re not going to learn everything we need to work with data in this single exercise, but this will be our starting point.</p>
 <p><em>Reading</em>: (None; this exercise <em>is</em> the reading.)</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="stats-intro-to-densities.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div id="densities" class="section level2" number="23.1">
-<h2><span class="header-section-number">23.1</span> Densities</h2>
+<div id="densities" class="section level2 hasAnchor" number="23.1">
+<h2><span class="header-section-number">23.1</span> Densities<a href="stats-intro-to-densities.html#densities" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Fundamentally, a density is a <em>function</em>: It takes an input, and returns an output. A density has a special interpretation though; it represents the <em>relative chance</em> of particular values occurring.</p>
 <p>First, let’s look at a density of some real data:</p>
@@ -1048,8 +1047,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>In <code>R</code> we access a density by prefixing its name with the letter <code>d</code>.</p>
-<div id="q1-modify-the-code-below-to-evaluate-a-uniform-density-with-min--1-and-max-1.-assign-this-value-to-d." class="section level3" number="23.1.1">
-<h3><span class="header-section-number">23.1.1</span> <strong>q1</strong> Modify the code below to evaluate a uniform density with <code>min = -1</code> and <code>max = +1</code>. Assign this value to <code>d</code>.</h3>
+<div id="q1-modify-the-code-below-to-evaluate-a-uniform-density-with-min--1-and-max-1.-assign-this-value-to-d." class="section level3 hasAnchor" number="23.1.1">
+<h3><span class="header-section-number">23.1.1</span> <strong>q1</strong> Modify the code below to evaluate a uniform density with <code>min = -1</code> and <code>max = +1</code>. Assign this value to <code>d</code>.<a href="stats-intro-to-densities.html#q1-modify-the-code-below-to-evaluate-a-uniform-density-with-min--1-and-max-1.-assign-this-value-to-d." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="stats-intro-to-densities.html#cb215-1" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
 <span id="cb215-2"><a href="stats-intro-to-densities.html#cb215-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">+</span><span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb215-3"><a href="stats-intro-to-densities.html#cb215-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dunif</span>(x, <span class="at">min =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max =</span> <span class="sc">+</span><span class="dv">1</span>))</span></code></pre></div>
@@ -1077,8 +1076,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 </div>
 </div>
-<div id="drawing-samples-a-model-for-randomness" class="section level2" number="23.2">
-<h2><span class="header-section-number">23.2</span> Drawing Samples: A Model for Randomness</h2>
+<div id="drawing-samples-a-model-for-randomness" class="section level2 hasAnchor" number="23.2">
+<h2><span class="header-section-number">23.2</span> Drawing Samples: A Model for Randomness<a href="stats-intro-to-densities.html#drawing-samples-a-model-for-randomness" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>What does it <em>practically</em> mean for a value to be more or less likely? A density gives information about a <em>random variable</em>. A random variable is a quantity that takes a random value every time we observe it. For instance: If we roll a six-sided die, it will (unpredictably) land on values <code>1</code> through <code>6</code>. In my research, I use random variables to model material properties: Every component that comes off an assembly line will have a different strength associated with it. In order to design for a desired rate of failure, I model this variability with a random variable. A single value from a random variable—a roll of the die or a single value of material strength—is called a <em>realization</em>.</p>
 <p>Let’s illustrate this idea by using a normal density to define a <em>random variable</em> <code>Z</code>. This is sometimes denoted <code>Z ~ norm(mean, sd)</code>, which means <code>Z</code> is density as a normal density with <code>mean</code> and <code>sd</code>. The code below illustrates what it looks like when we draw a few samples of <code>Z</code>.</p>
@@ -1119,8 +1118,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>A <strong>sample</strong> is a set of realizations. A sample is a set of values, e.g. <code>rnorm(n = 10)</code>.</li>
 <li>A <strong>density</strong> is a function that describes the relative chance of all the values a random variable might take. A density is a function, e.g. <code>dnorm(x)</code>.</li>
 </ul>
-<div id="q2-plot-densities-for-z-values-in-df_q2.-use-aesthetics-to-plot-a-separate-curve-for-different-values-of-n.-comment-on-which-values-of-n-give-a-density-closer-to-normal." class="section level3" number="23.2.1">
-<h3><span class="header-section-number">23.2.1</span> <strong>q2</strong> Plot densities for <code>Z</code> values in <code>df_q2</code>. Use aesthetics to plot a separate curve for different values of <code>n</code>. Comment on which values of <code>n</code> give a density closer to “normal”.</h3>
+<div id="q2-plot-densities-for-z-values-in-df_q2.-use-aesthetics-to-plot-a-separate-curve-for-different-values-of-n.-comment-on-which-values-of-n-give-a-density-closer-to-normal." class="section level3 hasAnchor" number="23.2.1">
+<h3><span class="header-section-number">23.2.1</span> <strong>q2</strong> Plot densities for <code>Z</code> values in <code>df_q2</code>. Use aesthetics to plot a separate curve for different values of <code>n</code>. Comment on which values of <code>n</code> give a density closer to “normal”.<a href="stats-intro-to-densities.html#q2-plot-densities-for-z-values-in-df_q2.-use-aesthetics-to-plot-a-separate-curve-for-different-values-of-n.-comment-on-which-values-of-n-give-a-density-closer-to-normal." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: You may need to use the <code>group</code> aesthetic, in addition to <code>color</code> or <code>fill</code>.</p>
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="stats-intro-to-densities.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Use the data generated here</span></span>
 <span id="cb224-2"><a href="stats-intro-to-densities.html#cb224-2" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(</span>
@@ -1138,12 +1137,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 - The larger the value of <code>n</code>, the closer the density tends to be to normal.</p>
 </div>
 </div>
-<div id="not-everything-is-normal" class="section level2" number="23.3">
-<h2><span class="header-section-number">23.3</span> Not Everything is Normal</h2>
+<div id="not-everything-is-normal" class="section level2 hasAnchor" number="23.3">
+<h2><span class="header-section-number">23.3</span> Not Everything is Normal<a href="stats-intro-to-densities.html#not-everything-is-normal" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>A <em>very common misconception</em> is that drawing more samples will make <em>anything</em> look like a normal density. <strong>This is not the case!</strong> The following exercise will help us understand that the normal density is <em>just a model</em>, and <em>not</em> what we should expect all randomness to look like.</p>
-<div id="q3-run-the-code-below-and-inspect-the-resulting-histogram.-increase-n_diamonds-below-to-increase-the-number-of-samples-drawn-do-this-a-few-times-for-an-increasing-number-of-samples.-answer-the-questions-under-observations-below." class="section level3" number="23.3.1">
-<h3><span class="header-section-number">23.3.1</span> <strong>q3</strong> Run the code below and inspect the resulting histogram. Increase <code>n_diamonds</code> below to increase the number of samples drawn: Do this a few times for an increasing number of samples. Answer the questions under <em>observations</em> below.</h3>
+<div id="q3-run-the-code-below-and-inspect-the-resulting-histogram.-increase-n_diamonds-below-to-increase-the-number-of-samples-drawn-do-this-a-few-times-for-an-increasing-number-of-samples.-answer-the-questions-under-observations-below." class="section level3 hasAnchor" number="23.3.1">
+<h3><span class="header-section-number">23.3.1</span> <strong>q3</strong> Run the code below and inspect the resulting histogram. Increase <code>n_diamonds</code> below to increase the number of samples drawn: Do this a few times for an increasing number of samples. Answer the questions under <em>observations</em> below.<a href="stats-intro-to-densities.html#q3-run-the-code-below-and-inspect-the-resulting-histogram.-increase-n_diamonds-below-to-increase-the-number-of-samples-drawn-do-this-a-few-times-for-an-increasing-number-of-samples.-answer-the-questions-under-observations-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="stats-intro-to-densities.html#cb225-1" aria-hidden="true" tabindex="-1"></a>n_diamonds <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
 <span id="cb225-2"><a href="stats-intro-to-densities.html#cb225-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb225-3"><a href="stats-intro-to-densities.html#cb225-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
@@ -1161,13 +1160,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The normal density <em>is</em> a good model for some physical phenomena, such as the set of heights among a population. However, it is not always a good model. One reason the normal density “shows up” a lot is because it is involved in <em>estimation</em>, which we’ll talk more about when we later discuss the central limit theorem.</p>
 </div>
 </div>
-<div id="random-seeds-setting-the-state" class="section level2" number="23.4">
-<h2><span class="header-section-number">23.4</span> Random Seeds: Setting the State</h2>
+<div id="random-seeds-setting-the-state" class="section level2 hasAnchor" number="23.4">
+<h2><span class="header-section-number">23.4</span> Random Seeds: Setting the State<a href="stats-intro-to-densities.html#random-seeds-setting-the-state" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Remember that random variables are <em>random</em>. That means if we draw samples multiple times, we’re bound to get different values. For example, run the following code chunk multiple times.</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="stats-intro-to-densities.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change; run this multiple times!</span></span>
 <span id="cb227-2"><a href="stats-intro-to-densities.html#cb227-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## [1] -0.1774026 -1.2717437 -0.5473653 -1.7831728 -0.1015989</code></pre>
+<pre><code>## [1]  1.0060817  0.0558651 -0.8245560 -1.4396246 -1.1300042</code></pre>
 <p>What this means is we’ll get a slightly different picture every time we draw a sample. <strong>This is the challenge with randomness</strong>: Since we could have drawn a different set of samples, we need to know the degree to which we can trust conclusions drawn from data. Being <em>statistically literate</em> means knowing how much to trust your data.</p>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="stats-intro-to-densities.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
 <span id="cb229-2"><a href="stats-intro-to-densities.html#cb229-2" aria-hidden="true" tabindex="-1"></a>df_samp_multi <span class="ot">&lt;-</span></span>
@@ -1267,7 +1266,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

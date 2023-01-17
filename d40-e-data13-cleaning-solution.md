@@ -11,14 +11,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -51,48 +51,38 @@ read_csv(filename_disease) %>% glimpse()
 ```
 
 ```
-## Warning: Duplicated column names deduplicated: '1.0' => '1.0_1' [3], '1.0' =>
-## '1.0_2' [6], '0.0' => '0.0_1' [12]
-```
-
-```
-## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   `63.0` = col_double(),
-##   `1.0` = col_double(),
-##   `1.0_1` = col_double(),
-##   `145.0` = col_double(),
-##   `233.0` = col_double(),
-##   `1.0_2` = col_double(),
-##   `2.0` = col_double(),
-##   `150.0` = col_double(),
-##   `0.0` = col_double(),
-##   `2.3` = col_double(),
-##   `3.0` = col_double(),
-##   `0.0_1` = col_character(),
-##   `6.0` = col_character(),
-##   `0` = col_double()
-## )
+## New names:
+## Rows: 302 Columns: 14
+## ── Column specification
+## ──────────────────────────────────────────────────────── Delimiter: "," chr
+## (2): 0.0...12, 6.0 dbl (12): 63.0, 1.0...2, 1.0...3, 145.0, 233.0, 1.0...6,
+## 2.0, 150.0, 0.0...9...
+## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## • `1.0` -> `1.0...2`
+## • `1.0` -> `1.0...3`
+## • `1.0` -> `1.0...6`
+## • `0.0` -> `0.0...9`
+## • `0.0` -> `0.0...12`
 ```
 
 ```
 ## Rows: 302
 ## Columns: 14
-## $ `63.0`  <dbl> 67, 67, 37, 41, 56, 62, 57, 63, 53, 57, 56, 56, 44, 52, 57, 48…
-## $ `1.0`   <dbl> 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,…
-## $ `1.0_1` <dbl> 4, 4, 3, 2, 2, 4, 4, 4, 4, 4, 2, 3, 2, 3, 3, 2, 4, 3, 2, 1, 1,…
-## $ `145.0` <dbl> 160, 120, 130, 130, 120, 140, 120, 130, 140, 140, 140, 130, 12…
-## $ `233.0` <dbl> 286, 229, 250, 204, 236, 268, 354, 254, 203, 192, 294, 256, 26…
-## $ `1.0_2` <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1,…
-## $ `2.0`   <dbl> 2, 2, 0, 2, 0, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2,…
-## $ `150.0` <dbl> 108, 129, 187, 172, 178, 160, 163, 147, 155, 148, 153, 142, 17…
-## $ `0.0`   <dbl> 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0,…
-## $ `2.3`   <dbl> 1.5, 2.6, 3.5, 1.4, 0.8, 3.6, 0.6, 1.4, 3.1, 0.4, 1.3, 0.6, 0.…
-## $ `3.0`   <dbl> 2, 2, 3, 1, 1, 3, 1, 2, 3, 2, 2, 2, 1, 1, 1, 3, 1, 1, 1, 2, 1,…
-## $ `0.0_1` <chr> "3.0", "2.0", "0.0", "0.0", "0.0", "2.0", "0.0", "1.0", "0.0",…
-## $ `6.0`   <chr> "3.0", "7.0", "3.0", "3.0", "3.0", "3.0", "3.0", "7.0", "7.0",…
-## $ `0`     <dbl> 2, 1, 0, 0, 0, 3, 0, 2, 1, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0,…
+## $ `63.0`     <dbl> 67, 67, 37, 41, 56, 62, 57, 63, 53, 57, 56, 56, 44, 52, 57,…
+## $ `1.0...2`  <dbl> 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1,…
+## $ `1.0...3`  <dbl> 4, 4, 3, 2, 2, 4, 4, 4, 4, 4, 2, 3, 2, 3, 3, 2, 4, 3, 2, 1,…
+## $ `145.0`    <dbl> 160, 120, 130, 130, 120, 140, 120, 130, 140, 140, 140, 130,…
+## $ `233.0`    <dbl> 286, 229, 250, 204, 236, 268, 354, 254, 203, 192, 294, 256,…
+## $ `1.0...6`  <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0,…
+## $ `2.0`      <dbl> 2, 2, 0, 2, 0, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2,…
+## $ `150.0`    <dbl> 108, 129, 187, 172, 178, 160, 163, 147, 155, 148, 153, 142,…
+## $ `0.0...9`  <dbl> 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1,…
+## $ `2.3`      <dbl> 1.5, 2.6, 3.5, 1.4, 0.8, 3.6, 0.6, 1.4, 3.1, 0.4, 1.3, 0.6,…
+## $ `3.0`      <dbl> 2, 2, 3, 1, 1, 3, 1, 2, 3, 2, 2, 2, 1, 1, 1, 3, 1, 1, 1, 2,…
+## $ `0.0...12` <chr> "3.0", "2.0", "0.0", "0.0", "0.0", "2.0", "0.0", "1.0", "0.…
+## $ `6.0`      <chr> "3.0", "7.0", "3.0", "3.0", "3.0", "3.0", "3.0", "7.0", "7.…
+## $ `0`        <dbl> 2, 1, 0, 0, 0, 3, 0, 2, 1, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0,…
 ```
 
 *Observations*:
@@ -312,15 +302,10 @@ df_q2 <-
 ```
 
 ```
-## Warning: 6 parsing failures.
-## row  col expected actual                           file
-##  88 thal a number      ? './data/uci_heart_disease.csv'
-## 167 ca   a number      ? './data/uci_heart_disease.csv'
-## 193 ca   a number      ? './data/uci_heart_disease.csv'
-## 267 thal a number      ? './data/uci_heart_disease.csv'
-## 288 ca   a number      ? './data/uci_heart_disease.csv'
-## ... .... ........ ...... ..............................
-## See problems(...) for more details.
+## Warning: One or more parsing issues, call `problems()` on your data frame for details,
+## e.g.:
+##   dat <- vroom(...)
+##   problems(dat)
 ```
 
 ```r
@@ -541,20 +526,21 @@ df_q4
 ```
 
 ```
-## # A tibble: 303 x 14
-##      age sex    cp      trestbps  chol fbs   restecg thalach exang oldpeak slope
+## # A tibble: 303 × 14
+##      age sex    cp       trest…¹  chol fbs   restecg thalach exang oldpeak slope
 ##    <dbl> <chr>  <chr>      <dbl> <dbl> <lgl> <chr>     <dbl> <lgl>   <dbl> <chr>
-##  1    63 male   typica…      145   233 TRUE  Estes'…     150 FALSE     2.3 down…
-##  2    67 male   asympt…      160   286 FALSE Estes'…     108 TRUE      1.5 flat 
-##  3    67 male   asympt…      120   229 FALSE Estes'…     129 TRUE      2.6 flat 
-##  4    37 male   non-an…      130   250 FALSE normal      187 FALSE     3.5 down…
-##  5    41 female atypic…      130   204 FALSE Estes'…     172 FALSE     1.4 upsl…
-##  6    56 male   atypic…      120   236 FALSE normal      178 FALSE     0.8 upsl…
-##  7    62 female asympt…      140   268 FALSE Estes'…     160 FALSE     3.6 down…
-##  8    57 female asympt…      120   354 FALSE normal      163 TRUE      0.6 upsl…
-##  9    63 male   asympt…      130   254 FALSE Estes'…     147 FALSE     1.4 flat 
-## 10    53 male   asympt…      140   203 TRUE  Estes'…     155 TRUE      3.1 down…
-## # … with 293 more rows, and 3 more variables: ca <dbl>, thal <chr>, num <dbl>
+##  1    63 male   typical…     145   233 TRUE  Estes'…     150 FALSE     2.3 down…
+##  2    67 male   asympto…     160   286 FALSE Estes'…     108 TRUE      1.5 flat 
+##  3    67 male   asympto…     120   229 FALSE Estes'…     129 TRUE      2.6 flat 
+##  4    37 male   non-ang…     130   250 FALSE normal      187 FALSE     3.5 down…
+##  5    41 female atypica…     130   204 FALSE Estes'…     172 FALSE     1.4 upsl…
+##  6    56 male   atypica…     120   236 FALSE normal      178 FALSE     0.8 upsl…
+##  7    62 female asympto…     140   268 FALSE Estes'…     160 FALSE     3.6 down…
+##  8    57 female asympto…     120   354 FALSE normal      163 TRUE      0.6 upsl…
+##  9    63 male   asympto…     130   254 FALSE Estes'…     147 FALSE     1.4 flat 
+## 10    53 male   asympto…     140   203 TRUE  Estes'…     155 TRUE      3.1 down…
+## # … with 293 more rows, 3 more variables: ca <dbl>, thal <chr>, num <dbl>, and
+## #   abbreviated variable name ¹​trestbps
 ```
 
 ## Prepare the Data for Modeling
@@ -678,16 +664,17 @@ df_q4 %>%
 ```
 
 ```
-## # A tibble: 6 x 14
-##      ca thal       age sex   cp      trestbps  chol fbs   restecg  thalach exang
-##   <dbl> <chr>    <dbl> <chr> <chr>      <dbl> <dbl> <lgl> <chr>      <dbl> <lgl>
-## 1     0 <NA>        53 fema… non-an…      128   216 FALSE Estes' …     115 FALSE
-## 2    NA normal      52 male  non-an…      138   223 FALSE normal       169 FALSE
-## 3    NA reversi…    43 male  asympt…      132   247 TRUE  Estes' …     143 TRUE 
-## 4     0 <NA>        52 male  asympt…      128   204 TRUE  normal       156 TRUE 
-## 5    NA reversi…    58 male  atypic…      125   220 FALSE normal       144 FALSE
-## 6    NA normal      38 male  non-an…      138   175 FALSE normal       173 FALSE
-## # … with 3 more variables: oldpeak <dbl>, slope <chr>, num <dbl>
+## # A tibble: 6 × 14
+##      ca thal           age sex   cp    trest…¹  chol fbs   restecg thalach exang
+##   <dbl> <chr>        <dbl> <chr> <chr>   <dbl> <dbl> <lgl> <chr>     <dbl> <lgl>
+## 1     0 <NA>            53 fema… non-…     128   216 FALSE Estes'…     115 FALSE
+## 2    NA normal          52 male  non-…     138   223 FALSE normal      169 FALSE
+## 3    NA reversible …    43 male  asym…     132   247 TRUE  Estes'…     143 TRUE 
+## 4     0 <NA>            52 male  asym…     128   204 TRUE  normal      156 TRUE 
+## 5    NA reversible …    58 male  atyp…     125   220 FALSE normal      144 FALSE
+## 6    NA normal          38 male  non-…     138   175 FALSE normal      173 FALSE
+## # … with 3 more variables: oldpeak <dbl>, slope <chr>, num <dbl>, and
+## #   abbreviated variable name ¹​trestbps
 ```
 
 There are six rows with missing values.
@@ -706,20 +693,21 @@ df_q6
 ```
 
 ```
-## # A tibble: 297 x 14
-##      age sex    cp      trestbps  chol fbs   restecg thalach exang oldpeak slope
+## # A tibble: 297 × 14
+##      age sex    cp       trest…¹  chol fbs   restecg thalach exang oldpeak slope
 ##    <dbl> <chr>  <chr>      <dbl> <dbl> <lgl> <chr>     <dbl> <lgl>   <dbl> <chr>
-##  1    63 male   typica…      145   233 TRUE  Estes'…     150 FALSE     2.3 down…
-##  2    67 male   asympt…      160   286 FALSE Estes'…     108 TRUE      1.5 flat 
-##  3    67 male   asympt…      120   229 FALSE Estes'…     129 TRUE      2.6 flat 
-##  4    37 male   non-an…      130   250 FALSE normal      187 FALSE     3.5 down…
-##  5    41 female atypic…      130   204 FALSE Estes'…     172 FALSE     1.4 upsl…
-##  6    56 male   atypic…      120   236 FALSE normal      178 FALSE     0.8 upsl…
-##  7    62 female asympt…      140   268 FALSE Estes'…     160 FALSE     3.6 down…
-##  8    57 female asympt…      120   354 FALSE normal      163 TRUE      0.6 upsl…
-##  9    63 male   asympt…      130   254 FALSE Estes'…     147 FALSE     1.4 flat 
-## 10    53 male   asympt…      140   203 TRUE  Estes'…     155 TRUE      3.1 down…
-## # … with 287 more rows, and 3 more variables: ca <dbl>, thal <chr>, num <dbl>
+##  1    63 male   typical…     145   233 TRUE  Estes'…     150 FALSE     2.3 down…
+##  2    67 male   asympto…     160   286 FALSE Estes'…     108 TRUE      1.5 flat 
+##  3    67 male   asympto…     120   229 FALSE Estes'…     129 TRUE      2.6 flat 
+##  4    37 male   non-ang…     130   250 FALSE normal      187 FALSE     3.5 down…
+##  5    41 female atypica…     130   204 FALSE Estes'…     172 FALSE     1.4 upsl…
+##  6    56 male   atypica…     120   236 FALSE normal      178 FALSE     0.8 upsl…
+##  7    62 female asympto…     140   268 FALSE Estes'…     160 FALSE     3.6 down…
+##  8    57 female asympto…     120   354 FALSE normal      163 TRUE      0.6 upsl…
+##  9    63 male   asympto…     130   254 FALSE Estes'…     147 FALSE     1.4 flat 
+## 10    53 male   asympto…     140   203 TRUE  Estes'…     155 TRUE      3.1 down…
+## # … with 287 more rows, 3 more variables: ca <dbl>, thal <chr>, num <dbl>, and
+## #   abbreviated variable name ¹​trestbps
 ```
 
 Use the following to check your code.

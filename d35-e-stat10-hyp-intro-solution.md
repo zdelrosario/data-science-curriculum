@@ -14,14 +14,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -100,7 +100,7 @@ df_population %>%
 ```
 
 ```
-## # A tibble: 6 x 2
+## # A tibble: 6 × 2
 ##   cut       price
 ##   <chr>     <dbl>
 ## 1 Fair      2092.
@@ -157,7 +157,7 @@ df_sample %>%
 ```
 
 ```
-## # A tibble: 1 x 2
+## # A tibble: 1 × 2
 ##   price_lo price_hi
 ##      <dbl>    <dbl>
 ## 1    1418.    1856.
@@ -237,7 +237,7 @@ int_pctl(df_resample_total_price, estimates, alpha = 0.01)
 ```
 
 ```
-## # A tibble: 1 x 6
+## # A tibble: 1 × 6
 ##   term            .lower .estimate .upper .alpha .method   
 ##   <chr>            <dbl>     <dbl>  <dbl>  <dbl> <chr>     
 ## 1 proportion_high  0.530     0.640  0.750   0.01 percentile
@@ -267,7 +267,7 @@ df_population %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   price
 ##   <dbl>
 ## 1 1633.
@@ -308,7 +308,7 @@ df_population %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   proportion
 ##        <dbl>
 ## 1      0.667

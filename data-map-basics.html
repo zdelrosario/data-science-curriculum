@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>44 Data: Map Basics | Data Science: Exercise Solutions</title>
   <meta name="description" content="44 Data: Map Basics | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="44 Data: Map Basics | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="stats-error-and-bias.html"/>
 <link rel="next" href="data-factors.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,60 +980,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-map-basics" class="section level1" number="44">
-<h1><span class="header-section-number">44</span> Data: Map Basics</h1>
+<div id="data-map-basics" class="section level1 hasAnchor" number="44">
+<h1><span class="header-section-number">44</span> Data: Map Basics<a href="data-map-basics.html#data-map-basics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: The <code>map()</code> function and its variants are extremely useful for automating iterative tasks. We’ll learn the basics through this short exercise.</p>
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/5.1">Introduction to Iteration</a> and <a href="https://rstudio.cloud/learn/primers/5.2">Map</a> (you can skip the Case Study).</p>
-<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="data-map-basics.html#cb766-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="data-map-basics.html#cb768-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div id="formulas" class="section level2" number="44.1">
-<h2><span class="header-section-number">44.1</span> Formulas</h2>
+<div id="formulas" class="section level2 hasAnchor" number="44.1">
+<h2><span class="header-section-number">44.1</span> Formulas<a href="data-map-basics.html#formulas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>The primer introduced <code>map()</code> as a way to apply a function to a list.</p>
-<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="data-map-basics.html#cb770-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this example</span></span>
-<span id="cb770-2"><a href="data-map-basics.html#cb770-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), log)</span></code></pre></div>
+<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="data-map-basics.html#cb772-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this example</span></span>
+<span id="cb772-2"><a href="data-map-basics.html#cb772-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), log)</span></code></pre></div>
 <pre><code>## [1] 0.0000000 0.6931472 1.0986123</code></pre>
 <p>This is very helpful when we have a builtin or otherwise defined function, but what about when we need a more special-purpose function for a specific case? In this instance we can use R’s <em>formula notation</em>. For example, to compute powers of <code>10</code>, we could do:</p>
-<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="data-map-basics.html#cb772-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this example</span></span>
-<span id="cb772-2"><a href="data-map-basics.html#cb772-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="sc">~</span> <span class="dv">10</span> <span class="sc">^</span> .x)</span></code></pre></div>
+<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb774-1"><a href="data-map-basics.html#cb774-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this example</span></span>
+<span id="cb774-2"><a href="data-map-basics.html#cb774-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="sc">~</span> <span class="dv">10</span> <span class="sc">^</span> .x)</span></code></pre></div>
 <pre><code>## [1]   10  100 1000</code></pre>
 <p>The tilde <code>~</code> operator signals to R that we’re doing something special: defining a formula. The <code>.x</code> symbol is the argument for this new function. Basically, we are taking a formal function definition, such as</p>
-<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb774-1"><a href="data-map-basics.html#cb774-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this example</span></span>
-<span id="cb774-2"><a href="data-map-basics.html#cb774-2" aria-hidden="true" tabindex="-1"></a>pow10 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="dv">10</span> <span class="sc">^</span> x}</span></code></pre></div>
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="data-map-basics.html#cb776-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this example</span></span>
+<span id="cb776-2"><a href="data-map-basics.html#cb776-2" aria-hidden="true" tabindex="-1"></a>pow10 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="dv">10</span> <span class="sc">^</span> x}</span></code></pre></div>
 <p>And defining a more compact version with <code>~ 10 ^ x.</code>. We’ve actually already seen this formula notation when we use <code>facet_grid()</code> and <code>facet_wrap()</code>, though it’s used in a very different way in that context.</p>
-<div id="q1-use-map_chr-to-prepend-the-string-n-to-the-numbers-in-v_nums.-use-formula-notation-with-str_c-as-your-map-function." class="section level3" number="44.1.1">
-<h3><span class="header-section-number">44.1.1</span> <strong>q1</strong> Use <code>map_chr()</code> to prepend the string <code>"N: "</code> to the numbers in <code>v_nums</code>. Use formula notation with <code>str_c()</code> as your map function.</h3>
+<div id="q1-use-map_chr-to-prepend-the-string-n-to-the-numbers-in-v_nums.-use-formula-notation-with-str_c-as-your-map-function." class="section level3 hasAnchor" number="44.1.1">
+<h3><span class="header-section-number">44.1.1</span> <strong>q1</strong> Use <code>map_chr()</code> to prepend the string <code>"N: "</code> to the numbers in <code>v_nums</code>. Use formula notation with <code>str_c()</code> as your map function.<a href="data-map-basics.html#q1-use-map_chr-to-prepend-the-string-n-to-the-numbers-in-v_nums.-use-formula-notation-with-str_c-as-your-map-function." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: The function <code>str_c()</code> combines two or more objects into one string.</p>
-<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="data-map-basics.html#cb775-1" aria-hidden="true" tabindex="-1"></a>v_nums <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb775-2"><a href="data-map-basics.html#cb775-2" aria-hidden="true" tabindex="-1"></a>v_q1 <span class="ot">&lt;-</span> <span class="fu">map_chr</span>(v_nums, <span class="sc">~</span> <span class="fu">str_c</span>(<span class="st">&quot;N: &quot;</span>, .x))</span>
-<span id="cb775-3"><a href="data-map-basics.html#cb775-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb775-4"><a href="data-map-basics.html#cb775-4" aria-hidden="true" tabindex="-1"></a>v_q1</span></code></pre></div>
+<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="data-map-basics.html#cb777-1" aria-hidden="true" tabindex="-1"></a>v_nums <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb777-2"><a href="data-map-basics.html#cb777-2" aria-hidden="true" tabindex="-1"></a>v_q1 <span class="ot">&lt;-</span> <span class="fu">map_chr</span>(v_nums, <span class="sc">~</span> <span class="fu">str_c</span>(<span class="st">&quot;N: &quot;</span>, .x))</span>
+<span id="cb777-3"><a href="data-map-basics.html#cb777-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb777-4"><a href="data-map-basics.html#cb777-4" aria-hidden="true" tabindex="-1"></a>v_q1</span></code></pre></div>
 <pre><code>## [1] &quot;N: 1&quot; &quot;N: 2&quot; &quot;N: 3&quot;</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="data-map-basics.html#cb777-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb777-2"><a href="data-map-basics.html#cb777-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(v_q1, <span class="fu">c</span>(<span class="st">&quot;N: 1&quot;</span>, <span class="st">&quot;N: 2&quot;</span>, <span class="st">&quot;N: 3&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="data-map-basics.html#cb779-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb779-2"><a href="data-map-basics.html#cb779-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(v_q1, <span class="fu">c</span>(<span class="st">&quot;N: 1&quot;</span>, <span class="st">&quot;N: 2&quot;</span>, <span class="st">&quot;N: 3&quot;</span>)))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="data-map-basics.html#cb779-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="data-map-basics.html#cb781-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great job!&quot;</code></pre>
 <p>Formula notation is another way to pass arguments to functions; I find this a little more readable than passing arguments to <code>map()</code>.</p>
 </div>
-<div id="q2-use-map_dbl-to-compute-the-log-with-base-2-of-the-numbers-in-v_nums.-use-formula-notation-with-log-as-your-map-function." class="section level3" number="44.1.2">
-<h3><span class="header-section-number">44.1.2</span> <strong>q2</strong> Use <code>map_dbl()</code> to compute the <code>log</code> with <code>base = 2</code> of the numbers in <code>v_nums</code>. Use formula notation with <code>log()</code> as your map function.</h3>
-<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="data-map-basics.html#cb781-1" aria-hidden="true" tabindex="-1"></a>v_q2 <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(v_nums, <span class="sc">~</span> <span class="fu">log</span>(.x, <span class="at">base =</span> <span class="dv">2</span>))</span>
-<span id="cb781-2"><a href="data-map-basics.html#cb781-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb781-3"><a href="data-map-basics.html#cb781-3" aria-hidden="true" tabindex="-1"></a>v_q2</span></code></pre></div>
+<div id="q2-use-map_dbl-to-compute-the-log-with-base-2-of-the-numbers-in-v_nums.-use-formula-notation-with-log-as-your-map-function." class="section level3 hasAnchor" number="44.1.2">
+<h3><span class="header-section-number">44.1.2</span> <strong>q2</strong> Use <code>map_dbl()</code> to compute the <code>log</code> with <code>base = 2</code> of the numbers in <code>v_nums</code>. Use formula notation with <code>log()</code> as your map function.<a href="data-map-basics.html#q2-use-map_dbl-to-compute-the-log-with-base-2-of-the-numbers-in-v_nums.-use-formula-notation-with-log-as-your-map-function." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="data-map-basics.html#cb783-1" aria-hidden="true" tabindex="-1"></a>v_q2 <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(v_nums, <span class="sc">~</span> <span class="fu">log</span>(.x, <span class="at">base =</span> <span class="dv">2</span>))</span>
+<span id="cb783-2"><a href="data-map-basics.html#cb783-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb783-3"><a href="data-map-basics.html#cb783-3" aria-hidden="true" tabindex="-1"></a>v_q2</span></code></pre></div>
 <pre><code>## [1] 0.000000 1.000000 1.584963</code></pre>
-<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="data-map-basics.html#cb783-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb783-2"><a href="data-map-basics.html#cb783-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(v_q2, <span class="fu">log</span>(v_nums, <span class="at">base =</span> <span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="data-map-basics.html#cb785-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb785-2"><a href="data-map-basics.html#cb785-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(v_q2, <span class="fu">log</span>(v_nums, <span class="at">base =</span> <span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="data-map-basics.html#cb785-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb787-1"><a href="data-map-basics.html#cb787-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <!-- include-exit-ticket -->
 
@@ -1107,7 +1106,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

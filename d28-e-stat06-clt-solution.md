@@ -13,14 +13,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -112,7 +112,8 @@ df_clt <-
 ```
 
 ```
-## `summarise()` has grouped output by 'n'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'n'. You can override using the `.groups`
+## argument.
 ```
 
 Let's visualize the sampling distribution for each sample size:
@@ -215,7 +216,7 @@ df_clt %>%
 ```
 
 ```
-## # A tibble: 4 x 2
+## # A tibble: 4 × 2
 ##       n coverage
 ##   <dbl>    <dbl>
 ## 1     2    0.661
@@ -295,7 +296,7 @@ df_flights_aa
 ```
 
 ```
-## # A tibble: 1 x 3
+## # A tibble: 1 × 3
 ##   arr_delay_mean arr_delay_sd arr_delay_n
 ##            <dbl>        <dbl>       <int>
 ## 1          0.364         42.5       32729
@@ -356,6 +357,11 @@ df_flights_sampled %>%
     y = "Arrival Delay (minutes)",
     title = "American Airlines Delays"
   )
+```
+
+```
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
 ```
 
 <img src="d28-e-stat06-clt-solution_files/figure-html/flights-aa-samples-1.png" width="672" />

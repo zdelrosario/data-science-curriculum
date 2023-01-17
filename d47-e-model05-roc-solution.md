@@ -11,14 +11,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -178,15 +178,10 @@ df_data <-
 ```
 
 ```
-## Warning: 6 parsing failures.
-## row  col expected actual                           file
-##  88 thal a number      ? './data/uci_heart_disease.csv'
-## 167 ca   a number      ? './data/uci_heart_disease.csv'
-## 193 ca   a number      ? './data/uci_heart_disease.csv'
-## 267 thal a number      ? './data/uci_heart_disease.csv'
-## 288 ca   a number      ? './data/uci_heart_disease.csv'
-## ... .... ........ ...... ..............................
-## See problems(...) for more details.
+## Warning: One or more parsing issues, call `problems()` on your data frame for details,
+## e.g.:
+##   dat <- vroom(...)
+##   problems(dat)
 ```
 
 ```r
@@ -319,7 +314,7 @@ df_q1
 ```
 
 ```
-## # A tibble: 1 x 6
+## # A tibble: 1 × 6
 ##      TP    FP    TN    FN   TPR   FPR
 ##   <int> <int> <int> <int> <dbl> <dbl>
 ## 1    26    37    24    10 0.722 0.607
@@ -549,7 +544,7 @@ df_thresholds %>%
 ```
 
 ```
-## # A tibble: 2 x 3
+## # A tibble: 2 × 3
 ##   pr_heart_disease true_positive_rate false_positive_rate
 ##              <dbl>              <dbl>               <dbl>
 ## 1            0.252              0.917               0.492

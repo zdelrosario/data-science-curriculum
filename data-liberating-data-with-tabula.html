@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>60 Data: Liberating data with Tabula | Data Science: Exercise Solutions</title>
   <meta name="description" content="60 Data: Liberating data with Tabula | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="60 Data: Liberating data with Tabula | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="model-warnings-when-interpreting-linear-models.html"/>
 <link rel="next" href="model-logistic-regression.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,41 +980,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-liberating-data-with-tabula" class="section level1" number="60">
-<h1><span class="header-section-number">60</span> Data: Liberating data with Tabula</h1>
+<div id="data-liberating-data-with-tabula" class="section level1 hasAnchor" number="60">
+<h1><span class="header-section-number">60</span> Data: Liberating data with Tabula<a href="data-liberating-data-with-tabula.html#data-liberating-data-with-tabula" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Sometimes data are messy—we know how to deal with that. Other times data are “locked up” in a format we can’t easily analyze, such as in a PDF. In this exercise you’ll learn how to <em>liberate</em> data from a PDF table using Tabula.</p>
 <p><em>Reading</em>: (<em>None</em>, this exercise <em>is</em> the reading.)</p>
-<div class="sourceCode" id="cb1139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1139-1"><a href="data-liberating-data-with-tabula.html#cb1139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<div class="sourceCode" id="cb1148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1148-1"><a href="data-liberating-data-with-tabula.html#cb1148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <p><em>Background</em>: <a href="https://tabula.technology/">Tabula</a> is a piece of software developed for journalists carrying out investigative reporting. It was developed with support from organizations like <a href="http://propublica.org/">ProPublica</a> and <a href="http://www.nytimes.com/">The New York Times</a>. This tool is meant to help investigators parse unwieldy PDFs and liberate useful information.</p>
-<div id="setup-2" class="section level2" number="60.1">
-<h2><span class="header-section-number">60.1</span> Setup</h2>
-<div id="q1-install-tabula." class="section level3" number="60.1.1">
-<h3><span class="header-section-number">60.1.1</span> <strong>q1</strong> Install Tabula.</h3>
+<div id="setup-2" class="section level2 hasAnchor" number="60.1">
+<h2><span class="header-section-number">60.1</span> Setup<a href="data-liberating-data-with-tabula.html#setup-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="q1-install-tabula." class="section level3 hasAnchor" number="60.1.1">
+<h3><span class="header-section-number">60.1.1</span> <strong>q1</strong> Install Tabula.<a href="data-liberating-data-with-tabula.html#q1-install-tabula." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Download and install <a href="https://tabula.technology/">Tabula</a>; the webpage has installation instructions.</p>
 <p><em>Note</em>: Tabula’s interface is through a locally-hosted server; it should automatically open a browser window for Tabula. If it does not, then open <a href="http://localhost:8080/">http://localhost:8080/</a> after you’ve launched Tabula.</p>
 </div>
 </div>
-<div id="liberating-data" class="section level2" number="60.2">
-<h2><span class="header-section-number">60.2</span> Liberating Data</h2>
-<div id="q2.1-obtain-the-data." class="section level3" number="60.2.1">
-<h3><span class="header-section-number">60.2.1</span> <strong>q2.1</strong> Obtain the data.</h3>
+<div id="liberating-data" class="section level2 hasAnchor" number="60.2">
+<h2><span class="header-section-number">60.2</span> Liberating Data<a href="data-liberating-data-with-tabula.html#liberating-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="q2.1-obtain-the-data." class="section level3 hasAnchor" number="60.2.1">
+<h3><span class="header-section-number">60.2.1</span> <strong>q2.1</strong> Obtain the data.<a href="data-liberating-data-with-tabula.html#q2.1-obtain-the-data." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Download <code>FY2019 independent financial audit report (PDF)</code> from the Needham, MA <a href="https://www.needhamma.gov/1673/Financial-Reports">financial reports page</a>.</p>
 </div>
-<div id="q2.2-try-it-the-hard-way." class="section level3" number="60.2.2">
-<h3><span class="header-section-number">60.2.2</span> <strong>q2.2</strong> Try it the hard way.</h3>
+<div id="q2.2-try-it-the-hard-way." class="section level3 hasAnchor" number="60.2.2">
+<h3><span class="header-section-number">60.2.2</span> <strong>q2.2</strong> Try it the hard way.<a href="data-liberating-data-with-tabula.html#q2.2-try-it-the-hard-way." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Try copy-pasting from the FY2019 report the table <code>Government-Wide Financial Analysis</code> into a text document or your favorite spreadsheet editor. <strong>This is unlikely to produce the desired result.</strong> (Please don’t spend any time trying to format this copied data—you’re about to learn a better way!)</p>
 <p>Tabula is a tool that will help us <em>liberate</em> the data; basically, it’s a copy-paste for PDF tables <em>that actually works</em>.</p>
 </div>
-<div id="q3-extract-from-the-fy2019-report-the-government-wide-financial-analysis-table." class="section level3" number="60.2.3">
-<h3><span class="header-section-number">60.2.3</span> <strong>q3</strong> Extract from the FY2019 report the <code>Government-Wide Financial Analysis</code> table.</h3>
+<div id="q3-extract-from-the-fy2019-report-the-government-wide-financial-analysis-table." class="section level3 hasAnchor" number="60.2.3">
+<h3><span class="header-section-number">60.2.3</span> <strong>q3</strong> Extract from the FY2019 report the <code>Government-Wide Financial Analysis</code> table.<a href="data-liberating-data-with-tabula.html#q3-extract-from-the-fy2019-report-the-government-wide-financial-analysis-table." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We’ll do this in steps:</p>
 <ol style="list-style-type: decimal">
 <li>Click the browse button to select your downloaded FY2019 report and click <em>Import</em>.</li>
@@ -1056,84 +1055,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Once you have a preview that matches the columns above, select the CSV filetype and click the <em>Export</em> button. Download the file to your <code>data</code> folder and give it a sensible filename.</li>
 </ol>
 </div>
-<div id="q4-load-and-clean-the-data." class="section level3" number="60.2.4">
-<h3><span class="header-section-number">60.2.4</span> <strong>q4</strong> Load and clean the data.</h3>
+<div id="q4-load-and-clean-the-data." class="section level3 hasAnchor" number="60.2.4">
+<h3><span class="header-section-number">60.2.4</span> <strong>q4</strong> Load and clean the data.<a href="data-liberating-data-with-tabula.html#q4-load-and-clean-the-data." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Load and clean the table you extracted above. Use the column names <code>category</code> and <code>[government|business|total]_[2019|2018]</code>. Do not <em>tidy</em> (pivot) the data yet, but make sure the appropriate columns are numeric.</p>
 <p><em>Note</em>: In accounting practice, numbers in parentheses are understood to be negative, e.g. <code>(1000) = -1000</code>.</p>
-<div class="sourceCode" id="cb1143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1143-1"><a href="data-liberating-data-with-tabula.html#cb1143-1" aria-hidden="true" tabindex="-1"></a>df_2019_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1143-2"><a href="data-liberating-data-with-tabula.html#cb1143-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;./data/needham_fs19.csv&quot;</span>,</span>
-<span id="cb1143-3"><a href="data-liberating-data-with-tabula.html#cb1143-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">1</span>,</span>
-<span id="cb1143-4"><a href="data-liberating-data-with-tabula.html#cb1143-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(</span>
-<span id="cb1143-5"><a href="data-liberating-data-with-tabula.html#cb1143-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;category&quot;</span>,</span>
-<span id="cb1143-6"><a href="data-liberating-data-with-tabula.html#cb1143-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X2&quot;</span>,</span>
-<span id="cb1143-7"><a href="data-liberating-data-with-tabula.html#cb1143-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;governmental_2019&quot;</span>,</span>
-<span id="cb1143-8"><a href="data-liberating-data-with-tabula.html#cb1143-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X4&quot;</span>,</span>
-<span id="cb1143-9"><a href="data-liberating-data-with-tabula.html#cb1143-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;governmental_2018&quot;</span>,</span>
-<span id="cb1143-10"><a href="data-liberating-data-with-tabula.html#cb1143-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X6&quot;</span>,</span>
-<span id="cb1143-11"><a href="data-liberating-data-with-tabula.html#cb1143-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;business_2019&quot;</span>,</span>
-<span id="cb1143-12"><a href="data-liberating-data-with-tabula.html#cb1143-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X8&quot;</span>,</span>
-<span id="cb1143-13"><a href="data-liberating-data-with-tabula.html#cb1143-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;business_2018&quot;</span>,</span>
-<span id="cb1143-14"><a href="data-liberating-data-with-tabula.html#cb1143-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X10&quot;</span>,</span>
-<span id="cb1143-15"><a href="data-liberating-data-with-tabula.html#cb1143-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;total_2019&quot;</span>,</span>
-<span id="cb1143-16"><a href="data-liberating-data-with-tabula.html#cb1143-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X12&quot;</span>,</span>
-<span id="cb1143-17"><a href="data-liberating-data-with-tabula.html#cb1143-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;total_2018&quot;</span></span>
-<span id="cb1143-18"><a href="data-liberating-data-with-tabula.html#cb1143-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1143-19"><a href="data-liberating-data-with-tabula.html#cb1143-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1143-20"><a href="data-liberating-data-with-tabula.html#cb1143-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1143-21"><a href="data-liberating-data-with-tabula.html#cb1143-21" aria-hidden="true" tabindex="-1"></a>df_2019 <span class="ot">&lt;-</span></span>
-<span id="cb1143-22"><a href="data-liberating-data-with-tabula.html#cb1143-22" aria-hidden="true" tabindex="-1"></a>  df_2019_raw <span class="sc">%&gt;%</span></span>
-<span id="cb1143-23"><a href="data-liberating-data-with-tabula.html#cb1143-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb1143-24"><a href="data-liberating-data-with-tabula.html#cb1143-24" aria-hidden="true" tabindex="-1"></a>  <span class="do">## across() allows us to apply the same mutation to multiple</span></span>
-<span id="cb1143-25"><a href="data-liberating-data-with-tabula.html#cb1143-25" aria-hidden="true" tabindex="-1"></a>  <span class="do">## columns; remove all internal spaces from numbers</span></span>
-<span id="cb1143-26"><a href="data-liberating-data-with-tabula.html#cb1143-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>category, <span class="sc">~</span><span class="fu">str_remove_all</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb1143-27"><a href="data-liberating-data-with-tabula.html#cb1143-27" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Handle numbers enclosed by parentheses; make them negative</span></span>
-<span id="cb1143-28"><a href="data-liberating-data-with-tabula.html#cb1143-28" aria-hidden="true" tabindex="-1"></a>  <span class="do">## and remove all parentheses for the number parser</span></span>
-<span id="cb1143-29"><a href="data-liberating-data-with-tabula.html#cb1143-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
-<span id="cb1143-30"><a href="data-liberating-data-with-tabula.html#cb1143-30" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span>category,</span>
-<span id="cb1143-31"><a href="data-liberating-data-with-tabula.html#cb1143-31" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span><span class="fu">if_else</span>(</span>
-<span id="cb1143-32"><a href="data-liberating-data-with-tabula.html#cb1143-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(&quot;</span>),</span>
-<span id="cb1143-33"><a href="data-liberating-data-with-tabula.html#cb1143-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_c</span>(<span class="st">&quot;-&quot;</span>, <span class="fu">str_remove_all</span>(., <span class="st">&quot;[</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">)]&quot;</span>)),</span>
-<span id="cb1143-34"><a href="data-liberating-data-with-tabula.html#cb1143-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_remove_all</span>(., <span class="st">&quot;[</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">)]&quot;</span>)</span>
-<span id="cb1143-35"><a href="data-liberating-data-with-tabula.html#cb1143-35" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1143-36"><a href="data-liberating-data-with-tabula.html#cb1143-36" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb1143-37"><a href="data-liberating-data-with-tabula.html#cb1143-37" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Use the number parser to handle conversions</span></span>
-<span id="cb1143-38"><a href="data-liberating-data-with-tabula.html#cb1143-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>category, parse_number)) <span class="sc">%&gt;%</span></span>
-<span id="cb1143-39"><a href="data-liberating-data-with-tabula.html#cb1143-39" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Fix a couple chopped lines</span></span>
-<span id="cb1143-40"><a href="data-liberating-data-with-tabula.html#cb1143-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1143-41"><a href="data-liberating-data-with-tabula.html#cb1143-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">if_else</span>(</span>
-<span id="cb1143-42"><a href="data-liberating-data-with-tabula.html#cb1143-42" aria-hidden="true" tabindex="-1"></a>      category <span class="sc">==</span> <span class="st">&quot;resources&quot;</span>,</span>
-<span id="cb1143-43"><a href="data-liberating-data-with-tabula.html#cb1143-43" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Total assets and deferred outflow of resources&quot;</span>,</span>
-<span id="cb1143-44"><a href="data-liberating-data-with-tabula.html#cb1143-44" aria-hidden="true" tabindex="-1"></a>      category</span>
-<span id="cb1143-45"><a href="data-liberating-data-with-tabula.html#cb1143-45" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1143-46"><a href="data-liberating-data-with-tabula.html#cb1143-46" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1143-47"><a href="data-liberating-data-with-tabula.html#cb1143-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1143-48"><a href="data-liberating-data-with-tabula.html#cb1143-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">str_replace</span>(</span>
-<span id="cb1143-49"><a href="data-liberating-data-with-tabula.html#cb1143-49" aria-hidden="true" tabindex="-1"></a>      category,</span>
-<span id="cb1143-50"><a href="data-liberating-data-with-tabula.html#cb1143-50" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;resources, and net position&quot;</span>,</span>
-<span id="cb1143-51"><a href="data-liberating-data-with-tabula.html#cb1143-51" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Total liabilities, deferred inflow of resources, and net position&quot;</span></span>
-<span id="cb1143-52"><a href="data-liberating-data-with-tabula.html#cb1143-52" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1143-53"><a href="data-liberating-data-with-tabula.html#cb1143-53" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1143-54"><a href="data-liberating-data-with-tabula.html#cb1143-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(governmental_2019))</span>
-<span id="cb1143-55"><a href="data-liberating-data-with-tabula.html#cb1143-55" aria-hidden="true" tabindex="-1"></a>df_2019 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1152-1"><a href="data-liberating-data-with-tabula.html#cb1152-1" aria-hidden="true" tabindex="-1"></a>df_2019_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1152-2"><a href="data-liberating-data-with-tabula.html#cb1152-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;./data/needham_fs19.csv&quot;</span>,</span>
+<span id="cb1152-3"><a href="data-liberating-data-with-tabula.html#cb1152-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">1</span>,</span>
+<span id="cb1152-4"><a href="data-liberating-data-with-tabula.html#cb1152-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(</span>
+<span id="cb1152-5"><a href="data-liberating-data-with-tabula.html#cb1152-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;category&quot;</span>,</span>
+<span id="cb1152-6"><a href="data-liberating-data-with-tabula.html#cb1152-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X2&quot;</span>,</span>
+<span id="cb1152-7"><a href="data-liberating-data-with-tabula.html#cb1152-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;governmental_2019&quot;</span>,</span>
+<span id="cb1152-8"><a href="data-liberating-data-with-tabula.html#cb1152-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X4&quot;</span>,</span>
+<span id="cb1152-9"><a href="data-liberating-data-with-tabula.html#cb1152-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;governmental_2018&quot;</span>,</span>
+<span id="cb1152-10"><a href="data-liberating-data-with-tabula.html#cb1152-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X6&quot;</span>,</span>
+<span id="cb1152-11"><a href="data-liberating-data-with-tabula.html#cb1152-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;business_2019&quot;</span>,</span>
+<span id="cb1152-12"><a href="data-liberating-data-with-tabula.html#cb1152-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X8&quot;</span>,</span>
+<span id="cb1152-13"><a href="data-liberating-data-with-tabula.html#cb1152-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;business_2018&quot;</span>,</span>
+<span id="cb1152-14"><a href="data-liberating-data-with-tabula.html#cb1152-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X10&quot;</span>,</span>
+<span id="cb1152-15"><a href="data-liberating-data-with-tabula.html#cb1152-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;total_2019&quot;</span>,</span>
+<span id="cb1152-16"><a href="data-liberating-data-with-tabula.html#cb1152-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;X12&quot;</span>,</span>
+<span id="cb1152-17"><a href="data-liberating-data-with-tabula.html#cb1152-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;total_2018&quot;</span></span>
+<span id="cb1152-18"><a href="data-liberating-data-with-tabula.html#cb1152-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1152-19"><a href="data-liberating-data-with-tabula.html#cb1152-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1152-20"><a href="data-liberating-data-with-tabula.html#cb1152-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1152-21"><a href="data-liberating-data-with-tabula.html#cb1152-21" aria-hidden="true" tabindex="-1"></a>df_2019 <span class="ot">&lt;-</span></span>
+<span id="cb1152-22"><a href="data-liberating-data-with-tabula.html#cb1152-22" aria-hidden="true" tabindex="-1"></a>  df_2019_raw <span class="sc">%&gt;%</span></span>
+<span id="cb1152-23"><a href="data-liberating-data-with-tabula.html#cb1152-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1152-24"><a href="data-liberating-data-with-tabula.html#cb1152-24" aria-hidden="true" tabindex="-1"></a>  <span class="do">## across() allows us to apply the same mutation to multiple</span></span>
+<span id="cb1152-25"><a href="data-liberating-data-with-tabula.html#cb1152-25" aria-hidden="true" tabindex="-1"></a>  <span class="do">## columns; remove all internal spaces from numbers</span></span>
+<span id="cb1152-26"><a href="data-liberating-data-with-tabula.html#cb1152-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>category, <span class="sc">~</span><span class="fu">str_remove_all</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb1152-27"><a href="data-liberating-data-with-tabula.html#cb1152-27" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Handle numbers enclosed by parentheses; make them negative</span></span>
+<span id="cb1152-28"><a href="data-liberating-data-with-tabula.html#cb1152-28" aria-hidden="true" tabindex="-1"></a>  <span class="do">## and remove all parentheses for the number parser</span></span>
+<span id="cb1152-29"><a href="data-liberating-data-with-tabula.html#cb1152-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
+<span id="cb1152-30"><a href="data-liberating-data-with-tabula.html#cb1152-30" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span>category,</span>
+<span id="cb1152-31"><a href="data-liberating-data-with-tabula.html#cb1152-31" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span><span class="fu">if_else</span>(</span>
+<span id="cb1152-32"><a href="data-liberating-data-with-tabula.html#cb1152-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(&quot;</span>),</span>
+<span id="cb1152-33"><a href="data-liberating-data-with-tabula.html#cb1152-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_c</span>(<span class="st">&quot;-&quot;</span>, <span class="fu">str_remove_all</span>(., <span class="st">&quot;[</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">)]&quot;</span>)),</span>
+<span id="cb1152-34"><a href="data-liberating-data-with-tabula.html#cb1152-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_remove_all</span>(., <span class="st">&quot;[</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">)]&quot;</span>)</span>
+<span id="cb1152-35"><a href="data-liberating-data-with-tabula.html#cb1152-35" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1152-36"><a href="data-liberating-data-with-tabula.html#cb1152-36" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb1152-37"><a href="data-liberating-data-with-tabula.html#cb1152-37" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Use the number parser to handle conversions</span></span>
+<span id="cb1152-38"><a href="data-liberating-data-with-tabula.html#cb1152-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>category, parse_number)) <span class="sc">%&gt;%</span></span>
+<span id="cb1152-39"><a href="data-liberating-data-with-tabula.html#cb1152-39" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Fix a couple chopped lines</span></span>
+<span id="cb1152-40"><a href="data-liberating-data-with-tabula.html#cb1152-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1152-41"><a href="data-liberating-data-with-tabula.html#cb1152-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">if_else</span>(</span>
+<span id="cb1152-42"><a href="data-liberating-data-with-tabula.html#cb1152-42" aria-hidden="true" tabindex="-1"></a>      category <span class="sc">==</span> <span class="st">&quot;resources&quot;</span>,</span>
+<span id="cb1152-43"><a href="data-liberating-data-with-tabula.html#cb1152-43" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Total assets and deferred outflow of resources&quot;</span>,</span>
+<span id="cb1152-44"><a href="data-liberating-data-with-tabula.html#cb1152-44" aria-hidden="true" tabindex="-1"></a>      category</span>
+<span id="cb1152-45"><a href="data-liberating-data-with-tabula.html#cb1152-45" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1152-46"><a href="data-liberating-data-with-tabula.html#cb1152-46" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1152-47"><a href="data-liberating-data-with-tabula.html#cb1152-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1152-48"><a href="data-liberating-data-with-tabula.html#cb1152-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">str_replace</span>(</span>
+<span id="cb1152-49"><a href="data-liberating-data-with-tabula.html#cb1152-49" aria-hidden="true" tabindex="-1"></a>      category,</span>
+<span id="cb1152-50"><a href="data-liberating-data-with-tabula.html#cb1152-50" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;resources, and net position&quot;</span>,</span>
+<span id="cb1152-51"><a href="data-liberating-data-with-tabula.html#cb1152-51" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Total liabilities, deferred inflow of resources, and net position&quot;</span></span>
+<span id="cb1152-52"><a href="data-liberating-data-with-tabula.html#cb1152-52" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1152-53"><a href="data-liberating-data-with-tabula.html#cb1152-53" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1152-54"><a href="data-liberating-data-with-tabula.html#cb1152-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(governmental_2019))</span>
+<span id="cb1152-55"><a href="data-liberating-data-with-tabula.html#cb1152-55" aria-hidden="true" tabindex="-1"></a>df_2019 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <p>Use the following to check your work:</p>
-<div class="sourceCode" id="cb1144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1144-1"><a href="data-liberating-data-with-tabula.html#cb1144-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; check a couple problematic values</span></span>
-<span id="cb1144-2"><a href="data-liberating-data-with-tabula.html#cb1144-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb1144-3"><a href="data-liberating-data-with-tabula.html#cb1144-3" aria-hidden="true" tabindex="-1"></a>  (</span>
-<span id="cb1144-4"><a href="data-liberating-data-with-tabula.html#cb1144-4" aria-hidden="true" tabindex="-1"></a>    df_2019 <span class="sc">%&gt;%</span></span>
-<span id="cb1144-5"><a href="data-liberating-data-with-tabula.html#cb1144-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(category <span class="sc">==</span> <span class="st">&quot;Deferred outflow of resources&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1144-6"><a href="data-liberating-data-with-tabula.html#cb1144-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(business_2019)</span>
-<span id="cb1144-7"><a href="data-liberating-data-with-tabula.html#cb1144-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">==</span> <span class="dv">1160</span></span>
-<span id="cb1144-8"><a href="data-liberating-data-with-tabula.html#cb1144-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1144-9"><a href="data-liberating-data-with-tabula.html#cb1144-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1144-10"><a href="data-liberating-data-with-tabula.html#cb1144-10" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb1144-11"><a href="data-liberating-data-with-tabula.html#cb1144-11" aria-hidden="true" tabindex="-1"></a>  (</span>
-<span id="cb1144-12"><a href="data-liberating-data-with-tabula.html#cb1144-12" aria-hidden="true" tabindex="-1"></a>    df_2019 <span class="sc">%&gt;%</span></span>
-<span id="cb1144-13"><a href="data-liberating-data-with-tabula.html#cb1144-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(category <span class="sc">==</span> <span class="st">&quot;Unrestricted&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1144-14"><a href="data-liberating-data-with-tabula.html#cb1144-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(governmental_2019)</span>
-<span id="cb1144-15"><a href="data-liberating-data-with-tabula.html#cb1144-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">==</span> <span class="sc">-</span><span class="dv">62396</span></span>
-<span id="cb1144-16"><a href="data-liberating-data-with-tabula.html#cb1144-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1144-17"><a href="data-liberating-data-with-tabula.html#cb1144-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1144-18"><a href="data-liberating-data-with-tabula.html#cb1144-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1153-1"><a href="data-liberating-data-with-tabula.html#cb1153-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; check a couple problematic values</span></span>
+<span id="cb1153-2"><a href="data-liberating-data-with-tabula.html#cb1153-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb1153-3"><a href="data-liberating-data-with-tabula.html#cb1153-3" aria-hidden="true" tabindex="-1"></a>  (</span>
+<span id="cb1153-4"><a href="data-liberating-data-with-tabula.html#cb1153-4" aria-hidden="true" tabindex="-1"></a>    df_2019 <span class="sc">%&gt;%</span></span>
+<span id="cb1153-5"><a href="data-liberating-data-with-tabula.html#cb1153-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(category <span class="sc">==</span> <span class="st">&quot;Deferred outflow of resources&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1153-6"><a href="data-liberating-data-with-tabula.html#cb1153-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(business_2019)</span>
+<span id="cb1153-7"><a href="data-liberating-data-with-tabula.html#cb1153-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">==</span> <span class="dv">1160</span></span>
+<span id="cb1153-8"><a href="data-liberating-data-with-tabula.html#cb1153-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1153-9"><a href="data-liberating-data-with-tabula.html#cb1153-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1153-10"><a href="data-liberating-data-with-tabula.html#cb1153-10" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb1153-11"><a href="data-liberating-data-with-tabula.html#cb1153-11" aria-hidden="true" tabindex="-1"></a>  (</span>
+<span id="cb1153-12"><a href="data-liberating-data-with-tabula.html#cb1153-12" aria-hidden="true" tabindex="-1"></a>    df_2019 <span class="sc">%&gt;%</span></span>
+<span id="cb1153-13"><a href="data-liberating-data-with-tabula.html#cb1153-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(category <span class="sc">==</span> <span class="st">&quot;Unrestricted&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1153-14"><a href="data-liberating-data-with-tabula.html#cb1153-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(governmental_2019)</span>
+<span id="cb1153-15"><a href="data-liberating-data-with-tabula.html#cb1153-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">==</span> <span class="sc">-</span><span class="dv">62396</span></span>
+<span id="cb1153-16"><a href="data-liberating-data-with-tabula.html#cb1153-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1153-17"><a href="data-liberating-data-with-tabula.html#cb1153-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1153-18"><a href="data-liberating-data-with-tabula.html#cb1153-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
 <p>Where Tabula really shines is in cases where you need to process <em>many</em> documents; if you find yourself needing to process a whole folder of PDF’s, consider using Tabula.</p>
 <!-- include-exit-ticket -->
 
@@ -1206,7 +1205,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -135,6 +135,11 @@ mpg %>%
   )
 ```
 
+```
+## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+## ℹ Please use the `linewidth` argument instead.
+```
+
 <img src="d24-e-vis06-themes-solution_files/figure-html/q3-solution-1.png" width="672" />
 
 <!-- include-exit-ticket -->

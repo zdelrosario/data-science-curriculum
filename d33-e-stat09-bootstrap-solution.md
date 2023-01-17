@@ -10,14 +10,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -120,7 +120,7 @@ df_q1
 
 ```
 ## # Bootstrap sampling 
-## # A tibble: 1,000 x 4
+## # A tibble: 1,000 × 4
 ##    splits          id            df                mean_est
 ##    <list>          <chr>         <list>               <dbl>
 ##  1 <split [50/16]> Bootstrap0001 <tibble [50 × 1]> -0.0667 
@@ -175,7 +175,7 @@ df_data_norm %>%
 ```
 
 ```
-## # A tibble: 2 x 3
+## # A tibble: 2 × 3
 ##   term  estimate std.error
 ##   <chr>    <dbl>     <dbl>
 ## 1 mean    -0.124    0.131 
@@ -204,7 +204,7 @@ int_pctl(df_q2, estimates)
 ```
 
 ```
-## # A tibble: 2 x 6
+## # A tibble: 2 × 6
 ##   term  .lower .estimate .upper .alpha .method   
 ##   <chr>  <dbl>     <dbl>  <dbl>  <dbl> <chr>     
 ## 1 mean  -0.378    -0.118  0.124   0.05 percentile
@@ -240,7 +240,7 @@ tibble(x = rnorm(n = 100)) %>%
 ```
 
 ```
-## # A tibble: 2 x 6
+## # A tibble: 2 × 6
 ##   term  .lower .estimate .upper .alpha .method   
 ##   <chr>  <dbl>     <dbl>  <dbl>  <dbl> <chr>     
 ## 1 mean  -0.965    -0.770 -0.605   0.05 percentile
@@ -283,305 +283,122 @@ df_q4 <-
 ```
 
 ```
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
-
-## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms:
-## `mean`, `sd`.
+## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+```
+
+```
+## Warning in bootstraps(., times = times): Some assessment sets contained zero
+## rows.
+```
+
+```
+## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+```
+
+```
+## Warning in bootstraps(., times = times): Some assessment sets contained zero
+## rows.
+```
+
+```
+## Warning: Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
+## Recommend at least 1000 non-missing bootstrap resamples for terms: `mean`, `sd`.
 ```
 
 ```r
@@ -593,7 +410,7 @@ df_q4 %>%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   `mean(cover)`
 ##           <dbl>
 ## 1           0.9
@@ -628,7 +445,7 @@ df_data_w %>%
 ```
 
 ```
-## # A tibble: 2 x 3
+## # A tibble: 2 × 3
 ##   term  estimate std.error
 ##   <chr>    <dbl>     <dbl>
 ## 1 shape     2.18     0.239
@@ -982,7 +799,7 @@ int_pctl(df_resample_pr, estimates)
 ```
 
 ```
-## # A tibble: 3 x 6
+## # A tibble: 3 × 6
 ##   term  .lower .estimate .upper .alpha .method   
 ##   <chr>  <dbl>     <dbl>  <dbl>  <dbl> <chr>     
 ## 1 pr     0.121     0.197  0.278   0.05 percentile

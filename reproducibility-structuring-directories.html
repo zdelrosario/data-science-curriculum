@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>22 Reproducibility: Structuring Directories | Data Science: Exercise Solutions</title>
   <meta name="description" content="22 Reproducibility: Structuring Directories | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="22 Reproducibility: Structuring Directories | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="vis-histograms.html"/>
 <link rel="next" href="stats-intro-to-densities.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,21 +980,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reproducibility-structuring-directories" class="section level1" number="22">
-<h1><span class="header-section-number">22</span> Reproducibility: Structuring Directories</h1>
+<div id="reproducibility-structuring-directories" class="section level1 hasAnchor" number="22">
+<h1><span class="header-section-number">22</span> Reproducibility: Structuring Directories<a href="reproducibility-structuring-directories.html#reproducibility-structuring-directories" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: A key part of being successful in data science is <em>getting
 organized</em>. In this exercise, you’ll set yourself up for future success by
 learning how to <em>structure</em> a project in terms of its folder hierarchy: its
 <em>directories</em>. You’ll learn how to isolate your projects, structure your
 subdirectories, and protect your raw data.</p>
 <p><em>Reading</em>: <a href="https://reproducible-science-curriculum.github.io/organization-RR-Jupyter/02-directories/">Project Structure</a> (Skim: Provided so you can see an example of a well-structured project directory)</p>
-<div id="reading-structuring-a-project" class="section level2" number="22.1">
-<h2><span class="header-section-number">22.1</span> Reading: Structuring a Project</h2>
+<div id="reading-structuring-a-project" class="section level2 hasAnchor" number="22.1">
+<h2><span class="header-section-number">22.1</span> Reading: Structuring a Project<a href="reproducibility-structuring-directories.html#reading-structuring-a-project" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>In this exercise, we’ll assume that you are working on a project.</p>
 </div>
-<div id="isolate-your-project" class="section level2" number="22.2">
-<h2><span class="header-section-number">22.2</span> Isolate your project</h2>
+<div id="isolate-your-project" class="section level2 hasAnchor" number="22.2">
+<h2><span class="header-section-number">22.2</span> Isolate your project<a href="reproducibility-structuring-directories.html#isolate-your-project" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>While there are <a href="https://medium.com/javascript-in-plain-english/how-to-organize-project-files-4b9d9fd02e73">many
 ways</a>
 to <em>organize</em> a given project, you should <strong>definitely</strong> organize your work into
@@ -1003,8 +1002,8 @@ individual <em>projects</em>. Each project should have its own directory, and sh
 generally have all its related files under that directory.</p>
 <p>For instance, <code>data-science-curriculum</code> is in my mind an entire project, containing both exercises and challenges. Thus for me, it makes sense to organize all of these <em>subdirectories</em> under <code>data-science-curriculum</code>.</p>
 </div>
-<div id="structure-your-subdirectories" class="section level2" number="22.3">
-<h2><span class="header-section-number">22.3</span> Structure your subdirectories</h2>
+<div id="structure-your-subdirectories" class="section level2 hasAnchor" number="22.3">
+<h2><span class="header-section-number">22.3</span> Structure your subdirectories<a href="reproducibility-structuring-directories.html#structure-your-subdirectories" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Subdirectories are folders (directories!) <em>under</em> the main (root) project
 folder. For instance, the <code>data-science-curriculum</code> has subdirectories
 <code>exercises</code>, <code>challenges</code>, and more.</p>
@@ -1025,8 +1024,8 @@ subdirectories</em>. For instance, the <code>exercises</code> folder has a subdi
 <code>exercises/data</code>; this is where exercise datasets live. In your own projects,
 you should keep your data <em>unaltered</em> in some kind of data directory.</p>
 </div>
-<div id="protect-your-data" class="section level2" number="22.4">
-<h2><span class="header-section-number">22.4</span> Protect your data!</h2>
+<div id="protect-your-data" class="section level2 hasAnchor" number="22.4">
+<h2><span class="header-section-number">22.4</span> Protect your data!<a href="reproducibility-structuring-directories.html#protect-your-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Never</strong> make alterations to your raw data! Even if your data have errors, it’s
 far better to <em>document</em> those errors somewhere, such that you have a papertrail
 for what changed and why. It is far better practice to keep your data unedited,
@@ -1037,24 +1036,24 @@ writes out a processed version of the data. You can then load the processed data
 in later scripts, and all of your processing steps will be permanently
 documented.</p>
 </div>
-<div id="practice-set-up-a-project" class="section level2" number="22.5">
-<h2><span class="header-section-number">22.5</span> Practice: Set up a project</h2>
+<div id="practice-set-up-a-project" class="section level2 hasAnchor" number="22.5">
+<h2><span class="header-section-number">22.5</span> Practice: Set up a project<a href="reproducibility-structuring-directories.html#practice-set-up-a-project" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Let’s set you up for future success by creating a directory for your Project 1.</p>
-<div id="q1-create-a-project-directory-in-your-personal-data-science-rep-called" class="section level3" number="22.5.1">
-<h3><span class="header-section-number">22.5.1</span> <strong>q1</strong> Create a project directory in your personal data science rep called</h3>
+<div id="q1-create-a-project-directory-in-your-personal-data-science-rep-called" class="section level3 hasAnchor" number="22.5.1">
+<h3><span class="header-section-number">22.5.1</span> <strong>q1</strong> Create a project directory in your personal data science rep called<a href="reproducibility-structuring-directories.html#q1-create-a-project-directory-in-your-personal-data-science-rep-called" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>p01-name</code>. If you already know what you’re going to work on, feel free to
 replace <code>name</code> with something sensible. If you don’t know what to call it yet,
 don’t worry—you can change it later!</p>
 </div>
-<div id="q2-create-a-data-directory-under-p01-name-you-should-then-have" class="section level3" number="22.5.2">
-<h3><span class="header-section-number">22.5.2</span> <strong>q2</strong> Create a <code>data</code> directory under <code>p01-name</code>; you should then have</h3>
+<div id="q2-create-a-data-directory-under-p01-name-you-should-then-have" class="section level3 hasAnchor" number="22.5.2">
+<h3><span class="header-section-number">22.5.2</span> <strong>q2</strong> Create a <code>data</code> directory under <code>p01-name</code>; you should then have<a href="reproducibility-structuring-directories.html#q2-create-a-data-directory-under-p01-name-you-should-then-have" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>p01-name/data</code>. This is where you will put any data files you read or write in the project.</p>
 <p>There’s a <em>trick</em> to committing an empty folder with Git. We’ll need to
 introduce some kind of file to preserve an empty directory structure.</p>
 </div>
-<div id="q3-create-an-empty-file-called-.gitignore-under-your-data-folder.-you" class="section level3" number="22.5.3">
-<h3><span class="header-section-number">22.5.3</span> <strong>q3</strong> Create an empty file called <code>.gitignore</code> under your <code>data</code> folder. You</h3>
+<div id="q3-create-an-empty-file-called-.gitignore-under-your-data-folder.-you" class="section level3 hasAnchor" number="22.5.3">
+<h3><span class="header-section-number">22.5.3</span> <strong>q3</strong> Create an empty file called <code>.gitignore</code> under your <code>data</code> folder. You<a href="reproducibility-structuring-directories.html#q3-create-an-empty-file-called-.gitignore-under-your-data-folder.-you" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>can do this from the root of your data science repo by using the following from
 your command line:</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb207-1"><a href="reproducibility-structuring-directories.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Move to your data science directory</span></span>
@@ -1147,7 +1146,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

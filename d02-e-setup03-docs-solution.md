@@ -15,14 +15,14 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2
 ```
 
 ```
@@ -68,7 +68,7 @@ iris %>%
 ```
 
 ```
-## # A tibble: 50 x 5
+## # A tibble: 50 × 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           <dbl>       <dbl>        <dbl>       <dbl> <fct>  
 ##  1          5.1         3.5          1.4         0.2 setosa 
@@ -114,7 +114,7 @@ iris %>%
 ```
 
 ```
-## # A tibble: 83 x 5
+## # A tibble: 83 × 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           <dbl>       <dbl>        <dbl>       <dbl> <fct>  
 ##  1          5.1         3.5          1.4         0.2 setosa 

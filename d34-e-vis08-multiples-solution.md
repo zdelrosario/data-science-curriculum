@@ -146,7 +146,7 @@ as_tibble(iris) %>%
 ```
 
 ```
-## # A tibble: 600 x 3
+## # A tibble: 600 × 3
 ##    Species part         length
 ##    <fct>   <chr>         <dbl>
 ##  1 setosa  Sepal.Length    5.1

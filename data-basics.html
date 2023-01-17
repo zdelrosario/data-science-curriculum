@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9 Data: Basics | Data Science: Exercise Solutions</title>
   <meta name="description" content="9 Data: Basics | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9 Data: Basics | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="setup-function-basics.html"/>
 <link rel="next" href="setup-documentation.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -92,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -498,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="33.2.1" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q1-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.1</b> <strong>q1</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.2" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q2-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.2</b> <strong>q2</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
 <li class="chapter" data-level="33.2.3" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q3-identify-the-point-on-the-narrative-spectrum-and-justify-your-answer."><i class="fa fa-check"></i><b>33.2.3</b> <strong>q3</strong> Identify the point on the narrative spectrum, and justify your answer.</a></li>
-<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. <span>Link</span></a></li>
+<li class="chapter" data-level="33.2.4" data-path="communication-narrative-basics.html"><a href="communication-narrative-basics.html#q4-turn-in-all-your-answers-via-google-forms.-link"><i class="fa fa-check"></i><b>33.2.4</b> <strong>q4</strong> Turn in all your answers via google forms. Link</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>34</b> Bibliography</a></li>
@@ -981,27 +980,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-basics" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Data: Basics</h1>
+<div id="data-basics" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Data: Basics<a href="data-basics.html#data-basics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: When first studying a new dataset, there are very simple checks we
 should perform first. These are those checks.</p>
 <p>Additionally, we’ll have our first look at the <em>pipe operator</em>, which will be
 super useful for writing code that’s readable.</p>
 <p><em>Reading</em>: (None)</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-basics.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.2     ✔ dplyr   1.0.7
-## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
-## ✔ readr   1.4.0     ✔ forcats 0.5.1</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div id="first-checks" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> First Checks</h2>
+<div id="first-checks" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> First Checks<a href="data-basics.html#first-checks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
-<div id="q0-run-the-following-chunk" class="section level3" number="9.1.1">
-<h3><span class="header-section-number">9.1.1</span> <strong>q0</strong> Run the following chunk:</h3>
+<div id="q0-run-the-following-chunk" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> <strong>q0</strong> Run the following chunk:<a href="data-basics.html#q0-run-the-following-chunk" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: You can do this either by clicking the green arrow at the top-right of
 the chunk, or by using the keybaord shortcut <code>Shift</code> + <code>Cmd/Ctrl</code> + <code>Enter</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-basics.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div>
@@ -1021,14 +1020,14 @@ Some nomenclature:</p>
 <li>The column <code>Species</code> takes <strong>string</strong> values</li>
 </ul>
 </div>
-<div id="q1-load-the-tidyverse-and-inspect-the-diamonds-dataset.-what-do-the" class="section level3" number="9.1.2">
-<h3><span class="header-section-number">9.1.2</span> <strong>q1</strong> Load the <code>tidyverse</code> and inspect the <code>diamonds</code> dataset. What do the</h3>
+<div id="q1-load-the-tidyverse-and-inspect-the-diamonds-dataset.-what-do-the" class="section level3 hasAnchor" number="9.1.2">
+<h3><span class="header-section-number">9.1.2</span> <strong>q1</strong> Load the <code>tidyverse</code> and inspect the <code>diamonds</code> dataset. What do the<a href="data-basics.html#q1-load-the-tidyverse-and-inspect-the-diamonds-dataset.-what-do-the" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>cut</code>, <code>color</code>, and <code>clarity</code> variables mean?</p>
 <p><em>Hint</em>: You can run <code>?diamonds</code> to get information on a built-in dataset.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-basics.html#cb14-1" aria-hidden="true" tabindex="-1"></a>?diamonds</span></code></pre></div>
 </div>
-<div id="q2-run-glimpsediamonds-what-variables-does-diamonds-have" class="section level3" number="9.1.3">
-<h3><span class="header-section-number">9.1.3</span> <strong>q2</strong> Run <code>glimpse(diamonds)</code>; what variables does <code>diamonds</code> have?</h3>
+<div id="q2-run-glimpsediamonds-what-variables-does-diamonds-have" class="section level3 hasAnchor" number="9.1.3">
+<h3><span class="header-section-number">9.1.3</span> <strong>q2</strong> Run <code>glimpse(diamonds)</code>; what variables does <code>diamonds</code> have?<a href="data-basics.html#q2-run-glimpsediamonds-what-variables-does-diamonds-have" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="data-basics.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(diamonds)</span></code></pre></div>
 <pre><code>## Rows: 53,940
 ## Columns: 10
@@ -1044,8 +1043,8 @@ Some nomenclature:</p>
 ## $ z       &lt;dbl&gt; 2.43, 2.31, 2.31, 2.63, 2.75, 2.48, 2.47, 2.53, 2.49, 2.39, 2.…</code></pre>
 <p>The <code>diamonds</code> dataset has variables <code>carat, cut, color, clarity, depth, table, price, x, y, z</code>.</p>
 </div>
-<div id="q3-run-summarydiamonds-what-are-the-common-values-for-each-of-the" class="section level3" number="9.1.4">
-<h3><span class="header-section-number">9.1.4</span> <strong>q3</strong> Run <code>summary(diamonds)</code>; what are the common values for each of the</h3>
+<div id="q3-run-summarydiamonds-what-are-the-common-values-for-each-of-the" class="section level3 hasAnchor" number="9.1.4">
+<h3><span class="header-section-number">9.1.4</span> <strong>q3</strong> Run <code>summary(diamonds)</code>; what are the common values for each of the<a href="data-basics.html#q3-run-summarydiamonds-what-are-the-common-values-for-each-of-the" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>variables? How widely do each of the variables vary?</p>
 <p><em>Hint</em>: The <code>Median</code> and <code>Mean</code> are common values, while <code>Min</code> and <code>Max</code> give us
 a sense of variation.</p>
@@ -1060,8 +1059,8 @@ hypotheses, and devise more specific analyses to probe those hypotheses. The
 <code>glimpse()</code> and <code>summary()</code> functions are two of the simplest tools we have.</p>
 </div>
 </div>
-<div id="the-pipe-operator" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> The Pipe Operator</h2>
+<div id="the-pipe-operator" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> The Pipe Operator<a href="data-basics.html#the-pipe-operator" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Throughout this class we’re going to make heavy use of the <em>pipe operator</em>
 <code>%&gt;%</code>. This handy little function will help us make our code more readable.
@@ -1070,7 +1069,7 @@ instance</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-basics.html#cb17-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
 <span id="cb17-2"><a href="data-basics.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
 <span id="cb17-3"><a href="data-basics.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">carat_mean =</span> <span class="fu">mean</span>(carat))</span></code></pre></div>
-<pre><code>## # A tibble: 5 x 2
+<pre><code>## # A tibble: 5 × 2
 ##   cut       carat_mean
 ##   &lt;ord&gt;          &lt;dbl&gt;
 ## 1 Fair           1.05 
@@ -1088,8 +1087,8 @@ instance</p>
 left-hand side (LHS) and inserts it as an the first argument to the function on
 its right-hand side (RHS). So the pipe will let us take <code>glimpse(diamonds)</code> and
 turn it into <code>diamonds %&gt;% glimpse()</code>.</p>
-<div id="q4-use-the-pipe-operator-to-re-write-summarydiamonds." class="section level3" number="9.2.1">
-<h3><span class="header-section-number">9.2.1</span> <strong>q4</strong> Use the pipe operator to re-write <code>summary(diamonds)</code>.</h3>
+<div id="q4-use-the-pipe-operator-to-re-write-summarydiamonds." class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> <strong>q4</strong> Use the pipe operator to re-write <code>summary(diamonds)</code>.<a href="data-basics.html#q4-use-the-pipe-operator-to-re-write-summarydiamonds." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="data-basics.html#cb19-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>##      carat               cut        color        clarity          depth      
 ##  Min.   :0.2000   Fair     : 1610   D: 6775   SI1    :13065   Min.   :43.00  
@@ -1117,22 +1116,23 @@ turn it into <code>diamonds %&gt;% glimpse()</code>.</p>
 ## </code></pre>
 </div>
 </div>
-<div id="reading-data" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Reading Data</h2>
+<div id="reading-data" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Reading Data<a href="data-basics.html#reading-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>So far we’ve only been looking at built-in datasets. Ultimately, we’ll want to read in our own data. We’ll get to the art of loading and <em>wrangling</em> data later, but for now, know that the <code>readr</code> package provides us tools to read data. Let’s quickly practice loading data below.</p>
-<div id="q5-use-the-function-read_csv-to-load-the-file-.datatiny.csv." class="section level3" number="9.3.1">
-<h3><span class="header-section-number">9.3.1</span> <strong>q5</strong> Use the function <code>read_csv()</code> to load the file <code>"./data/tiny.csv"</code>.</h3>
+<div id="q5-use-the-function-read_csv-to-load-the-file-.datatiny.csv." class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> <strong>q5</strong> Use the function <code>read_csv()</code> to load the file <code>"./data/tiny.csv"</code>.<a href="data-basics.html#q5-use-the-function-read_csv-to-load-the-file-.datatiny.csv." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="data-basics.html#cb21-1" aria-hidden="true" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
 <span id="cb21-2"><a href="data-basics.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(<span class="st">&quot;./data/tiny.csv&quot;</span>)</span></code></pre></div>
-<pre><code>## 
+<pre><code>## Rows: 2 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   x = col_double(),
-##   y = col_double()
-## )</code></pre>
+## Delimiter: &quot;,&quot;
+## dbl (2): x, y
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="data-basics.html#cb23-1" aria-hidden="true" tabindex="-1"></a>df_q5</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 2
+<pre><code>## # A tibble: 2 × 2
 ##       x     y
 ##   &lt;dbl&gt; &lt;dbl&gt;
 ## 1     1     2
@@ -1208,7 +1208,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
