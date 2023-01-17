@@ -16,7 +16,8 @@ test:
 	Rscript -e 'testthat::test_dir("./tests/")'
 
 lock:
-	Rscript -e "renv::snapshop(type='explicit')"
+	rm renv.lock
+	Rscript -e "renv::snapshot(type='explicit')"
 
 challenges:
 	cd ../data-science-challenges/challenges; make
