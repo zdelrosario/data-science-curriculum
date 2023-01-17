@@ -1,7 +1,15 @@
 Imports:
-    dplyr,
-    magrittr,
-    purrr,
-    stringr,
+    tidyverse,
     testthat,
-    tibble
+    broom,
+    curl,
+    fitdistrplus,
+    gapminder,
+    ggrepel,
+    googlesheets4,
+    nycflights13,
+    modelr,
+    mvtnorm,
+    rsample,
+    Rtsne,
+    viridis

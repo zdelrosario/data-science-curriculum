@@ -15,6 +15,9 @@ book: main
 test:
 	Rscript -e 'testthat::test_dir("./tests/")'
 
+lock:
+	Rscript -e "renv::snapshop(type='explicit')"
+
 challenges:
 	cd ../data-science-challenges/challenges; make
 	cp -f ../data-science-challenges/challenges/*-assignment.Rmd challenges/.
