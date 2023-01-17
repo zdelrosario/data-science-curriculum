@@ -1,5 +1,6 @@
 Imports:
     tidyverse,
+    bookdown,
     testthat,
     broom,
     curl,
