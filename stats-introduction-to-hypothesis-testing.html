@@ -987,7 +987,7 @@ under uncertainty</em>. To frame these decisions we will use the framework of
 <em>hypothesis testing</em>. In this exercise you’ll learn how to set up competing
 hypotheses and potential actions, based on different scenarios.</p>
 <p><em>Reading</em>: <a href="https://medium.com/hackernoon/statistical-inference-in-one-sentence-33a4683a6424">Statistical Inference in One Sentence</a> (9 min)</p>
-<div class="sourceCode" id="cb900"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb900-1"><a href="stats-introduction-to-hypothesis-testing.html#cb900-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb897-1"><a href="stats-introduction-to-hypothesis-testing.html#cb897-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -996,7 +996,7 @@ hypotheses and potential actions, based on different scenarios.</p>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb904-1"><a href="stats-introduction-to-hypothesis-testing.html#cb904-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span></code></pre></div>
+<div class="sourceCode" id="cb901"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb901-1"><a href="stats-introduction-to-hypothesis-testing.html#cb901-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span></code></pre></div>
 <div id="a-full-example" class="section level2 hasAnchor" number="51.1">
 <h2><span class="header-section-number">51.1</span> A Full Example<a href="stats-introduction-to-hypothesis-testing.html#a-full-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
@@ -1011,37 +1011,37 @@ recently—they tell you this is <em>representative</em> of the packages they se
 <h2><span class="header-section-number">51.2</span> Pick your population<a href="stats-introduction-to-hypothesis-testing.html#pick-your-population" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For the sake of this exercise, let’s assume that <code>df_population</code> is the entire
 set of diamonds the vendor has in stock.</p>
-<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb905-1"><a href="stats-introduction-to-hypothesis-testing.html#cb905-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb905-2"><a href="stats-introduction-to-hypothesis-testing.html#cb905-2" aria-hidden="true" tabindex="-1"></a>df_population <span class="ot">&lt;-</span></span>
-<span id="cb905-3"><a href="stats-introduction-to-hypothesis-testing.html#cb905-3" aria-hidden="true" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb905-4"><a href="stats-introduction-to-hypothesis-testing.html#cb905-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb902"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb902-1"><a href="stats-introduction-to-hypothesis-testing.html#cb902-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb902-2"><a href="stats-introduction-to-hypothesis-testing.html#cb902-2" aria-hidden="true" tabindex="-1"></a>df_population <span class="ot">&lt;-</span></span>
+<span id="cb902-3"><a href="stats-introduction-to-hypothesis-testing.html#cb902-3" aria-hidden="true" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb902-4"><a href="stats-introduction-to-hypothesis-testing.html#cb902-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><strong>Important Note</strong>: No peeking! While I’ve defined <code>df_population</code> here, you
 <em>should not</em> look at its values until the end of the exercise.</p>
 <p>While we do have access to the entirety of the population, in most real problems
 we’ll only have a sample. The function <code>slice_sample()</code> allows us to choose a
 <em>random</em> sample from a dataframe.</p>
-<div class="sourceCode" id="cb906"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb906-1"><a href="stats-introduction-to-hypothesis-testing.html#cb906-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb906-2"><a href="stats-introduction-to-hypothesis-testing.html#cb906-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb906-3"><a href="stats-introduction-to-hypothesis-testing.html#cb906-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb906-4"><a href="stats-introduction-to-hypothesis-testing.html#cb906-4" aria-hidden="true" tabindex="-1"></a>df_sample <span class="ot">&lt;-</span></span>
-<span id="cb906-5"><a href="stats-introduction-to-hypothesis-testing.html#cb906-5" aria-hidden="true" tabindex="-1"></a>  df_population <span class="sc">%&gt;%</span></span>
-<span id="cb906-6"><a href="stats-introduction-to-hypothesis-testing.html#cb906-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb903"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb903-1"><a href="stats-introduction-to-hypothesis-testing.html#cb903-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb903-2"><a href="stats-introduction-to-hypothesis-testing.html#cb903-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb903-3"><a href="stats-introduction-to-hypothesis-testing.html#cb903-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb903-4"><a href="stats-introduction-to-hypothesis-testing.html#cb903-4" aria-hidden="true" tabindex="-1"></a>df_sample <span class="ot">&lt;-</span></span>
+<span id="cb903-5"><a href="stats-introduction-to-hypothesis-testing.html#cb903-5" aria-hidden="true" tabindex="-1"></a>  df_population <span class="sc">%&gt;%</span></span>
+<span id="cb903-6"><a href="stats-introduction-to-hypothesis-testing.html#cb903-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">100</span>)</span></code></pre></div>
 </div>
 <div id="set-up-your-hypotheses-and-actions" class="section level2 hasAnchor" number="51.3">
 <h2><span class="header-section-number">51.3</span> Set up your hypotheses and actions<a href="stats-introduction-to-hypothesis-testing.html#set-up-your-hypotheses-and-actions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Based on the contract above, our decision threshold should be related to the
 sale price the vendor quotes.</p>
-<div class="sourceCode" id="cb907"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb907-1"><a href="stats-introduction-to-hypothesis-testing.html#cb907-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this; this will be our decision threshold</span></span>
-<span id="cb907-2"><a href="stats-introduction-to-hypothesis-testing.html#cb907-2" aria-hidden="true" tabindex="-1"></a>price_threshold <span class="ot">&lt;-</span> <span class="dv">1700</span></span></code></pre></div>
-<div class="sourceCode" id="cb908"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb908-1"><a href="stats-introduction-to-hypothesis-testing.html#cb908-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is for exercise-design purposes: What are the true parameters?</span></span>
-<span id="cb908-2"><a href="stats-introduction-to-hypothesis-testing.html#cb908-2" aria-hidden="true" tabindex="-1"></a>df_population <span class="sc">%&gt;%</span></span>
-<span id="cb908-3"><a href="stats-introduction-to-hypothesis-testing.html#cb908-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
-<span id="cb908-4"><a href="stats-introduction-to-hypothesis-testing.html#cb908-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(price)) <span class="sc">%&gt;%</span></span>
-<span id="cb908-5"><a href="stats-introduction-to-hypothesis-testing.html#cb908-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb908-6"><a href="stats-introduction-to-hypothesis-testing.html#cb908-6" aria-hidden="true" tabindex="-1"></a>    df_population <span class="sc">%&gt;%</span></span>
-<span id="cb908-7"><a href="stats-introduction-to-hypothesis-testing.html#cb908-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(price)) <span class="sc">%&gt;%</span></span>
-<span id="cb908-8"><a href="stats-introduction-to-hypothesis-testing.html#cb908-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cut =</span> <span class="st">&quot;(All)&quot;</span>)</span>
-<span id="cb908-9"><a href="stats-introduction-to-hypothesis-testing.html#cb908-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb904-1"><a href="stats-introduction-to-hypothesis-testing.html#cb904-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this; this will be our decision threshold</span></span>
+<span id="cb904-2"><a href="stats-introduction-to-hypothesis-testing.html#cb904-2" aria-hidden="true" tabindex="-1"></a>price_threshold <span class="ot">&lt;-</span> <span class="dv">1700</span></span></code></pre></div>
+<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb905-1"><a href="stats-introduction-to-hypothesis-testing.html#cb905-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is for exercise-design purposes: What are the true parameters?</span></span>
+<span id="cb905-2"><a href="stats-introduction-to-hypothesis-testing.html#cb905-2" aria-hidden="true" tabindex="-1"></a>df_population <span class="sc">%&gt;%</span></span>
+<span id="cb905-3"><a href="stats-introduction-to-hypothesis-testing.html#cb905-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
+<span id="cb905-4"><a href="stats-introduction-to-hypothesis-testing.html#cb905-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(price)) <span class="sc">%&gt;%</span></span>
+<span id="cb905-5"><a href="stats-introduction-to-hypothesis-testing.html#cb905-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb905-6"><a href="stats-introduction-to-hypothesis-testing.html#cb905-6" aria-hidden="true" tabindex="-1"></a>    df_population <span class="sc">%&gt;%</span></span>
+<span id="cb905-7"><a href="stats-introduction-to-hypothesis-testing.html#cb905-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(price)) <span class="sc">%&gt;%</span></span>
+<span id="cb905-8"><a href="stats-introduction-to-hypothesis-testing.html#cb905-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cut =</span> <span class="st">&quot;(All)&quot;</span>)</span>
+<span id="cb905-9"><a href="stats-introduction-to-hypothesis-testing.html#cb905-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   cut       price
 ##   &lt;chr&gt;     &lt;dbl&gt;
@@ -1078,20 +1078,20 @@ less than the threshold <code>price_threshold</code>.
 <h2><span class="header-section-number">51.4</span> Compute<a href="stats-introduction-to-hypothesis-testing.html#compute" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="q1-based-on-your-results-can-you-reject-the-null-hypothesis-h_0-for-the-population-with-a-95-percent-confidence-interval" class="section level3 hasAnchor" number="51.4.1">
 <h3><span class="header-section-number">51.4.1</span> <strong>q1</strong> Based on your results, can you reject the null hypothesis <strong>H_0</strong> for the population with a 95-percent confidence interval?<a href="stats-introduction-to-hypothesis-testing.html#q1-based-on-your-results-can-you-reject-the-null-hypothesis-h_0-for-the-population-with-a-95-percent-confidence-interval" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb910"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb910-1"><a href="stats-introduction-to-hypothesis-testing.html#cb910-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute a confidence interval on the mean, use to answer the question</span></span>
-<span id="cb910-2"><a href="stats-introduction-to-hypothesis-testing.html#cb910-2" aria-hidden="true" tabindex="-1"></a>df_sample <span class="sc">%&gt;%</span></span>
-<span id="cb910-3"><a href="stats-introduction-to-hypothesis-testing.html#cb910-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb910-4"><a href="stats-introduction-to-hypothesis-testing.html#cb910-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_mean =</span> <span class="fu">mean</span>(price),</span>
-<span id="cb910-5"><a href="stats-introduction-to-hypothesis-testing.html#cb910-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_sd =</span> <span class="fu">sd</span>(price),</span>
-<span id="cb910-6"><a href="stats-introduction-to-hypothesis-testing.html#cb910-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_lo =</span> price_mean <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> price_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()),</span>
-<span id="cb910-7"><a href="stats-introduction-to-hypothesis-testing.html#cb910-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_hi =</span> price_mean <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> price_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span>
-<span id="cb910-8"><a href="stats-introduction-to-hypothesis-testing.html#cb910-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb910-9"><a href="stats-introduction-to-hypothesis-testing.html#cb910-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(price_lo, price_hi)</span></code></pre></div>
+<div class="sourceCode" id="cb907"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb907-1"><a href="stats-introduction-to-hypothesis-testing.html#cb907-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute a confidence interval on the mean, use to answer the question</span></span>
+<span id="cb907-2"><a href="stats-introduction-to-hypothesis-testing.html#cb907-2" aria-hidden="true" tabindex="-1"></a>df_sample <span class="sc">%&gt;%</span></span>
+<span id="cb907-3"><a href="stats-introduction-to-hypothesis-testing.html#cb907-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb907-4"><a href="stats-introduction-to-hypothesis-testing.html#cb907-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_mean =</span> <span class="fu">mean</span>(price),</span>
+<span id="cb907-5"><a href="stats-introduction-to-hypothesis-testing.html#cb907-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_sd =</span> <span class="fu">sd</span>(price),</span>
+<span id="cb907-6"><a href="stats-introduction-to-hypothesis-testing.html#cb907-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_lo =</span> price_mean <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> price_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()),</span>
+<span id="cb907-7"><a href="stats-introduction-to-hypothesis-testing.html#cb907-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_hi =</span> price_mean <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> price_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span>
+<span id="cb907-8"><a href="stats-introduction-to-hypothesis-testing.html#cb907-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb907-9"><a href="stats-introduction-to-hypothesis-testing.html#cb907-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(price_lo, price_hi)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##   price_lo price_hi
 ##      &lt;dbl&gt;    &lt;dbl&gt;
 ## 1    1418.    1856.</code></pre>
-<div class="sourceCode" id="cb912"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb912-1"><a href="stats-introduction-to-hypothesis-testing.html#cb912-1" aria-hidden="true" tabindex="-1"></a>price_threshold</span></code></pre></div>
+<div class="sourceCode" id="cb909"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb909-1"><a href="stats-introduction-to-hypothesis-testing.html#cb909-1" aria-hidden="true" tabindex="-1"></a>price_threshold</span></code></pre></div>
 <pre><code>## [1] 1700</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1133,21 +1133,21 @@ higher 99-percent confidence.</p>
 <p><em>Hint 1</em>: Remember that you can use <code>mean(X == "value")</code> to compute the proportion
 of cases in a sample with variable <code>X</code> equal to <code>"value"</code>. You’ll need to figure out how to combine the cases of <code>Premium</code> and <code>Ideal</code>.</p>
 <p><em>Hint 2</em> <code>int_pctl()</code> takes an <code>alpha</code> keyword argument; this is simply <code>alpha = 1 - confidence</code>.</p>
-<div class="sourceCode" id="cb914"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb914-1"><a href="stats-introduction-to-hypothesis-testing.html#cb914-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Estimate a confidence interval for the proportion of high-cut diamonds</span></span>
-<span id="cb914-2"><a href="stats-introduction-to-hypothesis-testing.html#cb914-2" aria-hidden="true" tabindex="-1"></a><span class="do">## in the population. Look to `e-stat09-bootstrap` for starter code.</span></span>
-<span id="cb914-3"><a href="stats-introduction-to-hypothesis-testing.html#cb914-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb914-4"><a href="stats-introduction-to-hypothesis-testing.html#cb914-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb914-5"><a href="stats-introduction-to-hypothesis-testing.html#cb914-5" aria-hidden="true" tabindex="-1"></a>fit_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(split) {</span>
-<span id="cb914-6"><a href="stats-introduction-to-hypothesis-testing.html#cb914-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">analysis</span>(split) <span class="sc">%&gt;%</span></span>
-<span id="cb914-7"><a href="stats-introduction-to-hypothesis-testing.html#cb914-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">estimate =</span> <span class="fu">mean</span>((cut <span class="sc">==</span> <span class="st">&quot;Premium&quot;</span>) <span class="sc">|</span> (cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb914-8"><a href="stats-introduction-to-hypothesis-testing.html#cb914-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">term =</span> <span class="st">&quot;proportion_high&quot;</span>)</span>
-<span id="cb914-9"><a href="stats-introduction-to-hypothesis-testing.html#cb914-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb914-10"><a href="stats-introduction-to-hypothesis-testing.html#cb914-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb914-11"><a href="stats-introduction-to-hypothesis-testing.html#cb914-11" aria-hidden="true" tabindex="-1"></a>df_resample_total_price <span class="ot">&lt;-</span></span>
-<span id="cb914-12"><a href="stats-introduction-to-hypothesis-testing.html#cb914-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bootstraps</span>(df_sample, <span class="at">times =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb914-13"><a href="stats-introduction-to-hypothesis-testing.html#cb914-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimates =</span> <span class="fu">map</span>(splits, fit_fun))</span>
-<span id="cb914-14"><a href="stats-introduction-to-hypothesis-testing.html#cb914-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb914-15"><a href="stats-introduction-to-hypothesis-testing.html#cb914-15" aria-hidden="true" tabindex="-1"></a><span class="fu">int_pctl</span>(df_resample_total_price, estimates, <span class="at">alpha =</span> <span class="fl">0.01</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb911"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb911-1"><a href="stats-introduction-to-hypothesis-testing.html#cb911-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Estimate a confidence interval for the proportion of high-cut diamonds</span></span>
+<span id="cb911-2"><a href="stats-introduction-to-hypothesis-testing.html#cb911-2" aria-hidden="true" tabindex="-1"></a><span class="do">## in the population. Look to `e-stat09-bootstrap` for starter code.</span></span>
+<span id="cb911-3"><a href="stats-introduction-to-hypothesis-testing.html#cb911-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb911-4"><a href="stats-introduction-to-hypothesis-testing.html#cb911-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb911-5"><a href="stats-introduction-to-hypothesis-testing.html#cb911-5" aria-hidden="true" tabindex="-1"></a>fit_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(split) {</span>
+<span id="cb911-6"><a href="stats-introduction-to-hypothesis-testing.html#cb911-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">analysis</span>(split) <span class="sc">%&gt;%</span></span>
+<span id="cb911-7"><a href="stats-introduction-to-hypothesis-testing.html#cb911-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">estimate =</span> <span class="fu">mean</span>((cut <span class="sc">==</span> <span class="st">&quot;Premium&quot;</span>) <span class="sc">|</span> (cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb911-8"><a href="stats-introduction-to-hypothesis-testing.html#cb911-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">term =</span> <span class="st">&quot;proportion_high&quot;</span>)</span>
+<span id="cb911-9"><a href="stats-introduction-to-hypothesis-testing.html#cb911-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb911-10"><a href="stats-introduction-to-hypothesis-testing.html#cb911-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb911-11"><a href="stats-introduction-to-hypothesis-testing.html#cb911-11" aria-hidden="true" tabindex="-1"></a>df_resample_total_price <span class="ot">&lt;-</span></span>
+<span id="cb911-12"><a href="stats-introduction-to-hypothesis-testing.html#cb911-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bootstraps</span>(df_sample, <span class="at">times =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb911-13"><a href="stats-introduction-to-hypothesis-testing.html#cb911-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimates =</span> <span class="fu">map</span>(splits, fit_fun))</span>
+<span id="cb911-14"><a href="stats-introduction-to-hypothesis-testing.html#cb911-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb911-15"><a href="stats-introduction-to-hypothesis-testing.html#cb911-15" aria-hidden="true" tabindex="-1"></a><span class="fu">int_pctl</span>(df_resample_total_price, estimates, <span class="at">alpha =</span> <span class="fl">0.01</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 6
 ##   term            .lower .estimate .upper .alpha .method   
 ##   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     
@@ -1170,14 +1170,14 @@ underlying population.</p>
 <div id="q3-compute-the-population-mean-price-for-the-diamonds.-did-you-reject-the" class="section level3 hasAnchor" number="51.9.1">
 <h3><span class="header-section-number">51.9.1</span> <strong>q3</strong> Compute the population mean price for the diamonds. Did you reject the<a href="stats-introduction-to-hypothesis-testing.html#q3-compute-the-population-mean-price-for-the-diamonds.-did-you-reject-the" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>null hypothesis?</p>
-<div class="sourceCode" id="cb916"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb916-1"><a href="stats-introduction-to-hypothesis-testing.html#cb916-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the population mean of diamond price</span></span>
-<span id="cb916-2"><a href="stats-introduction-to-hypothesis-testing.html#cb916-2" aria-hidden="true" tabindex="-1"></a>df_population <span class="sc">%&gt;%</span></span>
-<span id="cb916-3"><a href="stats-introduction-to-hypothesis-testing.html#cb916-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
+<div class="sourceCode" id="cb913"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb913-1"><a href="stats-introduction-to-hypothesis-testing.html#cb913-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the population mean of diamond price</span></span>
+<span id="cb913-2"><a href="stats-introduction-to-hypothesis-testing.html#cb913-2" aria-hidden="true" tabindex="-1"></a>df_population <span class="sc">%&gt;%</span></span>
+<span id="cb913-3"><a href="stats-introduction-to-hypothesis-testing.html#cb913-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   price
 ##   &lt;dbl&gt;
 ## 1 1633.</code></pre>
-<div class="sourceCode" id="cb918"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb918-1"><a href="stats-introduction-to-hypothesis-testing.html#cb918-1" aria-hidden="true" tabindex="-1"></a>price_threshold</span></code></pre></div>
+<div class="sourceCode" id="cb915"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb915-1"><a href="stats-introduction-to-hypothesis-testing.html#cb915-1" aria-hidden="true" tabindex="-1"></a>price_threshold</span></code></pre></div>
 <pre><code>## [1] 1700</code></pre>
 <p><strong>Observations</strong>:</p>
 <p>When I did q1, I <strong>did not reject the null</strong>. Note the weird wording there:
@@ -1194,9 +1194,9 @@ to recognize when we’ve learned nothing.</p>
 <div id="q4-compute-the-proportion-of-high-cut-diamonds-in-the-population.-did-you" class="section level3 hasAnchor" number="51.9.2">
 <h3><span class="header-section-number">51.9.2</span> <strong>q4</strong> Compute the proportion of high-cut diamonds in the population. Did you<a href="stats-introduction-to-hypothesis-testing.html#q4-compute-the-proportion-of-high-cut-diamonds-in-the-population.-did-you" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>reject the null hypothesis?</p>
-<div class="sourceCode" id="cb920"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb920-1"><a href="stats-introduction-to-hypothesis-testing.html#cb920-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the population proportion of high-cut diamonds</span></span>
-<span id="cb920-2"><a href="stats-introduction-to-hypothesis-testing.html#cb920-2" aria-hidden="true" tabindex="-1"></a>df_population <span class="sc">%&gt;%</span></span>
-<span id="cb920-3"><a href="stats-introduction-to-hypothesis-testing.html#cb920-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">proportion =</span> <span class="fu">mean</span>((cut <span class="sc">==</span> <span class="st">&quot;Premium&quot;</span>) <span class="sc">|</span> (cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb917"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb917-1"><a href="stats-introduction-to-hypothesis-testing.html#cb917-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the population proportion of high-cut diamonds</span></span>
+<span id="cb917-2"><a href="stats-introduction-to-hypothesis-testing.html#cb917-2" aria-hidden="true" tabindex="-1"></a>df_population <span class="sc">%&gt;%</span></span>
+<span id="cb917-3"><a href="stats-introduction-to-hypothesis-testing.html#cb917-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">proportion =</span> <span class="fu">mean</span>((cut <span class="sc">==</span> <span class="st">&quot;Premium&quot;</span>) <span class="sc">|</span> (cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>)))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   proportion
 ##        &lt;dbl&gt;

@@ -56,18 +56,6 @@ df_michelson <-
 ```
 
 ```
-## ✖ Request failed [429]. Retry 1 happens in 3.6 seconds ...
-```
-
-```
-## ✖ Request failed [429]. Retry 2 happens in 6.3 seconds ...
-```
-
-```
-## ✖ Request failed [429]. Retry 3 happens in 25.8 seconds ...
-```
-
-```
 ## ✔ Reading from "michelson1879".
 ```
 

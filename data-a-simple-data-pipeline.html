@@ -1013,12 +1013,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb881-10"><a href="data-a-simple-data-pipeline.html#cb881-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_sheet</span>(ss_michelson) <span class="sc">%&gt;%</span></span>
 <span id="cb881-11"><a href="data-a-simple-data-pipeline.html#cb881-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Date, Distinctness, Temp, Velocity) <span class="sc">%&gt;%</span></span>
 <span id="cb881-12"><a href="data-a-simple-data-pipeline.html#cb881-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Distinctness =</span> <span class="fu">as_factor</span>(Distinctness))</span></code></pre></div>
-<pre><code>## ✖ Request failed [429]. Retry 1 happens in 3.6 seconds ...</code></pre>
-<pre><code>## ✖ Request failed [429]. Retry 2 happens in 6.3 seconds ...</code></pre>
-<pre><code>## ✖ Request failed [429]. Retry 3 happens in 25.8 seconds ...</code></pre>
 <pre><code>## ✔ Reading from &quot;michelson1879&quot;.</code></pre>
 <pre><code>## ✔ Range &#39;Sheet1&#39;.</code></pre>
-<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="data-a-simple-data-pipeline.html#cb887-1" aria-hidden="true" tabindex="-1"></a>df_michelson <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
+<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb884-1"><a href="data-a-simple-data-pipeline.html#cb884-1" aria-hidden="true" tabindex="-1"></a>df_michelson <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
 <pre><code>## Rows: 100
 ## Columns: 4
 ## $ Date         &lt;dttm&gt; 1879-06-05, 1879-06-07, 1879-06-07, 1879-06-07, 1879-06-…
@@ -1031,8 +1028,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="private-sheets" class="section level2 hasAnchor" number="49.3">
 <h2><span class="header-section-number">49.3</span> Private sheets<a href="data-a-simple-data-pipeline.html#private-sheets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In order to load a private data sheet, you’ll need to <em>authorize</em> googlesheets4 to use your Google account. The following line should open a browser window that will ask for your permissions.</p>
-<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="data-a-simple-data-pipeline.html#cb889-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run to authorize R to use your google account</span></span>
-<span id="cb889-2"><a href="data-a-simple-data-pipeline.html#cb889-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gs4_auth</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb886"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb886-1"><a href="data-a-simple-data-pipeline.html#cb886-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run to authorize R to use your google account</span></span>
+<span id="cb886-2"><a href="data-a-simple-data-pipeline.html#cb886-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gs4_auth</span>()</span></code></pre></div>
 <p>Now that you’ve authorized your account, let’s create a very simple data-collection pipeline.</p>
 </div>
 <div id="setting-up-a-form-sheet" class="section level2 hasAnchor" number="49.4">
@@ -1051,12 +1048,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q3-copy-the-url-for-your-new-sheet-and-copy-it-below.-run-the-following-chunk-to-load-your-probably-empy-sheet." class="section level3 hasAnchor" number="49.4.3">
 <h3><span class="header-section-number">49.4.3</span> <strong>q3</strong> Copy the URL for your new sheet and copy it below. Run the following chunk to load your (probably empy) sheet.<a href="data-a-simple-data-pipeline.html#q3-copy-the-url-for-your-new-sheet-and-copy-it-below.-run-the-following-chunk-to-load-your-probably-empy-sheet." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="data-a-simple-data-pipeline.html#cb890-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: I&#39;m not going to put a URL here, as one of my personal sheets</span></span>
-<span id="cb890-2"><a href="data-a-simple-data-pipeline.html#cb890-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       won&#39;t work for you....</span></span>
-<span id="cb890-3"><a href="data-a-simple-data-pipeline.html#cb890-3" aria-hidden="true" tabindex="-1"></a>url_custom_sheet <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb890-4"><a href="data-a-simple-data-pipeline.html#cb890-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb890-5"><a href="data-a-simple-data-pipeline.html#cb890-5" aria-hidden="true" tabindex="-1"></a>df_custom_sheet <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(url_custom_sheet)</span>
-<span id="cb890-6"><a href="data-a-simple-data-pipeline.html#cb890-6" aria-hidden="true" tabindex="-1"></a>df_custom_sheet <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="data-a-simple-data-pipeline.html#cb887-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: I&#39;m not going to put a URL here, as one of my personal sheets</span></span>
+<span id="cb887-2"><a href="data-a-simple-data-pipeline.html#cb887-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       won&#39;t work for you....</span></span>
+<span id="cb887-3"><a href="data-a-simple-data-pipeline.html#cb887-3" aria-hidden="true" tabindex="-1"></a>url_custom_sheet <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb887-4"><a href="data-a-simple-data-pipeline.html#cb887-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb887-5"><a href="data-a-simple-data-pipeline.html#cb887-5" aria-hidden="true" tabindex="-1"></a>df_custom_sheet <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(url_custom_sheet)</span>
+<span id="cb887-6"><a href="data-a-simple-data-pipeline.html#cb887-6" aria-hidden="true" tabindex="-1"></a>df_custom_sheet <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <p>Now as results from your survey come in, you can simply re-run this notebook to grab the most recent version of your data for local analysis.</p>
 <p>This is <em>very simple</em> but <em>surprisingly powerful</em>: I use a pipeline exactly like this for the exit tickets!</p>
 <!-- include-exit-ticket -->
