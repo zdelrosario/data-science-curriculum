@@ -24,21 +24,13 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
 | Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Needs Improvement | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
 
 *Background*: We'll study data from the [Stanford Open Policing Project](https://openpolicing.stanford.edu/data/), specifically their dataset on Massachusetts State Patrol police stops.
 
@@ -50,7 +42,7 @@ library(broom)
 # Setup
 <!-- -------------------------------------------------- -->
 
-__q1__ Go to the [Stanford Open Policing Project](https://openpolicing.stanford.edu/data/) page and download the Massachusetts State Police records in `Rds` format. Move the data to your `data` folder and match the `filename` to load the data.
+### __q1__ Go to the [Stanford Open Policing Project](https://openpolicing.stanford.edu/data/) page and download the Massachusetts State Police records in `Rds` format. Move the data to your `data` folder and match the `filename` to load the data.
 
 *Note*: An `Rds` file is an R-specific file format. The function `readRDS` will read these files.
 
@@ -63,7 +55,7 @@ df_data <- readRDS(filename)
 # EDA
 <!-- -------------------------------------------------- -->
 
-__q2__ Do your "first checks" on the dataset. What are the basic facts about this dataset?
+### __q2__ Do your "first checks" on the dataset. What are the basic facts about this dataset?
 
 
 Note that we have both a `subject_race` and `race_Raw` column. There are a few possibilities as to what `race_Raw` represents:
@@ -73,7 +65,7 @@ Note that we have both a `subject_race` and `race_Raw` column. There are a few p
 
 Let's try to distinguish between these two possibilities.
 
-__q3__ Check the set of factor levels for `subject_race` and `raw_Race`. What do you note about overlap / difference between the two sets?
+### __q3__ Check the set of factor levels for `subject_race` and `raw_Race`. What do you note about overlap / difference between the two sets?
 
 ```{r q3-task}
 ## TODO: Determine the factor levels for subject_race and raw_Race
@@ -81,12 +73,12 @@ __q3__ Check the set of factor levels for `subject_race` and `raw_Race`. What do
 
 **Observations**:
 
-- What are the levels for `subject_race`?
-- What are the levels for `raw_Race`?
+- What are the unique values for `subject_race`?
+- What are the unique values for `raw_Race`?
 - What is the overlap between the two sets?
 - What is the difference between the two sets?
 
-__q4__ Check whether `subject_race` and `raw_Race` match for a large fraction of cases. Which of the two hypotheses above is most likely, based on your results?
+### __q4__ Check whether `subject_race` and `raw_Race` match for a large fraction of cases. Which of the two hypotheses above is most likely, based on your results?
 
 *Note*: Just to be clear, I'm *not* asking you to do a *statistical* hypothesis test.
 
@@ -103,11 +95,12 @@ Between the two hypotheses:
 
 which is most plausible, based on your results?
 
+- (Your response here)
 
 ## Vis
 <!-- ------------------------- -->
 
-__q5__ Compare the *arrest rate*---the fraction of total cases in which the subject was arrested---across different factors. Create as many visuals (or tables) as you need, but make sure to check the trends across all of the `subject` variables. Answer the questions under *observations* below.
+### __q5__ Compare the *arrest rate*---the fraction of total cases in which the subject was arrested---across different factors. Create as many visuals (or tables) as you need, but make sure to check the trends across all of the `subject` variables. Answer the questions under *observations* below.
 
 (Note: Create as many chunks and visuals as you need)
 
@@ -115,15 +108,18 @@ __q5__ Compare the *arrest rate*---the fraction of total cases in which the subj
 **Observations**:
 
 - How does `arrest_rate` tend to vary with `subject_age`?
+  - (Your response here)
 - How does `arrest_rate` tend to vary with `subject_sex`?
+  - (Your response here)
 - How does `arrest_rate` tend to vary with `subject_race`?
+  - (Your response here)
 
 # Modeling
 <!-- -------------------------------------------------- -->
 
 We're going to use a model to study the relationship between `subject` factors and arrest rate, but first we need to understand a bit more about *dummy variables*
 
-__q6__ Run the following code and interpret the regression coefficients. Answer the the questions under *observations* below.
+### __q6__ Run the following code and interpret the regression coefficients. Answer the the questions under *observations* below.
 
 ```{r q6-task}
 ## NOTE: No need to edit; inspect the estimated model terms.
@@ -144,7 +140,9 @@ fit_q6 %>% tidy()
 **Observations**:
 
 - Which `subject_race` levels are included in fitting the model?
+  - (Your response here)
 - Which `subject_race` levels have terms in the model?
+  - (Your response here)
 
 You should find that each factor in the model has a level *missing* in its set of terms. This is because R represents factors against a *reference level*: The model treats one factor level as "default", and each factor model term represents a change from that "default" behavior. For instance, the model above treats `subject_sex==male` as the reference level, so the `subject_sexfemale` term represents the *change in probability* of arrest due to a person being female (rather than male).
 
@@ -152,7 +150,7 @@ The this reference level approach to coding factors is necessary for [technical 
 
 By default `glm` uses the first factor level present as the reference level. Therefore we can use `mutate(factor = fct_relevel(factor, "desired_level"))` to set our `"desired_level"` as the reference factor.
 
-__q7__ Re-fit the logistic regression from q6 setting `"white"` as the reference level for `subject_race`. Interpret the the model terms and answer the questions below.
+### __q7__ Re-fit the logistic regression from q6 setting `"white"` as the reference level for `subject_race`. Interpret the the model terms and answer the questions below.
 
 ```{r q7-task}
 ## TODO: Re-fit the logistic regression, but set "white" as the reference
@@ -164,12 +162,15 @@ fit_q7 %>% tidy()
 **Observations**:
 
 - Which `subject_race` level has the highest probability of being arrested, according to this model? Which has the lowest probability?
+  - (Your response here)
 - What could explain this difference in probabilities of arrest across race? List **multiple** possibilities.
+  - (Your response here)
 - Look at the sent of variables in the dataset; do any of the columns relate to a potential explanation you listed?
+  - (Your response here)
 
 One way we can explain differential arrest rates is to include some measure indicating the presence of an arrestable offense. We'll do this in a particular way in the next task.
 
-__q8__ Re-fit the model using a factor indicating the presence of contraband in the subject's vehicle. Answer the questions under *observations* below.
+### __q8__ Re-fit the model using a factor indicating the presence of contraband in the subject's vehicle. Answer the questions under *observations* below.
 
 ```{r q8-task}
 ## TODO: Repeat the modeling above, but control for whether contraband was found
@@ -180,13 +181,15 @@ fit_q8 %>% tidy()
 **Observations**:
 
 - How does controlling for found contraband affect the `subject_race` terms in the model?
+  - (Your response here)
 - What does the *finding of contraband* tell us about the stop? What does it *not* tell us about the stop?
+  - (Your response here)
 
-__q9__ Go deeper: Post at least one more question about the data and fit at least one more model in support of answering that question.
+### __q9__ Go deeper: Pose at least one more question about the data and fit at least one more model in support of answering that question.
 
 **Observations**:
 
-- Document your findings
+- Document your question and findings
 
 ## Further Reading
 <!-- -------------------------------------------------- -->

@@ -5,6 +5,8 @@ date: 2020-
 output:
   github_document:
     toc: true
+prerequisites:
+  - e-vis03-boxplots
 ---
 
 *Purpose*: Learning to do EDA well takes practice! In this challenge you'll further practice EDA by first completing a guided exploration, then by conducting your own investigation. This challenge will also give you a chance to use the wide variety of visual tools we've been learning.
@@ -24,21 +26,13 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
 | Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Needs Improvement | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
 
 ```{r setup}
 library(tidyverse)
@@ -57,7 +51,7 @@ we'll study in this challenge is from Gapminder.
 
 First, we'll go through a round of *guided EDA*. Try to pay attention to the high-level process we're going through---after this guided round you'll be responsible for doing another cycle of EDA on your own!
 
-__q0__ Perform your "first checks" on the dataset. What variables are in this
+### __q0__ Perform your "first checks" on the dataset. What variables are in this
 dataset?
 
 ```{r q0-task}
@@ -66,11 +60,11 @@ dataset?
 
 **Observations**:
 
-- Write the variable names here
+- Write all variable names here
 
-__q1__ Determine the most and least recent years in the `gapminder` dataset.
+### __q1__ Determine the most and least recent years in the `gapminder` dataset.
 
-*Hint*: You may need to use the `pull()` function to get a vector out of a tibble.
+*Hint*: Use the `pull()` function to get a vector out of a tibble. (Rather than the `$` notation of base R.)
 
 ```{r q1-task}
 ## TASK: Find the largest and smallest values of `year` in `gapminder`
@@ -95,7 +89,7 @@ if (is_tibble(year_max)) {
 print("Nice!")
 ```
 
-__q2__ Filter on years matching `year_min`, and make a plot of the GDP per capita against continent. Choose an appropriate `geom_` to visualize the data. What observations can you make?
+### __q2__ Filter on years matching `year_min`, and make a plot of the GDP per capita against continent. Choose an appropriate `geom_` to visualize the data. What observations can you make?
 
 You may encounter difficulties in visualizing these data; if so document your challenges and attempt to produce the most informative visual you can.
 
@@ -111,7 +105,7 @@ You may encounter difficulties in visualizing these data; if so document your ch
 
 - Write your challenges and your approach to solving them
 
-__q3__ You should have found *at least* three outliers in q2 (but possibly many more!). Identify those outliers (figure out which countries they are).
+### __q3__ You should have found *at least* three outliers in q2 (but possibly many more!). Identify those outliers (figure out which countries they are).
 
 ```{r q3-task}
 ## TASK: Identify the outliers from q2
@@ -120,8 +114,25 @@ __q3__ You should have found *at least* three outliers in q2 (but possibly many 
 **Observations**:
 
 - Identify the outlier countries from q2
+  - (Your response here)
 
-__q4__ Create a plot similar to yours from q2 studying both `year_min` and `year_max`. Find a way to highlight the outliers from q3 on your plot *in a way that lets you identify which country is which*. Compare the patterns between `year_min` and `year_max`.
+*Hint*: For the next task, it's helpful to know a ggplot trick we'll learn in an upcoming exercise: You can use the `data` argument inside any `geom_*` to modify the data that will be plotted *by that geom only*. For instance, you can use this trick to filter a set of points to label:
+
+```{r layer-filter}
+## NOTE: No need to edit, use ideas from this in q4 below
+gapminder %>%
+  filter(year == max(year)) %>%
+
+  ggplot(aes(continent, lifeExp)) +
+  geom_boxplot() +
+  geom_point(
+    data = . %>% filter(country %in% c("United Kingdom", "Japan", "Zambia")),
+    mapping = aes(color = country),
+    size = 2
+  )
+```
+
+### __q4__ Create a plot similar to yours from q2 studying both `year_min` and `year_max`. Find a way to highlight the outliers from q3 on your plot *in a way that lets you identify which country is which*. Compare the patterns between `year_min` and `year_max`.
 
 *Hint*: We've learned a lot of different ways to show multiple variables; think about using different aesthetics or facets.
 
@@ -138,19 +149,22 @@ __q4__ Create a plot similar to yours from q2 studying both `year_min` and `year
 
 Now it's your turn! We just went through guided EDA considering the GDP per capita at two time points. You can continue looking at outliers, consider different years, repeat the exercise with `lifeExp`, consider the relationship between variables, or something else entirely.
 
-__q5__ Create *at least* three new figures below. With each figure, try to pose new questions about the data.
+### __q5__ Create *at least* three new figures below. With each figure, try to pose new questions about the data.
 
 ```{r q5-task1}
 ## TASK: Your first graph
 ```
 
+- (Your notes and observations here)
 
 ```{r q5-task2}
 ## TASK: Your second graph
 ```
 
+- (Your notes and observations here)
 
 ```{r q5-task3}
 ## TASK: Your third graph
 ```
 
+- (Your notes and observations here)

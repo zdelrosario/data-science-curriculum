@@ -86,11 +86,7 @@ tibble(x = seq(0, 1, length.out = 100)) %>%
 
 The area of the set $Sc$ is $\pi/4$, while the area of $St$ is $1$. Thus the probability that a *uniform* random variable over the square lands inside $Sc$ is the ratio of the areas, that is
 
-$$\mathbb{P}_{X}[X \in Sc] = (\pi / 4) / 1.$$
-
-Re-arranging, we find
-
-$$\pi = 4 \times \mathbb{P}_{X}[X \in Sc].$$
+$$\mathbb{P}_{X}[X \in Sc] = (\pi / 4) / 1 = \frac{\pi}{4}.$$
 
 This expression is our ticket to estimating $\pi$ with a source of randomness: If we estimate the probability above and multiply by $4$, we'll be estimating $\pi$.
 
@@ -120,7 +116,7 @@ pi_est
 # Quantifying Uncertainty
 <!-- -------------------------------------------------- -->
 
-You now have an estimate of $\pi$, but how trustworthy is that estimate? In `e-stat06-clt` we discussed *confience intervals* as a means to quantify the uncertainty in an estimate. Now you'll apply that knowledge to assess your $\pi$ estimate.
+You now have an estimate of $\pi$, but how trustworthy is that estimate? In `e-stat06-clt` we discussed *confidence intervals* as a means to quantify the uncertainty in an estimate. Now you'll apply that knowledge to assess your $\pi$ estimate.
 
 ### __q3__ Using a CLT approximation, produce a confidence interval for your estimate of $\pi$. Make sure you specify your confidence level. Does your interval include the true value of $\pi$? Was your chosen sample size sufficiently large so as to produce a trustworthy answer?
 

@@ -5,6 +5,8 @@ date: 2020-
 output:
   github_document:
     toc: true
+prerequisites:
+  - e-data03-pivot-basics
 ---
 
 *Purpose*: When designing structures such as bridges, boats, and planes, the design team needs data about *material properties*. Often when we engineers first learn about material properties through coursework, we talk about abstract ideas and look up values in tables without ever looking at the data that gave rise to published properties. In this challenge you'll study an aluminum alloy dataset: Studying these data will give you a better sense of the challenges underlying published material values.
@@ -26,21 +28,13 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
 | Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Needs Improvement | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
 
 ```{r setup}
 library(tidyverse)
@@ -65,7 +59,7 @@ df_stang
 
 Note that these data are not tidy! The data in this form are convenient for reporting in a table, but are not ideal for analysis.
 
-__q1__ Tidy `df_stang` to produce `df_stang_long`. You should have column names `thick, alloy, angle, E, nu`. Make sure the `angle` variable is of correct type. Filter out any invalid values.
+### __q1__ Tidy `df_stang` to produce `df_stang_long`. You should have column names `thick, alloy, angle, E, nu`. Make sure the `angle` variable is of correct type. Filter out any invalid values.
 
 *Hint*: You can reshape in one `pivot` using the `".value"` special value for `names_to`.
 
@@ -104,7 +98,7 @@ print("Very good!")
 ## Initial checks
 <!-- ------------------------- -->
 
-__q2__ Perform a basic EDA on the aluminum data *without visualization*. Use your analysis to answer the questions under *observations* below. In addition, add your own *specific* question that you'd like to answer about the data---you'll answer it below in q3.
+### __q2__ Perform a basic EDA on the aluminum data *without visualization*. Use your analysis to answer the questions under *observations* below. In addition, add your own *specific* question that you'd like to answer about the data---you'll answer it below in q3.
 
 ```{r q2-task}
 ##
@@ -113,15 +107,19 @@ __q2__ Perform a basic EDA on the aluminum data *without visualization*. Use you
 **Observations**:
 
 - Is there "one true value" for the material properties of Aluminum?
+  - (Your response here)
 - How many aluminum alloys are in this dataset? How do you know?
+  - (Your response here)
 - What angles were tested?
+  - (Your response here)
 - What thicknesses were tested?
+  - (Your response here)
 - (Write your own question here)
 
 ## Visualize
 <!-- ------------------------- -->
 
-__q3__ Create a visualization to investigate your question from q2 above. Can you find an answer to your question using the dataset? Would you need additional information to answer your question?
+### __q3__ Create a visualization to investigate your question from q2 above. Can you find an answer to your question using the dataset? Would you need additional information to answer your question?
 
 ```{r q3-task}
 ## TASK: Investigate your question from q1 here
@@ -131,7 +129,7 @@ __q3__ Create a visualization to investigate your question from q2 above. Can yo
 
 - (Address your question from q1 here)
 
-__q4__ Consider the following statement:
+### __q4__ Consider the following statement:
 
 "A material's property (or material property) is an intensive property of some material, i.e. a physical property that does not depend on the amount of the material."[2]
 
@@ -149,6 +147,7 @@ df_stang_long %>%
 **Observations**:
 
 - Does this graph support or contradict the claim above?
+  - (Your response here)
 
 # References
 <!-- -------------------------------------------------- -->
