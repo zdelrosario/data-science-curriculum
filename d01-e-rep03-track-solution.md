@@ -54,6 +54,6 @@ Once you've finished this, you've successfully tracked your changes *locally*. H
 ### __q3__ Click the `push` button (green upward arrow, highlighted below) to push your changes to GitHub. Check your repository in GitHub (on the internet); you should be able to see your changes to the readme text.
 
 ![New](./images/rep03-push.png)
-Now you have a backup copy of your work in GitHub, and you can easily share your work by sharing a link to your repository!
+Now you have a backup copy of your work in GitHub, and you can easily share your work by sharing a link to your repository! This is how you will submit Challenges to Canvas: by sharing a link to your work.
 
 <!-- include-exit-ticket -->

@@ -87,7 +87,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      90   0.9
+## 1         100      91  0.91
 ```
 
 Now it's your turn!
@@ -108,7 +108,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      47  0.47
+## 1         100      55  0.55
 ```
 
 **Observations**:
@@ -160,16 +160,16 @@ map_dfr(
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
 ## 1          10       4 0.4  
-## 2         100      46 0.46 
-## 3        1000     518 0.518
-## 4       10000    5003 0.500
+## 2         100      53 0.53 
+## 3        1000     499 0.499
+## 4       10000    4903 0.490
 ```
 
 This is because *probability* is actually defined[1] in terms of the limit
 
 $$\mathbb{P}_{\rho}[X \in A] = \lim_{n \to \infty} F_{X_n}(A),$$
 
-where $X_n$ is a sample of size $n$ drawn from the density $\rho$.[2]
+where $X_n$ is a sample of size $n$ drawn from the density $X_n \sim \rho$.[2]
 
 ### __q2__: Modify the code below to consider the set $A = {z | -1.96 <= z <= +1.96}$. What value does `fr` appear to be limiting towards?
 
@@ -194,9 +194,9 @@ map_dfr(
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
 ## 1          10      10 1    
-## 2         100      94 0.94 
-## 3        1000     946 0.946
-## 4       10000    9510 0.951
+## 2         100      91 0.91 
+## 3        1000     962 0.962
+## 4       10000    9551 0.955
 ```
 
 **Observations**:
@@ -210,9 +210,9 @@ Now that we know what probability is; let's connect the idea to *distributions*.
 
 A continuous *distribution* models probability in terms of an integral
 
-$$\mathbb{P}_{\rho}[X \in A] = \int_{-\infty}^{+\infty} 1_A(x)\rho(x)\,dx = \mathbb{E}_{\rho}[I_A(X)]$$
+$$\mathbb{P}_{\rho}[X \in A] = \int_{-\infty}^{+\infty} \mathcal{I}_A(x)\rho(x)\,dx = \mathbb{E}_{\rho}[\mathcal{I}_A(X)]$$
 
-where $1_A(x)$ is the *indicator function*; a function that takes the value $1$ when $x \in A$, and the value $0$ when $x \not\in A$. The $$\mathbb{E}[Y]$$ denotes taking the mean of a random variable; this is also called the *expectation* of a random variable. The function $\rho(x)$ is the *density* of the random variable---we'll return to this idea in a bit.
+where $\mathcal{I}_A(x)$ is the *indicator function*; a function that takes the value $1$ when $x \in A$, and the value $0$ when $x \not\in A$. The $$\mathbb{E}[Y]$$ denotes taking the mean of a random variable; this is also called the *expectation* of a random variable. The function $\rho(x)$ is the *density* of the random variable---we'll return to this idea in a bit.
 
 This definition gives us a geometric way to think about probability; the distribution definition means probability is the area under the density curve within the set $A$.
 
@@ -293,7 +293,7 @@ tibble(z = seq(-3, +3, length.out = 1000)) %>%
   geom_line() +
   labs(
     x = "z",
-    y = "Likelihood",
+    y = "Probability Density",
     title = "Probability Density Function"
   )
 ```

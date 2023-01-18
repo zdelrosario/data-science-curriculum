@@ -1,10 +1,7 @@
 
 # Setup: RStudio
 
-*Purpose*: We're going to make extensive use of the [R programming
-language](https://www.r-project.org/about.html); in particular, the
-[Tidyverse](https://www.tidyverse.org/) packages. This first exercise
-will guide you through setting up the necessary software.
+*Purpose*: We're going to make extensive use of the [R programming language](https://www.r-project.org/about.html); in particular, the [Tidyverse](https://www.tidyverse.org/) packages. This first exercise will guide you through setting up the necessary software.
 
 *Reading*: (None)
 
@@ -14,8 +11,7 @@ will guide you through setting up the necessary software.
 
 ### __q1__ Install Rstudio
 
-Download [RStudio Desktop](https://rstudio.com/products/rstudio/download/) and
-install the [R programming language](https://cran.rstudio.com/). Both are free!
+Download [RStudio Desktop](https://rstudio.com/products/rstudio/download/) and install the [R programming language](https://cran.rstudio.com/). Both are free!
 
 Once installed, you can [download the source](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-setup00-install-master.Rmd) for this exercise and open open it in RStudio (or you can follow `e-rep01-intro-git` and *clone* the repository). This is an `R Markdown` file, which is a combination of human-readable text and machine-readable code. Think of it as a modern take on a lab notebook.
 
@@ -74,13 +70,11 @@ doing data science. Some of the most important ones are:
 - [Data transformation](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
 - [Data importing](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf)
 
-Later, we will learn special tools for handling:
+Later, we will learn special tools for handling other types of data. The following cheatsheets will be useful for those:
 
 - [String data](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf)
 - [Dates and times](https://github.com/rstudio/cheatsheets/raw/master/lubridate.pdf)
 - [Factors](https://github.com/rstudio/cheatsheets/raw/master/factors.pdf)
 - [R Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
-
-For every exercise, your deliverable will to complete an "exit ticket". Make sure to follow the survey link at the end of every exercise and submit the survey to get credit for your work! Note that in RStudio you can Shift + Click (CMD + Click) to follow a link.
 
 <!-- include-exit-ticket -->
