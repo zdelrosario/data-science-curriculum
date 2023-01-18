@@ -5,6 +5,8 @@ date: 2020-
 output:
   github_document:
     toc: true
+prerequisites:
+  - e-vis05-lines
 ---
 
 *Purpose*: In this challenge, you'll learn how to navigate the U.S. Census Bureau website, programmatically download data from the internet, and perform a county-level population-weighted analysis of current COVID-19 trends. This will give you the base for a very deep investigation of COVID-19, which we'll build upon for Project 1.
@@ -24,21 +26,13 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
 | Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Needs Improvement | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
 
 ```{r setup}
 library(tidyverse)
@@ -76,9 +70,9 @@ That's the high-level view; now let's dig into the details.
   - `Geography > County > All counties in United States`
 5. Select the **Total Population** table and click the `Download` button to download the data; make sure to select the 2018 5-year estimates.
 6. Unzip and move the data to your `challenges/data` folder.
-  - Note that the data will have a crazy-long filename `ACSDT5Y2018.B01003_data_with_overlays_2020-07-26T094857.csv`. That's because metadata is stored in the filename, such as the year of the estimate (`Y2018`) and my access date (`2020-06-30`). **Your filename will vary based on when you download the data**, so make sure to copy the filename that corresponds to what you downloaded!
+  - Note that the data will have a crazy-long filename like `ACSDT5Y2018.B01003_data_with_overlays_2020-07-26T094857.csv`. That's because metadata is stored in the filename, such as the year of the estimate (`Y2018`) and my access date (`2020-07-26`). **Your filename will vary based on when you download the data**, so make sure to copy the filename that corresponds to what you downloaded!
 
-__q1__ Load Table `B01003` into the following tibble. Make sure the column names are `id, Geographic Area Name, Estimate!!Total, Margin of Error!!Total`.
+### __q1__ Load Table `B01003` into the following tibble. Make sure the column names are `id, Geographic Area Name, Estimate!!Total, Margin of Error!!Total`.
 
 *Hint*: You will need to use the `skip` keyword when loading these data!
 
@@ -96,7 +90,7 @@ ACS 5-year estimates don't change all that often, but the COVID-19 data are chan
 
 The New York Times is publishing up-to-date data on COVID-19 on [GitHub](https://github.com/nytimes/covid-19-data).
 
-__q2__ Visit the NYT [GitHub](https://github.com/nytimes/covid-19-data) repo and find the URL for the **raw** US County-level data. Assign that URL as a string to the variable below.
+### __q2__ Visit the NYT [GitHub](https://github.com/nytimes/covid-19-data) repo and find the URL for the **raw** US County-level data. Assign that URL as a string to the variable below.
 
 ```{r q2-task}
 ## TASK: Find the URL for the NYT covid-19 county-level data
@@ -137,7 +131,7 @@ df_covid %>% glimpse
 
 To join these datasets, we'll need to use [FIPS county codes](https://en.wikipedia.org/wiki/FIPS_county_code).[2] The last `5` digits of the `id` column in `df_pop` is the FIPS county code, while the NYT data `df_covid` already contains the `fips`.
 
-__q3__ Process the `id` column of `df_pop` to create a `fips` column.
+### __q3__ Process the `id` column of `df_pop` to create a `fips` column.
 
 ```{r q3-task}
 ## TASK: Create a `fips` column by extracting the county code
@@ -157,9 +151,7 @@ assertthat::assert_that(
 print("Very good!")
 ```
 
-Once
-
-__q4__ Join `df_covid` with `df_q3` by the `fips` column. Use the proper type of join to preserve *only* the rows in `df_covid`.
+### __q4__ Join `df_covid` with `df_q3` by the `fips` column. Use the proper type of join to preserve *only* the rows in `df_covid`.
 
 ```{r q4-task}
 ## TASK: Join df_covid and df_q3 by fips.
@@ -192,7 +184,7 @@ Now that we've done the hard work of loading and wrangling the data, we can fina
 ## Normalize
 <!-- ------------------------- -->
 
-__q5__ Use the `population` estimates in `df_data` to normalize `cases` and `deaths` to produce per 100,000 counts.[3] Store these values in the columns `cases_per100k` and `deaths_per100k`.
+### __q5__ Use the `population` estimates in `df_data` to normalize `cases` and `deaths` to produce per 100,000 counts [3]. Store these values in the columns `cases_per100k` and `deaths_per100k`.
 
 ```{r q5-task}
 ## TASK: Normalize cases and deaths
@@ -241,13 +233,13 @@ print("Excellent!")
 
 Before turning you loose, let's complete a couple guided EDA tasks.
 
-__q6__ Compute the mean and standard deviation for `cases_per100k` and `deaths_per100k`.
+### __q6__ Compute the mean and standard deviation for `cases_per100k` and `deaths_per100k`.
 
 ```{r q6-task}
 ## TASK: Compute mean and sd for cases_per100k and deaths_per100k
 ```
 
-__q7__ Find the top 10 counties in terms of `cases_per100k`, and the top 10 in terms of `deaths_per100k`. Report the population of each county along with the per-100,000 counts. Compare the counts against the mean values you found in q6. Note any observations.
+### __q7__ Find the top 10 counties in terms of `cases_per100k`, and the top 10 in terms of `deaths_per100k`. Report the population of each county along with the per-100,000 counts. Compare the counts against the mean values you found in q6. Note any observations.
 
 ```{r q7-task}
 ## TASK: Find the top 10 max cases_per100k counties; report populations as well
@@ -257,12 +249,12 @@ __q7__ Find the top 10 counties in terms of `cases_per100k`, and the top 10 in t
 
 **Observations**:
 
-- Note your observations here!
+- (Note your observations here!)
 
 ## Self-directed EDA
 <!-- ------------------------- -->
 
-__q8__ Drive your own ship: You've just put together a very rich dataset; you now get to explore! Pick your own direction and generate at least one punchline figure to document an interesting finding. I give a couple tips & ideas below:
+### __q8__ Drive your own ship: You've just put together a very rich dataset; you now get to explore! Pick your own direction and generate at least one punchline figure to document an interesting finding. I give a couple tips & ideas below:
 
 ### Ideas
 <!-- ------------------------- -->
@@ -273,6 +265,8 @@ __q8__ Drive your own ship: You've just put together a very rich dataset; you no
 - Do a deep-dive on counties that are important to you (e.g. where you or your family live).
 - Fix the *geographic exceptions* noted below to study New York City.
 - Your own idea!
+
+**DO YOUR OWN ANALYSIS HERE**
 
 ### Aside: Some visualization tricks
 <!-- ------------------------- -->

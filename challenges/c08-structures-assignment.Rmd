@@ -1,15 +1,17 @@
 ---
 title: "Structural Safety"
 author: "(Your name here)"
-date: 2020-
+date: 202X-XX-XX
 output:
   github_document:
     toc: true
+prerequisites:
+  - e-vis09-bootstrap
 ---
 
 *Purpose*: Most real problems have multiple sources of uncertainty mixed together. Untangling these different sources can be challenging, even on a conceptual level. In this challenge we'll study a simple problem of structural safety, and use this small case study to untangle sources of sampling and Monte Carlo uncertainty.
 
-*Note*: In this challenge I provide a lot of stub-code; you won't have to do too much coding. This is because I want you to *focus on answering the conceptual questions*. The most important question in this challenge is *what sources of uncertainty are you accounting for, and what sources are you not accounting for?*
+*Note*: In this challenge I provide a lot of stub-code; you won't have to do too much coding. This is because I want you to *focus on answering the conceptual questions*. The most important questions in this challenge are: *What sources of uncertainty are you accounting for? What sources are you not accounting for? Are those sources real or induced?*
 
 <!-- include-rubric -->
 # Grading Rubric
@@ -26,21 +28,13 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
 | Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Needs Improvement | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
 
 # Setup
 <!-- ----------------------------------------------------------------------- -->
@@ -60,7 +54,7 @@ filename_samples <- "./data/al_samples.csv"
 
 By Jorge Stolfi - Own work, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=24499456
 
-*Strength* is a measure of how much internal stress an object can survive: A higher strength means a stronger material. This challenge's data are very simple: They are (synthetic) observations on aluminum strength. 
+*Strength* is a measure of how much internal stress an object can survive: A higher strength means a stronger material. This challenge's data are very simple: They are (synthetic) observations of ultimate tensile strength (UTS) on individual samples of the same aluminum alloy. The experiments were carried out following the higest standards of experimental rigor, so you should consider these values to be the "true" breaking strength for each sample.
 
 ```{r read-data}
 ## NOTE: No need to edit; load data
@@ -73,7 +67,7 @@ Data Dictionary:
 |----------------|-------|
 | Strength (UTS) | psi   |
 
-__q1__ Visualize the strength data with a histogram. Describe the extent to which you can tell what "shape" the data have.
+### __q1__ Visualize the strength data with a histogram. Answer the questions below.
 
 ```{r q1-task}
 ```
@@ -81,7 +75,11 @@ __q1__ Visualize the strength data with a histogram. Describe the extent to whic
 **Observations**:
 
 - What is the mean strength of the material, approximately?
-- To what extent can you tell what shape the data have?
+  - (Your response here)
+- To what extent can you tell what shape the distribution of the data has?
+  - (Your response here)
+- Assuming the scopus is the strength of an individual part made from this aluminum alloy, is the observed variability real or induced?
+  - (Your response here)
 
 # Assessing Structural Safety
 <!-- ----------------------------------------------------------------------- -->
@@ -113,7 +111,7 @@ The *probability of failure* (POF) is then defined in terms of the limit state $
 
 $$\text{POF} \equiv \mathbb{P}[g \leq 0].$$
 
-__q2__ Using the observations in `df_samples` and the structural model `g_break()`, estimate the probability of failure.
+### __q2__ Using the observations in `df_samples` and the structural model `g_break()`, estimate the probability of failure.
 
 *Hint*: In `c07-monte-carlo` you learned how to estimate a probability as the `mean()` of an indicator. Use the same strategy here.
 
@@ -125,15 +123,18 @@ df_samples
 **Observations**:
 
 - Does this estimate satisfy `POF < 0.03`?
+  - (Your response here)
 - Is this estimate of the probability of failure trustworthy? Why or why not?
+  - (Your response here)
 - Can you confidently conclude that `POF < 0.03`? Why or why not.
+  - (Your response here)
 
 ## Material property model
 <!-- --------------------------------------- -->
 
 Since we have so few physical samples, we will fit a distribution to model the material property. This will give us the means to draw "virtual samples" and use those to estimate the POF.
 
-__q3__ Fit a lognormal distribution to the strength data using the `fitdistr()` function.
+### __q3__ Fit a lognormal distribution to the strength data using the `fitdistr()` function.
 
 *Note*: In this challenge I generated the `strength` data from a `lognormal` distribution; if you didn't know that fact, then the choice of distribution would be an *additional* source of uncertainty!
 
@@ -149,7 +150,7 @@ df_fit
 
 Once you've successfully fit a model for the strength, you can estimate the probability of failure by drawing samples from the fitted distribution.
 
-__q4__ Complete the code below by 1. choosing a Monte Carlo sample size `n_monte_carlo`, 2. extracting the estimated parameters from q3, and 3. computing the limit state value `g = g_break()`. Answer the questions under *observations* below.
+### __q4__ Complete the code below by 1. choosing a Monte Carlo sample size `n_monte_carlo`, 2. extracting the estimated parameters from q3, and 3. computing the limit state value `g = g_break()`. Answer the questions under *observations* below.
 
 *Hint 1*: You will need to combine ideas from `c07-monte-carlo` and `e-stat08-fit-dist` in order to complete this task.
 
@@ -159,39 +160,47 @@ __q4__ Complete the code below by 1. choosing a Monte Carlo sample size `n_monte
 ## TODO 1: Choose Monte Carlo sample size
 n_monte_carlo <- NA_real_
 
-## TODO 2: Extract parameter estimates from df_elasticity_norm and df_poisson_norm
+## TODO 2: Extract parameter estimates from df_fit
 strength_meanlog <- NA_real_
 strength_sdlog <- NA_real_
 
 # Generate samples
-df_norm_sim <- 
-  tibble(strength = rlnorm(n_monte_carlo, strength_meanlog, strength_sdlog)) %>% 
+df_norm_sim <-
+  tibble(strength = rlnorm(n_monte_carlo, strength_meanlog, strength_sdlog)) %>%
 ## TODO 3: Compute structural response
   glimpse()
 
 ## NOTE: The following code estimates the POF and a 95% confidence interval
-df_norm_pof <- 
-  df_norm_sim %>% 
-  mutate(stat = g <= 0) %>% 
+df_norm_pof <-
+  df_norm_sim %>%
+  mutate(stat = g <= 0) %>%
   summarize(
-    pi_est = mean(stat),
+    pof_est = mean(stat),
     se = sd(stat) / sqrt(n_monte_carlo)
   ) %>%
   mutate(
-    pi_lo = pi_est - 1.96 * se,
-    pi_hi = pi_est + 1.96 * se
+    pof_lo = pof_est - 1.96 * se,
+    pof_hi = pof_est + 1.96 * se
   ) %>%
-  select(pi_lo, pi_est, pi_hi)
+  select(pof_lo, pof_est, pof_hi)
 
 df_norm_pof
 ```
 
+- Assuming your scopus is the probability of failure `POF` defined above, does your estimate exhibit real variability, induced variability, or both?
+  - (Your response here)
 - Does this confidence interval imply that `POF < 0.03`?
+  - (Your response here)
 - Compare this probability with your estimate from q2; is it more or less trustworthy?
+  - (Your response here)
 - Does the confidence interval above account for uncertainty arising from the *Monte Carlo approximation*? Why or why not?
+  - (Your response here)
 - Does the confidence interval above account for uncertainty arising from *limited physical tests* (`df_samples`)? Why or why not?
+  - (Your response here)
 - What could you do to tighten up the confidence interval?
+  - (Your response here)
 - Can you *confidently* conclude that `POF < 0.03`? Why or why not?
+  - (Your response here)
 
 ## A different way to compute the POF
 <!-- --------------------------------------- -->
@@ -202,10 +211,10 @@ $$\text{POF} = \mathbb{P}[g \leq 0] = \mathbb{P}[S \leq L / A] = \text{CDF}_S(L/
 
 Since `S = rlnorm(n, meanlog = strength_meanlog, sdlog = strength_sdlog)`, we can use `plnorm` to compute the probability of failure without Monte Carlo as `POF = plnorm(L/A, meanlog = strength_meanlog, sdlog = strength_sdlog)`. Let's combine this idea with the fitted distribution to estimate the POF.
 
-__q5__ Finish the following function by computing the POF with `plnorm()`. Answer the questions under *observations* below.
+### __q5__ Finish the following function by computing the POF with `plnorm()`. Answer the questions under *observations* below.
 
 ```{r q5-task}
-## TODO: Complete the function below; 
+## TODO: Complete the function below;
 ##       note that you only need to edit the TODO section
 
 estimate_pof <- function(df) {
@@ -217,18 +226,18 @@ estimate_pof <- function(df) {
     tidy()
 
   ## Extract the parameters
-  strength_meanlog <- 
-    df_fit %>% 
-    filter(term == "meanlog") %>% 
+  strength_meanlog <-
+    df_fit %>%
+    filter(term == "meanlog") %>%
     pull(estimate)
-  strength_sdlog <- 
-    df_fit %>% 
-    filter(term == "sdlog") %>% 
+  strength_sdlog <-
+    df_fit %>%
+    filter(term == "sdlog") %>%
     pull(estimate)
-  
+
 ## TODO: Estimate the probability of failure using plnorm
   pof_estimate <- NA
-  
+
   ## NOTE: No need to edit; this last line returns your pof_estimate
   pof_estimate
 }
@@ -240,29 +249,33 @@ df_samples %>% estimate_pof()
 **Observations**:
 
 - How does this estimate compare with your Monte Carlo estimate above?
+  - (Your response here)
 - Does this estimate have any uncertainty due to *Monte Carlo approximation*? Why or why not?
+  - (Your response here)
+- With the scopus as the `POF`, would uncertainty due to *Monte Carlo approximation* be induced or real?
+  - (Your response here)
 - Does this estimate have any uncertainty due to *limited physical tests*? Why or why not?
+  - (Your response here)
+- With the scopus as the `POF`, would uncertainty due to *limited physical tests* be induced or real?
+  - (Your response here)
 
 ## Quantifying sampling uncertainty
 <!-- --------------------------------------- -->
 
 Using `plnorm()` gets rid of Monte Carlo error, but we still have uncertainty due to limited physical testing. Often we can use a CLT approximation to construct a confidence interval. However, with `plnorm()` we can't use a CLT approximation because it does not follow the assumptions of the central limit theorem (it's not a sum of iid random variables). Instead, we can use the *bootstrap* to approximate a confidence interval via resampling.
 
-__q6__ Complete the code below to construct a bootstrap CI on your POF estimate. Answer the questions under *observations* below.
-
-*Hint 1*: Remember that you need to provide results in the form `tibble(term = "pof", estimate = pof_estimate)` to work with `int_pctl()`.
-
-*Hint 2*: If you're having trouble with this part, take a look at the `pr-bootstrap` chunk at the end of `e-stat09-bootstrap`.
+### __q6__ The code below estimates a bootstrap CI on your POF estimate. Answer the questions under *observations* below.
 
 ```{r q6-task}
-## NOTE: You only need to edit one line below!
-df_samples %>% 
+## NOTE: No need to edit; run and inspect
+tidycustom <- function(est) {tibble(term = "pof", estimate = est)}
+
+df_samples %>%
   bootstraps(times = 1000) %>%
   mutate(
     estimates = map(
       splits,
-## TODO: Uncomment and finish this line!
-     # ~ analysis(.x) %>% # Uncomment and write your code here!
+      ~ analysis(.x) %>% estimate_pof() %>% tidycustom()
     )
   ) %>%
   int_pctl(estimates)
@@ -271,5 +284,8 @@ df_samples %>%
 **Observations**:
 
 - Does the confidence interval above account for uncertainty arising from *Monte Carlo approximation* of the POF? Why or why not?
+  - (Your response here)
 - Does the confidence interval above account for uncertainty arising from *limited physical tests* (`df_samples`)? Why or why not?
+  - (Your response here)
 - Can you confidently conclude that `POF < 0.03`? Why or why not?
+  - (Your response here)

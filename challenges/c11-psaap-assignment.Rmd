@@ -24,21 +24,13 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
 | Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Needs Improvement | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
 
 ```{r setup}
 library(tidyverse)
@@ -75,7 +67,7 @@ df_psaap <- read_csv(filename_psaap)
 ![PSAAP II irradiated core flow](./images/psaap-setup.png)
 Figure 1. An example simulation, frozen at a specific point in time. An initial simulation is run (HIT SECTION) to generate a turbulent flow with particles, and that swirling flow is released into a rectangular domain (RADIATED SECTION) with bulk downstream flow (left to right). Concentrated solar radiation transmits through the optically transparent fluid, but deposits heat into the particles. The particles then convect heat into the fluid, which heats up the flow. The false-color image shows the fluid temperature: Notice that there are "hot spots" where hot particles have deposited heat into the fluid. The dataset `df_psaap` gives measurements of `T_norm = (T - T0) / T0` averaged across planes at various locations along the RADIATED SECTION.
 
-__q1__ Perform your "initial checks" to get a sense of the data.
+### __q1__ Perform your "initial checks" to get a sense of the data.
 
 ```{r q1-task}
 ## TODO: Perform your initial checks
@@ -114,7 +106,7 @@ The important variables in this dataset are:
 
 The primary output of interest is `T_norm = (avg_T - T_f) / T_f`, the normalized (dimensionless) temperature rise of the fluid, due to heat transfer. These measurements are taken at locations `x` along a column of fluid, for different experimental settings (e.g. different dimensions `W, L`, different flow speeds `U_0`, etc.).
 
-__q2__ Visualize `T_norm` against `x`. Note that there are multiple simulations at different values of the Input variables: Each simulation result is identified by a different value of `idx`.
+### __q2__ Visualize `T_norm` against `x`. Note that there are multiple simulations at different values of the Input variables: Each simulation result is identified by a different value of `idx`.
 
 ```{r q2-task}
 ## TODO: Visualize the data in df_psaap with T_norm against x;
@@ -130,15 +122,15 @@ The following chunk will split the data into training and validation sets.
 ## NOTE: No need to edit this chunk
 # Addl' Note: These data are already randomized by idx; no need
 # to additionally shuffle the data!
-df_train <- df_psaap %>% filter(idx %in% seq(1:20))
-df_validate <- df_psaap %>% filter(idx %in% seq(21:36))
+df_train <- df_psaap %>% filter(idx %in% 1:20)
+df_validate <- df_psaap %>% filter(idx %in% 21:36)
 ```
 
 One of the key decisions we must make in modeling is choosing predictors (features) from our observations to include in the model. Ideally we should have some intuition for why these predictors are reasonable to include in the model; for instance, we saw above that location along the flow `x` tends to affect the temperature rise `T_norm`. This is because fluid downstream has been exposed to solar radiation for longer, and thus is likely to be at a higher temperature.
 
 Reasoning about our variables---at least at a *high level*---can help us to avoid including *fallacious* predictors in our models. You'll explore this idea in the next task.
 
-__q3__ The following code chunk fits a few different models. Compute a measure of model accuracy for each model on `df_validate`, and compare their performance.
+### __q3__ The following code chunk fits a few different models. Compute a measure of model accuracy for each model on `df_validate`, and compare their performance.
 
 ```{r q3-task}
 ## NOTE: No need to edit these models
@@ -161,11 +153,15 @@ fit_nonphysical <-
 **Observations**:
 
 - Which model is *most accurate*? Which is *least accurate*?
+  - (Your response here)
 - What *Category* of variable is `avg_T`? Why is it such an effective predictor?
+  - (Your response here)
 - Would we have access to `avg_T` if we were trying to predict a *new* value of `T_norm`? Is `avg_T` a valid predictor?
+  - (Your response here)
 - What *Category* of variable is `idx`? Does it have any physical meaning?
+  - (Your response here)
 
-__q4__ Use a combination of EDA and train-validation error to build a model by selecting *principled* predictors for the `formula` argument. Document your findings under *observations* below. Try to build the most accurate model you can!
+### __q4__ Use a combination of EDA and train-validation error to build a model by selecting *reasonable* predictors for the `formula` argument. Document your findings under *observations* below. Try to build the most accurate model you can!
 
 ```{r q4-task}
 ## TODO: Fit a model for T_norm using only *principled* predictors, try to
@@ -249,7 +245,7 @@ Both CI and PI are a quantification of the uncertainty in our model, but the two
 
 Since CI and PI are a quantification of uncertainty, they should tend to *narrow* as our model becomes more confident in its predictions. Building a more accurate model will often lead to a reduction in uncertainty. We'll see this phenomenon in action with the following task:
 
-__q5__ The following code will construct a predicted-vs-actual plot with your model from *q4* and add prediction intervals. Study the results and answer the questions below under *observations*.
+### __q5__ The following code will construct a predicted-vs-actual plot with your model from *q4* and add prediction intervals. Study the results and answer the questions below under *observations*.
 
 ```{r q5-task}
 ## TODO: Run this code and interpret the results
@@ -266,7 +262,7 @@ bind_rows(
   df_validate %>% 
     add_uncertainties(fit_q4, interval = "prediction", prefix = "pi") %>% 
     select(T_norm, pi_lwr, pi_fit, pi_upr) %>% 
-    mutate(model = "full"),
+    mutate(model = "q4"),
 ) %>% 
   
   ggplot(aes(T_norm, pi_fit)) +
@@ -289,8 +285,11 @@ bind_rows(
 **Observations**:
 
 - Which model tends to be more accurate? How can you tell from this predicted-vs-actual plot?
+  - (Your response here)
 - Which model tends to be *more confident* in its predictions? Put differently, which model has *narrower prediction intervals*?
+  - (Your response here)
 - How many predictors does the `fit_simple` model need in order to make a prediction? What about your model `fit_q4`?
+  - (Your response here)
 
 Based on these results, you might be tempted to always throw every reasonable variable into the model. For some cases, that might be the best choice. However, some variables might be *outside our control*; for example, variables involving human behavior cannot be fully under our control. Other variables may be *too difficult to measure*; for example, it is *in theory* possible to predict the strength of a component by having detailed knowledge of its microstructure. However, it is *patently infeasible* to do a detailed study of *every single component* that gets used in an airplane.
 
@@ -298,7 +297,7 @@ In both cases---human behavior and variable material properties---we would be be
 
 # Case Study: Predicting Performance Ranges
 
-__q6__ You are consulting with a team that is designing a prototype heat transfer device. They are asking you to help determine a *dependable range of values* for `T_norm` they can design around for this *single prototype*. The realized value of `T_norm` must not be too high as it may damage the downstream equipment, but it must also be high enough to extract an acceptable amount of heat.
+### __q6__ You are consulting with a team that is designing a prototype heat transfer device. They are asking you to help determine a *dependable range of values* for `T_norm` they can design around for this *single prototype*. The realized value of `T_norm` must not be too high as it may damage the downstream equipment, but it must also be high enough to extract an acceptable amount of heat.
 
 In order to maximize the conditions under which this device can operate successfully, the design team has chosen to fix the variables listed in the table below, and consider the other variables to fluctuate according to the values observed in `df_psaap`.
 
@@ -332,10 +331,15 @@ fit_q6 <- NA
 **Recommendation**:
 
 - How much do you trust your model? Why?
+  - (Your response here)
 - What kind of interval---confidence or prediction---would you use for this task, and why?
+  - (Your response here)
 - What fraction of validation cases lie within the interval you predict? How does this compare with `pr_level`?
-- What interval for `T_norm` would you recommend the design time to plan around?
+  - (Your response here)
+- What interval for `T_norm` would you recommend the design team to plan around?
+  - (Your response here)
 - Are there any other recommendations you would provide?
+  - (Your response here)
 
 *Bonus*: One way you could take this analysis further is to recommend which other variables the design team should tightly control. You could do this by fixing values in `df_design` and adding them to the model. An exercise you could carry out would be to systematically test the variables to see which ones the design team should more tightly control.
 

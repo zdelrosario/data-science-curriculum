@@ -124,7 +124,7 @@ This is because *probability* is actually defined[1] in terms of the limit
 
 $$\mathbb{P}_{\rho}[X \in A] = \lim_{n \to \infty} F_{X_n}(A),$$
 
-where $X_n$ is a sample of size $n$ drawn from the density $\rho$.[2]
+where $X_n$ is a sample of size $n$ drawn from the density $X_n \sim \rho$.[2]
 
 ### __q2__: Modify the code below to consider the set $A = {z | -1.96 <= z <= +1.96}$. What value does `fr` appear to be limiting towards?
 
@@ -154,9 +154,9 @@ Now that we know what probability is; let's connect the idea to *distributions*.
 
 A continuous *distribution* models probability in terms of an integral
 
-$$\mathbb{P}_{\rho}[X \in A] = \int_{-\infty}^{+\infty} 1_A(x)\rho(x)\,dx = \mathbb{E}_{\rho}[I_A(X)]$$
+$$\mathbb{P}_{\rho}[X \in A] = \int_{-\infty}^{+\infty} \mathcal{I}_A(x)\rho(x)\,dx = \mathbb{E}_{\rho}[\mathcal{I}_A(X)]$$
 
-where $1_A(x)$ is the *indicator function*; a function that takes the value $1$ when $x \in A$, and the value $0$ when $x \not\in A$. The $$\mathbb{E}[Y]$$ denotes taking the mean of a random variable; this is also called the *expectation* of a random variable. The function $\rho(x)$ is the *density* of the random variable---we'll return to this idea in a bit.
+where $\mathcal{I}_A(x)$ is the *indicator function*; a function that takes the value $1$ when $x \in A$, and the value $0$ when $x \not\in A$. The $$\mathbb{E}[Y]$$ denotes taking the mean of a random variable; this is also called the *expectation* of a random variable. The function $\rho(x)$ is the *density* of the random variable---we'll return to this idea in a bit.
 
 This definition gives us a geometric way to think about probability; the distribution definition means probability is the area under the density curve within the set $A$.
 
@@ -222,7 +222,7 @@ tibble(z = seq(-3, +3, length.out = 1000)) %>%
   geom_line() +
   labs(
     x = "z",
-    y = "Likelihood",
+    y = "Probability Density",
     title = "Probability Density Function"
   )
 ```

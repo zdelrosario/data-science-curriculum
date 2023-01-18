@@ -1,10 +1,12 @@
 ---
 title: "US Income"
 author: "(Your name here)"
-date: 2020-
+date: 202X-XX-XX
 output:
   github_document:
     toc: true
+prerequisites:
+  - e-stat09-bootstrap
 ---
 
 *Purpose*: We've been learning how to quantify uncertainty in estimates through the exercises; now its time to put those skills to use studying real data. In this challenge we'll use concepts like confidence intervals to help us make sense of census data.
@@ -28,21 +30,13 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
 | Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Needs Improvement | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
 
 # Setup
 <!-- ----------------------------------------------------------------------- -->
@@ -51,7 +45,7 @@ All the deliverables stated in the rubrics above are due **at midnight** before 
 library(tidyverse)
 ```
 
-__q1__ Load the population data from c06; simply replace `filename_pop` below.
+### __q1__ Load the population data from c06; simply replace `filename_pop` below.
 
 ```{r q1-task}
 ## TODO: Give the filename for your copy of Table B01003
@@ -79,12 +73,12 @@ You might wonder why the `Margin of Error` in the population estimates is listed
 
 This means that for cases listed as `*****` the US Census Bureau recommends treating the margin of error (and thus standard error) as zero.
 
-__q2__ Obtain median income data from the Census Bureau:
+### __q2__ Obtain median income data from the Census Bureau:
 
 - `Filter > Topics > Income and Poverty > Income and Poverty`
 - `Filter > Geography > County > All counties in United States`
 - Look for `Median Income in the Past 12 Months` (Table S1903)
-- Download the 5-year ACS estimates; save to your `data` folder and add the filename below.
+- Download the 2018 5-year ACS estimates; save to your `data` folder and add the filename below.
 
 ```{r q2-task}
 ## TODO: Give the filename for your copy of Table S1903
@@ -113,9 +107,20 @@ print("Well done!")
 
 This dataset is in desperate need of some *tidying*. To simplify the task, we'll start by considering the `\\d-person families` columns first.
 
-__q3__ Tidy the `df_income` dataset by completing the code below. Pivot and rename the columns to arrive at the column names `id, geographic_area_name, category, income_estimate, income_moe`.
+### __q3__ Tidy the `df_income` dataset by completing the code below. Pivot and rename the columns to arrive at the column names `id, geographic_area_name, category, income_estimate, income_moe`.
+
+*Hint*: You can do this in a single pivot using the `".value"` argument and a `names_pattern` using capture groups `"()"`. Remember that you can use an OR operator `|` in a regex to allow for multiple possibilities in a capture group, for example `"(Estimate|Margin of Error)"`.
 
 ```{r q3-task}
+df_q3 <-
+  df_income %>%
+  select(
+    id,
+    contains("Geographic"),
+    contains("median") & matches("\\d-person families")
+  ) %>%
+  mutate(across(contains("median"), as.numeric)) %>%
+## TODO: Pivot the data, rename the columns
   glimpse()
 ```
 
@@ -143,7 +148,7 @@ The data gives finite values for the Margin of Error, which is closely related t
 
 $$\text{MOE} = 1.645 \times \text{SE}.$$
 
-__q4__ Convert the margin of error to standard error. Additionally, compute a 99% confidence interval on income, and compute the coefficient of variation `CV`. Provide these columns with the names `income_SE, income_lo, income_hi, income_CV`.
+### __q4__ Convert the margin of error to standard error. Additionally, compute a 99% confidence interval on income, and normalize the standard error to `income_CV = income_SE / income_estimate`. Provide these columns with the names `income_SE, income_lo, income_hi, income_CV`.
 
 ```{r q4-task}
 
@@ -198,7 +203,7 @@ print("Nice!")
 
 One last wrangling step: We need to join the two datasets so we can compare population with income.
 
-__q5__ Join `df_q4` and `df_pop`.
+### __q5__ Join `df_q4` and `df_pop`.
 
 ```{r q5-task}
 ## TODO: Join df_q4 and df_pop by the appropriate column
@@ -211,7 +216,7 @@ df_data
 
 We now have both estimates and confidence intervals for `\\d-person families`. Now we can compare cases with quantified uncertainties: Let's practice!
 
-__q6__ Study the following graph, making sure to note what you can *and can't* conclude based on the estimates and confidence intervals. Document your observations below and answer the questions.
+### __q6__ Study the following graph, making sure to note what you can *and can't* conclude based on the estimates and confidence intervals. Document your observations below and answer the questions.
 
 ```{r q6-task}
 ## NOTE: No need to edit; run and inspect
@@ -241,12 +246,17 @@ df_data %>%
 **Observations**:
 
 - Document your observations here.
+  - (Your response here)
+  - (Your response here)
+  - ...
 - Can you confidently distinguish between household incomes in Suffolk county? Why or why not?
+  - (Your response here)
 - Which counties have the widest confidence intervals?
+  - (Your response here)
 
 In the next task you'll investigate the relationship between population and uncertainty.
 
-__q7__ Plot the standard error against population for all counties. Create a visual that effectively highlights the trends in the data. Answer the questions under *observations* below.
+### __q7__ Plot the standard error against population for all counties. Create a visual that effectively highlights the trends in the data. Answer the questions under *observations* below.
 
 *Hint*: Remember that standard error is a function of *both* variability (e.g. variance) and sample size.
 
@@ -256,14 +266,16 @@ __q7__ Plot the standard error against population for all counties. Create a vis
 **Observations**:
 
 - What *overall* trend do you see between `SE` and population? Why might this trend exist?
+  - (Your response here)
 - What does this *overall* trend tell you about the relative ease of studying small vs large counties?
+  - (Your response here)
 
 # Going Further
 <!-- ----------------------------------------------------------------------- -->
 
 Now it's your turn! You have income data for every county in the United States: Pose your own question and try to answer it with the data.
 
-__q8__ Pose your own question about the data. Create a visualization (or table) here, and document your observations.
+### __q8__ Pose your own question about the data. Create a visualization (or table) here, and document your observations.
 
 ```{r q8-task}
 ## TODO: Pose and answer your own question about the data

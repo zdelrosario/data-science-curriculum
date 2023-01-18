@@ -5,6 +5,8 @@ date: 2020-
 output:
   github_document:
     toc: true
+prerequisites:
+  - e-vis00-basics
 ---
 
 *Purpose*: How do we apply hypothesis testing to investigating data? In this challenge you'll practice using hypothesis testing tools to make sense of a dataset.
@@ -38,28 +40,20 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
 | Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Needs Improvement | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
 
 *Background*: Every year about 2 million students take the Scholastic Aptitude Test (SAT). The exam is [controversial](http://www.nea.org/home/73288.htm) but [extremely consequential](https://www.csmonitor.com/2004/0518/p13s01-legn.html). There are many claims about the SAT, but we're going to look at just one: Is the SAT predictive of scholastic performance in college? It turns out this is a fairly complicated question to assess---we'll get an introduction to some of the complexities.
 
 # Obtain the Data
 <!-- -------------------------------------------------- -->
 
-__q1__ Visit the [SAT and College GPA](http://onlinestatbook.com/2/case_studies/sat.html) case study page, scroll to the bottom, and click the `Open Data with Excel` button. This will allow you to download an `xls` file. Save the file to your `data` folder, load the data as `df_sat`, and perform your "first checks" against these data. Answer the questions below:
+### __q1__ Visit the [SAT and College GPA](http://onlinestatbook.com/2/case_studies/sat.html) case study page, scroll to the bottom, and click the `Open Data with Excel` button. This will allow you to download an `xls` file. Save the file to your `data` folder, load the data as `df_sat`, and perform your "first checks" against these data. Answer the questions below:
 
 ```{r q1-task}
 ## TODO:
@@ -81,8 +75,11 @@ df_sat <- NA
 | `univ_GPA` | ???     |
 
 - What information do we have about these students?
+  - (Your response here)
 - What kinds of information *do we not have* about these students?
-  - Based on these missing variables, what possible effects could be present in the data that we would have *no way of detecting*?
+  - (Your response here)
+- Based on these missing variables, what possible effects could be present in the data that we would have *no way of detecting*?
+  - (Your response here)
 
 # Analysis with Hypothesis Testing
 <!-- ----------------------------------------------------------------------- -->
@@ -101,7 +98,7 @@ df_composite <-
 ## View 1: Correlations
 <!-- ----------------------------------------------------------------------- -->
 
-__q2__ Create a *single* plot that shows `univ_GPA` against *both* `high_GPA` and `both_SAT`. Visually compare the two trends.
+### __q2__ Create a *single* plot that shows `univ_GPA` against *both* `high_GPA` and `both_SAT`. Visually compare the two trends.
 
 *Hint*: One way to do this is to first *pivot* `df_composite`.
 
@@ -112,7 +109,9 @@ __q2__ Create a *single* plot that shows `univ_GPA` against *both* `high_GPA` an
 **Observations**:
 
 - What relationship do `univ_GPA` and `both_SAT` exhibit?
+  - (Your response here)
 - What relationship do `univ_GPA` and `high_GPA` exhibit?
+  - (Your response here)
 
 ### Hypothesis Testing with a Correlation Coefficient
 <!-- ------------------------- -->
@@ -129,7 +128,7 @@ $$\text{HA: } \text{Corr}[X, Y] \neq 0$$
 
 The R function `cor.test` implements such a hypothesis test under the assumption that `X, Y` are both normally distributed. First, let's check to see if this assumption looks reasonable for our data.
 
-__q3__ Plot histograms for `both_SAT, high_GPA, univ_GPA`. Which---if any---of the variables look approximately normally distributed.
+### __q3__ Plot histograms for `both_SAT, high_GPA, univ_GPA`. Which---if any---of the variables look approximately normally distributed.
 
 ```{r q3-task}
 ```
@@ -137,15 +136,15 @@ __q3__ Plot histograms for `both_SAT, high_GPA, univ_GPA`. Which---if any---of t
 **Observations**:
 
 - To what extent does `both_SAT` look like a normal distribution?
+  - (Your response here)
 - To what extent does `high_GPA` look like a normal distribution?
+  - (Your response here)
 - To what extent does `univ_GPA` look like a normal distribution?
-- `both_SAT` looks unimodal, but perhaps a bit skewed; it's not terribly normal
-- `high_GPA` has a small lower peak, but it's dominated by a single mode; it looks somewhat normal
-- `univ_GPA` has two well-separated peaks; this is definitely not normal!
+  - (Your response here)
 
 Keep in mind your findings as you complete q4.
 
-__q4__ Use the function `cor.test()` to construct confidence intervals for `corr[high_GPA, univ_GPA` and `corr[both_SAT, univ_GPA]`. Answer the questions below.
+### __q4__ Use the function `cor.test()` to construct confidence intervals for `corr[high_GPA, univ_GPA` and `corr[both_SAT, univ_GPA]`. Answer the questions below.
 
 ```{r q4-task}
 ## TODO: Use the function cor.test() to test the correlations between
@@ -156,13 +155,17 @@ __q4__ Use the function `cor.test()` to construct confidence intervals for `corr
 **Observations**:
 
 - Which correlations are significantly nonzero?
+  - (Your response here)
 - Which of `high_GPA` and `both_SAT` seems to be more strongly correlated with `univ_GPA`?
+  - (Your response here)
 - How do the results here compare with the visual you created in q2?
+  - (Your response here)
 - Based on these results, what can we say about the predictive capabilities of both `high_GPA` and `both_SAT` to predict `univ_GPA`?
+  - (Your response here)
 
 Finally, let's use the bootstrap to perform the same test using *different* assumptions.
 
-__q5__ Use the bootstrap to approximate a confidence interval for `corr[high_GPA, univ_GPA`. Compare your results---both the estimate and confidence interval---to your results from q4.
+### __q5__ Use the bootstrap to approximate a confidence interval for `corr[high_GPA, univ_GPA`. Compare your results---both the estimate and confidence interval---to your results from q4.
 
 ```{r q5-task}
 ## TODO: Use the bootstrap to compute a confidence interval for corr[high_GPA, univ_GPA]
@@ -171,7 +174,9 @@ __q5__ Use the bootstrap to approximate a confidence interval for `corr[high_GPA
 **Observations**:
 
 - How does your estimate from q5 compare with your estimate from q4?
+  - (Your response here)
 - How does your CI from q5 compare with your CI from q4?
+  - (Your response here)
 
 *Aside*: When you use two different approximations to compute the same quantity and get similar results, that's an *encouraging sign*. Such an outcome lends a bit more credibility to the results.
 
@@ -216,7 +221,7 @@ $$\text{HA}: \beta \neq 0$$
 
 In this case, we're testing for whether $X$ has a significant effect on $Y$. Let's apply this idea to relating the variables `univ_GPA` and `high_GPA`. Luckily R has built-in tools to construct a confidence interval on the $\beta$'s in a regression [1]; we'll simply use those tools rather than do it by hand.
 
-__q6__ Fit a linear model predicting `univ_GPA` with the predictor `both_SAT`. Assess the model to determine how effective a predictor `both_SAT` is for `univ_GPA`. Interpret the resulting confidence interval for the coefficient on `both_SAT`.
+### __q6__ Fit a linear model predicting `univ_GPA` with the predictor `both_SAT`. Assess the model to determine how effective a predictor `both_SAT` is for `univ_GPA`. Interpret the resulting confidence interval for the coefficient on `both_SAT`.
 
 ```{r q6-task}
 ## TODO: Fit a model of univ_GPA on the predictor both_SAT
@@ -233,11 +238,13 @@ fit_basic %>%
 **Observations**:
 
 - What is the confidence interval on the coefficient of `both_SAT`? Is this coefficient significantly different from zero?
+  - (Your response here)
 - By itself, how well does `both_SAT` predict `univ_GPA`?
+  - (Your response here)
 
 Remember from `e-model03-interp-warnings` that there are challenges with interpreting regression coefficients! Let's investigate that idea further.
 
-__q7__ Fit a model predicting `univ_GPA` using both `high_GPA` and `both_SAT`. Compare the prediction accuracy and hypothesis test results.
+### __q7__ Fit a model predicting `univ_GPA` using both `high_GPA` and `both_SAT`. Compare the prediction accuracy and hypothesis test results.
 
 ```{r q7-task}
 ## TODO: Fit and assess models with predictors both_SAT + high_GPA, and high_GPA alone
@@ -246,20 +253,25 @@ __q7__ Fit a model predicting `univ_GPA` using both `high_GPA` and `both_SAT`. C
 **Observations**:
 
 - How well do these models perform, compared to the one you built in q6?
+  - (Your response here)
 - What is the confidence interval on the coefficient of `both_SAT` when including `high_GPA` as a predictor?? Is this coefficient significantly different from zero?
-  - How do the hypothesis test results compare with the results in q6?
+  - (Your response here)
+- How do the hypothesis test results compare with the results in q6?
+  - (Your response here)
 
 ## Synthesize
 <!-- ------------------------- -->
 
 Before closing, let's synthesize a bit from the analyses above.
 
-__q8__ Using the results from all previous q's, answer the following questions.
+### __q8__ Using the results from all previous q's, answer the following questions.
 
 **Observations**:
 
 - Between `both_SAT` and `high_GPA`, which single variable would you choose to predict `univ_GPA`? Why?
-- Is `both_SAT` an effective predictor of `high_GPA`? What specific pieces of evidence do you have in favor of `both_SAT` being effective? What specific pieces of evidence do you have against?
+  - (Your response here)
+- Is `both_SAT` an effective predictor of `univ_GPA`? What specific pieces of evidence do you have in favor of `both_SAT` being effective? What specific pieces of evidence do you have against?
+  - (Your response here)
 
 # End Notes
 <!-- ----------------------------------------------------------------------- -->
