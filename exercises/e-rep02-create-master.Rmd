@@ -32,4 +32,6 @@ reading: 10
 
 Next, follow the steps in [e-rep01-intro-git](https://github.com/zdelrosario/data-science-curriculum/blob/master/exercises/e-rep01-intro-git.md) to clone your new repository (make sure to target your new repository, though!).
 
+**Important note**: You should *not* use this repository to upload your assignments. You should use the repository you cloned in `e-rep01-intro-git` instead. This exercise is just about learning how to create a GitHub repository.
+
 <!-- include-exit-ticket -->

@@ -34,13 +34,13 @@ Git is free and open-source version control software. One of our desired outcome
 
 GitHub is a free service that helps you track and share code, interfacing with Git. We will use this to distribute and submit assignments.
 
-- You will need an account on [GitHub](https://github.com/); create an account and share your username in the survey below.
+- You will need an account on [GitHub](https://github.com/).
 
 ## Discord
 <!-- ------------------------- -->
 
 Discord is a free service used for communication. It's like a combination of Slack (persistent text channels) and Zoom (audio and video chat). We will use this for almost all communication about the class, including technical questions, office hours, and (online) class sessions.
 
-- You will need an account on [Discord](https://discord.com/); create an account and share your username in the survey below.
+- You will need an account on [Discord](https://discord.com/).
 
 <!-- include-exit-ticket -->

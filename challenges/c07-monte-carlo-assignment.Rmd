@@ -5,6 +5,8 @@ date: 2020-
 output:
   github_document:
     toc: true
+prerequisites:
+  - e-stat06-clt
 ---
 
 *Purpose*: Random sampling is extremely powerful. To build more intuition for how we can use random sampling to solve problems, we'll tackle what---at first blush---doesn't seem appropriate for a random approach: estimating fundamental deterministic constants. In this challenge you'll work through an example of turning a deterministic problem into a random sampling problem, and practice quantifying uncertainty in your estimate.
@@ -24,21 +26,13 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
 | Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Needs Improvement | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed observations to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to observations, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis with active hyperlinks |
 
 ## Due Date
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
+All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
 
 ```{r setup}
 library(tidyverse)
@@ -105,7 +99,7 @@ This expression is our ticket to estimating $\pi$ with a source of randomness: I
 
 Remember in `e-stat02-probability` we learned how to estimate probabilities as the limit of frequencies. Use your knowledge from that exercise to generate Monte Carlo data.
 
-__q1__ Pick a sample size $n$ and generate $n$ points *uniform randomly* in the square $x \in [0, 1]$ and $y \in [0, 1]$. Create a column `stat` whose mean will converge to $\pi$.
+### __q1__ Pick a sample size $n$ and generate $n$ points *uniform randomly* in the square $x \in [0, 1]$ and $y \in [0, 1]$. Create a column `stat` whose mean will converge to $\pi$.
 
 *Hint*: Remember that the mean of an *indicator function* on your target set will estimate the probability of points landing in that area (see `e-stat02-probability`). Based on the expression above, you'll need to *modify* that indicator to produce an estimate of $\pi$.
 
@@ -115,7 +109,7 @@ n <- NA_real_ # Choose a sample size
 df_q1 <- NA # Generate the data
 ```
 
-__q2__ Using your data in `df_q1`, estimate $\pi$.
+### __q2__ Using your data in `df_q1`, estimate $\pi$.
 
 ```{r q2-task}
 ## TASK: Estimate pi using your data from q1
@@ -128,7 +122,7 @@ pi_est
 
 You now have an estimate of $\pi$, but how trustworthy is that estimate? In `e-stat06-clt` we discussed *confience intervals* as a means to quantify the uncertainty in an estimate. Now you'll apply that knowledge to assess your $\pi$ estimate.
 
-__q3__ Using a CLT approximation, produce a confidence interval for your estimate of $\pi$. Make sure you specify your confidence level. Does your interval include the true value of $\pi$? Was your chosen sample size sufficiently large so as to produce a trustworthy answer?
+### __q3__ Using a CLT approximation, produce a confidence interval for your estimate of $\pi$. Make sure you specify your confidence level. Does your interval include the true value of $\pi$? Was your chosen sample size sufficiently large so as to produce a trustworthy answer?
 
 ```{r q3-task}
 ```
@@ -136,8 +130,11 @@ __q3__ Using a CLT approximation, produce a confidence interval for your estimat
 **Observations**:
 
 - Does your interval include the true value of $\pi$?
+  - (Your response here)
 - What confidence level did you choose?
-- Was your sample size $n$ large enough?
+  - (Your response here)
+- Was your sample size $n$ large enough? Why do you say that?
+  - (Your response here)
 
 # References
 <!-- -------------------------------------------------- -->
