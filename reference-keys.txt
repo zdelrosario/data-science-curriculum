@@ -16,11 +16,9 @@ q2-install-packages
 q3-test-your-install
 q4-download-extras
 q5-download-cheatsheets
-reproducibility-creating-a-github-repository
-set-up-your-repository
 reproducibility-tracking-changes-with-git
 configure-rstudio-to-use-git
-set-up-your-repository-1
+set-up-your-repository
 add-a-readme
 q1-edit-your-readme.md-with-information-about-your-repository.-for-instance-you-could-add-your-name-and-a-short-description.
 commit-changes

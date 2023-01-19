@@ -26,29 +26,41 @@ Before you can "clone" (download) the repository of exercises, you'll need to se
 ## Downloading Our Exercises
 <!-- -------------------------------------------------- -->
 
-Using RStudio, we will download a local copy of the [data-science-curriculum](https://github.com/zdelrosario/data-science-curriculum/tree/build). Follow these instructions:
+Open your browser and log into GitHub. Click the `New` button to create a new repository.
 
-- Open [data-science-curriculum](https://github.com/zdelrosario/data-science-curriculum/tree/build) in your browser, and click the "Clone" button. Make sure you have "SSH" selected, and click the "clipboard" button to copy the `git@github:...` url.
+![Setup](./images/setup00-new.png)
 
-- Open the `Terminal` tab
+Give this a sensible name, like `data-science-S2023`. **Ensure your repository is public,** or you will not be able to submit your homework!
 
-![Terminal](./images/rep01-terminal.png)
+![Setup](./images/setup01-name-public.png)
 
-- Use the change directory (`cd`) command to change to where you want to copy `data-science-curriculum`, and use the `git clone` command to copy the repository.
+Once you've selected the correct settings, click `Create Repository`. This creates a repository on GitHub's servers, but you still need to download it locally. After creating your repository, you'll see the following link in your browser. Copy the SSH link (note, **not** the HTTPS link) and open a Terminal. 
 
-- *Note*: I recommend creating a `Git` directory on your computer in an easy-to-find location (say Home or Documents), and that you put `data-science-curriculum` there.
+![Setup](./images/setup02-clone-link.png)
 
-![Clone](./images/rep01-clone-cli.png)
+Navigate in your terminal to the location where you'd like to store your work for this class. Type the command `git clone` and paste the link you copied above. Hit Return to "clone" a local copy of your repository. Git will likely tell you that you cloned an empty repository. That's OK! We're going to add the course materials next.
 
-- Change Directory to `exercises` with the command `cd exercises`
+*Note*: If you haven't used a Terminal before, just open RStudio and find the Terminal tab (towards the bottom).
 
-![Terminal](./images/rep01-cd.png)
+![Setup](./images/setup03-clone-terminal.png)
 
-- Run the command `make` to create the `assignment` files
+Download the curriculum as a zip file from [this link](https://github.com/zdelrosario/data-science-curriculum/archive/refs/heads/build.zip). Unzip this in your blank repository. Unzip the materials and copy them to your (empty) repository. Once you've done this, your repository folder should look like this:
 
-![Terminal](./images/rep01-make.png)
+![Setup](./images/setup04-contents.png)
 
-- Great job! Now you have all the assignment exercises for the course!
+Once you've copied over the materials, run the three following commands from your Terminal while inside your repository:
+
+`git add *`
+
+`git commit -m "initial commit"`
+
+`git push`
+
+If you do this successfully, you can refresh the repository page in your browser and see the following:
+
+![Setup](./images/setup05-success.png)
+
+Once you've gotten to this point, take a moment to look around the repository. The `exercises_sequenced` folder contains all of the Exercises for the course, while the `challenges` folder contains all of the challenges you will complete as your homework. You will commit your work to this repository then submit links on Canvas.
 
 *Aside*: Note that *Git* and *GitHub* are two different things! *Git* is a
 version control tool, while *GitHub* is a service that uses Git where you can host repositories. For instance, [GitLab](https://about.gitlab.com/) is another service where you can host Git repositories.
