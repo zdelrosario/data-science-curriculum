@@ -54,7 +54,7 @@ df_schedule <-
 
     "e-rep00-setup",                    0,  0,
     "e-rep01-intro-git",                0,  0,
-    "e-rep02-create",                   1,  0,
+    # "e-rep02-create",                   1,  0,
     "e-rep03-track",                    1,  0,
     "e-rep04-directories",             12,  2,
     "e-rep05-collab",                  14,  2,
