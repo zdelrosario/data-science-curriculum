@@ -152,7 +152,7 @@ df_holidays <- tribble(
 
 ```{r}
 df_instructional <- 
-  tibble(date = seq(day_start, day_end, by = "days")) %>% 
+  tibble(date = seq(date_start, date_end, by = "days")) %>% 
   ## Remove invalid days
   filter(
     # No weekends
