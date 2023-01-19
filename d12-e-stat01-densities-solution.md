@@ -253,7 +253,7 @@ rnorm(5)
 ```
 
 ```
-## [1] -0.44583504 -1.99706874  0.06447299 -1.45233349 -0.63199749
+## [1]  1.1934388  0.2973507 -0.6896291 -1.0235159  0.9477710
 ```
 
 What this means is we'll get a slightly different picture every time we draw a sample. **This is the challenge with randomness**: Since we could have drawn a different set of samples, we need to know the degree to which we can trust conclusions drawn from data. Being *statistically literate* means knowing how much to trust your data.
