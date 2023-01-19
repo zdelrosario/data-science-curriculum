@@ -72,22 +72,21 @@ together a number of
 [cheatsheets](https://rstudio.com/resources/cheatsheets/) to reference
 when doing data science. Some of the most important ones are:
 
+*Note*: These links often break! If they're not working, try checking the [Posit website](https://posit.co/resources/cheatsheets/), or just googling "Posit cheatsheets."
+
   - [Data
-    visualization](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
+    visualization](https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf)
   - [Data
-    transformation](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+    transformation](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf)
   - [Data
-    importing](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf)
+    importing](https://posit.co/wp-content/uploads/2022/10/data-import.pdf)
 
 Later, we will learn special tools for handling:
 
-  - [String
-    data](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf)
-  - [Dates and
-    times](https://github.com/rstudio/cheatsheets/raw/master/lubridate.pdf)
-  - [Factors](https://github.com/rstudio/cheatsheets/raw/master/factors.pdf)
-  - [R
-    Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+  - [String data](https://posit.co/wp-content/uploads/2022/10/strings-1.pdf)
+  - [Dates and times](https://posit.co/wp-content/uploads/2022/10/lubridate-1.pdf)
+  - [Factors](https://posit.co/wp-content/uploads/2022/10/factors-1.pdf)
+  - [R Markdown](https://posit.co/wp-content/uploads/2022/10/rmarkdown-1.pdf)
 
 # Exit Ticket
 
