@@ -45,6 +45,8 @@ Navigate to your repository (the one you made in `e-rep02-create`). If you don't
 
 Once you've updated your readme, you can click on the `Git` tab in RStudio to check changes in your repository.
 
+*Note*: The `Git` tab will only appear if you've opened a *project* in RStudio. You can do this by clicking the `Project` button in the top-right of RStudio and opening the `data-science-curriculum.Rproj` file in your repository. OR you can just use git through whatever interface you like best!
+
 ![New](./images/rep03-git.png)
 
 This is an alternative to using Git with the terminal. We'll work through an entire workflow of *commiting* and *pushing* our work to your GitHub repository.
