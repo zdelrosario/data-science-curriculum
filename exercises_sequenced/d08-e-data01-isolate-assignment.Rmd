@@ -26,7 +26,7 @@ We'll use the `nycflights13` dataset for this exercise; upon loading the
 package, the data are stored in the variable name `flights`. For instance:
 
 ```{r glimpse}
-flights %>% glimpse
+flights %>% glimpse()
 ```
 
 ### __q1__ Select all the variables whose name ends with `_time`.
