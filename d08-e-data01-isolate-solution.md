@@ -40,7 +40,7 @@ package, the data are stored in the variable name `flights`. For instance:
 
 
 ```r
-flights %>% glimpse
+flights %>% glimpse()
 ```
 
 ```
