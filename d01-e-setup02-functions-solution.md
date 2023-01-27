@@ -28,7 +28,7 @@ rnorm
 ```
 ## function (n, mean = 0, sd = 1) 
 ## .Call(C_rnorm, n, mean, sd)
-## <bytecode: 0x7fefbd42cf30>
+## <bytecode: 0x7fa83bc25b30>
 ## <environment: namespace:stats>
 ```
 
