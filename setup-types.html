@@ -980,7 +980,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">13</span> Setup: Types<a href="setup-types.html#setup-types" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Vectors can hold data of only one <em>type</em>. While this isn’t a course on computer science, there are some type “gotchas” to look out for when doing data science. This exercise will help us get ahead of those issues.</p>
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/1.2">Types</a></p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="setup-types.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="setup-types.html#cb85-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -994,12 +994,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- -------------------------------------------------- -->
 <div id="q1-describe-what-is-wrong-with-the-code-below." class="section level3 hasAnchor" number="13.1.1">
 <h3><span class="header-section-number">13.1.1</span> <strong>q1</strong> Describe what is wrong with the code below.<a href="setup-types.html#q1-describe-what-is-wrong-with-the-code-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="setup-types.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Describe what went wrong here</span></span>
-<span id="cb89-2"><a href="setup-types.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Set our airport</span></span>
-<span id="cb89-3"><a href="setup-types.html#cb89-3" aria-hidden="true" tabindex="-1"></a>airport <span class="ot">&lt;-</span> <span class="st">&quot;BOS&quot;</span></span>
-<span id="cb89-4"><a href="setup-types.html#cb89-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-5"><a href="setup-types.html#cb89-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Check our airport value</span></span>
-<span id="cb89-6"><a href="setup-types.html#cb89-6" aria-hidden="true" tabindex="-1"></a>airport <span class="sc">==</span> ATL</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="setup-types.html#cb89-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Describe what went wrong here</span></span>
+<span id="cb89-2"><a href="setup-types.html#cb89-2" tabindex="-1"></a><span class="do">## Set our airport</span></span>
+<span id="cb89-3"><a href="setup-types.html#cb89-3" tabindex="-1"></a>airport <span class="ot">&lt;-</span> <span class="st">&quot;BOS&quot;</span></span>
+<span id="cb89-4"><a href="setup-types.html#cb89-4" tabindex="-1"></a></span>
+<span id="cb89-5"><a href="setup-types.html#cb89-5" tabindex="-1"></a><span class="do">## Check our airport value</span></span>
+<span id="cb89-6"><a href="setup-types.html#cb89-6" tabindex="-1"></a>airport <span class="sc">==</span> ATL</span></code></pre></div>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li><code>ATL</code> (without quotes) is trying to refer to an object (variable); we would need to write <code>"ATL"</code> (with quotes) to produce a string.</li>
@@ -1018,18 +1018,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="q2-cast-the-following-vector-v_string-to-integers." class="section level3 hasAnchor" number="13.2.1">
 <h3><span class="header-section-number">13.2.1</span> <strong>q2</strong> Cast the following vector <code>v_string</code> to integers.<a href="setup-types.html#q2-cast-the-following-vector-v_string-to-integers." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="setup-types.html#cb90-1" aria-hidden="true" tabindex="-1"></a>v_string <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;00&quot;</span>, <span class="st">&quot;45&quot;</span>, <span class="st">&quot;90&quot;</span>)</span>
-<span id="cb90-2"><a href="setup-types.html#cb90-2" aria-hidden="true" tabindex="-1"></a>v_integer <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(v_string)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="setup-types.html#cb90-1" tabindex="-1"></a>v_string <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;00&quot;</span>, <span class="st">&quot;45&quot;</span>, <span class="st">&quot;90&quot;</span>)</span>
+<span id="cb90-2"><a href="setup-types.html#cb90-2" tabindex="-1"></a>v_integer <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(v_string)</span></code></pre></div>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="setup-types.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb91-2"><a href="setup-types.html#cb91-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb91-3"><a href="setup-types.html#cb91-3" aria-hidden="true" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb91-4"><a href="setup-types.html#cb91-4" aria-hidden="true" tabindex="-1"></a>                v_integer,</span>
-<span id="cb91-5"><a href="setup-types.html#cb91-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">c</span>(0L, 45L, 90L)</span>
-<span id="cb91-6"><a href="setup-types.html#cb91-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb91-7"><a href="setup-types.html#cb91-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="setup-types.html#cb91-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb91-2"><a href="setup-types.html#cb91-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb91-3"><a href="setup-types.html#cb91-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb91-4"><a href="setup-types.html#cb91-4" tabindex="-1"></a>                v_integer,</span>
+<span id="cb91-5"><a href="setup-types.html#cb91-5" tabindex="-1"></a>                <span class="fu">c</span>(0L, 45L, 90L)</span>
+<span id="cb91-6"><a href="setup-types.html#cb91-6" tabindex="-1"></a>  )</span>
+<span id="cb91-7"><a href="setup-types.html#cb91-7" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="setup-types.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="setup-types.html#cb93-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great job!&quot;</code></pre>
 <!-- include-exit-ticket -->
 

@@ -986,7 +986,7 @@ actually based on these guidelines!</p>
 <p><em>Reading</em>: <a href="https://style.tidyverse.org/">tidyverse style guide</a>.
 <em>Topics</em>: <a href="https://style.tidyverse.org/syntax.html#spacing">Spacing</a> (subsection only), <a href="https://style.tidyverse.org/pipes.html">Pipes</a> (whole section)
 <em>Reading Time</em>: ~ 10 minutes</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="communication-code-style.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="communication-code-style.html#cb34-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -998,8 +998,8 @@ actually based on these guidelines!</p>
 <div id="q1-re-write-according-to-the-style-guide" class="section level3 hasAnchor" number="10.0.1">
 <h3><span class="header-section-number">10.0.1</span> <strong>q1</strong> Re-write according to the style guide<a href="communication-code-style.html#q1-re-write-according-to-the-style-guide" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: The pipe operator <code>%&gt;%</code> will help make this code more readable.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="communication-code-style.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Original code; hard to read</span></span>
-<span id="cb38-2"><a href="communication-code-style.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="fu">group_by</span>(diamonds, cut), <span class="at">mean_price =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="communication-code-style.html#cb38-1" tabindex="-1"></a><span class="do">## Original code; hard to read</span></span>
+<span id="cb38-2"><a href="communication-code-style.html#cb38-2" tabindex="-1"></a><span class="fu">summarize</span>(<span class="fu">group_by</span>(diamonds, cut), <span class="at">mean_price =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 2
 ##   cut       mean_price
 ##   &lt;ord&gt;          &lt;dbl&gt;
@@ -1008,11 +1008,11 @@ actually based on these guidelines!</p>
 ## 3 Very Good      3982.
 ## 4 Premium        4584.
 ## 5 Ideal          3458.</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="communication-code-style.html#cb40-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb40-2"><a href="communication-code-style.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
-<span id="cb40-3"><a href="communication-code-style.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb40-4"><a href="communication-code-style.html#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_price =</span> <span class="fu">mean</span>(price)</span>
-<span id="cb40-5"><a href="communication-code-style.html#cb40-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="communication-code-style.html#cb40-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="communication-code-style.html#cb40-2" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="communication-code-style.html#cb40-3" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb40-4"><a href="communication-code-style.html#cb40-4" tabindex="-1"></a>    <span class="at">mean_price =</span> <span class="fu">mean</span>(price)</span>
+<span id="cb40-5"><a href="communication-code-style.html#cb40-5" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 2
 ##   cut       mean_price
 ##   &lt;ord&gt;          &lt;dbl&gt;
@@ -1025,14 +1025,14 @@ actually based on these guidelines!</p>
 <div id="q2-re-write-according-to-the-style-guide" class="section level3 hasAnchor" number="10.0.2">
 <h3><span class="header-section-number">10.0.2</span> <strong>q2</strong> Re-write according to the style guide<a href="communication-code-style.html#q2-re-write-according-to-the-style-guide" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: There are <em>particular rules</em> about spacing!</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="communication-code-style.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: You can copy this code to the chunk below</span></span>
-<span id="cb42-2"><a href="communication-code-style.html#cb42-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb42-3"><a href="communication-code-style.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sepal.Area=</span>Sepal.Length<span class="sc">*</span>Sepal.Width) <span class="sc">%&gt;%</span></span>
-<span id="cb42-4"><a href="communication-code-style.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>( Species ) <span class="sc">%&gt;%</span></span>
-<span id="cb42-5"><a href="communication-code-style.html#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_if</span>(is.numeric,mean)<span class="sc">%&gt;%</span></span>
-<span id="cb42-6"><a href="communication-code-style.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb42-7"><a href="communication-code-style.html#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>( <span class="at">names_to=</span><span class="st">&quot;measure&quot;</span>,<span class="at">values_to=</span><span class="st">&quot;value&quot;</span>,<span class="at">cols=</span><span class="sc">-</span>Species ) <span class="sc">%&gt;%</span></span>
-<span id="cb42-8"><a href="communication-code-style.html#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(value )</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="communication-code-style.html#cb42-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: You can copy this code to the chunk below</span></span>
+<span id="cb42-2"><a href="communication-code-style.html#cb42-2" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb42-3"><a href="communication-code-style.html#cb42-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sepal.Area=</span>Sepal.Length<span class="sc">*</span>Sepal.Width) <span class="sc">%&gt;%</span></span>
+<span id="cb42-4"><a href="communication-code-style.html#cb42-4" tabindex="-1"></a>  <span class="fu">group_by</span>( Species ) <span class="sc">%&gt;%</span></span>
+<span id="cb42-5"><a href="communication-code-style.html#cb42-5" tabindex="-1"></a>  <span class="fu">summarize_if</span>(is.numeric,mean)<span class="sc">%&gt;%</span></span>
+<span id="cb42-6"><a href="communication-code-style.html#cb42-6" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb42-7"><a href="communication-code-style.html#cb42-7" tabindex="-1"></a>  <span class="fu">pivot_longer</span>( <span class="at">names_to=</span><span class="st">&quot;measure&quot;</span>,<span class="at">values_to=</span><span class="st">&quot;value&quot;</span>,<span class="at">cols=</span><span class="sc">-</span>Species ) <span class="sc">%&gt;%</span></span>
+<span id="cb42-8"><a href="communication-code-style.html#cb42-8" tabindex="-1"></a>  <span class="fu">arrange</span>(value )</span></code></pre></div>
 <pre><code>## # A tibble: 15 × 3
 ##    Species    measure       value
 ##    &lt;fct&gt;      &lt;chr&gt;         &lt;dbl&gt;
@@ -1051,13 +1051,13 @@ actually based on these guidelines!</p>
 ## 13 versicolor Sepal.Area   16.5  
 ## 14 setosa     Sepal.Area   17.3  
 ## 15 virginica  Sepal.Area   19.7</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="communication-code-style.html#cb44-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb44-2"><a href="communication-code-style.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sepal.Area =</span> Sepal.Length <span class="sc">*</span> Sepal.Width) <span class="sc">%&gt;%</span></span>
-<span id="cb44-3"><a href="communication-code-style.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
-<span id="cb44-4"><a href="communication-code-style.html#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_if</span>(is.numeric, mean) <span class="sc">%&gt;%</span></span>
-<span id="cb44-5"><a href="communication-code-style.html#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb44-6"><a href="communication-code-style.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">&quot;measure&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>, <span class="at">cols =</span> <span class="sc">-</span>Species) <span class="sc">%&gt;%</span></span>
-<span id="cb44-7"><a href="communication-code-style.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(value)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="communication-code-style.html#cb44-1" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="communication-code-style.html#cb44-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sepal.Area =</span> Sepal.Length <span class="sc">*</span> Sepal.Width) <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="communication-code-style.html#cb44-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
+<span id="cb44-4"><a href="communication-code-style.html#cb44-4" tabindex="-1"></a>  <span class="fu">summarize_if</span>(is.numeric, mean) <span class="sc">%&gt;%</span></span>
+<span id="cb44-5"><a href="communication-code-style.html#cb44-5" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb44-6"><a href="communication-code-style.html#cb44-6" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">&quot;measure&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>, <span class="at">cols =</span> <span class="sc">-</span>Species) <span class="sc">%&gt;%</span></span>
+<span id="cb44-7"><a href="communication-code-style.html#cb44-7" tabindex="-1"></a>  <span class="fu">arrange</span>(value)</span></code></pre></div>
 <pre><code>## # A tibble: 15 × 3
 ##    Species    measure       value
 ##    &lt;fct&gt;      &lt;chr&gt;         &lt;dbl&gt;
@@ -1080,23 +1080,23 @@ actually based on these guidelines!</p>
 <div id="q3-re-write-according-to-the-style-guide" class="section level3 hasAnchor" number="10.0.3">
 <h3><span class="header-section-number">10.0.3</span> <strong>q3</strong> Re-write according to the style guide<a href="communication-code-style.html#q3-re-write-according-to-the-style-guide" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: What do we do about long lines?</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="communication-code-style.html#cb46-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb46-2"><a href="communication-code-style.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
-<span id="cb46-3"><a href="communication-code-style.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Sepal.Length =</span> <span class="fu">mean</span>(Sepal.Length), <span class="at">Sepal.Width =</span> <span class="fu">mean</span>(Sepal.Width), <span class="at">Petal.Length =</span> <span class="fu">mean</span>(Petal.Length), <span class="at">Petal.Width =</span> <span class="fu">mean</span>(Petal.Width))</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="communication-code-style.html#cb46-1" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="communication-code-style.html#cb46-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="communication-code-style.html#cb46-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Sepal.Length =</span> <span class="fu">mean</span>(Sepal.Length), <span class="at">Sepal.Width =</span> <span class="fu">mean</span>(Sepal.Width), <span class="at">Petal.Length =</span> <span class="fu">mean</span>(Petal.Length), <span class="at">Petal.Width =</span> <span class="fu">mean</span>(Petal.Width))</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 5
 ##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
 ## 1 setosa             5.01        3.43         1.46       0.246
 ## 2 versicolor         5.94        2.77         4.26       1.33 
 ## 3 virginica          6.59        2.97         5.55       2.03</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="communication-code-style.html#cb48-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb48-2"><a href="communication-code-style.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
-<span id="cb48-3"><a href="communication-code-style.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb48-4"><a href="communication-code-style.html#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sepal.Length =</span> <span class="fu">mean</span>(Sepal.Length),</span>
-<span id="cb48-5"><a href="communication-code-style.html#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sepal.Width  =</span> <span class="fu">mean</span>(Sepal.Width),</span>
-<span id="cb48-6"><a href="communication-code-style.html#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Petal.Length =</span> <span class="fu">mean</span>(Petal.Length),</span>
-<span id="cb48-7"><a href="communication-code-style.html#cb48-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Petal.Width  =</span> <span class="fu">mean</span>(Petal.Width)</span>
-<span id="cb48-8"><a href="communication-code-style.html#cb48-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="communication-code-style.html#cb48-1" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb48-2"><a href="communication-code-style.html#cb48-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href="communication-code-style.html#cb48-3" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb48-4"><a href="communication-code-style.html#cb48-4" tabindex="-1"></a>    <span class="at">Sepal.Length =</span> <span class="fu">mean</span>(Sepal.Length),</span>
+<span id="cb48-5"><a href="communication-code-style.html#cb48-5" tabindex="-1"></a>    <span class="at">Sepal.Width  =</span> <span class="fu">mean</span>(Sepal.Width),</span>
+<span id="cb48-6"><a href="communication-code-style.html#cb48-6" tabindex="-1"></a>    <span class="at">Petal.Length =</span> <span class="fu">mean</span>(Petal.Length),</span>
+<span id="cb48-7"><a href="communication-code-style.html#cb48-7" tabindex="-1"></a>    <span class="at">Petal.Width  =</span> <span class="fu">mean</span>(Petal.Width)</span>
+<span id="cb48-8"><a href="communication-code-style.html#cb48-8" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 5
 ##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
@@ -1105,32 +1105,32 @@ actually based on these guidelines!</p>
 ## 3 virginica          6.59        2.97         5.55       2.03</code></pre>
 <p>The following is an <em>addition</em> I’m making to the “effective styleguide” for the
 class: Rather than doing this:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="communication-code-style.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit, just an example</span></span>
-<span id="cb50-2"><a href="communication-code-style.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb50-3"><a href="communication-code-style.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="communication-code-style.html#cb50-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit, just an example</span></span>
+<span id="cb50-2"><a href="communication-code-style.html#cb50-2" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="communication-code-style.html#cb50-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d03-e-comm00-style-solution_files/figure-html/nopipe-1.png" width="672" /></p>
 <p>Instead, do this:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="communication-code-style.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit, just an example</span></span>
-<span id="cb51-2"><a href="communication-code-style.html#cb51-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb51-3"><a href="communication-code-style.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb51-4"><a href="communication-code-style.html#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="communication-code-style.html#cb51-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit, just an example</span></span>
+<span id="cb51-2"><a href="communication-code-style.html#cb51-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb51-3"><a href="communication-code-style.html#cb51-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb51-4"><a href="communication-code-style.html#cb51-4" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d03-e-comm00-style-solution_files/figure-html/withpipe-1.png" width="672" /></p>
 <p>This may seem like a small difference (it is), but getting in this habit will
 pay off when we start combining data operations with plotting; for instance:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="communication-code-style.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit, just an example</span></span>
-<span id="cb52-2"><a href="communication-code-style.html#cb52-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb52-3"><a href="communication-code-style.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fl">1.5</span> <span class="sc">&lt;=</span> carat, carat <span class="sc">&lt;=</span> <span class="fl">2.0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb52-4"><a href="communication-code-style.html#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-5"><a href="communication-code-style.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb52-6"><a href="communication-code-style.html#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="communication-code-style.html#cb52-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit, just an example</span></span>
+<span id="cb52-2"><a href="communication-code-style.html#cb52-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb52-3"><a href="communication-code-style.html#cb52-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fl">1.5</span> <span class="sc">&lt;=</span> carat, carat <span class="sc">&lt;=</span> <span class="fl">2.0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb52-4"><a href="communication-code-style.html#cb52-4" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="communication-code-style.html#cb52-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb52-6"><a href="communication-code-style.html#cb52-6" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d03-e-comm00-style-solution_files/figure-html/withpipe-ops-1.png" width="672" /></p>
 <p>Getting in the habit of “putting the data first” will make it easier for you to
 add preprocessing steps. Also, you can easily “disable” the plot to inspect your
 preprocessing while debugging; that is:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="communication-code-style.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit, just an example</span></span>
-<span id="cb53-2"><a href="communication-code-style.html#cb53-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb53-3"><a href="communication-code-style.html#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fl">1.5</span> <span class="sc">&lt;=</span> carat, carat <span class="sc">&lt;=</span> <span class="fl">2.0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb53-4"><a href="communication-code-style.html#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="communication-code-style.html#cb53-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit, just an example</span></span>
+<span id="cb53-2"><a href="communication-code-style.html#cb53-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="communication-code-style.html#cb53-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fl">1.5</span> <span class="sc">&lt;=</span> carat, carat <span class="sc">&lt;=</span> <span class="fl">2.0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="communication-code-style.html#cb53-4" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 4,346
 ## Columns: 10
 ## $ carat   &lt;dbl&gt; 1.50, 1.52, 1.52, 1.50, 1.50, 1.50, 1.51, 1.52, 1.52, 1.50, 1.…
@@ -1143,36 +1143,36 @@ preprocessing while debugging; that is:</p>
 ## $ x       &lt;dbl&gt; 7.26, 7.53, 7.53, 6.99, 7.56, 7.40, 7.29, 7.18, 7.43, 7.37, 7.…
 ## $ y       &lt;dbl&gt; 7.09, 7.42, 7.42, 6.81, 7.39, 7.28, 7.17, 7.13, 7.35, 7.26, 7.…
 ## $ z       &lt;dbl&gt; 4.70, 4.28, 4.28, 4.78, 4.29, 4.42, 4.63, 4.65, 4.52, 4.47, 4.…</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="communication-code-style.html#cb55-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## ggplot(aes(carat, price)) +</span></span>
-<span id="cb55-2"><a href="communication-code-style.html#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">## geom_point()</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="communication-code-style.html#cb55-1" tabindex="-1"></a>  <span class="do">## ggplot(aes(carat, price)) +</span></span>
+<span id="cb55-2"><a href="communication-code-style.html#cb55-2" tabindex="-1"></a>  <span class="do">## geom_point()</span></span></code></pre></div>
 <p>I’ll enforce this “data first” style, but after this class you are (of course)
 free to write code however you like!</p>
 </div>
 <div id="q4-re-write-according-to-the-style-guide" class="section level3 hasAnchor" number="10.0.4">
 <h3><span class="header-section-number">10.0.4</span> <strong>q4</strong> Re-write according to the style guide<a href="communication-code-style.html#q4-re-write-according-to-the-style-guide" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: Put the data first!</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="communication-code-style.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb56-2"><a href="communication-code-style.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  iris <span class="sc">%&gt;%</span></span>
-<span id="cb56-3"><a href="communication-code-style.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb56-4"><a href="communication-code-style.html#cb56-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;Part&quot;</span>, <span class="st">&quot;.value&quot;</span>),</span>
-<span id="cb56-5"><a href="communication-code-style.html#cb56-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>,</span>
-<span id="cb56-6"><a href="communication-code-style.html#cb56-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>Species</span>
-<span id="cb56-7"><a href="communication-code-style.html#cb56-7" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb56-8"><a href="communication-code-style.html#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(Width, Length, <span class="at">color =</span> Part)</span>
-<span id="cb56-9"><a href="communication-code-style.html#cb56-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb56-10"><a href="communication-code-style.html#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb56-11"><a href="communication-code-style.html#cb56-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="communication-code-style.html#cb56-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb56-2"><a href="communication-code-style.html#cb56-2" tabindex="-1"></a>  iris <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="communication-code-style.html#cb56-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb56-4"><a href="communication-code-style.html#cb56-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;Part&quot;</span>, <span class="st">&quot;.value&quot;</span>),</span>
+<span id="cb56-5"><a href="communication-code-style.html#cb56-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>,</span>
+<span id="cb56-6"><a href="communication-code-style.html#cb56-6" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>Species</span>
+<span id="cb56-7"><a href="communication-code-style.html#cb56-7" tabindex="-1"></a>  ),</span>
+<span id="cb56-8"><a href="communication-code-style.html#cb56-8" tabindex="-1"></a>  <span class="fu">aes</span>(Width, Length, <span class="at">color =</span> Part)</span>
+<span id="cb56-9"><a href="communication-code-style.html#cb56-9" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb56-10"><a href="communication-code-style.html#cb56-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb56-11"><a href="communication-code-style.html#cb56-11" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species)</span></code></pre></div>
 <p><img src="d03-e-comm00-style-solution_files/figure-html/q4-description-1.png" width="672" /></p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="communication-code-style.html#cb57-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb57-2"><a href="communication-code-style.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb57-3"><a href="communication-code-style.html#cb57-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;Part&quot;</span>, <span class="st">&quot;.value&quot;</span>),</span>
-<span id="cb57-4"><a href="communication-code-style.html#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>,</span>
-<span id="cb57-5"><a href="communication-code-style.html#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>Species</span>
-<span id="cb57-6"><a href="communication-code-style.html#cb57-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb57-7"><a href="communication-code-style.html#cb57-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-8"><a href="communication-code-style.html#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Width, Length, <span class="at">color =</span> Part)) <span class="sc">+</span></span>
-<span id="cb57-9"><a href="communication-code-style.html#cb57-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb57-10"><a href="communication-code-style.html#cb57-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="communication-code-style.html#cb57-1" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="communication-code-style.html#cb57-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb57-3"><a href="communication-code-style.html#cb57-3" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;Part&quot;</span>, <span class="st">&quot;.value&quot;</span>),</span>
+<span id="cb57-4"><a href="communication-code-style.html#cb57-4" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>,</span>
+<span id="cb57-5"><a href="communication-code-style.html#cb57-5" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>Species</span>
+<span id="cb57-6"><a href="communication-code-style.html#cb57-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb57-7"><a href="communication-code-style.html#cb57-7" tabindex="-1"></a></span>
+<span id="cb57-8"><a href="communication-code-style.html#cb57-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Width, Length, <span class="at">color =</span> Part)) <span class="sc">+</span></span>
+<span id="cb57-9"><a href="communication-code-style.html#cb57-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb57-10"><a href="communication-code-style.html#cb57-10" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species)</span></code></pre></div>
 <p><img src="d03-e-comm00-style-solution_files/figure-html/q4-task-1.png" width="672" /></p>
 <!-- include-exit-ticket -->
 

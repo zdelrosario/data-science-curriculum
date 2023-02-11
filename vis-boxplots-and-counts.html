@@ -982,7 +982,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/3.4">Boxplots and Counts</a>
 <em>Topics</em>: (All topics)
 <em>Reading Time</em>: ~20 minutes</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="vis-boxplots-and-counts.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="vis-boxplots-and-counts.html#cb300-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -999,10 +999,10 @@ practice this idea in a number of ways.</p>
 <p>the settings in your cut and document your observations.</p>
 <p><em>Hint</em>: Recall that we learned about <code>cut_interval, cut_number, cut_width</code>. Take
 your pick!</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="vis-boxplots-and-counts.html#cb304-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb304-2"><a href="vis-boxplots-and-counts.html#cb304-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">carat_cut =</span> <span class="fu">cut_width</span>(carat, <span class="at">width =</span> <span class="fl">0.5</span>, <span class="at">boundary =</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb304-3"><a href="vis-boxplots-and-counts.html#cb304-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat_cut, <span class="at">y =</span> price)) <span class="sc">+</span></span>
-<span id="cb304-4"><a href="vis-boxplots-and-counts.html#cb304-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="vis-boxplots-and-counts.html#cb304-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb304-2"><a href="vis-boxplots-and-counts.html#cb304-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">carat_cut =</span> <span class="fu">cut_width</span>(carat, <span class="at">width =</span> <span class="fl">0.5</span>, <span class="at">boundary =</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb304-3"><a href="vis-boxplots-and-counts.html#cb304-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat_cut, <span class="at">y =</span> price)) <span class="sc">+</span></span>
+<span id="cb304-4"><a href="vis-boxplots-and-counts.html#cb304-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <p><img src="d15-e-vis03-boxplots-solution_files/figure-html/q1-task-1.png" width="672" /></p>
 <p><strong>Observations</strong>
 - Price tends to increase with carat
@@ -1013,28 +1013,28 @@ your pick!</p>
 </div>
 <div id="q2-the-following-code-visualizes-the-count-of-diamonds-of-all-carats-according-to-their-cut-and-color.-modify-the-code-to-consider-only-diamonds-with-carat-2.-does-the-most-common-group-of-cut-and-color-change" class="section level3 hasAnchor" number="25.0.2">
 <h3><span class="header-section-number">25.0.2</span> <strong>q2</strong> The following code visualizes the count of diamonds of <em>all</em> carats according to their cut and color. Modify the code to consider <em>only</em> diamonds with <code>carat &gt;= 2</code>. Does the most common group of cut and color change?<a href="vis-boxplots-and-counts.html#q2-the-following-code-visualizes-the-count-of-diamonds-of-all-carats-according-to-their-cut-and-color.-modify-the-code-to-consider-only-diamonds-with-carat-2.-does-the-most-common-group-of-cut-and-color-change" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="vis-boxplots-and-counts.html#cb305-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify; run and inspect</span></span>
-<span id="cb305-2"><a href="vis-boxplots-and-counts.html#cb305-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb305-3"><a href="vis-boxplots-and-counts.html#cb305-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(cut, color) <span class="sc">%&gt;%</span></span>
-<span id="cb305-4"><a href="vis-boxplots-and-counts.html#cb305-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, color, <span class="at">fill =</span> n)) <span class="sc">+</span></span>
-<span id="cb305-5"><a href="vis-boxplots-and-counts.html#cb305-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="vis-boxplots-and-counts.html#cb305-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify; run and inspect</span></span>
+<span id="cb305-2"><a href="vis-boxplots-and-counts.html#cb305-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb305-3"><a href="vis-boxplots-and-counts.html#cb305-3" tabindex="-1"></a>  <span class="fu">count</span>(cut, color) <span class="sc">%&gt;%</span></span>
+<span id="cb305-4"><a href="vis-boxplots-and-counts.html#cb305-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, color, <span class="at">fill =</span> n)) <span class="sc">+</span></span>
+<span id="cb305-5"><a href="vis-boxplots-and-counts.html#cb305-5" tabindex="-1"></a>  <span class="fu">geom_tile</span>()</span></code></pre></div>
 <p><img src="d15-e-vis03-boxplots-solution_files/figure-html/q2-ref-1.png" width="672" /></p>
 <p>Modify the following code:</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="vis-boxplots-and-counts.html#cb306-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb306-2"><a href="vis-boxplots-and-counts.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&gt;=</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb306-3"><a href="vis-boxplots-and-counts.html#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(cut, color) <span class="sc">%&gt;%</span></span>
-<span id="cb306-4"><a href="vis-boxplots-and-counts.html#cb306-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, color, <span class="at">fill =</span> n)) <span class="sc">+</span></span>
-<span id="cb306-5"><a href="vis-boxplots-and-counts.html#cb306-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="vis-boxplots-and-counts.html#cb306-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb306-2"><a href="vis-boxplots-and-counts.html#cb306-2" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&gt;=</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb306-3"><a href="vis-boxplots-and-counts.html#cb306-3" tabindex="-1"></a>  <span class="fu">count</span>(cut, color) <span class="sc">%&gt;%</span></span>
+<span id="cb306-4"><a href="vis-boxplots-and-counts.html#cb306-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, color, <span class="at">fill =</span> n)) <span class="sc">+</span></span>
+<span id="cb306-5"><a href="vis-boxplots-and-counts.html#cb306-5" tabindex="-1"></a>  <span class="fu">geom_tile</span>()</span></code></pre></div>
 <p><img src="d15-e-vis03-boxplots-solution_files/figure-html/q2-task-1.png" width="672" /></p>
 <p><strong>Observations</strong>:
 - Yes, it used to be <code>G, Ideal</code>, but is now <code>I, Premium</code></p>
 </div>
 <div id="q3-the-following-plot-has-overlapping-x-axis-labels.-use-a-verb-from-the-reading-to-flip-the-coordinates-and-improve-readability." class="section level3 hasAnchor" number="25.0.3">
 <h3><span class="header-section-number">25.0.3</span> <strong>q3</strong> The following plot has overlapping x-axis labels. Use a verb from the reading to <code>flip</code> the coordinates and improve readability.<a href="vis-boxplots-and-counts.html#q3-the-following-plot-has-overlapping-x-axis-labels.-use-a-verb-from-the-reading-to-flip-the-coordinates-and-improve-readability." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="vis-boxplots-and-counts.html#cb307-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb307-2"><a href="vis-boxplots-and-counts.html#cb307-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(manufacturer, hwy)) <span class="sc">+</span></span>
-<span id="cb307-3"><a href="vis-boxplots-and-counts.html#cb307-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb307-4"><a href="vis-boxplots-and-counts.html#cb307-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="vis-boxplots-and-counts.html#cb307-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb307-2"><a href="vis-boxplots-and-counts.html#cb307-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(manufacturer, hwy)) <span class="sc">+</span></span>
+<span id="cb307-3"><a href="vis-boxplots-and-counts.html#cb307-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb307-4"><a href="vis-boxplots-and-counts.html#cb307-4" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
 <p><img src="d15-e-vis03-boxplots-solution_files/figure-html/q3-task-1.png" width="672" /></p>
 <p>This is a simple—but important—trick to remember when visualizing data with many categories.</p>
 <!-- include-exit-ticket -->

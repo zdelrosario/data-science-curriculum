@@ -981,7 +981,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Purpose</em>: You’ve probably heard that a “control” is important for doing science. If you’re lucky, you may have also heard about randomization. These two ideas are the <em>backbone</em> of sound data collection. In this exercise, you’ll learn the basics about how to plan data collection.</p>
 <p><strong>This is probably <strong>the most important</strong> lesson in this entire class,</strong> so I hope you do this exercise very carefully!</p>
 <p><em>Reading</em>: (None, this is the reading)</p>
-<div class="sourceCode" id="cb1190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1190-1"><a href="stats-randomization.html#cb1190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb1190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1190-1"><a href="stats-randomization.html#cb1190-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -990,72 +990,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb1194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1194-1"><a href="stats-randomization.html#cb1194-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Don&#39;t edit this; this sets up the example</span></span>
-<span id="cb1194-2"><a href="stats-randomization.html#cb1194-2" aria-hidden="true" tabindex="-1"></a>simulate_yield <span class="ot">&lt;-</span> <span class="cf">function</span>(v) {</span>
-<span id="cb1194-3"><a href="stats-randomization.html#cb1194-3" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Check assertions</span></span>
-<span id="cb1194-4"><a href="stats-randomization.html#cb1194-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(v) <span class="sc">!=</span> <span class="dv">6</span>) {</span>
-<span id="cb1194-5"><a href="stats-randomization.html#cb1194-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Design must be a vector of length 6&quot;</span>)</span>
-<span id="cb1194-6"><a href="stats-randomization.html#cb1194-6" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1194-7"><a href="stats-randomization.html#cb1194-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">setdiff</span>(v, <span class="fu">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;C&quot;</span>)) <span class="sc">!=</span> <span class="dv">0</span>)) {</span>
-<span id="cb1194-8"><a href="stats-randomization.html#cb1194-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Design must be a vector with &#39;T&#39; and &#39;C&#39; characters only&quot;</span>)</span>
-<span id="cb1194-9"><a href="stats-randomization.html#cb1194-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1194-10"><a href="stats-randomization.html#cb1194-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">setdiff</span>(<span class="fu">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;C&quot;</span>), v)) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb1194-11"><a href="stats-randomization.html#cb1194-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Design must contain at least one &#39;T&#39; and at least one &#39;C&#39;&quot;</span>)</span>
-<span id="cb1194-12"><a href="stats-randomization.html#cb1194-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1194-13"><a href="stats-randomization.html#cb1194-13" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Simulate data</span></span>
-<span id="cb1194-14"><a href="stats-randomization.html#cb1194-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">condition =</span> v) <span class="sc">%&gt;%</span></span>
-<span id="cb1194-15"><a href="stats-randomization.html#cb1194-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb1194-16"><a href="stats-randomization.html#cb1194-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">condition =</span> <span class="fu">fct_relevel</span>(condition, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;C&quot;</span>),</span>
-<span id="cb1194-17"><a href="stats-randomization.html#cb1194-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot =</span> <span class="fu">row_number</span>(),</span>
-<span id="cb1194-18"><a href="stats-randomization.html#cb1194-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">yield =</span> <span class="fu">if_else</span>(condition <span class="sc">==</span> <span class="st">&quot;T&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="sc">+</span> plot <span class="sc">/</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb1194-19"><a href="stats-randomization.html#cb1194-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1194-20"><a href="stats-randomization.html#cb1194-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1194-1"><a href="stats-randomization.html#cb1194-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Don&#39;t edit this; this sets up the example</span></span>
+<span id="cb1194-2"><a href="stats-randomization.html#cb1194-2" tabindex="-1"></a>simulate_yield <span class="ot">&lt;-</span> <span class="cf">function</span>(v) {</span>
+<span id="cb1194-3"><a href="stats-randomization.html#cb1194-3" tabindex="-1"></a>  <span class="do">## Check assertions</span></span>
+<span id="cb1194-4"><a href="stats-randomization.html#cb1194-4" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(v) <span class="sc">!=</span> <span class="dv">6</span>) {</span>
+<span id="cb1194-5"><a href="stats-randomization.html#cb1194-5" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Design must be a vector of length 6&quot;</span>)</span>
+<span id="cb1194-6"><a href="stats-randomization.html#cb1194-6" tabindex="-1"></a>  }</span>
+<span id="cb1194-7"><a href="stats-randomization.html#cb1194-7" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">setdiff</span>(v, <span class="fu">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;C&quot;</span>)) <span class="sc">!=</span> <span class="dv">0</span>)) {</span>
+<span id="cb1194-8"><a href="stats-randomization.html#cb1194-8" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Design must be a vector with &#39;T&#39; and &#39;C&#39; characters only&quot;</span>)</span>
+<span id="cb1194-9"><a href="stats-randomization.html#cb1194-9" tabindex="-1"></a>  }</span>
+<span id="cb1194-10"><a href="stats-randomization.html#cb1194-10" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">setdiff</span>(<span class="fu">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;C&quot;</span>), v)) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1194-11"><a href="stats-randomization.html#cb1194-11" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Design must contain at least one &#39;T&#39; and at least one &#39;C&#39;&quot;</span>)</span>
+<span id="cb1194-12"><a href="stats-randomization.html#cb1194-12" tabindex="-1"></a>  }</span>
+<span id="cb1194-13"><a href="stats-randomization.html#cb1194-13" tabindex="-1"></a>  <span class="do">## Simulate data</span></span>
+<span id="cb1194-14"><a href="stats-randomization.html#cb1194-14" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">condition =</span> v) <span class="sc">%&gt;%</span></span>
+<span id="cb1194-15"><a href="stats-randomization.html#cb1194-15" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb1194-16"><a href="stats-randomization.html#cb1194-16" tabindex="-1"></a>      <span class="at">condition =</span> <span class="fu">fct_relevel</span>(condition, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;C&quot;</span>),</span>
+<span id="cb1194-17"><a href="stats-randomization.html#cb1194-17" tabindex="-1"></a>      <span class="at">plot =</span> <span class="fu">row_number</span>(),</span>
+<span id="cb1194-18"><a href="stats-randomization.html#cb1194-18" tabindex="-1"></a>      <span class="at">yield =</span> <span class="fu">if_else</span>(condition <span class="sc">==</span> <span class="st">&quot;T&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="sc">+</span> plot <span class="sc">/</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb1194-19"><a href="stats-randomization.html#cb1194-19" tabindex="-1"></a>    )</span>
+<span id="cb1194-20"><a href="stats-randomization.html#cb1194-20" tabindex="-1"></a>}</span></code></pre></div>
 <div id="an-example-fertilizer-and-crop-yield" class="section level2 hasAnchor" number="61.1">
 <h2><span class="header-section-number">61.1</span> An Example: Fertilizer and Crop Yield<a href="stats-randomization.html#an-example-fertilizer-and-crop-yield" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It’s difficult to explain the ideas behind data collection without talking about data to collect, so let’s consider a specific example:</p>
 <p>Imagine we’re testing a fertilizer, and we want to know how much it affects the yield of a specific crop. We have access to a farm, which we section off into six plots. In order to determine the effect the fertilizer has, we need to add fertilizer to some plots, and leave other plots without fertilizer (to serve as a comparison). In scientific jargon, these choices are referred to as the “treatment” and “control”. The treatment will have the effect we wish to study, while the control serves as a baseline for a meaningful (quantitative) comparison.</p>
 <p>The code below selects a simple arrangement of treatment and control plots.</p>
-<div class="sourceCode" id="cb1195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1195-1"><a href="stats-randomization.html#cb1195-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Define the sequence of treatment (T) and control (C) plots</span></span>
-<span id="cb1195-2"><a href="stats-randomization.html#cb1195-2" aria-hidden="true" tabindex="-1"></a>experimental_design <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1195-1"><a href="stats-randomization.html#cb1195-1" tabindex="-1"></a><span class="do">## Define the sequence of treatment (T) and control (C) plots</span></span>
+<span id="cb1195-2"><a href="stats-randomization.html#cb1195-2" tabindex="-1"></a>experimental_design <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>)</span></code></pre></div>
 <p>In statistics, the word “design” refers to the “design of <em>data collection</em>”. The purposeful planning of data collection is called <em>statistical design of experiments</em>.</p>
 </div>
 <div id="visualize-the-scenario" class="section level2 hasAnchor" number="61.2">
 <h2><span class="header-section-number">61.2</span> Visualize the Scenario<a href="stats-randomization.html#visualize-the-scenario" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The following code visualizes the scenario: how experimental conditions are arranged spatially on our test farm.</p>
-<div class="sourceCode" id="cb1196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1196-1"><a href="stats-randomization.html#cb1196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb1196-2"><a href="stats-randomization.html#cb1196-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">condition =</span> experimental_design,</span>
-<span id="cb1196-3"><a href="stats-randomization.html#cb1196-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(experimental_design)</span>
-<span id="cb1196-4"><a href="stats-randomization.html#cb1196-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb1196-5"><a href="stats-randomization.html#cb1196-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plot, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb1196-6"><a href="stats-randomization.html#cb1196-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(</span>
-<span id="cb1196-7"><a href="stats-randomization.html#cb1196-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> condition, <span class="at">fill =</span> condition),</span>
-<span id="cb1196-8"><a href="stats-randomization.html#cb1196-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">10</span></span>
-<span id="cb1196-9"><a href="stats-randomization.html#cb1196-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1196-10"><a href="stats-randomization.html#cb1196-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1196-11"><a href="stats-randomization.html#cb1196-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb1196-12"><a href="stats-randomization.html#cb1196-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb1196-13"><a href="stats-randomization.html#cb1196-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb1196-14"><a href="stats-randomization.html#cb1196-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1196-15"><a href="stats-randomization.html#cb1196-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1196-16"><a href="stats-randomization.html#cb1196-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Plot of Land&quot;</span>,</span>
-<span id="cb1196-17"><a href="stats-randomization.html#cb1196-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb1196-18"><a href="stats-randomization.html#cb1196-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1196-1"><a href="stats-randomization.html#cb1196-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb1196-2"><a href="stats-randomization.html#cb1196-2" tabindex="-1"></a>  <span class="at">condition =</span> experimental_design,</span>
+<span id="cb1196-3"><a href="stats-randomization.html#cb1196-3" tabindex="-1"></a>  <span class="at">plot =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(experimental_design)</span>
+<span id="cb1196-4"><a href="stats-randomization.html#cb1196-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb1196-5"><a href="stats-randomization.html#cb1196-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plot, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1196-6"><a href="stats-randomization.html#cb1196-6" tabindex="-1"></a>  <span class="fu">geom_label</span>(</span>
+<span id="cb1196-7"><a href="stats-randomization.html#cb1196-7" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> condition, <span class="at">fill =</span> condition),</span>
+<span id="cb1196-8"><a href="stats-randomization.html#cb1196-8" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">10</span></span>
+<span id="cb1196-9"><a href="stats-randomization.html#cb1196-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1196-10"><a href="stats-randomization.html#cb1196-10" tabindex="-1"></a></span>
+<span id="cb1196-11"><a href="stats-randomization.html#cb1196-11" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb1196-12"><a href="stats-randomization.html#cb1196-12" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb1196-13"><a href="stats-randomization.html#cb1196-13" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1196-14"><a href="stats-randomization.html#cb1196-14" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1196-15"><a href="stats-randomization.html#cb1196-15" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1196-16"><a href="stats-randomization.html#cb1196-16" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Plot of Land&quot;</span>,</span>
+<span id="cb1196-17"><a href="stats-randomization.html#cb1196-17" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb1196-18"><a href="stats-randomization.html#cb1196-18" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="d46-e-stat12-randomization-solution_files/figure-html/vis-design-1.png" width="672" /></p>
 <p>Now let’s simulate the results of the experiment!</p>
 <div id="q1-simulate-the-results-of-this-experimental-design-and-answer-the-questions-under-observations-below." class="section level3 hasAnchor" number="61.2.1">
 <h3><span class="header-section-number">61.2.1</span> <strong>q1</strong> Simulate the results of this experimental design, and answer the questions under <em>Observations</em> below.<a href="stats-randomization.html#q1-simulate-the-results-of-this-experimental-design-and-answer-the-questions-under-observations-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1197-1"><a href="stats-randomization.html#cb1197-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Do not edit; run the following code, answer the questions below</span></span>
-<span id="cb1197-2"><a href="stats-randomization.html#cb1197-2" aria-hidden="true" tabindex="-1"></a><span class="do">## For reproducibility, set the seed</span></span>
-<span id="cb1197-3"><a href="stats-randomization.html#cb1197-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1197-4"><a href="stats-randomization.html#cb1197-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Simulate the experimental yields</span></span>
-<span id="cb1197-5"><a href="stats-randomization.html#cb1197-5" aria-hidden="true" tabindex="-1"></a>experimental_design <span class="sc">%&gt;%</span></span>
-<span id="cb1197-6"><a href="stats-randomization.html#cb1197-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulate_yield</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1197-7"><a href="stats-randomization.html#cb1197-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Analyze the data</span></span>
-<span id="cb1197-8"><a href="stats-randomization.html#cb1197-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition) <span class="sc">%&gt;%</span></span>
-<span id="cb1197-9"><a href="stats-randomization.html#cb1197-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb1197-10"><a href="stats-randomization.html#cb1197-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">yield_mean =</span> <span class="fu">mean</span>(yield),</span>
-<span id="cb1197-11"><a href="stats-randomization.html#cb1197-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">yield_sd =</span> <span class="fu">sd</span>(yield)</span>
-<span id="cb1197-12"><a href="stats-randomization.html#cb1197-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1197-1"><a href="stats-randomization.html#cb1197-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Do not edit; run the following code, answer the questions below</span></span>
+<span id="cb1197-2"><a href="stats-randomization.html#cb1197-2" tabindex="-1"></a><span class="do">## For reproducibility, set the seed</span></span>
+<span id="cb1197-3"><a href="stats-randomization.html#cb1197-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1197-4"><a href="stats-randomization.html#cb1197-4" tabindex="-1"></a><span class="do">## Simulate the experimental yields</span></span>
+<span id="cb1197-5"><a href="stats-randomization.html#cb1197-5" tabindex="-1"></a>experimental_design <span class="sc">%&gt;%</span></span>
+<span id="cb1197-6"><a href="stats-randomization.html#cb1197-6" tabindex="-1"></a>  <span class="fu">simulate_yield</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1197-7"><a href="stats-randomization.html#cb1197-7" tabindex="-1"></a>  <span class="do">## Analyze the data</span></span>
+<span id="cb1197-8"><a href="stats-randomization.html#cb1197-8" tabindex="-1"></a>  <span class="fu">group_by</span>(condition) <span class="sc">%&gt;%</span></span>
+<span id="cb1197-9"><a href="stats-randomization.html#cb1197-9" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb1197-10"><a href="stats-randomization.html#cb1197-10" tabindex="-1"></a>    <span class="at">yield_mean =</span> <span class="fu">mean</span>(yield),</span>
+<span id="cb1197-11"><a href="stats-randomization.html#cb1197-11" tabindex="-1"></a>    <span class="at">yield_sd =</span> <span class="fu">sd</span>(yield)</span>
+<span id="cb1197-12"><a href="stats-randomization.html#cb1197-12" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   condition yield_mean yield_sd
 ##   &lt;fct&gt;          &lt;dbl&gt;    &lt;dbl&gt;
@@ -1072,34 +1072,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="confound---increased-yield-due-to-proximity-to-the-river" class="section level2 hasAnchor" number="61.3">
 <h2><span class="header-section-number">61.3</span> Confound - Increased yield due to proximity to the river!<a href="stats-randomization.html#confound---increased-yield-due-to-proximity-to-the-river" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>What I didn’t tell you about the experimental setup is that there’s a <em>river</em> on the right-hand-side of the plots:</p>
-<div class="sourceCode" id="cb1199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1199-1"><a href="stats-randomization.html#cb1199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb1199-2"><a href="stats-randomization.html#cb1199-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">condition =</span> experimental_design,</span>
-<span id="cb1199-3"><a href="stats-randomization.html#cb1199-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(experimental_design)</span>
-<span id="cb1199-4"><a href="stats-randomization.html#cb1199-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb1199-5"><a href="stats-randomization.html#cb1199-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plot, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb1199-6"><a href="stats-randomization.html#cb1199-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(</span>
-<span id="cb1199-7"><a href="stats-randomization.html#cb1199-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> condition, <span class="at">fill =</span> condition),</span>
-<span id="cb1199-8"><a href="stats-randomization.html#cb1199-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">10</span></span>
-<span id="cb1199-9"><a href="stats-randomization.html#cb1199-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1199-10"><a href="stats-randomization.html#cb1199-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
-<span id="cb1199-11"><a href="stats-randomization.html#cb1199-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">xintercept =</span> <span class="dv">7</span>,</span>
-<span id="cb1199-12"><a href="stats-randomization.html#cb1199-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>,</span>
-<span id="cb1199-13"><a href="stats-randomization.html#cb1199-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">8</span></span>
-<span id="cb1199-14"><a href="stats-randomization.html#cb1199-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1199-15"><a href="stats-randomization.html#cb1199-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
-<span id="cb1199-16"><a href="stats-randomization.html#cb1199-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;text&quot;</span>,</span>
-<span id="cb1199-17"><a href="stats-randomization.html#cb1199-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">6.7</span>, <span class="at">y =</span> <span class="fl">1.25</span>, <span class="at">label =</span> <span class="st">&quot;River&quot;</span>,</span>
-<span id="cb1199-18"><a href="stats-randomization.html#cb1199-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="dv">1</span></span>
-<span id="cb1199-19"><a href="stats-randomization.html#cb1199-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1199-20"><a href="stats-randomization.html#cb1199-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1199-21"><a href="stats-randomization.html#cb1199-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb1199-22"><a href="stats-randomization.html#cb1199-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>)) <span class="sc">+</span></span>
-<span id="cb1199-23"><a href="stats-randomization.html#cb1199-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb1199-24"><a href="stats-randomization.html#cb1199-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1199-25"><a href="stats-randomization.html#cb1199-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1199-26"><a href="stats-randomization.html#cb1199-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Plot of Land&quot;</span>,</span>
-<span id="cb1199-27"><a href="stats-randomization.html#cb1199-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb1199-28"><a href="stats-randomization.html#cb1199-28" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1199-1"><a href="stats-randomization.html#cb1199-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb1199-2"><a href="stats-randomization.html#cb1199-2" tabindex="-1"></a>  <span class="at">condition =</span> experimental_design,</span>
+<span id="cb1199-3"><a href="stats-randomization.html#cb1199-3" tabindex="-1"></a>  <span class="at">plot =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(experimental_design)</span>
+<span id="cb1199-4"><a href="stats-randomization.html#cb1199-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb1199-5"><a href="stats-randomization.html#cb1199-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plot, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1199-6"><a href="stats-randomization.html#cb1199-6" tabindex="-1"></a>  <span class="fu">geom_label</span>(</span>
+<span id="cb1199-7"><a href="stats-randomization.html#cb1199-7" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> condition, <span class="at">fill =</span> condition),</span>
+<span id="cb1199-8"><a href="stats-randomization.html#cb1199-8" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">10</span></span>
+<span id="cb1199-9"><a href="stats-randomization.html#cb1199-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1199-10"><a href="stats-randomization.html#cb1199-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb1199-11"><a href="stats-randomization.html#cb1199-11" tabindex="-1"></a>    <span class="at">xintercept =</span> <span class="dv">7</span>,</span>
+<span id="cb1199-12"><a href="stats-randomization.html#cb1199-12" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>,</span>
+<span id="cb1199-13"><a href="stats-randomization.html#cb1199-13" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">8</span></span>
+<span id="cb1199-14"><a href="stats-randomization.html#cb1199-14" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1199-15"><a href="stats-randomization.html#cb1199-15" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb1199-16"><a href="stats-randomization.html#cb1199-16" tabindex="-1"></a>    <span class="st">&quot;text&quot;</span>,</span>
+<span id="cb1199-17"><a href="stats-randomization.html#cb1199-17" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">6.7</span>, <span class="at">y =</span> <span class="fl">1.25</span>, <span class="at">label =</span> <span class="st">&quot;River&quot;</span>,</span>
+<span id="cb1199-18"><a href="stats-randomization.html#cb1199-18" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="dv">1</span></span>
+<span id="cb1199-19"><a href="stats-randomization.html#cb1199-19" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1199-20"><a href="stats-randomization.html#cb1199-20" tabindex="-1"></a></span>
+<span id="cb1199-21"><a href="stats-randomization.html#cb1199-21" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb1199-22"><a href="stats-randomization.html#cb1199-22" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>)) <span class="sc">+</span></span>
+<span id="cb1199-23"><a href="stats-randomization.html#cb1199-23" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1199-24"><a href="stats-randomization.html#cb1199-24" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1199-25"><a href="stats-randomization.html#cb1199-25" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1199-26"><a href="stats-randomization.html#cb1199-26" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Plot of Land&quot;</span>,</span>
+<span id="cb1199-27"><a href="stats-randomization.html#cb1199-27" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb1199-28"><a href="stats-randomization.html#cb1199-28" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.</code></pre>
 <p><img src="d46-e-stat12-randomization-solution_files/figure-html/vis-design-river-1.png" width="672" /></p>
@@ -1107,19 +1107,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Terminology: When there are other factors present in an experiment affecting our outcome of interest, we call those factors <em>confounds</em>. When we don’t know that a confound exists, it is sometimes called a <em>lurking variable</em> (Joiner 1979).</p>
 <div id="q2-try-defining-a-different-order-of-the-plots-to-overcome-the-confound-river." class="section level3 hasAnchor" number="61.3.1">
 <h3><span class="header-section-number">61.3.1</span> <strong>q2</strong> Try defining a different order of the plots to overcome the confound (river).<a href="stats-randomization.html#q2-try-defining-a-different-order-of-the-plots-to-overcome-the-confound-river." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1201-1"><a href="stats-randomization.html#cb1201-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Define your own experimental design</span></span>
-<span id="cb1201-2"><a href="stats-randomization.html#cb1201-2" aria-hidden="true" tabindex="-1"></a><span class="do">## An &quot;obvious&quot; first attempt would be to simply switch the order, but this</span></span>
-<span id="cb1201-3"><a href="stats-randomization.html#cb1201-3" aria-hidden="true" tabindex="-1"></a><span class="do">## will tend to over-estimate the effect of the treatment</span></span>
-<span id="cb1201-4"><a href="stats-randomization.html#cb1201-4" aria-hidden="true" tabindex="-1"></a>your_design <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>)</span>
-<span id="cb1201-5"><a href="stats-randomization.html#cb1201-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1201-6"><a href="stats-randomization.html#cb1201-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; use this to simulate your design</span></span>
-<span id="cb1201-7"><a href="stats-randomization.html#cb1201-7" aria-hidden="true" tabindex="-1"></a>your_design <span class="sc">%&gt;%</span></span>
-<span id="cb1201-8"><a href="stats-randomization.html#cb1201-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulate_yield</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1201-9"><a href="stats-randomization.html#cb1201-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition) <span class="sc">%&gt;%</span></span>
-<span id="cb1201-10"><a href="stats-randomization.html#cb1201-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb1201-11"><a href="stats-randomization.html#cb1201-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">yield_mean =</span> <span class="fu">mean</span>(yield),</span>
-<span id="cb1201-12"><a href="stats-randomization.html#cb1201-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">yield_sd =</span> <span class="fu">sd</span>(yield)</span>
-<span id="cb1201-13"><a href="stats-randomization.html#cb1201-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1201-1"><a href="stats-randomization.html#cb1201-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Define your own experimental design</span></span>
+<span id="cb1201-2"><a href="stats-randomization.html#cb1201-2" tabindex="-1"></a><span class="do">## An &quot;obvious&quot; first attempt would be to simply switch the order, but this</span></span>
+<span id="cb1201-3"><a href="stats-randomization.html#cb1201-3" tabindex="-1"></a><span class="do">## will tend to over-estimate the effect of the treatment</span></span>
+<span id="cb1201-4"><a href="stats-randomization.html#cb1201-4" tabindex="-1"></a>your_design <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;T&quot;</span>)</span>
+<span id="cb1201-5"><a href="stats-randomization.html#cb1201-5" tabindex="-1"></a></span>
+<span id="cb1201-6"><a href="stats-randomization.html#cb1201-6" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; use this to simulate your design</span></span>
+<span id="cb1201-7"><a href="stats-randomization.html#cb1201-7" tabindex="-1"></a>your_design <span class="sc">%&gt;%</span></span>
+<span id="cb1201-8"><a href="stats-randomization.html#cb1201-8" tabindex="-1"></a>  <span class="fu">simulate_yield</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1201-9"><a href="stats-randomization.html#cb1201-9" tabindex="-1"></a>  <span class="fu">group_by</span>(condition) <span class="sc">%&gt;%</span></span>
+<span id="cb1201-10"><a href="stats-randomization.html#cb1201-10" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb1201-11"><a href="stats-randomization.html#cb1201-11" tabindex="-1"></a>    <span class="at">yield_mean =</span> <span class="fu">mean</span>(yield),</span>
+<span id="cb1201-12"><a href="stats-randomization.html#cb1201-12" tabindex="-1"></a>    <span class="at">yield_sd =</span> <span class="fu">sd</span>(yield)</span>
+<span id="cb1201-13"><a href="stats-randomization.html#cb1201-13" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   condition yield_mean yield_sd
 ##   &lt;fct&gt;          &lt;dbl&gt;    &lt;dbl&gt;
@@ -1139,29 +1139,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You might be tempted to try to do something “smart” to cancel out the effects of the river (such as alternate the order of <code>T</code> and <code>C</code>). While that might work for this specific example, in real experiments there are often many different confounds with all sorts of complicated effects on the quantity we seek to study. What we need is a <em>general-purpose</em> way to do statistical design of experiments that can deal with <em>any</em> kind of confound.</p>
 <p>To that end, <strong>the gold-standard for dealing with confounds is to <em>randomize</em> our data collection</strong>.</p>
 <p>The <code>sample()</code> function will randomize the order of a vector, as the following code shows.</p>
-<div class="sourceCode" id="cb1203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1203-1"><a href="stats-randomization.html#cb1203-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb1203-2"><a href="stats-randomization.html#cb1203-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Start with a simple arrangement</span></span>
-<span id="cb1203-3"><a href="stats-randomization.html#cb1203-3" aria-hidden="true" tabindex="-1"></a>experimental_design <span class="sc">%&gt;%</span></span>
-<span id="cb1203-4"><a href="stats-randomization.html#cb1203-4" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Randomize the order</span></span>
-<span id="cb1203-5"><a href="stats-randomization.html#cb1203-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1203-1"><a href="stats-randomization.html#cb1203-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb1203-2"><a href="stats-randomization.html#cb1203-2" tabindex="-1"></a><span class="do">## Start with a simple arrangement</span></span>
+<span id="cb1203-3"><a href="stats-randomization.html#cb1203-3" tabindex="-1"></a>experimental_design <span class="sc">%&gt;%</span></span>
+<span id="cb1203-4"><a href="stats-randomization.html#cb1203-4" tabindex="-1"></a>  <span class="do">## Randomize the order</span></span>
+<span id="cb1203-5"><a href="stats-randomization.html#cb1203-5" tabindex="-1"></a>  <span class="fu">sample</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;C&quot; &quot;T&quot; &quot;T&quot; &quot;T&quot; &quot;C&quot; &quot;C&quot;</code></pre>
 <p>If we randomize the order of treatment and control plots, then we <em>transform</em> the effects of the river (and any other confounds) into a random effect.</p>
 <div id="q3-randomize-the-run-order-to-produce-your-design.-answer-the-questions-under-observations-below." class="section level3 hasAnchor" number="61.4.1">
 <h3><span class="header-section-number">61.4.1</span> <strong>q3</strong> Randomize the run order to produce your design. Answer the questions under <em>Observations</em> below.<a href="stats-randomization.html#q3-randomize-the-run-order-to-produce-your-design.-answer-the-questions-under-observations-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1205-1"><a href="stats-randomization.html#cb1205-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Complete the code below</span></span>
-<span id="cb1205-2"><a href="stats-randomization.html#cb1205-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Set the seed for reproducibility</span></span>
-<span id="cb1205-3"><a href="stats-randomization.html#cb1205-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1205-4"><a href="stats-randomization.html#cb1205-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1205-5"><a href="stats-randomization.html#cb1205-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Simulate the experimental results</span></span>
-<span id="cb1205-6"><a href="stats-randomization.html#cb1205-6" aria-hidden="true" tabindex="-1"></a>experimental_design <span class="sc">%&gt;%</span></span>
-<span id="cb1205-7"><a href="stats-randomization.html#cb1205-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Randomize the plot order</span></span>
-<span id="cb1205-8"><a href="stats-randomization.html#cb1205-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1205-9"><a href="stats-randomization.html#cb1205-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulate_yield</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1205-10"><a href="stats-randomization.html#cb1205-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition) <span class="sc">%&gt;%</span></span>
-<span id="cb1205-11"><a href="stats-randomization.html#cb1205-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb1205-12"><a href="stats-randomization.html#cb1205-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">yield_mean =</span> <span class="fu">mean</span>(yield),</span>
-<span id="cb1205-13"><a href="stats-randomization.html#cb1205-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">yield_sd =</span> <span class="fu">sd</span>(yield)</span>
-<span id="cb1205-14"><a href="stats-randomization.html#cb1205-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1205-1"><a href="stats-randomization.html#cb1205-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Complete the code below</span></span>
+<span id="cb1205-2"><a href="stats-randomization.html#cb1205-2" tabindex="-1"></a><span class="do">## Set the seed for reproducibility</span></span>
+<span id="cb1205-3"><a href="stats-randomization.html#cb1205-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1205-4"><a href="stats-randomization.html#cb1205-4" tabindex="-1"></a></span>
+<span id="cb1205-5"><a href="stats-randomization.html#cb1205-5" tabindex="-1"></a><span class="do">## Simulate the experimental results</span></span>
+<span id="cb1205-6"><a href="stats-randomization.html#cb1205-6" tabindex="-1"></a>experimental_design <span class="sc">%&gt;%</span></span>
+<span id="cb1205-7"><a href="stats-randomization.html#cb1205-7" tabindex="-1"></a>  <span class="do">## Randomize the plot order</span></span>
+<span id="cb1205-8"><a href="stats-randomization.html#cb1205-8" tabindex="-1"></a>  <span class="fu">sample</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1205-9"><a href="stats-randomization.html#cb1205-9" tabindex="-1"></a>  <span class="fu">simulate_yield</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1205-10"><a href="stats-randomization.html#cb1205-10" tabindex="-1"></a>  <span class="fu">group_by</span>(condition) <span class="sc">%&gt;%</span></span>
+<span id="cb1205-11"><a href="stats-randomization.html#cb1205-11" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb1205-12"><a href="stats-randomization.html#cb1205-12" tabindex="-1"></a>    <span class="at">yield_mean =</span> <span class="fu">mean</span>(yield),</span>
+<span id="cb1205-13"><a href="stats-randomization.html#cb1205-13" tabindex="-1"></a>    <span class="at">yield_sd =</span> <span class="fu">sd</span>(yield)</span>
+<span id="cb1205-14"><a href="stats-randomization.html#cb1205-14" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   condition yield_mean yield_sd
 ##   &lt;fct&gt;          &lt;dbl&gt;    &lt;dbl&gt;
@@ -1178,27 +1178,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="why-does-randomization-work" class="section level2 hasAnchor" number="61.5">
 <h2><span class="header-section-number">61.5</span> Why does randomization work?<a href="stats-randomization.html#why-does-randomization-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s visually compare a naive (sequential) design with a randomized design, and draw a line to represent the effects of the river on crop yield.</p>
-<div class="sourceCode" id="cb1207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1207-1"><a href="stats-randomization.html#cb1207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1207-2"><a href="stats-randomization.html#cb1207-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb1207-3"><a href="stats-randomization.html#cb1207-3" aria-hidden="true" tabindex="-1"></a>  experimental_design <span class="sc">%&gt;%</span></span>
-<span id="cb1207-4"><a href="stats-randomization.html#cb1207-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">simulate_yield</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1207-5"><a href="stats-randomization.html#cb1207-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">design =</span> <span class="st">&quot;Naive&quot;</span>),</span>
-<span id="cb1207-6"><a href="stats-randomization.html#cb1207-6" aria-hidden="true" tabindex="-1"></a>  experimental_design <span class="sc">%&gt;%</span></span>
-<span id="cb1207-7"><a href="stats-randomization.html#cb1207-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1207-8"><a href="stats-randomization.html#cb1207-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">simulate_yield</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1207-9"><a href="stats-randomization.html#cb1207-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">design =</span> <span class="st">&quot;Randomized&quot;</span>),</span>
-<span id="cb1207-10"><a href="stats-randomization.html#cb1207-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb1207-11"><a href="stats-randomization.html#cb1207-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1207-12"><a href="stats-randomization.html#cb1207-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plot, yield)) <span class="sc">+</span></span>
-<span id="cb1207-13"><a href="stats-randomization.html#cb1207-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> plot <span class="sc">/</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1207-14"><a href="stats-randomization.html#cb1207-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb1207-15"><a href="stats-randomization.html#cb1207-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> plot <span class="sc">/</span> <span class="dv">3</span>, <span class="at">yend =</span> yield, <span class="at">xend =</span> plot),</span>
-<span id="cb1207-16"><a href="stats-randomization.html#cb1207-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.05</span>, <span class="st">&quot;npc&quot;</span>)),</span>
-<span id="cb1207-17"><a href="stats-randomization.html#cb1207-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;grey70&quot;</span></span>
-<span id="cb1207-18"><a href="stats-randomization.html#cb1207-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1207-19"><a href="stats-randomization.html#cb1207-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> condition)) <span class="sc">+</span></span>
-<span id="cb1207-20"><a href="stats-randomization.html#cb1207-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(design<span class="sc">~</span>.) <span class="sc">+</span></span>
-<span id="cb1207-21"><a href="stats-randomization.html#cb1207-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1207-1"><a href="stats-randomization.html#cb1207-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1207-2"><a href="stats-randomization.html#cb1207-2" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb1207-3"><a href="stats-randomization.html#cb1207-3" tabindex="-1"></a>  experimental_design <span class="sc">%&gt;%</span></span>
+<span id="cb1207-4"><a href="stats-randomization.html#cb1207-4" tabindex="-1"></a>    <span class="fu">simulate_yield</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1207-5"><a href="stats-randomization.html#cb1207-5" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">design =</span> <span class="st">&quot;Naive&quot;</span>),</span>
+<span id="cb1207-6"><a href="stats-randomization.html#cb1207-6" tabindex="-1"></a>  experimental_design <span class="sc">%&gt;%</span></span>
+<span id="cb1207-7"><a href="stats-randomization.html#cb1207-7" tabindex="-1"></a>    <span class="fu">sample</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1207-8"><a href="stats-randomization.html#cb1207-8" tabindex="-1"></a>    <span class="fu">simulate_yield</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1207-9"><a href="stats-randomization.html#cb1207-9" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">design =</span> <span class="st">&quot;Randomized&quot;</span>),</span>
+<span id="cb1207-10"><a href="stats-randomization.html#cb1207-10" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb1207-11"><a href="stats-randomization.html#cb1207-11" tabindex="-1"></a></span>
+<span id="cb1207-12"><a href="stats-randomization.html#cb1207-12" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plot, yield)) <span class="sc">+</span></span>
+<span id="cb1207-13"><a href="stats-randomization.html#cb1207-13" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> plot <span class="sc">/</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1207-14"><a href="stats-randomization.html#cb1207-14" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb1207-15"><a href="stats-randomization.html#cb1207-15" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> plot <span class="sc">/</span> <span class="dv">3</span>, <span class="at">yend =</span> yield, <span class="at">xend =</span> plot),</span>
+<span id="cb1207-16"><a href="stats-randomization.html#cb1207-16" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.05</span>, <span class="st">&quot;npc&quot;</span>)),</span>
+<span id="cb1207-17"><a href="stats-randomization.html#cb1207-17" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;grey70&quot;</span></span>
+<span id="cb1207-18"><a href="stats-randomization.html#cb1207-18" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1207-19"><a href="stats-randomization.html#cb1207-19" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> condition)) <span class="sc">+</span></span>
+<span id="cb1207-20"><a href="stats-randomization.html#cb1207-20" tabindex="-1"></a>  <span class="fu">facet_grid</span>(design<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb1207-21"><a href="stats-randomization.html#cb1207-21" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="d46-e-stat12-randomization-solution_files/figure-html/vis-cf-1.png" width="672" /></p>
 <p>In the naive case, we’ve placed all our treatments at locations where the river has a low effect, and our controls at locations where the river has a high effect. This results in a consistent effect that reverses the perceived difference between treatment and control.</p>
 <p>However, when we randomize, a mix of high and low river effects enter into both the treatment and control conditions. So long as there is an average difference between the treatment and control, we can detect it with sufficiently many samples <em>from a well-designed study</em>.</p>

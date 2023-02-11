@@ -983,7 +983,7 @@ need to be able to <em>join</em> data.</p>
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/4.3">Join Data Sets</a>
 <em>Topics</em>: Welcome, mutating joins, filtering joins, Binds and set operations
 <em>Reading Time</em>: ~30 minutes</p>
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="data-joining-datasets.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="data-joining-datasets.html#cb444-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -992,31 +992,31 @@ need to be able to <em>join</em> data.</p>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="data-joining-datasets.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="data-joining-datasets.html#cb448-1" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code></pre></div>
 <div id="dangers-of-binding" class="section level2 hasAnchor" number="30.1">
 <h2><span class="header-section-number">30.1</span> Dangers of Binding!<a href="data-joining-datasets.html#dangers-of-binding" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>In the reading we learned about <code>bind_cols</code> and <code>bind_rows</code>.</p>
-<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="data-joining-datasets.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this; setup</span></span>
-<span id="cb449-2"><a href="data-joining-datasets.html#cb449-2" aria-hidden="true" tabindex="-1"></a>beatles1 <span class="ot">&lt;-</span></span>
-<span id="cb449-3"><a href="data-joining-datasets.html#cb449-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb449-4"><a href="data-joining-datasets.html#cb449-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>band, <span class="sc">~</span>name,</span>
-<span id="cb449-5"><a href="data-joining-datasets.html#cb449-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;John&quot;</span>,</span>
-<span id="cb449-6"><a href="data-joining-datasets.html#cb449-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Paul&quot;</span>,</span>
-<span id="cb449-7"><a href="data-joining-datasets.html#cb449-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;George&quot;</span>,</span>
-<span id="cb449-8"><a href="data-joining-datasets.html#cb449-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Ringo&quot;</span></span>
-<span id="cb449-9"><a href="data-joining-datasets.html#cb449-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb449-10"><a href="data-joining-datasets.html#cb449-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb449-11"><a href="data-joining-datasets.html#cb449-11" aria-hidden="true" tabindex="-1"></a>beatles2 <span class="ot">&lt;-</span></span>
-<span id="cb449-12"><a href="data-joining-datasets.html#cb449-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb449-13"><a href="data-joining-datasets.html#cb449-13" aria-hidden="true" tabindex="-1"></a>       <span class="sc">~</span>surname, <span class="sc">~</span>instrument,</span>
-<span id="cb449-14"><a href="data-joining-datasets.html#cb449-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;McCartney&quot;</span>,      <span class="st">&quot;bass&quot;</span>,</span>
-<span id="cb449-15"><a href="data-joining-datasets.html#cb449-15" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Harrison&quot;</span>,    <span class="st">&quot;guitar&quot;</span>,</span>
-<span id="cb449-16"><a href="data-joining-datasets.html#cb449-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Starr&quot;</span>,     <span class="st">&quot;drums&quot;</span>,</span>
-<span id="cb449-17"><a href="data-joining-datasets.html#cb449-17" aria-hidden="true" tabindex="-1"></a>       <span class="st">&quot;Lennon&quot;</span>,    <span class="st">&quot;guitar&quot;</span></span>
-<span id="cb449-18"><a href="data-joining-datasets.html#cb449-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb449-19"><a href="data-joining-datasets.html#cb449-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb449-20"><a href="data-joining-datasets.html#cb449-20" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(beatles1, beatles2)</span></code></pre></div>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="data-joining-datasets.html#cb449-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this; setup</span></span>
+<span id="cb449-2"><a href="data-joining-datasets.html#cb449-2" tabindex="-1"></a>beatles1 <span class="ot">&lt;-</span></span>
+<span id="cb449-3"><a href="data-joining-datasets.html#cb449-3" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb449-4"><a href="data-joining-datasets.html#cb449-4" tabindex="-1"></a>    <span class="sc">~</span>band, <span class="sc">~</span>name,</span>
+<span id="cb449-5"><a href="data-joining-datasets.html#cb449-5" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;John&quot;</span>,</span>
+<span id="cb449-6"><a href="data-joining-datasets.html#cb449-6" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Paul&quot;</span>,</span>
+<span id="cb449-7"><a href="data-joining-datasets.html#cb449-7" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;George&quot;</span>,</span>
+<span id="cb449-8"><a href="data-joining-datasets.html#cb449-8" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Ringo&quot;</span></span>
+<span id="cb449-9"><a href="data-joining-datasets.html#cb449-9" tabindex="-1"></a>  )</span>
+<span id="cb449-10"><a href="data-joining-datasets.html#cb449-10" tabindex="-1"></a></span>
+<span id="cb449-11"><a href="data-joining-datasets.html#cb449-11" tabindex="-1"></a>beatles2 <span class="ot">&lt;-</span></span>
+<span id="cb449-12"><a href="data-joining-datasets.html#cb449-12" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb449-13"><a href="data-joining-datasets.html#cb449-13" tabindex="-1"></a>       <span class="sc">~</span>surname, <span class="sc">~</span>instrument,</span>
+<span id="cb449-14"><a href="data-joining-datasets.html#cb449-14" tabindex="-1"></a>    <span class="st">&quot;McCartney&quot;</span>,      <span class="st">&quot;bass&quot;</span>,</span>
+<span id="cb449-15"><a href="data-joining-datasets.html#cb449-15" tabindex="-1"></a>     <span class="st">&quot;Harrison&quot;</span>,    <span class="st">&quot;guitar&quot;</span>,</span>
+<span id="cb449-16"><a href="data-joining-datasets.html#cb449-16" tabindex="-1"></a>        <span class="st">&quot;Starr&quot;</span>,     <span class="st">&quot;drums&quot;</span>,</span>
+<span id="cb449-17"><a href="data-joining-datasets.html#cb449-17" tabindex="-1"></a>       <span class="st">&quot;Lennon&quot;</span>,    <span class="st">&quot;guitar&quot;</span></span>
+<span id="cb449-18"><a href="data-joining-datasets.html#cb449-18" tabindex="-1"></a>  )</span>
+<span id="cb449-19"><a href="data-joining-datasets.html#cb449-19" tabindex="-1"></a></span>
+<span id="cb449-20"><a href="data-joining-datasets.html#cb449-20" tabindex="-1"></a><span class="fu">bind_cols</span>(beatles1, beatles2)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 4
 ##   band    name   surname   instrument
 ##   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;     
@@ -1030,39 +1030,39 @@ need to be able to <em>join</em> data.</p>
 <li>The rows of <code>beatles1</code> and <code>beatles2</code> were not ordered identically; therefore the wrong names and surnames were combined</li>
 </ul>
 <p>We’ll use the following <code>beatles3</code> to <em>correctly</em> join the data.</p>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="data-joining-datasets.html#cb451-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this; setup</span></span>
-<span id="cb451-2"><a href="data-joining-datasets.html#cb451-2" aria-hidden="true" tabindex="-1"></a>beatles3 <span class="ot">&lt;-</span></span>
-<span id="cb451-3"><a href="data-joining-datasets.html#cb451-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb451-4"><a href="data-joining-datasets.html#cb451-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>name, <span class="sc">~</span>surname,</span>
-<span id="cb451-5"><a href="data-joining-datasets.html#cb451-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;John&quot;</span>, <span class="st">&quot;Lennon&quot;</span>,</span>
-<span id="cb451-6"><a href="data-joining-datasets.html#cb451-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;McCartney&quot;</span>,</span>
-<span id="cb451-7"><a href="data-joining-datasets.html#cb451-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;George&quot;</span>, <span class="st">&quot;Harrison&quot;</span>,</span>
-<span id="cb451-8"><a href="data-joining-datasets.html#cb451-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ringo&quot;</span>, <span class="st">&quot;Starr&quot;</span></span>
-<span id="cb451-9"><a href="data-joining-datasets.html#cb451-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb451-10"><a href="data-joining-datasets.html#cb451-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb451-11"><a href="data-joining-datasets.html#cb451-11" aria-hidden="true" tabindex="-1"></a>beatles_joined <span class="ot">&lt;-</span></span>
-<span id="cb451-12"><a href="data-joining-datasets.html#cb451-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb451-13"><a href="data-joining-datasets.html#cb451-13" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>band, <span class="sc">~</span>name, <span class="sc">~</span>surname, <span class="sc">~</span>instrument,</span>
-<span id="cb451-14"><a href="data-joining-datasets.html#cb451-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;John&quot;</span>, <span class="st">&quot;Lennon&quot;</span>, <span class="st">&quot;guitar&quot;</span>,</span>
-<span id="cb451-15"><a href="data-joining-datasets.html#cb451-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;McCartney&quot;</span>, <span class="st">&quot;bass&quot;</span>,</span>
-<span id="cb451-16"><a href="data-joining-datasets.html#cb451-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;George&quot;</span>, <span class="st">&quot;Harrison&quot;</span>, <span class="st">&quot;guitar&quot;</span>,</span>
-<span id="cb451-17"><a href="data-joining-datasets.html#cb451-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Ringo&quot;</span>, <span class="st">&quot;Starr&quot;</span>, <span class="st">&quot;drums&quot;</span></span>
-<span id="cb451-18"><a href="data-joining-datasets.html#cb451-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="data-joining-datasets.html#cb451-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this; setup</span></span>
+<span id="cb451-2"><a href="data-joining-datasets.html#cb451-2" tabindex="-1"></a>beatles3 <span class="ot">&lt;-</span></span>
+<span id="cb451-3"><a href="data-joining-datasets.html#cb451-3" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb451-4"><a href="data-joining-datasets.html#cb451-4" tabindex="-1"></a>    <span class="sc">~</span>name, <span class="sc">~</span>surname,</span>
+<span id="cb451-5"><a href="data-joining-datasets.html#cb451-5" tabindex="-1"></a>    <span class="st">&quot;John&quot;</span>, <span class="st">&quot;Lennon&quot;</span>,</span>
+<span id="cb451-6"><a href="data-joining-datasets.html#cb451-6" tabindex="-1"></a>    <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;McCartney&quot;</span>,</span>
+<span id="cb451-7"><a href="data-joining-datasets.html#cb451-7" tabindex="-1"></a>    <span class="st">&quot;George&quot;</span>, <span class="st">&quot;Harrison&quot;</span>,</span>
+<span id="cb451-8"><a href="data-joining-datasets.html#cb451-8" tabindex="-1"></a>    <span class="st">&quot;Ringo&quot;</span>, <span class="st">&quot;Starr&quot;</span></span>
+<span id="cb451-9"><a href="data-joining-datasets.html#cb451-9" tabindex="-1"></a>  )</span>
+<span id="cb451-10"><a href="data-joining-datasets.html#cb451-10" tabindex="-1"></a></span>
+<span id="cb451-11"><a href="data-joining-datasets.html#cb451-11" tabindex="-1"></a>beatles_joined <span class="ot">&lt;-</span></span>
+<span id="cb451-12"><a href="data-joining-datasets.html#cb451-12" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb451-13"><a href="data-joining-datasets.html#cb451-13" tabindex="-1"></a>    <span class="sc">~</span>band, <span class="sc">~</span>name, <span class="sc">~</span>surname, <span class="sc">~</span>instrument,</span>
+<span id="cb451-14"><a href="data-joining-datasets.html#cb451-14" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;John&quot;</span>, <span class="st">&quot;Lennon&quot;</span>, <span class="st">&quot;guitar&quot;</span>,</span>
+<span id="cb451-15"><a href="data-joining-datasets.html#cb451-15" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;McCartney&quot;</span>, <span class="st">&quot;bass&quot;</span>,</span>
+<span id="cb451-16"><a href="data-joining-datasets.html#cb451-16" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;George&quot;</span>, <span class="st">&quot;Harrison&quot;</span>, <span class="st">&quot;guitar&quot;</span>,</span>
+<span id="cb451-17"><a href="data-joining-datasets.html#cb451-17" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Ringo&quot;</span>, <span class="st">&quot;Starr&quot;</span>, <span class="st">&quot;drums&quot;</span></span>
+<span id="cb451-18"><a href="data-joining-datasets.html#cb451-18" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
 <div id="q2-use-the-following-beatles3-to-correctly-join-beatles1" class="section level3 hasAnchor" number="30.1.2">
 <h3><span class="header-section-number">30.1.2</span> <strong>q2</strong> Use the following <code>beatles3</code> to <em>correctly</em> join <code>beatles1</code><a href="data-joining-datasets.html#q2-use-the-following-beatles3-to-correctly-join-beatles1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="data-joining-datasets.html#cb452-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
-<span id="cb452-2"><a href="data-joining-datasets.html#cb452-2" aria-hidden="true" tabindex="-1"></a>  beatles1 <span class="sc">%&gt;%</span></span>
-<span id="cb452-3"><a href="data-joining-datasets.html#cb452-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb452-4"><a href="data-joining-datasets.html#cb452-4" aria-hidden="true" tabindex="-1"></a>    beatles3,</span>
-<span id="cb452-5"><a href="data-joining-datasets.html#cb452-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;name&quot;</span></span>
-<span id="cb452-6"><a href="data-joining-datasets.html#cb452-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb452-7"><a href="data-joining-datasets.html#cb452-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb452-8"><a href="data-joining-datasets.html#cb452-8" aria-hidden="true" tabindex="-1"></a>    beatles2,</span>
-<span id="cb452-9"><a href="data-joining-datasets.html#cb452-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;surname&quot;</span></span>
-<span id="cb452-10"><a href="data-joining-datasets.html#cb452-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb452-11"><a href="data-joining-datasets.html#cb452-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb452-12"><a href="data-joining-datasets.html#cb452-12" aria-hidden="true" tabindex="-1"></a>df_q2</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="data-joining-datasets.html#cb452-1" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
+<span id="cb452-2"><a href="data-joining-datasets.html#cb452-2" tabindex="-1"></a>  beatles1 <span class="sc">%&gt;%</span></span>
+<span id="cb452-3"><a href="data-joining-datasets.html#cb452-3" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb452-4"><a href="data-joining-datasets.html#cb452-4" tabindex="-1"></a>    beatles3,</span>
+<span id="cb452-5"><a href="data-joining-datasets.html#cb452-5" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;name&quot;</span></span>
+<span id="cb452-6"><a href="data-joining-datasets.html#cb452-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb452-7"><a href="data-joining-datasets.html#cb452-7" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb452-8"><a href="data-joining-datasets.html#cb452-8" tabindex="-1"></a>    beatles2,</span>
+<span id="cb452-9"><a href="data-joining-datasets.html#cb452-9" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;surname&quot;</span></span>
+<span id="cb452-10"><a href="data-joining-datasets.html#cb452-10" tabindex="-1"></a>  )</span>
+<span id="cb452-11"><a href="data-joining-datasets.html#cb452-11" tabindex="-1"></a></span>
+<span id="cb452-12"><a href="data-joining-datasets.html#cb452-12" tabindex="-1"></a>df_q2</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 4
 ##   band    name   surname   instrument
 ##   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;     
@@ -1071,10 +1071,10 @@ need to be able to <em>join</em> data.</p>
 ## 3 Beatles George Harrison  guitar    
 ## 4 Beatles Ringo  Starr     drums</code></pre>
 <p>Use the following test to check your work:</p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="data-joining-datasets.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb454-2"><a href="data-joining-datasets.html#cb454-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">all_equal</span>(df_q2, beatles_joined))</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="data-joining-datasets.html#cb454-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb454-2"><a href="data-joining-datasets.html#cb454-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">all_equal</span>(df_q2, beatles_joined))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="data-joining-datasets.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="data-joining-datasets.html#cb456-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <p>There’s a <strong>very important lesson</strong> here: In general, don’t trust <code>bind_cols</code>.
 It’s easy in the example above to tell there’s a problem because the data are
@@ -1097,13 +1097,13 @@ Oakland airports.</p>
 <p><em>Hint 1</em>: To find the airport identifiers, you can either use <code>str_detect</code> to
 filter the <code>airports</code> dataset, or use Google!</p>
 <p><em>Hint 2</em>: Remember to look up the documentation for a function you don’t yet know!</p>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="data-joining-datasets.html#cb458-1" aria-hidden="true" tabindex="-1"></a>criteria <span class="ot">&lt;-</span></span>
-<span id="cb458-2"><a href="data-joining-datasets.html#cb458-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(</span>
-<span id="cb458-3"><a href="data-joining-datasets.html#cb458-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>),</span>
-<span id="cb458-4"><a href="data-joining-datasets.html#cb458-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dest =</span> <span class="fu">c</span>(<span class="st">&quot;SJC&quot;</span>, <span class="st">&quot;SFO&quot;</span>, <span class="st">&quot;OAK&quot;</span>)</span>
-<span id="cb458-5"><a href="data-joining-datasets.html#cb458-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb458-6"><a href="data-joining-datasets.html#cb458-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb458-7"><a href="data-joining-datasets.html#cb458-7" aria-hidden="true" tabindex="-1"></a>criteria</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="data-joining-datasets.html#cb458-1" tabindex="-1"></a>criteria <span class="ot">&lt;-</span></span>
+<span id="cb458-2"><a href="data-joining-datasets.html#cb458-2" tabindex="-1"></a>  <span class="fu">expand_grid</span>(</span>
+<span id="cb458-3"><a href="data-joining-datasets.html#cb458-3" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>),</span>
+<span id="cb458-4"><a href="data-joining-datasets.html#cb458-4" tabindex="-1"></a>    <span class="at">dest =</span> <span class="fu">c</span>(<span class="st">&quot;SJC&quot;</span>, <span class="st">&quot;SFO&quot;</span>, <span class="st">&quot;OAK&quot;</span>)</span>
+<span id="cb458-5"><a href="data-joining-datasets.html#cb458-5" tabindex="-1"></a>  )</span>
+<span id="cb458-6"><a href="data-joining-datasets.html#cb458-6" tabindex="-1"></a></span>
+<span id="cb458-7"><a href="data-joining-datasets.html#cb458-7" tabindex="-1"></a>criteria</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   month dest 
 ##   &lt;dbl&gt; &lt;chr&gt;
@@ -1114,45 +1114,45 @@ filter the <code>airports</code> dataset, or use Google!</p>
 ## 5     9 SFO  
 ## 6     9 OAK</code></pre>
 <p>Use the following test to check your work:</p>
-<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="data-joining-datasets.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb460-2"><a href="data-joining-datasets.html#cb460-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb460-3"><a href="data-joining-datasets.html#cb460-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
-<span id="cb460-4"><a href="data-joining-datasets.html#cb460-4" aria-hidden="true" tabindex="-1"></a>                criteria,</span>
-<span id="cb460-5"><a href="data-joining-datasets.html#cb460-5" aria-hidden="true" tabindex="-1"></a>                criteria <span class="sc">%&gt;%</span></span>
-<span id="cb460-6"><a href="data-joining-datasets.html#cb460-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">semi_join</span>(</span>
-<span id="cb460-7"><a href="data-joining-datasets.html#cb460-7" aria-hidden="true" tabindex="-1"></a>                  airports <span class="sc">%&gt;%</span></span>
-<span id="cb460-8"><a href="data-joining-datasets.html#cb460-8" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">filter</span>(</span>
-<span id="cb460-9"><a href="data-joining-datasets.html#cb460-9" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;San Jose&quot;</span>) <span class="sc">|</span></span>
-<span id="cb460-10"><a href="data-joining-datasets.html#cb460-10" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;San Francisco&quot;</span>) <span class="sc">|</span></span>
-<span id="cb460-11"><a href="data-joining-datasets.html#cb460-11" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;Metropolitan Oakland&quot;</span>)</span>
-<span id="cb460-12"><a href="data-joining-datasets.html#cb460-12" aria-hidden="true" tabindex="-1"></a>                ),</span>
-<span id="cb460-13"><a href="data-joining-datasets.html#cb460-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span> <span class="ot">=</span> <span class="st">&quot;faa&quot;</span>)</span>
-<span id="cb460-14"><a href="data-joining-datasets.html#cb460-14" aria-hidden="true" tabindex="-1"></a>              )</span>
-<span id="cb460-15"><a href="data-joining-datasets.html#cb460-15" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb460-16"><a href="data-joining-datasets.html#cb460-16" aria-hidden="true" tabindex="-1"></a>          )</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="data-joining-datasets.html#cb460-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb460-2"><a href="data-joining-datasets.html#cb460-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb460-3"><a href="data-joining-datasets.html#cb460-3" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
+<span id="cb460-4"><a href="data-joining-datasets.html#cb460-4" tabindex="-1"></a>                criteria,</span>
+<span id="cb460-5"><a href="data-joining-datasets.html#cb460-5" tabindex="-1"></a>                criteria <span class="sc">%&gt;%</span></span>
+<span id="cb460-6"><a href="data-joining-datasets.html#cb460-6" tabindex="-1"></a>                <span class="fu">semi_join</span>(</span>
+<span id="cb460-7"><a href="data-joining-datasets.html#cb460-7" tabindex="-1"></a>                  airports <span class="sc">%&gt;%</span></span>
+<span id="cb460-8"><a href="data-joining-datasets.html#cb460-8" tabindex="-1"></a>                  <span class="fu">filter</span>(</span>
+<span id="cb460-9"><a href="data-joining-datasets.html#cb460-9" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;San Jose&quot;</span>) <span class="sc">|</span></span>
+<span id="cb460-10"><a href="data-joining-datasets.html#cb460-10" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;San Francisco&quot;</span>) <span class="sc">|</span></span>
+<span id="cb460-11"><a href="data-joining-datasets.html#cb460-11" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;Metropolitan Oakland&quot;</span>)</span>
+<span id="cb460-12"><a href="data-joining-datasets.html#cb460-12" tabindex="-1"></a>                ),</span>
+<span id="cb460-13"><a href="data-joining-datasets.html#cb460-13" tabindex="-1"></a>                <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span> <span class="ot">=</span> <span class="st">&quot;faa&quot;</span>)</span>
+<span id="cb460-14"><a href="data-joining-datasets.html#cb460-14" tabindex="-1"></a>              )</span>
+<span id="cb460-15"><a href="data-joining-datasets.html#cb460-15" tabindex="-1"></a>            )</span>
+<span id="cb460-16"><a href="data-joining-datasets.html#cb460-16" tabindex="-1"></a>          )</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="data-joining-datasets.html#cb462-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb462-2"><a href="data-joining-datasets.html#cb462-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
-<span id="cb462-3"><a href="data-joining-datasets.html#cb462-3" aria-hidden="true" tabindex="-1"></a>                criteria,</span>
-<span id="cb462-4"><a href="data-joining-datasets.html#cb462-4" aria-hidden="true" tabindex="-1"></a>                criteria <span class="sc">%&gt;%</span> <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>))</span>
-<span id="cb462-5"><a href="data-joining-datasets.html#cb462-5" aria-hidden="true" tabindex="-1"></a>              )</span>
-<span id="cb462-6"><a href="data-joining-datasets.html#cb462-6" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="data-joining-datasets.html#cb462-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb462-2"><a href="data-joining-datasets.html#cb462-2" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
+<span id="cb462-3"><a href="data-joining-datasets.html#cb462-3" tabindex="-1"></a>                criteria,</span>
+<span id="cb462-4"><a href="data-joining-datasets.html#cb462-4" tabindex="-1"></a>                criteria <span class="sc">%&gt;%</span> <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>))</span>
+<span id="cb462-5"><a href="data-joining-datasets.html#cb462-5" tabindex="-1"></a>              )</span>
+<span id="cb462-6"><a href="data-joining-datasets.html#cb462-6" tabindex="-1"></a>            )</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="data-joining-datasets.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="data-joining-datasets.html#cb464-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 </div>
 <div id="q4-use-the-criteria-dataframe-you-produced-above-to-filter-flights-on-dest-and-month." class="section level3 hasAnchor" number="30.2.2">
 <h3><span class="header-section-number">30.2.2</span> <strong>q4</strong> Use the <code>criteria</code> dataframe you produced above to filter <code>flights</code> on <code>dest</code> and <code>month</code>.<a href="data-joining-datasets.html#q4-use-the-criteria-dataframe-you-produced-above-to-filter-flights-on-dest-and-month." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: Remember to use a <em>filtering join</em> to take advantage of the <code>criteria</code>
 dataset we built above!</p>
-<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="data-joining-datasets.html#cb466-1" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
-<span id="cb466-2"><a href="data-joining-datasets.html#cb466-2" aria-hidden="true" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
-<span id="cb466-3"><a href="data-joining-datasets.html#cb466-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(</span>
-<span id="cb466-4"><a href="data-joining-datasets.html#cb466-4" aria-hidden="true" tabindex="-1"></a>    criteria,</span>
-<span id="cb466-5"><a href="data-joining-datasets.html#cb466-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span>, <span class="st">&quot;month&quot;</span>)</span>
-<span id="cb466-6"><a href="data-joining-datasets.html#cb466-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb466-7"><a href="data-joining-datasets.html#cb466-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb466-8"><a href="data-joining-datasets.html#cb466-8" aria-hidden="true" tabindex="-1"></a>df_q4</span></code></pre></div>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="data-joining-datasets.html#cb466-1" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
+<span id="cb466-2"><a href="data-joining-datasets.html#cb466-2" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb466-3"><a href="data-joining-datasets.html#cb466-3" tabindex="-1"></a>  <span class="fu">semi_join</span>(</span>
+<span id="cb466-4"><a href="data-joining-datasets.html#cb466-4" tabindex="-1"></a>    criteria,</span>
+<span id="cb466-5"><a href="data-joining-datasets.html#cb466-5" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span>, <span class="st">&quot;month&quot;</span>)</span>
+<span id="cb466-6"><a href="data-joining-datasets.html#cb466-6" tabindex="-1"></a>  )</span>
+<span id="cb466-7"><a href="data-joining-datasets.html#cb466-7" tabindex="-1"></a></span>
+<span id="cb466-8"><a href="data-joining-datasets.html#cb466-8" tabindex="-1"></a>df_q4</span></code></pre></div>
 <pre><code>## # A tibble: 2,584 × 19
 ##     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
@@ -1171,19 +1171,19 @@ dataset we built above!</p>
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
 ## #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay</code></pre>
 <p>Use the following test to check your work:</p>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="data-joining-datasets.html#cb468-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb468-2"><a href="data-joining-datasets.html#cb468-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb468-3"><a href="data-joining-datasets.html#cb468-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
-<span id="cb468-4"><a href="data-joining-datasets.html#cb468-4" aria-hidden="true" tabindex="-1"></a>                df_q4,</span>
-<span id="cb468-5"><a href="data-joining-datasets.html#cb468-5" aria-hidden="true" tabindex="-1"></a>                df_q4 <span class="sc">%&gt;%</span></span>
-<span id="cb468-6"><a href="data-joining-datasets.html#cb468-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">filter</span>(</span>
-<span id="cb468-7"><a href="data-joining-datasets.html#cb468-7" aria-hidden="true" tabindex="-1"></a>                  month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>),</span>
-<span id="cb468-8"><a href="data-joining-datasets.html#cb468-8" aria-hidden="true" tabindex="-1"></a>                  dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SJC&quot;</span>, <span class="st">&quot;SFO&quot;</span>, <span class="st">&quot;OAK&quot;</span>)</span>
-<span id="cb468-9"><a href="data-joining-datasets.html#cb468-9" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb468-10"><a href="data-joining-datasets.html#cb468-10" aria-hidden="true" tabindex="-1"></a>              )</span>
-<span id="cb468-11"><a href="data-joining-datasets.html#cb468-11" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="data-joining-datasets.html#cb468-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb468-2"><a href="data-joining-datasets.html#cb468-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb468-3"><a href="data-joining-datasets.html#cb468-3" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
+<span id="cb468-4"><a href="data-joining-datasets.html#cb468-4" tabindex="-1"></a>                df_q4,</span>
+<span id="cb468-5"><a href="data-joining-datasets.html#cb468-5" tabindex="-1"></a>                df_q4 <span class="sc">%&gt;%</span></span>
+<span id="cb468-6"><a href="data-joining-datasets.html#cb468-6" tabindex="-1"></a>                <span class="fu">filter</span>(</span>
+<span id="cb468-7"><a href="data-joining-datasets.html#cb468-7" tabindex="-1"></a>                  month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>),</span>
+<span id="cb468-8"><a href="data-joining-datasets.html#cb468-8" tabindex="-1"></a>                  dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SJC&quot;</span>, <span class="st">&quot;SFO&quot;</span>, <span class="st">&quot;OAK&quot;</span>)</span>
+<span id="cb468-9"><a href="data-joining-datasets.html#cb468-9" tabindex="-1"></a>                )</span>
+<span id="cb468-10"><a href="data-joining-datasets.html#cb468-10" tabindex="-1"></a>              )</span>
+<span id="cb468-11"><a href="data-joining-datasets.html#cb468-11" tabindex="-1"></a>            )</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="data-joining-datasets.html#cb470-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="data-joining-datasets.html#cb470-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <!-- include-exit-ticket -->
 

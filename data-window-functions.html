@@ -980,7 +980,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">38</span> Data: Window Functions<a href="data-window-functions.html#data-window-functions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Window functions are another family of <code>dplyr</code> verbs that are related to aggregates like <code>mean</code> and <code>sd</code>. These functions are useful for building up more complicated filters, enabling aesthetic tricks in plots, and some advanced data wrangling we’ll do next exercise.</p>
 <p><em>Reading</em>: <a href="https://dplyr.tidyverse.org/articles/window-functions.html#cumulative-aggregates-1">Window Functions</a>, <em>Types of window functions</em>, <em>Ranking functions</em>, and <em>Lead and lag</em></p>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="data-window-functions.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="data-window-functions.html#cb607-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -989,42 +989,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="data-window-functions.html#cb611-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span></code></pre></div>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="data-window-functions.html#cb611-1" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span></code></pre></div>
 <div id="lead-and-lag" class="section level2 hasAnchor" number="38.1">
 <h2><span class="header-section-number">38.1</span> Lead and Lag<a href="data-window-functions.html#lead-and-lag" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>The lead and lag functions simply provide a “shifted” copy of a vector.</p>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="data-window-functions.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
-<span id="cb612-2"><a href="data-window-functions.html#cb612-2" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb612-3"><a href="data-window-functions.html#cb612-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lead</span>(v)</span></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="data-window-functions.html#cb612-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
+<span id="cb612-2"><a href="data-window-functions.html#cb612-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb612-3"><a href="data-window-functions.html#cb612-3" tabindex="-1"></a><span class="fu">lead</span>(v)</span></code></pre></div>
 <pre><code>## [1]  2  3  4  5 NA</code></pre>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="data-window-functions.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lag</span>(v)</span></code></pre></div>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="data-window-functions.html#cb614-1" tabindex="-1"></a><span class="fu">lag</span>(v)</span></code></pre></div>
 <pre><code>## [1] NA  1  2  3  4</code></pre>
 <p>These are particularly useful for computing things like differences:</p>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="data-window-functions.html#cb616-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
-<span id="cb616-2"><a href="data-window-functions.html#cb616-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">+</span><span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">6</span>)</span>
-<span id="cb616-3"><a href="data-window-functions.html#cb616-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> x <span class="sc">^</span> <span class="dv">2</span></span>
-<span id="cb616-4"><a href="data-window-functions.html#cb616-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb616-5"><a href="data-window-functions.html#cb616-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Forward finite difference</span></span>
-<span id="cb616-6"><a href="data-window-functions.html#cb616-6" aria-hidden="true" tabindex="-1"></a>df_dx <span class="ot">&lt;-</span> (<span class="fu">lead</span>(f) <span class="sc">-</span> f) <span class="sc">/</span> (<span class="fu">lead</span>(x) <span class="sc">-</span> x)</span>
-<span id="cb616-7"><a href="data-window-functions.html#cb616-7" aria-hidden="true" tabindex="-1"></a>df_dx</span></code></pre></div>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="data-window-functions.html#cb616-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
+<span id="cb616-2"><a href="data-window-functions.html#cb616-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">+</span><span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">6</span>)</span>
+<span id="cb616-3"><a href="data-window-functions.html#cb616-3" tabindex="-1"></a>f <span class="ot">&lt;-</span> x <span class="sc">^</span> <span class="dv">2</span></span>
+<span id="cb616-4"><a href="data-window-functions.html#cb616-4" tabindex="-1"></a></span>
+<span id="cb616-5"><a href="data-window-functions.html#cb616-5" tabindex="-1"></a><span class="do">## Forward finite difference</span></span>
+<span id="cb616-6"><a href="data-window-functions.html#cb616-6" tabindex="-1"></a>df_dx <span class="ot">&lt;-</span> (<span class="fu">lead</span>(f) <span class="sc">-</span> f) <span class="sc">/</span> (<span class="fu">lead</span>(x) <span class="sc">-</span> x)</span>
+<span id="cb616-7"><a href="data-window-functions.html#cb616-7" tabindex="-1"></a>df_dx</span></code></pre></div>
 <pre><code>## [1] -1.600000e+00 -8.000000e-01  2.255141e-16  8.000000e-01  1.600000e+00
 ## [6]            NA</code></pre>
 <p>Make sure to order your data or use the <code>order_by</code> argument when using <code>lead</code> or <code>lag</code>! GGplot automatically reorders your data when making a line plot, but <code>lead</code> and <code>lag</code> will use the order of the data you provide.</p>
 <div id="q1-use-a-window-function-modify-the-following-visual-to-color-each-segment-differently-based-on-whether-the-period-of-time-was-increasing-or-decreasing." class="section level3 hasAnchor" number="38.1.1">
 <h3><span class="header-section-number">38.1.1</span> <strong>q1</strong> Use a window function modify the following visual to color each segment differently based on whether the period of time was increasing or decreasing.<a href="data-window-functions.html#q1-use-a-window-function-modify-the-following-visual-to-color-each-segment-differently-based-on-whether-the-period-of-time-was-increasing-or-decreasing." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="data-window-functions.html#cb618-1" aria-hidden="true" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
-<span id="cb618-2"><a href="data-window-functions.html#cb618-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(date) <span class="sc">%&gt;%</span></span>
-<span id="cb618-3"><a href="data-window-functions.html#cb618-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb618-4"><a href="data-window-functions.html#cb618-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> <span class="fu">lead</span>(unemploy, <span class="at">order_by =</span> date) <span class="sc">-</span> unemploy,</span>
-<span id="cb618-5"><a href="data-window-functions.html#cb618-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Positive =</span> delta <span class="sc">&gt;</span> <span class="dv">0</span></span>
-<span id="cb618-6"><a href="data-window-functions.html#cb618-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb618-7"><a href="data-window-functions.html#cb618-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb618-8"><a href="data-window-functions.html#cb618-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, unemploy, <span class="at">color =</span> Positive)) <span class="sc">+</span></span>
-<span id="cb618-9"><a href="data-window-functions.html#cb618-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(</span>
-<span id="cb618-10"><a href="data-window-functions.html#cb618-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xend =</span> <span class="fu">lead</span>(date, <span class="at">order_by =</span> date),</span>
-<span id="cb618-11"><a href="data-window-functions.html#cb618-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fu">lead</span>(unemploy, <span class="at">order_by =</span> date)</span>
-<span id="cb618-12"><a href="data-window-functions.html#cb618-12" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="data-window-functions.html#cb618-1" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
+<span id="cb618-2"><a href="data-window-functions.html#cb618-2" tabindex="-1"></a>  <span class="fu">arrange</span>(date) <span class="sc">%&gt;%</span></span>
+<span id="cb618-3"><a href="data-window-functions.html#cb618-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb618-4"><a href="data-window-functions.html#cb618-4" tabindex="-1"></a>    <span class="at">delta =</span> <span class="fu">lead</span>(unemploy, <span class="at">order_by =</span> date) <span class="sc">-</span> unemploy,</span>
+<span id="cb618-5"><a href="data-window-functions.html#cb618-5" tabindex="-1"></a>    <span class="at">Positive =</span> delta <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb618-6"><a href="data-window-functions.html#cb618-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb618-7"><a href="data-window-functions.html#cb618-7" tabindex="-1"></a></span>
+<span id="cb618-8"><a href="data-window-functions.html#cb618-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, unemploy, <span class="at">color =</span> Positive)) <span class="sc">+</span></span>
+<span id="cb618-9"><a href="data-window-functions.html#cb618-9" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(</span>
+<span id="cb618-10"><a href="data-window-functions.html#cb618-10" tabindex="-1"></a>    <span class="at">xend =</span> <span class="fu">lead</span>(date, <span class="at">order_by =</span> date),</span>
+<span id="cb618-11"><a href="data-window-functions.html#cb618-11" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fu">lead</span>(unemploy, <span class="at">order_by =</span> date)</span>
+<span id="cb618-12"><a href="data-window-functions.html#cb618-12" tabindex="-1"></a>  ))</span></code></pre></div>
 <pre><code>## Warning: Removed 1 rows containing missing values (`geom_segment()`).</code></pre>
 <p><img src="d27-e-data08-window-solution_files/figure-html/q1-task-1.png" width="672" /></p>
 </div>
@@ -1033,74 +1033,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">38.2</span> Ranks<a href="data-window-functions.html#ranks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>The rank functions allow you to assign (integer) ranks to smallest (or largest) values of a vector.</p>
-<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="data-window-functions.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
-<span id="cb620-2"><a href="data-window-functions.html#cb620-2" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb620-3"><a href="data-window-functions.html#cb620-3" aria-hidden="true" tabindex="-1"></a><span class="fu">row_number</span>(v)</span></code></pre></div>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="data-window-functions.html#cb620-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
+<span id="cb620-2"><a href="data-window-functions.html#cb620-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb620-3"><a href="data-window-functions.html#cb620-3" tabindex="-1"></a><span class="fu">row_number</span>(v)</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5</code></pre>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="data-window-functions.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min_rank</span>(v)</span></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="data-window-functions.html#cb622-1" tabindex="-1"></a><span class="fu">min_rank</span>(v)</span></code></pre></div>
 <pre><code>## [1] 1 1 3 4 5</code></pre>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="data-window-functions.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dense_rank</span>(v)</span></code></pre></div>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="data-window-functions.html#cb624-1" tabindex="-1"></a><span class="fu">dense_rank</span>(v)</span></code></pre></div>
 <pre><code>## [1] 1 1 2 3 4</code></pre>
 <p>You can use the <code>desc()</code> function (or a negative sign) to reverse the ranking order.</p>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="data-window-functions.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
-<span id="cb626-2"><a href="data-window-functions.html#cb626-2" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb626-3"><a href="data-window-functions.html#cb626-3" aria-hidden="true" tabindex="-1"></a><span class="fu">row_number</span>(<span class="fu">desc</span>(v))</span></code></pre></div>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="data-window-functions.html#cb626-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
+<span id="cb626-2"><a href="data-window-functions.html#cb626-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb626-3"><a href="data-window-functions.html#cb626-3" tabindex="-1"></a><span class="fu">row_number</span>(<span class="fu">desc</span>(v))</span></code></pre></div>
 <pre><code>## [1] 4 5 3 2 1</code></pre>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="data-window-functions.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min_rank</span>(<span class="fu">desc</span>(v))</span></code></pre></div>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="data-window-functions.html#cb628-1" tabindex="-1"></a><span class="fu">min_rank</span>(<span class="fu">desc</span>(v))</span></code></pre></div>
 <pre><code>## [1] 4 4 3 2 1</code></pre>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="data-window-functions.html#cb630-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dense_rank</span>(<span class="sc">-</span>v)</span></code></pre></div>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="data-window-functions.html#cb630-1" tabindex="-1"></a><span class="fu">dense_rank</span>(<span class="sc">-</span>v)</span></code></pre></div>
 <pre><code>## [1] 4 4 3 2 1</code></pre>
 <p>I find it difficult to remember how the rank functions behave, so I created the following visual to help remind myself how they function..</p>
-<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="data-window-functions.html#cb632-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
-<span id="cb632-2"><a href="data-window-functions.html#cb632-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb632-3"><a href="data-window-functions.html#cb632-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tribble</span>(</span>
-<span id="cb632-4"><a href="data-window-functions.html#cb632-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y,</span>
-<span id="cb632-5"><a href="data-window-functions.html#cb632-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>,  <span class="dv">0</span>,</span>
-<span id="cb632-6"><a href="data-window-functions.html#cb632-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>,  <span class="dv">0</span>,</span>
-<span id="cb632-7"><a href="data-window-functions.html#cb632-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>,  <span class="dv">1</span>,</span>
-<span id="cb632-8"><a href="data-window-functions.html#cb632-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>,  <span class="dv">2</span>,</span>
-<span id="cb632-9"><a href="data-window-functions.html#cb632-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>,  <span class="dv">2</span>,</span>
-<span id="cb632-10"><a href="data-window-functions.html#cb632-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>,  <span class="dv">3</span>,</span>
-<span id="cb632-11"><a href="data-window-functions.html#cb632-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>,  <span class="dv">3</span>,</span>
-<span id="cb632-12"><a href="data-window-functions.html#cb632-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>,  <span class="dv">3</span></span>
-<span id="cb632-13"><a href="data-window-functions.html#cb632-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb632-14"><a href="data-window-functions.html#cb632-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb632-15"><a href="data-window-functions.html#cb632-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">rk_row =</span> <span class="fu">row_number</span>(y),</span>
-<span id="cb632-16"><a href="data-window-functions.html#cb632-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">rk_min =</span> <span class="fu">min_rank</span>(y),</span>
-<span id="cb632-17"><a href="data-window-functions.html#cb632-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">rk_dense =</span> <span class="fu">dense_rank</span>(y)</span>
-<span id="cb632-18"><a href="data-window-functions.html#cb632-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb632-19"><a href="data-window-functions.html#cb632-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb632-20"><a href="data-window-functions.html#cb632-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;fcn&quot;</span>,</span>
-<span id="cb632-21"><a href="data-window-functions.html#cb632-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">&quot;rk_&quot;</span>,</span>
-<span id="cb632-22"><a href="data-window-functions.html#cb632-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;rk&quot;</span>,</span>
-<span id="cb632-23"><a href="data-window-functions.html#cb632-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>x, <span class="sc">-</span>y)</span>
-<span id="cb632-24"><a href="data-window-functions.html#cb632-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb632-25"><a href="data-window-functions.html#cb632-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb632-26"><a href="data-window-functions.html#cb632-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb632-27"><a href="data-window-functions.html#cb632-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb632-28"><a href="data-window-functions.html#cb632-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb632-29"><a href="data-window-functions.html#cb632-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rk <span class="sc">&lt;=</span> <span class="dv">3</span>),</span>
-<span id="cb632-30"><a href="data-window-functions.html#cb632-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
-<span id="cb632-31"><a href="data-window-functions.html#cb632-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;orange&quot;</span></span>
-<span id="cb632-32"><a href="data-window-functions.html#cb632-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb632-33"><a href="data-window-functions.html#cb632-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> rk), <span class="at">nudge_x =</span> <span class="fl">0.2</span>, <span class="at">nudge_y =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb632-34"><a href="data-window-functions.html#cb632-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb632-35"><a href="data-window-functions.html#cb632-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>fcn) <span class="sc">+</span></span>
-<span id="cb632-36"><a href="data-window-functions.html#cb632-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb632-37"><a href="data-window-functions.html#cb632-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">size =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb632-38"><a href="data-window-functions.html#cb632-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb632-39"><a href="data-window-functions.html#cb632-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb632-40"><a href="data-window-functions.html#cb632-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Minimum Three Ranks&quot;</span></span>
-<span id="cb632-41"><a href="data-window-functions.html#cb632-41" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="data-window-functions.html#cb632-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; just an example</span></span>
+<span id="cb632-2"><a href="data-window-functions.html#cb632-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb632-3"><a href="data-window-functions.html#cb632-3" tabindex="-1"></a><span class="fu">tribble</span>(</span>
+<span id="cb632-4"><a href="data-window-functions.html#cb632-4" tabindex="-1"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y,</span>
+<span id="cb632-5"><a href="data-window-functions.html#cb632-5" tabindex="-1"></a>  <span class="dv">0</span>,  <span class="dv">0</span>,</span>
+<span id="cb632-6"><a href="data-window-functions.html#cb632-6" tabindex="-1"></a>  <span class="dv">1</span>,  <span class="dv">0</span>,</span>
+<span id="cb632-7"><a href="data-window-functions.html#cb632-7" tabindex="-1"></a>  <span class="dv">1</span>,  <span class="dv">1</span>,</span>
+<span id="cb632-8"><a href="data-window-functions.html#cb632-8" tabindex="-1"></a>  <span class="dv">0</span>,  <span class="dv">2</span>,</span>
+<span id="cb632-9"><a href="data-window-functions.html#cb632-9" tabindex="-1"></a>  <span class="dv">2</span>,  <span class="dv">2</span>,</span>
+<span id="cb632-10"><a href="data-window-functions.html#cb632-10" tabindex="-1"></a>  <span class="dv">0</span>,  <span class="dv">3</span>,</span>
+<span id="cb632-11"><a href="data-window-functions.html#cb632-11" tabindex="-1"></a>  <span class="dv">2</span>,  <span class="dv">3</span>,</span>
+<span id="cb632-12"><a href="data-window-functions.html#cb632-12" tabindex="-1"></a>  <span class="dv">3</span>,  <span class="dv">3</span></span>
+<span id="cb632-13"><a href="data-window-functions.html#cb632-13" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb632-14"><a href="data-window-functions.html#cb632-14" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb632-15"><a href="data-window-functions.html#cb632-15" tabindex="-1"></a>    <span class="at">rk_row =</span> <span class="fu">row_number</span>(y),</span>
+<span id="cb632-16"><a href="data-window-functions.html#cb632-16" tabindex="-1"></a>    <span class="at">rk_min =</span> <span class="fu">min_rank</span>(y),</span>
+<span id="cb632-17"><a href="data-window-functions.html#cb632-17" tabindex="-1"></a>    <span class="at">rk_dense =</span> <span class="fu">dense_rank</span>(y)</span>
+<span id="cb632-18"><a href="data-window-functions.html#cb632-18" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb632-19"><a href="data-window-functions.html#cb632-19" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb632-20"><a href="data-window-functions.html#cb632-20" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;fcn&quot;</span>,</span>
+<span id="cb632-21"><a href="data-window-functions.html#cb632-21" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">&quot;rk_&quot;</span>,</span>
+<span id="cb632-22"><a href="data-window-functions.html#cb632-22" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;rk&quot;</span>,</span>
+<span id="cb632-23"><a href="data-window-functions.html#cb632-23" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>x, <span class="sc">-</span>y)</span>
+<span id="cb632-24"><a href="data-window-functions.html#cb632-24" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb632-25"><a href="data-window-functions.html#cb632-25" tabindex="-1"></a></span>
+<span id="cb632-26"><a href="data-window-functions.html#cb632-26" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb632-27"><a href="data-window-functions.html#cb632-27" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb632-28"><a href="data-window-functions.html#cb632-28" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb632-29"><a href="data-window-functions.html#cb632-29" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rk <span class="sc">&lt;=</span> <span class="dv">3</span>),</span>
+<span id="cb632-30"><a href="data-window-functions.html#cb632-30" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb632-31"><a href="data-window-functions.html#cb632-31" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;orange&quot;</span></span>
+<span id="cb632-32"><a href="data-window-functions.html#cb632-32" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb632-33"><a href="data-window-functions.html#cb632-33" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> rk), <span class="at">nudge_x =</span> <span class="fl">0.2</span>, <span class="at">nudge_y =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb632-34"><a href="data-window-functions.html#cb632-34" tabindex="-1"></a></span>
+<span id="cb632-35"><a href="data-window-functions.html#cb632-35" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>fcn) <span class="sc">+</span></span>
+<span id="cb632-36"><a href="data-window-functions.html#cb632-36" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb632-37"><a href="data-window-functions.html#cb632-37" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">size =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb632-38"><a href="data-window-functions.html#cb632-38" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb632-39"><a href="data-window-functions.html#cb632-39" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb632-40"><a href="data-window-functions.html#cb632-40" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Minimum Three Ranks&quot;</span></span>
+<span id="cb632-41"><a href="data-window-functions.html#cb632-41" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Warning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.
 ## ℹ Please use the `linewidth` argument instead.</code></pre>
 <p><img src="d27-e-data08-window-solution_files/figure-html/ex-ranks-vis-1.png" width="672" /></p>
 <div id="q2-use-a-rank-function-to-filter-the-largest-3-hwy-values-and-all-vehicles-that-have-those-values." class="section level3 hasAnchor" number="38.2.1">
 <h3><span class="header-section-number">38.2.1</span> <strong>q2</strong> Use a rank function to filter the largest 3 <code>hwy</code> values and <strong>all</strong> vehicles that have those values.<a href="data-window-functions.html#q2-use-a-rank-function-to-filter-the-largest-3-hwy-values-and-all-vehicles-that-have-those-values." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="data-window-functions.html#cb634-1" aria-hidden="true" tabindex="-1"></a>q2 <span class="ot">&lt;-</span></span>
-<span id="cb634-2"><a href="data-window-functions.html#cb634-2" aria-hidden="true" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
-<span id="cb634-3"><a href="data-window-functions.html#cb634-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">dense_rank</span>(<span class="fu">desc</span>(hwy)) <span class="sc">&lt;=</span> <span class="dv">3</span>)</span>
-<span id="cb634-4"><a href="data-window-functions.html#cb634-4" aria-hidden="true" tabindex="-1"></a>q2</span></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="data-window-functions.html#cb634-1" tabindex="-1"></a>q2 <span class="ot">&lt;-</span></span>
+<span id="cb634-2"><a href="data-window-functions.html#cb634-2" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
+<span id="cb634-3"><a href="data-window-functions.html#cb634-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">dense_rank</span>(<span class="fu">desc</span>(hwy)) <span class="sc">&lt;=</span> <span class="dv">3</span>)</span>
+<span id="cb634-4"><a href="data-window-functions.html#cb634-4" tabindex="-1"></a>q2</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 11
 ##   manufacturer model      displ  year   cyl trans  drv     cty   hwy fl    class
 ##   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
@@ -1109,10 +1109,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3 volkswagen   new beetle   1.9  1999     4 manua… f        35    44 d     subc…
 ## 4 volkswagen   new beetle   1.9  1999     4 auto(… f        29    41 d     subc…</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="data-window-functions.html#cb636-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb636-2"><a href="data-window-functions.html#cb636-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">dim</span>(q2)[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="data-window-functions.html#cb636-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb636-2"><a href="data-window-functions.html#cb636-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">dim</span>(q2)[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="data-window-functions.html#cb638-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="data-window-functions.html#cb638-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <!-- include-exit-ticket -->
 

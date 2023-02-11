@@ -988,7 +988,7 @@ statistics (summaries!) of our data.</p>
 <em>Reading Time</em>: ~60 minutes</p>
 <p><em>Note</em>: I’m considering splitting this exercise into two parts; I welcome
 feedback on this idea.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="data-deriving-quantities.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="data-deriving-quantities.html#cb169-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -999,8 +999,8 @@ feedback on this idea.</p>
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div id="q1-what-is-the-difference-between-these-two-versions-how-are-they-the-same-how-are-they-different" class="section level3 hasAnchor" number="19.0.1">
 <h3><span class="header-section-number">19.0.1</span> <strong>q1</strong> What is the difference between these two versions? How are they the same? How are they different?<a href="data-deriving-quantities.html#q1-what-is-the-difference-between-these-two-versions-how-are-they-the-same-how-are-they-different" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="data-deriving-quantities.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Version 1</span></span>
-<span id="cb173-2"><a href="data-deriving-quantities.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(diamonds, cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="data-deriving-quantities.html#cb173-1" tabindex="-1"></a><span class="do">## Version 1</span></span>
+<span id="cb173-2"><a href="data-deriving-quantities.html#cb173-2" tabindex="-1"></a><span class="fu">filter</span>(diamonds, cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 21,551 × 10
 ##    carat cut   color clarity depth table price     x     y     z
 ##    &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1015,8 +1015,8 @@ feedback on this idea.</p>
 ##  9  0.32 Ideal I     SI1      60.9    55   404  4.45  4.48  2.72
 ## 10  0.3  Ideal I     SI2      61      59   405  4.3   4.33  2.63
 ## # … with 21,541 more rows</code></pre>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="data-deriving-quantities.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Version 2</span></span>
-<span id="cb175-2"><a href="data-deriving-quantities.html#cb175-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="data-deriving-quantities.html#cb175-1" tabindex="-1"></a><span class="do">## Version 2</span></span>
+<span id="cb175-2"><a href="data-deriving-quantities.html#cb175-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 21,551 × 10
 ##    carat cut   color clarity depth table price     x     y     z
 ##    &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1071,31 +1071,31 @@ in the table below:</p>
 </table>
 <div id="q2-using-summarize-and-a-logical-summary-function-determine-the-number-of-rows-with-ideal-cut.-save-this-value-to-a-column-called-n_ideal." class="section level3 hasAnchor" number="19.1.1">
 <h3><span class="header-section-number">19.1.1</span> <strong>q2</strong> Using <code>summarize()</code> and a logical summary function, determine the number of rows with <code>Ideal</code> <code>cut</code>. Save this value to a column called <code>n_ideal</code>.<a href="data-deriving-quantities.html#q2-using-summarize-and-a-logical-summary-function-determine-the-number-of-rows-with-ideal-cut.-save-this-value-to-a-column-called-n_ideal." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="data-deriving-quantities.html#cb177-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
-<span id="cb177-2"><a href="data-deriving-quantities.html#cb177-2" aria-hidden="true" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb177-3"><a href="data-deriving-quantities.html#cb177-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_ideal =</span> <span class="fu">sum</span>(cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>))</span>
-<span id="cb177-4"><a href="data-deriving-quantities.html#cb177-4" aria-hidden="true" tabindex="-1"></a>df_q2</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="data-deriving-quantities.html#cb177-1" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
+<span id="cb177-2"><a href="data-deriving-quantities.html#cb177-2" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb177-3"><a href="data-deriving-quantities.html#cb177-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_ideal =</span> <span class="fu">sum</span>(cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>))</span>
+<span id="cb177-4"><a href="data-deriving-quantities.html#cb177-4" tabindex="-1"></a>df_q2</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   n_ideal
 ##     &lt;int&gt;
 ## 1   21551</code></pre>
 <p>The following test will verify that your <code>df_q2</code> is correct:</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="data-deriving-quantities.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb179-2"><a href="data-deriving-quantities.html#cb179-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb179-3"><a href="data-deriving-quantities.html#cb179-3" aria-hidden="true" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb179-4"><a href="data-deriving-quantities.html#cb179-4" aria-hidden="true" tabindex="-1"></a>    df_q2 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(n_ideal),</span>
-<span id="cb179-5"><a href="data-deriving-quantities.html#cb179-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">21551</span></span>
-<span id="cb179-6"><a href="data-deriving-quantities.html#cb179-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb179-7"><a href="data-deriving-quantities.html#cb179-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="data-deriving-quantities.html#cb179-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb179-2"><a href="data-deriving-quantities.html#cb179-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb179-3"><a href="data-deriving-quantities.html#cb179-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb179-4"><a href="data-deriving-quantities.html#cb179-4" tabindex="-1"></a>    df_q2 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(n_ideal),</span>
+<span id="cb179-5"><a href="data-deriving-quantities.html#cb179-5" tabindex="-1"></a>    <span class="dv">21551</span></span>
+<span id="cb179-6"><a href="data-deriving-quantities.html#cb179-6" tabindex="-1"></a>  )</span>
+<span id="cb179-7"><a href="data-deriving-quantities.html#cb179-7" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="data-deriving-quantities.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="data-deriving-quantities.html#cb181-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great job!&quot;</code></pre>
 </div>
 <div id="q3-the-function-group_by-modifies-how-other-dplyr-verbs-function.-uncomment-the-group_by-below-and-describe-how-the-result-changes." class="section level3 hasAnchor" number="19.1.2">
 <h3><span class="header-section-number">19.1.2</span> <strong>q3</strong> The function <code>group_by()</code> modifies how other dplyr verbs function. Uncomment the <code>group_by()</code> below, and describe how the result changes.<a href="data-deriving-quantities.html#q3-the-function-group_by-modifies-how-other-dplyr-verbs-function.-uncomment-the-group_by-below-and-describe-how-the-result-changes." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="data-deriving-quantities.html#cb183-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb183-2"><a href="data-deriving-quantities.html#cb183-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">## group_by(color, clarity) %&gt;%</span></span>
-<span id="cb183-3"><a href="data-deriving-quantities.html#cb183-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="data-deriving-quantities.html#cb183-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb183-2"><a href="data-deriving-quantities.html#cb183-2" tabindex="-1"></a>  <span class="do">## group_by(color, clarity) %&gt;%</span></span>
+<span id="cb183-3"><a href="data-deriving-quantities.html#cb183-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   price
 ##   &lt;dbl&gt;
@@ -1160,23 +1160,23 @@ tibble to <code>df_q4</code>, and assign the appropriate values to <code>cov_dep
 <code>cov_diff</code>. Comment on the relative values of <code>cov_depth</code> and <code>cov_diff</code>; why is
 <code>cov_diff</code> so large?</p>
 <p><em>Note</em>: Confusingly, the documentation for <code>diamonds</code> leaves out the factor of <code>100</code> in the computation of <code>depth</code>.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="data-deriving-quantities.html#cb185-1" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
-<span id="cb185-2"><a href="data-deriving-quantities.html#cb185-2" aria-hidden="true" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb185-3"><a href="data-deriving-quantities.html#cb185-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb185-4"><a href="data-deriving-quantities.html#cb185-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">depth_computed =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> z <span class="sc">/</span> (x <span class="sc">+</span> y),</span>
-<span id="cb185-5"><a href="data-deriving-quantities.html#cb185-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">diff =</span> depth <span class="sc">-</span> depth_computed</span>
-<span id="cb185-6"><a href="data-deriving-quantities.html#cb185-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb185-7"><a href="data-deriving-quantities.html#cb185-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb185-8"><a href="data-deriving-quantities.html#cb185-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">depth_mean =</span> <span class="fu">mean</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb185-9"><a href="data-deriving-quantities.html#cb185-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">depth_sd =</span> <span class="fu">sd</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb185-10"><a href="data-deriving-quantities.html#cb185-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">cov_depth =</span> depth_sd <span class="sc">/</span> depth_mean,</span>
-<span id="cb185-11"><a href="data-deriving-quantities.html#cb185-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb185-12"><a href="data-deriving-quantities.html#cb185-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">diff_mean =</span> <span class="fu">mean</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb185-13"><a href="data-deriving-quantities.html#cb185-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">diff_sd =</span> <span class="fu">sd</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb185-14"><a href="data-deriving-quantities.html#cb185-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cov_diff =</span> diff_sd <span class="sc">/</span> diff_mean,</span>
-<span id="cb185-15"><a href="data-deriving-quantities.html#cb185-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_diff =</span> <span class="fu">IQR</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">median</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb185-16"><a href="data-deriving-quantities.html#cb185-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb185-17"><a href="data-deriving-quantities.html#cb185-17" aria-hidden="true" tabindex="-1"></a>df_q4</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="data-deriving-quantities.html#cb185-1" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
+<span id="cb185-2"><a href="data-deriving-quantities.html#cb185-2" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb185-3"><a href="data-deriving-quantities.html#cb185-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb185-4"><a href="data-deriving-quantities.html#cb185-4" tabindex="-1"></a>    <span class="at">depth_computed =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> z <span class="sc">/</span> (x <span class="sc">+</span> y),</span>
+<span id="cb185-5"><a href="data-deriving-quantities.html#cb185-5" tabindex="-1"></a>    <span class="at">diff =</span> depth <span class="sc">-</span> depth_computed</span>
+<span id="cb185-6"><a href="data-deriving-quantities.html#cb185-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb185-7"><a href="data-deriving-quantities.html#cb185-7" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb185-8"><a href="data-deriving-quantities.html#cb185-8" tabindex="-1"></a>    <span class="at">depth_mean =</span> <span class="fu">mean</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb185-9"><a href="data-deriving-quantities.html#cb185-9" tabindex="-1"></a>    <span class="at">depth_sd =</span> <span class="fu">sd</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb185-10"><a href="data-deriving-quantities.html#cb185-10" tabindex="-1"></a>    <span class="at">cov_depth =</span> depth_sd <span class="sc">/</span> depth_mean,</span>
+<span id="cb185-11"><a href="data-deriving-quantities.html#cb185-11" tabindex="-1"></a></span>
+<span id="cb185-12"><a href="data-deriving-quantities.html#cb185-12" tabindex="-1"></a>    <span class="at">diff_mean =</span> <span class="fu">mean</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb185-13"><a href="data-deriving-quantities.html#cb185-13" tabindex="-1"></a>    <span class="at">diff_sd =</span> <span class="fu">sd</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb185-14"><a href="data-deriving-quantities.html#cb185-14" tabindex="-1"></a>    <span class="at">cov_diff =</span> diff_sd <span class="sc">/</span> diff_mean,</span>
+<span id="cb185-15"><a href="data-deriving-quantities.html#cb185-15" tabindex="-1"></a>    <span class="at">c_diff =</span> <span class="fu">IQR</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">median</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb185-16"><a href="data-deriving-quantities.html#cb185-16" tabindex="-1"></a>  )</span>
+<span id="cb185-17"><a href="data-deriving-quantities.html#cb185-17" tabindex="-1"></a>df_q4</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 7
 ##   depth_mean depth_sd cov_depth diff_mean diff_sd cov_diff   c_diff
 ##        &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -1187,12 +1187,12 @@ tibble to <code>df_q4</code>, and assign the appropriate values to <code>cov_dep
 <li><code>cov_diff</code> is enormous! This is because the mean difference between <code>depth</code> and <code>depth_computed</code> is small, which causes the <code>cov</code> to blow up.</li>
 </ul>
 <p>The following test will verify that your <code>df_q4</code> is correct:</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="data-deriving-quantities.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb187-2"><a href="data-deriving-quantities.html#cb187-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(df_q4 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(cov_depth) <span class="sc">-</span> <span class="fl">0.02320057</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="data-deriving-quantities.html#cb187-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb187-2"><a href="data-deriving-quantities.html#cb187-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(df_q4 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(cov_depth) <span class="sc">-</span> <span class="fl">0.02320057</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="data-deriving-quantities.html#cb189-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(df_q4 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(cov_diff) <span class="sc">-</span> <span class="fl">497.5585</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="data-deriving-quantities.html#cb189-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(df_q4 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(cov_diff) <span class="sc">-</span> <span class="fl">497.5585</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="data-deriving-quantities.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="data-deriving-quantities.html#cb191-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <p>There is nonzero difference between <code>depth</code> and the computed <code>depth</code>; this
 raises some questions about how <code>depth</code> was actually computed! It’s often a good
@@ -1203,15 +1203,15 @@ sometimes uncover errors in the data!</p>
 <h3><span class="header-section-number">19.1.5</span> <strong>q5</strong> Compute and observe<a href="data-deriving-quantities.html#q5-compute-and-observe" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Compute the <code>price_mean = mean(price)</code>, <code>price_sd = sd(price)</code>, and <code>price_cov = price_sd / price_mean</code> for each <code>cut</code> of diamond. What observations can you make
 about the various cuts? Do those observations match your expectations?</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="data-deriving-quantities.html#cb193-1" aria-hidden="true" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
-<span id="cb193-2"><a href="data-deriving-quantities.html#cb193-2" aria-hidden="true" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb193-3"><a href="data-deriving-quantities.html#cb193-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
-<span id="cb193-4"><a href="data-deriving-quantities.html#cb193-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb193-5"><a href="data-deriving-quantities.html#cb193-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_mean =</span> <span class="fu">mean</span>(price),</span>
-<span id="cb193-6"><a href="data-deriving-quantities.html#cb193-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_sd =</span> <span class="fu">sd</span>(price),</span>
-<span id="cb193-7"><a href="data-deriving-quantities.html#cb193-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_cov =</span> price_sd <span class="sc">/</span> price_mean</span>
-<span id="cb193-8"><a href="data-deriving-quantities.html#cb193-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb193-9"><a href="data-deriving-quantities.html#cb193-9" aria-hidden="true" tabindex="-1"></a>df_q5</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="data-deriving-quantities.html#cb193-1" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
+<span id="cb193-2"><a href="data-deriving-quantities.html#cb193-2" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb193-3"><a href="data-deriving-quantities.html#cb193-3" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
+<span id="cb193-4"><a href="data-deriving-quantities.html#cb193-4" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb193-5"><a href="data-deriving-quantities.html#cb193-5" tabindex="-1"></a>    <span class="at">price_mean =</span> <span class="fu">mean</span>(price),</span>
+<span id="cb193-6"><a href="data-deriving-quantities.html#cb193-6" tabindex="-1"></a>    <span class="at">price_sd =</span> <span class="fu">sd</span>(price),</span>
+<span id="cb193-7"><a href="data-deriving-quantities.html#cb193-7" tabindex="-1"></a>    <span class="at">price_cov =</span> price_sd <span class="sc">/</span> price_mean</span>
+<span id="cb193-8"><a href="data-deriving-quantities.html#cb193-8" tabindex="-1"></a>  )</span>
+<span id="cb193-9"><a href="data-deriving-quantities.html#cb193-9" tabindex="-1"></a>df_q5</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 4
 ##   cut       price_mean price_sd price_cov
 ##   &lt;ord&gt;          &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
@@ -1221,21 +1221,21 @@ about the various cuts? Do those observations match your expectations?</p>
 ## 4 Premium        4584.    4349.     0.949
 ## 5 Ideal          3458.    3808.     1.10</code></pre>
 <p>The following test will verify that your <code>df_q5</code> is correct:</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="data-deriving-quantities.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb195-2"><a href="data-deriving-quantities.html#cb195-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb195-3"><a href="data-deriving-quantities.html#cb195-3" aria-hidden="true" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb195-4"><a href="data-deriving-quantities.html#cb195-4" aria-hidden="true" tabindex="-1"></a>    df_q5 <span class="sc">%&gt;%</span></span>
-<span id="cb195-5"><a href="data-deriving-quantities.html#cb195-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(cut, price_cov) <span class="sc">%&gt;%</span></span>
-<span id="cb195-6"><a href="data-deriving-quantities.html#cb195-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">price_cov =</span> <span class="fu">round</span>(price_cov, <span class="at">digits =</span> <span class="dv">3</span>)),</span>
-<span id="cb195-7"><a href="data-deriving-quantities.html#cb195-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb195-8"><a href="data-deriving-quantities.html#cb195-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">cut =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>),</span>
-<span id="cb195-9"><a href="data-deriving-quantities.html#cb195-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">price_cov =</span> <span class="fu">c</span>(<span class="fl">0.817</span>, <span class="fl">0.937</span>, <span class="fl">0.988</span>, <span class="fl">0.949</span>, <span class="fl">1.101</span>)</span>
-<span id="cb195-10"><a href="data-deriving-quantities.html#cb195-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb195-11"><a href="data-deriving-quantities.html#cb195-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cut =</span> <span class="fu">fct_inorder</span>(cut, <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb195-12"><a href="data-deriving-quantities.html#cb195-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb195-13"><a href="data-deriving-quantities.html#cb195-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="data-deriving-quantities.html#cb195-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb195-2"><a href="data-deriving-quantities.html#cb195-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb195-3"><a href="data-deriving-quantities.html#cb195-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb195-4"><a href="data-deriving-quantities.html#cb195-4" tabindex="-1"></a>    df_q5 <span class="sc">%&gt;%</span></span>
+<span id="cb195-5"><a href="data-deriving-quantities.html#cb195-5" tabindex="-1"></a>      <span class="fu">select</span>(cut, price_cov) <span class="sc">%&gt;%</span></span>
+<span id="cb195-6"><a href="data-deriving-quantities.html#cb195-6" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">price_cov =</span> <span class="fu">round</span>(price_cov, <span class="at">digits =</span> <span class="dv">3</span>)),</span>
+<span id="cb195-7"><a href="data-deriving-quantities.html#cb195-7" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb195-8"><a href="data-deriving-quantities.html#cb195-8" tabindex="-1"></a>      <span class="at">cut =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>),</span>
+<span id="cb195-9"><a href="data-deriving-quantities.html#cb195-9" tabindex="-1"></a>      <span class="at">price_cov =</span> <span class="fu">c</span>(<span class="fl">0.817</span>, <span class="fl">0.937</span>, <span class="fl">0.988</span>, <span class="fl">0.949</span>, <span class="fl">1.101</span>)</span>
+<span id="cb195-10"><a href="data-deriving-quantities.html#cb195-10" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb195-11"><a href="data-deriving-quantities.html#cb195-11" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cut =</span> <span class="fu">fct_inorder</span>(cut, <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb195-12"><a href="data-deriving-quantities.html#cb195-12" tabindex="-1"></a>  )</span>
+<span id="cb195-13"><a href="data-deriving-quantities.html#cb195-13" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="data-deriving-quantities.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="data-deriving-quantities.html#cb197-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Excellent!&quot;</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>

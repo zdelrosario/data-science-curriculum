@@ -86,7 +86,7 @@ cases
 
 
 ```r
-## TODO: Modify with your answer
+## TODO: Modify with your multiple choice number answer
 q1_answer <- 0
 
 ## NOTE: The following will test your answer
@@ -132,7 +132,7 @@ alloys
 
 
 ```r
-## TODO: Modify with your answer
+## TODO: Modify with your multiple choice number answer
 q2_answer <- 0
 
 ## NOTE: The following will test your answer

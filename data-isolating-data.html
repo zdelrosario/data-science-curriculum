@@ -984,7 +984,7 @@ facility at <em>isolating data</em>. In this exercise, you will practice isolati
 columns with <code>select()</code>, picking specific rows with <code>filter()</code>, and sorting your
 data with <code>arrange()</code> to see what rises to the top.</p>
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/2.2">Isolating Data with dplyr</a> (All topics)</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="data-isolating-data.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="data-isolating-data.html#cb116-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -993,10 +993,10 @@ data with <code>arrange()</code> to see what rises to the top.</p>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="data-isolating-data.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13) <span class="co"># For `flights` data</span></span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="data-isolating-data.html#cb120-1" tabindex="-1"></a><span class="fu">library</span>(nycflights13) <span class="co"># For `flights` data</span></span></code></pre></div>
 <p>We’ll use the <code>nycflights13</code> dataset for this exercise; upon loading the
 package, the data are stored in the variable name <code>flights</code>. For instance:</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="data-isolating-data.html#cb121-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="data-isolating-data.html#cb121-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 336,776
 ## Columns: 19
 ## $ year           &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2…
@@ -1020,8 +1020,8 @@ package, the data are stored in the variable name <code>flights</code>. For inst
 ## $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-01 0…</code></pre>
 <div id="q1-select-all-the-variables-whose-name-ends-with-_time." class="section level3 hasAnchor" number="17.0.1">
 <h3><span class="header-section-number">17.0.1</span> <strong>q1</strong> Select all the variables whose name ends with <code>_time</code>.<a href="data-isolating-data.html#q1-select-all-the-variables-whose-name-ends-with-_time." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="data-isolating-data.html#cb123-1" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">&quot;_time&quot;</span>))</span>
-<span id="cb123-2"><a href="data-isolating-data.html#cb123-2" aria-hidden="true" tabindex="-1"></a>df_q1</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="data-isolating-data.html#cb123-1" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">&quot;_time&quot;</span>))</span>
+<span id="cb123-2"><a href="data-isolating-data.html#cb123-2" tabindex="-1"></a>df_q1</span></code></pre></div>
 <pre><code>## # A tibble: 336,776 × 5
 ##    dep_time sched_dep_time arr_time sched_arr_time air_time
 ##       &lt;int&gt;          &lt;int&gt;    &lt;int&gt;          &lt;int&gt;    &lt;dbl&gt;
@@ -1038,19 +1038,19 @@ package, the data are stored in the variable name <code>flights</code>. For inst
 ## # … with 336,766 more rows</code></pre>
 <p>The following is a <em>unit test</em> of your code; if you managed to solve task <strong>q2</strong>
 correctly, the following code will execute without error.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="data-isolating-data.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb125-2"><a href="data-isolating-data.html#cb125-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb125-3"><a href="data-isolating-data.html#cb125-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">all</span>(<span class="fu">names</span>(df_q1) <span class="sc">%&gt;%</span> <span class="fu">str_detect</span>(., <span class="st">&quot;_time$&quot;</span>))</span>
-<span id="cb125-4"><a href="data-isolating-data.html#cb125-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="data-isolating-data.html#cb125-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb125-2"><a href="data-isolating-data.html#cb125-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb125-3"><a href="data-isolating-data.html#cb125-3" tabindex="-1"></a>  <span class="fu">all</span>(<span class="fu">names</span>(df_q1) <span class="sc">%&gt;%</span> <span class="fu">str_detect</span>(., <span class="st">&quot;_time$&quot;</span>))</span>
+<span id="cb125-4"><a href="data-isolating-data.html#cb125-4" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="data-isolating-data.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="data-isolating-data.html#cb127-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 </div>
 <div id="q2-re-arrange-the-columns-to-place-dest-origin-carrier-at-the-front-but-retain-all-other-columns." class="section level3 hasAnchor" number="17.0.2">
 <h3><span class="header-section-number">17.0.2</span> <strong>q2</strong> Re-arrange the columns to place <code>dest, origin, carrier</code> at the front, but retain all other columns.<a href="data-isolating-data.html#q2-re-arrange-the-columns-to-place-dest-origin-carrier-at-the-front-but-retain-all-other-columns." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: The function <code>everything()</code> will be useful!</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="data-isolating-data.html#cb129-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(dest, origin, carrier, <span class="fu">everything</span>())</span>
-<span id="cb129-2"><a href="data-isolating-data.html#cb129-2" aria-hidden="true" tabindex="-1"></a>df_q2</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="data-isolating-data.html#cb129-1" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(dest, origin, carrier, <span class="fu">everything</span>())</span>
+<span id="cb129-2"><a href="data-isolating-data.html#cb129-2" tabindex="-1"></a>df_q2</span></code></pre></div>
 <pre><code>## # A tibble: 336,776 × 19
 ##    dest  origin carrier  year month   day dep_time sched_dep_t…¹ dep_d…² arr_t…³
 ##    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;         &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;
@@ -1069,19 +1069,19 @@ correctly, the following code will execute without error.</p>
 ## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated
 ## #   variable names ¹​sched_dep_time, ²​dep_delay, ³​arr_time</code></pre>
 <p>Use the following to check your code.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="data-isolating-data.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb131-2"><a href="data-isolating-data.html#cb131-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb131-3"><a href="data-isolating-data.html#cb131-3" aria-hidden="true" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(<span class="fu">names</span>(df_q2)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span>, <span class="st">&quot;origin&quot;</span>, <span class="st">&quot;carrier&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>))</span>
-<span id="cb131-4"><a href="data-isolating-data.html#cb131-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="data-isolating-data.html#cb131-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb131-2"><a href="data-isolating-data.html#cb131-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb131-3"><a href="data-isolating-data.html#cb131-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(<span class="fu">names</span>(df_q2)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span>, <span class="st">&quot;origin&quot;</span>, <span class="st">&quot;carrier&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>))</span>
+<span id="cb131-4"><a href="data-isolating-data.html#cb131-4" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="data-isolating-data.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="data-isolating-data.html#cb133-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 <p>Since R will only show the first few columns of a tibble, using <code>select()</code> in
 this fashion will help us see the values of particular columns.</p>
 </div>
 <div id="q3-fix-the-following-code.-what-is-the-mistake-here-what-is-the-code-trying-to-accomplish" class="section level3 hasAnchor" number="17.0.3">
 <h3><span class="header-section-number">17.0.3</span> <strong>q3</strong> Fix the following code. What is the mistake here? What is the code trying to accomplish?<a href="data-isolating-data.html#q3-fix-the-following-code.-what-is-the-mistake-here-what-is-the-code-trying-to-accomplish" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="data-isolating-data.html#cb135-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">&quot;LAX&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="data-isolating-data.html#cb135-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">&quot;LAX&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 16,174 × 19
 ##     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
@@ -1103,7 +1103,7 @@ this fashion will help us see the values of particular columns.</p>
 </div>
 <div id="q4-this-code-doesnt-quite-what-the-user-intended.-what-went-wrong" class="section level3 hasAnchor" number="17.0.4">
 <h3><span class="header-section-number">17.0.4</span> <strong>q4</strong> This code doesn’t quite what the user intended. What went wrong?<a href="data-isolating-data.html#q4-this-code-doesnt-quite-what-the-user-intended.-what-went-wrong" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="data-isolating-data.html#cb137-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">&quot;BOS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="data-isolating-data.html#cb137-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">&quot;BOS&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 15,508 × 19
 ##     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
@@ -1128,34 +1128,34 @@ city? Let’s do a quick check to get an idea:</p>
 </div>
 <div id="q5-perform-two-filters-first" class="section level3 hasAnchor" number="17.0.5">
 <h3><span class="header-section-number">17.0.5</span> <strong>q5</strong> Perform <strong>two</strong> filters; first<a href="data-isolating-data.html#q5-perform-two-filters-first" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="data-isolating-data.html#cb139-1" aria-hidden="true" tabindex="-1"></a>df_q5a <span class="ot">&lt;-</span></span>
-<span id="cb139-2"><a href="data-isolating-data.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
-<span id="cb139-3"><a href="data-isolating-data.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb139-4"><a href="data-isolating-data.html#cb139-4" aria-hidden="true" tabindex="-1"></a>    dest <span class="sc">==</span> <span class="st">&quot;JFK&quot;</span> <span class="sc">|</span> dest <span class="sc">==</span> <span class="st">&quot;LGA&quot;</span> <span class="sc">|</span> dest <span class="sc">==</span> <span class="st">&quot;EWR&quot;</span></span>
-<span id="cb139-5"><a href="data-isolating-data.html#cb139-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb139-6"><a href="data-isolating-data.html#cb139-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb139-7"><a href="data-isolating-data.html#cb139-7" aria-hidden="true" tabindex="-1"></a>df_q5b <span class="ot">&lt;-</span></span>
-<span id="cb139-8"><a href="data-isolating-data.html#cb139-8" aria-hidden="true" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
-<span id="cb139-9"><a href="data-isolating-data.html#cb139-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb139-10"><a href="data-isolating-data.html#cb139-10" aria-hidden="true" tabindex="-1"></a>    origin <span class="sc">==</span> <span class="st">&quot;JFK&quot;</span> <span class="sc">|</span> origin <span class="sc">==</span> <span class="st">&quot;LGA&quot;</span> <span class="sc">|</span> origin <span class="sc">==</span> <span class="st">&quot;EWR&quot;</span></span>
-<span id="cb139-11"><a href="data-isolating-data.html#cb139-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="data-isolating-data.html#cb139-1" tabindex="-1"></a>df_q5a <span class="ot">&lt;-</span></span>
+<span id="cb139-2"><a href="data-isolating-data.html#cb139-2" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb139-3"><a href="data-isolating-data.html#cb139-3" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb139-4"><a href="data-isolating-data.html#cb139-4" tabindex="-1"></a>    dest <span class="sc">==</span> <span class="st">&quot;JFK&quot;</span> <span class="sc">|</span> dest <span class="sc">==</span> <span class="st">&quot;LGA&quot;</span> <span class="sc">|</span> dest <span class="sc">==</span> <span class="st">&quot;EWR&quot;</span></span>
+<span id="cb139-5"><a href="data-isolating-data.html#cb139-5" tabindex="-1"></a>  )</span>
+<span id="cb139-6"><a href="data-isolating-data.html#cb139-6" tabindex="-1"></a></span>
+<span id="cb139-7"><a href="data-isolating-data.html#cb139-7" tabindex="-1"></a>df_q5b <span class="ot">&lt;-</span></span>
+<span id="cb139-8"><a href="data-isolating-data.html#cb139-8" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb139-9"><a href="data-isolating-data.html#cb139-9" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb139-10"><a href="data-isolating-data.html#cb139-10" tabindex="-1"></a>    origin <span class="sc">==</span> <span class="st">&quot;JFK&quot;</span> <span class="sc">|</span> origin <span class="sc">==</span> <span class="st">&quot;LGA&quot;</span> <span class="sc">|</span> origin <span class="sc">==</span> <span class="st">&quot;EWR&quot;</span></span>
+<span id="cb139-11"><a href="data-isolating-data.html#cb139-11" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Use the following code to check your answer.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="data-isolating-data.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb140-2"><a href="data-isolating-data.html#cb140-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb140-3"><a href="data-isolating-data.html#cb140-3" aria-hidden="true" tabindex="-1"></a>  df_q5a <span class="sc">%&gt;%</span></span>
-<span id="cb140-4"><a href="data-isolating-data.html#cb140-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flag =</span> dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;JFK&quot;</span>, <span class="st">&quot;LGA&quot;</span>, <span class="st">&quot;EWR&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb140-5"><a href="data-isolating-data.html#cb140-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">flag =</span> <span class="fu">all</span>(flag)) <span class="sc">%&gt;%</span></span>
-<span id="cb140-6"><a href="data-isolating-data.html#cb140-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(flag)</span>
-<span id="cb140-7"><a href="data-isolating-data.html#cb140-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="data-isolating-data.html#cb140-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb140-2"><a href="data-isolating-data.html#cb140-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb140-3"><a href="data-isolating-data.html#cb140-3" tabindex="-1"></a>  df_q5a <span class="sc">%&gt;%</span></span>
+<span id="cb140-4"><a href="data-isolating-data.html#cb140-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flag =</span> dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;JFK&quot;</span>, <span class="st">&quot;LGA&quot;</span>, <span class="st">&quot;EWR&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb140-5"><a href="data-isolating-data.html#cb140-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">flag =</span> <span class="fu">all</span>(flag)) <span class="sc">%&gt;%</span></span>
+<span id="cb140-6"><a href="data-isolating-data.html#cb140-6" tabindex="-1"></a>  <span class="fu">pull</span>(flag)</span>
+<span id="cb140-7"><a href="data-isolating-data.html#cb140-7" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="data-isolating-data.html#cb142-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb142-2"><a href="data-isolating-data.html#cb142-2" aria-hidden="true" tabindex="-1"></a>  df_q5b <span class="sc">%&gt;%</span></span>
-<span id="cb142-3"><a href="data-isolating-data.html#cb142-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flag =</span> origin <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;JFK&quot;</span>, <span class="st">&quot;LGA&quot;</span>, <span class="st">&quot;EWR&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb142-4"><a href="data-isolating-data.html#cb142-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">flag =</span> <span class="fu">all</span>(flag)) <span class="sc">%&gt;%</span></span>
-<span id="cb142-5"><a href="data-isolating-data.html#cb142-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(flag)</span>
-<span id="cb142-6"><a href="data-isolating-data.html#cb142-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="data-isolating-data.html#cb142-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb142-2"><a href="data-isolating-data.html#cb142-2" tabindex="-1"></a>  df_q5b <span class="sc">%&gt;%</span></span>
+<span id="cb142-3"><a href="data-isolating-data.html#cb142-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flag =</span> origin <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;JFK&quot;</span>, <span class="st">&quot;LGA&quot;</span>, <span class="st">&quot;EWR&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb142-4"><a href="data-isolating-data.html#cb142-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">flag =</span> <span class="fu">all</span>(flag)) <span class="sc">%&gt;%</span></span>
+<span id="cb142-5"><a href="data-isolating-data.html#cb142-5" tabindex="-1"></a>  <span class="fu">pull</span>(flag)</span>
+<span id="cb142-6"><a href="data-isolating-data.html#cb142-6" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="data-isolating-data.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="data-isolating-data.html#cb144-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <p>The fact that <strong>all</strong> observations have their origin in NYC highlights (but
 does not itself prove!) that these data were collected to study flights
@@ -1171,11 +1171,11 @@ machine learning. (<code>end-rant</code>)</p>
 </div>
 <div id="q6-sort-the-flights-in-descending-order-by-their-air_time.-bring-air_time-dest-to-the-front.-what-can-you-tell-about-the-longest-flights" class="section level3 hasAnchor" number="17.0.6">
 <h3><span class="header-section-number">17.0.6</span> <strong>q6</strong> Sort the flights in <em>descending</em> order by their <code>air_time</code>. Bring <code>air_time, dest</code> to the front. What can you tell about the longest flights?<a href="data-isolating-data.html#q6-sort-the-flights-in-descending-order-by-their-air_time.-bring-air_time-dest-to-the-front.-what-can-you-tell-about-the-longest-flights" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="data-isolating-data.html#cb146-1" aria-hidden="true" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
-<span id="cb146-2"><a href="data-isolating-data.html#cb146-2" aria-hidden="true" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
-<span id="cb146-3"><a href="data-isolating-data.html#cb146-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(air_time, dest, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb146-4"><a href="data-isolating-data.html#cb146-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(air_time))</span>
-<span id="cb146-5"><a href="data-isolating-data.html#cb146-5" aria-hidden="true" tabindex="-1"></a>df_q6</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="data-isolating-data.html#cb146-1" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
+<span id="cb146-2"><a href="data-isolating-data.html#cb146-2" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb146-3"><a href="data-isolating-data.html#cb146-3" tabindex="-1"></a>  <span class="fu">select</span>(air_time, dest, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb146-4"><a href="data-isolating-data.html#cb146-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(air_time))</span>
+<span id="cb146-5"><a href="data-isolating-data.html#cb146-5" tabindex="-1"></a>df_q6</span></code></pre></div>
 <pre><code>## # A tibble: 336,776 × 19
 ##    air_time dest   year month   day dep_time sched_dep…¹ dep_d…² arr_t…³ sched…⁴
 ##       &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;       &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;
@@ -1193,29 +1193,29 @@ machine learning. (<code>end-rant</code>)</p>
 ## #   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
 ## #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time</code></pre>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="data-isolating-data.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb148-2"><a href="data-isolating-data.html#cb148-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb148-3"><a href="data-isolating-data.html#cb148-3" aria-hidden="true" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb148-4"><a href="data-isolating-data.html#cb148-4" aria-hidden="true" tabindex="-1"></a>    df_q6 <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(air_time),</span>
-<span id="cb148-5"><a href="data-isolating-data.html#cb148-5" aria-hidden="true" tabindex="-1"></a>    flights <span class="sc">%&gt;%</span> <span class="fu">pull</span>(air_time) <span class="sc">%&gt;%</span> <span class="fu">max</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb148-6"><a href="data-isolating-data.html#cb148-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb148-7"><a href="data-isolating-data.html#cb148-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="data-isolating-data.html#cb148-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb148-2"><a href="data-isolating-data.html#cb148-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb148-3"><a href="data-isolating-data.html#cb148-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb148-4"><a href="data-isolating-data.html#cb148-4" tabindex="-1"></a>    df_q6 <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(air_time),</span>
+<span id="cb148-5"><a href="data-isolating-data.html#cb148-5" tabindex="-1"></a>    flights <span class="sc">%&gt;%</span> <span class="fu">pull</span>(air_time) <span class="sc">%&gt;%</span> <span class="fu">max</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb148-6"><a href="data-isolating-data.html#cb148-6" tabindex="-1"></a>  )</span>
+<span id="cb148-7"><a href="data-isolating-data.html#cb148-7" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="data-isolating-data.html#cb150-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb150-2"><a href="data-isolating-data.html#cb150-2" aria-hidden="true" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb150-3"><a href="data-isolating-data.html#cb150-3" aria-hidden="true" tabindex="-1"></a>    df_q6 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(air_time)) <span class="sc">%&gt;%</span> <span class="fu">tail</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(air_time),</span>
-<span id="cb150-4"><a href="data-isolating-data.html#cb150-4" aria-hidden="true" tabindex="-1"></a>    flights <span class="sc">%&gt;%</span> <span class="fu">pull</span>(air_time) <span class="sc">%&gt;%</span> <span class="fu">min</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb150-5"><a href="data-isolating-data.html#cb150-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb150-6"><a href="data-isolating-data.html#cb150-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="data-isolating-data.html#cb150-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb150-2"><a href="data-isolating-data.html#cb150-2" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb150-3"><a href="data-isolating-data.html#cb150-3" tabindex="-1"></a>    df_q6 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(air_time)) <span class="sc">%&gt;%</span> <span class="fu">tail</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(air_time),</span>
+<span id="cb150-4"><a href="data-isolating-data.html#cb150-4" tabindex="-1"></a>    flights <span class="sc">%&gt;%</span> <span class="fu">pull</span>(air_time) <span class="sc">%&gt;%</span> <span class="fu">min</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb150-5"><a href="data-isolating-data.html#cb150-5" tabindex="-1"></a>  )</span>
+<span id="cb150-6"><a href="data-isolating-data.html#cb150-6" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="data-isolating-data.html#cb152-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb152-2"><a href="data-isolating-data.html#cb152-2" aria-hidden="true" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb152-3"><a href="data-isolating-data.html#cb152-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(df_q6)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>],</span>
-<span id="cb152-4"><a href="data-isolating-data.html#cb152-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;air_time&quot;</span>, <span class="st">&quot;dest&quot;</span>)</span>
-<span id="cb152-5"><a href="data-isolating-data.html#cb152-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb152-6"><a href="data-isolating-data.html#cb152-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="data-isolating-data.html#cb152-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb152-2"><a href="data-isolating-data.html#cb152-2" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb152-3"><a href="data-isolating-data.html#cb152-3" tabindex="-1"></a>    <span class="fu">names</span>(df_q6)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>],</span>
+<span id="cb152-4"><a href="data-isolating-data.html#cb152-4" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;air_time&quot;</span>, <span class="st">&quot;dest&quot;</span>)</span>
+<span id="cb152-5"><a href="data-isolating-data.html#cb152-5" tabindex="-1"></a>  )</span>
+<span id="cb152-6"><a href="data-isolating-data.html#cb152-6" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="data-isolating-data.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="data-isolating-data.html#cb154-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great job!&quot;</code></pre>
 <p>The longest flights are to “HNL”; this makes sense—Honolulu is quite far
 from NYC!</p>

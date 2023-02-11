@@ -988,11 +988,11 @@ allow us to create just about any graph you can imagine!</p>
 <div id="q1-inspect-the-diamonds-dataset.-what-do-the-cut-color-and-clarity-variables-mean" class="section level3 hasAnchor" number="14.0.1">
 <h3><span class="header-section-number">14.0.1</span> <strong>q1</strong> Inspect the <code>diamonds</code> dataset. What do the <code>cut</code>, <code>color</code>, and <code>clarity</code> variables mean?<a href="vis-data-visualization-basics.html#q1-inspect-the-diamonds-dataset.-what-do-the-cut-color-and-clarity-variables-mean" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: We learned how to inspect a dataset in <code>e-data-00-basics</code>!</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="vis-data-visualization-basics.html#cb95-1" aria-hidden="true" tabindex="-1"></a>?diamonds</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="vis-data-visualization-basics.html#cb95-1" tabindex="-1"></a>?diamonds</span></code></pre></div>
 </div>
 <div id="q2-use-your-standard-checks-to-determine-what-variables-the-dataset-has." class="section level3 hasAnchor" number="14.0.2">
 <h3><span class="header-section-number">14.0.2</span> <strong>q2</strong> Use your “standard checks” to determine what variables the dataset has.<a href="vis-data-visualization-basics.html#q2-use-your-standard-checks-to-determine-what-variables-the-dataset-has." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="vis-data-visualization-basics.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(diamonds)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="vis-data-visualization-basics.html#cb96-1" tabindex="-1"></a><span class="fu">glimpse</span>(diamonds)</span></code></pre></div>
 <pre><code>## Rows: 53,940
 ## Columns: 10
 ## $ carat   &lt;dbl&gt; 0.23, 0.21, 0.23, 0.29, 0.31, 0.24, 0.24, 0.26, 0.22, 0.23, 0.…
@@ -1013,9 +1013,9 @@ allow us to create just about any graph you can imagine!</p>
 <p>you observe?</p>
 <p><em>Hint</em>: Usually the language <code>y</code> vs <code>x</code> refers to the <code>vertical axis</code> vs
 <code>horizontal axis</code>. This is the opposite order from the way we often specify <code>x, y</code> pairs. Language is hard!</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="vis-data-visualization-basics.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Complete this code</span></span>
-<span id="cb98-2"><a href="vis-data-visualization-basics.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds) <span class="sc">+</span></span>
-<span id="cb98-3"><a href="vis-data-visualization-basics.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price))</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="vis-data-visualization-basics.html#cb98-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Complete this code</span></span>
+<span id="cb98-2"><a href="vis-data-visualization-basics.html#cb98-2" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds) <span class="sc">+</span></span>
+<span id="cb98-3"><a href="vis-data-visualization-basics.html#cb98-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price))</span></code></pre></div>
 <p><img src="d05-e-vis00-basics-solution_files/figure-html/q3-task-1.png" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1035,9 +1035,9 @@ question will explore this idea more.</p>
 <h3><span class="header-section-number">14.1.1</span> <strong>q4</strong> Create a new graph to visualize <code>price</code>, <code>carat</code>, and <code>cut</code><a href="vis-data-visualization-basics.html#q4-create-a-new-graph-to-visualize-price-carat-and-cut" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>simultaneously.</p>
 <p><em>Hint</em>: Remember that you can add additional aesthetic mappings in <code>aes()</code>. Some options include <code>size</code>, <code>color</code>, and <code>shape</code>.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="vis-data-visualization-basics.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Complete this code</span></span>
-<span id="cb99-2"><a href="vis-data-visualization-basics.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds) <span class="sc">+</span></span>
-<span id="cb99-3"><a href="vis-data-visualization-basics.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price, <span class="at">color =</span> cut))</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="vis-data-visualization-basics.html#cb99-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Complete this code</span></span>
+<span id="cb99-2"><a href="vis-data-visualization-basics.html#cb99-2" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds) <span class="sc">+</span></span>
+<span id="cb99-3"><a href="vis-data-visualization-basics.html#cb99-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price, <span class="at">color =</span> cut))</span></code></pre></div>
 <p><img src="d05-e-vis00-basics-solution_files/figure-html/q4-task-1.png" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>

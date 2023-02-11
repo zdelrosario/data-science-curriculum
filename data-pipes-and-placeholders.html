@@ -980,7 +980,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">36</span> Data: Pipes and Placeholders<a href="data-pipes-and-placeholders.html#data-pipes-and-placeholders" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: The pipe <code>%&gt;%</code> has additional functionality than what we’ve used so far. In this exercise we’ll learn about the <em>placeholder</em> <code>.</code>, which will give us more control over how data flows between our functions.</p>
 <p><em>Reading</em>: <a href="https://magrittr.tidyverse.org/reference/pipe.html">The Pipe</a></p>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="data-pipes-and-placeholders.html#cb562-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="data-pipes-and-placeholders.html#cb562-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -992,7 +992,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q1-re-write-the-following-code-to-use-the-placeholder." class="section level3 hasAnchor" number="36.0.1">
 <h3><span class="header-section-number">36.0.1</span> <strong>q1</strong> Re-write the following code to use the <em>placeholder</em>.<a href="data-pipes-and-placeholders.html#q1-re-write-the-following-code-to-use-the-placeholder." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: This may feel very simple, in which case good. This is not a trick question.</p>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="data-pipes-and-placeholders.html#cb566-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>(.)</span></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="data-pipes-and-placeholders.html#cb566-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>(.)</span></code></pre></div>
 <pre><code>## Rows: 53,940
 ## Columns: 10
 ## $ carat   &lt;dbl&gt; 0.23, 0.21, 0.23, 0.29, 0.31, 0.24, 0.24, 0.26, 0.22, 0.23, 0.…
@@ -1009,23 +1009,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q2-fix-the-lambda-expression" class="section level3 hasAnchor" number="36.0.2">
 <h3><span class="header-section-number">36.0.2</span> <strong>q2</strong> Fix the lambda expression<a href="data-pipes-and-placeholders.html#q2-fix-the-lambda-expression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The reading discussed <em>Using lambda expressions with <code>%&gt;%</code></em>; use this part of the reading to explain why the following code fails. Then fix the code so it runs without error.</p>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="data-pipes-and-placeholders.html#cb568-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">%&gt;%</span></span>
-<span id="cb568-2"><a href="data-pipes-and-placeholders.html#cb568-2" aria-hidden="true" tabindex="-1"></a>  {. <span class="sc">*</span> .}</span></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="data-pipes-and-placeholders.html#cb568-1" tabindex="-1"></a><span class="dv">2</span> <span class="sc">%&gt;%</span></span>
+<span id="cb568-2"><a href="data-pipes-and-placeholders.html#cb568-2" tabindex="-1"></a>  {. <span class="sc">*</span> .}</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 </div>
 <div id="q3-re-write-the-following-code-using-the-placeholder-.-operator-to-simplify-the-second-filter." class="section level3 hasAnchor" number="36.0.3">
 <h3><span class="header-section-number">36.0.3</span> <strong>q3</strong> Re-write the following code using the placeholder <code>.</code> operator to simplify the second filter.<a href="data-pipes-and-placeholders.html#q3-re-write-the-following-code-using-the-placeholder-.-operator-to-simplify-the-second-filter." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: You should be able to simplify the second call to <code>filter</code> down to just
 <code>filter(cut == "Fair")</code>.</p>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="data-pipes-and-placeholders.html#cb570-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb570-2"><a href="data-pipes-and-placeholders.html#cb570-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;=</span> <span class="fl">0.3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb570-3"><a href="data-pipes-and-placeholders.html#cb570-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb570-4"><a href="data-pipes-and-placeholders.html#cb570-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb570-5"><a href="data-pipes-and-placeholders.html#cb570-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb570-6"><a href="data-pipes-and-placeholders.html#cb570-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb570-7"><a href="data-pipes-and-placeholders.html#cb570-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">&quot;Fair&quot;</span>),</span>
-<span id="cb570-8"><a href="data-pipes-and-placeholders.html#cb570-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;red&quot;</span></span>
-<span id="cb570-9"><a href="data-pipes-and-placeholders.html#cb570-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="data-pipes-and-placeholders.html#cb570-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb570-2"><a href="data-pipes-and-placeholders.html#cb570-2" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;=</span> <span class="fl">0.3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb570-3"><a href="data-pipes-and-placeholders.html#cb570-3" tabindex="-1"></a></span>
+<span id="cb570-4"><a href="data-pipes-and-placeholders.html#cb570-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb570-5"><a href="data-pipes-and-placeholders.html#cb570-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb570-6"><a href="data-pipes-and-placeholders.html#cb570-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb570-7"><a href="data-pipes-and-placeholders.html#cb570-7" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">&quot;Fair&quot;</span>),</span>
+<span id="cb570-8"><a href="data-pipes-and-placeholders.html#cb570-8" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;red&quot;</span></span>
+<span id="cb570-9"><a href="data-pipes-and-placeholders.html#cb570-9" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="d25-e-data07-placeholders-solution_files/figure-html/q3-task-1.png" width="672" /></p>
 <p>The placeholder even works at “later” points in a pipeline. We can use it to
 help simplify code, as you did above.</p>

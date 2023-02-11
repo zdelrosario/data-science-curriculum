@@ -982,7 +982,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/3.5">Scatterplots</a>
 <em>Topics</em>: (All topics)
 <em>Reading Time</em>: ~40 minutes</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="vis-scatterplots-and-layers.html#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="vis-scatterplots-and-layers.html#cb361-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -991,7 +991,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="vis-scatterplots-and-layers.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="vis-scatterplots-and-layers.html#cb365-1" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span></code></pre></div>
 <div id="a-note-on-layers" class="section level2 hasAnchor" number="28.1">
 <h2><span class="header-section-number">28.1</span> A Note on Layers<a href="vis-scatterplots-and-layers.html#a-note-on-layers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
@@ -1000,38 +1000,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 inherited defaults, or override those defaults. There are two major settings we
 might want to change: the source of <code>data</code> or the <code>mapping</code> which defines the
 aesthetics. If we’re being verbose, we write a ggplot call like:</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="vis-scatterplots-and-layers.html#cb366-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify! Just example code</span></span>
-<span id="cb366-2"><a href="vis-scatterplots-and-layers.html#cb366-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb366-3"><a href="vis-scatterplots-and-layers.html#cb366-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mpg,</span>
-<span id="cb366-4"><a href="vis-scatterplots-and-layers.html#cb366-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)</span>
-<span id="cb366-5"><a href="vis-scatterplots-and-layers.html#cb366-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb366-6"><a href="vis-scatterplots-and-layers.html#cb366-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="vis-scatterplots-and-layers.html#cb366-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify! Just example code</span></span>
+<span id="cb366-2"><a href="vis-scatterplots-and-layers.html#cb366-2" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb366-3"><a href="vis-scatterplots-and-layers.html#cb366-3" tabindex="-1"></a>  <span class="at">data =</span> mpg,</span>
+<span id="cb366-4"><a href="vis-scatterplots-and-layers.html#cb366-4" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)</span>
+<span id="cb366-5"><a href="vis-scatterplots-and-layers.html#cb366-5" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb366-6"><a href="vis-scatterplots-and-layers.html#cb366-6" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-1-1.png" width="672" /></p>
 <p>However, ggplot makes a number of sensible defaults to help save us typing.
 Ggplot assumes an order for <code>data, mapping</code>, so we can drop the keywords:</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="vis-scatterplots-and-layers.html#cb367-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify! Just example code</span></span>
-<span id="cb367-2"><a href="vis-scatterplots-and-layers.html#cb367-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb367-3"><a href="vis-scatterplots-and-layers.html#cb367-3" aria-hidden="true" tabindex="-1"></a>  mpg,</span>
-<span id="cb367-4"><a href="vis-scatterplots-and-layers.html#cb367-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)</span>
-<span id="cb367-5"><a href="vis-scatterplots-and-layers.html#cb367-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb367-6"><a href="vis-scatterplots-and-layers.html#cb367-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="vis-scatterplots-and-layers.html#cb367-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify! Just example code</span></span>
+<span id="cb367-2"><a href="vis-scatterplots-and-layers.html#cb367-2" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb367-3"><a href="vis-scatterplots-and-layers.html#cb367-3" tabindex="-1"></a>  mpg,</span>
+<span id="cb367-4"><a href="vis-scatterplots-and-layers.html#cb367-4" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)</span>
+<span id="cb367-5"><a href="vis-scatterplots-and-layers.html#cb367-5" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb367-6"><a href="vis-scatterplots-and-layers.html#cb367-6" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-2-1.png" width="672" /></p>
 <p>Similarly the aesthetic function <code>aes()</code> assumes the first two arguments will be
 <code>x, y</code>, so we can drop those arguments as well</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="vis-scatterplots-and-layers.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify! Just example code</span></span>
-<span id="cb368-2"><a href="vis-scatterplots-and-layers.html#cb368-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb368-3"><a href="vis-scatterplots-and-layers.html#cb368-3" aria-hidden="true" tabindex="-1"></a>  mpg,</span>
-<span id="cb368-4"><a href="vis-scatterplots-and-layers.html#cb368-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(displ, hwy)</span>
-<span id="cb368-5"><a href="vis-scatterplots-and-layers.html#cb368-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb368-6"><a href="vis-scatterplots-and-layers.html#cb368-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="vis-scatterplots-and-layers.html#cb368-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify! Just example code</span></span>
+<span id="cb368-2"><a href="vis-scatterplots-and-layers.html#cb368-2" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb368-3"><a href="vis-scatterplots-and-layers.html#cb368-3" tabindex="-1"></a>  mpg,</span>
+<span id="cb368-4"><a href="vis-scatterplots-and-layers.html#cb368-4" tabindex="-1"></a>  <span class="fu">aes</span>(displ, hwy)</span>
+<span id="cb368-5"><a href="vis-scatterplots-and-layers.html#cb368-5" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb368-6"><a href="vis-scatterplots-and-layers.html#cb368-6" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-3-1.png" width="672" /></p>
 <p>Above <code>geom_point()</code> inherits the <code>mapping</code> from the base <code>ggplot</code> call;
 however, we can override this. This can be helpful for a number of different
 purposes:</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="vis-scatterplots-and-layers.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify! Just example code</span></span>
-<span id="cb369-2"><a href="vis-scatterplots-and-layers.html#cb369-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ)) <span class="sc">+</span></span>
-<span id="cb369-3"><a href="vis-scatterplots-and-layers.html#cb369-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> hwy, <span class="at">color =</span> <span class="st">&quot;hwy&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb369-4"><a href="vis-scatterplots-and-layers.html#cb369-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> cty, <span class="at">color =</span> <span class="st">&quot;cty&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="vis-scatterplots-and-layers.html#cb369-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify! Just example code</span></span>
+<span id="cb369-2"><a href="vis-scatterplots-and-layers.html#cb369-2" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ)) <span class="sc">+</span></span>
+<span id="cb369-3"><a href="vis-scatterplots-and-layers.html#cb369-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> hwy, <span class="at">color =</span> <span class="st">&quot;hwy&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb369-4"><a href="vis-scatterplots-and-layers.html#cb369-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> cty, <span class="at">color =</span> <span class="st">&quot;cty&quot;</span>))</span></code></pre></div>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-4-1.png" width="672" /></p>
 <p>Later, we’ll learn more concise ways to construct graphs like the one above. But
 for now, we’ll practice using layers to add more information to scatterplots.</p>
@@ -1043,11 +1043,11 @@ for now, we’ll practice using layers to add more information to scatterplots.<
 <h3><span class="header-section-number">28.2.1</span> <strong>q1</strong> Add two <code>geom_smooth</code> trends to the following plot. Use “gam” for one<a href="vis-scatterplots-and-layers.html#q1-add-two-geom_smooth-trends-to-the-following-plot.-use-gam-for-one" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>trend and “lm” for the other. Comment on how linear or nonlinear the “gam” trend
 looks.</p>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="vis-scatterplots-and-layers.html#cb370-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb370-2"><a href="vis-scatterplots-and-layers.html#cb370-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb370-3"><a href="vis-scatterplots-and-layers.html#cb370-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb370-4"><a href="vis-scatterplots-and-layers.html#cb370-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;gam&quot;</span>), <span class="at">method =</span> <span class="st">&quot;gam&quot;</span>) <span class="sc">+</span></span>
-<span id="cb370-5"><a href="vis-scatterplots-and-layers.html#cb370-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;lm&quot;</span>), <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="vis-scatterplots-and-layers.html#cb370-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb370-2"><a href="vis-scatterplots-and-layers.html#cb370-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb370-3"><a href="vis-scatterplots-and-layers.html#cb370-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb370-4"><a href="vis-scatterplots-and-layers.html#cb370-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;gam&quot;</span>), <span class="at">method =</span> <span class="st">&quot;gam&quot;</span>) <span class="sc">+</span></span>
+<span id="cb370-5"><a href="vis-scatterplots-and-layers.html#cb370-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;lm&quot;</span>), <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;
 ## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/q1-task-1.png" width="672" /></p>
@@ -1060,22 +1060,22 @@ looks.</p>
 <p><em>Hint 1</em>: <code>geom_label_repel</code> comes from the <code>ggrepel</code> package. Make sure to load
 it, and adhere to best-practices!</p>
 <p><em>Hint 2</em>: You’ll have to use the <code>data</code> keyword to override the data layer!</p>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="vis-scatterplots-and-layers.html#cb372-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Use df_annotate below to add text labels to the scatterplot</span></span>
-<span id="cb372-2"><a href="vis-scatterplots-and-layers.html#cb372-2" aria-hidden="true" tabindex="-1"></a>df_annotate <span class="ot">&lt;-</span></span>
-<span id="cb372-3"><a href="vis-scatterplots-and-layers.html#cb372-3" aria-hidden="true" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
-<span id="cb372-4"><a href="vis-scatterplots-and-layers.html#cb372-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
-<span id="cb372-5"><a href="vis-scatterplots-and-layers.html#cb372-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb372-6"><a href="vis-scatterplots-and-layers.html#cb372-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">displ =</span> <span class="fu">mean</span>(displ),</span>
-<span id="cb372-7"><a href="vis-scatterplots-and-layers.html#cb372-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">hwy =</span> <span class="fu">mean</span>(hwy)</span>
-<span id="cb372-8"><a href="vis-scatterplots-and-layers.html#cb372-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb372-9"><a href="vis-scatterplots-and-layers.html#cb372-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb372-10"><a href="vis-scatterplots-and-layers.html#cb372-10" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb372-11"><a href="vis-scatterplots-and-layers.html#cb372-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
-<span id="cb372-12"><a href="vis-scatterplots-and-layers.html#cb372-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb372-13"><a href="vis-scatterplots-and-layers.html#cb372-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
-<span id="cb372-14"><a href="vis-scatterplots-and-layers.html#cb372-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df_annotate,</span>
-<span id="cb372-15"><a href="vis-scatterplots-and-layers.html#cb372-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> class, <span class="at">fill =</span> class)</span>
-<span id="cb372-16"><a href="vis-scatterplots-and-layers.html#cb372-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="vis-scatterplots-and-layers.html#cb372-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Use df_annotate below to add text labels to the scatterplot</span></span>
+<span id="cb372-2"><a href="vis-scatterplots-and-layers.html#cb372-2" tabindex="-1"></a>df_annotate <span class="ot">&lt;-</span></span>
+<span id="cb372-3"><a href="vis-scatterplots-and-layers.html#cb372-3" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
+<span id="cb372-4"><a href="vis-scatterplots-and-layers.html#cb372-4" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
+<span id="cb372-5"><a href="vis-scatterplots-and-layers.html#cb372-5" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb372-6"><a href="vis-scatterplots-and-layers.html#cb372-6" tabindex="-1"></a>    <span class="at">displ =</span> <span class="fu">mean</span>(displ),</span>
+<span id="cb372-7"><a href="vis-scatterplots-and-layers.html#cb372-7" tabindex="-1"></a>    <span class="at">hwy =</span> <span class="fu">mean</span>(hwy)</span>
+<span id="cb372-8"><a href="vis-scatterplots-and-layers.html#cb372-8" tabindex="-1"></a>  )</span>
+<span id="cb372-9"><a href="vis-scatterplots-and-layers.html#cb372-9" tabindex="-1"></a></span>
+<span id="cb372-10"><a href="vis-scatterplots-and-layers.html#cb372-10" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb372-11"><a href="vis-scatterplots-and-layers.html#cb372-11" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
+<span id="cb372-12"><a href="vis-scatterplots-and-layers.html#cb372-12" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb372-13"><a href="vis-scatterplots-and-layers.html#cb372-13" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb372-14"><a href="vis-scatterplots-and-layers.html#cb372-14" tabindex="-1"></a>    <span class="at">data =</span> df_annotate,</span>
+<span id="cb372-15"><a href="vis-scatterplots-and-layers.html#cb372-15" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> class, <span class="at">fill =</span> class)</span>
+<span id="cb372-16"><a href="vis-scatterplots-and-layers.html#cb372-16" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/q2-task-1.png" width="672" /></p>
 </div>
 <div id="q3-study-the-following-scatterplot-note-whether-city-cty-or-highway" class="section level3 hasAnchor" number="28.2.3">
@@ -1084,17 +1084,17 @@ it, and adhere to best-practices!</p>
 <code>geom_smooth</code>) in mileage with engine displacement (a measure of engine size).</p>
 <p><em>Note</em>: The grey region around the smooth trend is a <em>confidence bound</em>; we’ll
 discuss these further as we get deeper into statistical literacy.</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="vis-scatterplots-and-layers.html#cb373-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify! Just analyze the scatterplot</span></span>
-<span id="cb373-2"><a href="vis-scatterplots-and-layers.html#cb373-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb373-3"><a href="vis-scatterplots-and-layers.html#cb373-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">&quot;source&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;mpg&quot;</span>, <span class="fu">c</span>(hwy, cty)) <span class="sc">%&gt;%</span></span>
-<span id="cb373-4"><a href="vis-scatterplots-and-layers.html#cb373-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, mpg, <span class="at">color =</span> source)) <span class="sc">+</span></span>
-<span id="cb373-5"><a href="vis-scatterplots-and-layers.html#cb373-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb373-6"><a href="vis-scatterplots-and-layers.html#cb373-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb373-7"><a href="vis-scatterplots-and-layers.html#cb373-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Mileage Type&quot;</span>) <span class="sc">+</span></span>
-<span id="cb373-8"><a href="vis-scatterplots-and-layers.html#cb373-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb373-9"><a href="vis-scatterplots-and-layers.html#cb373-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Engine displacement (liters)&quot;</span>,</span>
-<span id="cb373-10"><a href="vis-scatterplots-and-layers.html#cb373-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Mileage (mpg)&quot;</span></span>
-<span id="cb373-11"><a href="vis-scatterplots-and-layers.html#cb373-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="vis-scatterplots-and-layers.html#cb373-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify! Just analyze the scatterplot</span></span>
+<span id="cb373-2"><a href="vis-scatterplots-and-layers.html#cb373-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb373-3"><a href="vis-scatterplots-and-layers.html#cb373-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">&quot;source&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;mpg&quot;</span>, <span class="fu">c</span>(hwy, cty)) <span class="sc">%&gt;%</span></span>
+<span id="cb373-4"><a href="vis-scatterplots-and-layers.html#cb373-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, mpg, <span class="at">color =</span> source)) <span class="sc">+</span></span>
+<span id="cb373-5"><a href="vis-scatterplots-and-layers.html#cb373-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb373-6"><a href="vis-scatterplots-and-layers.html#cb373-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb373-7"><a href="vis-scatterplots-and-layers.html#cb373-7" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Mileage Type&quot;</span>) <span class="sc">+</span></span>
+<span id="cb373-8"><a href="vis-scatterplots-and-layers.html#cb373-8" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb373-9"><a href="vis-scatterplots-and-layers.html#cb373-9" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Engine displacement (liters)&quot;</span>,</span>
+<span id="cb373-10"><a href="vis-scatterplots-and-layers.html#cb373-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Mileage (mpg)&quot;</span></span>
+<span id="cb373-11"><a href="vis-scatterplots-and-layers.html#cb373-11" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/q3-task-1.png" width="672" /></p>
 <p><strong>Observations</strong>:
@@ -1111,16 +1111,16 @@ discuss these further as we get deeper into statistical literacy.</p>
 <h2><span class="header-section-number">28.4</span> Raw populations<a href="vis-scatterplots-and-layers.html#raw-populations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>Two visuals of the same data:</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="vis-scatterplots-and-layers.html#cb375-1" aria-hidden="true" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
-<span id="cb375-2"><a href="vis-scatterplots-and-layers.html#cb375-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">&quot;2010-01-01&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb375-3"><a href="vis-scatterplots-and-layers.html#cb375-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, pop)) <span class="sc">+</span></span>
-<span id="cb375-4"><a href="vis-scatterplots-and-layers.html#cb375-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="vis-scatterplots-and-layers.html#cb375-1" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
+<span id="cb375-2"><a href="vis-scatterplots-and-layers.html#cb375-2" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">&quot;2010-01-01&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb375-3"><a href="vis-scatterplots-and-layers.html#cb375-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, pop)) <span class="sc">+</span></span>
+<span id="cb375-4"><a href="vis-scatterplots-and-layers.html#cb375-4" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-bar-raw-1.png" width="672" /></p>
 <p>Here we’re emphasizing zero, so we don’t see much of a change</p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="vis-scatterplots-and-layers.html#cb376-1" aria-hidden="true" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
-<span id="cb376-2"><a href="vis-scatterplots-and-layers.html#cb376-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">&quot;2010-01-01&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb376-3"><a href="vis-scatterplots-and-layers.html#cb376-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, pop)) <span class="sc">+</span></span>
-<span id="cb376-4"><a href="vis-scatterplots-and-layers.html#cb376-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="vis-scatterplots-and-layers.html#cb376-1" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
+<span id="cb376-2"><a href="vis-scatterplots-and-layers.html#cb376-2" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">&quot;2010-01-01&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb376-3"><a href="vis-scatterplots-and-layers.html#cb376-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, pop)) <span class="sc">+</span></span>
+<span id="cb376-4"><a href="vis-scatterplots-and-layers.html#cb376-4" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-point-raw-1.png" width="672" /></p>
 <p>Here’s we’re not emphasizing zero; the scale is adjusted to emphasize the trend in the data.</p>
 </div>
@@ -1128,18 +1128,18 @@ discuss these further as we get deeper into statistical literacy.</p>
 <h2><span class="header-section-number">28.5</span> Population changes<a href="vis-scatterplots-and-layers.html#population-changes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>Two visuals of the same data:</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="vis-scatterplots-and-layers.html#cb377-1" aria-hidden="true" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
-<span id="cb377-2"><a href="vis-scatterplots-and-layers.html#cb377-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_delta =</span> pop <span class="sc">-</span> <span class="fu">lag</span>(pop)) <span class="sc">%&gt;%</span></span>
-<span id="cb377-3"><a href="vis-scatterplots-and-layers.html#cb377-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">&quot;2005-01-01&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb377-4"><a href="vis-scatterplots-and-layers.html#cb377-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, pop_delta)) <span class="sc">+</span></span>
-<span id="cb377-5"><a href="vis-scatterplots-and-layers.html#cb377-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="vis-scatterplots-and-layers.html#cb377-1" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
+<span id="cb377-2"><a href="vis-scatterplots-and-layers.html#cb377-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_delta =</span> pop <span class="sc">-</span> <span class="fu">lag</span>(pop)) <span class="sc">%&gt;%</span></span>
+<span id="cb377-3"><a href="vis-scatterplots-and-layers.html#cb377-3" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">&quot;2005-01-01&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb377-4"><a href="vis-scatterplots-and-layers.html#cb377-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, pop_delta)) <span class="sc">+</span></span>
+<span id="cb377-5"><a href="vis-scatterplots-and-layers.html#cb377-5" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-bar-change-1.png" width="672" /></p>
 <p>Here we’re emphasizing zero, so we can easily see the month of negative change.</p>
-<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="vis-scatterplots-and-layers.html#cb378-1" aria-hidden="true" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
-<span id="cb378-2"><a href="vis-scatterplots-and-layers.html#cb378-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_delta =</span> pop <span class="sc">-</span> <span class="fu">lag</span>(pop)) <span class="sc">%&gt;%</span></span>
-<span id="cb378-3"><a href="vis-scatterplots-and-layers.html#cb378-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">&quot;2005-01-01&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb378-4"><a href="vis-scatterplots-and-layers.html#cb378-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, pop_delta)) <span class="sc">+</span></span>
-<span id="cb378-5"><a href="vis-scatterplots-and-layers.html#cb378-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="vis-scatterplots-and-layers.html#cb378-1" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
+<span id="cb378-2"><a href="vis-scatterplots-and-layers.html#cb378-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_delta =</span> pop <span class="sc">-</span> <span class="fu">lag</span>(pop)) <span class="sc">%&gt;%</span></span>
+<span id="cb378-3"><a href="vis-scatterplots-and-layers.html#cb378-3" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">&quot;2005-01-01&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb378-4"><a href="vis-scatterplots-and-layers.html#cb378-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, pop_delta)) <span class="sc">+</span></span>
+<span id="cb378-5"><a href="vis-scatterplots-and-layers.html#cb378-5" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-point-change-1.png" width="672" /></p>
 <p>Here we’re not emphasizing zero; we can easily see the outlier month, but we have to read the axis to see that this is a case of negative growth.</p>
 <p>For more, see <a href="https://dcl-data-vis.stanford.edu/discrete-continuous.html#bars-vs.-dots">Bars vs Dots</a>.</p>

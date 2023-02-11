@@ -981,7 +981,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Purpose</em>: We’re going to spend <strong>a lot</strong> of time in this class discussing datasets. To help prepare ourselves for productive discussions, we’re going to use some ideas from <a href="https://en.wikipedia.org/wiki/Positive_psychology">positive psychology</a> to help make our discussions more pleasant and productive.</p>
 <p><em>Reading</em>: <a href="https://gostrengths.com/what-is-active-and-constructive-responding/">GoStrengths: What is Active and Constructive Responding?</a></p>
 <p><em>Reading Time</em>: ~ 10 minutes</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="communication-active-and-constructive-responding.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="communication-active-and-constructive-responding.html#cb100-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -1047,17 +1047,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">15.2</span> Having Productive Discussions<a href="communication-active-and-constructive-responding.html#having-productive-discussions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>What does ACR have to do with data science? Imagine you’re in a meeting with some data science colleagues, and the presenter shows the following graph.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="communication-active-and-constructive-responding.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; just run and inspect</span></span>
-<span id="cb104-2"><a href="communication-active-and-constructive-responding.html#cb104-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb104-3"><a href="communication-active-and-constructive-responding.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb104-4"><a href="communication-active-and-constructive-responding.html#cb104-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-5"><a href="communication-active-and-constructive-responding.html#cb104-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb104-6"><a href="communication-active-and-constructive-responding.html#cb104-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb104-7"><a href="communication-active-and-constructive-responding.html#cb104-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-8"><a href="communication-active-and-constructive-responding.html#cb104-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
-<span id="cb104-9"><a href="communication-active-and-constructive-responding.html#cb104-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb104-10"><a href="communication-active-and-constructive-responding.html#cb104-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb104-11"><a href="communication-active-and-constructive-responding.html#cb104-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="communication-active-and-constructive-responding.html#cb104-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; just run and inspect</span></span>
+<span id="cb104-2"><a href="communication-active-and-constructive-responding.html#cb104-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb104-3"><a href="communication-active-and-constructive-responding.html#cb104-3" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb104-4"><a href="communication-active-and-constructive-responding.html#cb104-4" tabindex="-1"></a></span>
+<span id="cb104-5"><a href="communication-active-and-constructive-responding.html#cb104-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb104-6"><a href="communication-active-and-constructive-responding.html#cb104-6" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb104-7"><a href="communication-active-and-constructive-responding.html#cb104-7" tabindex="-1"></a></span>
+<span id="cb104-8"><a href="communication-active-and-constructive-responding.html#cb104-8" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb104-9"><a href="communication-active-and-constructive-responding.html#cb104-9" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb104-10"><a href="communication-active-and-constructive-responding.html#cb104-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb104-11"><a href="communication-active-and-constructive-responding.html#cb104-11" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="d06-e-comm01-responding-solution_files/figure-html/vis-example-1.png" width="672" /></p>
 <p>Let’s use the active-passive-constructive-destructive (APCD) response framework above to analyze some <em>discussion scenarios</em>. Imagine the following scenario:</p>
 <blockquote>
@@ -1098,17 +1098,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">15.3</span> Active and Constructive Questions<a href="communication-active-and-constructive-responding.html#active-and-constructive-questions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>With a bit of imagination, we can apply the APCD framework to <em>questions</em> as well. Let’s keep looking at the same graph.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="communication-active-and-constructive-responding.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; just run and inspect</span></span>
-<span id="cb105-2"><a href="communication-active-and-constructive-responding.html#cb105-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb105-3"><a href="communication-active-and-constructive-responding.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb105-4"><a href="communication-active-and-constructive-responding.html#cb105-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-5"><a href="communication-active-and-constructive-responding.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb105-6"><a href="communication-active-and-constructive-responding.html#cb105-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb105-7"><a href="communication-active-and-constructive-responding.html#cb105-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-8"><a href="communication-active-and-constructive-responding.html#cb105-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
-<span id="cb105-9"><a href="communication-active-and-constructive-responding.html#cb105-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb105-10"><a href="communication-active-and-constructive-responding.html#cb105-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb105-11"><a href="communication-active-and-constructive-responding.html#cb105-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="communication-active-and-constructive-responding.html#cb105-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; just run and inspect</span></span>
+<span id="cb105-2"><a href="communication-active-and-constructive-responding.html#cb105-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb105-3"><a href="communication-active-and-constructive-responding.html#cb105-3" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb105-4"><a href="communication-active-and-constructive-responding.html#cb105-4" tabindex="-1"></a></span>
+<span id="cb105-5"><a href="communication-active-and-constructive-responding.html#cb105-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb105-6"><a href="communication-active-and-constructive-responding.html#cb105-6" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb105-7"><a href="communication-active-and-constructive-responding.html#cb105-7" tabindex="-1"></a></span>
+<span id="cb105-8"><a href="communication-active-and-constructive-responding.html#cb105-8" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb105-9"><a href="communication-active-and-constructive-responding.html#cb105-9" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb105-10"><a href="communication-active-and-constructive-responding.html#cb105-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb105-11"><a href="communication-active-and-constructive-responding.html#cb105-11" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="d06-e-comm01-responding-solution_files/figure-html/vis-example-rep-1.png" width="672" /></p>
 <p>Imagine the following scenario:</p>
 <blockquote>

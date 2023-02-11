@@ -983,7 +983,7 @@ data science. To that end, let’s learn some basics about vectors.</p>
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/1.2">Programming Basics</a>.
 <em>Topics</em>: <code>vectors</code>
 <em>Reading Time</em>: ~10 minutes</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="setup-vector-basics.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="setup-vector-basics.html#cb65-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -994,32 +994,32 @@ data science. To that end, let’s learn some basics about vectors.</p>
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div id="q1-what-single-letter-r-function-do-you-use-to-create-vectors-with-specific-entries-use-that-function-to-create-a-vector-with-the-numbers-1-2-3-below." class="section level3 hasAnchor" number="12.0.1">
 <h3><span class="header-section-number">12.0.1</span> <strong>q1</strong> What single-letter <code>R</code> function do you use to create vectors with specific entries? Use that function to create a vector with the numbers <code>1, 2, 3</code> below.<a href="setup-vector-basics.html#q1-what-single-letter-r-function-do-you-use-to-create-vectors-with-specific-entries-use-that-function-to-create-a-vector-with-the-numbers-1-2-3-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="setup-vector-basics.html#cb69-1" aria-hidden="true" tabindex="-1"></a>vec_q1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb69-2"><a href="setup-vector-basics.html#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-3"><a href="setup-vector-basics.html#cb69-3" aria-hidden="true" tabindex="-1"></a>vec_q1</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="setup-vector-basics.html#cb69-1" tabindex="-1"></a>vec_q1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb69-2"><a href="setup-vector-basics.html#cb69-2" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="setup-vector-basics.html#cb69-3" tabindex="-1"></a>vec_q1</span></code></pre></div>
 <pre><code>## [1] 1 2 3</code></pre>
 <p>Use the following tests to check your work:</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="setup-vector-basics.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb71-2"><a href="setup-vector-basics.html#cb71-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">length</span>(vec_q1) <span class="sc">==</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="setup-vector-basics.html#cb71-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb71-2"><a href="setup-vector-basics.html#cb71-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">length</span>(vec_q1) <span class="sc">==</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="setup-vector-basics.html#cb73-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">mean</span>(vec_q1) <span class="sc">==</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="setup-vector-basics.html#cb73-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">mean</span>(vec_q1) <span class="sc">==</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="setup-vector-basics.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="setup-vector-basics.html#cb75-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 </div>
 <div id="q2-did-you-know-that-you-can-use-c-to-extend-a-vector-as-well-use-this-to-add-the-extra-entry-4-to-vec_q1." class="section level3 hasAnchor" number="12.0.2">
 <h3><span class="header-section-number">12.0.2</span> <strong>q2</strong> Did you know that you can use <code>c()</code> to <em>extend</em> a vector as well? Use this to add the extra entry <code>4</code> to <code>vec_q1</code>.<a href="setup-vector-basics.html#q2-did-you-know-that-you-can-use-c-to-extend-a-vector-as-well-use-this-to-add-the-extra-entry-4-to-vec_q1." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="setup-vector-basics.html#cb77-1" aria-hidden="true" tabindex="-1"></a>vec_q2 <span class="ot">&lt;-</span> <span class="fu">c</span>(vec_q1, <span class="dv">4</span>)</span>
-<span id="cb77-2"><a href="setup-vector-basics.html#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-3"><a href="setup-vector-basics.html#cb77-3" aria-hidden="true" tabindex="-1"></a>vec_q2</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="setup-vector-basics.html#cb77-1" tabindex="-1"></a>vec_q2 <span class="ot">&lt;-</span> <span class="fu">c</span>(vec_q1, <span class="dv">4</span>)</span>
+<span id="cb77-2"><a href="setup-vector-basics.html#cb77-2" tabindex="-1"></a></span>
+<span id="cb77-3"><a href="setup-vector-basics.html#cb77-3" tabindex="-1"></a>vec_q2</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4</code></pre>
 <p>Use the following tests to check your work:</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="setup-vector-basics.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb79-2"><a href="setup-vector-basics.html#cb79-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">length</span>(vec_q2) <span class="sc">==</span> <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="setup-vector-basics.html#cb79-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb79-2"><a href="setup-vector-basics.html#cb79-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">length</span>(vec_q2) <span class="sc">==</span> <span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="setup-vector-basics.html#cb81-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">mean</span>(vec_q2) <span class="sc">==</span> <span class="fl">2.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="setup-vector-basics.html#cb81-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">mean</span>(vec_q2) <span class="sc">==</span> <span class="fl">2.5</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="setup-vector-basics.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="setup-vector-basics.html#cb83-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 <!-- include-exit-ticket -->
 

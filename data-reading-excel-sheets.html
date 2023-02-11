@@ -981,7 +981,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Purpose</em>: The Tidyverse is built to work with tidy data. Unfortunately, most data in the wild are not tidy. The good news is that we have a lot of tools for <em>wrangling</em> data into tidy form. The bad news is that “every untidy dataset is untidy in its own way.” I can’t show you you every crazy way people decide to store their data. But I can walk you through a worked example to show some common techniques.</p>
 <p>In this case study, I’ll take you through the process of <em>wrangling</em> a messy Excel spreadsheet into machine-readable form. You will both learn some general tools for wrangling data, and you can keep this notebook as a <em>recipe</em> for future messy datasets of similar form.</p>
 <p><em>Reading</em>: (None)</p>
-<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="data-reading-excel-sheets.html#cb700-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="data-reading-excel-sheets.html#cb700-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -990,25 +990,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="data-reading-excel-sheets.html#cb704-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) <span class="co"># For reading Excel sheets</span></span>
-<span id="cb704-2"><a href="data-reading-excel-sheets.html#cb704-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr) <span class="co"># For downloading files</span></span>
-<span id="cb704-3"><a href="data-reading-excel-sheets.html#cb704-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb704-4"><a href="data-reading-excel-sheets.html#cb704-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Use my tidy-exercises copy of UNDOC data for stability</span></span>
-<span id="cb704-5"><a href="data-reading-excel-sheets.html#cb704-5" aria-hidden="true" tabindex="-1"></a>url_undoc <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/zdelrosario/tidy-exercises/blob/master/2019/2019-12-10-news-plots/GSH2013_Homicide_count_and_rate.xlsx?raw=true&quot;</span></span>
-<span id="cb704-6"><a href="data-reading-excel-sheets.html#cb704-6" aria-hidden="true" tabindex="-1"></a>filename <span class="ot">&lt;-</span> <span class="st">&quot;./data/undoc.xlsx&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="data-reading-excel-sheets.html#cb704-1" tabindex="-1"></a><span class="fu">library</span>(readxl) <span class="co"># For reading Excel sheets</span></span>
+<span id="cb704-2"><a href="data-reading-excel-sheets.html#cb704-2" tabindex="-1"></a><span class="fu">library</span>(httr) <span class="co"># For downloading files</span></span>
+<span id="cb704-3"><a href="data-reading-excel-sheets.html#cb704-3" tabindex="-1"></a></span>
+<span id="cb704-4"><a href="data-reading-excel-sheets.html#cb704-4" tabindex="-1"></a><span class="do">## Use my tidy-exercises copy of UNDOC data for stability</span></span>
+<span id="cb704-5"><a href="data-reading-excel-sheets.html#cb704-5" tabindex="-1"></a>url_undoc <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/zdelrosario/tidy-exercises/blob/master/2019/2019-12-10-news-plots/GSH2013_Homicide_count_and_rate.xlsx?raw=true&quot;</span></span>
+<span id="cb704-6"><a href="data-reading-excel-sheets.html#cb704-6" tabindex="-1"></a>filename <span class="ot">&lt;-</span> <span class="st">&quot;./data/undoc.xlsx&quot;</span></span></code></pre></div>
 <p>I keep a copy of the example data in a personal repo; download a local copy.</p>
-<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="data-reading-excel-sheets.html#cb705-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb705-2"><a href="data-reading-excel-sheets.html#cb705-2" aria-hidden="true" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_download</span>(</span>
-<span id="cb705-3"><a href="data-reading-excel-sheets.html#cb705-3" aria-hidden="true" tabindex="-1"></a>        url_undoc,</span>
-<span id="cb705-4"><a href="data-reading-excel-sheets.html#cb705-4" aria-hidden="true" tabindex="-1"></a>        filename</span>
-<span id="cb705-5"><a href="data-reading-excel-sheets.html#cb705-5" aria-hidden="true" tabindex="-1"></a>      )</span></code></pre></div>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="data-reading-excel-sheets.html#cb705-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb705-2"><a href="data-reading-excel-sheets.html#cb705-2" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_download</span>(</span>
+<span id="cb705-3"><a href="data-reading-excel-sheets.html#cb705-3" tabindex="-1"></a>        url_undoc,</span>
+<span id="cb705-4"><a href="data-reading-excel-sheets.html#cb705-4" tabindex="-1"></a>        filename</span>
+<span id="cb705-5"><a href="data-reading-excel-sheets.html#cb705-5" tabindex="-1"></a>      )</span></code></pre></div>
 <div id="wrangling-basics" class="section level2 hasAnchor" number="41.1">
 <h2><span class="header-section-number">41.1</span> Wrangling Basics<a href="data-reading-excel-sheets.html#wrangling-basics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <div id="q1-run-the-following-code-and-pay-attention-to-the-column-names.-open-the-downloaded-excel-sheet-and-compare.-why-are-the-column-names-so-weird" class="section level3 hasAnchor" number="41.1.1">
 <h3><span class="header-section-number">41.1.1</span> <strong>q1</strong> Run the following code and pay attention to the column names. Open the downloaded Excel sheet and compare. Why are the column names so weird?<a href="data-reading-excel-sheets.html#q1-run-the-following-code-and-pay-attention-to-the-column-names.-open-the-downloaded-excel-sheet-and-compare.-why-are-the-column-names-so-weird" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="data-reading-excel-sheets.html#cb706-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb706-2"><a href="data-reading-excel-sheets.html#cb706-2" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(filename)</span></code></pre></div>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="data-reading-excel-sheets.html#cb706-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb706-2"><a href="data-reading-excel-sheets.html#cb706-2" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(filename)</span></code></pre></div>
 <pre><code>## New names:
 ## • `` -&gt; `...2`
 ## • `` -&gt; `...3`
@@ -1028,7 +1028,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## • `` -&gt; `...17`
 ## • `` -&gt; `...18`
 ## • `` -&gt; `...19`</code></pre>
-<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="data-reading-excel-sheets.html#cb708-1" aria-hidden="true" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
+<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="data-reading-excel-sheets.html#cb708-1" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
 <pre><code>## Rows: 447
 ## Columns: 19
 ## $ `Intentional homicide count and rate per 100,000 population, by country/territory (2000-2012)` &lt;chr&gt; …
@@ -1059,11 +1059,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q2-read-the-excel-sheet." class="section level3 hasAnchor" number="41.1.2">
 <h3><span class="header-section-number">41.1.2</span> <strong>q2</strong> Read the Excel sheet.<a href="data-reading-excel-sheets.html#q2-read-the-excel-sheet." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Open the target Excel sheet (located at <code>./data/undoc.xlsx</code>) and find which line (row) at which the year column headers are located. Use the <code>skip</code> keyword to start your read at that line.</p>
-<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="data-reading-excel-sheets.html#cb710-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">:</span></span>
-<span id="cb710-2"><a href="data-reading-excel-sheets.html#cb710-2" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb710-3"><a href="data-reading-excel-sheets.html#cb710-3" aria-hidden="true" tabindex="-1"></a>  filename,</span>
-<span id="cb710-4"><a href="data-reading-excel-sheets.html#cb710-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">6</span></span>
-<span id="cb710-5"><a href="data-reading-excel-sheets.html#cb710-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="data-reading-excel-sheets.html#cb710-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">:</span></span>
+<span id="cb710-2"><a href="data-reading-excel-sheets.html#cb710-2" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb710-3"><a href="data-reading-excel-sheets.html#cb710-3" tabindex="-1"></a>  filename,</span>
+<span id="cb710-4"><a href="data-reading-excel-sheets.html#cb710-4" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">6</span></span>
+<span id="cb710-5"><a href="data-reading-excel-sheets.html#cb710-5" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## New names:
 ## • `` -&gt; `...1`
 ## • `` -&gt; `...2`
@@ -1071,7 +1071,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## • `` -&gt; `...4`
 ## • `` -&gt; `...5`
 ## • `` -&gt; `...6`</code></pre>
-<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="data-reading-excel-sheets.html#cb712-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
+<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="data-reading-excel-sheets.html#cb712-1" tabindex="-1"></a>df_q2 <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
 <pre><code>## Rows: 444
 ## Columns: 19
 ## $ ...1   &lt;chr&gt; &quot;Africa&quot;, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
@@ -1094,16 +1094,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ `2011` &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, &quot;6.3&quot;, &quot;2641&quot;, NA, NA, …
 ## $ `2012` &lt;chr&gt; &quot;8&quot;, &quot;790&quot;, &quot;10&quot;, &quot;72&quot;, &quot;10.1&quot;, &quot;87&quot;, &quot;7.1&quot;, &quot;437&quot;, &quot;12&quot;, &quot;1104…</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="data-reading-excel-sheets.html#cb714-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb714-2"><a href="data-reading-excel-sheets.html#cb714-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(</span>
-<span id="cb714-3"><a href="data-reading-excel-sheets.html#cb714-3" aria-hidden="true" tabindex="-1"></a>              (df_q2 <span class="sc">%&gt;%</span> <span class="fu">names</span>() <span class="sc">%&gt;%</span> .[<span class="dv">7</span><span class="sc">:</span><span class="dv">19</span>]),</span>
-<span id="cb714-4"><a href="data-reading-excel-sheets.html#cb714-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">as.character</span>(<span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2012</span>))</span>
-<span id="cb714-5"><a href="data-reading-excel-sheets.html#cb714-5" aria-hidden="true" tabindex="-1"></a>            ))</span></code></pre></div>
+<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="data-reading-excel-sheets.html#cb714-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb714-2"><a href="data-reading-excel-sheets.html#cb714-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(</span>
+<span id="cb714-3"><a href="data-reading-excel-sheets.html#cb714-3" tabindex="-1"></a>              (df_q2 <span class="sc">%&gt;%</span> <span class="fu">names</span>() <span class="sc">%&gt;%</span> .[<span class="dv">7</span><span class="sc">:</span><span class="dv">19</span>]),</span>
+<span id="cb714-4"><a href="data-reading-excel-sheets.html#cb714-4" tabindex="-1"></a>              <span class="fu">as.character</span>(<span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2012</span>))</span>
+<span id="cb714-5"><a href="data-reading-excel-sheets.html#cb714-5" tabindex="-1"></a>            ))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="data-reading-excel-sheets.html#cb716-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="data-reading-excel-sheets.html#cb716-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <p>Let’s take stock of where we are:</p>
-<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="data-reading-excel-sheets.html#cb718-1" aria-hidden="true" tabindex="-1"></a>df_q2 <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="data-reading-excel-sheets.html#cb718-1" tabindex="-1"></a>df_q2 <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 19
 ##   ...1   ...2  ...3  ...4  ...5  ...6  `2000` `2001` `2002` `2003` `2004` `2005`
 ##   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -1126,58 +1126,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Use the provided names in <code>col_names_undoc</code> with the <code>col_names</code> argument to set <em>manual</em> column names. Use the <code>col_types</code> argument to set all years to <code>"numeric"</code>, and the rest to <code>"text"</code>.</p>
 <p><em>Hint 1</em>: Since you’re providing manual <code>col_names</code>, you will have to <em>adjust</em> your <code>skip</code> value!</p>
 <p><em>Hint 2</em>: You can use a named vector for <code>col_types</code> to help keep type of which type is assigned to which variable, for instance <code>c("variable" = "type")</code>.</p>
-<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="data-reading-excel-sheets.html#cb720-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Use these column names</span></span>
-<span id="cb720-2"><a href="data-reading-excel-sheets.html#cb720-2" aria-hidden="true" tabindex="-1"></a>col_names_undoc <span class="ot">&lt;-</span></span>
-<span id="cb720-3"><a href="data-reading-excel-sheets.html#cb720-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb720-4"><a href="data-reading-excel-sheets.html#cb720-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;region&quot;</span>,</span>
-<span id="cb720-5"><a href="data-reading-excel-sheets.html#cb720-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;sub_region&quot;</span>,</span>
-<span id="cb720-6"><a href="data-reading-excel-sheets.html#cb720-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;territory&quot;</span>,</span>
-<span id="cb720-7"><a href="data-reading-excel-sheets.html#cb720-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;source&quot;</span>,</span>
-<span id="cb720-8"><a href="data-reading-excel-sheets.html#cb720-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;org&quot;</span>,</span>
-<span id="cb720-9"><a href="data-reading-excel-sheets.html#cb720-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;indicator&quot;</span>,</span>
-<span id="cb720-10"><a href="data-reading-excel-sheets.html#cb720-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2000&quot;</span>,</span>
-<span id="cb720-11"><a href="data-reading-excel-sheets.html#cb720-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2001&quot;</span>,</span>
-<span id="cb720-12"><a href="data-reading-excel-sheets.html#cb720-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2002&quot;</span>,</span>
-<span id="cb720-13"><a href="data-reading-excel-sheets.html#cb720-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2003&quot;</span>,</span>
-<span id="cb720-14"><a href="data-reading-excel-sheets.html#cb720-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2004&quot;</span>,</span>
-<span id="cb720-15"><a href="data-reading-excel-sheets.html#cb720-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2005&quot;</span>,</span>
-<span id="cb720-16"><a href="data-reading-excel-sheets.html#cb720-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2006&quot;</span>,</span>
-<span id="cb720-17"><a href="data-reading-excel-sheets.html#cb720-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2007&quot;</span>,</span>
-<span id="cb720-18"><a href="data-reading-excel-sheets.html#cb720-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2008&quot;</span>,</span>
-<span id="cb720-19"><a href="data-reading-excel-sheets.html#cb720-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2009&quot;</span>,</span>
-<span id="cb720-20"><a href="data-reading-excel-sheets.html#cb720-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2010&quot;</span>,</span>
-<span id="cb720-21"><a href="data-reading-excel-sheets.html#cb720-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2011&quot;</span>,</span>
-<span id="cb720-22"><a href="data-reading-excel-sheets.html#cb720-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2012&quot;</span></span>
-<span id="cb720-23"><a href="data-reading-excel-sheets.html#cb720-23" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb720-24"><a href="data-reading-excel-sheets.html#cb720-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb720-25"><a href="data-reading-excel-sheets.html#cb720-25" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Use the arguments `skip`, `col_names`, and `col_types`</span></span>
-<span id="cb720-26"><a href="data-reading-excel-sheets.html#cb720-26" aria-hidden="true" tabindex="-1"></a>df_q3 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb720-27"><a href="data-reading-excel-sheets.html#cb720-27" aria-hidden="true" tabindex="-1"></a>  filename,</span>
-<span id="cb720-28"><a href="data-reading-excel-sheets.html#cb720-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">sheet =</span> <span class="dv">1</span>,</span>
-<span id="cb720-29"><a href="data-reading-excel-sheets.html#cb720-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">7</span>,</span>
-<span id="cb720-30"><a href="data-reading-excel-sheets.html#cb720-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> col_names_undoc,</span>
-<span id="cb720-31"><a href="data-reading-excel-sheets.html#cb720-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">c</span>(</span>
-<span id="cb720-32"><a href="data-reading-excel-sheets.html#cb720-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;region&quot;</span>     <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
-<span id="cb720-33"><a href="data-reading-excel-sheets.html#cb720-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;sub_region&quot;</span> <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
-<span id="cb720-34"><a href="data-reading-excel-sheets.html#cb720-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;territory&quot;</span>  <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
-<span id="cb720-35"><a href="data-reading-excel-sheets.html#cb720-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;source&quot;</span>     <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
-<span id="cb720-36"><a href="data-reading-excel-sheets.html#cb720-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;org&quot;</span>        <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
-<span id="cb720-37"><a href="data-reading-excel-sheets.html#cb720-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;indicator&quot;</span>  <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
-<span id="cb720-38"><a href="data-reading-excel-sheets.html#cb720-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2000&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-39"><a href="data-reading-excel-sheets.html#cb720-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2001&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-40"><a href="data-reading-excel-sheets.html#cb720-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2002&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-41"><a href="data-reading-excel-sheets.html#cb720-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2003&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-42"><a href="data-reading-excel-sheets.html#cb720-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2004&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-43"><a href="data-reading-excel-sheets.html#cb720-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2005&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-44"><a href="data-reading-excel-sheets.html#cb720-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2006&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-45"><a href="data-reading-excel-sheets.html#cb720-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2007&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-46"><a href="data-reading-excel-sheets.html#cb720-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2008&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-47"><a href="data-reading-excel-sheets.html#cb720-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2009&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-48"><a href="data-reading-excel-sheets.html#cb720-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2010&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-49"><a href="data-reading-excel-sheets.html#cb720-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2011&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb720-50"><a href="data-reading-excel-sheets.html#cb720-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2012&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span></span>
-<span id="cb720-51"><a href="data-reading-excel-sheets.html#cb720-51" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb720-52"><a href="data-reading-excel-sheets.html#cb720-52" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="data-reading-excel-sheets.html#cb720-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Use these column names</span></span>
+<span id="cb720-2"><a href="data-reading-excel-sheets.html#cb720-2" tabindex="-1"></a>col_names_undoc <span class="ot">&lt;-</span></span>
+<span id="cb720-3"><a href="data-reading-excel-sheets.html#cb720-3" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb720-4"><a href="data-reading-excel-sheets.html#cb720-4" tabindex="-1"></a>    <span class="st">&quot;region&quot;</span>,</span>
+<span id="cb720-5"><a href="data-reading-excel-sheets.html#cb720-5" tabindex="-1"></a>    <span class="st">&quot;sub_region&quot;</span>,</span>
+<span id="cb720-6"><a href="data-reading-excel-sheets.html#cb720-6" tabindex="-1"></a>    <span class="st">&quot;territory&quot;</span>,</span>
+<span id="cb720-7"><a href="data-reading-excel-sheets.html#cb720-7" tabindex="-1"></a>    <span class="st">&quot;source&quot;</span>,</span>
+<span id="cb720-8"><a href="data-reading-excel-sheets.html#cb720-8" tabindex="-1"></a>    <span class="st">&quot;org&quot;</span>,</span>
+<span id="cb720-9"><a href="data-reading-excel-sheets.html#cb720-9" tabindex="-1"></a>    <span class="st">&quot;indicator&quot;</span>,</span>
+<span id="cb720-10"><a href="data-reading-excel-sheets.html#cb720-10" tabindex="-1"></a>    <span class="st">&quot;2000&quot;</span>,</span>
+<span id="cb720-11"><a href="data-reading-excel-sheets.html#cb720-11" tabindex="-1"></a>    <span class="st">&quot;2001&quot;</span>,</span>
+<span id="cb720-12"><a href="data-reading-excel-sheets.html#cb720-12" tabindex="-1"></a>    <span class="st">&quot;2002&quot;</span>,</span>
+<span id="cb720-13"><a href="data-reading-excel-sheets.html#cb720-13" tabindex="-1"></a>    <span class="st">&quot;2003&quot;</span>,</span>
+<span id="cb720-14"><a href="data-reading-excel-sheets.html#cb720-14" tabindex="-1"></a>    <span class="st">&quot;2004&quot;</span>,</span>
+<span id="cb720-15"><a href="data-reading-excel-sheets.html#cb720-15" tabindex="-1"></a>    <span class="st">&quot;2005&quot;</span>,</span>
+<span id="cb720-16"><a href="data-reading-excel-sheets.html#cb720-16" tabindex="-1"></a>    <span class="st">&quot;2006&quot;</span>,</span>
+<span id="cb720-17"><a href="data-reading-excel-sheets.html#cb720-17" tabindex="-1"></a>    <span class="st">&quot;2007&quot;</span>,</span>
+<span id="cb720-18"><a href="data-reading-excel-sheets.html#cb720-18" tabindex="-1"></a>    <span class="st">&quot;2008&quot;</span>,</span>
+<span id="cb720-19"><a href="data-reading-excel-sheets.html#cb720-19" tabindex="-1"></a>    <span class="st">&quot;2009&quot;</span>,</span>
+<span id="cb720-20"><a href="data-reading-excel-sheets.html#cb720-20" tabindex="-1"></a>    <span class="st">&quot;2010&quot;</span>,</span>
+<span id="cb720-21"><a href="data-reading-excel-sheets.html#cb720-21" tabindex="-1"></a>    <span class="st">&quot;2011&quot;</span>,</span>
+<span id="cb720-22"><a href="data-reading-excel-sheets.html#cb720-22" tabindex="-1"></a>    <span class="st">&quot;2012&quot;</span></span>
+<span id="cb720-23"><a href="data-reading-excel-sheets.html#cb720-23" tabindex="-1"></a>  )</span>
+<span id="cb720-24"><a href="data-reading-excel-sheets.html#cb720-24" tabindex="-1"></a></span>
+<span id="cb720-25"><a href="data-reading-excel-sheets.html#cb720-25" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Use the arguments `skip`, `col_names`, and `col_types`</span></span>
+<span id="cb720-26"><a href="data-reading-excel-sheets.html#cb720-26" tabindex="-1"></a>df_q3 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb720-27"><a href="data-reading-excel-sheets.html#cb720-27" tabindex="-1"></a>  filename,</span>
+<span id="cb720-28"><a href="data-reading-excel-sheets.html#cb720-28" tabindex="-1"></a>  <span class="at">sheet =</span> <span class="dv">1</span>,</span>
+<span id="cb720-29"><a href="data-reading-excel-sheets.html#cb720-29" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">7</span>,</span>
+<span id="cb720-30"><a href="data-reading-excel-sheets.html#cb720-30" tabindex="-1"></a>  <span class="at">col_names =</span> col_names_undoc,</span>
+<span id="cb720-31"><a href="data-reading-excel-sheets.html#cb720-31" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">c</span>(</span>
+<span id="cb720-32"><a href="data-reading-excel-sheets.html#cb720-32" tabindex="-1"></a>    <span class="st">&quot;region&quot;</span>     <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
+<span id="cb720-33"><a href="data-reading-excel-sheets.html#cb720-33" tabindex="-1"></a>    <span class="st">&quot;sub_region&quot;</span> <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
+<span id="cb720-34"><a href="data-reading-excel-sheets.html#cb720-34" tabindex="-1"></a>    <span class="st">&quot;territory&quot;</span>  <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
+<span id="cb720-35"><a href="data-reading-excel-sheets.html#cb720-35" tabindex="-1"></a>    <span class="st">&quot;source&quot;</span>     <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
+<span id="cb720-36"><a href="data-reading-excel-sheets.html#cb720-36" tabindex="-1"></a>    <span class="st">&quot;org&quot;</span>        <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
+<span id="cb720-37"><a href="data-reading-excel-sheets.html#cb720-37" tabindex="-1"></a>    <span class="st">&quot;indicator&quot;</span>  <span class="ot">=</span> <span class="st">&quot;text&quot;</span>,</span>
+<span id="cb720-38"><a href="data-reading-excel-sheets.html#cb720-38" tabindex="-1"></a>    <span class="st">&quot;2000&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-39"><a href="data-reading-excel-sheets.html#cb720-39" tabindex="-1"></a>    <span class="st">&quot;2001&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-40"><a href="data-reading-excel-sheets.html#cb720-40" tabindex="-1"></a>    <span class="st">&quot;2002&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-41"><a href="data-reading-excel-sheets.html#cb720-41" tabindex="-1"></a>    <span class="st">&quot;2003&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-42"><a href="data-reading-excel-sheets.html#cb720-42" tabindex="-1"></a>    <span class="st">&quot;2004&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-43"><a href="data-reading-excel-sheets.html#cb720-43" tabindex="-1"></a>    <span class="st">&quot;2005&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-44"><a href="data-reading-excel-sheets.html#cb720-44" tabindex="-1"></a>    <span class="st">&quot;2006&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-45"><a href="data-reading-excel-sheets.html#cb720-45" tabindex="-1"></a>    <span class="st">&quot;2007&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-46"><a href="data-reading-excel-sheets.html#cb720-46" tabindex="-1"></a>    <span class="st">&quot;2008&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-47"><a href="data-reading-excel-sheets.html#cb720-47" tabindex="-1"></a>    <span class="st">&quot;2009&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-48"><a href="data-reading-excel-sheets.html#cb720-48" tabindex="-1"></a>    <span class="st">&quot;2010&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-49"><a href="data-reading-excel-sheets.html#cb720-49" tabindex="-1"></a>    <span class="st">&quot;2011&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb720-50"><a href="data-reading-excel-sheets.html#cb720-50" tabindex="-1"></a>    <span class="st">&quot;2012&quot;</span> <span class="ot">=</span> <span class="st">&quot;numeric&quot;</span></span>
+<span id="cb720-51"><a href="data-reading-excel-sheets.html#cb720-51" tabindex="-1"></a>  )</span>
+<span id="cb720-52"><a href="data-reading-excel-sheets.html#cb720-52" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning: Expecting numeric in P315 / R315C16: got &#39;2366*&#39;</code></pre>
 <pre><code>## Warning: Expecting numeric in Q315 / R315C17: got &#39;1923*&#39;</code></pre>
 <pre><code>## Warning: Expecting numeric in R315 / R315C18: got &#39;1866*&#39;</code></pre>
@@ -1188,15 +1188,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Warning: Expecting numeric in S439 / R439C19: got &#39;x&#39;</code></pre>
 <pre><code>## Warning: Expecting numeric in S445 / R445C19: got &#39;x&#39;</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="data-reading-excel-sheets.html#cb730-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb730-2"><a href="data-reading-excel-sheets.html#cb730-2" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(</span>
-<span id="cb730-3"><a href="data-reading-excel-sheets.html#cb730-3" aria-hidden="true" tabindex="-1"></a>              (df_q3 <span class="sc">%&gt;%</span> <span class="fu">names</span>()),</span>
-<span id="cb730-4"><a href="data-reading-excel-sheets.html#cb730-4" aria-hidden="true" tabindex="-1"></a>              col_names_undoc</span>
-<span id="cb730-5"><a href="data-reading-excel-sheets.html#cb730-5" aria-hidden="true" tabindex="-1"></a>            ))</span></code></pre></div>
+<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="data-reading-excel-sheets.html#cb730-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb730-2"><a href="data-reading-excel-sheets.html#cb730-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(</span>
+<span id="cb730-3"><a href="data-reading-excel-sheets.html#cb730-3" tabindex="-1"></a>              (df_q3 <span class="sc">%&gt;%</span> <span class="fu">names</span>()),</span>
+<span id="cb730-4"><a href="data-reading-excel-sheets.html#cb730-4" tabindex="-1"></a>              col_names_undoc</span>
+<span id="cb730-5"><a href="data-reading-excel-sheets.html#cb730-5" tabindex="-1"></a>            ))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="data-reading-excel-sheets.html#cb732-1" aria-hidden="true" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>((df_q3 <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(<span class="st">`</span><span class="at">2012</span><span class="st">`</span>)) <span class="sc">==</span> <span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="data-reading-excel-sheets.html#cb732-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>((df_q3 <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(<span class="st">`</span><span class="at">2012</span><span class="st">`</span>)) <span class="sc">==</span> <span class="dv">8</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="data-reading-excel-sheets.html#cb734-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="data-reading-excel-sheets.html#cb734-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great!&quot;</code></pre>
 </div>
 </div>
@@ -1204,7 +1204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">41.2</span> Danger Zone<a href="data-reading-excel-sheets.html#danger-zone" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>Now let’s take a look at the head of the data:</p>
-<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="data-reading-excel-sheets.html#cb736-1" aria-hidden="true" tabindex="-1"></a>df_q3 <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="data-reading-excel-sheets.html#cb736-1" tabindex="-1"></a>df_q3 <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 19
 ##   region sub_r…¹ terri…² source org   indic…³ `2000` `2001` `2002` `2003` `2004`
 ##   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -1220,16 +1220,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Irritatingly, many of the cell values are left <em>implicit</em>; as humans reading these data, we can tell that the entries in <code>region</code> under <code>Africa</code> also have the value <code>Africa</code>. However, the computer can’t tell this! We need to make these values <em>explicit</em> by filling them in.</p>
 <p>To that end, I’m going to <em>guide</em> you through some slightly advanced Tidyverse code to <em>lag-fill</em> the missing values. To that end, I’ll define and demonstrate two helper functions:</p>
 <p>First, the following function counts the number of rows with <code>NA</code> entries in a chosen set of columns:</p>
-<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="data-reading-excel-sheets.html#cb738-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Helper function to count num rows w/ NA in vars_lagged</span></span>
-<span id="cb738-2"><a href="data-reading-excel-sheets.html#cb738-2" aria-hidden="true" tabindex="-1"></a>rowAny <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">rowSums</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span></span>
-<span id="cb738-3"><a href="data-reading-excel-sheets.html#cb738-3" aria-hidden="true" tabindex="-1"></a>countna <span class="ot">&lt;-</span> <span class="cf">function</span>(df, vars_lagged) {</span>
-<span id="cb738-4"><a href="data-reading-excel-sheets.html#cb738-4" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
-<span id="cb738-5"><a href="data-reading-excel-sheets.html#cb738-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">rowAny</span>(<span class="fu">across</span>(vars_lagged, is.na))) <span class="sc">%&gt;%</span></span>
-<span id="cb738-6"><a href="data-reading-excel-sheets.html#cb738-6" aria-hidden="true" tabindex="-1"></a>    dim <span class="sc">%&gt;%</span></span>
-<span id="cb738-7"><a href="data-reading-excel-sheets.html#cb738-7" aria-hidden="true" tabindex="-1"></a>    .[[<span class="dv">1</span>]]</span>
-<span id="cb738-8"><a href="data-reading-excel-sheets.html#cb738-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb738-9"><a href="data-reading-excel-sheets.html#cb738-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb738-10"><a href="data-reading-excel-sheets.html#cb738-10" aria-hidden="true" tabindex="-1"></a><span class="fu">countna</span>(df_q3, <span class="fu">c</span>(<span class="st">&quot;region&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="data-reading-excel-sheets.html#cb738-1" tabindex="-1"></a><span class="do">## Helper function to count num rows w/ NA in vars_lagged</span></span>
+<span id="cb738-2"><a href="data-reading-excel-sheets.html#cb738-2" tabindex="-1"></a>rowAny <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">rowSums</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb738-3"><a href="data-reading-excel-sheets.html#cb738-3" tabindex="-1"></a>countna <span class="ot">&lt;-</span> <span class="cf">function</span>(df, vars_lagged) {</span>
+<span id="cb738-4"><a href="data-reading-excel-sheets.html#cb738-4" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
+<span id="cb738-5"><a href="data-reading-excel-sheets.html#cb738-5" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">rowAny</span>(<span class="fu">across</span>(vars_lagged, is.na))) <span class="sc">%&gt;%</span></span>
+<span id="cb738-6"><a href="data-reading-excel-sheets.html#cb738-6" tabindex="-1"></a>    dim <span class="sc">%&gt;%</span></span>
+<span id="cb738-7"><a href="data-reading-excel-sheets.html#cb738-7" tabindex="-1"></a>    .[[<span class="dv">1</span>]]</span>
+<span id="cb738-8"><a href="data-reading-excel-sheets.html#cb738-8" tabindex="-1"></a>}</span>
+<span id="cb738-9"><a href="data-reading-excel-sheets.html#cb738-9" tabindex="-1"></a></span>
+<span id="cb738-10"><a href="data-reading-excel-sheets.html#cb738-10" tabindex="-1"></a><span class="fu">countna</span>(df_q3, <span class="fu">c</span>(<span class="st">&quot;region&quot;</span>))</span></code></pre></div>
 <pre><code>## Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
 ## ℹ Please use `all_of()` or `any_of()` instead.
 ##   # Was:
@@ -1241,46 +1241,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</code></pre>
 <pre><code>## [1] 435</code></pre>
 <p>Ideally we want this count to be <em>zero</em>. To fill-in values, we will use the following function to do one round of <em>lag-filling</em>:</p>
-<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="data-reading-excel-sheets.html#cb741-1" aria-hidden="true" tabindex="-1"></a>lagfill <span class="ot">&lt;-</span> <span class="cf">function</span>(df, vars_lagged) {</span>
-<span id="cb741-2"><a href="data-reading-excel-sheets.html#cb741-2" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
-<span id="cb741-3"><a href="data-reading-excel-sheets.html#cb741-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
-<span id="cb741-4"><a href="data-reading-excel-sheets.html#cb741-4" aria-hidden="true" tabindex="-1"></a>      vars_lagged,</span>
-<span id="cb741-5"><a href="data-reading-excel-sheets.html#cb741-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">function</span>(var) {</span>
-<span id="cb741-6"><a href="data-reading-excel-sheets.html#cb741-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">if_else</span>(</span>
-<span id="cb741-7"><a href="data-reading-excel-sheets.html#cb741-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">is.na</span>(var) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">lag</span>(var)),</span>
-<span id="cb741-8"><a href="data-reading-excel-sheets.html#cb741-8" aria-hidden="true" tabindex="-1"></a>          <span class="fu">lag</span>(var),</span>
-<span id="cb741-9"><a href="data-reading-excel-sheets.html#cb741-9" aria-hidden="true" tabindex="-1"></a>          var</span>
-<span id="cb741-10"><a href="data-reading-excel-sheets.html#cb741-10" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb741-11"><a href="data-reading-excel-sheets.html#cb741-11" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb741-12"><a href="data-reading-excel-sheets.html#cb741-12" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb741-13"><a href="data-reading-excel-sheets.html#cb741-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb741-14"><a href="data-reading-excel-sheets.html#cb741-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb741-15"><a href="data-reading-excel-sheets.html#cb741-15" aria-hidden="true" tabindex="-1"></a>df_tmp <span class="ot">&lt;-</span></span>
-<span id="cb741-16"><a href="data-reading-excel-sheets.html#cb741-16" aria-hidden="true" tabindex="-1"></a>  df_q3 <span class="sc">%&gt;%</span></span>
-<span id="cb741-17"><a href="data-reading-excel-sheets.html#cb741-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lagfill</span>(<span class="fu">c</span>(<span class="st">&quot;region&quot;</span>))</span>
-<span id="cb741-18"><a href="data-reading-excel-sheets.html#cb741-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb741-19"><a href="data-reading-excel-sheets.html#cb741-19" aria-hidden="true" tabindex="-1"></a><span class="fu">countna</span>(df_tmp, <span class="fu">c</span>(<span class="st">&quot;region&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="data-reading-excel-sheets.html#cb741-1" tabindex="-1"></a>lagfill <span class="ot">&lt;-</span> <span class="cf">function</span>(df, vars_lagged) {</span>
+<span id="cb741-2"><a href="data-reading-excel-sheets.html#cb741-2" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
+<span id="cb741-3"><a href="data-reading-excel-sheets.html#cb741-3" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
+<span id="cb741-4"><a href="data-reading-excel-sheets.html#cb741-4" tabindex="-1"></a>      vars_lagged,</span>
+<span id="cb741-5"><a href="data-reading-excel-sheets.html#cb741-5" tabindex="-1"></a>      <span class="cf">function</span>(var) {</span>
+<span id="cb741-6"><a href="data-reading-excel-sheets.html#cb741-6" tabindex="-1"></a>        <span class="fu">if_else</span>(</span>
+<span id="cb741-7"><a href="data-reading-excel-sheets.html#cb741-7" tabindex="-1"></a>          <span class="fu">is.na</span>(var) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">lag</span>(var)),</span>
+<span id="cb741-8"><a href="data-reading-excel-sheets.html#cb741-8" tabindex="-1"></a>          <span class="fu">lag</span>(var),</span>
+<span id="cb741-9"><a href="data-reading-excel-sheets.html#cb741-9" tabindex="-1"></a>          var</span>
+<span id="cb741-10"><a href="data-reading-excel-sheets.html#cb741-10" tabindex="-1"></a>        )</span>
+<span id="cb741-11"><a href="data-reading-excel-sheets.html#cb741-11" tabindex="-1"></a>      }</span>
+<span id="cb741-12"><a href="data-reading-excel-sheets.html#cb741-12" tabindex="-1"></a>    ))</span>
+<span id="cb741-13"><a href="data-reading-excel-sheets.html#cb741-13" tabindex="-1"></a>}</span>
+<span id="cb741-14"><a href="data-reading-excel-sheets.html#cb741-14" tabindex="-1"></a></span>
+<span id="cb741-15"><a href="data-reading-excel-sheets.html#cb741-15" tabindex="-1"></a>df_tmp <span class="ot">&lt;-</span></span>
+<span id="cb741-16"><a href="data-reading-excel-sheets.html#cb741-16" tabindex="-1"></a>  df_q3 <span class="sc">%&gt;%</span></span>
+<span id="cb741-17"><a href="data-reading-excel-sheets.html#cb741-17" tabindex="-1"></a>  <span class="fu">lagfill</span>(<span class="fu">c</span>(<span class="st">&quot;region&quot;</span>))</span>
+<span id="cb741-18"><a href="data-reading-excel-sheets.html#cb741-18" tabindex="-1"></a></span>
+<span id="cb741-19"><a href="data-reading-excel-sheets.html#cb741-19" tabindex="-1"></a><span class="fu">countna</span>(df_tmp, <span class="fu">c</span>(<span class="st">&quot;region&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] 429</code></pre>
 <p>We can see that <code>lagfill</code> has filled the <code>Africa</code> value in row 2, as well as a number of other rows as evidenced by the reduced value returned by <code>countna</code>.</p>
 <p>What we’ll do is continually run <code>lagfill</code> until we reduce <code>countna</code> to zero. We could do this by repeatedly running the function <em>manually</em>, but that would be silly. Instead, we’ll run a <code>while</code> loop to automatically run the function until <code>countna</code> reaches zero.</p>
 <div id="q4-i-have-already-provided-the-while-loop-below-fill-in-vars_lagged-with-the-names-of-the-columns-where-cell-values-are-implicit." class="section level3 hasAnchor" number="41.2.1">
 <h3><span class="header-section-number">41.2.1</span> <strong>q4</strong> I have already provided the <code>while</code> loop below; fill in <code>vars_lagged</code> with the names of the columns where cell values are <em>implicit</em>.<a href="data-reading-excel-sheets.html#q4-i-have-already-provided-the-while-loop-below-fill-in-vars_lagged-with-the-names-of-the-columns-where-cell-values-are-implicit." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: Think about which columns have implicit values, and which truly have missing values.</p>
-<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="data-reading-excel-sheets.html#cb743-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Choose variables to lag-fill</span></span>
-<span id="cb743-2"><a href="data-reading-excel-sheets.html#cb743-2" aria-hidden="true" tabindex="-1"></a>vars_lagged <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;region&quot;</span>, <span class="st">&quot;sub_region&quot;</span>, <span class="st">&quot;territory&quot;</span>, <span class="st">&quot;source&quot;</span>, <span class="st">&quot;org&quot;</span>)</span>
-<span id="cb743-3"><a href="data-reading-excel-sheets.html#cb743-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb743-4"><a href="data-reading-excel-sheets.html#cb743-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this</span></span>
-<span id="cb743-5"><a href="data-reading-excel-sheets.html#cb743-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Trim head and notes</span></span>
-<span id="cb743-6"><a href="data-reading-excel-sheets.html#cb743-6" aria-hidden="true" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
-<span id="cb743-7"><a href="data-reading-excel-sheets.html#cb743-7" aria-hidden="true" tabindex="-1"></a>  df_q3 <span class="sc">%&gt;%</span></span>
-<span id="cb743-8"><a href="data-reading-excel-sheets.html#cb743-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="sc">-</span>(<span class="fu">n</span>()<span class="sc">-</span><span class="dv">5</span><span class="sc">:-</span><span class="fu">n</span>()))</span>
-<span id="cb743-9"><a href="data-reading-excel-sheets.html#cb743-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb743-10"><a href="data-reading-excel-sheets.html#cb743-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Repeatedly lag-fill until NA&#39;s are gone</span></span>
-<span id="cb743-11"><a href="data-reading-excel-sheets.html#cb743-11" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="fu">countna</span>(df_q4, vars_lagged) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb743-12"><a href="data-reading-excel-sheets.html#cb743-12" aria-hidden="true" tabindex="-1"></a>  df_q4 <span class="ot">&lt;-</span></span>
-<span id="cb743-13"><a href="data-reading-excel-sheets.html#cb743-13" aria-hidden="true" tabindex="-1"></a>    df_q4 <span class="sc">%&gt;%</span></span>
-<span id="cb743-14"><a href="data-reading-excel-sheets.html#cb743-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lagfill</span>(vars_lagged)</span>
-<span id="cb743-15"><a href="data-reading-excel-sheets.html#cb743-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="data-reading-excel-sheets.html#cb743-1" tabindex="-1"></a><span class="do">## Choose variables to lag-fill</span></span>
+<span id="cb743-2"><a href="data-reading-excel-sheets.html#cb743-2" tabindex="-1"></a>vars_lagged <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;region&quot;</span>, <span class="st">&quot;sub_region&quot;</span>, <span class="st">&quot;territory&quot;</span>, <span class="st">&quot;source&quot;</span>, <span class="st">&quot;org&quot;</span>)</span>
+<span id="cb743-3"><a href="data-reading-excel-sheets.html#cb743-3" tabindex="-1"></a></span>
+<span id="cb743-4"><a href="data-reading-excel-sheets.html#cb743-4" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this</span></span>
+<span id="cb743-5"><a href="data-reading-excel-sheets.html#cb743-5" tabindex="-1"></a><span class="do">## Trim head and notes</span></span>
+<span id="cb743-6"><a href="data-reading-excel-sheets.html#cb743-6" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
+<span id="cb743-7"><a href="data-reading-excel-sheets.html#cb743-7" tabindex="-1"></a>  df_q3 <span class="sc">%&gt;%</span></span>
+<span id="cb743-8"><a href="data-reading-excel-sheets.html#cb743-8" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="sc">-</span>(<span class="fu">n</span>()<span class="sc">-</span><span class="dv">5</span><span class="sc">:-</span><span class="fu">n</span>()))</span>
+<span id="cb743-9"><a href="data-reading-excel-sheets.html#cb743-9" tabindex="-1"></a></span>
+<span id="cb743-10"><a href="data-reading-excel-sheets.html#cb743-10" tabindex="-1"></a><span class="do">## Repeatedly lag-fill until NA&#39;s are gone</span></span>
+<span id="cb743-11"><a href="data-reading-excel-sheets.html#cb743-11" tabindex="-1"></a><span class="cf">while</span> (<span class="fu">countna</span>(df_q4, vars_lagged) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb743-12"><a href="data-reading-excel-sheets.html#cb743-12" tabindex="-1"></a>  df_q4 <span class="ot">&lt;-</span></span>
+<span id="cb743-13"><a href="data-reading-excel-sheets.html#cb743-13" tabindex="-1"></a>    df_q4 <span class="sc">%&gt;%</span></span>
+<span id="cb743-14"><a href="data-reading-excel-sheets.html#cb743-14" tabindex="-1"></a>    <span class="fu">lagfill</span>(vars_lagged)</span>
+<span id="cb743-15"><a href="data-reading-excel-sheets.html#cb743-15" tabindex="-1"></a>}</span></code></pre></div>
 <p>And we’re done! All of the particularly tricky wrangling is now done. You could now use pivoting to tidy the data into long form.</p>
 <!-- include-exit-ticket -->
 

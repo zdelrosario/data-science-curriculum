@@ -984,7 +984,7 @@ look up the facts they need, when they need them. Just as you had to learn how
 to read English, you will have to learn how to consult documentation. This
 exercise will get you started.</p>
 <p><em>Reading</em>: <a href="https://www.r-project.org/help.html">Getting help with R</a> (Vignettes and Code Demonstrations)</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="setup-documentation.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="setup-documentation.html#cb25-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -1000,7 +1000,7 @@ developers.</p>
 <div id="q1-use-vignettepackage-fill-in-the-to-look-up-vignettes" class="section level3 hasAnchor" number="9.0.1">
 <h3><span class="header-section-number">9.0.1</span> <strong>q1</strong> Use <code>vignette(package = ???)</code> (fill in the ???) to look up vignettes<a href="setup-documentation.html#q1-use-vignettepackage-fill-in-the-to-look-up-vignettes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>associated with <code>"dplyr"</code>. What vignettes are available?</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="setup-documentation.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="setup-documentation.html#cb29-1" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>The <code>dplyr</code> package has vignettes <code>compatibility</code>, <code>dplyr</code>, <code>programming</code>,
 <code>two-table</code>, and <code>window-functions</code>. We’ll cover many of these topics
 in this course!</p>
@@ -1012,12 +1012,12 @@ read a particular vignette.</p>
 <p>Read this vignette up to the first note on <code>filter()</code>. Use <code>filter()</code> to select
 only those rows of the <code>iris</code> dataset where <code>Species == "setosa"</code>.</p>
 <p><em>Note</em>: This should open up your browser.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="setup-documentation.html#cb30-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb30-2"><a href="setup-documentation.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb30-3"><a href="setup-documentation.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb30-4"><a href="setup-documentation.html#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: Filter on Species &quot;setosa&quot;</span></span>
-<span id="cb30-5"><a href="setup-documentation.html#cb30-5" aria-hidden="true" tabindex="-1"></a>    Species <span class="sc">==</span> <span class="st">&quot;setosa&quot;</span></span>
-<span id="cb30-6"><a href="setup-documentation.html#cb30-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="setup-documentation.html#cb30-1" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="setup-documentation.html#cb30-2" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="setup-documentation.html#cb30-3" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb30-4"><a href="setup-documentation.html#cb30-4" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: Filter on Species &quot;setosa&quot;</span></span>
+<span id="cb30-5"><a href="setup-documentation.html#cb30-5" tabindex="-1"></a>    Species <span class="sc">==</span> <span class="st">&quot;setosa&quot;</span></span>
+<span id="cb30-6"><a href="setup-documentation.html#cb30-6" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 50 × 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
@@ -1051,12 +1051,12 @@ be <em>extremely</em> helpful.</p>
 <h3><span class="header-section-number">9.0.4</span> <strong>q4</strong> Use your knowledge of documentation lookup to answer the following<a href="setup-documentation.html#q4-use-your-knowledge-of-documentation-lookup-to-answer-the-following" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>question: How could we <code>filter</code> the <code>iris</code> dataset to return only those rows
 with <code>Sepal.Length</code> between <code>5.1</code> and <code>6.4</code>?</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="setup-documentation.html#cb32-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb32-2"><a href="setup-documentation.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb32-3"><a href="setup-documentation.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb32-4"><a href="setup-documentation.html#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">5.1</span> <span class="sc">&lt;=</span> Sepal.Length,</span>
-<span id="cb32-5"><a href="setup-documentation.html#cb32-5" aria-hidden="true" tabindex="-1"></a>    Sepal.Length <span class="sc">&lt;=</span> <span class="fl">6.4</span></span>
-<span id="cb32-6"><a href="setup-documentation.html#cb32-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="setup-documentation.html#cb32-1" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="setup-documentation.html#cb32-2" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="setup-documentation.html#cb32-3" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb32-4"><a href="setup-documentation.html#cb32-4" tabindex="-1"></a>    <span class="fl">5.1</span> <span class="sc">&lt;=</span> Sepal.Length,</span>
+<span id="cb32-5"><a href="setup-documentation.html#cb32-5" tabindex="-1"></a>    Sepal.Length <span class="sc">&lt;=</span> <span class="fl">6.4</span></span>
+<span id="cb32-6"><a href="setup-documentation.html#cb32-6" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 83 × 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  

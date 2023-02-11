@@ -998,39 +998,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.3</span> Downloading Our Exercises<a href="reproducibility-git-and-our-curriculum.html#downloading-our-exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Open your browser and log into GitHub. Click the <code>New</code> button to create a new repository.</p>
-<div class="figure">
-<img src="images/setup00-new.png" alt="" />
-<p class="caption">Setup</p>
+<div class="float">
+<img src="images/setup00-new.png" alt="Setup" />
+<div class="figcaption">Setup</div>
 </div>
 <p>Give this a sensible name, like <code>data-science-S2023</code>. <strong>Ensure your repository is public,</strong> or you will not be able to submit your homework!</p>
-<div class="figure">
-<img src="images/setup01-name-public.png" alt="" />
-<p class="caption">Setup</p>
+<div class="float">
+<img src="images/setup01-name-public.png" alt="Setup" />
+<div class="figcaption">Setup</div>
 </div>
 <p>Once you’ve selected the correct settings, click <code>Create Repository</code>. This creates a repository on GitHub’s servers, but you still need to download it locally. After creating your repository, you’ll see the following link in your browser. Copy the SSH link (note, <strong>not</strong> the HTTPS link) and open a Terminal.</p>
-<div class="figure">
-<img src="images/setup02-clone-link.png" alt="" />
-<p class="caption">Setup</p>
+<div class="float">
+<img src="images/setup02-clone-link.png" alt="Setup" />
+<div class="figcaption">Setup</div>
 </div>
 <p>Navigate in your terminal to the location where you’d like to store your work for this class. Type the command <code>git clone</code> and paste the link you copied above. Hit Return to “clone” a local copy of your repository. Git will likely tell you that you cloned an empty repository. That’s OK! We’re going to add the course materials next.</p>
 <p><em>Note</em>: If you haven’t used a Terminal before, just open RStudio and find the Terminal tab (towards the bottom).</p>
-<div class="figure">
-<img src="images/setup03-clone-terminal.png" alt="" />
-<p class="caption">Setup</p>
+<div class="float">
+<img src="images/setup03-clone-terminal.png" alt="Setup" />
+<div class="figcaption">Setup</div>
 </div>
 <p>Download the curriculum as a zip file from <a href="https://github.com/zdelrosario/data-science-curriculum/archive/refs/heads/build.zip">this link</a>. Unzip this in your blank repository. Unzip the materials and copy them to your (empty) repository. Once you’ve done this, your repository folder should look like this:</p>
-<div class="figure">
-<img src="images/setup04-contents.png" alt="" />
-<p class="caption">Setup</p>
+<div class="float">
+<img src="images/setup04-contents.png" alt="Setup" />
+<div class="figcaption">Setup</div>
 </div>
 <p>Once you’ve copied over the materials, run the three following commands from your Terminal while inside your repository:</p>
 <p><code>git add *</code></p>
 <p><code>git commit -m "initial commit"</code></p>
 <p><code>git push</code></p>
 <p>If you do this successfully, you can refresh the repository page in your browser and see the following:</p>
-<div class="figure">
-<img src="images/setup05-success.png" alt="" />
-<p class="caption">Setup</p>
+<div class="float">
+<img src="images/setup05-success.png" alt="Setup" />
+<div class="figcaption">Setup</div>
 </div>
 <p>Once you’ve gotten to this point, take a moment to look around the repository. The <code>exercises_sequenced</code> folder contains all of the Exercises for the course, while the <code>challenges</code> folder contains all of the challenges you will complete as your homework. You will commit your work to this repository then submit links on Canvas.</p>
 <p><em>Aside</em>: Note that <em>Git</em> and <em>GitHub</em> are two different things! <em>Git</em> is a

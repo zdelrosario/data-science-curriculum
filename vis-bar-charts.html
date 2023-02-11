@@ -984,7 +984,7 @@ how to construct a variety of different bar charts, as well as when—and when
 <p><em>Reading</em>: <a href="https://rstudio.cloud/learn/primers/3.2">Bar Charts</a>
 <em>Topics</em>: (All topics)
 <em>Reading Time</em>: ~30 minutes</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="vis-bar-charts.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="vis-bar-charts.html#cb156-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -997,10 +997,10 @@ how to construct a variety of different bar charts, as well as when—and when
 <h3><span class="header-section-number">18.0.1</span> <strong>q1</strong> In the reading, you learned the relation between <code>geom_bar()</code> and<a href="vis-bar-charts.html#q1-in-the-reading-you-learned-the-relation-between-geom_bar-and" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>geom_col()</code>. Use that knowledge to convert the following <code>geom_bar()</code> plot into
 the same visual using <code>geom_col()</code>.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="vis-bar-charts.html#cb160-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb160-2"><a href="vis-bar-charts.html#cb160-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(trans) <span class="sc">%&gt;%</span></span>
-<span id="cb160-3"><a href="vis-bar-charts.html#cb160-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> trans, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb160-4"><a href="vis-bar-charts.html#cb160-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="vis-bar-charts.html#cb160-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb160-2"><a href="vis-bar-charts.html#cb160-2" tabindex="-1"></a>  <span class="fu">count</span>(trans) <span class="sc">%&gt;%</span></span>
+<span id="cb160-3"><a href="vis-bar-charts.html#cb160-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> trans, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb160-4"><a href="vis-bar-charts.html#cb160-4" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
 <p><img src="d09-e-vis01-bar-charts-solution_files/figure-html/q1-task-1.png" width="672" /></p>
 <p>The reading mentioned that when using <code>geom_col()</code> our x-y data should be
 <code>1-to-1</code>. This next exercise will probe what happens when our data are not
@@ -1008,8 +1008,8 @@ the same visual using <code>geom_col()</code>.</p>
 <a href="https://en.wikipedia.org/wiki/Injective_function">one-to-one</a> function is one
 where each input leads to a single output. For the <code>mpg</code> dataset, we can see
 that the pairs <code>cty, hwy</code> clearly don’t have this one-to-one property:</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="vis-bar-charts.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Run this chunk for an illustration</span></span>
-<span id="cb161-2"><a href="vis-bar-charts.html#cb161-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cty <span class="sc">==</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="vis-bar-charts.html#cb161-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Run this chunk for an illustration</span></span>
+<span id="cb161-2"><a href="vis-bar-charts.html#cb161-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cty <span class="sc">==</span> <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 11 × 11
 ##    manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class
 ##    &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
@@ -1029,19 +1029,19 @@ that the pairs <code>cty, hwy</code> clearly don’t have this one-to-one proper
 <h3><span class="header-section-number">18.0.2</span> <strong>q2</strong> The following code attempts to visualize <code>cty, hwy</code> from <code>mpg</code> using<a href="vis-bar-charts.html#q2-the-following-code-attempts-to-visualize-cty-hwy-from-mpg-using" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>geom_col()</code>. There’s something fishy about the <code>hwy</code> values; what’s wrong here?</p>
 <p><em>Hint</em>: Try changing the <code>position</code> parameter for <code>geom_col()</code>.</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="vis-bar-charts.html#cb163-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb163-2"><a href="vis-bar-charts.html#cb163-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
-<span id="cb163-3"><a href="vis-bar-charts.html#cb163-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="vis-bar-charts.html#cb163-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb163-2"><a href="vis-bar-charts.html#cb163-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb163-3"><a href="vis-bar-charts.html#cb163-3" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
 <p><img src="d09-e-vis01-bar-charts-solution_files/figure-html/q2-task-1.png" width="672" /></p>
 <p><strong>Observations</strong>:
 - Since <code>position = "stacked"</code> is the default for <code>geom_col()</code>, we see not the real <code>hwy</code> values, but effectively a sum at each <code>cty</code> value!</p>
 <p>A more standard way to visualize this kind of data is a <em>scatterplot</em>, which
 we’ll study later. For now, here’s an example of a more effective way to
 visualize <code>cty</code> vs <code>hwy</code>:</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="vis-bar-charts.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Run this chunk for an illustration</span></span>
-<span id="cb164-2"><a href="vis-bar-charts.html#cb164-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb164-3"><a href="vis-bar-charts.html#cb164-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span></span>
-<span id="cb164-4"><a href="vis-bar-charts.html#cb164-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="vis-bar-charts.html#cb164-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Run this chunk for an illustration</span></span>
+<span id="cb164-2"><a href="vis-bar-charts.html#cb164-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb164-3"><a href="vis-bar-charts.html#cb164-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span></span>
+<span id="cb164-4"><a href="vis-bar-charts.html#cb164-4" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="d09-e-vis01-bar-charts-solution_files/figure-html/q2-compare-1.png" width="672" /></p>
 </div>
 <div id="q3-the-following-are-two-different-visualizations-of-the-mpg-dataset." class="section level3 hasAnchor" number="18.0.3">
@@ -1049,19 +1049,19 @@ visualize <code>cty</code> vs <code>hwy</code>:</p>
 <p>Document your observations between the <code>v1</code> and <code>v2</code> visuals. Then, determine
 which—<code>v1</code> or <code>v2</code>—enabled you to make more observations. What was the
 difference between the two visuals?</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="vis-bar-charts.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Run this code without changing, describe your observations on the data</span></span>
-<span id="cb165-2"><a href="vis-bar-charts.html#cb165-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb165-3"><a href="vis-bar-charts.html#cb165-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(class, <span class="at">fill =</span> class)) <span class="sc">+</span></span>
-<span id="cb165-4"><a href="vis-bar-charts.html#cb165-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="vis-bar-charts.html#cb165-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Run this code without changing, describe your observations on the data</span></span>
+<span id="cb165-2"><a href="vis-bar-charts.html#cb165-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb165-3"><a href="vis-bar-charts.html#cb165-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(class, <span class="at">fill =</span> class)) <span class="sc">+</span></span>
+<span id="cb165-4"><a href="vis-bar-charts.html#cb165-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <p><img src="d09-e-vis01-bar-charts-solution_files/figure-html/q4-v1-1.png" width="672" /></p>
 <p><strong>Observations</strong>:
 In this dataset:
 - <code>SUV</code>’s are most numerous, followed by <code>compact</code> and <code>midsize</code>
 - There are very few <code>2seater</code> vehicles</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="vis-bar-charts.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Run this code without changing, describe your observations on the data</span></span>
-<span id="cb166-2"><a href="vis-bar-charts.html#cb166-2" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb166-3"><a href="vis-bar-charts.html#cb166-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(class, <span class="at">fill =</span> drv)) <span class="sc">+</span></span>
-<span id="cb166-4"><a href="vis-bar-charts.html#cb166-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="vis-bar-charts.html#cb166-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Run this code without changing, describe your observations on the data</span></span>
+<span id="cb166-2"><a href="vis-bar-charts.html#cb166-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb166-3"><a href="vis-bar-charts.html#cb166-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(class, <span class="at">fill =</span> drv)) <span class="sc">+</span></span>
+<span id="cb166-4"><a href="vis-bar-charts.html#cb166-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <p><img src="d09-e-vis01-bar-charts-solution_files/figure-html/q4-v2-1.png" width="672" /></p>
 <p><strong>Observations</strong>:
 In this dataset:
@@ -1089,10 +1089,10 @@ In this dataset:
 relation between <code>manufacturer</code> and <code>class</code> of cars in this dataset?</p>
 <p><em>Note</em>: I use a <code>theme()</code> call to rotate the x-axis labels. We’ll learn how to
 do this in a future exercise.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="vis-bar-charts.html#cb167-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb167-2"><a href="vis-bar-charts.html#cb167-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> manufacturer, <span class="at">fill =</span> class)) <span class="sc">+</span></span>
-<span id="cb167-3"><a href="vis-bar-charts.html#cb167-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
-<span id="cb167-4"><a href="vis-bar-charts.html#cb167-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">270</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="vis-bar-charts.html#cb167-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb167-2"><a href="vis-bar-charts.html#cb167-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> manufacturer, <span class="at">fill =</span> class)) <span class="sc">+</span></span>
+<span id="cb167-3"><a href="vis-bar-charts.html#cb167-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb167-4"><a href="vis-bar-charts.html#cb167-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">270</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="dv">0</span>))</span></code></pre></div>
 <p><img src="d09-e-vis01-bar-charts-solution_files/figure-html/q4-task-1.png" width="672" /></p>
 <p><strong>Observations</strong>
 - Certain manufacturers seem to favor particular classes of car. For instance,
@@ -1105,10 +1105,10 @@ do this in a future exercise.</p>
 <h3><span class="header-section-number">18.0.5</span> <strong>q5</strong> The following graph is hard to read. What other form of faceting would<a href="vis-bar-charts.html#q5-the-following-graph-is-hard-to-read.-what-other-form-of-faceting-would" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>make the visual more convenient to read? Modify the code below with your
 suggested improvement.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="vis-bar-charts.html#cb168-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb168-2"><a href="vis-bar-charts.html#cb168-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cyl)) <span class="sc">+</span></span>
-<span id="cb168-3"><a href="vis-bar-charts.html#cb168-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb168-4"><a href="vis-bar-charts.html#cb168-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> manufacturer)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="vis-bar-charts.html#cb168-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb168-2"><a href="vis-bar-charts.html#cb168-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cyl)) <span class="sc">+</span></span>
+<span id="cb168-3"><a href="vis-bar-charts.html#cb168-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb168-4"><a href="vis-bar-charts.html#cb168-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> manufacturer)</span></code></pre></div>
 <p><img src="d09-e-vis01-bar-charts-solution_files/figure-html/q5-task-1.png" width="672" /></p>
 <!-- include-exit-ticket -->
 
