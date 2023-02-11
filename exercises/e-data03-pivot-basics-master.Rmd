@@ -69,7 +69,7 @@ cases
 - 3. FR, DE, and US
 
 ```{r q1-test}
-## TODO: Modify with your answer
+## TODO: Modify with your multiple choice number answer
 q1_answer <- 0
 
 ## NOTE: The following will test your answer
@@ -99,7 +99,7 @@ alloys
 - 3. thick, E, mu, rep, angle
 
 ```{r q2-test}
-## TODO: Modify with your answer
+## TODO: Modify with your multiple choice number answer
 q2_answer <- 0
 
 ## NOTE: The following will test your answer
