@@ -1029,7 +1029,7 @@ For the example above, we have</p>
 <pre><code>## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
-## 1         100      96  0.96</code></pre>
+## 1         100      94  0.94</code></pre>
 <p>Now it’s your turn!</p>
 <div id="q1-let-a-z-z-0.-complete-the-following-code-to-compute-count_total-count_a-and-fr.-before-executing-the-code-make-a-prediction-about-the-value-of-fr.-did-the-computed-fr-value-match-your-prediction" class="section level3 hasAnchor" number="26.1.1">
 <h3><span class="header-section-number">26.1.1</span> <strong>q1</strong> Let <span class="math inline">\(A = {Z | Z &lt;= 0}\)</span>. Complete the following code to compute <code>count_total</code>, <code>count_A</code>, and <code>fr</code>. Before executing the code, <strong>make a prediction</strong> about the value of <code>fr</code>. Did the computed <code>fr</code> value match your prediction?<a href="stats-probability.html#q1-let-a-z-z-0.-complete-the-following-code-to-compute-count_total-count_a-and-fr.-before-executing-the-code-make-a-prediction-about-the-value-of-fr.-did-the-computed-fr-value-match-your-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1042,7 +1042,7 @@ For the example above, we have</p>
 <pre><code>## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
-## 1         100      54  0.54</code></pre>
+## 1         100      50   0.5</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>I predicted <code>fr = 0.5</code></li>
@@ -1079,9 +1079,9 @@ For the example above, we have</p>
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
 ## 1          10       6 0.6  
-## 2         100      50 0.5  
-## 3        1000     487 0.487
-## 4       10000    4999 0.500</code></pre>
+## 2         100      51 0.51 
+## 3        1000     515 0.515
+## 4       10000    5034 0.503</code></pre>
 <p>This is because <em>probability</em> is actually defined[1] in terms of the limit</p>
 <p><span class="math display">\[\mathbb{P}_{\rho}[X \in A] = \lim_{n \to \infty} F_{X_n}(A),\]</span></p>
 <p>where <span class="math inline">\(X_n\)</span> is a sample of size <span class="math inline">\(n\)</span> drawn from the density <span class="math inline">\(X_n \sim \rho\)</span>.[2]</p>
@@ -1104,9 +1104,9 @@ For the example above, we have</p>
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
 ## 1          10      10 1    
-## 2         100      95 0.95 
-## 3        1000     949 0.949
-## 4       10000    9559 0.956</code></pre>
+## 2         100      93 0.93 
+## 3        1000     948 0.948
+## 4       10000    9449 0.945</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li><code>fr</code> is limiting towards <code>~0.95</code></li>
@@ -1198,7 +1198,7 @@ For the example above, we have</p>
 <span id="cb326-9"><a href="stats-probability.html#cb326-9" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Cumulative Distribution Function&quot;</span></span>
 <span id="cb326-10"><a href="stats-probability.html#cb326-10" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="d16-e-stat02-probability-solution_files/figure-html/vis-cdf-1.png" width="672" /></p>
-<p>Note that, by definition, the CDF gives the probability over the set <span class="math inline">\(A = {x | x &lt;= 0}\)</span>. Thus the CDF returns a probability (which explains the <code>p</code> prefix for R functions).</p>
+<p>Note that, by definition, the CDF gives the probability over the set <span class="math inline">\(A(x) = {x&#39; | x&#39; &lt;= x}\)</span> (this is just all the values less than the value we’re considering <span class="math inline">\(x\)</span>). Thus the CDF returns a probability (which explains the <code>p</code> prefix for R functions).</p>
 <div id="q4-use-pnorm-to-compute-the-probability-that-z-normmean-0-sd-1-is-less-than-or-equal-to-zero.-compare-this-against-your-frequency-prediction-from-q1." class="section level3 hasAnchor" number="26.4.1">
 <h3><span class="header-section-number">26.4.1</span> <strong>q4</strong> Use <code>pnorm</code> to compute the probability that <code>Z ~ norm(mean = 0, sd = 1)</code> is less than or equal to zero. Compare this against your frequency prediction from <strong>q1</strong>.<a href="stats-probability.html#q4-use-pnorm-to-compute-the-probability-that-z-normmean-0-sd-1-is-less-than-or-equal-to-zero.-compare-this-against-your-frequency-prediction-from-q1." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="stats-probability.html#cb327-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the probability that Z &lt;= 0, assign to p0</span></span>

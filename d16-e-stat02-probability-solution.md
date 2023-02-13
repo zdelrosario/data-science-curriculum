@@ -87,7 +87,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      96  0.96
+## 1         100      94  0.94
 ```
 
 Now it's your turn!
@@ -108,7 +108,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      54  0.54
+## 1         100      50   0.5
 ```
 
 **Observations**:
@@ -160,9 +160,9 @@ map_dfr(
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
 ## 1          10       6 0.6  
-## 2         100      50 0.5  
-## 3        1000     487 0.487
-## 4       10000    4999 0.500
+## 2         100      51 0.51 
+## 3        1000     515 0.515
+## 4       10000    5034 0.503
 ```
 
 This is because *probability* is actually defined[1] in terms of the limit
@@ -194,9 +194,9 @@ map_dfr(
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
 ## 1          10      10 1    
-## 2         100      95 0.95 
-## 3        1000     949 0.949
-## 4       10000    9559 0.956
+## 2         100      93 0.93 
+## 3        1000     948 0.948
+## 4       10000    9449 0.945
 ```
 
 **Observations**:
@@ -322,7 +322,7 @@ tibble(z = seq(-3, +3, length.out = 1000)) %>%
 
 <img src="d16-e-stat02-probability-solution_files/figure-html/vis-cdf-1.png" width="672" />
 
-Note that, by definition, the CDF gives the probability over the set $A = {x | x <= 0}$. Thus the CDF returns a probability (which explains the `p` prefix for R functions).
+Note that, by definition, the CDF gives the probability over the set $A(x) = {x' | x' <= x}$ (this is just all the values less than the value we're considering $x$). Thus the CDF returns a probability (which explains the `p` prefix for R functions).
 
 ### __q4__ Use `pnorm` to compute the probability that `Z ~ norm(mean = 0, sd = 1)` is less than or equal to zero. Compare this against your frequency prediction from __q1__.
 
