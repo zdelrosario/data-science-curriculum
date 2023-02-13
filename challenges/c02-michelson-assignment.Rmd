@@ -64,7 +64,7 @@ df_michelson <-
   select(Date, Distinctness, Temp, Velocity) %>%
   mutate(Distinctness = as_factor(Distinctness))
 
-df_michelson %>% glimpse
+df_michelson %>% glimpse()
 ```
 
 *Data dictionary*:
