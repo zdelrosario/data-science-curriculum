@@ -246,7 +246,7 @@ tibble(z = seq(-3, +3, length.out = 1000)) %>%
   )
 ```
 
-Note that, by definition, the CDF gives the probability over the set $A = {x | x <= 0}$. Thus the CDF returns a probability (which explains the `p` prefix for R functions).
+Note that, by definition, the CDF gives the probability over the set $A(x) = {x' | x' <= x}$ (this is just all the values less than the value we're considering $x$). Thus the CDF returns a probability (which explains the `p` prefix for R functions).
 
 ### __q4__ Use `pnorm` to compute the probability that `Z ~ norm(mean = 0, sd = 1)` is less than or equal to zero. Compare this against your frequency prediction from __q1__.
 
