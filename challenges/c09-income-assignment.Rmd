@@ -107,9 +107,7 @@ This dataset is in desperate need of some *tidying*. To simplify the task, we'll
 
 ### __q3__ Tidy the `df_income` dataset by completing the code below. Pivot and rename the columns to arrive at the column names `id, geographic_area_name, category, income_estimate, income_moe`.
 
-*Hint 1*: You can do this in a single pivot using the `".value"` argument and a `names_pattern` using capture groups `"()"`. Remember that you can use an OR operator `|` in a regex to allow for multiple possibilities in a capture group, for example `"(Estimate|Margin of Error)"`.
-
-*Hint 2*: You may find it helpful to drop all of the `"Annotation of .*"` columns in the dataset; you will not need those.
+*Hint*: You can do this in a single pivot using the `".value"` argument and a `names_pattern` using capture groups `"()"`. Remember that you can use an OR operator `|` in a regex to allow for multiple possibilities in a capture group, for example `"(Estimate|Margin of Error)"`.
 
 ```{r q3-task}
 df_q3 <-
@@ -117,6 +115,8 @@ df_q3 <-
   select(
     Geography,
     contains("Geographic"),
+    # This will select only the numeric d-person family columns;
+    # it will ignore the annotation columns
     contains("median") & matches("\\d-person families") & !contains("Annotation of")
   ) %>%
   mutate(across(contains("median"), as.numeric)) %>%
