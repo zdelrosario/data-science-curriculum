@@ -43,10 +43,11 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
 
-## Due Date
+## Submission
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
+Make sure to commit both the challenge report (`report.md` file) and supporting files (`report_files/` folder) when you are done! Then submit a link to Canvas. **Your Challenge submission is not complete without all files uploaded to GitHub.**
+
 
 *Background*: Every year about 2 million students take the Scholastic Aptitude Test (SAT). The exam is [controversial](http://www.nea.org/home/73288.htm) but [extremely consequential](https://www.csmonitor.com/2004/0518/p13s01-legn.html). There are many claims about the SAT, but we're going to look at just one: Is the SAT predictive of scholastic performance in college? It turns out this is a fairly complicated question to assess---we'll get an introduction to some of the complexities.
 
@@ -167,6 +168,8 @@ Finally, let's use the bootstrap to perform the same test using *different* assu
 
 ### __q5__ Use the bootstrap to approximate a confidence interval for `corr[high_GPA, univ_GPA`. Compare your results---both the estimate and confidence interval---to your results from q4.
 
+*Hint*. You'll find that the documentation for `int_pctl` has some **really** useful examples for this task!
+
 ```{r q5-task}
 ## TODO: Use the bootstrap to compute a confidence interval for corr[high_GPA, univ_GPA]
 ```
@@ -271,6 +274,8 @@ Before closing, let's synthesize a bit from the analyses above.
 - Between `both_SAT` and `high_GPA`, which single variable would you choose to predict `univ_GPA`? Why?
   - (Your response here)
 - Is `both_SAT` an effective predictor of `univ_GPA`? What specific pieces of evidence do you have in favor of `both_SAT` being effective? What specific pieces of evidence do you have against?
+  - (Your response here)
+- Based on the source of the data, how broadly do your findings apply? Do they apply to all students across the United States, or to a narrower subset of that population?
   - (Your response here)
 
 # End Notes
