@@ -166,12 +166,26 @@ Keep in mind your findings as you complete q4.
 
 Finally, let's use the bootstrap to perform the same test using *different* assumptions.
 
-### __q5__ Use the bootstrap to approximate a confidence interval for `corr[high_GPA, univ_GPA`. Compare your results---both the estimate and confidence interval---to your results from q4.
+### __q5__ Use the bootstrap to approximate a confidence interval.
+
+Use the bootstrap to approximate a confidence interval for `cor[high_GPA, univ_GPA]`. Compare your results---both the estimate and confidence interval---to your results from q4.
 
 *Hint*. You'll find that the documentation for `int_pctl` has some **really** useful examples for this task!
 
 ```{r q5-task}
-## TODO: Use the bootstrap to compute a confidence interval for corr[high_GPA, univ_GPA]
+## TODO: Complete the following helper function to do a bootstrap analysis
+corr_high_GPA <- function(split) {
+  tibble(
+    term = "cor",
+    # estimate = ? # TODO: Complete this code
+  )
+}
+
+## Use the bootstrap to approximate a CI
+df_composite %>%
+  bootstraps(times = 1000) %>%
+  mutate(estimates = map(splits, corr_high_GPA)) %>%
+  int_pctl(estimates)
 ```
 
 **Observations**:
