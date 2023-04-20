@@ -170,7 +170,9 @@ Finally, let's use the bootstrap to perform the same test using *different* assu
 
 Use the bootstrap to approximate a confidence interval for `cor[high_GPA, univ_GPA]`. Compare your results---both the estimate and confidence interval---to your results from q4.
 
-*Hint*. You'll find that the documentation for `int_pctl` has some **really** useful examples for this task!
+*Hint 1*. The `cor(x, y)` function computes the correlation between two variables `x` and `y`. You may find this more helpful than the `cor.test()` function we used above.
+
+*Hint 2*. You'll find that the documentation for `int_pctl` has some **really** useful examples for this task!
 
 ```{r q5-task}
 ## TODO: Complete the following helper function to do a bootstrap analysis
