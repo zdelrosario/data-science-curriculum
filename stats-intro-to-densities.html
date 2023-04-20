@@ -1162,7 +1162,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Remember that random variables are <em>random</em>. That means if we draw samples multiple times, we’re bound to get different values. For example, run the following code chunk multiple times.</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="stats-intro-to-densities.html#cb227-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change; run this multiple times!</span></span>
 <span id="cb227-2"><a href="stats-intro-to-densities.html#cb227-2" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## [1]  1.2064054 -1.8409828  0.2841271 -0.7164442  1.1098719</code></pre>
+<pre><code>## [1] -0.4402686  1.4734189  0.5651969  1.0964822  1.5231040</code></pre>
 <p>What this means is we’ll get a slightly different picture every time we draw a sample. <strong>This is the challenge with randomness</strong>: Since we could have drawn a different set of samples, we need to know the degree to which we can trust conclusions drawn from data. Being <em>statistically literate</em> means knowing how much to trust your data.</p>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="stats-intro-to-densities.html#cb229-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
 <span id="cb229-2"><a href="stats-intro-to-densities.html#cb229-2" tabindex="-1"></a>df_samp_multi <span class="ot">&lt;-</span></span>
