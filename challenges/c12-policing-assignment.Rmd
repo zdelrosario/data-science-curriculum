@@ -172,7 +172,7 @@ fit_q7 %>% tidy()
   - (Your response here)
 - What could explain this difference in probabilities of arrest across race? List **multiple** possibilities.
   - (Your response here)
-- Look at the sent of variables in the dataset; do any of the columns relate to a potential explanation you listed?
+- Look at the set of variables in the dataset; do any of the columns relate to a potential explanation you listed?
   - (Your response here)
 
 One way we can explain differential arrest rates is to include some measure indicating the presence of an arrestable offense. We'll do this in a particular way in the next task.
