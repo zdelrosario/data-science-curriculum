@@ -16,7 +16,6 @@ reading: 0
 ```{r setup, include=FALSE}
 library(tidyverse)
 # knitr options
-library(tidyverse)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 

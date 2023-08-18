@@ -239,9 +239,6 @@ df_samp_unif %>%
 **Observations**:
 
 - (Describe the shape of the sampling distribution)
-- The sampling distribution is concentrated around the mean of `0.5`.
-- The sampling distribution stretches from `0` to `1`.
-- The sampling distribution looks roughly normal in shape
 
 ## Intermediate conclusion
 <!-- ------------------------- -->

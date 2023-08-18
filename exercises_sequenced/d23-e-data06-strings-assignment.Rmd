@@ -186,7 +186,7 @@ str_extract(
 
 ### __q3__ Match alphabet characters
 
-Notice that the `trans` column of `mpg` has many entries of the form `auto|manual\\([[:alpha:]]\\d\\)`; use `str_mutate()` to create a new column `tmp` with just the code inside the parentheses extracting `[[:alpha:]]\\d`.
+Notice that the `trans` column of `mpg` has many entries of the form `auto|manual\\([[:alpha:]]\\d\\)`; use `str_extract()` to create a new column `tmp` with just the code inside the parentheses extracting `[[:alpha:]]\\d`.
 
 ```{r q3-task}
 ## TASK: Mutate `trans` to extract
