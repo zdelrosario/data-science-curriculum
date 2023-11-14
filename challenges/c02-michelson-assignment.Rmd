@@ -2,7 +2,7 @@
 title: "Michelson Speed-of-light Measurements"
 author: "(Your name here)"
 date: 2020-
-output:
+output: 
   github_document:
     toc: true
 prerequisites:
@@ -31,10 +31,11 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
 
-## Due Date
+## Submission
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
+Make sure to commit both the challenge report (`report.md` file) and supporting files (`report_files/` folder) when you are done! Then submit a link to Canvas. **Your Challenge submission is not complete without all files uploaded to GitHub.**
+
 
 ```{r message=FALSE, warning=FALSE}
 # Libraries
@@ -211,7 +212,7 @@ Similarities
 Differences
 - (your responses here)
 
-### __q5__ You have access to a few other variables. Construct a few visualizations of `VelocityVacuum` against these other factors. Are there other patterns in the data that might help explain the difference between Michelson's estimate and `LIGHTSPEED_VACUUM`?
+### __q5__ You have access to a few other variables. Construct a **at least three** visualizations of `VelocityVacuum` against these other factors. Are there other patterns in the data that might help explain the difference between Michelson's estimate and `LIGHTSPEED_VACUUM`?
 
 **Observations**:
 
