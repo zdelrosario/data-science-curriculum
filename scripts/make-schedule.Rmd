@@ -121,8 +121,8 @@ df_schedule %>%
 
 ```{r metadata}
 # Bounds
-date_start <- ymd("2023-01-19") # First day of class
-date_end <- ymd("2023-05-01")   # Last day of class
+date_start <- ymd("2025-01-21") # First day of class
+date_end <- ymd("2025-04-30")   # Last day of class
 
 # Class days
 # Sunday==1, Monday==2, Tuesday==3, Wednesday==4, Thursday==5, Friday==6, Saturday==7
@@ -131,18 +131,24 @@ wday_class <- c(2, 5)
 # Holidays
 df_holidays <- tribble(
   ~date, ~comment,
-  ymd("2023-02-17"), "Winter break",
-  ymd("2023-02-20"), "President's day",
-  ymd("2023-03-13"), "Spring break",
-  ymd("2023-03-14"), "Spring break",
-  ymd("2023-03-15"), "Spring break",
-  ymd("2023-03-16"), "Spring break",
+  # ymd("2023-02-17"), "Winter break",
+  ymd("2023-02-17"), "President's day",
   ymd("2023-03-17"), "Spring break",
-  ymd("2023-04-17"), "Patriots' day",
+  ymd("2023-03-18"), "Spring break",
+  ymd("2023-03-19"), "Spring break",
+  ymd("2023-03-20"), "Spring break",
+  ymd("2023-03-21"), "Spring break",
+  ymd("2023-04-21"), "Patriots' day",
 )
 
 # Extra days added by the registrar
 # df_extras # NOT IMPLEMENTED YET
+df_extras <- tribble(
+  ~date, ~comment,
+  ymd("2023-02-19"), "Olin Monday",
+  ymd("2023-04-22"), "Olin Monday",
+)
+
 ```
 
 
@@ -183,7 +189,9 @@ df_challenges <-
   # Collapse exercises
   distinct(day, date, challenge) %>% 
   # Take valid class days only
-  filter(wday(date) %in% wday_class) %>% 
+  filter(
+    (wday(date) %in% wday_class) | (date %in% df_extras$date)
+  ) %>% 
   # Compute class days
   rowid_to_column(var = "day_class") %>% 
   # Lag to ensure exercise completion
