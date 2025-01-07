@@ -13,7 +13,7 @@ prerequisites:
 
 *Purpose*: All real data have variability: repeated measurements of "the same" quantity tend to result in different values. To help you recognize different kinds of variability and choose a reasonable analysis procedure based on the kind of variability, you will learn about different *sources* of variability in this exercise.
 
-*Reading*: [Conceptual Tools for Handling Uncertainty](https://drive.google.com/file/d/1FCvHiag25zqN6WdKoisaMUh35pSQU-0M/view?usp=sharing) (a draft chapter from a textbook I'm writing)
+*Reading*: [Conceptual Tools for Handling Uncertainty](https://drive.google.com/file/d/1nuGuPGG0zLgB72wjwfAoMiKAWQ4g7hlr/view?usp=sharing)
 
 ```{r library}
 ## Note: No need to edit this chunk!
@@ -33,39 +33,39 @@ As descrinbed in the reading, the *cause-source quadrants* organize variability 
 - *Cause* is an idea from statistical quality control (manufacturing); a *chance cause* is modeled as random, while an *assignable cause* is thought to be traceable and preventable.
 - *Source* is an idea from statistics education theory; this concept is explained further below.
 
-## Real vs Induced Source
+## Real vs Erroneous Source
 
-The idea of *source* can only be understood in the distinction between a *scopus* and a *measurement*: The *scopus* is the quantity that we are seeking to study, while the *measurement* is a possibly-corrupted version of our scopus. The key insight is that **variability can occur both in the scopus value, and in the measurement**.
+The idea of *source* can only be understood in the distinction between a *quantity of interest* (QOI) and a *measurement*: The *QOI* is the quantity that we are seeking to study, while the *measurement* is a possibly-corrupted version of our QOI. The key insight is that **variability can occur both in the QOI, and in the measurement**.
 
 ![Variability quadrants](./images/noise-v-deviation.png)
 
-As a simple example: based on our current understanding of physics, the speed of light `c` is a [constant value](https://en.wikipedia.org/wiki/Speed_of_light). Therefore, any variability we see in measurements of `c` are understood to be *induced variability*; real variability in `c` is not considered to be possible.
+As a simple example: based on our current understanding of physics, the speed of light `c` is a [constant value](https://en.wikipedia.org/wiki/Speed_of_light). Therefore, any variability we see in measurements of `c` are understood to be *erroneous variability*; real variability in `c` is not considered to be possible.
 
 Conversely, our current understanding of physics is that quantum phenomena are [fundamentally unpredictable](https://en.wikipedia.org/wiki/Quantum_mechanics), and can only be described in a statistical sense. This means that quantum phenomena exhibit real variability.
 
-Other physical quantities exhibit both real and induced variability. Since the concept of *source* relies on a choice of scopus, the only way we can make progress with this concept is to consider a specific scenario in detail.
+Other physical quantities exhibit both real and erroneous variability. Since the concept of a *QOI* relies on a choice, the only way we can make progress with this concept is to consider a specific scenario in detail.
 
 ## Manufacturing structural steel components
 
 *The Context*: A manufacturer is producing cast steel parts for a landing gear. The part in question takes a heavy load, and if it fails it will disable the aircraft on the ground. These parts will be manufactured in bulk; approximately 500 will be made and installed in commercial aircraft that will operate for decades.
 
-*The Scopus*: The strength of each steel component---as-manufactured---will ultimately determine whether each aircraft is safe. As we learned in `c08-structures`, a structure is safe if its applied stress is less than its strength. Therefore, a smaller material strength is a more conservative value for design purposes.
+*The QOI*: The strength of each steel component---as-manufactured---will ultimately determine whether each aircraft is safe. As we learned in `c08-structures`, a structure is safe if its applied stress is less than its strength. Therefore, a smaller material strength is a more conservative value for design purposes.
 
 ## Scenarios
 
-### __q1__ Imagine the manufacturer selects one part and performs multiple non-destructive tensile tests on that single part, under similar conditions. The measured elasticity from each test is slightly different. Is this variability real or induced?
+### __q1__ Imagine the manufacturer selects one part and performs multiple non-destructive tensile tests on that single part, under similar conditions. The measured elasticity from each test is slightly different. Is this variability real or erroneous?
 
-- real or induced?
+- real or erroneous?
 - (Why?)
 
-### __q2__ Imagine the manufacturer selects multiple parts and---for each part---performs multiple non-destructive tensile tests, all under similar conditions. The measured elasticity values for each part are averaged to provide a more reliable estimate for each part. Upon comparing the parts, each averaged value is fairly different. Is this variability real or induced?
+### __q2__ Imagine the manufacturer selects multiple parts and---for each part---performs multiple non-destructive tensile tests, all under similar conditions. The measured elasticity values for each part are averaged to provide a more reliable estimate for each part. Upon comparing the parts, each averaged value is fairly different. Is this variability real or erroneous?
 
-- real or induced?
+- real or erroneous?
 - (Why?)
 
-### __q3__ Now the manufacturer selects multiple parts and performs a destructive tensile test to characterize the strength of each part, with tests carried out under similar conditions. The measured strength values exhibit a fair amount of variability. Is this variability real or induced?
+### __q3__ Now the manufacturer selects multiple parts and performs a destructive tensile test to characterize the strength of each part, with tests carried out under similar conditions. The measured strength values exhibit a fair amount of variability. Is this variability real or erroneous?
 
-- real or induced?
+- real or erroneous?
 - (Why?)
 
 ## Analyzing Data
