@@ -1,0 +1,102 @@
+---
+title: "The Islands, Part 2: Study"
+author: "(Your name here)"
+date: 202X-XX-XX
+output:
+  github_document:
+    toc: true
+prerequisites:
+  - c10-islands-pt1
+---
+
+*Purpose*: This is part 2 of 2. In part 1 you *planed* your statistical project, particularly your data collection. In this part you will give updates on your plan, and report your findings.
+
+This challenge is deliberately shorter so you have time to collect and analyze your data.
+
+*Important note*: While we expect that you did your data collection with your team, you need to complete your own individual report for c10.
+
+<!-- include-rubric -->
+# Grading Rubric
+<!-- -------------------------------------------------- -->
+
+Unlike exercises, **challenges will be graded**. The following rubrics define how you will be graded, both on an individual and team basis.
+
+## Individual
+<!-- ------------------------- -->
+
+| Category | Needs Improvement | Satisfactory |
+|----------|----------------|--------------|
+| Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
+| Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
+| Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
+| Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
+| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
+| Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
+
+## Submission
+<!-- ------------------------- -->
+
+Make sure to commit both the challenge report (`report.md` file) and supporting files (`report_files/` folder) when you are done! Then submit a link to Canvas. **Your Challenge submission is not complete without all files uploaded to GitHub.**
+
+
+# Setup
+<!-- ----------------------------------------------------------------------- -->
+
+```{r setup}
+library(tidyverse)
+library(rsample)
+
+# TODO: Include any other packages you need
+```
+
+### __q1__ Planning a study (TEAMWORK)
+
+While you provided this plan in c08 (Part 1), please include your plan here. In particular, describe how you updated your plan in response to feedback.
+
+#### Population
+
+- (What population are you going to study?)
+  - All of the Islanders? Only the residents of Helvig? Participants meeting certain criteria (in which case, you need to list *covariates*)?
+
+#### Quantity of interest
+
+- (Write your quantity of interest here)
+
+#### Covariates
+
+- (Write any relevant covariates here)
+- (There's probably more than one!)
+
+#### Observation or experiment?
+
+The Islands allows you to ask islanders to complete tasks. If you just take measurements on your participants, then it's an *observational study*. But if you also introduce something that's meant to change the outcome of a measurement (e.g., drinking coffee before taking a test), that's called an *experimental study*. You need to decide whether your study is observational or experimental.
+
+- (Observation or experiment?)
+
+#### Question / Hypothesis
+
+- (Write your question / hypothesis here)
+  - This could be an observational question, like "How are X and Y related in the population?"
+  - This could be an experimental question, like "What effect does X have on Y in the population?"
+
+#### Sampling plan
+
+- (What steps will you take to collect the data?)
+  - Be specific. For instance, if you're going to collect a random sample, how will you enumerate all of the things to be sampled?
+  - Write a protocol. Document step-by-step instructions that your team will follow. That way, you can feasibly split up data collection among the whole team, while making sure each team member doesn't make ad hoc decisions that introduce bias into your results.
+- (How will you ensure the data is representative of your chosen population?)
+- (For experiments only: How will you ensure any effects you observe are due to the treatment, and not due to other factors?)
+- (How will you choose your sample size?)
+  - This should be a mix of how confident you want to be in your results, and what is actually *feasible* for your research team.
+
+### __q2__ EDA
+
+Conduct an EDA on your data. Add as many code chunks as you need. Ensure your EDA gives enough context of the data for us to understand what comes next in this report.
+
+### __q3__ Key Analyses
+
+Present the key analyses that support your questions / hypotheses. This could include summary statistics (e.g., a proportion of Islanders), grouped summary statistics (e.g., a proportion for group A, and for group B), or visualizations (e.g., a histogram). This section should be short, and every analysis should directly relate to q4.
+
+### __q4__ Answers
+
+Connect your Key Analyses to your questions / hypotheses. What did you conclude from your study?
