@@ -13,8 +13,7 @@ reading: 0
 
 *Reading*: (None; there's a bit of reading here.)
 
-"At the heart of quantitative reasoning is a single question: *Compared to
-what?*" Edward Tufte on small multiples.
+"At the heart of quantitative reasoning is a single question: *Compared to what?*" Edward Tufte on visual comparison.
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -26,9 +25,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Small Multiples
 <!-- -------------------------------------------------- -->
 
-Facets in ggplot allow us to apply the ideas of [small
-multiples](https://en.wikipedia.org/wiki/Small_multiple). As an example,
-consider the following graph:
+Facets in ggplot allow us to apply the ideas of [small multiples](https://en.wikipedia.org/wiki/Small_multiple). As an example, consider the following graph:
 
 ```{r ex-economics-multiples}
 economics %>%

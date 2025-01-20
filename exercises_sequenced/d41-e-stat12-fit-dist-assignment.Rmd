@@ -44,14 +44,7 @@ diamonds %>%
 
 ## Distribution Parameters and Fitting
 
-The function `rnorm()` requires values for `mean` and `sd`; while `rnorm()` has
-defaults for these arguments, if we are trying to model a random event in the
-real world, we should set `mean, sd` based on data. The process of estimating
-parameters such as `mean, sd` for a distribution is called *fitting*. Fitting a
-distribution is often accomplished through [*maximum likelihood
-estimation*](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) (MLE);
-rather than discuss the gory details of MLE, we will simply use MLE as a
-technology to do useful work.
+The function `rnorm()` requires values for `mean` and `sd`; while `rnorm()` has defaults for these arguments, if we are trying to model a random event in the real world, we should set `mean, sd` based on data. The process of estimating parameters such as `mean, sd` for a distribution is called *fitting*. Fitting a distribution is often accomplished through [*maximum likelihood estimation*](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) (MLE); rather than discuss the gory details of MLE, we will simply use MLE as a technology to do useful work.
 
 First, let's look at an example of MLE carried out with the function `MASS::fitdistr()`.
 
@@ -75,7 +68,9 @@ df_est_norm
 - `fitdistr()` takes a *vector*; I use the function `pull(x)` to pull the vector `x` out of the dataframe.
 - `fitdistr()` returns a messy output; the function `broom::tidy()` automagically cleans up the output and provides a tibble.
 
-### __q1__ Compute the sample mean and standard deviation of `x` in `df_data_norm`. Compare these values to those you computed with `fitdistr()`.
+### __q1__ Compute the mean and SD
+
+Compute the sample mean and standard deviation of `x` in `df_data_norm`. Compare these values to those you computed with `fitdistr()`.
 
 ```{r q1-task}
 ## TASK: Compute the sample mean and sd of `df_data_norm %>% pull(x)`
@@ -91,7 +86,9 @@ sd_est
 
 Estimating parameters for a normal distribution is easy because it is parameterized in terms of the mean and standard deviation. The advantage of using `fitdistr()` is that it will allow us to work with a much wider selection of distribution models.
 
-### __q2__ Use the function `fitdistr()` to fit a `"weibull"` distribution to the realizations `y` in `df_data_weibull`.
+### __q2__ Fit a Weibull distribution
+
+Use the function `fitdistr()` to fit a `"weibull"` distribution to the realizations `y` in `df_data_weibull`.
 
 *Note*: The [weibull distribution](https://en.wikipedia.org/wiki/Weibull_distribution) is used to model many physical phenomena, including the strength of composite materials.
 
@@ -107,7 +104,9 @@ df_q2
 
 Once we've fit a distribution, we can use the estimated parameters to approximate quantities like probabilities. If we were using the distribution for `y` to model a material strength, we would estimate probabilities to compute the rate of failure for mechanical components---we could then use this information to make design decisions.
 
-### __q3__ Extract the estimates `shape_est` and `scale_est` from `df_q2`, and use them to estimate the probability that `Y <= 2`.
+### __q3__ Extract the parameter estimates
+
+Extract the estimates `shape_est` and `scale_est` from `df_q2`, and use them to estimate the probability that `Y <= 2`.
 
 *Hint*: `pr_true` contains the true probability; modify that code to compute the estimated probability.
 
@@ -122,13 +121,13 @@ pr_true
 pr_est
 ```
 
-You'll probably find that `pr_true != pr_est`! As we saw in `e-stat06-clt` we should really compute a *confidence interval* to assess our degree of confidence in this probability estimate. However, it's not obvious how we can use the ideas of the Central Limit Theorem to put a confidence interval around `pr_est. In the next exercise we'll learn a very general technique for estimating confidence intervals.
+You'll probably find that `pr_true != pr_est`! As we saw in `e-stat06-clt` we should really compute a *confidence interval* to assess our degree of confidence in this probability estimate. However, it's not obvious how we can use the ideas of the Central Limit Theorem to put a confidence interval around `pr_est. [We can use](https://rsample.tidymodels.org/articles/Working_with_rsets.html#keeping-tidy) the `broom` package with the `rsample` package to use bootstrap resampling to estimate confidence intervals in this setting.
 
 <!-- include-exit-ticket -->
 # Exit Ticket
 <!-- -------------------------------------------------- -->
 
-Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-stat08-fit-dist-assignment.Rmd).
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-stat12-fit-dist-assignment.Rmd).
 
 ## Notes
 <!-- -------------------------------------------------- -->

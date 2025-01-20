@@ -14,8 +14,6 @@ prerequisites:
 
 *Purpose*: You've probably heard that a "control" is important for doing science. If you're lucky, you may have also heard about randomization. These two ideas are the *backbone* of sound data collection. In this exercise, you'll learn the basics about how to plan data collection.
 
-**This is probably __the most important__ lesson in this entire class,** so I hope you do this exercise very carefully!
-
 *Reading*: (None, this is the reading)
 
 ```{r setup}
@@ -85,7 +83,9 @@ tibble(
 
 Now let's simulate the results of the experiment!
 
-### __q1__ Simulate the results of this experimental design, and answer the questions under *Observations* below.
+### __q1__ Simulate
+
+Simulate the results of this experimental design, and answer the questions under *Observations* below.
 
 ```{r q1-task}
 ## TODO: Do not edit; run the following code, answer the questions below
@@ -150,7 +150,9 @@ While fertilizer leads to an increase in crop yield, additional water also leads
 
 Terminology: When there are other factors present in an experiment affecting our outcome of interest, we call those factors *confounds*. When we don't know that a confound exists, it is sometimes called a *lurking variable* (Joiner 1979).
 
-### __q2__ Try defining a different order of the plots to overcome the confound (river).
+### __q2__ "Outsmart" the confound
+
+Try defining a different order of the plots to overcome the confound (river).
 
 ```{r q2-task}
 ## TODO: Define your own experimental design
@@ -195,7 +197,9 @@ experimental_design %>%
 
 If we randomize the order of treatment and control plots, then we *transform* the effects of the river (and any other confounds) into a random effect.
 
-### __q3__ Randomize the run order to produce your design. Answer the questions under *Observations* below.
+### __q3__ Randomize
+
+Randomize the run order to produce your design. Answer the questions under *Observations* below.
 
 ```{r q3-task}
 ## TODO: Complete the code below
@@ -252,7 +256,7 @@ bind_rows(
 
 In the naive case, we've placed all our treatments at locations where the river has a low effect, and our controls at locations where the river has a high effect. This results in a consistent effect that reverses the perceived difference between treatment and control.
 
-However, when we randomize, a mix of high and low river effects enter into both the treatment and control conditions. So long as there is an average difference between the treatment and control, we can detect it with sufficiently many samples *from a well-designed study*.
+However, when we randomize, a mix of high and low river effects enter into both the treatment and control conditions. So long as there is an average difference between the treatment and control, we can detect it with sufficiently many observations *from a well-designed study*.
 
 It's not randomization alone that's saving us from confounds: The river will boost production for all plots, so we'll always see a yield higher than what we'd get with the treatment or control alone. Studying the difference between treatment and control cancels out any constant difference, while randomization scrambles the effect of the river. This is why we combine randomization with a treatment-to-control comparison:
 
@@ -275,7 +279,7 @@ Here are the key takeaways from this lesson:
 # Exit Ticket
 <!-- -------------------------------------------------- -->
 
-Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-stat12-randomization-assignment.Rmd).
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-stat10-randomization-assignment.Rmd).
 
 ## References
 

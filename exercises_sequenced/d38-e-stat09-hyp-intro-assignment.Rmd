@@ -1,0 +1,190 @@
+---
+title: "Stats: Introduction to Hypothesis Testing"
+author: Zachary del Rosario
+date: 2020-07-23
+output: github_document
+time: 30
+reading: 10
+---
+
+# Stats: Introduction to Hypothesis Testing
+
+*Purpose*: Part of the payoff of statistics is to support making *decisions under uncertainty*. To frame these decisions we will use the framework of *hypothesis testing*. In this exercise you'll learn how to set up competing hypotheses and potential actions, based on different scenarios.
+
+*Reading*: [Statistical Inference in One Sentence](https://medium.com/hackernoon/statistical-inference-in-one-sentence-33a4683a6424) (9 min)
+
+```{r setup}
+library(tidyverse)
+library(rsample)
+```
+
+## A Full Example
+<!-- -------------------------------------------------- -->
+
+You are considering buying a set of diamonds in bulk. The prospective vendor is willing to sell you 100 diamonds at $1700 per diamond. You will *not* get to see the specific diamonds before buying, though. To convince you, the vendor gives you a detailed list of a prior package of bulk diamonds they sold recently---they tell you this is *representative* of the packages they sell.
+
+This is a weird contract, but it's intriguing. Let's use statistics to help determine whether or not to take the deal.
+
+## Pick your population
+
+For the sake of this exercise, let's assume that `df_population` is the entire set of diamonds the vendor has in stock.
+
+```{r define-population}
+## NOTE: No need to change this!
+df_population <-
+  diamonds %>%
+  filter(carat < 1)
+```
+
+**Important Note**: No peeking! While I've defined `df_population` here, you *should not* look at its values until the end of the exercise.
+
+While we do have access to the entirety of the population, in most real problems we'll only have a sample. The function `slice_sample()` allows us to choose a *random* sample from a dataframe.
+
+```{r define-sample}
+## NOTE: No need to change this!
+set.seed(101)
+
+df_sample <-
+  df_population %>%
+  slice_sample(n = 100)
+```
+
+## Set up your hypotheses and actions
+
+Based on the contract above, our decision threshold should be related to the sale price the vendor quotes.
+
+```{r budget}
+## NOTE: No need to change this; this will be our decision threshold
+price_threshold <- 1700
+```
+
+
+In order to do hypothesis testing, we need to define *null and alternative hypotheses*. These two hypotheses are competing theories for the state of the world
+
+Furthermore, we are aiming to use hypothesis testing *to support making a decision*. To that end, we'll also define a default action (if we fail to reject the null), and an alternative action (if we find our evidence sufficiently convincing so as to change our minds).
+
+For this buying scenario, we feel that the contract is pretty weird: We'll set up our null hypothesis to assume the vendor is trying to rip us off. In order to make this hypothesis testable, we'll need to make it *quantitative*.
+
+One way make our hypothesis quantitative is to think about the mean price of diamonds in the population: If the diamonds are---on average---less expensive than the `price_threshold`, then on average we'll tend to get a set of diamonds that are worth less than what we paid. This will be our null hypothesis. Consequently, our default action will be to buy no diamonds from this vendor. In standard statistics notation, this is how we denote our null and alternative hypotheses:
+
+**H_0** (Null hypothesis) The mean price of all diamonds in the population is less than the threshold `price_threshold`.
+- Default action: Buy no diamonds
+
+**H_A** (Alternative hypothesis) The mean price of all diamonds in the population is equal to or greater than the threshold `price_threshold`.
+- Alternative action: Buy diamonds in bulk
+
+## Compute
+
+### __q1__ Assess the null hypothesis
+
+Based on your results, can you reject the null hypothesis **H_0** for the population with a 95-percent confidence interval?
+
+```{r q1-task}
+## TASK: Compute a confidence interval on the mean, use to answer the question
+## above
+df_sample
+price_threshold
+```
+
+**Observations**:
+
+- Can you reject the null hypothesis **H_0**?
+- How does this affect your decision?
+
+## Different Scenario, Different Hypotheses
+<!-- -------------------------------------------------- -->
+
+## Proportion Ideal
+
+Let's imagine a different scenario: We have a lead on a buyer of engagement rings who is *obsessed* with well-cut diamonds. If we could buy at least `50` diamonds with cut `Premium` or `Ideal` (what we'll call "high-cut"), we could easily recoup the cost of the bulk purchase.
+
+If the proportion of high-cut diamonds in the vendor's population is greater than 50 percent, we stand a good chance of making a lot of money.
+
+Unfortunately, I haven't taught you any techniques for estimating a [CI for a proportion](https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval). *However* in `e-stat05-inference` we learned a general approximation technique: *the bootstrap*. Let's put that to work to estimate a confidence interval for the proportion of high-cut diamonds in the population.
+
+## Hypotheses and Actions
+
+Let's redefine our hypotheses to match the new scenario.
+
+**H_0** (Null hypothesis) The proportion of high-cut diamonds in the population is less than 50 percent.
+- Default action: Buy no diamonds
+
+**H_A** (Alternative hypothesis) The proportion of high-cut diamonds in the population is equal to or greater than 50 percent.
+- Alternative action: Buy diamonds in bulk
+
+Furthermore, let's change our decision threshold from 95-percent confidence to a higher 99-percent confidence.
+
+### __q2__ Construct a bootstrap CI for the proportion
+
+Use the techniques you learned in `e-stat09-bootstrap` to estimate a 99-percent confidence interval for the population proportion of high-cut diamonds. Can you reject the null hypothesis? What decision do you take?
+
+*Hint 1*: Remember that you can use `mean(X == "value")` to compute the proportion of cases in a sample with variable `X` equal to `"value"`. You'll need to figure out how to combine the cases of `Premium` and `Ideal`.
+
+*Hint 2* Remember that you need to split `alpha` in half when computing quantiles of the bootstrap-estimated sampling distribution.
+
+```{r q2-task}
+## TASK: Estimate a confidence interval for the proportion of high-cut diamonds
+## in the population. Look to `e-stat09-bootstrap` for starter code.
+```
+
+**Observations**:
+
+- Can you reject the null hypothesis **H_0**?
+- How does this affect your decision?
+
+## Closing Thoughts
+<!-- -------------------------------------------------- -->
+
+## The big reveal
+
+To close this exercise, let's reveal whether our chosen hypotheses matched the underlying population.
+
+### __q3__ Mean price
+
+Compute the population mean price for the diamonds. Did you reject the null hypothesis?
+
+```{r q3-task}
+## TASK: Compute the population mean of diamond price
+
+price_threshold
+```
+
+**Observations**:
+
+- Did you reject the null hypothesis in q1?
+- What is the actual truth?
+- What decision did you make?
+
+When I did q1, I **did not reject the null**. Note the weird wording there: **did not reject the null**, rather than "accepted the null". In this hypothesis testing framework we never actually *accept* the null hypothesis, we can only *fail to reject the null*. What this means is that we still maintain the possibility that the null is false, and all we can say for sure is that our data are not sufficient to reject the null hypothesis.
+
+In other words, when we fail to reject the null hypothesis "we've learned nothing."
+
+Learning nothing isn't a bad thing though! It's an important part of statistics to recognize when we've learned nothing.
+
+### __q4__ Proportion high-cut
+
+Compute the proportion of high-cut diamonds in the population. Did you reject the null hypothesis?
+
+```{r q4-task}
+## TASK: Compute the population proportion of high-cut diamonds
+```
+
+**Observations**:
+
+- Did you reject the null hypothesis in q2?
+- What is the actual truth?
+- What decision did you make?
+
+When I did q2 I **did reject the null hypothesis**. It happens that this was the correct choice; the true proportion of high-cut diamonds is greater than 50-percent.
+
+## End notes
+
+Note that the underlying population is *identical* in the two settings above, but the "correct" decision is *different*. This helps illustrate that **math alone cannot help you frame a reasonable hypothesis**. Ultimately, you must understand the situation you are in, and the decisions you are considering.
+
+If you've taken a statistics course, you might be wondering why I'm talking about hypothesis testing *without* introducing p-values. I feel that confidence invervals more obviously communicate the uncertainty in results, in line with Andrew Gelman's suggestion that we [embrace uncertainty](https://stat.columbia.edu/~gelman/research/published/asa_pvalues.pdf). The penalty we pay working with (two-sided) confidence intervals is a reduction in [statistical power](https://en.wikipedia.org/wiki/Power_of_a_test).
+
+<!-- include-exit-ticket -->
+# Exit Ticket
+<!-- -------------------------------------------------- -->
+
+Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-stat09-hyp-intro-assignment.Rmd).
