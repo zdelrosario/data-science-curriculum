@@ -117,11 +117,7 @@ assertthat::assert_that(all_equal(df_q2, beatles_joined))
 print("Nice!")
 ```
 
-There's a **very important lesson** here: In general, don't trust `bind_cols`.
-It's easy in the example above to tell there's a problem because the data are
-*small*; when working with larger datasets, R will happily give you the wrong
-answer if you give it the wrong instructions. Whenever possible, use some form
-of join to combine datasets.
+There's a **very important lesson** here: In general, don't trust `bind_cols`. It's easy in the example above to tell there's a problem because the data are *small*; when working with larger datasets, R will happily give you the wrong answer if you give it the wrong instructions. Whenever possible, use some form of join to combine datasets.
 
 ## Utility of Filtering Joins
 <!-- ------------------------- -->
