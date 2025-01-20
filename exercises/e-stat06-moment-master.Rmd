@@ -50,7 +50,9 @@ $$\mathbb{E}[aX + c] = a \mathbb{E}[X] + c.$$
 
 We can use this fact to compute the mean of simply transformed random variables.
 
-### __q1__ Compute the mean of $2 Z + 3$, where $Z$ is a standard normal.
+### __q1__ 
+
+Compute the mean of $2 Z + 3$, where $Z$ is a standard normal.
 
 ```{r q1-task}
 ## TASK: Compute the mean of 2 Z + 3
@@ -74,7 +76,9 @@ Since the expectation is linear, it also satisfies
 
 $$\mathbb{E}[aX + bY] = a \mathbb{E}[X] + b \mathbb{E}[Y].$$
 
-### __q2__ Compute the mean of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are separate standard normals.
+### __q2__ 
+
+Compute the mean of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are separate standard normals.
 
 ```{r q2-task}
 ## TASK: Compute the mean of 2 Z1 + 3 Z2
@@ -101,7 +105,9 @@ Remember that variance is the square of standard deviation. Variance satisfies t
 
 $$\mathbb{V}[aX + c] = a^2 \mathbb{V}[X].$$
 
-### __q3__ Compute the variance of $2 Z + 3$, where $Z$ is a standard normal.
+### __q3__ 
+
+Compute the variance of $2 Z + 3$, where $Z$ is a standard normal.
 
 ```{r q3-task}
 ## TASK: Compute the mean of 2 Z + 3
@@ -126,7 +132,9 @@ The variance of a *sum* of random variables is a bit more complicated
 $$\mathbb{V}[aX + bY] = a^2 \mathbb{V}[X] + b^2 \mathbb{V}[Y] + 2ab \text{Cov}[X, Y],$$
 where $\text{Cov}[X, Y]$ denotes the [covariance](https://en.wikipedia.org/wiki/Covariance) of $X, Y$. Covariance is closely related to correlation, which we discussed in `e-stat03-descriptive`. If two random variables $X, Y$ are *uncorrelated*, then $\text{Cov}[X, Y] = 0$.
 
-### __q4__ Compute the variance of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are *uncorrelated* standard normals.
+### __q4__ 
+
+Compute the variance of $2 Z_1 + 3 Z_2$, where $Z_1, Z_2$ are *uncorrelated* standard normals.
 
 ```{r q4-task}
 ## TASK: Compute the variance of 2 Z1 + 3 Z2
@@ -151,7 +159,9 @@ print("Well done!")
 
 The following two exercises illustrate two important transformations.
 
-### __q5__ Compute the mean and variance of $(X - 1) / 2$, where
+### __q5__ 
+
+Compute the mean and variance of $(X - 1) / 2$, where
 
 $$\mathbb{E}[X] = 1, \mathbb{V}[X] = 4$$.
 
@@ -178,7 +188,9 @@ print("Well done!")
 
 This process of centering (setting the mean to zero) and scaling a random variable is called *standardization*. For instance, if $X$ is a normal random variable, then $(X - \mu) / \sigma = Z$ is a standard normal.
 
-### __q6__ Compute the mean and variance of $1 + 2 Z$, where $Z$ is a standard normal.
+### __q6__ 
+
+Compute the mean and variance of $1 + 2 Z$, where $Z$ is a standard normal.
 
 ```{r q6-task}
 ## TASK: Compute the mean and variance
@@ -218,7 +230,9 @@ is the *covariance* between $X$ and $Y$. If $X, Y$ are independent, then the cov
 
 Using this expression, we can prove that the standard error of the sample mean $\overline{X}$ is $\sigma / \sqrt{n}$.
 
-### __q7__ (Bonus) Use the identity above to prove that
+### __q7__ (Bonus) Prove an equality
+
+Use the identity above to prove that,
 
 $$\mathbb{V}[\overline{X}] = \sigma^2 / n,$$
 
@@ -228,7 +242,6 @@ The quantity
 
 $$\sqrt{\mathbb{V}[\overline{X}]}$$
 
-is called the *standard error of the mean*; more generally the *standard error*
-for a statistic is the standard deviation of its sampling distribution. We'll return to this concept in `e-stat06`.
+is called the *standard error of the mean*; more generally the *standard error* for a statistic is the standard deviation of its sampling distribution. We saw this idea in `e-stat04-population`, and will return to it in `e-stat07-clt`.
 
 <!-- include-exit-ticket -->

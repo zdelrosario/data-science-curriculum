@@ -52,7 +52,9 @@ $$P = \mathbb{P}\left[l < X < u\right] = \mathbb{P}\left[\frac{l - \mu}{\sigma} 
 - Note that the CI equation above has a dependence on $n$; as we gather more data the interval will tend to narrow.
 - Note that the PI equation above have *no dependence* on $n$; when we turn the "magic" off and have to estimate `mean, sd` from data a dependence on $n$ shows up. However, even if we had infinite data (recovering the "magic" equation above), the interval would still not collapse to zero width.
 
-### __q1__ Check your understanding; I provide code below to compute a confidence interval for the sample mean when sampling from `rnorm(mean = 1, sd = 2)` with `n = 400`. Modify the code to compute a prediction interval for the same underlying normal distribution.
+### __q1__ Check your understanding
+
+I provide code below to compute a confidence interval for the sample mean when sampling from `rnorm(mean = 1, sd = 2)` with `n = 400`. Modify the code to compute a prediction interval for the same underlying normal distribution.
 
 ```{r q1-task}
 ## NOTE: No need to edit this setup
@@ -133,7 +135,9 @@ bind_rows(
 ```
 Take a quick look at the plot above, and make a prediction (to yourself) whether the normally-approximated CI and PI will behave well in this case. Then continue on to q2.
 
-### __q2__ Using the formulas above, estimate CI and PI using `diamonds_train`. Visualize the results using the chunk `q2-vis` below, and answer the questions under *observations*.
+### __q2__ Estimate CI and PI
+
+Using the formulas above, estimate CI and PI using `diamonds_train`. Visualize the results using the chunk `q2-vis` below, and answer the questions under *observations*.
 
 ```{r q2-task}
 # task-begin
@@ -200,7 +204,9 @@ df_q2 %>%
 - Both the CI and PI above assume a normal distribution and perfectly-known parameters `mean, sd`. The assumption of perfectly-known parameters is probably ok here (since we have *a lot* of data), but based on EDA we've done before, the assumption of normality is quite poor.
 <!-- solution-end -->
 
-### __q3__ Test whether your CI and PI are constructed correctly: Remember the definitions of what CI and PI are meant to accomplish, and check how closely your intervals agree with the validation data.
+### __q3__ Test your intervals
+
+Test whether your CI and PI are constructed correctly: Remember the definitions of what CI and PI are meant to accomplish, and check how closely your intervals agree with the validation data.
 
 ```{r q3-task}
 ## TODO: Devise a test to see if your CI and PI are correctly reflecting
