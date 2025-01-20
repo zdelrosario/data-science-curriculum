@@ -30,19 +30,19 @@ df_schedule <-
     "e-data00-basics",                  2,  0,
     "e-data01-isolate",                 8,  1,
     "e-data02-derive",                 10,  2,
-    "e-data03-pivot-basics",           13,  2,
+    "e-data03-pivot-basics",           14,  2,
     "e-data04-separate-unite",         17,  3,
     "e-data05-join",                   20,  4,
     "e-data06-strings",                23,  4,
     "e-data07-placeholders",           25,  5,
     "e-data08-window",                 27,  5,
     "e-data09-readxl",                 29,  5,
-    "e-data10-map",                    30,  6,
-    "e-data11-factors",                31,  6,
-    "e-data12-simple-pipeline",        34,  6,
-    "e-data13-cleaning",               40,  8,
-    "e-data14-webplotdigitizer",       42,  8,
-    "e-data15-tabula",                 44,  8,
+    "e-data10-map",                    31,  6,
+    "e-data11-factors",                32,  6,
+    "e-data12-simple-pipeline",        33,  6,
+    "e-data13-cleaning",               43,  9,
+    "e-data14-webplotdigitizer",       45, 10,
+    "e-data15-tabula",                 46, 10,
 
     "e-setup00-install",                0,  0,
     "e-setup01-packages",               1,  0,
@@ -60,26 +60,26 @@ df_schedule <-
     "e-rep05-collab",                  14,  2,
 
     "e-stat00-eda-basics",              7,  1, 
-    "e-stat01-densities",              12,  2,
+    "e-stat01-densities",              13,  2,
     "e-stat02-probability",            16,  3,
     "e-stat03-descriptive",            19,  3,
 
-    "e-stat04-population",             26,  5,
-    "e-stat05-moment",                 27,  5,
-    "e-stat06-clt",                    28,  5,
-    "e-stat07-error-bias",             29,  5,
-    "e-stat08-fit-dist",               31,  6,
-    "e-stat09-bootstrap",              33,  6,
-    "e-stat10-hyp-intro",              35,  7,
-    "e-stat11-ci-pi",                  36,  7,
-    "e-stat12-randomization",          46,  9,
+    "e-stat04-population",             28,  6,
+    "e-stat05-inference",              30,  6,
+    "e-stat06-moment",                 34,  7,
+    "e-stat07-clt",                    35,  7,
+    "e-stat08-error-bias",             37,  8,
+    "e-stat09-hypo-intro",             38,  8,
+    "e-stat10-randomization",          39,  8,
+    "e-stat11-ci-pi",                  40,  8,
+    "e-stat12-fit-dist",               41,  8,
 
-    "e-model00-source",                37,  7,
-    "e-model01-intro",                 39,  7,
-    "e-model02-train-validate",        41,  8,
-    "e-model03-interp-warnings",       43,  8,
-    "e-model04-logistic",              45,  9,
-    "e-model05-roc",                   47,  9,
+    "e-model00-source",                42,  8,
+    "e-model01-intro",                 47, 11,
+    "e-model02-train-validate",        48, 11,
+    "e-model03-interp-warnings",       50, 11,
+    "e-model04-logistic",              52, 12,
+    "e-model05-roc",                   53, 12,
 
     "e-vis00-basics",                   5,  1,
     "e-vis01-bar-charts",               9,  1,
@@ -88,27 +88,12 @@ df_schedule <-
     "e-vis04-scatterplot",             18,  3,
     "e-vis05-lines",                   21,  4,
     "e-vis06-themes",                  24,  4,
-    "e-vis07-perception",              32,  6,
-    "e-vis08-multiples",               34,  6,
-    "e-vis09-improve",                 38,  7,
-    "e-vis10-control-chart",           48,  9,
+    "e-vis07-perception",              26,  5,
+    "e-vis08-multiples",               36,  7,
+    "e-vis09-improve",                 44,  9,
+    "e-vis10-control-chart",           54,  12,
     # Placeholders needed for challenge scheduling
-    NA_character_,                     49,  9,
-    NA_character_,                     50,  10,
-    NA_character_,                     51,  10,
-    NA_character_,                     52,  10,
-    NA_character_,                     53,  10,
-    NA_character_,                     54,  10,
-    NA_character_,                     55,  11,
-    NA_character_,                     56,  11,
-    NA_character_,                     57,  11,
-    NA_character_,                     58,  11,
-    NA_character_,                     59,  11,
-    NA_character_,                     60,  12,
-    NA_character_,                     61,  12,
-    NA_character_,                     62,  12,
-    NA_character_,                     63,  12,
-    NA_character_,                     64,  12,
+    NA_character_,                     55,  12,
   )
 
 df_schedule %>% 
@@ -131,18 +116,17 @@ wday_class <- c(2, 5)
 # Holidays
 df_holidays <- tribble(
   ~date, ~comment,
-  # ymd("2023-02-17"), "Winter break",
-  ymd("2023-02-17"), "President's day",
-  ymd("2023-03-17"), "Spring break",
-  ymd("2023-03-18"), "Spring break",
-  ymd("2023-03-19"), "Spring break",
-  ymd("2023-03-20"), "Spring break",
-  ymd("2023-03-21"), "Spring break",
-  ymd("2023-04-21"), "Patriots' day",
+  # ymd("2024-02-17"), "Winter break",
+  ymd("2025-02-17"), "President's day",
+  ymd("2025-03-17"), "Spring break",
+  ymd("2025-03-18"), "Spring break",
+  ymd("2025-03-19"), "Spring break",
+  ymd("2025-03-20"), "Spring break",
+  ymd("2025-03-21"), "Spring break",
+  ymd("2025-04-21"), "Patriots' day",
 )
 
 # Extra days added by the registrar
-# df_extras # NOT IMPLEMENTED YET
 df_extras <- tribble(
   ~date, ~comment,
   ymd("2023-02-19"), "Olin Monday",
@@ -172,6 +156,9 @@ df_instructional <-
   ## Assign exercises
   left_join(df_schedule)
 
+# Show all the data
+df_instructional
+
 ## Write to file
 df_instructional %>% 
   filter(!is.na(name)) %>% 
@@ -193,7 +180,7 @@ df_challenges <-
     (wday(date) %in% wday_class) | (date %in% df_extras$date)
   ) %>% 
   # Compute class days
-  rowid_to_column(var = "day_class") %>% 
+  mutate(day_class = consecutive_id(day)) %>% 
   # Lag to ensure exercise completion
   mutate(challenge = lag(challenge)) %>% 
   # Latest possible due-date given constraints
@@ -209,4 +196,61 @@ df_challenges %>%
   write_csv(filename_challenges)
 
 df_challenges 
+```
+
+
+## Quality checks
+
+### Class Day
+
+```{r}
+# Count exercises on each date
+df_instructional %>% 
+  ggplot(aes(day)) +
+  geom_bar() +
+  geom_vline(
+    data = df_challenges,
+    mapping = aes(xintercept = day)
+  ) +
+  scale_x_continuous(breaks = seq(1, 70, by = 2))
+
+```
+
+### Calendar date
+
+```{r}
+# Count exercises on each date
+df_instructional %>% 
+  filter(!is.na(name)) %>% 
+  ggplot(aes(date)) +
+  # Special dates
+  geom_vline(
+    xintercept = date_start,
+    color = "blue", linewidth = 1.5
+  ) +
+  geom_vline(
+    xintercept = date_end,
+    color = "blue", linewidth = 1.5
+  ) +
+  geom_vline(
+    data = df_holidays,
+    mapping = aes(xintercept = date),
+    color = "salmon", linewidth = 1.5
+  ) +
+  # Challenge min deadline
+  geom_vline(
+    data = df_challenges,
+    mapping = aes(xintercept = date)
+  ) +
+  geom_label(
+    data = df_challenges,
+    mapping = aes(x = date, y = 4, label = challenge)
+  ) +
+  # Exercise count
+  geom_bar() +
+  
+  scale_x_date(
+    date_labels = "%b %d",
+    limits = c(date_start - day(1), date_end + day(1))
+  )
 ```
