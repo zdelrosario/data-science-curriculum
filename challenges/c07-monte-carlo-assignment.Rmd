@@ -37,6 +37,7 @@ Make sure to commit both the challenge report (`report.md` file) and supporting 
 
 ```{r setup}
 library(tidyverse)
+library(rsample)
 ```
 
 *Background*: In 2014, some crazy Quebecois physicists estimated $\pi$ with a pump-action shotgun[1,2]. Their technique was based on the *Monte Carlo method*, a general strategy for turning deterministic problems into random sampling.
@@ -53,7 +54,7 @@ In this challenge, we'll tackle a deterministic problem (computing $\pi$) with t
 ## Theory
 <!-- ------------------------- -->
 
-The idea behind estimating $\pi$ via Monte Carlo is to set up a probability estimation problem whose solution is related to $\pi$. Consider the following sets: a square with side length one $St$, and a quarter-circle $Sc$.
+The idea behind estimating $\pi$ via Monte Carlo is to set up a probability estimation problem whose solution is related to $\pi$. Consider the following sets: a square with side length $1$ ($S_t$), and a quarter-circle ($S_c$).
 
 ```{r vis-areas}
 ## NOTE: No need to edit; this visual helps explain the pi estimation scheme
@@ -85,20 +86,28 @@ tibble(x = seq(0, 1, length.out = 100)) %>%
   coord_fixed()
 ```
 
-The area of the set $Sc$ is $\pi/4$, while the area of $St$ is $1$. Thus the probability that a *uniform* random variable over the square lands inside $Sc$ is the ratio of the areas, that is
+The area of the set $S_c$ is $\pi/4$, while the area of $S_t$ is $1$. Thus the probability that a *uniform* random variable over the square lands inside $S_c$ is the ratio of the areas, that is
 
-$$\mathbb{P}_{X}[X \in Sc] = (\pi / 4) / 1 = \frac{\pi}{4}.$$
+$$\mathbb{P}_{X}[X \in S_c] = (\pi / 4) / 1 = \frac{\pi}{4}.$$
 
 This expression is our ticket to estimating $\pi$ with a source of randomness: If we estimate the probability above and multiply by $4$, we'll be estimating $\pi$.
+
+We can estimate probabilities by taking an average; in our case $\mathbb{P}_{X}[X \in S_c] = \mathbb{E}[I_{X \in S_c}]$, where $I_{X \in S_c}$ is the *indicator function*. The indicator function takes $I = 1$ when $X \in S_c$, and $I = 0$ otherwise.
+
+To ensure we are estimating $\pi$ (and not $\pi/4$), we'll need to re-arrange our equation a bit,
+
+$$\pi = \mathbb{E}[4 I_{X \in S_c}],$$
+
+where $\mathbb{E}[Y]$ is syntax for taking the average of $Y$.
 
 ## Implementation
 <!-- ------------------------- -->
 
 Remember in `e-stat02-probability` we learned how to estimate probabilities as the limit of frequencies. Use your knowledge from that exercise to generate Monte Carlo data.
 
-### __q1__ Pick a sample size $n$ and generate $n$ points *uniform randomly* in the square $x \in [0, 1]$ and $y \in [0, 1]$. Create a column `stat` whose mean will converge to $\pi$.
+### __q1__ Generate a uniform random sample on the unit square
 
-*Hint*: Remember that the mean of an *indicator function* on your target set will estimate the probability of points landing in that area (see `e-stat02-probability`). Based on the expression above, you'll need to *modify* that indicator to produce an estimate of $\pi$.
+Pick a sample size $n$ and generate $n$ points *uniform randomly* in the square $x \in [0, 1]$ and $y \in [0, 1]$.
 
 ```{r q1-task}
 ## TASK: Choose a sample size and generate samples
@@ -106,32 +115,187 @@ n <- NA_real_ # Choose a sample size
 df_q1 <- NA # Generate the data
 ```
 
-### __q2__ Using your data in `df_q1`, estimate $\pi$.
+Use the following to check that you've used the correct variable names. (NB. This does not check correctness.)
 
-```{r q2-task}
-## TASK: Estimate pi using your data from q1
-pi_est <- NA_real_
-pi_est
+```{r q1-check}
+## NOTE: Do not edit this code
+# Correct sample size
+assertthat::assert_that(
+  dim(df_q1) %>% 
+    .[[1]] == n,
+  msg = "The sample size should be `n`"
+)
+# Correct column names
+assertthat::assert_that(
+  setequal(names(df_q1), c("x", "y")),
+  msg = "df_q1 must include the columns `x` and `y`"
+)
+print("Good")
 ```
 
-# Quantifying Uncertainty
+
+###__q2__ Write a helper function
+
+Write a helper function `stat(x, y)` whose average (of the data from `q1`), will be $\pi$. Implement a test for correctness of your implementation, based on the equation
+
+$$\pi = \mathbb{E}[4 \times I_{X \in S_c}].$$
+
+*Hint*: The average of `stat()` needs to converge to $\pi$. You can't adjust `stat()` after taking an average, otherwise your answers will be *wrong*.
+
+Answer the questions below.
+
+```{r q2-task}
+## TASK: Finish implementing this function
+stat <- function(x, y) {
+  # TODO: Finish implementing this function
+}
+```
+
+Implement your own assert statements. They should pass using your implementation of `stat()`, *but* they should also be *correct*.
+
+```{r}
+## TASK: Finish writing these assert statements
+
+# Check the value for points *inside* the circle
+assertthat::assert_that(
+  # tibble(x = ?, y = ?) %>% # Pick a point *inside* the circle
+    mutate(stat = stat(x, y)) %>% 
+    pull(stat) %>% 
+    .[[1]] ==
+  # ???, # Write the correct value of stat() here
+  msg = "Incorrect value when a point is inside the circle"
+)
+
+# Check the value for points *outside* the circle
+assertthat::assert_that(
+  # tibble(x = ?, y = ?) %>% # Pick a point *outside* the circle
+    mutate(stat = stat(x, y)) %>% 
+    pull(stat) %>% 
+    .[[1]] ==
+  # ???, # Write the correct value of stat() here
+  msg = "Incorrect value when a point is outside the circle"
+)
+print("Your assertions passed, but make sure they're checking the right thing!")
+```
+
+*Observations*
+
+- You chose a correct value of `stat(x, y)` when `x, y` is *outside* the circle. Why did you choose this value?
+  - (Justify your value here)
+- You chose a correct value of `stat(x, y)` when `x, y` is *inside* the circle. Why did you choose this value?
+  - (Justify your value here)
+
+### __q3__ Estimate $\pi$
+
+Using your data in `df_q1`, estimate $\pi$.
+
+```{r q3-task}
+## TASK: Estimate pi using your data from q1
+df_q3 <- 
+  df_q1 %>% 
+  # TODO: Estimate pi as the column `pi_est`
+df_q3
+```
+
+Use the following to check that you've used the correct variable names. (NB. This does not check correctness.)
+
+```{r q3-check}
+## NOTE: Do not edit this code
+# Correct sample size
+assertthat::assert_that(
+  dim(df_q3) %>% 
+    .[[1]] == 1,
+  msg = "This result should have just one row"
+)
+# Correct column names
+assertthat::assert_that(
+  setequal(names(df_q3), c("pi_est")),
+  msg = "df_q3 must include the column `pi_est`"
+)
+print("Good")
+```
+
+## Quantifying Uncertainty
 <!-- -------------------------------------------------- -->
 
 You now have an estimate of $\pi$, but how trustworthy is that estimate? In `e-stat06-clt` we discussed *confidence intervals* as a means to quantify the uncertainty in an estimate. Now you'll apply that knowledge to assess your $\pi$ estimate.
 
-### __q3__ Using a CLT approximation, produce a confidence interval for your estimate of $\pi$. Make sure you specify your confidence level. Does your interval include the true value of $\pi$? Was your chosen sample size sufficiently large so as to produce a trustworthy answer?
+### __q4__ Simulation-based inference
 
-```{r q3-task}
+Complete the code below to perform a bootstrap resample of your $\pi$ estimate. Answer the questions below.
+
+```{r q4-task}
+## TASK: Finish the code below
+df_q4 <- 
+  df_q1 %>% 
+  bootstraps(., times = 1000) %>% 
+  mutate(
+    pi_est = map_dbl(
+      splits,
+      function(split_df) {
+        analysis(split_df) %>% 
+          # Estimate pi (pi_est) using the resampled data;
+          # this should be *identical* to the
+          # code you wrote for q3
+          pull(pi_est)
+      }
+    )
+  )
+
+## NOTE: Do not edit; use this to visualize your results
+df_q4 %>% 
+  ggplot(aes(pi_est)) +
+  geom_histogram()
+```
+
+*Observations*
+
+- What is a range of plausible values, based on the sampling distribution you've generated?
+  - (Your response here)
+
+### __q5__ Bootstrap percentile confidence interval
+
+Compute a bootstrap confidence interval for $\pi$ at the 95% confidence level (`alpha = 0.05`).
+
+*Hint*: You learned how to do this in `e-stat05-inference` and `e-stat06-clt`.
+
+```{r}
+## TASK: Compute a bootstrap confidence interval at the 95% level (alpha = 0.05)
+df_q5 <- 
+  df_q4 %>% 
+  summarize(
+    # TODO: Compute pi_lo and pi_up
+    # pi_lo = ?
+    # pi_up = ?
+  )
+
+df_q5
+```
+
+### __q6__ CLT confidence interval
+
+Compute a CLT-based confidence interval for $\pi$ at the 95% confidence level (`alpha = 0.05`). Answer the questions below, comparing with your answer to `q5`.
+
+*Hint 1*: You learned how to do this in `e-stat05-inference` and `e-stat06-clt`.
+
+*Hint 2*: You have computed the same thing (a 95% confidence interval) in both q5 and q6. If they disagree strongly, that suggests that you've done something *wrong* in one of the tasks....
+
+```{r q6-task}
+df_q1 %>%
 ```
 
 **Observations**:
 
-- Does your interval include the true value of $\pi$?
-  - (Your response here)
-- What confidence level did you choose?
-  - (Your response here)
-- Was your sample size $n$ large enough? Why do you say that?
-  - (Your response here)
+- Does your intervals include the true value of $\pi$?
+  - (Bootstrap CI: yes or no?)
+  - (CLT CI: yes or no?)
+- How closely do your bootstrap CI and CLT CI agree?
+  - (Your answer here)
+- Comment on the width of your CI(s). Would your estimate of $\pi$ be good enough for roughly estimating an area (e.g., to buy enough paint for an art project)? Would your estimate of $\pi$ be good enough for precisely calculating a trajectory (e.g., sending a rocket into orbit)?
+  - (Good enough as a rough estimate?)
+  - (Good enough as a precise estimate?)
+- What would be a *valid* way to make your CI more narrow?
+  - (Your answer here)
 
 # References
 <!-- -------------------------------------------------- -->
