@@ -24,13 +24,13 @@ df_schedule <-
   tribble(
     ~name,                           ~day, ~challenge,
     "e-comm00-style",                   3,  0,
-    "e-comm01-responding",              6,  1,
+    "e-comm01-responding",              5,  1,
     "e-comm02-story-basics",           22,  4,
 
     "e-data00-basics",                  2,  0,
-    "e-data01-isolate",                 8,  1,
-    "e-data02-derive",                 10,  2,
-    "e-data03-pivot-basics",           14,  2,
+    "e-data01-isolate",                 7,  1,
+    "e-data02-derive",                  9,  2,
+    "e-data03-pivot-basics",           13,  2,
     "e-data04-separate-unite",         17,  3,
     "e-data05-join",                   20,  4,
     "e-data06-strings",                23,  4,
@@ -56,11 +56,11 @@ df_schedule <-
     "e-rep01-intro-git",                0,  0,
     # "e-rep02-create",                   1,  0,
     "e-rep03-track",                    1,  0,
-    "e-rep04-directories",             12,  2,
+    "e-rep04-directories",             11,  2,
     "e-rep05-collab",                  14,  2,
 
-    "e-stat00-eda-basics",              7,  1, 
-    "e-stat01-densities",              13,  2,
+    "e-stat00-eda-basics",              6,  1, 
+    "e-stat01-densities",              12,  2,
     "e-stat02-probability",            16,  3,
     "e-stat03-descriptive",            19,  3,
 
@@ -69,7 +69,7 @@ df_schedule <-
     "e-stat06-moment",                 34,  7,
     "e-stat07-clt",                    35,  7,
     "e-stat08-error-bias",             37,  8,
-    "e-stat09-hypo-intro",             38,  8,
+    "e-stat09-hyp-intro",              38,  8,
     "e-stat10-randomization",          39,  8,
     "e-stat11-ci-pi",                  40,  8,
     "e-stat12-fit-dist",               41,  8,
@@ -82,8 +82,8 @@ df_schedule <-
     "e-model05-roc",                   53, 12,
 
     "e-vis00-basics",                   5,  1,
-    "e-vis01-bar-charts",               9,  1,
-    "e-vis02-histograms",              11,  2,
+    "e-vis01-bar-charts",               8,  1,
+    "e-vis02-histograms",              10,  2,
     "e-vis03-boxplots",                15,  3,
     "e-vis04-scatterplot",             18,  3,
     "e-vis05-lines",                   21,  4,
@@ -106,7 +106,7 @@ df_schedule %>%
 
 ```{r metadata}
 # Bounds
-date_start <- ymd("2025-01-21") # First day of class
+date_start <- ymd("2025-01-23") # First day of class
 date_end <- ymd("2025-04-30")   # Last day of class
 
 # Class days
@@ -211,6 +211,10 @@ df_instructional %>%
   geom_vline(
     data = df_challenges,
     mapping = aes(xintercept = day)
+  ) +
+  geom_label(
+    data = df_challenges,
+    mapping = aes(x = day, y = 4, label = challenge)
   ) +
   scale_x_continuous(breaks = seq(1, 70, by = 2))
 
