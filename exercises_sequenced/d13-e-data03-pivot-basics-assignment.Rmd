@@ -10,23 +10,15 @@ reading: 10
 # Data: Pivoting Data
 
 *Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse
-(including ggplot, dplyr, etc.) is specifically designed to use tidy data. But
-not all data we'll encounter is tidy! To that end, in this exercise we'll learn
-how to tidy our data by *pivoting*.
+(including ggplot, dplyr, etc.) is specifically designed to use tidy data. But not all data we'll encounter is tidy! To that end, in this exercise we'll learn how to tidy our data by *pivoting*.
 
-As a result of learning how to quickly *tidy* data, you'll vastly expand the set
-of datasets you can analyze. Rather than fighting with data, you'll be able to
-quickly wrangle and extract insights.
+As a result of learning how to quickly *tidy* data, you'll vastly expand the set of datasets you can analyze. Rather than fighting with data, you'll be able to quickly wrangle and extract insights.
 
-*Reading*: [Reshape Data](https://rstudio.cloud/learn/primers/4.1)
-*Topics*: Welcome, Tidy Data (skip Gathering and Spreading columns)
-*Reading Time*: ~10 minutes (this exercise contains more reading material)
+*Reading*: (None, this is the reading)
 *Optional readings*:
 - [selection language](https://tidyselect.r-lib.org/reference/language.html)
 
-*Note*: Unfortunately, the RStudio primers have not been updated to use the most
-up-to-date dplyr tools. Rather than learning the out-of-date tools `gather,
-spread`, we will instead learn how to use `pivot_longer` and `pivot_wider`.
+*Note*: Unfortunately, the RStudio primers have not been updated to use the most up-to-date dplyr tools. Rather than learning the out-of-date tools `gather, spread`, we will instead learn how to use `pivot_longer` and `pivot_wider`.
 
 ```{r setup, include=FALSE}
 # knitr options
@@ -47,9 +39,7 @@ Tidy data is a form of data where:
 2. Each *observation* is in its own *row*
 3. Each *value* is in its own *cell*
 
-Not all data are presented in tidy form; in this case it can be difficult to
-tell what the variables are. Let's practice distinguishing between the *columns*
-and the *variables*.
+Not all data are presented in tidy form; in this case it can be difficult to tell what the variables are. Let's practice distinguishing between the *columns* and the *variables*.
 
 ### __q1__ What are the variables in the following dataset?
 
@@ -113,16 +103,12 @@ if (((q2_answer + 38) %% 3 == 2) & (q2_answer > 0)) {
 ## Pivoting: Examples
 <!-- -------------------------------------------------- -->
 
-The dplyr package comes with tools to *pivot* our data into tidy form. There are
-two key tools: `pivot_longer` and `pivot_wider`. The names are suggestive of
-their use. When our data are too wide we should `pivot_longer`, and when our
-data are too long, we should `pivot_wider`.
+The dplyr package comes with tools to *pivot* our data into tidy form. There are two key tools: `pivot_longer` and `pivot_wider`. The names are suggestive of their use. When our data are too wide we should `pivot_longer`, and when our data are too long, we should `pivot_wider`.
 
 ### Pivot longer
 <!-- ------------------------- -->
 
-First, let's see how `pivot_longer` works on the `cases` data. Run the following
-code chunk:
+First, let's see how `pivot_longer` works on the `cases` data. Run the following code chunk:
 
 ```{r cases-demo}
 ## NOTE: No need to edit; execute
@@ -134,8 +120,7 @@ cases %>%
   )
 ```
 
-Now these data are tidy! The variable `Year` is now the name of a column, and
-its values appear in the cells.
+Now these data are tidy! The variable `Year` is now the name of a column, and its values appear in the cells.
 
 Let's break down the key inputs to `pivot_longer`:
 
@@ -159,8 +144,7 @@ cases %>%
   summarize(Year = mean(Year))
 ```
 
-The summary failed! That's because the `Year` column is full of strings, rather
-than integers. We can fix this via mutation:
+The summary failed! That's because the `Year` column is full of strings, rather than integers. We can fix this via mutation:
 
 ```{r cases-problem-solved}
 ## NOTE: No need to edit; execute
@@ -198,10 +182,7 @@ ansc <-
 ansc
 ```
 
-This dataset is too wide; the digit after each `x` or `y` denotes a different
-dataset. The case is tricky to pivot though: We need to separate the trailing
-digits while preserving the `x, y` column names. We can use the special ".value"
-entry in `names_to` in order to handle this:
+This dataset is too wide; the digit after each `x` or `y` denotes a different dataset. The case is tricky to pivot though: We need to separate the trailing digits while preserving the `x, y` column names. We can use the special ".value" entry in `names_to` in order to handle this:
 
 ```{r anscombe-pivot}
 ## NOTE: No need to edit; execute
@@ -237,10 +218,7 @@ Note a few differences from the call of `pivot_longer` on the `cases` data:
 - We use the `-column` syntax with `cols` to signal that we *don't* want the specified columns. This allows us to exclude `thick, rep`
   - As an alternative, we could have used the more verbose `cols = starts_with("E") | starts_with("mu")`, which means "starts with "E" OR starts with "mu""
 
-This looks closer to tidy---we've taken care of the merged column names---but
-now we have a different problem: The variables `E, mu` are now in cells, rather
-than column names! This is an example of a dataset that is *too long*. For this,
-we'll need to use `pivot_wider`.
+This looks closer to tidy---we've taken care of the merged column names---but now we have a different problem: The variables `E, mu` are now in cells, rather than column names! This is an example of a dataset that is *too long*. For this, we'll need to use `pivot_wider`.
 
 ### Pivot wider
 <!-- ------------------------- -->
@@ -279,8 +257,7 @@ documentation for more info.
 ## Pivoting: Exercises
 <!-- -------------------------------------------------- -->
 
-To practice using `pivot_longer` and `pivot_wider`, we're going to work with the
-following small dataset:
+To practice using `pivot_longer` and `pivot_wider`, we're going to work with the following small dataset:
 
 ```{r base}
 ## NOTE: No need to edit; this is setup for the exercises
@@ -293,8 +270,7 @@ df_base <-
   )
 ```
 
-We're going to play a game: I'm going to modify the data, and your job is to
-pivot it back to equal `df_base`.
+We're going to play a game: I'm going to modify the data, and your job is to pivot it back to equal `df_base`.
 
 ### __q3__ Recover `df_base` from `df_q3` by using a *single* pivot and no other functions.
 
@@ -313,6 +289,8 @@ df_q3
 ```
 
 Undo the modification using a single pivot. Don't worry about column order.
+
+*Hint*: The `names_prefix` argument will help here!
 
 ```{r q3-task}
 df_q3_res <-
@@ -338,8 +316,7 @@ df_q4
 
 Undo the modification using a single pivot. Don't worry about column order.
 
-*Hint*: You'll need a way to drop `NA` values in the pivot (without filtering).
-Check the documentation for `pivot_longer`.
+*Hint*: You'll need a way to drop `NA` values in the pivot (without filtering). Check the documentation for `pivot_longer`.
 
 ```{r q4-task}
 df_q4_res <-
