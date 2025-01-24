@@ -4,20 +4,14 @@ title: "Data: Separate and Unite Columns"
 date: 2020-06-05
 output: github_document
 time: 20
-reading: 30
+reading: 0
 ---
 
 # Data: Separate and Unite Columns
 
 *Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse (including ggplot, dplyr, etc.) is specifically designed to use tidy data. Last time we learned how to pivot data, but data can be untidy in other ways. Pivoting helped us when data were locked up in the *column headers*: This time, we'll learn how to use *separate* and *unite* to deal with *cell values* that are untidy.
 
-*Reading*: [Separate and Unite Columns](https://rstudio.cloud/learn/primers/4.2)
-*Topics*: Welcome, separate(), unite(), Case study
-*Reading Time*: ~30 minutes
-
-*Notes*:
-- I had trouble running the Case study in my browser. Note that the `who` dataset is loaded by the `tidyverse`. You can run the Case study locally if you need to!
-- The case study uses `gather` instead of `pivot_longer`; feel free to use `pivot_longer` in place.
+*Reading*: (None, this is the reading)
 
 ```{r setup, include=FALSE}
 # knitr options
@@ -28,9 +22,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 
 ```
-
-The Case study was already a fair bit of work! Let's do some simple review with
-`separate` and `unite`.
 
 ## Punnett Square
 <!-- ------------------------- -->
@@ -53,6 +44,79 @@ genes <-
   )
 genes
 ```
+
+To do this, we'll use `separate` and `unite`.
+
+## Separate
+
+The `separate` helper takes a string column and *separates* it on a specified character. For instance, if we had a set of phone numbers with `-`'s, we could separate them into components:
+
+```{r}
+tibble(digits = c(
+  "814-255-1234",
+  "650-123-4567",
+  "617-867-5309"
+)) %>% 
+  separate(
+    col = digits,
+    into = c("area_code", "telephone_prefix", "line_number"),
+    sep = "-",
+  )
+```
+
+The `sep` argument is quite versatile. We can also use the special argument `sep = ""` to separate every letter in the string. Note that we'll get funny behavior if the strings are different lengths:
+
+```{r}
+tibble(s = c(
+  "abc",
+  "def",
+  "yz"
+)) %>% 
+  separate(
+    col = s,
+    into = c("1", "2", "3"),
+    sep = ""
+  )
+```
+
+We can also specify `sep` as a string location. For instance, we could use this to "peel" off the leading characters of the strings:
+
+```{r}
+tibble(s = c(
+  "a1",
+  "a5",
+  "b11",
+  "b23",
+  "c300"
+)) %>% 
+  separate(
+    s,
+    into = c("letter", "number"),
+    sep = 1
+  ) %>% 
+  mutate(number = as.integer(number))
+```
+
+Note that `separte()` won't convert the strings for us! We'll need to `mutate()` if we've separated out numeric values.
+
+## Unite
+
+The `unite()` helper "undoes" a separation by *uniting* two or more string columns. We could use this build up a phone number from parts:
+
+```{r}
+tribble(
+  ~area_code, ~telephone_prefix, ~line_number,
+       "814",	            "255",       "1234",
+       "650",	            "123",       "4567",
+       "617",	            "867",       "5309"
+) %>% 
+  unite(
+    col = "number",
+    area_code, telephone_prefix, line_number,
+    sep = "-"
+  )
+```
+
 
 ### __q1__ Use a combination of `unite` and pivoting to turn `genes` into the same dataframe as `punnett`.
 

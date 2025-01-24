@@ -4,14 +4,14 @@ author: Zachary del Rosario
 date: 2020-06-26
 output: github_document
 time: 10
-reading: 5
+reading: 0
 ---
 
 # Setup: Types
 
 *Purpose*: Vectors can hold data of only one *type*. While this isn't a course on computer science, there are some type "gotchas" to look out for when doing data science. This exercise will help us get ahead of those issues.
 
-*Reading*: [Types](https://rstudio.cloud/learn/primers/1.2)
+*Reading*: (None, this is the reading)
 
 ```{r setup, include=FALSE}
 # knitr options
@@ -23,8 +23,43 @@ library(tidyverse)
 
 ```
 
-## Objects vs Strings
-<!-- -------------------------------------------------- -->
+## Data Types
+
+Any time we store data in a computer, we need to work with *types*. A type is a system for representing a class of data inside our computer. Types are important because they can muck up our analysis. For instance, we obviously can't perform addition with the number 1 and the letter "a"
+
+```{r}
+## No need to edit; uncomment and run
+# "a" + 1
+```
+
+However, we *can* "add" the letter "a" and the *string* "1":
+
+```{r}
+str_c("a", "1")
+```
+
+Thankfully, there are only a few data types we need to care about:
+
+- *Floating point numbers* allow us to represent decimal values. This is the default type for numbers in R.
+- *Integers* are integers (they have no decimal value). To specify an integer, we have to include an `L` character; for instance, `1L`.
+- *Booleans* are 1's and 0's. In R we specify these using `TRUE` and `FALSE`, which are the same as `1` and `0`:
+
+```{r}
+TRUE == 1
+FALSE == 0
+```
+
+
+- *Strings* can include just about any kind of character, so long as we enclose them with a pair of quotation marks "":
+
+```{r}
+nihongo <- "私は大学生です" # "I'm a college student"
+nihongo
+```
+
+### Variables vs Strings
+
+One common issue is confusing a *string* with a *variable name*. This is further complicated by the fact that we can store strings *in* variables.
 
 ### __q1__ Describe what is wrong with the code below.
 
@@ -55,6 +90,8 @@ Sometimes our data will not be in the form we want; in this case we may need to 
 - `as.numeric(x)` converts to real (floating point)
 - `as.character(x)` converts to character (string)
 - `as.logical(x)` converts to logical (boolean)
+
+For example, sometimes our numerical data gets loaded as a string, in which case we'll need to cast it back to numbers.
 
 ### __q2__ Cast the following vector `v_string` to integers.
 
