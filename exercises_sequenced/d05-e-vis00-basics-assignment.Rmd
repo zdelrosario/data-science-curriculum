@@ -3,21 +3,15 @@ title: "Vis: Data Visualization Basics"
 author: Zach del Rosario
 date: 2020-05-03
 output: github_document
-time: 10
-reading: 30
+time: 20
+reading: 0
 ---
 
 # Vis: Data Visualization Basics
 
-*Purpose*: The most powerful way for us to learn about a dataset is to
-_visualize the data_. Throughout this class we will make extensive use of the
-_grammar of graphics_, a powerful graphical programming _grammar_ that will
-allow us to create just about any graph you can imagine!
+*Purpose*: The most powerful way for us to learn about a dataset is to _visualize the data_. Throughout this class we will make extensive use of the _grammar of graphics_, a powerful graphical programming _grammar_ that will allow us to create just about any graph you can imagine!
 
-*Reading*: [Data Visualization Basics](https://rstudio.cloud/learn/primers/1.1). *Note*: In RStudio use `Ctrl + Click` (Mac `Command + Click`) to follow the link.
-*Topics*: `Welcome`, `A code template`, `Aesthetic mappings`.
-*Reading Time*: ~ 30 minutes
-
+*Reading*: (None, this is the reading)
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -25,24 +19,57 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### __q1__ Inspect the `diamonds` dataset. What do the `cut`, `color`, and `clarity` variables mean?
+### __q1__ Inspect a dataset
+
+Inspect the `diamonds` dataset. What do the `cut`, `color`, and `clarity` variables mean?
 
 *Hint*: We learned how to inspect a dataset in `e-data-00-basics`!
 
 ```{r q1-task, eval=FALSE}
 ```
 
-### __q2__ Use your "standard checks" to determine what variables the dataset has.
+### __q2__ Standard checks
+
+Use your "standard checks" to determine what variables the dataset has.
 
 
 Now that we have the list of variables in the dataset, we know what we can visualize!
 
-### __q3__ Using `ggplot`, visualize `price` vs `carat` with points. What trend do
-you observe?
+## The Grammar of Graphics
 
-*Hint*: Usually the language `y` vs `x` refers to the `vertical axis` vs
-`horizontal axis`. This is the opposite order from the way we often specify `x,
-y` pairs. Language is hard!
+In this class, we'll use the *Grammar of Graphics* for data visualization. This is implemented in the `ggplot2` package. The anatomy of a ggplot is broken down below:
+
+```{r}
+## NOTE: No need to edit; run and inspect
+
+ggplot(            # 1. Starting a ggplot
+  data = diamonds  # 2. Dataset to visualize
+) +                # 3. Adding elements to the plot
+  geom_point(      # 4. Geometry
+    mapping = aes( # 5. `Aes`thetic mapping
+      x = carat,   # 5.1. Mapping the `x` variable
+      y = depth    # 5.2. Mapping the `y` variable
+    )
+  )
+```
+
+The core idea in ggplot is that we can break *every concievable plot* down into just a few elements:
+
+* Data (the `data` argument): The data to visualize
+* Geometries (or `geom_*()` functions): The visual elements we'll use to show the data
+* Mapping (the relationship between the data and the geometries)
+
+Assuming we're not messing with the data[1], this implies that making a plot boils down to *choosing the geometries* and *mapping geometries to the data*. This is a bit abstract, but once you internalize this approach, *you can make virtually any plot you can imagine*.
+
+[1] Sometimes we'll mess with the data to make a more informative plot---stay tuned!
+
+Let's practice: Adapt the code above to complet the task below.
+
+### __q3__ Make your first ggplot
+
+Using `ggplot`, visualize `price` vs `carat` with points. What trend do you observe?
+
+*Hint*: Usually the language `y` vs `x` refers to the `vertical axis` vs `horizontal axis`. This is the opposite order from the way we often specify `x, y` pairs. Language is hard!
 
 ```{r q3-task}
 ## TODO: Complete this code
@@ -55,17 +82,36 @@ ggplot(diamonds)
 
 ## A note on *aesthetics*
 
-The function `aes()` is short for *aesthetics*. Aesthetics in ggplot are the
-mapping of variables in a dataframe to visual elements in the graph. For
-instance, in the plot above you assigned `carat` to the `x` aesthetic, and
-`price` to the `y` aesthetic. But there are *many more* aesthetics you can set,
-some of which vary based on the `geom_` you are using to visualize. The next
-question will explore this idea more.
+The function `aes()` is short for *aesthetics*. Aesthetics in ggplot are the mapping of variables in a dataframe to visual elements in the graph. For instance, in the plot above you assigned `carat` to the `x` aesthetic, and `price` to the `y` aesthetic. But there are *many more* aesthetics you can set, some of which vary based on the `geom_` you are using to visualize. 
 
-### __q4__ Create a new graph to visualize `price`, `carat`, and `cut`
-simultaneously.
 
-*Hint*: Remember that you can add additional aesthetic mappings in `aes()`. Some options include `size`, `color`, and `shape`.
+
+```{r}
+## NOTE: This is some more advanced code we'll learn to write later
+diamonds %>% 
+  group_by(carat) %>% 
+  summarize(
+    price = mean(price),
+    n = n()
+  ) %>% 
+  
+  # This is the focus of this code: Note the 
+  # additional `linewidth` argument to aes()
+  ggplot() +
+  geom_line(aes(x = carat, y = price, linewidth = n))
+```
+
+As with any R function, we can consult the documentation to learn more.
+
+### __q4__ Read the docs
+
+Look up the documentation for `geom_point()`, and scroll down to the *Aesthetics* section. What aesthetics (other than `x` and `y`) does `geom_point()` accept?
+
+### __q5__ Visualize a third variable
+
+Adapt your code from q3 to visualize `price`, `carat`, and `cut` simultaneously.
+
+*Hint*: Remember that you can add additional aesthetic mappings in `aes()`.
 
 ```{r q4-task}
 ## TODO: Complete this code
