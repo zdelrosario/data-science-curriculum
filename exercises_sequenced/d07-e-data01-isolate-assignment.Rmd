@@ -3,41 +3,69 @@ title: "Isolating Data"
 author: Zachary del Rosario
 date: 2020-05-05
 output: github_document
-time: 20
-reading: 40
+time: 30
+reading: 0
 ---
 
 # Data: Isolating Data
 
-*Purpose*: One of the keys to a successful analysis is the ability to *focus* on
-particular topics. When analyzing a dataset, our ability to focus is tied to our
-facility at *isolating data*. In this exercise, you will practice isolating
-columns with `select()`, picking specific rows with `filter()`, and sorting your
-data with `arrange()` to see what rises to the top.
+*Purpose*: One of the keys to a successful analysis is the ability to *focus* on particular topics. When analyzing a dataset, our ability to focus is tied to our facility at *isolating data*. In this exercise, you will practice isolating columns with `select()`, picking specific rows with `filter()`, and sorting your data with `arrange()` to see what rises to the top.
 
-*Reading*: [Isolating Data with dplyr](https://rstudio.cloud/learn/primers/2.2) (All topics)
+*Reading*: (None, this is the reading)
 
 ```{r setup}
 library(tidyverse)
 library(nycflights13) # For `flights` data
 ```
 
-We'll use the `nycflights13` dataset for this exercise; upon loading the
-package, the data are stored in the variable name `flights`. For instance:
+We'll use the `nycflights13` dataset for this exercise; upon loading the package, the data are stored in the variable name `flights`. For instance:
 
 ```{r glimpse}
 flights %>% glimpse()
 ```
 
-### __q1__ Select all the variables whose name ends with `_time`.
+## `select()` columns
+
+Sometimes, our data has so many columns that it's just *overwhelming*. The `flights` dataset only has 19 columns, but that's already quite a bit to deal with. Thankfully, we can `select()` a subset of columns to focus on a few at a time. To select a column, we simply provide its name:
+
+```{r}
+## NOTE: No need to edit
+flights %>% 
+  select(flight, carrier, dep_time)
+```
+
+This is fine when we know exactly what we're looking for. But `select()` is even more powerful when combined with *selection helpers*.
+
+### Matching selection helpers
+
+The following helpers perform different kinds of column matching:
+
+- `starts_with(str)`: all columns that start with the prefix `str`
+- `ends_with(str)`: all columns that end with the suffix `str`
+- `contains(str)`: all columns that contain the substring `str`
+- `matches(expr)`: matches a regular expression `expr`*
+- `numrange()`: builds ranges of variables, like `"x0", "x1", "x2", ...`
+
+*We'll learn more about regular expressions in `e-data06-strings`
+
+We use selection helpers inside `select()`, just like we'd provide a column name.
+
+```{r}
+flights %>% 
+  select(starts_with("dep_"))
+```
+
+
+### __q1__ Select matches
+
+Select all the variables whose name ends with `_time`.
 
 ```{r q1-task}
 ## df_q1 <- TODO: Your code goes here!
 df_q1
 ```
 
-The following is a *unit test* of your code; if you managed to solve task __q2__
-correctly, the following code will execute without error.
+The following is a *unit test* of your code; if you managed to solve task __q1__ correctly, the following code will execute without error.
 
 ```{r q1-tests}
 ## NOTE: No need to change this
@@ -47,7 +75,19 @@ assertthat::assert_that(
 print("Nice!")
 ```
 
-### __q2__ Re-arrange the columns to place `dest, origin, carrier` at the front, but retain all other columns.
+### The `everything()` helper
+
+There's another *strange* helper: `everything()`. This seems useless at first, until we realize that we can first *re-arrange* the other columns, then put `everything()` else at the end!
+
+```{r}
+flights %>% 
+  select(year, month, day, sched_dep_time, everything())
+```
+
+
+### __q2__ Re-arrange the columns
+
+Re-arrange the columns to place `dest, origin, carrier` at the front, but retain all other columns.
 
 *Hint*: The function `everything()` will be useful!
 
@@ -66,49 +106,129 @@ assertthat::assert_that(
 print("Well done!")
 ```
 
-Since R will only show the first few columns of a tibble, using `select()` in
-this fashion will help us see the values of particular columns.
+Since R will only show the first few columns of a tibble, using `select()` in this fashion will help us see the values of particular columns.
 
-### __q3__ Fix the following code. What is the mistake here? What is the code trying to accomplish?
+## `filter()` rows
 
-```{r q3-task}
+With analyzing data, we're often looking for rows that match particular criteria. To find rows, we can use `filter()` along with logical statements. For instance, we could select only those rows where the flight was in February (`month == 2`).
+
+```{r}
+flights %>% 
+  filter(month == 2)
+```
+
+*Important note*: Keep in mind that you have to use `==` to check equality. Using `=` inside a `filter()` will raise a helpful error message telling you to use `==` instead.
+
+```{r}
+## NOTE: Uncomment and run to see the error
+# flights %>% 
+#   filter(month = 2)
+```
+
+### Filter conditions
+
+We can use a variety of conditions with `filter()`:
+
+- `==`: strict equality
+- `!=`: not equal
+- `>`, `>=`: greater than (or equal)
+- `<`, "<=`: less than (or equal)
+- Logical operations:
+  - `&`: and
+  - `|`: or
+  - `!`: not
+  - `xor`: and/or
+  
+### Filter helpers
+
+There are also some useful helper functions we can use with `filter()`:
+
+- `is.na(x)`: Returns rows that contain `NaN` values
+  - Note that we can use `!is.na(x)` to return non-`NaN` values
+- `between(x, l, r)`: Returns rows with `l < x < r`
+- `near(x, y)`: Returns rows where `x` is "close" to `y`; we can optionally set the tolerance with `tol = ???`
+
+### __q3__ Find near-arrivals
+
+Find all the flights where the plane arrived within 10 minutes of its planned arrival time, but was not *exactly* on time.
+
+*Hint*: You can use `?flights` to look up the units for each column.
+
+```{r}
+## TASK:
+df_q3 <- 
+  flights %>% 
+  filter(
+  )
+
+df_q3
+```
+
+```{r q3-tests}
+## NOTE: No need to change this!
+assertthat::assert_that(
+  df_q3 %>%
+    summarize(diff = max(arr_time - sched_arr_time)) %>% 
+    pull(diff) %>% 
+    .[[1]] <= 10
+)
+assertthat::assert_that(
+  df_q3 %>%
+    summarize(diff = max(arr_time - sched_arr_time)) %>% 
+    pull(diff) %>% 
+    .[[1]] > 0
+)
+print("Nice!")
+```
+
+## Tidyverse quirks
+
+Note that in Tidyverse functions like `select()` and `filter()`, we can refer to column names directly---we don't have to quote them. However, the same doesn't hold if we're trying to compare string values. Make sure to quote a string if you're using it in a `filter()` comparison!
+
+### __q4__ Fix a bug
+
+Fix the following code. What is the mistake here? What is the code trying to accomplish?
+
+```{r q4-task}
 ## flights %>% filter(dest = LAX) # Uncomment and run to see error
 ```
 
 The next error is *far more insidious*....
 
-### __q4__ This code doesn't quite what the user intended. What went wrong?
+### __q5__ Fix a bug
 
-```{r q4-task}
+This code doesn't quite what the user intended. What went wrong?
+
+```{r q5-task}
 BOS <- "LGA"
 flights %>% filter(dest == BOS)
 ```
 
-It will take practice to get used to when and when not to use quotations. Don't
-worry---we'll get lots of practice!
+It will take practice to get used to when and when not to use quotations. Don't worry---we'll get lots of practice!
 
-This dataset is called `nycflights`; in what sense is it focused on New York
-city? Let's do a quick check to get an idea:
+The `filter()` tool is very simple, but already allows us to do a lot: This dataset is called `nycflights`; in what sense is it focused on New York city? Let's do a quick check to get an idea:
 
-### __q5__ Perform **two** filters; first
+### __q6__ Understand the data
 
-```{r q5-task}
-## df_q5a <- dest is JFK, LGA, or EWR
-## df_q5b <- origin is JFK, LGA, or EWR
+Perform **two** filters; first filter for flights where the *destination* was a New York airport (`JFK, LGA, or EWR`), then for flights where the *origin* was a New York airport (the same three). Answer the questions below.
+
+```{r q6-task}
+## df_q6a <- dest is JFK, LGA, or EWR
+## df_q6b <- origin is JFK, LGA, or EWR
 ```
 
 Use the following code to check your answer.
 
-```{r q5-tests}
+```{r q6-tests}
 ## NOTE: No need to change this!
 assertthat::assert_that(
-  df_q5a %>%
+  df_q6a %>%
   mutate(flag = dest %in% c("JFK", "LGA", "EWR")) %>%
   summarize(flag = all(flag)) %>%
   pull(flag)
 )
 assertthat::assert_that(
-  df_q5b %>%
+  df_q6b %>%
   mutate(flag = origin %in% c("JFK", "LGA", "EWR")) %>%
   summarize(flag = all(flag)) %>%
   pull(flag)
@@ -116,40 +236,73 @@ assertthat::assert_that(
 print("Nice!")
 ```
 
+**Observations**
+- Was this dataset assembled to study flights *out of* NYC, or *into* NYC? How do you know?
+  - (Your response here)
 
-*Aside*: Data are not just numbers. Data are *numbers with context*. Every
-dataset is put together for some reason. This reason will inform what
-observations (rows) and variables (columns) are *in the data*, and which are
-*not in the data*. Conversely, thinking carefully about what data a person or
-organization bothered to collect---and what they ignored---can tell you
-something about the *perspective* of those who collected the data. Thinking
-about these issues is partly what separates __data science__ from programming or
-machine learning. (`end-rant`)
+*Aside*: Data are not just numbers. Data are *numbers with context*. Every dataset is put together for some reason. This reason will inform what observations (rows) and variables (columns) are *in the data*, and which are *not in the data*. Conversely, thinking carefully about what data a person or organization bothered to collect---and what they ignored---can tell you something about the *perspective* of those who collected the data. Thinking about these issues is partly what separates __data science__ from programming or machine learning.
 
-### __q6__ Sort the flights in *descending* order by their `air_time`. Bring `air_time, dest` to the front. What can you tell about the longest flights?
+## `arrange()` rows
 
-```{r q6-task}
-## df_q6 <- TODO: Your code here!
-df_q6
+One more simple tool; rather than remove rows, we can re-arrange rows with `arrange()` to see what comes to the top. `arrange()` takes a set of columns by which to sort the data. For instance, we can find the earliest-departing flights with `arrange(dep_delay)`.
+
+```{r}
+## NOTE: No need to edit
+flights %>% 
+  arrange(dep_delay)
 ```
 
-```{r q6-tests}
+*Aside*: What flight leaves `43` minutes early? That's crazy!!
+
+We can also use `arrange(desc(x))` to reverse the sort.
+
+```{r}
+## NOTE: No need to edit
+flights %>% 
+  arrange(desc(dep_delay))
+```
+
+*Aside*: A 21.6 hour delay sounds like hell.
+
+Now I know what you're thinking: "`desc()` seems silly; why not just `arrange(-x)`?"
+
+Ah, but what about using `arrange(s)` with string data? How will you take a negative string? You can't! But you can use `arrange(desc(s))` to sort in reverse alphabetical order:
+
+```{r}
+## NOTE: No need to edit
+flights %>% 
+  arrange(desc(carrier)) %>% 
+  select(carrier, everything())
+```
+
+### __q7__ Sort to find
+
+Sort the flights in *descending* order by their `air_time`. Bring `air_time, dest` to the front. What can you tell about the longest flights?
+
+```{r q7-task}
+## df_q7 <- TODO: Your code here!
+df_q7
+```
+
+Use the following to check your work
+
+```{r q7-tests}
 ## NOTE: No need to change this!
 assertthat::assert_that(
   assertthat::are_equal(
-    df_q6 %>% head(1) %>% pull(air_time),
+    df_q7 %>% head(1) %>% pull(air_time),
     flights %>% pull(air_time) %>% max(na.rm = TRUE)
   )
 )
 assertthat::assert_that(
   assertthat::are_equal(
-    df_q6 %>% filter(!is.na(air_time)) %>% tail(1) %>% pull(air_time),
+    df_q7 %>% filter(!is.na(air_time)) %>% tail(1) %>% pull(air_time),
     flights %>% pull(air_time) %>% min(na.rm = TRUE)
   )
 )
 assertthat::assert_that(
   assertthat::are_equal(
-    names(df_q6)[1:2],
+    names(df_q7)[1:2],
     c("air_time", "dest")
   )
 )
