@@ -124,6 +124,7 @@ In addition to computer science data types, we will talk about variables in term
 
 - **Continuous variables** can have infinitely small differences between values, such as real numbers.
 - **Discrete variables** have a minimum difference between values, such as integers.
-- **Factors** (or **categoricals**) take only one of a fixed set of values. This could be a set of numbers {1, 2, 3}, or a set of categories {red, blue, green}.
+- **Factors** (or **categoricals**) take only one of a fixed set of values. This could be a set of numbers {1, 2, 3}, or a set of categories {red, blue, green}. 
+  - The fixed set of values are sometimes called *factor levels*.
 
 <!-- include-exit-ticket -->
