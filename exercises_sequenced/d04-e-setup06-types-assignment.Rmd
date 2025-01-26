@@ -77,7 +77,6 @@ airport == ATL
 - Write your explanation here
 
 ## Casting
-<!-- -------------------------------------------------- -->
 
 Sometimes our data will not be in the form we want; in this case we may need to *cast* the data to another format.
 
@@ -85,6 +84,7 @@ Sometimes our data will not be in the form we want; in this case we may need to 
 - `as.numeric(x)` converts to real (floating point)
 - `as.character(x)` converts to character (string)
 - `as.logical(x)` converts to logical (boolean)
+- `as.factor(x)` converts to a factor (fixed values)
 
 For example, sometimes our numerical data gets loaded as a string, in which case we'll need to cast it back to numbers.
 
@@ -107,6 +107,15 @@ assertthat::assert_that(
 )
 print("Great job!")
 ```
+
+## Statistical "types"
+
+In addition to computer science data types, we will talk about variables in terms that statisticians use. There are only a few key "statistical types":
+
+- **Continuous variables** can have infinitely small differences between values, such as real numbers.
+- **Discrete variables** have a minimum difference between values, such as integers.
+- **Factors** (or **categoricals**) take only one of a fixed set of values. This could be a set of numbers {1, 2, 3}, or a set of categories {red, blue, green}. 
+  - The fixed set of values are sometimes called *factor levels*.
 
 <!-- include-exit-ticket -->
 # Exit Ticket
