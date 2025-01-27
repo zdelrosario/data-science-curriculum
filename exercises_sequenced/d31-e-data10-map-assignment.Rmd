@@ -4,30 +4,57 @@ author: Zachary del Rosario
 date: 2020-05-07
 output: github_document
 time: 10
-reading: 30
+reading: 0
 ---
 
 # Data: Map Basics
 
 *Purpose*: The `map()` function and its variants are extremely useful for automating iterative tasks. We'll learn the basics through this short exercise.
 
-*Reading*: [Introduction to Iteration](https://rstudio.cloud/learn/primers/5.1) and [Map](https://rstudio.cloud/learn/primers/5.2) (you can skip the Case Study).
+*Reading*: (None, this is the reading)
 
 ```{r library}
 library(tidyverse)
 ```
 
-## Formulas
-<!-- ------------------------- -->
+## Loops vs mapping
 
-The primer introduced `map()` as a way to apply a function to a list.
+The core idea of `map()` is that it's an alternative to writing a `for` loop. In a lot of `for` loops, we're computing
 
-```{r ex1}
-# NOTE: No need to change this example
-map_dbl(c(1, 2, 3), log)
+```{r}
+## NOTE: No need to edit
+v <- seq(1, 10)
+v ^ 2 # Vectorized operation
 ```
 
-This is very helpful when we have a builtin or otherwise defined function, but what about when we need a more special-purpose function for a specific case? In this instance we can use R's *formula notation*. For example, to compute powers of `10`, we could do:
+However, if we have a non-vectorized function, we can still use `map()` to apply it to a vector:
+
+```{r}
+## NOTE: No need to edit
+f <- function(x) {x ^ 2}
+map(v, f)
+```
+
+The result prints in a weird way; that's because we've made a list, rather than a vector. To specify that we want our output to be a vector of floating point values, we can use `map_dbl()`:
+
+```{r}
+## NOTE: No need to edit
+f <- function(x) {x ^ 2}
+map_dbl(v, f)
+```
+
+Function notation in R is a little weird; we don't need to explicitly `return` our resulting value. Instead, the last line of the function will automatically be the return value:
+
+```{r}
+f2 <- function(x) {
+  x2 <- x * 2 # Do an intermediate calculation
+  x2 ^ 2      # The last value of the function is automatically returned as the output
+}
+```
+
+## Formula notation
+
+Rather than define a `function()`, we can use R's *formula notation*. For example, to compute powers of `10`, we could do:
 
 ```{r ex2}
 # NOTE: No need to change this example
@@ -43,7 +70,9 @@ pow10 <- function(x) {10 ^ x}
 
 And defining a more compact version with `~ 10 ^ x.`. We've actually already seen this formula notation when we use `facet_grid()` and `facet_wrap()`, though it's used in a very different way in that context.
 
-### __q1__ Use `map_chr()` to prepend the string `"N: "` to the numbers in `v_nums`. Use formula notation with `str_c()` as your map function.
+### __q1__ Add a prefix
+
+Use `map_chr()` to prepend the string `"N: "` to the numbers in `v_nums`. Use formula notation with `str_c()` as your map function.
 
 *Hint*: The function `str_c()` combines two or more objects into one string.
 
@@ -65,7 +94,9 @@ print("Great job!")
 
 Formula notation is another way to pass arguments to functions; I find this a little more readable than passing arguments to `map()`.
 
-### __q2__ Use `map_dbl()` to compute the `log` with `base = 2` of the numbers in `v_nums`. Use formula notation with `log()` as your map function.
+### __q2__ Compute a log
+
+Use `map_dbl()` to compute the `log` with `base = 2` of the numbers in `v_nums`. Use formula notation with `log()` as your map function.
 
 ```{r q2-task}
 ## TASK: Compute the log base = 2 with a map

@@ -4,21 +4,16 @@ author: Zachary del Rosario
 date: 2020-05-07
 output: github_document
 time: 40
-reading: 10
+reading: 0
 ---
 
 # Data: Pivoting Data
 
-*Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse
-(including ggplot, dplyr, etc.) is specifically designed to use tidy data. But not all data we'll encounter is tidy! To that end, in this exercise we'll learn how to tidy our data by *pivoting*.
+*Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse (including ggplot, dplyr, etc.) is specifically designed to use tidy data. But not all data we'll encounter is tidy! To that end, in this exercise we'll learn how to tidy our data by *pivoting*.
 
 As a result of learning how to quickly *tidy* data, you'll vastly expand the set of datasets you can analyze. Rather than fighting with data, you'll be able to quickly wrangle and extract insights.
 
 *Reading*: (None, this is the reading)
-*Optional readings*:
-- [selection language](https://tidyselect.r-lib.org/reference/language.html)
-
-*Note*: Unfortunately, the RStudio primers have not been updated to use the most up-to-date dplyr tools. Rather than learning the out-of-date tools `gather, spread`, we will instead learn how to use `pivot_longer` and `pivot_wider`.
 
 ```{r setup, include=FALSE}
 # knitr options
@@ -27,17 +22,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r library}
 library(tidyverse)
-
 ```
 
 ## Tidy Data
-<!-- -------------------------------------------------- -->
 
 Tidy data is a form of data where:
 
 1. Each *variable* is in its own *column*
 2. Each *observation* is in its own *row*
 3. Each *value* is in its own *cell*
+
+*Optional reading:* [Tidy Data](https://openscapes.org/blog/2020-10-12-tidy-data/), by Julie Lowndes and Allison Horst.
 
 Not all data are presented in tidy form; in this case it can be difficult to tell what the variables are. Let's practice distinguishing between the *columns* and the *variables*.
 
@@ -70,6 +65,8 @@ if (((q1_answer + 56) %% 3 == 1) & (q1_answer > 0)) {
 }
 ```
 
+Check out the solution manual to see the reasons.
+
 ### __q2__ What are the variables in the following dataset?
 
 ```{r stang-setup}
@@ -100,13 +97,13 @@ if (((q2_answer + 38) %% 3 == 2) & (q2_answer > 0)) {
 }
 ```
 
+Check out the solution manual to see the reasons.
+
 ## Pivoting: Examples
-<!-- -------------------------------------------------- -->
 
 The dplyr package comes with tools to *pivot* our data into tidy form. There are two key tools: `pivot_longer` and `pivot_wider`. The names are suggestive of their use. When our data are too wide we should `pivot_longer`, and when our data are too long, we should `pivot_wider`.
 
 ### Pivot longer
-<!-- ------------------------- -->
 
 First, let's see how `pivot_longer` works on the `cases` data. Run the following code chunk:
 
@@ -153,14 +150,13 @@ cases %>%
     names_to = "Year",
     values_to = "n",
     c(`2011`, `2012`, `2013`)
-
   ) %>%
   mutate(Year = as.integer(Year))
 ```
 
 Now the data are tidy and of the proper type.
 
-Let's look at a built-in dataset:
+Let's look at another example:
 
 ```{r anscombe-show}
 ## NOTE: No need to edit; execute
@@ -182,7 +178,9 @@ ansc <-
 ansc
 ```
 
-This dataset is too wide; the digit after each `x` or `y` denotes a different dataset. The case is tricky to pivot though: We need to separate the trailing digits while preserving the `x, y` column names. We can use the special ".value" entry in `names_to` in order to handle this:
+This dataset is too wide; the digit after each `x` or `y` denotes a different dataset. The case is tricky to pivot though: We need to separate the trailing digits (in the column names) while preserving the `x, y` column names. 
+
+We can use a combination of the `names_sep` argument and the special ".value" in `names_to`:
 
 ```{r anscombe-pivot}
 ## NOTE: No need to edit; execute
@@ -195,7 +193,7 @@ ansc %>%
 ```
 
 Note that:
-- With `.value` in `names_to`, we do *not* provide the `values_to` column names. We are instead signaling that the value names come from the column names
+- With `.value` in `names_to`, we do *not* provide the `values_to` column names. We are instead signaling that the value names come from the existing column names
 - `everything()` is a convenient way to select all columns
 
 Let's look at one more use of `pivot_longer` on the `alloys` dataset.
@@ -207,7 +205,7 @@ alloys %>%
     names_to = c("var", "angle"),
     names_sep = "_",
     values_to = "val",
-    cols = c(-thick, -rep)
+    cols = c(-thick, -rep) # Use all columns in the pivot, *EXCEPT* these two
   )
 ```
 
@@ -221,7 +219,6 @@ Note a few differences from the call of `pivot_longer` on the `cases` data:
 This looks closer to tidy---we've taken care of the merged column names---but now we have a different problem: The variables `E, mu` are now in cells, rather than column names! This is an example of a dataset that is *too long*. For this, we'll need to use `pivot_wider`.
 
 ### Pivot wider
-<!-- ------------------------- -->
 
 We'll continue tidying the `alloys` dataset with `pivot_wider`.
 
@@ -242,20 +239,17 @@ alloys %>%
 
 Note the differences between `pivot_longer` and `pivot_wider`:
 
-- Rather than `names_to`, we specify `names_from`; this takes a tidyselect specification. We specify the column(s) of values to turn into new column names
-- Rather than `values_to`, we specify `values_from`; this takes a tidyselect specification. We specify the column(s) of values to turn into new values
+- Rather than `names_to`, we specify `names_from`; this takes a tidyselect specification. We specify the column(s) to turn into new column names
+- Rather than `values_to`, we specify `values_from`; this takes a tidyselect specification. We specify the column(s) to turn into new values
 
-What we just saw above is a general strategy: If you see merged column names,
-you can:
+What we just saw above is a general strategy: If you see merged column names, you can:
 
 1. First, `pivot_longer` with `names_sep` or `names_pattern` to unmerge the column names.
 2. Next, `pivot_wider` to tidy the data.
 
-Both `pivot_longer` and `pivot_wider` have a *lot* of features; see their
-documentation for more info.
+Both `pivot_longer` and `pivot_wider` have a *lot* of features; see their documentation for more info.
 
 ## Pivoting: Exercises
-<!-- -------------------------------------------------- -->
 
 To practice using `pivot_longer` and `pivot_wider`, we're going to work with the following small dataset:
 
@@ -272,7 +266,9 @@ df_base <-
 
 We're going to play a game: I'm going to modify the data, and your job is to pivot it back to equal `df_base`.
 
-### __q3__ Recover `df_base` from `df_q3` by using a *single* pivot and no other functions.
+### __q3__ Unpivot the data
+
+Recover `df_base` from `df_q3` by using a *single* pivot and no other functions.
 
 ```{r q3-setup}
 ## NOTE: No need to edit; this is setup for the exercise
@@ -298,10 +294,15 @@ df_q3_res <-
 ## NOTE: Add your pivot here!
 
 df_q3_res
-all_equal(df_base, df_q3_res) # Checks equality; returns TRUE if equal
+all.equal(
+  df_base, 
+  df_q3_res %>% select(names(df_base))
+) # Checks equality; returns TRUE if equal
 ```
 
-### __q4__ Recover `df_base` from `df_q4` by using a *single* pivot and no other functions.
+### __q4__ Unpivot the data
+
+Recover `df_base` from `df_q4` by using a *single* pivot and no other functions.
 
 ```{r q4-setup}
 ## NOTE: No need to edit; this is setup for the exercise
@@ -324,10 +325,15 @@ df_q4_res <-
 ## NOTE: Add your pivot here!
 
 df_q4_res
-all_equal(df_base, df_q4_res) # Checks equality; returns TRUE if equal
+all.equal(
+  df_base, 
+  df_q4_res %>% select(names(df_base))
+) # Checks equality; returns TRUE if equal
 ```
 
-### __q5__ Recover `df_base` from `df_q5` by using a *single* pivot and no other functions.
+### __q5__ Unpivot the data
+
+Recover `df_base` from `df_q5` by using a *single* pivot and no other functions.
 
 ```{r q5-setup}
 ## NOTE: No need to edit; this is setup for the exercise
@@ -350,7 +356,10 @@ df_q5_res <-
 ## NOTE: Add your pivot here!
 
 df_q5_res
-all_equal(df_base, df_q5_res) # Checks equality; returns TRUE if equal
+all.equal(
+  df_base, 
+  df_q5_res %>% select(names(df_base))
+) # Checks equality; returns TRUE if equal
 ```
 
 ### __q6__ Make your own!
@@ -374,8 +383,14 @@ df_q6_res <-
 ## NOTE: Add your pivot here!
 
 df_q6_res
-all_equal(df_base, df_q6_res) # Checks equality; returns TRUE if equal
+all.equal(
+  df_base, 
+  df_q6_res %>% select(names(df_base))
+) # Checks equality; returns TRUE if equal
 ```
+
+*Optional reading*:
+- [selection language](https://tidyselect.r-lib.org/reference/language.html)
 
 <!-- include-exit-ticket -->
 # Exit Ticket

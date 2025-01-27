@@ -3,24 +3,15 @@ title: "Data: Deriving Quantities"
 author: Zachary del Rosario
 date: 2020-05-07
 output: github_document
-time: 15
-reading: 60
+time: 30
+reading: 0
 ---
 
 # Data: Deriving Quantities
 
-*Purpose*: Often our data will not tell us *directly* what we want to know; in
-these cases we need to *derive* new quantities from our data. In this exercise,
-we'll work with `mutate()` to create new columns by operating on existing
-variables, and use `group_by()` with `summarize()` to compute aggregate
-statistics (summaries!) of our data.
+*Purpose*: Often our data will not tell us *directly* what we want to know; in these cases we need to *derive* new quantities from our data. In this exercise, we'll work with `mutate()` to create new columns by operating on existing variables, and use `group_by()` with `summarize()` to compute aggregate statistics (summaries!) of our data.
 
-*Reading*: [Derive Information with dplyr](https://rstudio.cloud/learn/primers/2.3)
-*Topics*: (All topics, except *Challenges*)
-*Reading Time*: ~60 minutes
-
-*Note*: I'm considering splitting this exercise into two parts; I welcome
-feedback on this idea.
+*Reading*: (None, this is the reading)
 
 ```{r setup, include=FALSE}
 # knitr options
@@ -29,10 +20,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r library}
 library(tidyverse)
-
 ```
 
-### __q1__ What is the difference between these two versions? How are they the same? How are they different?
+## A pipe reminder
+
+Remember the pipe `%>%`? The pipe takes an input on the left, and "inserts" it into a function on the right. Let's put this idea to work with a little refresher exercise.
+
+### __q1__ A little refresher
+
+What is the difference between these two versions of code? How are they the same? How are they different?
 
 ```{r q1-task}
 ## Version 1
@@ -42,10 +38,31 @@ diamonds %>% filter(cut == "Ideal")
 ```
 
 
-The reading mentioned various kinds of *summary functions*, which are summarized
-in the table below:
+## Summarizing
 
-## Summary Functions
+The `summarize()` function applies a user-provided *summary function* over all rows, and returns a single row. We can use `summarize()` to compute things like an average:
+
+```{r}
+## NOTE: No need to edit
+diamonds %>% 
+  summarize(price_mean = mean(price))
+```
+
+We can also compute multiple summaries at once:
+
+```{r}
+## NOTE: No need to edit
+diamonds %>% 
+  summarize(
+    price_min = min(price),
+    price_mean = mean(price),
+    price_max = max(price),
+  )
+```
+
+### Summary Functions
+
+There are a variety of functions that work with `summarize()`:
 
 | Type | Functions |
 | ---- | --------- |
@@ -55,7 +72,19 @@ in the table below:
 | Counts | `n_distinct(x), n()` |
 | Logical | `sum(!is.na(x)), mean(y == 0)` |
 
-### __q2__ Using `summarize()` and a logical summary function, determine the number of rows with `Ideal` `cut`. Save this value to a column called `n_ideal`.
+We can combine computation with a summary function to calculate more complex quantities. For instance, the following code computes the number of one (or more) carat diamonds in the `diamonds` dataset:
+
+```{r}
+## NOTE: No need to edit
+diamonds %>% 
+  summarize(n_onecarat = sum(carat >= 1))
+```
+
+### __q2__ Count the ideal diamonds
+
+Using `summarize()` and a logical summary function, determine the number of rows with `Ideal` `cut`. Save this value to a column called `n_ideal`.
+
+*Hint*: We learned about checking for equality in `e-data01-isolate`.
 
 ```{r q2-task}
 df_q2
@@ -74,16 +103,52 @@ assertthat::assert_that(
 print("Great job!")
 ```
 
-### __q3__ The function `group_by()` modifies how other dplyr verbs function. Uncomment the `group_by()` below, and describe how the result changes.
+## Grouping
+
+Grouping allows us to modify the behavior of `summarize()`: It computes the given summaries within the groups defined by columns listed in `group_by()`. This is perhaps easiest to show with an example:
+
+```{r}
+## NOTE: No need to edit
+diamonds %>% 
+  group_by(cut) %>% 
+  summarize(n = n()) # Count the rows in each group of `cut`
+```
+
+*Aside*: Within-group counting is so useful that `dplyr` provides a shortcut for this: `count()`.
+
+```{r}
+## NOTE: This does the same as the previous code chunk
+diamonds %>% 
+  count(cut)
+```
+
+Grouping is a helpful way to get a sense for how a summary changes with another variable (or multiple variabels).
+
+### __q3__ Experiment with `group_by()`
+
+The function `group_by()` modifies how other dplyr verbs function. Uncomment the `group_by()` below, and describe how the result changes.
 
 ```{r q3-task}
 diamonds %>%
   ## group_by(color, clarity) %>%
-  summarize(price = mean(price))
+  summarize(price_mean = mean(price))
 ```
 
 
+## Row computations with `mutate()`
+
+Rather than compute summaries, we can apply computations to *every* row in the dataset using `mutate()`. This is useful for things like unit conversions. For instance, since 1 carat = $0.2$ grams, we can compute the mass of every diamond:
+
+```{r}
+## NOTE: No need to edit
+diamonds %>% 
+  mutate(`mass(g)` = carat / 5) %>% 
+  select(`mass(g)`, everything())
+```
+
 ### Vectorized Functions
+
+There are many *vectorized functions* that we can use with `mutate()`. A *vectorized* function is one that operates on an entire vector. If we want to use a non-vectorized function with `mutate()`, we'll have to use a `map()` function instead (introduced in `e-data10-map`).
 
 | Type | Functions |
 | ---- | --------- |
@@ -95,16 +160,13 @@ diamonds %>%
 | Cumulants | `cumsum(x), cumprod(x), cummin(x), cummax(x), cummean(x)` |
 | Ranking | `min_rank(x), row_number(x), dense_rank(x), percent_rank(x), cume_dist(x), ntile(x)` |
 
-### __q4__ Comment on why the difference is so large.
+### __q4__ Comment on why the difference is so large
 
-The `depth` variable is supposedly computed via `depth_computed = 100 * 2 * z /
-(x + y)`. Compute `diff = depth - depth_computed`: This is a measure of
-discrepancy between the given and computed depth. Additionally, compute the
-*coefficient of variation* `cov = sd(x) / mean(x)` for both `depth` and `diff`:
-This is a dimensionless measure of variation in a variable. Assign the resulting
-tibble to `df_q4`, and assign the appropriate values to `cov_depth` and
-`cov_diff`. Comment on the relative values of `cov_depth` and `cov_diff`; why is
-`cov_diff` so large?
+The `depth` variable is supposedly computed via `depth_computed = 100 * 2 * z / (x + y)`. Compute `diff = depth - depth_computed`: This is a measure of discrepancy between the given and computed depth. 
+
+Additionally, compute the *coefficient of variation* `cov = sd(x) / mean(x)` for both `depth` and `diff`: This is a dimensionless measure of variation in a variable. 
+
+Assign the resulting tibble to `df_q4`, and assign the appropriate values to `cov_depth` and `cov_diff`. Comment on the relative values of `cov_depth` and `cov_diff`; why is `cov_diff` so large?
 
 *Note*: Confusingly, the documentation for `diamonds` leaves out the factor of `100` in the computation of `depth`.
 
@@ -129,16 +191,11 @@ assertthat::assert_that(abs(df_q4 %>% pull(cov_diff) - 497.5585) < 1e-3)
 print("Nice!")
 ```
 
-There is nonzero difference between `depth` and the computed `depth`; this
-raises some questions about how `depth` was actually computed! It's often a good
-idea to try to check derived quantities in your data, if possible. These can
-sometimes uncover errors in the data!
+There is nonzero difference between `depth` and the computed `depth`; this raises some questions about how `depth` was actually computed! It's often a good idea to try to check derived quantities in your data, if possible. These can sometimes uncover errors in the data!
 
 ### __q5__ Compute and observe
 
-Compute the `price_mean = mean(price)`, `price_sd = sd(price)`, and `price_cov =
-price_sd / price_mean` for each `cut` of diamond. What observations can you make
-about the various cuts? Do those observations match your expectations?
+Compute the `price_mean = mean(price)`, `price_sd = sd(price)`, and `price_cov = price_sd / price_mean` for each `cut` of diamond. What observations can you make about the various cuts? Do those observations match your expectations?
 
 ```{r q5-task}
 ## TODO: Assign result to df_q5
@@ -165,7 +222,6 @@ print("Excellent!")
 ```
 
 **Observations**:
-
 - Write your observations here!
 
 <!-- include-exit-ticket -->
