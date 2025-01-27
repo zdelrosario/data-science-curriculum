@@ -13,14 +13,10 @@ reading: 5
 with your tools. One aspect of fluency is knowing and *using* keyboard
 shortcuts. In this exercise, we'll go over some of the most important ones.
 
-*Reading*: [Keyboard
-shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts); [Code Chunk Options](https://rmarkdown.rstudio.com/lesson-3.html)
-*Note*: Use this reading to look up answers to the questions below. Rather than
-*memorizing* this information, I recommend you download a
-[cheatsheet](https://rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf),
-and either print it out or save it in a convenient place on your computer. Get
-used to referencing your cheatsheets while doing data science---practice makes
-perfect!
+*Reading*: [Keyboard shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts); [Code Chunk Options](https://rmarkdown.rstudio.com/lesson-3.html)
+
+*Note*: Use this reading to look up answers to the questions below. Rather than *memorizing* this information, I recommend you download a [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/rstudio-ide.pdf), and either print it out or save it in a convenient place on your computer. Get used to referencing your cheatsheets while doing data science---practice makes perfect!
+- If this link is broken, try searching "Rstudio IDE cheatsheet" on the web.
 
 ```{r setup, include=FALSE}
 # knitr options
