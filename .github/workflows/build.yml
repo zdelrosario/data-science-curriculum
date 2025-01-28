@@ -21,9 +21,12 @@ jobs:
           cp -r challenges build/.
           cp -r exercises_sequenced build/.
           rm build/exercises_sequenced/.gitignore # Ensure push of Rmd for build
+          mkdir build/scripts # Copy the exercise tracking script
+          cp scripts/schedule.csv build/scripts/.
+          cp scripts/track-exercises.Rmd build/scripts/.
           cp data-science-curriculum.Rproj build/.
           cp README.md build/.
-    
+
       - name: Push
         uses: s0/git-publish-subdir-action@develop
         env:
