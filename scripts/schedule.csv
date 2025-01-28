@@ -49,7 +49,7 @@ e-model02-train-validate,48
 e-model03-interp-warnings,50
 e-model04-logistic,52
 e-model05-roc,53
-e-vis00-basics,5
+e-vis00-basics,3
 e-vis01-bar-charts,8
 e-vis02-histograms,10
 e-vis03-boxplots,15

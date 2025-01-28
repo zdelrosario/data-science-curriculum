@@ -25,7 +25,7 @@ df_schedule <-
   tribble(
     ~name,                           ~day, ~challenge,
     "e-comm00-style",                   3,  0,
-    "e-comm01-responding",              5,  1,
+    "e-comm01-responding",              5,  0,
     "e-comm02-story-basics",           22,  4,
 
     "e-data00-basics",                  2,  0,
@@ -82,7 +82,7 @@ df_schedule <-
     "e-model04-logistic",              52, 12,
     "e-model05-roc",                   53, 12,
 
-    "e-vis00-basics",                   5,  1,
+    "e-vis00-basics",                   3,  0,
     "e-vis01-bar-charts",               8,  1,
     "e-vis02-histograms",              10,  2,
     "e-vis03-boxplots",                15,  3,
