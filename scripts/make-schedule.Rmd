@@ -12,6 +12,7 @@ output:
 library(tidyverse)
 library(lubridate)
 filename_dep <- "./schedule.csv"
+filename_schedule <- "./schedule_wd.csv" # schedule with challenge data
 filename_exercises <- "./schedule_exercises.csv"
 filename_challenges <- "./schedule_challenges.csv"
 ```
@@ -100,6 +101,11 @@ df_schedule %>%
   filter(!is.na(name)) %>% 
   select(name, day) %>% 
   write_csv(filename_dep)
+
+df_schedule %>% 
+  filter(!is.na(name)) %>% 
+  select(name, day, challenge) %>% 
+  write_csv(filename_schedule)
 ```
 
 ## Class metadata
@@ -162,7 +168,7 @@ df_instructional
 ## Write to file
 df_instructional %>% 
   filter(!is.na(name)) %>% 
-  select(date, exercise = name) %>% 
+  select(date, exercise = name, challenge) %>% 
   write_csv(filename_exercises)
 ```
 

@@ -13,7 +13,7 @@ library(tidyverse)
 library(gt)
 
 # Schedule details
-filename_dep <- "./schedule.csv"
+filename_dep <- "./schedule_wd.csv"
 
 # Data directory
 dir_data <- "../exercises_sequenced"
