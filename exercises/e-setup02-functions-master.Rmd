@@ -13,6 +13,10 @@ reading: 0
 
 *Reading*: (None, this is the reading)
 
+```{r library}
+library(tidyverse)
+```
+
 ## Getting help
 
 No programmer memorizes how *every single function* works. Instead, effective programmers get used to looking up *documentation*. In R this is easy; if there's a function we want to learn about, we can run `?function` in our console.

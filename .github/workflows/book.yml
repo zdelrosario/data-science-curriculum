@@ -18,6 +18,8 @@ jobs:
 
       - name: Dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          cache: "always"
 
       - name: Cache bookdown results
         uses: actions/cache@v4
