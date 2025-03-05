@@ -8,6 +8,7 @@ License: CC-BY-SA-4.0
 Encoding: UTF-8
 Imports:
   tidyverse,
+  assertthat,
   bookdown,
   testthat,
   broom,
