@@ -12,25 +12,21 @@ actually based on these guidelines!
 *Reading Time*: ~ 10 minutes
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
 ### __q1__ Re-write according to the style guide
@@ -38,7 +34,7 @@ library(tidyverse)
 *Hint*: The pipe operator `%>%` will help make this code more readable.
 
 
-```r
+``` r
 ## Original code; hard to read
 summarize(group_by(diamonds, cut), mean_price = mean(price))
 ```
@@ -55,7 +51,7 @@ summarize(group_by(diamonds, cut), mean_price = mean(price))
 ```
 
 
-```r
+``` r
 diamonds %>%
   group_by(cut) %>%
   summarize(
@@ -79,7 +75,7 @@ diamonds %>%
 *Hint*: There are *particular rules* about spacing!
 
 
-```r
+``` r
 ## NOTE: You can copy this code to the chunk below
 iris %>%
   mutate(Sepal.Area=Sepal.Length*Sepal.Width) %>%
@@ -112,7 +108,7 @@ iris %>%
 ```
 
 
-```r
+``` r
 iris %>%
   mutate(Sepal.Area = Sepal.Length * Sepal.Width) %>%
   group_by(Species) %>%
@@ -148,7 +144,7 @@ iris %>%
 *Hint*: What do we do about long lines?
 
 
-```r
+``` r
 iris %>%
   group_by(Species) %>%
   summarize(Sepal.Length = mean(Sepal.Length), Sepal.Width = mean(Sepal.Width), Petal.Length = mean(Petal.Length), Petal.Width = mean(Petal.Width))
@@ -164,7 +160,7 @@ iris %>%
 ```
 
 
-```r
+``` r
 iris %>%
   group_by(Species) %>%
   summarize(
@@ -188,7 +184,7 @@ The following is an *addition* I'm making to the "effective styleguide" for the
 class: Rather than doing this:
 
 
-```r
+``` r
 ## NOTE: No need to edit, just an example
 ggplot(diamonds, aes(carat, price)) +
   geom_point()
@@ -199,7 +195,7 @@ ggplot(diamonds, aes(carat, price)) +
 Instead, do this:
 
 
-```r
+``` r
 ## NOTE: No need to edit, just an example
 diamonds %>%
   ggplot(aes(carat, price)) +
@@ -212,7 +208,7 @@ This may seem like a small difference (it is), but getting in this habit will
 pay off when we start combining data operations with plotting; for instance:
 
 
-```r
+``` r
 ## NOTE: No need to edit, just an example
 diamonds %>%
   filter(1.5 <= carat, carat <= 2.0) %>%
@@ -228,7 +224,7 @@ add preprocessing steps. Also, you can easily "disable" the plot to inspect your
 preprocessing while debugging; that is:
 
 
-```r
+``` r
 ## NOTE: No need to edit, just an example
 diamonds %>%
   filter(1.5 <= carat, carat <= 2.0) %>%
@@ -250,7 +246,7 @@ diamonds %>%
 ## $ z       <dbl> 4.70, 4.28, 4.28, 4.78, 4.29, 4.42, 4.63, 4.65, 4.52, 4.47, 4.…
 ```
 
-```r
+``` r
   ## ggplot(aes(carat, price)) +
   ## geom_point()
 ```
@@ -263,7 +259,7 @@ free to write code however you like!
 *Hint*: Put the data first!
 
 
-```r
+``` r
 ggplot(
   iris %>%
   pivot_longer(
@@ -280,7 +276,7 @@ ggplot(
 <img src="d03-e-comm00-style-solution_files/figure-html/q4-description-1.png" width="672" />
 
 
-```r
+``` r
 iris %>%
   pivot_longer(
     names_to = c("Part", ".value"),

@@ -10,25 +10,21 @@ exercise will get you started.
 *Reading*: [Getting help with R](https://www.r-project.org/help.html) (Vignettes and Code Demonstrations)
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
 The `vignette()` function allows us to look up
@@ -40,7 +36,7 @@ developers.
 associated with `"dplyr"`. What vignettes are available?
 
 
-```r
+``` r
 vignette(package = "dplyr")
 ```
 
@@ -58,7 +54,7 @@ only those rows of the `iris` dataset where `Species == "setosa"`.
 *Note*: This should open up your browser.
 
 
-```r
+``` r
 iris %>%
   as_tibble() %>%
   filter(
@@ -81,7 +77,7 @@ iris %>%
 ##  8          5           3.4          1.5         0.2 setosa 
 ##  9          4.4         2.9          1.4         0.2 setosa 
 ## 10          4.9         3.1          1.5         0.1 setosa 
-## # … with 40 more rows
+## # ℹ 40 more rows
 ```
 
 Vignettes are useful when we only know *generally* what we're looking for. Once
@@ -104,7 +100,7 @@ question: How could we `filter` the `iris` dataset to return only those rows
 with `Sepal.Length` between `5.1` and `6.4`?
 
 
-```r
+``` r
 iris %>%
   as_tibble() %>%
   filter(
@@ -127,7 +123,7 @@ iris %>%
 ##  8          5.7         3.8          1.7         0.3 setosa 
 ##  9          5.1         3.8          1.5         0.3 setosa 
 ## 10          5.4         3.4          1.7         0.2 setosa 
-## # … with 73 more rows
+## # ℹ 73 more rows
 ```
 
 We have at least two options:

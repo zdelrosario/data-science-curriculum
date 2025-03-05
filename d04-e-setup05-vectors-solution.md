@@ -4,38 +4,36 @@
 *Purpose*: *Vectors* are the most important object we'll work with when doing
 data science. To that end, let's learn some basics about vectors.
 
-*Reading*: [Programming Basics](https://rstudio.cloud/learn/primers/1.2).
-*Topics*: `vectors`
-*Reading Time*: ~10 minutes
+*Reading*: (None, this is the reading)
 
 
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
-### __q1__ What single-letter `R` function do you use to create vectors with specific entries? Use that function to create a vector with the numbers `1, 2, 3` below.
+Remember the `c()` function? Let's use it to work with vectors!
+
+### __q1__ Create a vector
+
+Create a vector with the numbers `1, 2, 3` below.
 
 
-```r
+``` r
 vec_q1 <- c(1, 2, 3)
 
 vec_q1
@@ -48,7 +46,7 @@ vec_q1
 Use the following tests to check your work:
 
 
-```r
+``` r
 ## NOTE: No need to change this
 assertthat::assert_that(length(vec_q1) == 3)
 ```
@@ -57,7 +55,7 @@ assertthat::assert_that(length(vec_q1) == 3)
 ## [1] TRUE
 ```
 
-```r
+``` r
 assertthat::assert_that(mean(vec_q1) == 2)
 ```
 
@@ -65,7 +63,7 @@ assertthat::assert_that(mean(vec_q1) == 2)
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Nice!")
 ```
 
@@ -73,10 +71,12 @@ print("Nice!")
 ## [1] "Nice!"
 ```
 
-### __q2__ Did you know that you can use `c()` to *extend* a vector as well? Use this to add the extra entry `4` to `vec_q1`.
+### __q2__ Extend a vector
+
+Did you know that you can use `c()` to *extend* a vector as well? Use this to add the extra entry `4` to `vec_q1`.
 
 
-```r
+``` r
 vec_q2 <- c(vec_q1, 4)
 
 vec_q2
@@ -89,7 +89,7 @@ vec_q2
 Use the following tests to check your work:
 
 
-```r
+``` r
 ## NOTE: No need to change this
 assertthat::assert_that(length(vec_q2) == 4)
 ```
@@ -98,7 +98,7 @@ assertthat::assert_that(length(vec_q2) == 4)
 ## [1] TRUE
 ```
 
-```r
+``` r
 assertthat::assert_that(mean(vec_q2) == 2.5)
 ```
 
@@ -106,7 +106,7 @@ assertthat::assert_that(mean(vec_q2) == 2.5)
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Well done!")
 ```
 

@@ -3,46 +3,137 @@
 
 *Purpose*: *Boxplots* are a key tool for EDA. Like histograms, boxplots give us a sense of "shape" for a distribution. However, a boxplot is a *careful summary* of shape. This helps us pick out key features of a distribution, and enables easier comparison of different distributions.
 
-*Reading*: [Boxplots and Counts](https://rstudio.cloud/learn/primers/3.4)
-*Topics*: (All topics)
-*Reading Time*: ~20 minutes
+*Reading*: (None, this is the reading)
 
 
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
-A *subtle point* from the primer is that we can use `dplyr` to generate new
-facts about our data, then use `ggplot2` to visualize those facts. We'll
-practice this idea in a number of ways.
+## Boxplots
 
-### __q1__ Use a `cut_*` verb to create a categorical variable out of `carat`. Tweak
-the settings in your cut and document your observations.
+Visuals like histograms, frequency polygons, and distributions give us a highly *detailed* view of our data. However, this can actually be overwhelming. To illustrate, let's dive straight into an exercise.
 
-*Hint*: Recall that we learned about `cut_interval, cut_number, cut_width`. Take
-your pick!
+### __q1__ Interpret plots
+
+Which class of vehicle tends to have the most "middle" value of engine displacement (`displ`)? More importantly, which plot *best* helps you make that determination?
 
 
-```r
+``` r
+## NOTE: No need to modify
+# Density plot
+mpg %>%
+  ggplot(aes(displ, color = class)) +
+  geom_density()
+```
+
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/q1-vis1-1.png" width="672" />
+
+Note that the bold line in the middle of a boxplot is the *median* of the group.
+
+
+``` r
+## NOTE: No need to modify
+# Boxplot
+mpg %>%
+  mutate(class = fct_reorder(class, displ)) %>% 
+  ggplot(aes(x = class, y = displ)) +
+  geom_boxplot()
+```
+
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/q1-vis2-1.png" width="672" />
+
+**Observations**
+- Minivans tend to be in the middle.
+- The boxplot is more effective; it literally puts `minivan` in the middle of the plot.
+
+## Boxplot definition
+
+A boxplot shows a few key *summary statistics* from our data. The "box" itself shows the lower quartile (25% of the data) and upper quartile (75% of the data), while the bold line shows the median (50% of the data). 
+
+The following code shows how the quartiles can be manually computed.
+
+
+``` r
+## NOTE: No need to edit
+mpg %>% 
+  filter(class == "midsize") %>% 
+  
+  ggplot(aes(x = class, y = displ)) +
+  geom_hline(
+    data = . %>%
+      # Compute the quartiles
+      summarize(
+        displ_025 = quantile(displ, 0.25),
+        displ_050 = quantile(displ, 0.50),
+        displ_075 = quantile(displ, 0.75),
+      ) %>%
+      # Reshape the data for plotting
+      pivot_longer(
+        cols = contains("displ"),
+        names_sep = "_",
+        names_to = c(".value", "quantile")
+      ),
+    mapping = aes(yintercept = displ, color = quantile)
+  ) +
+  geom_boxplot()
+```
+
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+
+The botplot also includes *fences* (the thin vertical lines) to show where there is some---but not very much---data. The boxplot also includes a heuristic for identifying outliers, which show up as dots.
+
+## Reorganizing factors
+
+There's a "trick" I've pulled in the earlier boxplot; I *reordered* the `class` variable based on the value of `displ` in each group. This is a way to make our plots more informative. The `fct_reorder(fct, x)` function is used in a `mutate()` call to directly override the original `fct` column.
+
+### __q2__ Reorder
+
+Reorder `class` according to `hwy`. Pay attention to how this modifies the plot.
+
+
+``` r
+## TASK: Edit this code to reorder `class` according to `hwy`
+mpg %>%
+  mutate(class = fct_reorder(class, hwy)) %>%
+  ggplot(aes(x = class, y = hwy)) +
+  geom_boxplot()
+```
+
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/q2-task-1.png" width="672" />
+
+
+## Cut helpers
+
+Plotting multiple boxplots works best when we have a categorical variable for grouping. However, we can "hack" a continuous variable into a categorical one by "cutting" the values, much like when we bin values in a histogram. The following helpers give us different ways to cut a continuous variable:
+
+- `cut_interval()`
+- `cut_number()`
+- `cut_width()`
+
+### __q3__ Cut a continuous variable
+
+Use a `cut_*` verb (of your choice) to create a categorical variable out of `carat`. Tweak the settings in your cut and document your observations.
+
+*Hint*: Recall that we learned how to look up documentation in an earlier exercise!
+
+
+``` r
 diamonds %>%
   mutate(carat_cut = cut_width(carat, width = 0.5, boundary = 0)) %>%
   ggplot(aes(x = carat_cut, y = price)) +
@@ -58,46 +149,35 @@ diamonds %>%
 - Across carat [2, 4.5], the whiskers have essentially the same max price
 - The IQR is quite small at low carat, but increases with carat; the prices become more variable at higher carat
 
-### __q2__ The following code visualizes the count of diamonds of *all* carats according to their cut and color. Modify the code to consider *only* diamonds with `carat >= 2`. Does the most common group of cut and color change?
+## Coordinate flipping
+
+One last visual trick: Boxplots in ggplot are usually vertically oriented. However, we can *flip* the plot to give them a horizontal orientation. Let's look at an example:
 
 
-```r
-## NOTE: No need to modify; run and inspect
-diamonds %>%
-  count(cut, color) %>%
-  ggplot(aes(cut, color, fill = n)) +
-  geom_tile()
+``` r
+mpg %>%
+  ggplot(aes(class, displ)) +
+  geom_boxplot() +
+  coord_flip()
 ```
 
-<img src="d15-e-vis03-boxplots-solution_files/figure-html/q2-ref-1.png" width="672" />
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
-Modify the following code:
+Coordinate flipping is especially helpful when we have a lot of categories.
 
+### __q4__ Flip a plot
 
-```r
-diamonds %>%
-  filter(carat >= 2) %>%
-  count(cut, color) %>%
-  ggplot(aes(cut, color, fill = n)) +
-  geom_tile()
-```
-
-<img src="d15-e-vis03-boxplots-solution_files/figure-html/q2-task-1.png" width="672" />
-
-**Observations**:
-- Yes, it used to be `G, Ideal`, but is now `I, Premium`
-
-### __q3__ The following plot has overlapping x-axis labels. Use a verb from the reading to `flip` the coordinates and improve readability.
+The following plot has overlapping x-axis labels. Use a verb from the reading to `flip` the coordinates and improve readability.
 
 
-```r
+``` r
 mpg %>%
   ggplot(aes(manufacturer, hwy)) +
   geom_boxplot() +
   coord_flip()
 ```
 
-<img src="d15-e-vis03-boxplots-solution_files/figure-html/q3-task-1.png" width="672" />
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/q4-task-1.png" width="672" />
 
 This is a simple---but important---trick to remember when visualizing data with many categories.
 

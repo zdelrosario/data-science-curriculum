@@ -8,28 +8,24 @@
 *Topics*: Mean, standard deviation, median, quantiles, dependence, correlation, robustness
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
-```r
+``` r
 library(nycflights13)
 library(gapminder)
 library(mvtnorm)
@@ -57,7 +53,7 @@ vis_central <- function(df, var) {
 A *statistic* is a numerical summary of a sample. Statistics are useful because they provide a useful summary about our data. A histogram gives us a rich summary of a datset: for example the departure delay time in the NYC flight data.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 flights %>%
   ggplot(aes(dep_delay)) +
@@ -66,15 +62,16 @@ flights %>%
 ```
 
 ```
-## Warning in self$trans$transform(x): NaNs produced
+## Warning in transformation$transform(x): NaNs produced
 ```
 
 ```
-## Warning: Transformation introduced infinite values in continuous x-axis
+## Warning in scale_x_log10(): log-10 transformation introduced infinite values.
 ```
 
 ```
-## Warning: Removed 208344 rows containing non-finite values (`stat_bin()`).
+## Warning: Removed 208344 rows containing non-finite outside the scale range
+## (`stat_bin()`).
 ```
 
 <img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-distribution-1.png" width="672" />
@@ -93,7 +90,7 @@ We can give quantitative answers to all these questions using statistics!
 Before we can start computing (descriptive) statistics, we need to learn how to deal with data issues. For instance, in the NYC flights data, we have a number of `NA`s.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 flights %>%
   summarize(across(where(is.numeric), ~sum(is.na(.)))) %>%
@@ -122,7 +119,7 @@ flights %>%
 These `NA`s will "infect" our computation, and lead to `NA` summaries.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 flights %>%
   summarize(across(where(is.numeric), mean)) %>%
@@ -153,7 +150,7 @@ Let's learn how to handle this:
 ### __q1__ The following code returns `NA`. Look up the documentation for `mean` and use an additional argument to strip the `NA` values in the dataset before computing the mean. Make this modification to the code below and report the mean departure delay time.
 
 
-```r
+``` r
 ## TASK: Edit to drop all NAs before computing the mean
 flights %>%
   summarize(dep_delay = mean(dep_delay, na.rm = TRUE))
@@ -176,7 +173,7 @@ flights %>%
 *Central tendency* is the idea of where data tend to be "located"---this concept is also called *location*. It is best thought of as the "center" of the data. The following graph illustrates central tendency.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 set.seed(101)
 tibble(z = rnorm(n = 1e3)) %>%
@@ -196,7 +193,7 @@ The [median](https://en.wikipedia.org/wiki/Median) is the value that separates h
 The median is a *robust* statistic, which is best illustrated by example. Consider the following two samples `v_base` and `v_outlier`. The sample `v_outlier` has an *outlier*, a value very different from the other values. Observe what value the mean and median take for these different samples.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 v_base <- c(1, 2, 3, 4, 5)
 v_outlier <- c(v_base, 1e3)
@@ -224,13 +221,14 @@ Note that for `v_outlier` the mean is greatly increased, but the median is only 
 It can be useful to think about when the mean and median agree or disagree with each other. For instance, with the flights data:
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 flights %>% vis_central(dep_delay)
 ```
 
 ```
-## Warning: Removed 8255 rows containing non-finite values (`stat_density()`).
+## Warning: Removed 8255 rows containing non-finite outside the scale range
+## (`stat_density()`).
 ```
 
 <img src="d19-e-stat03-descriptive-solution_files/figure-html/central-flights-1.png" width="672" />
@@ -238,7 +236,7 @@ flights %>% vis_central(dep_delay)
 the mean and median `dep_delay` largely agree (relative to all the other data). But for the gapminder data:
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 gapminder %>%
   filter(year == max(year)) %>%
@@ -254,7 +252,7 @@ the mean and median `gdpPercap` disagree.[2]
 *Hint*: Remember you can check the documentation of a built-in dataset with `?flights`!
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 flights %>%
   group_by(carrier) %>%
@@ -277,7 +275,7 @@ flights %>%
 ## 5 WN       17.7    1
 ```
 
-```r
+``` r
 ## TASK: Duplicate the code above, but sort by `median` instead
 flights %>%
   group_by(carrier) %>%
@@ -312,7 +310,7 @@ flights %>%
 It may not seem like it, but we're actually *making an assumption* when we use the mean (or median) as a typical value. Imagine we had the following data:
 
 
-```r
+``` r
 bind_rows(
   tibble(X = rnorm(300, mean = -2)),
   tibble(X = rnorm(300, mean = +2))
@@ -338,7 +336,7 @@ Before we can talk about spread, we need to talk about *quantiles*. A [quantile]
 The following graph visualizes the $25%, 50%, 75%$ quantiles of a standard normal. Since these are the quarter-quantiles ($1/4, 2/4, 3/4$), these are often called the *quartiles*.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 tibble(z = seq(-3, +3, length.out = 500)) %>%
   mutate(d = dnorm(z)) %>%
@@ -363,7 +361,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
 We'll use the quartiles to define the *interquartile range*. First, the `quantile()` function computes quantiles of a sample. For example:
 
 
-```r
+``` r
 ## NOTE: No need to change this! Run for an example
 flights %>%
   pull(dep_delay) %>%
@@ -386,7 +384,7 @@ where $Q_{p}[D]$ is the $p$-th quantile of a sample $D$.
 ### __q3__ Using the function `quantile`, compute the *interquartile range*; this is the difference between the $75%$ and $25%$ quantiles.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 set.seed(101)
 v_test_iqr <- rnorm(n = 10)
@@ -397,7 +395,7 @@ test_iqr <- quantile(v_test_iqr, probs = 0.75) - quantile(v_test_iqr, probs = 0.
 Use the following test to check your answer.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 assertthat::assert_that(test_iqr == IQR(v_test_iqr))
 ```
@@ -406,7 +404,7 @@ assertthat::assert_that(test_iqr == IQR(v_test_iqr))
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Great job!")
 ```
 
@@ -428,7 +426,7 @@ where $\overline{X}$ is the mean of the data. Note the factor of $n-1$ rather th
 By way of analogy, mean is to standard deviation as median is to IQR: The IQR is a robust measure of spread. Returning to our outlier example:
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 v_base <- c(1, 2, 3, 4, 5)
 v_outlier <- c(v_base, 1e3)
@@ -454,7 +452,7 @@ tibble(
 ### __q4__ Using the code from q2 as a starting point, compute the standard deviation (`sd()`) and interquartile range (`IQR()`), and rank the top five carriers, this time by sd and IQR. Report your observations on which carriers are in both lists, and which are different. Also note and comment on which carrier (among your top-ranked) has the largest difference between `sd` and `IQR`.
 
 
-```r
+``` r
 ## TODO: Use code from q2 to compute the sd and IQR, rank as before
 flights %>%
   group_by(carrier) %>%
@@ -477,7 +475,7 @@ flights %>%
 ## 5 EV       46.6    30
 ```
 
-```r
+``` r
 flights %>%
   group_by(carrier) %>%
   summarize(
@@ -506,7 +504,7 @@ flights %>%
 - `HA` has a large difference between `sd` and `IQR`; based on the following vis, it appears that `HA` has a lot more outliers than other carriers, which bumps up its `sd`
 
 
-```r
+``` r
 flights %>%
   filter(carrier %in% c("HA", "F9", "FL", "YV", "EV")) %>%
   ggplot(aes(carrier, dep_delay)) +
@@ -514,7 +512,8 @@ flights %>%
 ```
 
 ```
-## Warning: Removed 2949 rows containing non-finite values (`stat_boxplot()`).
+## Warning: Removed 2949 rows containing non-finite outside the scale range
+## (`stat_boxplot()`).
 ```
 
 <img src="d19-e-stat03-descriptive-solution_files/figure-html/q4-sol-vis-1.png" width="672" />
@@ -527,14 +526,15 @@ So far, we've talked about descriptive statistics to consider one variable at a 
 [Dependence](https://en.wikipedia.org/wiki/Correlation_and_dependence)---like location or spread---is a general idea of relation between two variables. For instance, when it comes to flights we'd expect trips between more distant airports to take longer. If we plot `distance` vs `air_time` in a scatterplot, we indeed see this dependence.
 
 
-```r
+``` r
 flights %>%
   ggplot(aes(air_time, distance)) +
   geom_point()
 ```
 
 ```
-## Warning: Removed 9430 rows containing missing values (`geom_point()`).
+## Warning: Removed 9430 rows containing missing values or values outside the scale range
+## (`geom_point()`).
 ```
 
 <img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-corr-1.png" width="672" />
@@ -550,7 +550,7 @@ The [Spearman correlation](https://en.wikipedia.org/wiki/Spearman%27s_rank_corre
 For example, we might expect a strong correlation between the `air_time` and the `distance` between airports. The function `cor` computes the Pearson correlation.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 flights %>%
   summarize(rho = cor(air_time, distance, use = "na.or.complete"))
@@ -568,7 +568,7 @@ flights %>%
 However, we wouldn't expect any relation between `air_time` and `month`.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 flights %>%
   summarize(rho = cor(air_time, month, use = "na.or.complete"))
@@ -586,7 +586,7 @@ In the case of a *perfect linear relationships* the Pearson correlation takes th
 ### __q5__ Compute the Pearson correlation between `x, y` below. Play with the `slope` and observe the change in the correlation.
 
 
-```r
+``` r
 slope <- 0.5 # Play with this value; observe the correlation
 df_line <-
   tibble(x = seq(-1, +1, length.out = 50)) %>%
@@ -608,7 +608,7 @@ df_line %>%
 Note that this means *correlation is a measure of dependence*; it is **not** a measure of slope! It is better thought of as how *strong* the relationship between two variables is. A closer-to-zero correlation indicates a noisy relationship between variables, while a closer-to-one (in absolute value) indicates a more perfect, predictable relationship between the variables. For instance, the following code simulates data with different correlations, and facets the data based on the underlying correlation.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 map_dfr(
   c(-1.0, -0.5, +0.0, +0.5, +1.0), # Chosen correlations
@@ -637,7 +637,7 @@ map_dfr(
 One of the primary differences between Pearson and Spearman is that Pearson is a *linear correlation*, while Spearman is a *nonlinear correlation*. For instance, the following data
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 # Positive slope
 df_monotone <-
@@ -654,7 +654,7 @@ df_monotone %>%
 have a perfect relationship between them. The Pearson correlation does not pick up on this fact, while the Spearman correlation indicates a perfect relation.
 
 
-```r
+``` r
 # Positive slope
 df_monotone %>%
   summarize(rho = cor(x, y, method = "pearson"))
@@ -667,7 +667,7 @@ df_monotone %>%
 ## 1 0.846
 ```
 
-```r
+``` r
 df_monotone %>%
   summarize(rho = cor(x, y, method = "spearman"))
 ```
@@ -684,7 +684,7 @@ One more note about functional relationships: Neither Pearson nor Spearman can p
 ### __q6__ Run the code chunk below and look at the visualization: Make a prediction about what you think the correlation will be. Then compute the Pearson correlation between `x, y` below.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 df_quad <-
   tibble(x = seq(-1, +1, length.out = 50)) %>%
@@ -702,7 +702,7 @@ df_quad %>%
 ## 1 -2.02e-16
 ```
 
-```r
+``` r
 df_quad %>%
   summarize(rho = cor(x, y, method = "spearman"))
 ```
@@ -714,7 +714,7 @@ df_quad %>%
 ## 1 -0.0236
 ```
 
-```r
+``` r
 df_quad %>%
   ggplot(aes(x, y)) +
   geom_point()
@@ -729,7 +729,7 @@ df_quad %>%
 One last point about correlation: The mean is to Pearson correlation as the median is to Spearman correlation. The median and Spearman's rho are robust to outliers.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 set.seed(101)
 X <- rmvnorm(
@@ -751,7 +751,7 @@ df_cor_outliers %>%
 
 <img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-outliers-1.png" width="672" />
 
-```r
+``` r
 df_cor_outliers %>%
   summarize(rho = cor(x, y, method = "pearson"))
 ```
@@ -763,7 +763,7 @@ df_cor_outliers %>%
 ## 1 0.621
 ```
 
-```r
+``` r
 df_cor_outliers %>%
   summarize(rho = cor(x, y, method = "spearman"))
 ```

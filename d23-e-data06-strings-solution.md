@@ -7,30 +7,27 @@
 
 *Topics*: Regular expressions, `stringr` package functions, pivoting
 
-*Note*: The [stringr cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf) is a helpful reference for this exercise!
+*Note*: The [stringr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) is a helpful reference for this exercise!
+- If this link is broken, try searching "Rstudio stringr cheatsheet" on the web.
 
 
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
 ## Intro to Stringr
@@ -44,7 +41,7 @@ Within the Tidyverse, the package `stringr` contains a large number of functions
 The function `str_detect()` allows us to *detect* the presence of a particular pattern. For instance, we can give it a fixed pattern such as:
 
 
-```r
+``` r
 ## NOTE: No need to edit
 strings <- c(
   "Team Alpha",
@@ -70,7 +67,7 @@ Since `str_detect()` returns boolean values, we can use it as a helper in
 `trans` that are automatic or manual.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 mpg %>%
   select(trans) %>%
@@ -86,7 +83,7 @@ mpg %>%
 We can't simply check whether `trans == "auto"`, because no string will *exactly* match that fixed pattern. But we can instead check for a substring.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 mpg %>%
   filter(str_detect(trans, "auto"))
@@ -106,13 +103,13 @@ mpg %>%
 ##  8 audi         a4 quattro   3.1  2008     6 auto… 4        17    25 p     comp…
 ##  9 audi         a6 quattro   2.8  1999     6 auto… 4        15    24 p     mids…
 ## 10 audi         a6 quattro   3.1  2008     6 auto… 4        17    25 p     mids…
-## # … with 147 more rows
+## # ℹ 147 more rows
 ```
 
 ### __q1__ Filter the `mpg` dataset down to `manual` vehicles using `str_detect()`.
 
 
-```r
+``` r
 df_q1 <-
   mpg %>%
   filter(str_detect(trans, "manual"))
@@ -138,7 +135,7 @@ df_q1 %>% glimpse()
 Use the following test to check your work.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 assertthat::assert_that(
               all(
@@ -153,7 +150,7 @@ assertthat::assert_that(
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Great job!")
 ```
 
@@ -164,7 +161,7 @@ print("Great job!")
 Part of the power of learning *regular expressions* is that we can write *patterns*, rather than exact matches. Notice that the `drv` variable in `mpg` takes either character or digit values. What if we wanted to filter out all the cases that had digits?
 
 
-```r
+``` r
 mpg %>%
   filter(
     !str_detect(drv, "\\d")
@@ -193,7 +190,7 @@ Recall (from the reading) that `\d` is a regular expression referring to a singl
 ### __q2__ Use `str_detect()` and an appropriate regular expression to filter `mpg` for *only* those values of `trans` that have a digit.
 
 
-```r
+``` r
 df_q2 <-
   mpg %>%
   filter(str_detect(trans, "\\d"))
@@ -219,7 +216,7 @@ df_q2 %>% glimpse()
 Use the following test to check your work.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 assertthat::assert_that(
               all(
@@ -234,7 +231,7 @@ assertthat::assert_that(
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Nice!")
 ```
 
@@ -248,7 +245,7 @@ print("Nice!")
 While `str_detect()` is useful for filtering, `str_extract()` is useful with `mutate()`. This function returns the *first extracted substring*, as demonstrated below.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 str_extract(
   string = c("abc", "xyz", "123"),
@@ -263,7 +260,7 @@ str_extract(
 Note that if `str_extract()` doesn't find a extract, it will return `NA`. Also, here that I'm using a *quantifier*; as we saw in the reading, `{}` notation will allow us to specify the number of repetitions to seek.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 str_extract(
   string = c("abc", "xyz", "123"),
@@ -278,7 +275,7 @@ str_extract(
 Notice that this only returns the first two digits in the extract, and neglects the third. If we don't know the specific number we're looking for, we can use `+` to select one or more characters:
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 str_extract(
   string = c("abc", "xyz", "123"),
@@ -293,7 +290,7 @@ str_extract(
 We can also use the `[[:alpha:]]` special symbol to select alphabetic characters only:
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 str_extract(
   string = c("abc", "xyz", "123"),
@@ -308,7 +305,7 @@ str_extract(
 And finally the wildcard `.` allows us to match any character:
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 str_extract(
   string = c("abc", "xyz", "123"),
@@ -325,7 +322,7 @@ str_extract(
 Notice that the `trans` column of `mpg` has many entries of the form `auto|manual\\([[:alpha:]]\\d\\)`; use `str_mutate()` to create a new column `tmp` with just the code inside the parentheses extracting `[[:alpha:]]\\d`.
 
 
-```r
+``` r
 ## TASK: Mutate `trans` to extract
 df_q3 <-
   mpg %>%
@@ -348,13 +345,13 @@ df_q3 %>%
 ##  8 m5   
 ##  9 l5   
 ## 10 m6   
-## # … with 224 more rows
+## # ℹ 224 more rows
 ```
 
 Use the following test to check your work.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 assertthat::assert_that(
               (df_q3 %>% filter(is.na(tmp)) %>% dim(.) %>% .[[1]]) == 5
@@ -365,7 +362,7 @@ assertthat::assert_that(
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Well done!")
 ```
 
@@ -379,7 +376,7 @@ print("Well done!")
 The `str_match()` function is similar to `str_extract()`, but it allows us to specify multiple "pieces" of a string to match with *capture groups*. A capture group is a pattern within parentheses; for instance, imagine we were trying to parse phone numbers, all with different formatting. We could use three capture groups for the three pieces of the phone number:
 
 
-```r
+``` r
 ## NOTE: No need to edit; execute
 phone_numbers <- c(
   "(814) 555 1234",
@@ -405,7 +402,7 @@ Remember that the `.` character is a wildcard. Here I use the `*` quantifier for
 ### __q4__ Modify the pattern below to extract the x, y pairs separately.
 
 
-```r
+``` r
 ## NOTE: No need to edit this setup
 points <- c(
   "x=1, y=2",
@@ -432,7 +429,7 @@ q4
 Use the following test to check your work.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 assertthat::assert_that(
               all(
@@ -446,7 +443,7 @@ assertthat::assert_that(
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Excellent!")
 ```
 
@@ -460,7 +457,7 @@ print("Excellent!")
 One last `stringr` function that's helpful to know: `str_remove()` will simply remove the *first* matched pattern in a string. This is particularly helpful for dealing with prefixes and suffixes.
 
 
-```r
+``` r
 ## NOTE: No need to edit; execute
 string_quantiles <- c(
   "q0.01",
@@ -482,7 +479,7 @@ string_quantiles %>%
 *Hint*: Note that parentheses are *special characters*, so you'll need to *escape* them as you did above.
 
 
-```r
+``` r
 df_q5 <-
   mpg %>%
   mutate(trans = str_remove(trans, "\\(.*\\)"))
@@ -503,13 +500,13 @@ df_q5
 ##  8 audi         a4 quattro   1.8  1999     4 manu… 4        18    26 p     comp…
 ##  9 audi         a4 quattro   1.8  1999     4 auto  4        16    25 p     comp…
 ## 10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…
-## # … with 224 more rows
+## # ℹ 224 more rows
 ```
 
 Use the following test to check your work.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 assertthat::assert_that(
               all(
@@ -525,7 +522,7 @@ assertthat::assert_that(
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Well done!")
 ```
 
@@ -541,7 +538,7 @@ Now we're going to put all these ideas together---special characters, quantifier
 Other functions like `pivot_longer` and `pivot_wider` also take regex patterns. We can use these to help solve data tidying problems. Let's return to the alloy data from `e-data03-pivot-basics`; the version of the data below do not have the convenient `_` separators in the column names.
 
 
-```r
+``` r
 ## NOTE: No need to edit; execute
 alloys <- tribble(
   ~thick,  ~E00,  ~mu00,  ~E45,  ~mu45, ~rep,
@@ -568,7 +565,7 @@ As described in the RegexOne tutorial, you can use *capture groups* in parenthes
 ### __q6__ Use your knowledge of regular expressions along with the `names_pattern` argument to successfully tidy the `alloys` data.
 
 
-```r
+``` r
 ## TASK: Tidy `alloys`
 df_q6 <-
   alloys %>%
@@ -607,7 +604,7 @@ df_q6
 Use the following test to check your work.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 assertthat::assert_that(dim(df_q6)[1] == 16)
 ```
@@ -616,7 +613,7 @@ assertthat::assert_that(dim(df_q6)[1] == 16)
 ## [1] TRUE
 ```
 
-```r
+``` r
 assertthat::assert_that(dim(df_q6)[2] == 5)
 ```
 
@@ -624,7 +621,7 @@ assertthat::assert_that(dim(df_q6)[2] == 5)
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Awesome!")
 ```
 

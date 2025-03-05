@@ -3,49 +3,162 @@
 
 *Purpose*: *Scatterplots* are a key tool for EDA. Scatteplots help us inspect the relationship between two variables. To enhance our scatterplots, we'll learn how to use *layers* in ggplot to add multiple pieces of information to our plots.
 
-*Reading*: [Scatterplots](https://rstudio.cloud/learn/primers/3.5)
-*Topics*: (All topics)
-*Reading Time*: ~40 minutes
+*Reading*: (None, this is the reading)
 
 
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
-```r
+``` r
 library(ggrepel)
 ```
 
-## A Note on Layers
-<!-- -------------------------------------------------- -->
+## Scatterplots
 
-In the reading we learned about *layers* in ggplot. Formally, ggplot is a
-"layered grammar of graphics"; each layer has the option to use built-in or
-inherited defaults, or override those defaults. There are two major settings we
-might want to change: the source of `data` or the `mapping` which defines the
-aesthetics. If we're being verbose, we write a ggplot call like:
+A scatterplot is simply a graph of two variables (`x` and `y`) where every data row is shown using a point. We can make a scatterplot by using the `geom_point()` geometry.
 
 
-```r
+``` r
+## NOTE: No need to modify! Just example code
+mpg %>% 
+  ggplot(mapping = aes(x = displ, y = hwy)) +
+  geom_point()
+```
+
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+
+Part of the *power* of the scatterplot is that it's a flexible way to *show all the data*. Unlike bar charts (where our data needs to be 1:1), a scatterplot easily deals with multiple `y` values for the same `x` simply by plotting multiple points.
+
+However, when we start plotting *a lot* of data, we start to encounter *overplotting*.
+
+## Solutions to Overplotting: Jittering, Counting, Alpha
+
+*Overplotting* is when multiple observations "land" in the same location in our graph, giving the false impression of a single point. Overplotting often happens when we have rounded values. For instance, the fuel economy values are integer values; this leads to a lot of overplotting.
+
+### Jittering
+
+One way to overcome overplotting is to randomly "jitter" the points: add a small random offset to the numerical values. We can do this with `geom_jitter()`, which is a drop-in replacement for `geom_point()`:
+
+
+``` r
+## NOTE: No need to modify! Just example code
+mpg %>% 
+  ggplot(mapping = aes(x = displ, y = hwy)) +
+  geom_jitter()
+```
+
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
+Now that we've jittered the data, we can see little "clusters" of points where we'd previously seen a single point. Unfortunately, jittering introduces some "lies" into our visual: We have to be careful not to interpret the jittering as true variability in the data.
+
+To overcome this, we can adjust the level of jittering in the horizontal and vertical directions. Since we know that `hwy` values are integers only, we can add a small jittering in the vertical direction only, and easily remember that the vertical jitter isn't actually in the data.
+
+### __q1__ Adjust the jitter
+
+Modify the code below to adjust the jittering to be 0 in the horizontal direction.
+
+*Note*: If you do this correctly, you should see vertical "streaks" with no horizontal jittering.
+
+
+``` r
+## TASK: Adjust the jittering to be 0 in the horizontal direction
+mpg %>% 
+  ggplot(mapping = aes(x = displ, y = hwy)) +
+  geom_jitter(
+    width = 0,
+    height = 0.5
+  )
+```
+
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q1-task-1.png" width="672" />
+
+### Count
+
+If our `x, y` values land *precisely* at the same point, there's another good option to deal with overplotting: `geom_point()` will count the number of rows that land at the same point and visualize them by size:
+
+
+``` r
+## NOTE: No need to modify! Just example code
+mpg %>% 
+  ggplot(mapping = aes(x = displ, y = hwy)) +
+  geom_count()
+```
+
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
+Personally, I find `geom_count()` to be much more effective at showing this dataset, compared with `geom_jitter()`.
+
+### Alpha
+
+We can't use `geom_count()` unless values land in *exactly* the same place. Even then, we may find that our points still overlap. Thankfully, there's one more trick for overplotting: adjust the *transparency* of points using the `alpha` argument. This is particularly helpful when we have an *extreme* amount of data:
+
+
+``` r
+## NOTE: No need to modify! Just example code
+diamonds %>% 
+  ggplot(aes(x = carat, y = price)) +
+  geom_point(alpha = 1/20)
+```
+
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+
+I like specifying `alpha` using a fraction; in this way, I can easily tell what number of overlapping points will appear solid. For instance, with `alpha = 1/20`, I know that a region of solid color is at least 20 overlapping points.
+
+## Adding variables
+
+Like other `geom_*()` functions, we can map additional (optional) aesthetics with `geom_point()`. One of the most useful (optional) aesthetics is `color`.
+
+
+``` r
+mpg %>% 
+  ggplot(aes(x = displ, y = hwy, color = class)) +
+  geom_point()
+```
+
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
+In the plot above, we're getting a misleading impression of the data, again due to overplotting.
+
+### __q2__ Add color to a jittered scatterplot
+
+
+``` r
+## TASK: Color each point by vehicle `class`
+mpg %>% 
+  ggplot(mapping = aes(
+    x = displ,
+    y = hwy,
+    color = class
+  )) +
+  geom_jitter(width = 0.1, height = 0.5)
+```
+
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q2-task-1.png" width="672" />
+
+The `color` aesthetic really only works when we have a *limited* number of factor levels.
+
+## Layers
+
+Formally, ggplot is a "layered grammar of graphics"; each layer has the option to use built-in or inherited defaults, or override those defaults. There are two major settings we might want to change: the source of `data` or the `mapping` which defines the aesthetics. If we're being verbose, we write a ggplot call like:
+
+
+``` r
 ## NOTE: No need to modify! Just example code
 ggplot(
   data = mpg,
@@ -56,11 +169,10 @@ ggplot(
 
 <img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-1-1.png" width="672" />
 
-However, ggplot makes a number of sensible defaults to help save us typing.
-Ggplot assumes an order for `data, mapping`, so we can drop the keywords:
+However, ggplot makes a number of sensible defaults to help save us typing. Ggplot assumes an order for `data, mapping`, so we can drop the keywords:
 
 
-```r
+``` r
 ## NOTE: No need to modify! Just example code
 ggplot(
   mpg,
@@ -71,27 +183,21 @@ ggplot(
 
 <img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-2-1.png" width="672" />
 
-Similarly the aesthetic function `aes()` assumes the first two arguments will be
-`x, y`, so we can drop those arguments as well
+Similarly the aesthetic function `aes()` assumes the first two arguments will be `x, y`, so we can drop those arguments as well. Once we know what we're doing, we can write some really short code:
 
 
-```r
+``` r
 ## NOTE: No need to modify! Just example code
-ggplot(
-  mpg,
-  aes(displ, hwy)
-) +
+ggplot(mpg, aes(displ, hwy)) +
   geom_point()
 ```
 
 <img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-3-1.png" width="672" />
 
-Above `geom_point()` inherits the `mapping` from the base `ggplot` call;
-however, we can override this. This can be helpful for a number of different
-purposes:
+Above `geom_point()` inherits the `mapping` from the base `ggplot` call; however, we can override this. This can be helpful for a number of different purposes: The following example uses the same `x` mapping for both `geom_point()` calls, but uses a different `y` mapping for each.
 
 
-```r
+``` r
 ## NOTE: No need to modify! Just example code
 ggplot(mpg, aes(x = displ)) +
   geom_point(aes(y = hwy, color = "hwy")) +
@@ -100,45 +206,18 @@ ggplot(mpg, aes(x = displ)) +
 
 <img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-4-1.png" width="672" />
 
-Later, we'll learn more concise ways to construct graphs like the one above. But
-for now, we'll practice using layers to add more information to scatterplots.
+Later, we'll learn more concise ways to construct graphs like the one above. But for now, we'll practice using layers to add more information to scatterplots.
 
-## Exercises
-<!-- -------------------------------------------------- -->
+### __q3__ Add a label layer
 
-### __q1__ Add two `geom_smooth` trends to the following plot. Use "gam" for one
-trend and "lm" for the other. Comment on how linear or nonlinear the "gam" trend
-looks.
+Add non-overlapping labels to the following scattterplot using the provided `df_annotate`.
 
-
-```r
-diamonds %>%
-  ggplot(aes(carat, price)) +
-  geom_point() +
-  geom_smooth(aes(color = "gam"), method = "gam") +
-  geom_smooth(aes(color = "lm"), method = "lm")
-```
-
-```
-## `geom_smooth()` using formula = 'y ~ s(x, bs = "cs")'
-## `geom_smooth()` using formula = 'y ~ x'
-```
-
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q1-task-1.png" width="672" />
-
-**Observations**:
-- No; the "gam" trend curves below then above the linear trend
-
-### __q2__ Add non-overlapping labels to the following scattterplot using the
-provided `df_annotate`.
-
-*Hint 1*: `geom_label_repel` comes from the `ggrepel` package. Make sure to load
-it, and adhere to best-practices!
+*Hint 1*: `geom_label_repel()` comes from the `ggrepel` package. Make sure to load `ggrepel`, and use help to figure out how to use `geom_label_repel()`!
 
 *Hint 2*: You'll have to use the `data` keyword to override the data layer!
 
 
-```r
+``` r
 ## TODO: Use df_annotate below to add text labels to the scatterplot
 df_annotate <-
   mpg %>%
@@ -157,23 +236,19 @@ mpg %>%
   )
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q3-task-1.png" width="672" />
 
-### __q3__ Study the following scatterplot: Note whether city (`cty`) or highway
-(`hwy`) mileage tends to be greater. Describe the trend (visualized by
-`geom_smooth`) in mileage with engine displacement (a measure of engine size).
+### __q4__ Interpret a scatterplot
 
-*Note*: The grey region around the smooth trend is a *confidence bound*; we'll
-discuss these further as we get deeper into statistical literacy.
+Study the following scatterplot: Note whether city (`cty`) or highway (`hwy`) mileage tends to be greater.
 
 
-```r
+``` r
 ## NOTE: No need to modify! Just analyze the scatterplot
 mpg %>%
   pivot_longer(names_to = "source", values_to = "mpg", c(hwy, cty)) %>%
   ggplot(aes(displ, mpg, color = source)) +
   geom_point() +
-  geom_smooth() +
   scale_color_discrete(name = "Mileage Type") +
   labs(
     x = "Engine displacement (liters)",
@@ -181,11 +256,7 @@ mpg %>%
   )
 ```
 
-```
-## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q3-task-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q4-task-1.png" width="672" />
 
 **Observations**:
 - `hwy` mileage tends to be larger; driving on the highway is more efficient
@@ -202,7 +273,7 @@ Why use a scatterplot vs a bar chart? A bar chart is useful for emphasizing some
 Two visuals of the same data:
 
 
-```r
+``` r
 economics %>%
   filter(date > lubridate::ymd("2010-01-01")) %>%
   ggplot(aes(date, pop)) +
@@ -214,7 +285,7 @@ economics %>%
 Here we're emphasizing zero, so we don't see much of a change
 
 
-```r
+``` r
 economics %>%
   filter(date > lubridate::ymd("2010-01-01")) %>%
   ggplot(aes(date, pop)) +
@@ -231,7 +302,7 @@ Here's we're not emphasizing zero; the scale is adjusted to emphasize the trend 
 Two visuals of the same data:
 
 
-```r
+``` r
 economics %>%
   mutate(pop_delta = pop - lag(pop)) %>%
   filter(date > lubridate::ymd("2005-01-01")) %>%
@@ -244,7 +315,7 @@ economics %>%
 Here we're emphasizing zero, so we can easily see the month of negative change.
 
 
-```r
+``` r
 economics %>%
   mutate(pop_delta = pop - lag(pop)) %>%
   filter(date > lubridate::ymd("2005-01-01")) %>%

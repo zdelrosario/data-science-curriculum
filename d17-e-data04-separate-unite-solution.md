@@ -1,57 +1,37 @@
 
 # Data: Separate and Unite Columns
 
-*Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse
-(including ggplot, dplyr, etc.) is specifically designed to use tidy data. Last
-time we learned how to pivot data, but data can be untidy in other ways.
-Pivoting helped us when data were locked up in the *column headers*: This time,
-we'll learn how to use *separate* and *unite* to deal with *cell values* that
-are untidy.
+*Purpose*: Data is easiest to use when it is *tidy*. In fact, the tidyverse (including ggplot, dplyr, etc.) is specifically designed to use tidy data. Last time we learned how to pivot data, but data can be untidy in other ways. Pivoting helped us when data were locked up in the *column headers*: This time, we'll learn how to use *separate* and *unite* to deal with *cell values* that are untidy.
 
-*Reading*: [Separate and Unite Columns](https://rstudio.cloud/learn/primers/4.2)
-*Topics*: Welcome, separate(), unite(), Case study
-*Reading Time*: ~30 minutes
-
-*Notes*:
-- I had trouble running the Case study in my browser. Note that the `who` dataset is loaded by the `tidyverse`. You can run the Case study locally if you need to!
-- The case study uses `gather` instead of `pivot_longer`; feel free to use `pivot_longer` in place.
+*Reading*: (None, this is the reading)
 
 
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
-
-The Case study was already a fair bit of work! Let's do some simple review with
-`separate` and `unite`.
 
 ## Punnett Square
 <!-- ------------------------- -->
 
-Let's make a [Punnett square](https://en.wikipedia.org/wiki/Punnett_square) with
-`unite` and some pivoting. You don't need to remember any biology for this
-example: Your task is to take `genes` and turn the data into `punnett`.
+Let's make a [Punnett square](https://en.wikipedia.org/wiki/Punnett_square) with `unite` and some pivoting. You don't need to remember any biology for this example: Your task is to take `genes` and turn the data into `punnett`.
 
 
-```r
+``` r
 punnett <-
   tribble(
     ~parent1,   ~a,   ~A,
@@ -69,7 +49,7 @@ punnett
 ## 2 A       Aa    AA
 ```
 
-```r
+``` r
 genes <-
   expand_grid(
     parent1 = c("a", "A"),
@@ -88,10 +68,129 @@ genes
 ## 4 A       A
 ```
 
+To do this, we'll use `separate` and `unite`.
+
+## Separate
+
+The `separate` helper takes a string column and *separates* it on a specified character. For instance, if we had a set of phone numbers with `-`'s, we could separate them into components:
+
+
+``` r
+tibble(digits = c(
+  "814-255-1234",
+  "650-123-4567",
+  "617-867-5309"
+)) %>% 
+  separate(
+    col = digits,
+    into = c("area_code", "telephone_prefix", "line_number"),
+    sep = "-",
+  )
+```
+
+```
+## # A tibble: 3 × 3
+##   area_code telephone_prefix line_number
+##   <chr>     <chr>            <chr>      
+## 1 814       255              1234       
+## 2 650       123              4567       
+## 3 617       867              5309
+```
+
+The `sep` argument is quite versatile. We can also use the special argument `sep = ""` to separate every letter in the string. Note that we'll get funny behavior if the strings are different lengths:
+
+
+``` r
+tibble(s = c(
+  "abc",
+  "def",
+  "yz"
+)) %>% 
+  separate(
+    col = s,
+    into = c("1", "2", "3"),
+    sep = ""
+  )
+```
+
+```
+## Warning: Expected 3 pieces. Additional pieces discarded in 2 rows [1, 2].
+```
+
+```
+## # A tibble: 3 × 3
+##   `1`   `2`   `3`  
+##   <chr> <chr> <chr>
+## 1 ""    a     b    
+## 2 ""    d     e    
+## 3 ""    y     z
+```
+
+We can also specify `sep` as a string location. For instance, we could use this to "peel" off the leading characters of the strings:
+
+
+``` r
+tibble(s = c(
+  "a1",
+  "a5",
+  "b11",
+  "b23",
+  "c300"
+)) %>% 
+  separate(
+    s,
+    into = c("letter", "number"),
+    sep = 1
+  ) %>% 
+  mutate(number = as.integer(number))
+```
+
+```
+## # A tibble: 5 × 2
+##   letter number
+##   <chr>   <int>
+## 1 a           1
+## 2 a           5
+## 3 b          11
+## 4 b          23
+## 5 c         300
+```
+
+Note that `separte()` won't convert the strings for us! We'll need to `mutate()` if we've separated out numeric values.
+
+## Unite
+
+The `unite()` helper "undoes" a separation by *uniting* two or more string columns. We could use this build up a phone number from parts:
+
+
+``` r
+tribble(
+  ~area_code, ~telephone_prefix, ~line_number,
+       "814",	            "255",       "1234",
+       "650",	            "123",       "4567",
+       "617",	            "867",       "5309"
+) %>% 
+  unite(
+    col = "number",
+    area_code, telephone_prefix, line_number,
+    sep = "-"
+  )
+```
+
+```
+## # A tibble: 3 × 1
+##   number      
+##   <chr>       
+## 1 814-255-1234
+## 2 650-123-4567
+## 3 617-867-5309
+```
+
+
 ### __q1__ Use a combination of `unite` and pivoting to turn `genes` into the same dataframe as `punnett`.
 
 
-```r
+``` r
 df_q1 <-
   genes %>%
   unite(col = "offspring", sep = "", remove = FALSE, parent1, parent2) %>%
@@ -114,7 +213,7 @@ df_q1
 Use the following test to check your answer:
 
 
-```r
+``` r
 ## NOTE: No need to change this
 assertthat::assert_that(
               all_equal(df_q1, punnett)
@@ -122,10 +221,19 @@ assertthat::assert_that(
 ```
 
 ```
+## Warning: `all_equal()` was deprecated in dplyr 1.1.0.
+## ℹ Please use `all.equal()` instead.
+## ℹ And manually order the rows/cols as needed
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+```
+
+```
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Well done!")
 ```
 
@@ -139,7 +247,7 @@ print("Well done!")
 In the previous data exercise, we studied an alloys dataset:
 
 
-```r
+``` r
 ## NOTE: No need to edit; execute
 alloys_mod <- tribble(
   ~thick,  ~E00,  ~mu00,  ~E45,  ~mu45, ~rep,
@@ -168,7 +276,7 @@ separate to tidy these data.
 ### __q2__ Use a combination of `separate` and pivoting to tidy `alloys_mod`.
 
 
-```r
+``` r
 df_q2 <-
   alloys_mod %>%
   pivot_longer(
@@ -207,7 +315,7 @@ df_q2
 Use the following tests to check your work:
 
 
-```r
+``` r
 ## NOTE: No need to change this
 assertthat::assert_that(
               (dim(df_q2)[1] == 8) & (dim(df_q2)[2] == 5)
@@ -218,7 +326,7 @@ assertthat::assert_that(
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Nice!")
 ```
 

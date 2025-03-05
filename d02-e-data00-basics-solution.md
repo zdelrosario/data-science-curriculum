@@ -10,25 +10,21 @@ super useful for writing code that's readable.
 *Reading*: (None)
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
 
@@ -42,7 +38,7 @@ library(tidyverse)
 the chunk, or by using the keybaord shortcut `Shift` + `Cmd/Ctrl` + `Enter`.
 
 
-```r
+``` r
 head(iris)
 ```
 
@@ -70,14 +66,14 @@ Some nomenclature:
 *Hint*: You can run `?diamonds` to get information on a built-in dataset.
 
 
-```r
+``` r
 ?diamonds
 ```
 
 ### __q2__ Run `glimpse(diamonds)`; what variables does `diamonds` have?
 
 
-```r
+``` r
 glimpse(diamonds)
 ```
 
@@ -126,7 +122,7 @@ Whenever you see `%>%`, you can translate that into the word "then". For
 instance
 
 
-```r
+``` r
 diamonds %>%
   group_by(cut) %>%
   summarize(carat_mean = mean(carat))
@@ -157,7 +153,7 @@ turn it into `diamonds %>% glimpse()`.
 ### __q4__ Use the pipe operator to re-write `summary(diamonds)`.
 
 
-```r
+``` r
 diamonds %>% summary()
 ```
 
@@ -196,7 +192,7 @@ So far we've only been looking at built-in datasets. Ultimately, we'll want to r
 ### __q5__ Use the function `read_csv()` to load the file `"./data/tiny.csv"`.
 
 
-```r
+``` r
 df_q5 <-
   read_csv("./data/tiny.csv")
 ```
@@ -211,7 +207,7 @@ df_q5 <-
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
-```r
+``` r
 df_q5
 ```
 

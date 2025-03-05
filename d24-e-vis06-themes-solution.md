@@ -10,7 +10,7 @@
 ### __q1__ Use `theme_void()` and `guides()` (with an argument) to remove everything in this plot except the points.
 
 
-```r
+``` r
 mpg %>%
   ggplot(aes(displ, hwy, color = class)) +
   geom_point()
@@ -19,7 +19,7 @@ mpg %>%
 <img src="d24-e-vis06-themes-solution_files/figure-html/q1-task-1.png" width="672" />
 
 
-```r
+``` r
 mpg %>%
   ggplot(aes(displ, hwy, color = class)) +
   geom_point() +
@@ -32,7 +32,7 @@ mpg %>%
 When I make presentation-quality figures, I often start with the following stub code:
 
 
-```r
+``` r
 ## NOTE: No need to edit; feel free to re-use this code!
 theme_common <- function() {
   theme_minimal() %+replace%
@@ -67,7 +67,7 @@ The `%+replace` magic above allows you to use `theme_common()` within your own g
 ### __q2__ Use `theme_common()` with the following graph. Document what's changed by the `theme()` arguments.
 
 
-```r
+``` r
 mpg %>%
   ggplot(aes(displ, hwy, color = class)) +
   geom_point() +
@@ -80,7 +80,7 @@ mpg %>%
 <img src="d24-e-vis06-themes-solution_files/figure-html/q2-task-1.png" width="672" />
 
 
-```r
+``` r
 mpg %>%
   ggplot(aes(displ, hwy, color = class)) +
   geom_point() +
@@ -106,7 +106,7 @@ Calling `theme_common()`, along with settings `labs()` and making some smart cho
 *Hint*: Use the `theme()` settings from q2 above as a starting point, and read the documentation for `theme()` to learn how to do more horrible things to this graph.
 
 
-```r
+``` r
 mpg %>%
   ggplot(aes(displ, hwy, color = class)) +
   geom_point() +
@@ -120,7 +120,7 @@ mpg %>%
 Here's one possible graph:
 
 
-```r
+``` r
 mpg %>%
   ggplot(aes(displ, hwy, color = class)) +
   geom_point() +
@@ -138,6 +138,9 @@ mpg %>%
 ```
 ## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
 ## ℹ Please use the `linewidth` argument instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 ```
 
 <img src="d24-e-vis06-themes-solution_files/figure-html/q3-solution-1.png" width="672" />

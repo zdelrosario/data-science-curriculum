@@ -6,28 +6,24 @@
 *Reading*: [Window Functions](https://dplyr.tidyverse.org/articles/window-functions.html#cumulative-aggregates-1), *Types of window functions*, *Ranking functions*, and *Lead and lag*
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
-```r
+``` r
 library(ggrepel)
 ```
 
@@ -37,7 +33,7 @@ library(ggrepel)
 The lead and lag functions simply provide a "shifted" copy of a vector.
 
 
-```r
+``` r
 ## NOTE: No need to edit this; just an example
 v <- c(1, 2, 3, 4, 5)
 lead(v)
@@ -47,7 +43,7 @@ lead(v)
 ## [1]  2  3  4  5 NA
 ```
 
-```r
+``` r
 lag(v)
 ```
 
@@ -58,7 +54,7 @@ lag(v)
 These are particularly useful for computing things like differences:
 
 
-```r
+``` r
 ## NOTE: No need to edit this; just an example
 x <- seq(-1, +1, length.out = 6)
 f <- x ^ 2
@@ -78,7 +74,7 @@ Make sure to order your data or use the `order_by` argument when using `lead` or
 ### __q1__ Use a window function modify the following visual to color each segment differently based on whether the period of time was increasing or decreasing.
 
 
-```r
+``` r
 economics %>%
   arrange(date) %>%
   mutate(
@@ -94,7 +90,8 @@ economics %>%
 ```
 
 ```
-## Warning: Removed 1 rows containing missing values (`geom_segment()`).
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_segment()`).
 ```
 
 <img src="d27-e-data08-window-solution_files/figure-html/q1-task-1.png" width="672" />
@@ -105,7 +102,7 @@ economics %>%
 The rank functions allow you to assign (integer) ranks to smallest (or largest) values of a vector.
 
 
-```r
+``` r
 ## NOTE: No need to edit this; just an example
 v <- c(1, 1, 2, 3, 5)
 row_number(v)
@@ -115,7 +112,7 @@ row_number(v)
 ## [1] 1 2 3 4 5
 ```
 
-```r
+``` r
 min_rank(v)
 ```
 
@@ -123,7 +120,7 @@ min_rank(v)
 ## [1] 1 1 3 4 5
 ```
 
-```r
+``` r
 dense_rank(v)
 ```
 
@@ -134,7 +131,7 @@ dense_rank(v)
 You can use the `desc()` function (or a negative sign) to reverse the ranking order.
 
 
-```r
+``` r
 ## NOTE: No need to edit this; just an example
 v <- c(1, 1, 2, 3, 5)
 row_number(desc(v))
@@ -144,7 +141,7 @@ row_number(desc(v))
 ## [1] 4 5 3 2 1
 ```
 
-```r
+``` r
 min_rank(desc(v))
 ```
 
@@ -152,7 +149,7 @@ min_rank(desc(v))
 ## [1] 4 4 3 2 1
 ```
 
-```r
+``` r
 dense_rank(-v)
 ```
 
@@ -163,7 +160,7 @@ dense_rank(-v)
 I find it difficult to remember how the rank functions behave, so I created the following visual to help remind myself how they function..
 
 
-```r
+``` r
 ## NOTE: No need to edit this; just an example
 set.seed(101)
 tribble(
@@ -210,6 +207,9 @@ tribble(
 ```
 ## Warning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.
 ## ℹ Please use the `linewidth` argument instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 ```
 
 <img src="d27-e-data08-window-solution_files/figure-html/ex-ranks-vis-1.png" width="672" />
@@ -217,7 +217,7 @@ tribble(
 ### __q2__ Use a rank function to filter the largest 3 `hwy` values and **all** vehicles that have those values.
 
 
-```r
+``` r
 q2 <-
   mpg %>%
   filter(dense_rank(desc(hwy)) <= 3)
@@ -237,7 +237,7 @@ q2
 Use the following test to check your work.
 
 
-```r
+``` r
 ## NOTE: No need to change this
 assertthat::assert_that(dim(q2)[1] == 4)
 ```
@@ -246,7 +246,7 @@ assertthat::assert_that(dim(q2)[1] == 4)
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Nice!")
 ```
 

@@ -6,25 +6,21 @@
 *Reading*: (None; this exercise *is* the reading.)
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
 ## Densities
@@ -35,7 +31,7 @@ Fundamentally, a density is a *function*: It takes an input, and returns an outp
 First, let's look at a density of some real data:
 
 
-```r
+``` r
 mpg %>%
   filter(class == "midsize") %>%
   ggplot(aes(cty, color = class)) +
@@ -49,7 +45,7 @@ This density indicates that a value around `18` is more prevalent than other val
 Next, let's look at a normal density:
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 df_norm_d <-
   tibble(z = seq(-5, +5, length.out = 100)) %>%
@@ -83,7 +79,7 @@ In `R` we access a density by prefixing its name with the letter `d`.
 ### __q1__ Modify the code below to evaluate a uniform density with `min = -1` and `max = +1`. Assign this value to `d`.
 
 
-```r
+``` r
 df_q1 <-
   tibble(x = seq(-5, +5, length.out = 100)) %>%
   mutate(d = dunif(x, min = -1, max = +1))
@@ -92,7 +88,7 @@ df_q1 <-
 Use the following test to check your answer.
 
 
-```r
+``` r
 ## NOTE: No need to change this
 assertthat::assert_that(
   all(
@@ -108,7 +104,7 @@ assertthat::assert_that(
 ## [1] TRUE
 ```
 
-```r
+``` r
 assertthat::assert_that(
   all(
     df_q1 %>%
@@ -123,7 +119,7 @@ assertthat::assert_that(
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Nice!")
 ```
 
@@ -139,7 +135,7 @@ What does it *practically* mean for a value to be more or less likely? A density
 Let's illustrate this idea by using a normal density to define a *random variable* `Z`. This is sometimes denoted `Z ~ norm(mean, sd)`, which means `Z` is density as a normal density with `mean` and `sd`. The code below illustrates what it looks like when we draw a few samples of `Z`.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 df_norm_samp <- tibble(Z = rnorm(n = 100, mean = 0, sd = 1))
 
@@ -162,7 +158,7 @@ ggplot() +
 Note that the histogram of `Z` values looks like a "blocky" version of the density. If we draw many more samples, the histogram will start to strongly resemble the density from which it was drawn:
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 ggplot() +
   ## Plot a *sample*
@@ -191,7 +187,7 @@ To clarify some terms:
 *Hint*: You may need to use the `group` aesthetic, in addition to `color` or `fill`.
 
 
-```r
+``` r
 ## NOTE: Use the data generated here
 df_q2 <- map_dfr(
   c(5, 10, 1e3),
@@ -218,7 +214,7 @@ A *very common misconception* is that drawing more samples will make *anything* 
 ### __q3__ Run the code below and inspect the resulting histogram. Increase `n_diamonds` below to increase the number of samples drawn: Do this a few times for an increasing number of samples. Answer the questions under *observations* below.
 
 
-```r
+``` r
 n_diamonds <- 1000
 
 diamonds %>%
@@ -247,19 +243,19 @@ The normal density *is* a good model for some physical phenomena, such as the se
 Remember that random variables are *random*. That means if we draw samples multiple times, we're bound to get different values. For example, run the following code chunk multiple times.
 
 
-```r
+``` r
 ## NOTE: No need to change; run this multiple times!
 rnorm(5)
 ```
 
 ```
-## [1] -1.3760786 -0.6709615 -0.5358250  0.9992815 -0.1919127
+## [1] -0.1567171 -0.7238050 -1.7103608 -2.2188364  0.4204561
 ```
 
 What this means is we'll get a slightly different picture every time we draw a sample. **This is the challenge with randomness**: Since we could have drawn a different set of samples, we need to know the degree to which we can trust conclusions drawn from data. Being *statistically literate* means knowing how much to trust your data.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 df_samp_multi <-
   tibble(Z = rnorm(n = 50, mean = 0, sd = 1), Run = "A") %>%
@@ -288,7 +284,7 @@ ggplot() +
 *However* for simulation purposes, we often want to be able to repeat a calculation. In order to do this, we can set the *state* of our random number generator by setting the *seed*. To illustrate, try running the following chunk multiple times.
 
 
-```r
+``` r
 ## NOTE: No need to change; run this multiple times!
 set.seed(101)
 rnorm(5)

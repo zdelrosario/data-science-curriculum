@@ -11,25 +11,21 @@
 nobody has the slightest notion what it means." --- Bertrand Russell
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
 ## Intuitive Definition
@@ -55,7 +51,7 @@ Note that this definition of frequency considers both a *set* $A$ and a sample $
 As an example, let's consider the set $A$ to be the set of $Z$ values such that $-1.96 <= Z <= +1.96$: We denote this set as $A = {Z | -1.96 <= Z <= +1.96}$. Let's also let $Z$ be a sample from a standard (`mean = 0, sd = 1`) normal. The following figure illustrates the set $A$ against a standard normal density.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 tibble(z = seq(-3, +3, length.out = 500)) %>%
   mutate(d = dnorm(z)) %>%
@@ -74,7 +70,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
 Note that a frequency is defined *not* in terms of a density, but rather in terms of a sample $X$. The following example code draws a sample from a standard normal, and computes the frequency with which values in the sample $X$ lie in the set $A$.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 df_z <- tibble(z = rnorm(100))
 
@@ -87,7 +83,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      98  0.98
+## 1         100      94  0.94
 ```
 
 Now it's your turn!
@@ -95,7 +91,7 @@ Now it's your turn!
 ### __q1__ Let $A = {Z | Z <= 0}$. Complete the following code to compute `count_total`, `count_A`, and `fr`. Before executing the code, **make a prediction** about the value of `fr`. Did the computed `fr` value match your prediction?
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 df_z <- tibble(z = rnorm(100))
 
@@ -108,7 +104,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      52  0.52
+## 1         100      55  0.55
 ```
 
 **Observations**:
@@ -119,7 +115,7 @@ df_z %>%
 The following graph visualizes the set $A = {z | z <= 0}$ against a standard normal density.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 tibble(z = seq(-3, +3, length.out = 500)) %>%
   mutate(d = dnorm(z)) %>%
@@ -140,7 +136,7 @@ Based on this visual, we might expect `fr = 0.5`. This was (likely) not the valu
 Remember in the previous stats exercise that when running `rnorm` with larger values of `n` we obtained histograms closer to the normal density? Something very similar happens with frequency and probability:
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 map_dfr(
   c(10, 100, 1000, 1e4),
@@ -160,9 +156,9 @@ map_dfr(
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
 ## 1          10       4 0.4  
-## 2         100      39 0.39 
-## 3        1000     510 0.51 
-## 4       10000    4955 0.496
+## 2         100      50 0.5  
+## 3        1000     507 0.507
+## 4       10000    4991 0.499
 ```
 
 This is because *probability* is actually defined[1] in terms of the limit
@@ -174,7 +170,7 @@ where $X_n$ is a sample of size $n$ drawn from the density $X_n \sim \rho$.[2]
 ### __q2__: Modify the code below to consider the set $A = {z | -1.96 <= z <= +1.96}$. What value does `fr` appear to be limiting towards?
 
 
-```r
+``` r
 ## TASK: Modify the code below
 map_dfr(
   c(10, 100, 1000, 1e4),
@@ -193,10 +189,10 @@ map_dfr(
 ## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1          10       9 0.9  
-## 2         100      93 0.93 
-## 3        1000     949 0.949
-## 4       10000    9467 0.947
+## 1          10      10 1    
+## 2         100      96 0.96 
+## 3        1000     956 0.956
+## 4       10000    9501 0.950
 ```
 
 **Observations**:
@@ -228,7 +224,7 @@ Note that for continuous distributions, the probability of a single point is *ze
 *Hint*: Remember the difference between `=` and `==`!
 
 
-```r
+``` r
 ## TASK: Modify the code below
 map_dfr(
   c(10, 100, 1000, 1e4),
@@ -260,7 +256,7 @@ map_dfr(
 We can also understand this phenomenon in terms of areas; the following graph visualizes the set $A = {z | z = 2}$ against a standard normal.
 
 
-```r
+``` r
 ## NOTE: No need to change this!
 tibble(z = seq(-3, +3, length.out = 500)) %>%
   mutate(d = dnorm(z)) %>%
@@ -285,7 +281,7 @@ Note that this set $A$ has nonzero height but zero width. Zero width corresponds
 There is a bit more terminology associated with distributions. The $\rho(x)$ we considered above is called a [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) (PDF); it is the function we integrate in order to obtain a probability. In R, the PDF has the `d` prefix, for instance `dnorm`. For example, the standard normal has the following PDF.
 
 
-```r
+``` r
 tibble(z = seq(-3, +3, length.out = 1000)) %>%
   mutate(d = dnorm(z)) %>%
 
@@ -307,7 +303,7 @@ $$R(x) = \int_{-\infty}^x \rho(s) ds.$$
 In R, the CDF has the prefix `p`, such as `pnorm`. For example, the standard normal has the following CDF.
 
 
-```r
+``` r
 tibble(z = seq(-3, +3, length.out = 1000)) %>%
   mutate(p = pnorm(z)) %>%
 
@@ -327,7 +323,7 @@ Note that, by definition, the CDF gives the probability over the set $A(x) = {x'
 ### __q4__ Use `pnorm` to compute the probability that `Z ~ norm(mean = 0, sd = 1)` is less than or equal to zero. Compare this against your frequency prediction from __q1__.
 
 
-```r
+``` r
 ## TASK: Compute the probability that Z <= 0, assign to p0
 p0 <- pnorm(q = 0)
 p0
@@ -340,7 +336,7 @@ p0
 Use the following code to check your answer.
 
 
-```r
+``` r
 ## NOTE: No need to change this
 assertthat::assert_that(p0 == 0.5)
 ```
@@ -349,7 +345,7 @@ assertthat::assert_that(p0 == 0.5)
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Nice!")
 ```
 
@@ -368,7 +364,7 @@ $$\mathbb{P}_{\rho}[a <= X <= b] = \int_a^b \rho(x) dx = \int_{-\infty}^b \rho(x
 ### __q5__ Using the identity above, use `pnorm` to compute the probability that $-1.96 <= Z <= +1.96$ with `Z ~ norm(mean = 0, sd = 1)`.
 
 
-```r
+``` r
 ## TASK: Compute the probability that -1.96 <= Z <= +1.96, assign to pI
 pI <- pnorm(q = +1.96) - pnorm(q = -1.96)
 pI
@@ -381,7 +377,7 @@ pI
 Use the following code to check your answer.
 
 
-```r
+``` r
 ## NOTE: No need to change this
 assertthat::assert_that(abs(pI - 0.95) < 1e-3)
 ```
@@ -390,7 +386,7 @@ assertthat::assert_that(abs(pI - 0.95) < 1e-3)
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Nice!")
 ```
 

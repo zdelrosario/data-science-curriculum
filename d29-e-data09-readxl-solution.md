@@ -10,28 +10,24 @@ In this case study, I'll take you through the process of *wrangling* a messy Exc
 
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2
-```
-
-```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
-```r
+``` r
 library(readxl) # For reading Excel sheets
 library(httr) # For downloading files
 
@@ -43,7 +39,7 @@ filename <- "./data/undoc.xlsx"
 I keep a copy of the example data in a personal repo; download a local copy.
 
 
-```r
+``` r
 ## NOTE: No need to edit
 curl::curl_download(
         url_undoc,
@@ -57,7 +53,7 @@ curl::curl_download(
 ### __q1__ Run the following code and pay attention to the column names. Open the downloaded Excel sheet and compare. Why are the column names so weird?
 
 
-```r
+``` r
 ## NOTE: No need to edit; run and inspect
 df_q1 <- read_excel(filename)
 ```
@@ -84,7 +80,7 @@ df_q1 <- read_excel(filename)
 ## • `` -> `...19`
 ```
 
-```r
+``` r
 df_q1 %>% glimpse
 ```
 
@@ -123,7 +119,7 @@ Most `read_` functions have a *skip* argument you can use to skip over the first
 Open the target Excel sheet (located at `./data/undoc.xlsx`) and find which line (row) at which the year column headers are located. Use the `skip` keyword to start your read at that line.
 
 
-```r
+``` r
 ## TODO:
 df_q2 <- read_excel(
   filename,
@@ -141,7 +137,7 @@ df_q2 <- read_excel(
 ## • `` -> `...6`
 ```
 
-```r
+``` r
 df_q2 %>% glimpse
 ```
 
@@ -172,7 +168,7 @@ df_q2 %>% glimpse
 Use the following test to check your work.
 
 
-```r
+``` r
 ## NOTE: No need to change this
 assertthat::assert_that(setequal(
               (df_q2 %>% names() %>% .[7:19]),
@@ -184,7 +180,7 @@ assertthat::assert_that(setequal(
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Nice!")
 ```
 
@@ -195,7 +191,7 @@ print("Nice!")
 Let's take stock of where we are:
 
 
-```r
+``` r
 df_q2 %>% head()
 ```
 
@@ -209,8 +205,8 @@ df_q2 %>% head()
 ## 4 <NA>   <NA>  <NA>  <NA>  <NA>  Count     NA     NA     NA     NA     NA     NA
 ## 5 <NA>   <NA>  Djib… PH    WHO   Rate      NA     NA     NA     NA     NA     NA
 ## 6 <NA>   <NA>  <NA>  <NA>  <NA>  Count     NA     NA     NA     NA     NA     NA
-## # … with 7 more variables: `2006` <dbl>, `2007` <dbl>, `2008` <dbl>,
-## #   `2009` <chr>, `2010` <chr>, `2011` <chr>, `2012` <chr>
+## # ℹ 7 more variables: `2006` <dbl>, `2007` <dbl>, `2008` <dbl>, `2009` <chr>,
+## #   `2010` <chr>, `2011` <chr>, `2012` <chr>
 ```
 
 We still have problems:
@@ -227,7 +223,7 @@ Use the provided names in `col_names_undoc` with the `col_names` argument to set
 *Hint 2*: You can use a named vector for `col_types` to help keep type of which type is assigned to which variable, for instance `c("variable" = "type")`.
 
 
-```r
+``` r
 ## NOTE: Use these column names
 col_names_undoc <-
   c(
@@ -321,7 +317,7 @@ df_q3 <- read_excel(
 Use the following test to check your work.
 
 
-```r
+``` r
 ## NOTE: No need to change this
 assertthat::assert_that(setequal(
               (df_q3 %>% names()),
@@ -333,7 +329,7 @@ assertthat::assert_that(setequal(
 ## [1] TRUE
 ```
 
-```r
+``` r
 assertthat::assert_that((df_q3 %>% slice(1) %>% pull(`2012`)) == 8)
 ```
 
@@ -341,7 +337,7 @@ assertthat::assert_that((df_q3 %>% slice(1) %>% pull(`2012`)) == 8)
 ## [1] TRUE
 ```
 
-```r
+``` r
 print("Great!")
 ```
 
@@ -355,23 +351,22 @@ print("Great!")
 Now let's take a look at the head of the data:
 
 
-```r
+``` r
 df_q3 %>% head()
 ```
 
 ```
 ## # A tibble: 6 × 19
-##   region sub_r…¹ terri…² source org   indic…³ `2000` `2001` `2002` `2003` `2004`
-##   <chr>  <chr>   <chr>   <chr>  <chr> <chr>    <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
-## 1 Africa Easter… Burundi PH     WHO   Rate        NA     NA     NA     NA     NA
-## 2 <NA>   <NA>    <NA>    <NA>   <NA>  Count       NA     NA     NA     NA     NA
-## 3 <NA>   <NA>    Comoros PH     WHO   Rate        NA     NA     NA     NA     NA
-## 4 <NA>   <NA>    <NA>    <NA>   <NA>  Count       NA     NA     NA     NA     NA
-## 5 <NA>   <NA>    Djibou… PH     WHO   Rate        NA     NA     NA     NA     NA
-## 6 <NA>   <NA>    <NA>    <NA>   <NA>  Count       NA     NA     NA     NA     NA
-## # … with 8 more variables: `2005` <dbl>, `2006` <dbl>, `2007` <dbl>,
-## #   `2008` <dbl>, `2009` <dbl>, `2010` <dbl>, `2011` <dbl>, `2012` <dbl>, and
-## #   abbreviated variable names ¹​sub_region, ²​territory, ³​indicator
+##   region sub_region territory source org   indicator `2000` `2001` `2002` `2003`
+##   <chr>  <chr>      <chr>     <chr>  <chr> <chr>      <dbl>  <dbl>  <dbl>  <dbl>
+## 1 Africa Eastern A… Burundi   PH     WHO   Rate          NA     NA     NA     NA
+## 2 <NA>   <NA>       <NA>      <NA>   <NA>  Count         NA     NA     NA     NA
+## 3 <NA>   <NA>       Comoros   PH     WHO   Rate          NA     NA     NA     NA
+## 4 <NA>   <NA>       <NA>      <NA>   <NA>  Count         NA     NA     NA     NA
+## 5 <NA>   <NA>       Djibouti  PH     WHO   Rate          NA     NA     NA     NA
+## 6 <NA>   <NA>       <NA>      <NA>   <NA>  Count         NA     NA     NA     NA
+## # ℹ 9 more variables: `2004` <dbl>, `2005` <dbl>, `2006` <dbl>, `2007` <dbl>,
+## #   `2008` <dbl>, `2009` <dbl>, `2010` <dbl>, `2011` <dbl>, `2012` <dbl>
 ```
 
 Irritatingly, many of the cell values are left *implicit*; as humans reading these data, we can tell that the entries in `region` under `Africa` also have the value `Africa`. However, the computer can't tell this! We need to make these values *explicit* by filling them in.
@@ -381,7 +376,7 @@ To that end, I'm going to *guide* you through some slightly advanced Tidyverse c
 First, the following function counts the number of rows with `NA` entries in a chosen set of columns:
 
 
-```r
+``` r
 ## Helper function to count num rows w/ NA in vars_lagged
 rowAny <- function(x) rowSums(x) > 0
 countna <- function(df, vars_lagged) {
@@ -395,7 +390,10 @@ countna(df_q3, c("region"))
 ```
 
 ```
-## Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
+## Warning: There was 1 warning in `filter()`.
+## ℹ In argument: `rowAny(across(vars_lagged, is.na))`.
+## Caused by warning:
+## ! Using an external vector in selections was deprecated in tidyselect 1.1.0.
 ## ℹ Please use `all_of()` or `any_of()` instead.
 ##   # Was:
 ##   data %>% select(vars_lagged)
@@ -413,7 +411,7 @@ countna(df_q3, c("region"))
 Ideally we want this count to be *zero*. To fill-in values, we will use the following function to do one round of *lag-filling*:
 
 
-```r
+``` r
 lagfill <- function(df, vars_lagged) {
   df %>%
     mutate(across(
@@ -448,7 +446,7 @@ What we'll do is continually run `lagfill` until we reduce `countna` to zero. We
 *Hint*: Think about which columns have implicit values, and which truly have missing values.
 
 
-```r
+``` r
 ## Choose variables to lag-fill
 vars_lagged <- c("region", "sub_region", "territory", "source", "org")
 

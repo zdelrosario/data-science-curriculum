@@ -49,7 +49,7 @@ What you've just done is create a *copy* of your partner's repository; you can n
 Then use the command below to clone your fork:
 
 
-```bash
+``` bash
 # You should be able to paste the git@github.com part you copied above
 $ git clone git@github.com:YOUR-USERNAME/YOUR-FORKED-REPO
 $ cd YOUR-FORKED-REPO
@@ -58,7 +58,7 @@ $ cd YOUR-FORKED-REPO
 ### __q3__ (*Forking*) Add your partner's repository as a *remote*. The reading described how to do this from the command line; use the command *within your forked repository*
 
 
-```bash
+``` bash
 $ git remote add upstream https://github.com/UPSTREAM-USER/ORIGINAL-PROJECT.git
 ```
 
@@ -69,7 +69,7 @@ where you should replace `UPSTREAM-USER` with your partner's GitHub username, an
 ### __q6__ (*Forking*) Commit your changes, and push them to your forked repository. If you do `$ git push`, you will probably see something like:
 
 
-```bash
+``` bash
 fatal: The current branch dev_addname has no upstream branch.
 To push the current branch and set the remote as upstream, use
 
@@ -81,7 +81,7 @@ If you see this, it's because Git is not willing to make assumptions about *wher
 Follow the instructions by running
 
 
-```bash
+``` bash
 $ git push --set-upstream origin master
 ```
 
@@ -126,7 +126,7 @@ of your repo. before pulling. Navigate to the directory of your repo. Make sure
 to commit any stray changes (e.g. in-progress exercises!). Then run `git pull`.
 
 
-```bash
+``` bash
 $ cd /path/to/your/repo
 $ git pull
 ```
@@ -144,7 +144,7 @@ partner's current (and future!) edits.
 Use the following command to *fetch* your partner's edits.
 
 
-```bash
+``` bash
 $ git fetch upstream
 ```
 
@@ -152,7 +152,7 @@ Note that this hasn't actually changed your local repo; to see this check out
 your *branches*.
 
 
-```bash
+``` bash
 $ git branch -va
 ```
 
@@ -164,7 +164,7 @@ Note that I have my own master branch, and also have my partner's
 In order to keep your forked copy of your partner's repo current, run the following commands.
 
 
-```bash
+``` bash
 # Make sure you're on the master branch
 $ git checkout master
 # merge your master with your partner's upstream/master
