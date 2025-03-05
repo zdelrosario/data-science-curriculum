@@ -28,7 +28,7 @@ A histogram is a form of bar chart. Much like `geom_bar()`, histograms count up 
 
 ```{r}
 ## NOTE: No need to modify
-mpg %>% 
+mpg %>%
   ggplot(aes(displ)) +
   geom_bar()
 ```
@@ -37,7 +37,7 @@ Some of the `displ` values only appear once, but they're very close to similar v
 
 ```{r}
 ## NOTE: No need to modify
-mpg %>% 
+mpg %>%
   ggplot(aes(displ)) +
   geom_histogram(bins = 20)
 ```
@@ -50,7 +50,7 @@ Make a histogram of `cty` fuel economy.
 
 ```{r q1-task}
 ## TASK: Make a histogram of
-mpg %>% 
+mpg %>%
 # TODO: Finish this code
 ```
 
@@ -62,7 +62,7 @@ If we pick very few bins, we lose a lot of resolution:
 
 ```{r}
 ## NOTE: No need to modify
-mpg %>% 
+mpg %>%
   ggplot(aes(displ)) +
   geom_histogram(bins = 5)
 ```
@@ -71,7 +71,7 @@ This plot gives the impression that the data peaks around `displ == 3` or so. Ho
 
 ```{r}
 ## NOTE: No need to modify
-mpg %>% 
+mpg %>%
   ggplot(aes(displ)) +
   geom_histogram(bins = 10)
 ```
@@ -80,7 +80,7 @@ This plot shows us a peak around `displ == 2` and another peak around `displ == 
 
 ```{r}
 ## NOTE: No need to modify
-mpg %>% 
+mpg %>%
   ggplot(aes(displ)) +
   geom_histogram(bins = 15)
 ```
@@ -156,7 +156,7 @@ In the reading, we learned that the "most important thing" to keep in mind with 
 
 Analyze the following graph; make sure to test different binwidths. What patterns do you see? Which patterns remain as you change the binwidth?
 
-```{r q3-task}
+```{r q4-task}
 ## TODO: Run this chunk; play with differnet bin widths
 diamonds %>%
   filter(carat < 1.1) %>%
