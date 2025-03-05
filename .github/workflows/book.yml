@@ -26,7 +26,7 @@ jobs:
           brew install pandoc
 
       - name: Cache bookdown results
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: book/_bookdown_files
           key: bookdown-${{ hashFiles('**/*Rmd') }}
