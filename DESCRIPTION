@@ -1,16 +1,24 @@
+Package: dscurriculum
+Title: Data Science Curriculum
+Version: 0.1.0
+Authors@R (parsed):
+    * Zachary del Rosario <zdelrosario@olin.edu> [aut, cre] (0000-0003-4676-1692)
+Description: What the package does (one paragraph).
+License: CC-BY-SA-4.0
+Encoding: UTF-8
 Imports:
-	tidyverse,
-	bookdown,
-    	testthat,
-    	broom,
-    	curl,
-    	fitdistrplus,
-    	gapminder,
-    	ggrepel,
-    	googlesheets4,
-    	nycflights13,
-    	modelr,
-    	mvtnorm,
-    	rsample,
-    	Rtsne,
-    	viridis
+  tidyverse,
+  bookdown,
+  testthat,
+  broom,
+  curl,
+  fitdistrplus,
+  gapminder,
+  ggrepel,
+  googlesheets4,
+  nycflights13,
+  modelr,
+  mvtnorm,
+  rsample,
+  Rtsne,
+  viridis
