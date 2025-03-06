@@ -264,7 +264,7 @@ and some diamonds have `x, y, z` values at zero....
 
 <!-- include-exit-ticket -->
 
-# Bibliography
+## Bibliography
 <!-- -------------------------------------------------- -->
 
 - [1] Olson, ["Houston, We Have a Narrative"](http://scienceneedsstory.com/) (2015)
