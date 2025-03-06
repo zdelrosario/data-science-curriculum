@@ -101,7 +101,7 @@ df_clt %>%
 
 At just `1` our sample mean is $X_1 / 1$---we're just drawing single observations from the population, so we see a uniform. At `2` we something that looks like a tent. By `9` samples we see a distribution that looks quite normal.
 
-The CLT doesn't work for *all* problems. The CLT is often used for sums of random variables---the mean is one such sum. However, something like a quantile is not estimated by a sum of random variables, so we can't use the CLT to approximate a sampling distribution. Later we'll learn a more general tool to approximate sampling distributions for general statistics---*the bootstrap*.
+The CLT doesn't work for *all* problems. The CLT is often used for sums of random variables---the mean is one such sum. However, something like a quantile is not estimated by a sum of random variables, so we can't use the CLT to approximate a sampling distribution. We already learned that we can use *bootstrap resampling* to approximate a sampling distribution. An advantage of the CLT approach is that it is *dead simple*---once we know the math.
 
 Note that the CLT tells us about estimates like the sample mean, it does *not* tell us anything about the distribution of the underlying population. We will use the CLT to help construct *confidence intervals*.
 
@@ -118,13 +118,20 @@ Now imagine we wanted to select two endpoints to give us the middle $95%$ of thi
 
 ```{r ci-95}
 ## NOTE: No need to change this!
-q95 <- qnorm( 1 - (1 - 0.95) / 2 )
-q95
+z_c <- qnorm( 1 - (1 - 0.95) / 2 )
+z_c
 ```
 
-This is approximately `1.96` when seeking a $95%$ confidence level. Since the standard normal distribution is symmetric about zero, we can use the same value `q95` with a negative sign for the appropriate lower quantile.
+This is approximately `1.96` when seeking a $95%$ confidence level---this is a value that's so famous, it gets its own [Wikipedia page](https://en.wikipedia.org/wiki/97.5th_percentile_point). Since the standard normal distribution is symmetric about zero, we can use the same value `z_c` with a negative sign for the appropriate lower quantile.
 
-*Here's the procedure*, we'll build lower and upper bounds for an interval based on the sample mean and sample standard error $[\hat{mu} - q_{95} \hat{\text{SE}}, \hat{mu} + q_{95} \hat{\text{SE}}]$. I construct this interval for each sample in `df_clt`, and check whether the interval contains the population mean of `0.5`. The following code visualizes the first `100` intervals.
+Note that our confidence level $C$ is often reported as an "alpha level" instead $\alpha = 1 - C$. This can be a more convenient way to compute `z_c`, and it gives an identical value.
+
+```{r alpha-05}
+## NOTE: No need to change this!
+-qnorm(0.05 / 2) # The same value as qnorm( 1 - (1 - 0.95) / 2 )
+```
+
+*Here's the procedure*, we'll build lower and upper bounds for an interval based on the sample mean and sample standard error $[\hat{mu} - z_c \hat{\text{SE}}, \hat{mu} + z_c \hat{\text{SE}}]$. I construct this interval for each sample in `df_clt`, and check whether the interval contains the population mean of `0.5`. The following code visualizes the first `100` intervals.
 
 ```{r vis-unif-ci}
 ## NOTE: No need to change this!
@@ -135,8 +142,8 @@ df_clt %>%
   ) %>%
   mutate(
     se = sd / sqrt(n),
-    lo = mean - q95 * se,
-    hi = mean + q95 * se
+    lo = mean - z_c * se,
+    hi = mean + z_c * se
   ) %>%
 
   ggplot(aes(id)) +
@@ -169,8 +176,8 @@ df_clt %>%
   filter(n > 1) %>%
   mutate(
     se = sd / sqrt(n),
-    lo = mean - q95 * se,
-    hi = mean + q95 * se,
+    lo = mean - z_c * se,
+    hi = mean + z_c * se,
     flag = (lo <= 0.5) & (0.5 <= hi)
   ) %>%
   group_by(n) %>%
@@ -184,7 +191,9 @@ Some observations to note:
 
 [This animation](https://seeing-theory.brown.edu/frequentist-inference/index.html) is the best visual explain I've found on how confidence intervals are constructed [2].
 
-### __q1__ Using the CLT, approximate a $99\%$ confidence interval for the population mean using the sample `z_q1`.
+### __q1__ Make a CLT approximation for a confidence interval
+
+Using the CLT, approximate a $99\%$ confidence interval for the population mean using the sample `z_q1`.
 
 ```{r q1-task}
 ## TASK: Estimate a 99% confidence interval with the sample below
@@ -282,7 +291,7 @@ df_flights_sampled %>%
   scale_color_discrete(name = "Confidently Greater than Zero?") +
   theme(legend.position = "bottom") +
   labs(
-    x = "Samples",
+    x = "Observations",
     y = "Arrival Delay (minutes)",
     title = "American Airlines Delays"
   )

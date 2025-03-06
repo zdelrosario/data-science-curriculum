@@ -31,10 +31,11 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
 
-## Due Date
+## Submission
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
+Make sure to commit both the challenge report (`report.md` file) and supporting files (`report_files/` folder) when you are done! Then submit a link to Canvas. **Your Challenge submission is not complete without all files uploaded to GitHub.**
+
 
 ```{r setup}
 library(tidyverse)
@@ -131,7 +132,7 @@ print("Very good!")
 
 ### __q4__ Consider the following statement:
 
-"A material's property (or material property) is an intensive property of some material, i.e. a physical property that does not depend on the amount of the material."[2]
+> "A material's property (or material property) is an intensive property of some material, i.e. a physical property that does not depend on the amount of the material."[2]
 
 Note that the "amount of material" would vary with the thickness of a tested plate. Does the following graph support or contradict the claim that "elasticity `E` is an intensive material property." Why or why not? Is this evidence *conclusive* one way or another? Why or why not?
 
@@ -147,6 +148,8 @@ df_stang_long %>%
 **Observations**:
 
 - Does this graph support or contradict the claim above?
+  - (Your response here)
+- Is this evidence *conclusive* one way or another?
   - (Your response here)
 
 # References

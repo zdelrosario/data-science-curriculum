@@ -12,7 +12,7 @@ prerequisites:
 *Purpose*: We've been learning how to quantify uncertainty in estimates through the exercises; now its time to put those skills to use studying real data. In this challenge we'll use concepts like confidence intervals to help us make sense of census data.
 
 *Reading*:
-- [Using ACS Estimates and Margin of Error](https://www.census.gov/programs-surveys/acs/guidance/training-presentations/acs-moe.html) (Optional)
+- [Using ACS Estimates and Margin of Error](https://www.census.gov/data/academy/webinars/2020/calculating-margins-of-error-acs.html) (Optional, see the PDF on the page)
 - [Patterns and Causes of Uncertainty in the American Community Survey](https://www.sciencedirect.com/science/article/pii/S0143622813002518?casa_token=VddzQ1-spHMAAAAA:FTq92LXgiPVloJUVjnHs8Ma1HwvPigisAYtzfqaGbbRRwoknNq56Y2IzszmGgIGH4JAPzQN0) (Optional, particularly the *Uncertainty in surveys* section under the Introduction.)
 
 <!-- include-rubric -->
@@ -33,10 +33,11 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
 
-## Due Date
+## Submission
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
+Make sure to commit both the challenge report (`report.md` file) and supporting files (`report_files/` folder) when you are done! Then submit a link to Canvas. **Your Challenge submission is not complete without all files uploaded to GitHub.**
+
 
 # Setup
 <!-- ----------------------------------------------------------------------- -->
@@ -55,13 +56,10 @@ filename_pop <- NA_character_
 df_pop <-
   read_csv(
     filename_pop,
-    skip = 2,
-    col_names = c(
-      "id",
-      "geographic_area_name",
-      "population_estimate",
-      "population_moe"
-    )
+    skip = 1,
+  ) %>% 
+  rename(
+    population_estimate = `Estimate!!Total`
   )
 
 df_pop
@@ -96,7 +94,7 @@ Use the following test to check that you downloaded the correct file:
 ## NOTE: No need to edit, use to check you got the right file.
 assertthat::assert_that(
   df_income %>%
-    filter(id == "0500000US01001") %>%
+    filter(Geography == "0500000US01001") %>%
     pull(`Estimate!!Percent Distribution!!FAMILY INCOME BY FAMILY SIZE!!2-person families`)
   == 45.6
 )
@@ -115,9 +113,11 @@ This dataset is in desperate need of some *tidying*. To simplify the task, we'll
 df_q3 <-
   df_income %>%
   select(
-    id,
+    Geography,
     contains("Geographic"),
-    contains("median") & matches("\\d-person families")
+    # This will select only the numeric d-person family columns;
+    # it will ignore the annotation columns
+    contains("median") & matches("\\d-person families") & !contains("Annotation of")
   ) %>%
   mutate(across(contains("median"), as.numeric)) %>%
 ## TODO: Pivot the data, rename the columns
@@ -130,12 +130,12 @@ Use the following tests to check your work:
 ## NOTE: No need to edit
 assertthat::assert_that(setequal(
   names(df_q3),
-  c("id", "geographic_area_name", "category", "income_estimate", "income_moe")
+  c("Geography", "geographic_area_name", "category", "income_estimate", "income_moe")
 ))
 
 assertthat::assert_that(
   df_q3 %>%
-    filter(id == "0500000US01001", category == "2-person families") %>%
+    filter(Geography == "0500000US01001", category == "2-person families") %>%
     pull(income_moe)
   == 6663
 )
@@ -161,14 +161,14 @@ Use the following tests to check your work:
 ## NOTE: No need to edit
 assertthat::assert_that(setequal(
   names(df_q4),
-  c("id", "geographic_area_name", "category", "income_estimate", "income_moe",
+  c("Geography", "geographic_area_name", "category", "income_estimate", "income_moe",
     "income_SE", "income_lo", "income_hi", "income_CV")
 ))
 
 assertthat::assert_that(
   abs(
     df_q4 %>%
-    filter(id == "0500000US01001", category == "2-person families") %>%
+    filter(Geography == "0500000US01001", category == "2-person families") %>%
     pull(income_SE) - 4050.456
   ) / 4050.456 < 1e-3
 )
@@ -176,7 +176,7 @@ assertthat::assert_that(
 assertthat::assert_that(
   abs(
     df_q4 %>%
-    filter(id == "0500000US01001", category == "2-person families") %>%
+    filter(Geography == "0500000US01001", category == "2-person families") %>%
     pull(income_lo) - 54513.72
   ) / 54513.72 < 1e-3
 )
@@ -184,7 +184,7 @@ assertthat::assert_that(
 assertthat::assert_that(
   abs(
     df_q4 %>%
-    filter(id == "0500000US01001", category == "2-person families") %>%
+    filter(Geography == "0500000US01001", category == "2-person families") %>%
     pull(income_hi) - 75380.28
   ) / 75380.28 < 1e-3
 )
@@ -192,7 +192,7 @@ assertthat::assert_that(
 assertthat::assert_that(
   abs(
     df_q4 %>%
-    filter(id == "0500000US01001", category == "2-person families") %>%
+    filter(Geography == "0500000US01001", category == "2-person families") %>%
     pull(income_CV) - 0.06236556
   ) / 0.06236556 < 1e-3
 )

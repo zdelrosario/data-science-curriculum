@@ -27,10 +27,11 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 | Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
 | Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
 
-## Due Date
+## Submission
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
+Make sure to commit both the challenge report (`report.md` file) and supporting files (`report_files/` folder) when you are done! Then submit a link to Canvas. **Your Challenge submission is not complete without all files uploaded to GitHub.**
+
 
 ```{r setup}
 library(tidyverse)
@@ -161,23 +162,35 @@ fit_nonphysical <-
 - What *Category* of variable is `idx`? Does it have any physical meaning?
   - (Your response here)
 
-### __q4__ Use a combination of EDA and train-validation error to build a model by selecting *reasonable* predictors for the `formula` argument. Document your findings under *observations* below. Try to build the most accurate model you can!
+### __q4__ Interpret this model
+
+Interpret the following model by answering the questions below.
+
+*Note*. The `-` syntax in R formulas allows us to exclude columns from fitting. So `T_norm ~ . - x` would fit on all columns *except* `x`.
 
 ```{r q4-task}
-## TODO: Fit a model for T_norm using only *principled* predictors, try to
-##       optimize your validation error.
-fit_q4 <- NA
-
-## NOTE: No need to change these error calculations; use them to
-##       help define your model
-rsquare(fit_q4, df_train)
-rsquare(fit_q4, df_validate)
+## TODO: Inspect the regression coefficients for the following model
+fit_q4 <- 
+  df_train %>% 
+  # lm(formula = T_norm ~ . - idx - avg_q - avg_T - rms_T)
+  lm(formula = T_norm ~ L + W + U_0 + N_p + k_f + T_f)
+  # lm(formula = T_norm ~ L - W - U_0 - N_p - k_f - T_f)
 ```
 
 **Observations**:
 
-- (Use this space to document which predictors seem useful.)
-- *Note*: You don't just have to fiddle with `formula`! Remember that you have a whole toolkit of *EDA* tools
+- Which columns are excluded in the model formula above? What categories do these belong to? Why are these important quantities to leave out of the model?
+  - (Your response here)
+- Which inputs are *statistically significant*, according to the model?
+  - (Your response here)
+- What is the regression coefficient for `x`? What about the regression coefficient for `T_f`?
+  - (Your response here)
+- What is the standard deviation of `x` in `df_psaap`? What about the standard deviation of `T_f`? 
+  - (Your response here)
+- How do these standard deviations relate to the regression coefficients for `x` and `T_f`?
+  - (Your response here)
+- Note that literally *all* of the inputs above have *some* effect on the output `T_norm`; so they are all "significant" in that sense. What does this tell us about the limitations of statistical significance for interpreting regression coefficients?
+  - (Your response here)
 
 ## Contrasting CI and PI
 
@@ -255,11 +268,11 @@ Since CI and PI are a quantification of uncertainty, they should tend to *narrow
 ##       and visualize the results on a predicted-vs-actual plot. It will
 ##       also compare against the simple `fit_simple` defined above.
 bind_rows(
-  df_validate %>% 
+  df_psaap %>% 
     add_uncertainties(fit_simple, interval = "prediction", prefix = "pi") %>% 
     select(T_norm, pi_lwr, pi_fit, pi_upr) %>% 
     mutate(model = "x only"),
-  df_validate %>% 
+  df_psaap %>% 
     add_uncertainties(fit_q4, interval = "prediction", prefix = "pi") %>% 
     select(T_norm, pi_lwr, pi_fit, pi_upr) %>% 
     mutate(model = "q4"),
@@ -309,7 +322,7 @@ In order to maximize the conditions under which this device can operate successf
 | `U_0`    | 1.0      |
 | (Other)  | (Varies) |
 
-Your task is to use a regression analysis to deliver to the design team a *dependable range* of values for `T_norm`, given their proposed design, and at a fairly high level `0.8`. Perform your analysis below (use the helper function `add_uncertainties()`!), and answer the questions below.
+Your task is to use a regression analysis to deliver to the design team a *dependable range* of values for `T_norm`, given their proposed design, and at a fairly high level `0.8`. Perform your analysis below (use the helper function `add_uncertainties()` with the `level` argument!), and answer the questions below.
 
 *Hint*: This problem will require you to *build a model* by choosing the appropriate variables to include in the analysis. Think about *which variables the design team can control*, and *which variables they have chosen to allow to vary*. You will also need to choose between computing a CI or PI for the design prediction.
 
@@ -334,7 +347,7 @@ fit_q6 <- NA
   - (Your response here)
 - What kind of interval---confidence or prediction---would you use for this task, and why?
   - (Your response here)
-- What fraction of validation cases lie within the interval you predict? How does this compare with `pr_level`?
+- What fraction of validation cases lie within the intervals you predict? (NB. Make sure to calculate your intervals *based on the validation data*; don't just use one single interval!) How does this compare with `pr_level`?
   - (Your response here)
 - What interval for `T_norm` would you recommend the design team to plan around?
   - (Your response here)

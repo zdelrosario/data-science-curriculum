@@ -1,0 +1,86 @@
+---
+title: "Track Exercises"
+output: github_document
+date: "2025-01-28"
+---
+
+This script shows all of the exercises you've completed (with a ✅), and which exercises each challenge depends on.
+
+To use this script, rename an exercise once you complete it. For instance if you've done `d00-e-rep00-setup-assignment.Rmd`, rename it to `zd00-e-rep00-setup-assignment.Rmd`.
+
+```{r, echo=FALSE, results=FALSE, message=FALSE}
+library(tidyverse)
+library(gt)
+
+# Schedule details
+filename_dep <- "./schedule_wd.csv"
+
+# Data directory
+dir_data <- "../exercises_sequenced"
+# Find all the assignment files
+df_files_all <-
+  tibble(filename = list.files(dir_data, full.names = TRUE)) %>%
+  mutate(name = str_remove(filename, "\\.\\./exercises_sequenced/")) %>% 
+  select(name)
+df_files_all
+```
+
+
+```{r, echo=FALSE, results=FALSE, message=FALSE}
+# Load the schedule data
+df_schedule <- read_csv(filename_dep)
+df_schedule 
+```
+
+
+
+```{r, echo=FALSE, results=FALSE, message=FALSE}
+# Wrangle the exercise sequence
+df_seq <- 
+  df_schedule %>% 
+  arrange(day) %>% 
+  mutate(
+    name = str_c(
+      "d", 
+      str_pad(day, width = 2, side = "left", pad = "0"), 
+      "-", 
+      name, 
+      "-assignment.Rmd"
+    )
+  ) %>% 
+  group_by(challenge) %>% 
+  mutate(
+    challenge = if_else(
+      row_number() == max(row_number()),
+      as.character(challenge),
+      ""
+    )
+  ) %>% 
+  ungroup()
+df_seq 
+```
+
+
+```{r, echo=FALSE, results=FALSE, message=FALSE}
+# Final join
+df_report <- 
+  df_seq %>% 
+  left_join(
+    .,
+    df_files_all %>% 
+      mutate(done = 0),
+    by = "name"
+  ) %>% 
+  mutate(done = if_else(is.na(done), "✅", "✖️️")) %>% 
+  select(day, challenge, done, name)
+
+df_report
+```
+
+
+
+```{r, echo=FALSE}
+df_report %>% 
+  gt()
+```
+

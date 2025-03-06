@@ -15,7 +15,8 @@ reading: 30
 
 *Topics*: Regular expressions, `stringr` package functions, pivoting
 
-*Note*: The [stringr cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf) is a helpful reference for this exercise!
+*Note*: The [stringr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) is a helpful reference for this exercise!
+- If this link is broken, try searching "Rstudio stringr cheatsheet" on the web.
 
 ```{r setup, include=FALSE}
 # knitr options
