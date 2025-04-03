@@ -35,7 +35,9 @@ library(tidyverse)
 
 Go to the [WebPlotDigitizer](https://automeris.io/WebPlotDigitizer/) website and download the desktop version (matching your operating system).
 
-*Note*: On Mac OS X you may have to open `Security & Privacy` in order to launch WebPlotDigitizer on your machine.
+*Note 1*: There should be a free version available; try clicking the `Access archived v4` link.
+
+*Note 2*: On Mac OS X you may have to open `Security & Privacy` in order to launch WebPlotDigitizer on your machine.
 
 ## Extract
 
