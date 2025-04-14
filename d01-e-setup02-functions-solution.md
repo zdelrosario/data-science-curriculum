@@ -14,7 +14,7 @@ library(tidyverse)
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
 ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -77,7 +77,7 @@ rbind
 ```
 ## function (..., deparse.level = 1) 
 ## .Internal(rbind(deparse.level, ...))
-## <bytecode: 0x557d222d2828>
+## <bytecode: 0x55b515001740>
 ## <environment: namespace:base>
 ```
 
@@ -165,7 +165,7 @@ lm
 ##         z$qr <- NULL
 ##     z
 ## }
-## <bytecode: 0x557d25c240c8>
+## <bytecode: 0x55b518abcbc0>
 ## <environment: namespace:stats>
 ```
 
@@ -252,8 +252,8 @@ rnorm(n = 10)
 ```
 
 ```
-##  [1] -0.24167451  1.32012304 -0.93445771  1.23867517  0.27108471 -0.67764958
-##  [7] -0.89418316  0.13053213 -0.53852860 -0.06510421
+##  [1]  1.07403789 -0.62270919 -0.43493973  0.66861217 -0.78672451  0.28279509
+##  [7]  0.01682127  0.19170868 -0.96723725  0.27472532
 ```
 
 ## Adapting examples

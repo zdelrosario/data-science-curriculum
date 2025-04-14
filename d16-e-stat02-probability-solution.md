@@ -19,7 +19,7 @@ library(tidyverse)
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
 ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -83,7 +83,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      99  0.99
+## 1         100      91  0.91
 ```
 
 Now it's your turn!
@@ -104,7 +104,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      48  0.48
+## 1         100      54  0.54
 ```
 
 **Observations**:
@@ -156,9 +156,9 @@ map_dfr(
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
 ## 1          10       5 0.5  
-## 2         100      49 0.49 
-## 3        1000     535 0.535
-## 4       10000    4997 0.500
+## 2         100      54 0.54 
+## 3        1000     500 0.5  
+## 4       10000    5004 0.500
 ```
 
 This is because *probability* is actually defined[1] in terms of the limit
@@ -189,10 +189,10 @@ map_dfr(
 ## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1          10      10 1    
-## 2         100      98 0.98 
+## 1          10       9 0.9  
+## 2         100      94 0.94 
 ## 3        1000     946 0.946
-## 4       10000    9531 0.953
+## 4       10000    9515 0.952
 ```
 
 **Observations**:

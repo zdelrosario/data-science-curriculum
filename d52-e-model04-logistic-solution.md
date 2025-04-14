@@ -14,7 +14,7 @@ library(tidyverse)
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
 ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.4     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -402,7 +402,7 @@ df_basic %>%
 ## # A tibble: 1 × 4
 ##      TP    FP    TN    FN
 ##   <int> <int> <int> <int>
-## 1    32    32    26     7
+## 1    39    30    20     8
 ```
 
 These numbers don't mean a whole lot on their own; we'll use them to compare performance across models. Next you'll practice using R functions to carry out logistic regression for classification, and build a model to compare against this basic one.
@@ -525,7 +525,7 @@ df_q4 %>%
 ## # A tibble: 1 × 4
 ##      TP    FP    TN    FN
 ##   <int> <int> <int> <int>
-## 1    28     6    52    11
+## 1    28     5    45    19
 ```
 
 **Observations**:
