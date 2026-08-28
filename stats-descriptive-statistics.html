@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>29 Stats: Descriptive Statistics | Data Science: Exercise Solutions</title>
   <meta name="description" content="29 Stats: Descriptive Statistics | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="29 Stats: Descriptive Statistics | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1086,50 +1086,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Purpose</em>: We will use <em>descriptive statistics</em> to make quantitative summaries of a dataset. Descriptive statistics provide a much more compact description than a visualization, and are important when a data consumer wants “just one number”.</p>
 <p><em>Reading</em>: (None; this exercise <em>is</em> the reading.)</p>
 <p><em>Topics</em>: Mean, standard deviation, median, quantiles, dependence, correlation, robustness</p>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="stats-descriptive-statistics.html#cb440-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="stats-descriptive-statistics.html#cb442-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="stats-descriptive-statistics.html#cb442-1" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
-<span id="cb442-2"><a href="stats-descriptive-statistics.html#cb442-2" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
-<span id="cb442-3"><a href="stats-descriptive-statistics.html#cb442-3" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
-<span id="cb442-4"><a href="stats-descriptive-statistics.html#cb442-4" tabindex="-1"></a></span>
-<span id="cb442-5"><a href="stats-descriptive-statistics.html#cb442-5" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb442-6"><a href="stats-descriptive-statistics.html#cb442-6" tabindex="-1"></a>vis_central <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var) {</span>
-<span id="cb442-7"><a href="stats-descriptive-statistics.html#cb442-7" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
-<span id="cb442-8"><a href="stats-descriptive-statistics.html#cb442-8" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>({{var}})) <span class="sc">+</span></span>
-<span id="cb442-9"><a href="stats-descriptive-statistics.html#cb442-9" tabindex="-1"></a>    <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb442-10"><a href="stats-descriptive-statistics.html#cb442-10" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
-<span id="cb442-11"><a href="stats-descriptive-statistics.html#cb442-11" tabindex="-1"></a>      <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mu =</span> <span class="fu">mean</span>({{var}}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb442-12"><a href="stats-descriptive-statistics.html#cb442-12" tabindex="-1"></a>      <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> mu, <span class="at">color =</span> <span class="st">&quot;Mean&quot;</span>)</span>
-<span id="cb442-13"><a href="stats-descriptive-statistics.html#cb442-13" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb442-14"><a href="stats-descriptive-statistics.html#cb442-14" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
-<span id="cb442-15"><a href="stats-descriptive-statistics.html#cb442-15" tabindex="-1"></a>      <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mu =</span> <span class="fu">median</span>({{var}}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb442-16"><a href="stats-descriptive-statistics.html#cb442-16" tabindex="-1"></a>      <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> mu, <span class="at">color =</span> <span class="st">&quot;Median&quot;</span>)</span>
-<span id="cb442-17"><a href="stats-descriptive-statistics.html#cb442-17" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb442-18"><a href="stats-descriptive-statistics.html#cb442-18" tabindex="-1"></a>    <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Location&quot;</span>)</span>
-<span id="cb442-19"><a href="stats-descriptive-statistics.html#cb442-19" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="stats-descriptive-statistics.html#cb444-1" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
+<span id="cb444-2"><a href="stats-descriptive-statistics.html#cb444-2" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb444-3"><a href="stats-descriptive-statistics.html#cb444-3" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
+<span id="cb444-4"><a href="stats-descriptive-statistics.html#cb444-4" tabindex="-1"></a></span>
+<span id="cb444-5"><a href="stats-descriptive-statistics.html#cb444-5" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb444-6"><a href="stats-descriptive-statistics.html#cb444-6" tabindex="-1"></a>vis_central <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var) {</span>
+<span id="cb444-7"><a href="stats-descriptive-statistics.html#cb444-7" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
+<span id="cb444-8"><a href="stats-descriptive-statistics.html#cb444-8" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>({{var}})) <span class="sc">+</span></span>
+<span id="cb444-9"><a href="stats-descriptive-statistics.html#cb444-9" tabindex="-1"></a>    <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb444-10"><a href="stats-descriptive-statistics.html#cb444-10" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
+<span id="cb444-11"><a href="stats-descriptive-statistics.html#cb444-11" tabindex="-1"></a>      <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mu =</span> <span class="fu">mean</span>({{var}}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb444-12"><a href="stats-descriptive-statistics.html#cb444-12" tabindex="-1"></a>      <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> mu, <span class="at">color =</span> <span class="st">&quot;Mean&quot;</span>)</span>
+<span id="cb444-13"><a href="stats-descriptive-statistics.html#cb444-13" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb444-14"><a href="stats-descriptive-statistics.html#cb444-14" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
+<span id="cb444-15"><a href="stats-descriptive-statistics.html#cb444-15" tabindex="-1"></a>      <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mu =</span> <span class="fu">median</span>({{var}}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb444-16"><a href="stats-descriptive-statistics.html#cb444-16" tabindex="-1"></a>      <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> mu, <span class="at">color =</span> <span class="st">&quot;Median&quot;</span>)</span>
+<span id="cb444-17"><a href="stats-descriptive-statistics.html#cb444-17" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb444-18"><a href="stats-descriptive-statistics.html#cb444-18" tabindex="-1"></a>    <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Location&quot;</span>)</span>
+<span id="cb444-19"><a href="stats-descriptive-statistics.html#cb444-19" tabindex="-1"></a>}</span></code></pre></div>
 <div id="statistics" class="section level2 hasAnchor" number="29.1">
 <h2><span class="header-section-number">29.1</span> Statistics<a href="stats-descriptive-statistics.html#statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>A <em>statistic</em> is a numerical summary of a sample. Statistics are useful because they provide a useful summary about our data. A histogram gives us a rich summary of a datset: for example the departure delay time in the NYC flight data.</p>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="stats-descriptive-statistics.html#cb443-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb443-2"><a href="stats-descriptive-statistics.html#cb443-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb443-3"><a href="stats-descriptive-statistics.html#cb443-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(dep_delay)) <span class="sc">+</span></span>
-<span id="cb443-4"><a href="stats-descriptive-statistics.html#cb443-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">60</span>) <span class="sc">+</span></span>
-<span id="cb443-5"><a href="stats-descriptive-statistics.html#cb443-5" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="stats-descriptive-statistics.html#cb445-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb445-2"><a href="stats-descriptive-statistics.html#cb445-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb445-3"><a href="stats-descriptive-statistics.html#cb445-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(dep_delay)) <span class="sc">+</span></span>
+<span id="cb445-4"><a href="stats-descriptive-statistics.html#cb445-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">60</span>) <span class="sc">+</span></span>
+<span id="cb445-5"><a href="stats-descriptive-statistics.html#cb445-5" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code></pre></div>
 <pre><code>## Warning in transformation$transform(x): NaNs produced</code></pre>
 <pre><code>## Warning in scale_x_log10(): log-10 transformation introduced infinite values.</code></pre>
 <pre><code>## Warning: Removed 208344 rows containing non-finite outside the scale range
 ## (`stat_bin()`).</code></pre>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-distribution-1.png" width="672" /></p>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-distribution-1.png" alt="" width="672" /></p>
 <p>However, we might be interested in a few questions about these data:</p>
 <ul>
 <li>What is a <em>typical</em> value for the departure delay? (Location)</li>
@@ -1142,10 +1142,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">29.2</span> Handling NA’s<a href="stats-descriptive-statistics.html#handling-nas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>Before we can start computing (descriptive) statistics, we need to learn how to deal with data issues. For instance, in the NYC flights data, we have a number of <code>NA</code>s.</p>
-<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="stats-descriptive-statistics.html#cb447-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb447-2"><a href="stats-descriptive-statistics.html#cb447-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb447-3"><a href="stats-descriptive-statistics.html#cb447-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">sum</span>(<span class="fu">is.na</span>(.)))) <span class="sc">%&gt;%</span></span>
-<span id="cb447-4"><a href="stats-descriptive-statistics.html#cb447-4" tabindex="-1"></a>  glimpse</span></code></pre></div>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="stats-descriptive-statistics.html#cb449-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb449-2"><a href="stats-descriptive-statistics.html#cb449-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb449-3"><a href="stats-descriptive-statistics.html#cb449-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">sum</span>(<span class="fu">is.na</span>(.)))) <span class="sc">%&gt;%</span></span>
+<span id="cb449-4"><a href="stats-descriptive-statistics.html#cb449-4" tabindex="-1"></a>  glimpse</span></code></pre></div>
 <pre><code>## Rows: 1
 ## Columns: 14
 ## $ year           &lt;int&gt; 0
@@ -1163,10 +1163,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ hour           &lt;int&gt; 0
 ## $ minute         &lt;int&gt; 0</code></pre>
 <p>These <code>NA</code>s will “infect” our computation, and lead to <code>NA</code> summaries.</p>
-<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="stats-descriptive-statistics.html#cb449-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb449-2"><a href="stats-descriptive-statistics.html#cb449-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb449-3"><a href="stats-descriptive-statistics.html#cb449-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean)) <span class="sc">%&gt;%</span></span>
-<span id="cb449-4"><a href="stats-descriptive-statistics.html#cb449-4" tabindex="-1"></a>  glimpse</span></code></pre></div>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="stats-descriptive-statistics.html#cb451-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb451-2"><a href="stats-descriptive-statistics.html#cb451-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb451-3"><a href="stats-descriptive-statistics.html#cb451-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean)) <span class="sc">%&gt;%</span></span>
+<span id="cb451-4"><a href="stats-descriptive-statistics.html#cb451-4" tabindex="-1"></a>  glimpse</span></code></pre></div>
 <pre><code>## Rows: 1
 ## Columns: 14
 ## $ year           &lt;dbl&gt; 2013
@@ -1186,9 +1186,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s learn how to handle this:</p>
 <div id="q1-the-following-code-returns-na.-look-up-the-documentation-for-mean-and-use-an-additional-argument-to-strip-the-na-values-in-the-dataset-before-computing-the-mean.-make-this-modification-to-the-code-below-and-report-the-mean-departure-delay-time." class="section level3 hasAnchor" number="29.2.1">
 <h3><span class="header-section-number">29.2.1</span> <strong>q1</strong> The following code returns <code>NA</code>. Look up the documentation for <code>mean</code> and use an additional argument to strip the <code>NA</code> values in the dataset before computing the mean. Make this modification to the code below and report the mean departure delay time.<a href="stats-descriptive-statistics.html#q1-the-following-code-returns-na.-look-up-the-documentation-for-mean-and-use-an-additional-argument-to-strip-the-na-values-in-the-dataset-before-computing-the-mean.-make-this-modification-to-the-code-below-and-report-the-mean-departure-delay-time." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="stats-descriptive-statistics.html#cb451-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Edit to drop all NAs before computing the mean</span></span>
-<span id="cb451-2"><a href="stats-descriptive-statistics.html#cb451-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb451-3"><a href="stats-descriptive-statistics.html#cb451-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">dep_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="stats-descriptive-statistics.html#cb453-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Edit to drop all NAs before computing the mean</span></span>
+<span id="cb453-2"><a href="stats-descriptive-statistics.html#cb453-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb453-3"><a href="stats-descriptive-statistics.html#cb453-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">dep_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   dep_delay
 ##       &lt;dbl&gt;
@@ -1203,27 +1203,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">29.3</span> Central Tendency<a href="stats-descriptive-statistics.html#central-tendency" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p><em>Central tendency</em> is the idea of where data tend to be “located”—this concept is also called <em>location</em>. It is best thought of as the “center” of the data. The following graph illustrates central tendency.</p>
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="stats-descriptive-statistics.html#cb453-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb453-2"><a href="stats-descriptive-statistics.html#cb453-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb453-3"><a href="stats-descriptive-statistics.html#cb453-3" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fl">1e3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb453-4"><a href="stats-descriptive-statistics.html#cb453-4" tabindex="-1"></a>  <span class="fu">vis_central</span>(z)</span></code></pre></div>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/central-normal-1.png" width="672" /></p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="stats-descriptive-statistics.html#cb455-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb455-2"><a href="stats-descriptive-statistics.html#cb455-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb455-3"><a href="stats-descriptive-statistics.html#cb455-3" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fl">1e3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb455-4"><a href="stats-descriptive-statistics.html#cb455-4" tabindex="-1"></a>  <span class="fu">vis_central</span>(z)</span></code></pre></div>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/central-normal-1.png" alt="" width="672" /></p>
 <p>There are two primary measures of central tendency; the <em>mean</em> and <em>median</em>. The mean is the simple <a href="https://en.wikipedia.org/wiki/Arithmetic_mean">arithmetic average</a>: the sum of all values divided by the total number of values. The mean is denoted by <span class="math inline">\(\overline{x}\)</span> and defined by</p>
 <p><span class="math display">\[\overline{X} = \frac{1}{n} \sum_{i=1}^n X_i,\]</span></p>
 <p>where <span class="math inline">\(n\)</span> is the number of data points, and the <span class="math inline">\(X_i\)</span> are the individual values.</p>
 <p>The <a href="https://en.wikipedia.org/wiki/Median">median</a> is the value that separates half the data above and below. Weirdly, there’s no standard symbol for the median, so we’ll just denote it as <span class="math inline">\(\text{Median}[D]\)</span> to denote the median of a set of data <span class="math inline">\(D\)</span>.</p>
 <p>The median is a <em>robust</em> statistic, which is best illustrated by example. Consider the following two samples <code>v_base</code> and <code>v_outlier</code>. The sample <code>v_outlier</code> has an <em>outlier</em>, a value very different from the other values. Observe what value the mean and median take for these different samples.</p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="stats-descriptive-statistics.html#cb454-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb454-2"><a href="stats-descriptive-statistics.html#cb454-2" tabindex="-1"></a>v_base <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb454-3"><a href="stats-descriptive-statistics.html#cb454-3" tabindex="-1"></a>v_outlier <span class="ot">&lt;-</span> <span class="fu">c</span>(v_base, <span class="fl">1e3</span>)</span>
-<span id="cb454-4"><a href="stats-descriptive-statistics.html#cb454-4" tabindex="-1"></a></span>
-<span id="cb454-5"><a href="stats-descriptive-statistics.html#cb454-5" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb454-6"><a href="stats-descriptive-statistics.html#cb454-6" tabindex="-1"></a>  <span class="at">mean_base =</span> <span class="fu">mean</span>(v_base),</span>
-<span id="cb454-7"><a href="stats-descriptive-statistics.html#cb454-7" tabindex="-1"></a>  <span class="at">median_base =</span> <span class="fu">median</span>(v_base),</span>
-<span id="cb454-8"><a href="stats-descriptive-statistics.html#cb454-8" tabindex="-1"></a></span>
-<span id="cb454-9"><a href="stats-descriptive-statistics.html#cb454-9" tabindex="-1"></a>  <span class="at">mean_outlier =</span> <span class="fu">mean</span>(v_outlier),</span>
-<span id="cb454-10"><a href="stats-descriptive-statistics.html#cb454-10" tabindex="-1"></a>  <span class="at">median_outlier =</span> <span class="fu">median</span>(v_outlier)</span>
-<span id="cb454-11"><a href="stats-descriptive-statistics.html#cb454-11" tabindex="-1"></a>) <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="stats-descriptive-statistics.html#cb456-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb456-2"><a href="stats-descriptive-statistics.html#cb456-2" tabindex="-1"></a>v_base <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb456-3"><a href="stats-descriptive-statistics.html#cb456-3" tabindex="-1"></a>v_outlier <span class="ot">&lt;-</span> <span class="fu">c</span>(v_base, <span class="fl">1e3</span>)</span>
+<span id="cb456-4"><a href="stats-descriptive-statistics.html#cb456-4" tabindex="-1"></a></span>
+<span id="cb456-5"><a href="stats-descriptive-statistics.html#cb456-5" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb456-6"><a href="stats-descriptive-statistics.html#cb456-6" tabindex="-1"></a>  <span class="at">mean_base =</span> <span class="fu">mean</span>(v_base),</span>
+<span id="cb456-7"><a href="stats-descriptive-statistics.html#cb456-7" tabindex="-1"></a>  <span class="at">median_base =</span> <span class="fu">median</span>(v_base),</span>
+<span id="cb456-8"><a href="stats-descriptive-statistics.html#cb456-8" tabindex="-1"></a></span>
+<span id="cb456-9"><a href="stats-descriptive-statistics.html#cb456-9" tabindex="-1"></a>  <span class="at">mean_outlier =</span> <span class="fu">mean</span>(v_outlier),</span>
+<span id="cb456-10"><a href="stats-descriptive-statistics.html#cb456-10" tabindex="-1"></a>  <span class="at">median_outlier =</span> <span class="fu">median</span>(v_outlier)</span>
+<span id="cb456-11"><a href="stats-descriptive-statistics.html#cb456-11" tabindex="-1"></a>) <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
 <pre><code>## Rows: 1
 ## Columns: 4
 ## $ mean_base      &lt;dbl&gt; 3
@@ -1232,30 +1232,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ median_outlier &lt;dbl&gt; 3.5</code></pre>
 <p>Note that for <code>v_outlier</code> the mean is greatly increased, but the median is only slightly changed. It is in this sense that the median is <em>robust</em>—it is robust to outliers. When one has a dataset with outliers, the median is usually a better measure of central tendency.[1]</p>
 <p>It can be useful to think about when the mean and median agree or disagree with each other. For instance, with the flights data:</p>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="stats-descriptive-statistics.html#cb456-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb456-2"><a href="stats-descriptive-statistics.html#cb456-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">vis_central</span>(dep_delay)</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="stats-descriptive-statistics.html#cb458-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb458-2"><a href="stats-descriptive-statistics.html#cb458-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">vis_central</span>(dep_delay)</span></code></pre></div>
 <pre><code>## Warning: Removed 8255 rows containing non-finite outside the scale range
 ## (`stat_density()`).</code></pre>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/central-flights-1.png" width="672" /></p>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/central-flights-1.png" alt="" width="672" /></p>
 <p>the mean and median <code>dep_delay</code> largely agree (relative to all the other data). But for the gapminder data:</p>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="stats-descriptive-statistics.html#cb458-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb458-2"><a href="stats-descriptive-statistics.html#cb458-2" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
-<span id="cb458-3"><a href="stats-descriptive-statistics.html#cb458-3" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="fu">max</span>(year)) <span class="sc">%&gt;%</span></span>
-<span id="cb458-4"><a href="stats-descriptive-statistics.html#cb458-4" tabindex="-1"></a>  <span class="fu">vis_central</span>(gdpPercap)</span></code></pre></div>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/central-gapminder-1.png" width="672" /></p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="stats-descriptive-statistics.html#cb460-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb460-2"><a href="stats-descriptive-statistics.html#cb460-2" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb460-3"><a href="stats-descriptive-statistics.html#cb460-3" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="fu">max</span>(year)) <span class="sc">%&gt;%</span></span>
+<span id="cb460-4"><a href="stats-descriptive-statistics.html#cb460-4" tabindex="-1"></a>  <span class="fu">vis_central</span>(gdpPercap)</span></code></pre></div>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/central-gapminder-1.png" alt="" width="672" /></p>
 <p>the mean and median <code>gdpPercap</code> disagree.[2]</p>
 <div id="q2-the-following-code-computes-the-mean-and-median-dep_delay-for-each-carrier-and-sorts-based-on-mean.-duplicate-the-code-and-sort-by-median-instead.-report-your-observations-on-which-carriers-are-in-both-lists-and-which-are-different.-also-comment-on-what-negative-dep_delay-values-mean." class="section level3 hasAnchor" number="29.3.1">
 <h3><span class="header-section-number">29.3.1</span> <strong>q2</strong> The following code computes the mean and median <code>dep_delay</code> for each carrier, and sorts based on mean. Duplicate the code, and sort by median instead. Report your observations on which carriers are in both lists, and which are different. Also comment on what negative <code>dep_delay</code> values mean.<a href="stats-descriptive-statistics.html#q2-the-following-code-computes-the-mean-and-median-dep_delay-for-each-carrier-and-sorts-based-on-mean.-duplicate-the-code-and-sort-by-median-instead.-report-your-observations-on-which-carriers-are-in-both-lists-and-which-are-different.-also-comment-on-what-negative-dep_delay-values-mean." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: Remember you can check the documentation of a built-in dataset with <code>?flights</code>!</p>
-<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="stats-descriptive-statistics.html#cb459-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb459-2"><a href="stats-descriptive-statistics.html#cb459-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb459-3"><a href="stats-descriptive-statistics.html#cb459-3" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
-<span id="cb459-4"><a href="stats-descriptive-statistics.html#cb459-4" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb459-5"><a href="stats-descriptive-statistics.html#cb459-5" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb459-6"><a href="stats-descriptive-statistics.html#cb459-6" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb459-7"><a href="stats-descriptive-statistics.html#cb459-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb459-8"><a href="stats-descriptive-statistics.html#cb459-8" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean)) <span class="sc">%&gt;%</span></span>
-<span id="cb459-9"><a href="stats-descriptive-statistics.html#cb459-9" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="stats-descriptive-statistics.html#cb461-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb461-2"><a href="stats-descriptive-statistics.html#cb461-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb461-3"><a href="stats-descriptive-statistics.html#cb461-3" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
+<span id="cb461-4"><a href="stats-descriptive-statistics.html#cb461-4" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb461-5"><a href="stats-descriptive-statistics.html#cb461-5" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb461-6"><a href="stats-descriptive-statistics.html#cb461-6" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb461-7"><a href="stats-descriptive-statistics.html#cb461-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb461-8"><a href="stats-descriptive-statistics.html#cb461-8" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean)) <span class="sc">%&gt;%</span></span>
+<span id="cb461-9"><a href="stats-descriptive-statistics.html#cb461-9" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 3
 ##   carrier  mean median
 ##   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;
@@ -1264,15 +1264,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3 YV       19.0   -2  
 ## 4 FL       18.7    1  
 ## 5 WN       17.7    1</code></pre>
-<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="stats-descriptive-statistics.html#cb461-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Duplicate the code above, but sort by `median` instead</span></span>
-<span id="cb461-2"><a href="stats-descriptive-statistics.html#cb461-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb461-3"><a href="stats-descriptive-statistics.html#cb461-3" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
-<span id="cb461-4"><a href="stats-descriptive-statistics.html#cb461-4" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb461-5"><a href="stats-descriptive-statistics.html#cb461-5" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb461-6"><a href="stats-descriptive-statistics.html#cb461-6" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb461-7"><a href="stats-descriptive-statistics.html#cb461-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb461-8"><a href="stats-descriptive-statistics.html#cb461-8" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(median)) <span class="sc">%&gt;%</span></span>
-<span id="cb461-9"><a href="stats-descriptive-statistics.html#cb461-9" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="stats-descriptive-statistics.html#cb463-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Duplicate the code above, but sort by `median` instead</span></span>
+<span id="cb463-2"><a href="stats-descriptive-statistics.html#cb463-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb463-3"><a href="stats-descriptive-statistics.html#cb463-3" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
+<span id="cb463-4"><a href="stats-descriptive-statistics.html#cb463-4" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb463-5"><a href="stats-descriptive-statistics.html#cb463-5" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb463-6"><a href="stats-descriptive-statistics.html#cb463-6" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb463-7"><a href="stats-descriptive-statistics.html#cb463-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb463-8"><a href="stats-descriptive-statistics.html#cb463-8" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(median)) <span class="sc">%&gt;%</span></span>
+<span id="cb463-9"><a href="stats-descriptive-statistics.html#cb463-9" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 3
 ##   carrier  mean median
 ##   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;
@@ -1293,17 +1293,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">29.4</span> Multi-modality<a href="stats-descriptive-statistics.html#multi-modality" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>It may not seem like it, but we’re actually <em>making an assumption</em> when we use the mean (or median) as a typical value. Imagine we had the following data:</p>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="stats-descriptive-statistics.html#cb463-1" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb463-2"><a href="stats-descriptive-statistics.html#cb463-2" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">X =</span> <span class="fu">rnorm</span>(<span class="dv">300</span>, <span class="at">mean =</span> <span class="sc">-</span><span class="dv">2</span>)),</span>
-<span id="cb463-3"><a href="stats-descriptive-statistics.html#cb463-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">X =</span> <span class="fu">rnorm</span>(<span class="dv">300</span>, <span class="at">mean =</span> <span class="sc">+</span><span class="dv">2</span>))</span>
-<span id="cb463-4"><a href="stats-descriptive-statistics.html#cb463-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb463-5"><a href="stats-descriptive-statistics.html#cb463-5" tabindex="-1"></a></span>
-<span id="cb463-6"><a href="stats-descriptive-statistics.html#cb463-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(X)) <span class="sc">+</span></span>
-<span id="cb463-7"><a href="stats-descriptive-statistics.html#cb463-7" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">60</span>) <span class="sc">+</span></span>
-<span id="cb463-8"><a href="stats-descriptive-statistics.html#cb463-8" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(X), <span class="at">color =</span> <span class="st">&quot;Mean&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb463-9"><a href="stats-descriptive-statistics.html#cb463-9" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(X), <span class="at">color =</span> <span class="st">&quot;Median&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb463-10"><a href="stats-descriptive-statistics.html#cb463-10" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Statistic&quot;</span>)</span></code></pre></div>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-bimodal-1.png" width="672" /></p>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="stats-descriptive-statistics.html#cb465-1" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb465-2"><a href="stats-descriptive-statistics.html#cb465-2" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">X =</span> <span class="fu">rnorm</span>(<span class="dv">300</span>, <span class="at">mean =</span> <span class="sc">-</span><span class="dv">2</span>)),</span>
+<span id="cb465-3"><a href="stats-descriptive-statistics.html#cb465-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">X =</span> <span class="fu">rnorm</span>(<span class="dv">300</span>, <span class="at">mean =</span> <span class="sc">+</span><span class="dv">2</span>))</span>
+<span id="cb465-4"><a href="stats-descriptive-statistics.html#cb465-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb465-5"><a href="stats-descriptive-statistics.html#cb465-5" tabindex="-1"></a></span>
+<span id="cb465-6"><a href="stats-descriptive-statistics.html#cb465-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(X)) <span class="sc">+</span></span>
+<span id="cb465-7"><a href="stats-descriptive-statistics.html#cb465-7" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">60</span>) <span class="sc">+</span></span>
+<span id="cb465-8"><a href="stats-descriptive-statistics.html#cb465-8" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(X), <span class="at">color =</span> <span class="st">&quot;Mean&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb465-9"><a href="stats-descriptive-statistics.html#cb465-9" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(X), <span class="at">color =</span> <span class="st">&quot;Median&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb465-10"><a href="stats-descriptive-statistics.html#cb465-10" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Statistic&quot;</span>)</span></code></pre></div>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-bimodal-1.png" alt="" width="672" /></p>
 <p>Here the mean and median are both close to zero, but <em>zero is an atypical number</em>! This is partly why we don’t <em>only</em> compute descriptive statistics, but also do a deeper dive into our data. Here, we should probably refuse to give a single typical value; instead, it seems there might really be two populations showing up in the same dataset, so we can give two typical numbers, say <code>-2, +2</code>.</p>
 </div>
 <div id="quantiles" class="section level2 hasAnchor" number="29.5">
@@ -1311,28 +1311,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- ------------------------- -->
 <p>Before we can talk about spread, we need to talk about <em>quantiles</em>. A <a href="https://en.wikipedia.org/wiki/Quantile">quantile</a> is a value that separates a user-specified fraction of data (or a distribution). For instance, the median is the <span class="math inline">\(50%\)</span> quantile; thus <span class="math inline">\(\text{Median}[D] = Q_{0.5}[D]\)</span>. We can generalize this idea to talk about any quantile between <span class="math inline">\(0%\)</span> and <span class="math inline">\(100%\)</span>.</p>
 <p>The following graph visualizes the <span class="math inline">\(25%, 50%, 75%\)</span> quantiles of a standard normal. Since these are the quarter-quantiles (<span class="math inline">\(1/4, 2/4, 3/4\)</span>), these are often called the <em>quartiles</em>.</p>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="stats-descriptive-statistics.html#cb464-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb464-2"><a href="stats-descriptive-statistics.html#cb464-2" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb464-3"><a href="stats-descriptive-statistics.html#cb464-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
-<span id="cb464-4"><a href="stats-descriptive-statistics.html#cb464-4" tabindex="-1"></a></span>
-<span id="cb464-5"><a href="stats-descriptive-statistics.html#cb464-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
-<span id="cb464-6"><a href="stats-descriptive-statistics.html#cb464-6" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb464-7"><a href="stats-descriptive-statistics.html#cb464-7" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb464-8"><a href="stats-descriptive-statistics.html#cb464-8" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">p =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb464-9"><a href="stats-descriptive-statistics.html#cb464-9" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
-<span id="cb464-10"><a href="stats-descriptive-statistics.html#cb464-10" tabindex="-1"></a>        <span class="at">z =</span> <span class="fu">qnorm</span>(p),</span>
-<span id="cb464-11"><a href="stats-descriptive-statistics.html#cb464-11" tabindex="-1"></a>        <span class="at">d =</span> <span class="fu">dnorm</span>(z)</span>
-<span id="cb464-12"><a href="stats-descriptive-statistics.html#cb464-12" tabindex="-1"></a>      ),</span>
-<span id="cb464-13"><a href="stats-descriptive-statistics.html#cb464-13" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xend =</span> z, <span class="at">yend =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="fu">as_factor</span>(p))</span>
-<span id="cb464-14"><a href="stats-descriptive-statistics.html#cb464-14" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb464-15"><a href="stats-descriptive-statistics.html#cb464-15" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Quantile&quot;</span>)</span></code></pre></div>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/quart-vis-1.png" width="672" /></p>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="stats-descriptive-statistics.html#cb466-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb466-2"><a href="stats-descriptive-statistics.html#cb466-2" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb466-3"><a href="stats-descriptive-statistics.html#cb466-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
+<span id="cb466-4"><a href="stats-descriptive-statistics.html#cb466-4" tabindex="-1"></a></span>
+<span id="cb466-5"><a href="stats-descriptive-statistics.html#cb466-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
+<span id="cb466-6"><a href="stats-descriptive-statistics.html#cb466-6" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb466-7"><a href="stats-descriptive-statistics.html#cb466-7" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb466-8"><a href="stats-descriptive-statistics.html#cb466-8" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">p =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb466-9"><a href="stats-descriptive-statistics.html#cb466-9" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
+<span id="cb466-10"><a href="stats-descriptive-statistics.html#cb466-10" tabindex="-1"></a>        <span class="at">z =</span> <span class="fu">qnorm</span>(p),</span>
+<span id="cb466-11"><a href="stats-descriptive-statistics.html#cb466-11" tabindex="-1"></a>        <span class="at">d =</span> <span class="fu">dnorm</span>(z)</span>
+<span id="cb466-12"><a href="stats-descriptive-statistics.html#cb466-12" tabindex="-1"></a>      ),</span>
+<span id="cb466-13"><a href="stats-descriptive-statistics.html#cb466-13" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xend =</span> z, <span class="at">yend =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="fu">as_factor</span>(p))</span>
+<span id="cb466-14"><a href="stats-descriptive-statistics.html#cb466-14" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb466-15"><a href="stats-descriptive-statistics.html#cb466-15" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Quantile&quot;</span>)</span></code></pre></div>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/quart-vis-1.png" alt="" width="672" /></p>
 <p><em>Note</em>: The function <code>qnorm</code> returns the quantiles of a normal distribution. We’ll focus on quantiles of <em>samples</em> in this exercise.</p>
 <p>We’ll use the quartiles to define the <em>interquartile range</em>. First, the <code>quantile()</code> function computes quantiles of a sample. For example:</p>
-<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="stats-descriptive-statistics.html#cb465-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this! Run for an example</span></span>
-<span id="cb465-2"><a href="stats-descriptive-statistics.html#cb465-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb465-3"><a href="stats-descriptive-statistics.html#cb465-3" tabindex="-1"></a>  <span class="fu">pull</span>(dep_delay) <span class="sc">%&gt;%</span></span>
-<span id="cb465-4"><a href="stats-descriptive-statistics.html#cb465-4" tabindex="-1"></a>  <span class="fu">quantile</span>(., <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>, <span class="fl">1.00</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="stats-descriptive-statistics.html#cb467-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this! Run for an example</span></span>
+<span id="cb467-2"><a href="stats-descriptive-statistics.html#cb467-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb467-3"><a href="stats-descriptive-statistics.html#cb467-3" tabindex="-1"></a>  <span class="fu">pull</span>(dep_delay) <span class="sc">%&gt;%</span></span>
+<span id="cb467-4"><a href="stats-descriptive-statistics.html#cb467-4" tabindex="-1"></a>  <span class="fu">quantile</span>(., <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>, <span class="fl">1.00</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>##   0%  25%  50%  75% 100% 
 ##  -43   -5   -2   11 1301</code></pre>
 <p>Like with <code>mean, median</code>, we need to specify if we want to remove <code>NA</code>s. We can provide a list of <code>probs</code> to specify the probabilities of the quantiles. Remember: a <em>probability</em> is a value between <span class="math inline">\([0, 1]\)</span>, while a <em>quantile</em> is a value that probably has units, like minutes in the case of <code>dep_delay</code>.</p>
@@ -1341,16 +1341,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>where <span class="math inline">\(Q_{p}[D]\)</span> is the <span class="math inline">\(p\)</span>-th quantile of a sample <span class="math inline">\(D\)</span>.</p>
 <div id="q3-using-the-function-quantile-compute-the-interquartile-range-this-is-the-difference-between-the-75-and-25-quantiles." class="section level3 hasAnchor" number="29.5.1">
 <h3><span class="header-section-number">29.5.1</span> <strong>q3</strong> Using the function <code>quantile</code>, compute the <em>interquartile range</em>; this is the difference between the <span class="math inline">\(75%\)</span> and <span class="math inline">\(25%\)</span> quantiles.<a href="stats-descriptive-statistics.html#q3-using-the-function-quantile-compute-the-interquartile-range-this-is-the-difference-between-the-75-and-25-quantiles." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="stats-descriptive-statistics.html#cb467-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb467-2"><a href="stats-descriptive-statistics.html#cb467-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb467-3"><a href="stats-descriptive-statistics.html#cb467-3" tabindex="-1"></a>v_test_iqr <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb467-4"><a href="stats-descriptive-statistics.html#cb467-4" tabindex="-1"></a></span>
-<span id="cb467-5"><a href="stats-descriptive-statistics.html#cb467-5" tabindex="-1"></a>test_iqr <span class="ot">&lt;-</span> <span class="fu">quantile</span>(v_test_iqr, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">-</span> <span class="fu">quantile</span>(v_test_iqr, <span class="at">probs =</span> <span class="fl">0.25</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="stats-descriptive-statistics.html#cb469-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb469-2"><a href="stats-descriptive-statistics.html#cb469-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb469-3"><a href="stats-descriptive-statistics.html#cb469-3" tabindex="-1"></a>v_test_iqr <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb469-4"><a href="stats-descriptive-statistics.html#cb469-4" tabindex="-1"></a></span>
+<span id="cb469-5"><a href="stats-descriptive-statistics.html#cb469-5" tabindex="-1"></a>test_iqr <span class="ot">&lt;-</span> <span class="fu">quantile</span>(v_test_iqr, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">-</span> <span class="fu">quantile</span>(v_test_iqr, <span class="at">probs =</span> <span class="fl">0.25</span>)</span></code></pre></div>
 <p>Use the following test to check your answer.</p>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="stats-descriptive-statistics.html#cb468-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb468-2"><a href="stats-descriptive-statistics.html#cb468-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(test_iqr <span class="sc">==</span> <span class="fu">IQR</span>(v_test_iqr))</span></code></pre></div>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="stats-descriptive-statistics.html#cb470-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb470-2"><a href="stats-descriptive-statistics.html#cb470-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(test_iqr <span class="sc">==</span> <span class="fu">IQR</span>(v_test_iqr))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="stats-descriptive-statistics.html#cb470-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="stats-descriptive-statistics.html#cb472-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great job!&quot;</code></pre>
 </div>
 </div>
@@ -1362,17 +1362,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[s = \sqrt{ \frac{1}{n-1} \sum_{i=1}^n (X_i - \overline{X})^2 },\]</span></p>
 <p>where <span class="math inline">\(\overline{X}\)</span> is the mean of the data. Note the factor of <span class="math inline">\(n-1\)</span> rather than <span class="math inline">\(n\)</span>: This slippery idea is called <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s correction</a>. Note that <span class="math inline">\(\sigma^2\)</span> is called the <em>variance</em>.</p>
 <p>By way of analogy, mean is to standard deviation as median is to IQR: The IQR is a robust measure of spread. Returning to our outlier example:</p>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="stats-descriptive-statistics.html#cb472-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb472-2"><a href="stats-descriptive-statistics.html#cb472-2" tabindex="-1"></a>v_base <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb472-3"><a href="stats-descriptive-statistics.html#cb472-3" tabindex="-1"></a>v_outlier <span class="ot">&lt;-</span> <span class="fu">c</span>(v_base, <span class="fl">1e3</span>)</span>
-<span id="cb472-4"><a href="stats-descriptive-statistics.html#cb472-4" tabindex="-1"></a></span>
-<span id="cb472-5"><a href="stats-descriptive-statistics.html#cb472-5" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb472-6"><a href="stats-descriptive-statistics.html#cb472-6" tabindex="-1"></a>  <span class="at">sd_base =</span> <span class="fu">sd</span>(v_base),</span>
-<span id="cb472-7"><a href="stats-descriptive-statistics.html#cb472-7" tabindex="-1"></a>  <span class="at">IQR_base =</span> <span class="fu">IQR</span>(v_base),</span>
-<span id="cb472-8"><a href="stats-descriptive-statistics.html#cb472-8" tabindex="-1"></a></span>
-<span id="cb472-9"><a href="stats-descriptive-statistics.html#cb472-9" tabindex="-1"></a>  <span class="at">sd_outlier =</span> <span class="fu">sd</span>(v_outlier),</span>
-<span id="cb472-10"><a href="stats-descriptive-statistics.html#cb472-10" tabindex="-1"></a>  <span class="at">IQR_outlier =</span> <span class="fu">IQR</span>(v_outlier)</span>
-<span id="cb472-11"><a href="stats-descriptive-statistics.html#cb472-11" tabindex="-1"></a>) <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="stats-descriptive-statistics.html#cb474-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb474-2"><a href="stats-descriptive-statistics.html#cb474-2" tabindex="-1"></a>v_base <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb474-3"><a href="stats-descriptive-statistics.html#cb474-3" tabindex="-1"></a>v_outlier <span class="ot">&lt;-</span> <span class="fu">c</span>(v_base, <span class="fl">1e3</span>)</span>
+<span id="cb474-4"><a href="stats-descriptive-statistics.html#cb474-4" tabindex="-1"></a></span>
+<span id="cb474-5"><a href="stats-descriptive-statistics.html#cb474-5" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb474-6"><a href="stats-descriptive-statistics.html#cb474-6" tabindex="-1"></a>  <span class="at">sd_base =</span> <span class="fu">sd</span>(v_base),</span>
+<span id="cb474-7"><a href="stats-descriptive-statistics.html#cb474-7" tabindex="-1"></a>  <span class="at">IQR_base =</span> <span class="fu">IQR</span>(v_base),</span>
+<span id="cb474-8"><a href="stats-descriptive-statistics.html#cb474-8" tabindex="-1"></a></span>
+<span id="cb474-9"><a href="stats-descriptive-statistics.html#cb474-9" tabindex="-1"></a>  <span class="at">sd_outlier =</span> <span class="fu">sd</span>(v_outlier),</span>
+<span id="cb474-10"><a href="stats-descriptive-statistics.html#cb474-10" tabindex="-1"></a>  <span class="at">IQR_outlier =</span> <span class="fu">IQR</span>(v_outlier)</span>
+<span id="cb474-11"><a href="stats-descriptive-statistics.html#cb474-11" tabindex="-1"></a>) <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
 <pre><code>## Rows: 1
 ## Columns: 4
 ## $ sd_base     &lt;dbl&gt; 1.581139
@@ -1381,15 +1381,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ IQR_outlier &lt;dbl&gt; 2.5</code></pre>
 <div id="q4-using-the-code-from-q2-as-a-starting-point-compute-the-standard-deviation-sd-and-interquartile-range-iqr-and-rank-the-top-five-carriers-this-time-by-sd-and-iqr.-report-your-observations-on-which-carriers-are-in-both-lists-and-which-are-different.-also-note-and-comment-on-which-carrier-among-your-top-ranked-has-the-largest-difference-between-sd-and-iqr." class="section level3 hasAnchor" number="29.6.1">
 <h3><span class="header-section-number">29.6.1</span> <strong>q4</strong> Using the code from q2 as a starting point, compute the standard deviation (<code>sd()</code>) and interquartile range (<code>IQR()</code>), and rank the top five carriers, this time by sd and IQR. Report your observations on which carriers are in both lists, and which are different. Also note and comment on which carrier (among your top-ranked) has the largest difference between <code>sd</code> and <code>IQR</code>.<a href="stats-descriptive-statistics.html#q4-using-the-code-from-q2-as-a-starting-point-compute-the-standard-deviation-sd-and-interquartile-range-iqr-and-rank-the-top-five-carriers-this-time-by-sd-and-iqr.-report-your-observations-on-which-carriers-are-in-both-lists-and-which-are-different.-also-note-and-comment-on-which-carrier-among-your-top-ranked-has-the-largest-difference-between-sd-and-iqr." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="stats-descriptive-statistics.html#cb474-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Use code from q2 to compute the sd and IQR, rank as before</span></span>
-<span id="cb474-2"><a href="stats-descriptive-statistics.html#cb474-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb474-3"><a href="stats-descriptive-statistics.html#cb474-3" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
-<span id="cb474-4"><a href="stats-descriptive-statistics.html#cb474-4" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb474-5"><a href="stats-descriptive-statistics.html#cb474-5" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb474-6"><a href="stats-descriptive-statistics.html#cb474-6" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb474-7"><a href="stats-descriptive-statistics.html#cb474-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb474-8"><a href="stats-descriptive-statistics.html#cb474-8" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(sd)) <span class="sc">%&gt;%</span></span>
-<span id="cb474-9"><a href="stats-descriptive-statistics.html#cb474-9" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="stats-descriptive-statistics.html#cb476-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Use code from q2 to compute the sd and IQR, rank as before</span></span>
+<span id="cb476-2"><a href="stats-descriptive-statistics.html#cb476-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb476-3"><a href="stats-descriptive-statistics.html#cb476-3" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
+<span id="cb476-4"><a href="stats-descriptive-statistics.html#cb476-4" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb476-5"><a href="stats-descriptive-statistics.html#cb476-5" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb476-6"><a href="stats-descriptive-statistics.html#cb476-6" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb476-7"><a href="stats-descriptive-statistics.html#cb476-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb476-8"><a href="stats-descriptive-statistics.html#cb476-8" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(sd)) <span class="sc">%&gt;%</span></span>
+<span id="cb476-9"><a href="stats-descriptive-statistics.html#cb476-9" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 3
 ##   carrier    sd   IQR
 ##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -1398,14 +1398,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3 FL       52.7    21
 ## 4 YV       49.2    30
 ## 5 EV       46.6    30</code></pre>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="stats-descriptive-statistics.html#cb476-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb476-2"><a href="stats-descriptive-statistics.html#cb476-2" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
-<span id="cb476-3"><a href="stats-descriptive-statistics.html#cb476-3" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb476-4"><a href="stats-descriptive-statistics.html#cb476-4" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb476-5"><a href="stats-descriptive-statistics.html#cb476-5" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb476-6"><a href="stats-descriptive-statistics.html#cb476-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb476-7"><a href="stats-descriptive-statistics.html#cb476-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(IQR)) <span class="sc">%&gt;%</span></span>
-<span id="cb476-8"><a href="stats-descriptive-statistics.html#cb476-8" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="stats-descriptive-statistics.html#cb478-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb478-2"><a href="stats-descriptive-statistics.html#cb478-2" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
+<span id="cb478-3"><a href="stats-descriptive-statistics.html#cb478-3" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb478-4"><a href="stats-descriptive-statistics.html#cb478-4" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb478-5"><a href="stats-descriptive-statistics.html#cb478-5" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb478-6"><a href="stats-descriptive-statistics.html#cb478-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb478-7"><a href="stats-descriptive-statistics.html#cb478-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(IQR)) <span class="sc">%&gt;%</span></span>
+<span id="cb478-8"><a href="stats-descriptive-statistics.html#cb478-8" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 3
 ##   carrier    sd   IQR
 ##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -1420,13 +1420,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The carrier <code>HA</code> is top in <code>sd</code>, while <code>9E</code> is top in IQR</li>
 <li><code>HA</code> has a large difference between <code>sd</code> and <code>IQR</code>; based on the following vis, it appears that <code>HA</code> has a lot more outliers than other carriers, which bumps up its <code>sd</code></li>
 </ul>
-<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="stats-descriptive-statistics.html#cb478-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb478-2"><a href="stats-descriptive-statistics.html#cb478-2" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;HA&quot;</span>, <span class="st">&quot;F9&quot;</span>, <span class="st">&quot;FL&quot;</span>, <span class="st">&quot;YV&quot;</span>, <span class="st">&quot;EV&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb478-3"><a href="stats-descriptive-statistics.html#cb478-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carrier, dep_delay)) <span class="sc">+</span></span>
-<span id="cb478-4"><a href="stats-descriptive-statistics.html#cb478-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="stats-descriptive-statistics.html#cb480-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb480-2"><a href="stats-descriptive-statistics.html#cb480-2" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;HA&quot;</span>, <span class="st">&quot;F9&quot;</span>, <span class="st">&quot;FL&quot;</span>, <span class="st">&quot;YV&quot;</span>, <span class="st">&quot;EV&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb480-3"><a href="stats-descriptive-statistics.html#cb480-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carrier, dep_delay)) <span class="sc">+</span></span>
+<span id="cb480-4"><a href="stats-descriptive-statistics.html#cb480-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <pre><code>## Warning: Removed 2949 rows containing non-finite outside the scale range
 ## (`stat_boxplot()`).</code></pre>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/q4-sol-vis-1.png" width="672" /></p>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/q4-sol-vis-1.png" alt="" width="672" /></p>
 </div>
 </div>
 <div id="dependence" class="section level2 hasAnchor" number="29.7">
@@ -1434,29 +1434,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- ------------------------- -->
 <p>So far, we’ve talked about descriptive statistics to consider one variable at a time. To conclude, we’ll talk about statistics to consider <em>dependence</em> between two variables in a dataset.</p>
 <p><a href="https://en.wikipedia.org/wiki/Correlation_and_dependence">Dependence</a>—like location or spread—is a general idea of relation between two variables. For instance, when it comes to flights we’d expect trips between more distant airports to take longer. If we plot <code>distance</code> vs <code>air_time</code> in a scatterplot, we indeed see this dependence.</p>
-<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="stats-descriptive-statistics.html#cb480-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb480-2"><a href="stats-descriptive-statistics.html#cb480-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(air_time, distance)) <span class="sc">+</span></span>
-<span id="cb480-3"><a href="stats-descriptive-statistics.html#cb480-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="stats-descriptive-statistics.html#cb482-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb482-2"><a href="stats-descriptive-statistics.html#cb482-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(air_time, distance)) <span class="sc">+</span></span>
+<span id="cb482-3"><a href="stats-descriptive-statistics.html#cb482-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <pre><code>## Warning: Removed 9430 rows containing missing values or values outside the scale range
 ## (`geom_point()`).</code></pre>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-corr-1.png" width="672" /></p>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-corr-1.png" alt="" width="672" /></p>
 <p>Two flavors of correlation help us make this idea quantitative: the <em>Pearson correlation</em> and <em>Spearman correlation</em>. Unlike our previous quantities for location and spread, these correlations are <em>dimensionless</em> (they have no units), and they are bounded between <span class="math inline">\([-1, +1]\)</span>.</p>
 <p>The <a href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">Pearson correlation</a> is often denoted by <span class="math inline">\(r_{XY}\)</span>, and it specifies the variables being considered <span class="math inline">\(X, Y\)</span>. It is defined by</p>
 <p><span class="math display">\[r_{XY} = \frac{\sum_{i=1}^n (X_i - \overline{X}) (Y_i - \overline{Y})}{s_X s_Y}.\]</span></p>
 <p>The <a href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient">Spearman correlation</a> is often denoted by <span class="math inline">\(\rho_{XY}\)</span>, and is actually defined in terms of the Pearson correlation <span class="math inline">\(r_{XY}\)</span>, but with the ranks (<span class="math inline">\(1\)</span> to <span class="math inline">\(n\)</span>) rather than the values <span class="math inline">\(X_i, Y_i\)</span>.</p>
 <p>For example, we might expect a strong correlation between the <code>air_time</code> and the <code>distance</code> between airports. The function <code>cor</code> computes the Pearson correlation.</p>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="stats-descriptive-statistics.html#cb482-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb482-2"><a href="stats-descriptive-statistics.html#cb482-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb482-3"><a href="stats-descriptive-statistics.html#cb482-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(air_time, distance, <span class="at">use =</span> <span class="st">&quot;na.or.complete&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="stats-descriptive-statistics.html#cb484-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb484-2"><a href="stats-descriptive-statistics.html#cb484-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb484-3"><a href="stats-descriptive-statistics.html#cb484-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(air_time, distance, <span class="at">use =</span> <span class="st">&quot;na.or.complete&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##     rho
 ##   &lt;dbl&gt;
 ## 1 0.991</code></pre>
 <p><em>Note</em>: Unfortunately, the function <code>cor</code> doesn’t follow the same pattern as <code>mean</code> or <code>sd</code>. We have to use this <code>use</code> argument to filter <code>NA</code>s.</p>
 <p>However, we wouldn’t expect any relation between <code>air_time</code> and <code>month</code>.</p>
-<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="stats-descriptive-statistics.html#cb484-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb484-2"><a href="stats-descriptive-statistics.html#cb484-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb484-3"><a href="stats-descriptive-statistics.html#cb484-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(air_time, month, <span class="at">use =</span> <span class="st">&quot;na.or.complete&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="stats-descriptive-statistics.html#cb486-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb486-2"><a href="stats-descriptive-statistics.html#cb486-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb486-3"><a href="stats-descriptive-statistics.html#cb486-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(air_time, month, <span class="at">use =</span> <span class="st">&quot;na.or.complete&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##      rho
 ##    &lt;dbl&gt;
@@ -1464,65 +1464,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In the case of a <em>perfect linear relationships</em> the Pearson correlation takes the value <span class="math inline">\(+1\)</span> (for a positive slope) or <span class="math inline">\(-1\)</span> for a negative slope.</p>
 <div id="q5-compute-the-pearson-correlation-between-x-y-below.-play-with-the-slope-and-observe-the-change-in-the-correlation." class="section level3 hasAnchor" number="29.7.1">
 <h3><span class="header-section-number">29.7.1</span> <strong>q5</strong> Compute the Pearson correlation between <code>x, y</code> below. Play with the <code>slope</code> and observe the change in the correlation.<a href="stats-descriptive-statistics.html#q5-compute-the-pearson-correlation-between-x-y-below.-play-with-the-slope-and-observe-the-change-in-the-correlation." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="stats-descriptive-statistics.html#cb486-1" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Play with this value; observe the correlation</span></span>
-<span id="cb486-2"><a href="stats-descriptive-statistics.html#cb486-2" tabindex="-1"></a>df_line <span class="ot">&lt;-</span></span>
-<span id="cb486-3"><a href="stats-descriptive-statistics.html#cb486-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">+</span><span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">50</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb486-4"><a href="stats-descriptive-statistics.html#cb486-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> slope <span class="sc">*</span> x)</span>
-<span id="cb486-5"><a href="stats-descriptive-statistics.html#cb486-5" tabindex="-1"></a></span>
-<span id="cb486-6"><a href="stats-descriptive-statistics.html#cb486-6" tabindex="-1"></a></span>
-<span id="cb486-7"><a href="stats-descriptive-statistics.html#cb486-7" tabindex="-1"></a>df_line <span class="sc">%&gt;%</span></span>
-<span id="cb486-8"><a href="stats-descriptive-statistics.html#cb486-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb486-9"><a href="stats-descriptive-statistics.html#cb486-9" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-line-1.png" width="672" /></p>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="stats-descriptive-statistics.html#cb488-1" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Play with this value; observe the correlation</span></span>
+<span id="cb488-2"><a href="stats-descriptive-statistics.html#cb488-2" tabindex="-1"></a>df_line <span class="ot">&lt;-</span></span>
+<span id="cb488-3"><a href="stats-descriptive-statistics.html#cb488-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">+</span><span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">50</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb488-4"><a href="stats-descriptive-statistics.html#cb488-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> slope <span class="sc">*</span> x)</span>
+<span id="cb488-5"><a href="stats-descriptive-statistics.html#cb488-5" tabindex="-1"></a></span>
+<span id="cb488-6"><a href="stats-descriptive-statistics.html#cb488-6" tabindex="-1"></a></span>
+<span id="cb488-7"><a href="stats-descriptive-statistics.html#cb488-7" tabindex="-1"></a>df_line <span class="sc">%&gt;%</span></span>
+<span id="cb488-8"><a href="stats-descriptive-statistics.html#cb488-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb488-9"><a href="stats-descriptive-statistics.html#cb488-9" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-line-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li><code>slope</code> values greater than 0 have a positive correlation</li>
 <li><code>slope</code> values less than 0 have a negative correlation</li>
 </ul>
 <p>Note that this means <em>correlation is a measure of dependence</em>; it is <strong>not</strong> a measure of slope! It is better thought of as how <em>strong</em> the relationship between two variables is. A closer-to-zero correlation indicates a noisy relationship between variables, while a closer-to-one (in absolute value) indicates a more perfect, predictable relationship between the variables. For instance, the following code simulates data with different correlations, and facets the data based on the underlying correlation.</p>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="stats-descriptive-statistics.html#cb487-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb487-2"><a href="stats-descriptive-statistics.html#cb487-2" tabindex="-1"></a><span class="fu">map_dfr</span>(</span>
-<span id="cb487-3"><a href="stats-descriptive-statistics.html#cb487-3" tabindex="-1"></a>  <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.0</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">+</span><span class="fl">0.0</span>, <span class="sc">+</span><span class="fl">0.5</span>, <span class="sc">+</span><span class="fl">1.0</span>), <span class="co"># Chosen correlations</span></span>
-<span id="cb487-4"><a href="stats-descriptive-statistics.html#cb487-4" tabindex="-1"></a>  <span class="cf">function</span>(r) {</span>
-<span id="cb487-5"><a href="stats-descriptive-statistics.html#cb487-5" tabindex="-1"></a>    <span class="co"># Simulate a multivariate gaussian</span></span>
-<span id="cb487-6"><a href="stats-descriptive-statistics.html#cb487-6" tabindex="-1"></a>    X <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(</span>
-<span id="cb487-7"><a href="stats-descriptive-statistics.html#cb487-7" tabindex="-1"></a>      <span class="at">n =</span> <span class="dv">100</span>,</span>
-<span id="cb487-8"><a href="stats-descriptive-statistics.html#cb487-8" tabindex="-1"></a>      <span class="at">sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, r, r, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb487-9"><a href="stats-descriptive-statistics.html#cb487-9" tabindex="-1"></a>    )</span>
-<span id="cb487-10"><a href="stats-descriptive-statistics.html#cb487-10" tabindex="-1"></a>    <span class="co"># Package and return the data</span></span>
-<span id="cb487-11"><a href="stats-descriptive-statistics.html#cb487-11" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb487-12"><a href="stats-descriptive-statistics.html#cb487-12" tabindex="-1"></a>      <span class="at">x =</span> X[, <span class="dv">1</span>],</span>
-<span id="cb487-13"><a href="stats-descriptive-statistics.html#cb487-13" tabindex="-1"></a>      <span class="at">y =</span> X[, <span class="dv">2</span>],</span>
-<span id="cb487-14"><a href="stats-descriptive-statistics.html#cb487-14" tabindex="-1"></a>      <span class="at">r =</span> r</span>
-<span id="cb487-15"><a href="stats-descriptive-statistics.html#cb487-15" tabindex="-1"></a>    )</span>
-<span id="cb487-16"><a href="stats-descriptive-statistics.html#cb487-16" tabindex="-1"></a>  }</span>
-<span id="cb487-17"><a href="stats-descriptive-statistics.html#cb487-17" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb487-18"><a href="stats-descriptive-statistics.html#cb487-18" tabindex="-1"></a>  <span class="co"># Plot the data</span></span>
-<span id="cb487-19"><a href="stats-descriptive-statistics.html#cb487-19" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb487-20"><a href="stats-descriptive-statistics.html#cb487-20" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb487-21"><a href="stats-descriptive-statistics.html#cb487-21" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>r)</span></code></pre></div>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-lineup-1.png" width="672" /></p>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="stats-descriptive-statistics.html#cb489-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb489-2"><a href="stats-descriptive-statistics.html#cb489-2" tabindex="-1"></a><span class="fu">map_dfr</span>(</span>
+<span id="cb489-3"><a href="stats-descriptive-statistics.html#cb489-3" tabindex="-1"></a>  <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.0</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">+</span><span class="fl">0.0</span>, <span class="sc">+</span><span class="fl">0.5</span>, <span class="sc">+</span><span class="fl">1.0</span>), <span class="co"># Chosen correlations</span></span>
+<span id="cb489-4"><a href="stats-descriptive-statistics.html#cb489-4" tabindex="-1"></a>  <span class="cf">function</span>(r) {</span>
+<span id="cb489-5"><a href="stats-descriptive-statistics.html#cb489-5" tabindex="-1"></a>    <span class="co"># Simulate a multivariate gaussian</span></span>
+<span id="cb489-6"><a href="stats-descriptive-statistics.html#cb489-6" tabindex="-1"></a>    X <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(</span>
+<span id="cb489-7"><a href="stats-descriptive-statistics.html#cb489-7" tabindex="-1"></a>      <span class="at">n =</span> <span class="dv">100</span>,</span>
+<span id="cb489-8"><a href="stats-descriptive-statistics.html#cb489-8" tabindex="-1"></a>      <span class="at">sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, r, r, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb489-9"><a href="stats-descriptive-statistics.html#cb489-9" tabindex="-1"></a>    )</span>
+<span id="cb489-10"><a href="stats-descriptive-statistics.html#cb489-10" tabindex="-1"></a>    <span class="co"># Package and return the data</span></span>
+<span id="cb489-11"><a href="stats-descriptive-statistics.html#cb489-11" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb489-12"><a href="stats-descriptive-statistics.html#cb489-12" tabindex="-1"></a>      <span class="at">x =</span> X[, <span class="dv">1</span>],</span>
+<span id="cb489-13"><a href="stats-descriptive-statistics.html#cb489-13" tabindex="-1"></a>      <span class="at">y =</span> X[, <span class="dv">2</span>],</span>
+<span id="cb489-14"><a href="stats-descriptive-statistics.html#cb489-14" tabindex="-1"></a>      <span class="at">r =</span> r</span>
+<span id="cb489-15"><a href="stats-descriptive-statistics.html#cb489-15" tabindex="-1"></a>    )</span>
+<span id="cb489-16"><a href="stats-descriptive-statistics.html#cb489-16" tabindex="-1"></a>  }</span>
+<span id="cb489-17"><a href="stats-descriptive-statistics.html#cb489-17" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb489-18"><a href="stats-descriptive-statistics.html#cb489-18" tabindex="-1"></a>  <span class="co"># Plot the data</span></span>
+<span id="cb489-19"><a href="stats-descriptive-statistics.html#cb489-19" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb489-20"><a href="stats-descriptive-statistics.html#cb489-20" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb489-21"><a href="stats-descriptive-statistics.html#cb489-21" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>r)</span></code></pre></div>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-lineup-1.png" alt="" width="672" /></p>
 <p>One of the primary differences between Pearson and Spearman is that Pearson is a <em>linear correlation</em>, while Spearman is a <em>nonlinear correlation</em>. For instance, the following data</p>
-<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="stats-descriptive-statistics.html#cb488-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb488-2"><a href="stats-descriptive-statistics.html#cb488-2" tabindex="-1"></a><span class="co"># Positive slope</span></span>
-<span id="cb488-3"><a href="stats-descriptive-statistics.html#cb488-3" tabindex="-1"></a>df_monotone <span class="ot">&lt;-</span></span>
-<span id="cb488-4"><a href="stats-descriptive-statistics.html#cb488-4" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span>pi<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="fl">0.1</span>, <span class="sc">+</span>pi<span class="sc">/</span><span class="dv">2</span> <span class="sc">-</span> <span class="fl">0.1</span>, <span class="at">length.out =</span> <span class="dv">50</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb488-5"><a href="stats-descriptive-statistics.html#cb488-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">tan</span>(x))</span>
-<span id="cb488-6"><a href="stats-descriptive-statistics.html#cb488-6" tabindex="-1"></a></span>
-<span id="cb488-7"><a href="stats-descriptive-statistics.html#cb488-7" tabindex="-1"></a>df_monotone <span class="sc">%&gt;%</span></span>
-<span id="cb488-8"><a href="stats-descriptive-statistics.html#cb488-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb488-9"><a href="stats-descriptive-statistics.html#cb488-9" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-data-monotone-1.png" width="672" /></p>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="stats-descriptive-statistics.html#cb490-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb490-2"><a href="stats-descriptive-statistics.html#cb490-2" tabindex="-1"></a><span class="co"># Positive slope</span></span>
+<span id="cb490-3"><a href="stats-descriptive-statistics.html#cb490-3" tabindex="-1"></a>df_monotone <span class="ot">&lt;-</span></span>
+<span id="cb490-4"><a href="stats-descriptive-statistics.html#cb490-4" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span>pi<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="fl">0.1</span>, <span class="sc">+</span>pi<span class="sc">/</span><span class="dv">2</span> <span class="sc">-</span> <span class="fl">0.1</span>, <span class="at">length.out =</span> <span class="dv">50</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb490-5"><a href="stats-descriptive-statistics.html#cb490-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">tan</span>(x))</span>
+<span id="cb490-6"><a href="stats-descriptive-statistics.html#cb490-6" tabindex="-1"></a></span>
+<span id="cb490-7"><a href="stats-descriptive-statistics.html#cb490-7" tabindex="-1"></a>df_monotone <span class="sc">%&gt;%</span></span>
+<span id="cb490-8"><a href="stats-descriptive-statistics.html#cb490-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb490-9"><a href="stats-descriptive-statistics.html#cb490-9" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-data-monotone-1.png" alt="" width="672" /></p>
 <p>have a perfect relationship between them. The Pearson correlation does not pick up on this fact, while the Spearman correlation indicates a perfect relation.</p>
-<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="stats-descriptive-statistics.html#cb489-1" tabindex="-1"></a><span class="co"># Positive slope</span></span>
-<span id="cb489-2"><a href="stats-descriptive-statistics.html#cb489-2" tabindex="-1"></a>df_monotone <span class="sc">%&gt;%</span></span>
-<span id="cb489-3"><a href="stats-descriptive-statistics.html#cb489-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;pearson&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="stats-descriptive-statistics.html#cb491-1" tabindex="-1"></a><span class="co"># Positive slope</span></span>
+<span id="cb491-2"><a href="stats-descriptive-statistics.html#cb491-2" tabindex="-1"></a>df_monotone <span class="sc">%&gt;%</span></span>
+<span id="cb491-3"><a href="stats-descriptive-statistics.html#cb491-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;pearson&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##     rho
 ##   &lt;dbl&gt;
 ## 1 0.846</code></pre>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="stats-descriptive-statistics.html#cb491-1" tabindex="-1"></a>df_monotone <span class="sc">%&gt;%</span></span>
-<span id="cb491-2"><a href="stats-descriptive-statistics.html#cb491-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;spearman&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="stats-descriptive-statistics.html#cb493-1" tabindex="-1"></a>df_monotone <span class="sc">%&gt;%</span></span>
+<span id="cb493-2"><a href="stats-descriptive-statistics.html#cb493-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;spearman&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##     rho
 ##   &lt;dbl&gt;
@@ -1531,59 +1531,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q6-run-the-code-chunk-below-and-look-at-the-visualization-make-a-prediction-about-what-you-think-the-correlation-will-be.-then-compute-the-pearson-correlation-between-x-y-below." class="section level3 hasAnchor" number="29.7.2">
 <h3><span class="header-section-number">29.7.2</span> <strong>q6</strong> Run the code chunk below and look at the visualization: Make a prediction about what you think the correlation will be. Then compute the Pearson correlation between <code>x, y</code> below.<a href="stats-descriptive-statistics.html#q6-run-the-code-chunk-below-and-look-at-the-visualization-make-a-prediction-about-what-you-think-the-correlation-will-be.-then-compute-the-pearson-correlation-between-x-y-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="stats-descriptive-statistics.html#cb493-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb493-2"><a href="stats-descriptive-statistics.html#cb493-2" tabindex="-1"></a>df_quad <span class="ot">&lt;-</span></span>
-<span id="cb493-3"><a href="stats-descriptive-statistics.html#cb493-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">+</span><span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">50</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb493-4"><a href="stats-descriptive-statistics.html#cb493-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="fl">0.5</span>)</span>
-<span id="cb493-5"><a href="stats-descriptive-statistics.html#cb493-5" tabindex="-1"></a></span>
-<span id="cb493-6"><a href="stats-descriptive-statistics.html#cb493-6" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the Pearson and Spearman correlations on `df_quad`</span></span>
-<span id="cb493-7"><a href="stats-descriptive-statistics.html#cb493-7" tabindex="-1"></a>df_quad <span class="sc">%&gt;%</span></span>
-<span id="cb493-8"><a href="stats-descriptive-statistics.html#cb493-8" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;pearson&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="stats-descriptive-statistics.html#cb495-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb495-2"><a href="stats-descriptive-statistics.html#cb495-2" tabindex="-1"></a>df_quad <span class="ot">&lt;-</span></span>
+<span id="cb495-3"><a href="stats-descriptive-statistics.html#cb495-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">+</span><span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">50</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb495-4"><a href="stats-descriptive-statistics.html#cb495-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="fl">0.5</span>)</span>
+<span id="cb495-5"><a href="stats-descriptive-statistics.html#cb495-5" tabindex="-1"></a></span>
+<span id="cb495-6"><a href="stats-descriptive-statistics.html#cb495-6" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the Pearson and Spearman correlations on `df_quad`</span></span>
+<span id="cb495-7"><a href="stats-descriptive-statistics.html#cb495-7" tabindex="-1"></a>df_quad <span class="sc">%&gt;%</span></span>
+<span id="cb495-8"><a href="stats-descriptive-statistics.html#cb495-8" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;pearson&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##         rho
 ##       &lt;dbl&gt;
 ## 1 -2.02e-16</code></pre>
-<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="stats-descriptive-statistics.html#cb495-1" tabindex="-1"></a>df_quad <span class="sc">%&gt;%</span></span>
-<span id="cb495-2"><a href="stats-descriptive-statistics.html#cb495-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;spearman&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="stats-descriptive-statistics.html#cb497-1" tabindex="-1"></a>df_quad <span class="sc">%&gt;%</span></span>
+<span id="cb497-2"><a href="stats-descriptive-statistics.html#cb497-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;spearman&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##       rho
 ##     &lt;dbl&gt;
 ## 1 -0.0236</code></pre>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="stats-descriptive-statistics.html#cb497-1" tabindex="-1"></a>df_quad <span class="sc">%&gt;%</span></span>
-<span id="cb497-2"><a href="stats-descriptive-statistics.html#cb497-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb497-3"><a href="stats-descriptive-statistics.html#cb497-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-data-quad-1.png" width="672" /></p>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="stats-descriptive-statistics.html#cb499-1" tabindex="-1"></a>df_quad <span class="sc">%&gt;%</span></span>
+<span id="cb499-2"><a href="stats-descriptive-statistics.html#cb499-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb499-3"><a href="stats-descriptive-statistics.html#cb499-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-data-quad-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>Both correlations are near-zero</li>
 </ul>
 <p>One last point about correlation: The mean is to Pearson correlation as the median is to Spearman correlation. The median and Spearman’s rho are robust to outliers.</p>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="stats-descriptive-statistics.html#cb498-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb498-2"><a href="stats-descriptive-statistics.html#cb498-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb498-3"><a href="stats-descriptive-statistics.html#cb498-3" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(</span>
-<span id="cb498-4"><a href="stats-descriptive-statistics.html#cb498-4" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">25</span>,</span>
-<span id="cb498-5"><a href="stats-descriptive-statistics.html#cb498-5" tabindex="-1"></a>  <span class="at">sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb498-6"><a href="stats-descriptive-statistics.html#cb498-6" tabindex="-1"></a>)</span>
-<span id="cb498-7"><a href="stats-descriptive-statistics.html#cb498-7" tabindex="-1"></a></span>
-<span id="cb498-8"><a href="stats-descriptive-statistics.html#cb498-8" tabindex="-1"></a>df_cor_outliers <span class="ot">&lt;-</span></span>
-<span id="cb498-9"><a href="stats-descriptive-statistics.html#cb498-9" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb498-10"><a href="stats-descriptive-statistics.html#cb498-10" tabindex="-1"></a>    <span class="at">x =</span> X[, <span class="dv">1</span>],</span>
-<span id="cb498-11"><a href="stats-descriptive-statistics.html#cb498-11" tabindex="-1"></a>    <span class="at">y =</span> X[, <span class="dv">2</span>]</span>
-<span id="cb498-12"><a href="stats-descriptive-statistics.html#cb498-12" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb498-13"><a href="stats-descriptive-statistics.html#cb498-13" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">10.1</span>, <span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">10.1</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.2</span>, <span class="sc">-</span><span class="fl">1.1</span>, <span class="fl">1.1</span>, <span class="fl">1.2</span>)))</span>
-<span id="cb498-14"><a href="stats-descriptive-statistics.html#cb498-14" tabindex="-1"></a></span>
-<span id="cb498-15"><a href="stats-descriptive-statistics.html#cb498-15" tabindex="-1"></a>df_cor_outliers <span class="sc">%&gt;%</span></span>
-<span id="cb498-16"><a href="stats-descriptive-statistics.html#cb498-16" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb498-17"><a href="stats-descriptive-statistics.html#cb498-17" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-outliers-1.png" width="672" /></p>
-<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="stats-descriptive-statistics.html#cb499-1" tabindex="-1"></a>df_cor_outliers <span class="sc">%&gt;%</span></span>
-<span id="cb499-2"><a href="stats-descriptive-statistics.html#cb499-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;pearson&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="stats-descriptive-statistics.html#cb500-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb500-2"><a href="stats-descriptive-statistics.html#cb500-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb500-3"><a href="stats-descriptive-statistics.html#cb500-3" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(</span>
+<span id="cb500-4"><a href="stats-descriptive-statistics.html#cb500-4" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">25</span>,</span>
+<span id="cb500-5"><a href="stats-descriptive-statistics.html#cb500-5" tabindex="-1"></a>  <span class="at">sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb500-6"><a href="stats-descriptive-statistics.html#cb500-6" tabindex="-1"></a>)</span>
+<span id="cb500-7"><a href="stats-descriptive-statistics.html#cb500-7" tabindex="-1"></a></span>
+<span id="cb500-8"><a href="stats-descriptive-statistics.html#cb500-8" tabindex="-1"></a>df_cor_outliers <span class="ot">&lt;-</span></span>
+<span id="cb500-9"><a href="stats-descriptive-statistics.html#cb500-9" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb500-10"><a href="stats-descriptive-statistics.html#cb500-10" tabindex="-1"></a>    <span class="at">x =</span> X[, <span class="dv">1</span>],</span>
+<span id="cb500-11"><a href="stats-descriptive-statistics.html#cb500-11" tabindex="-1"></a>    <span class="at">y =</span> X[, <span class="dv">2</span>]</span>
+<span id="cb500-12"><a href="stats-descriptive-statistics.html#cb500-12" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb500-13"><a href="stats-descriptive-statistics.html#cb500-13" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">10.1</span>, <span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">10.1</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.2</span>, <span class="sc">-</span><span class="fl">1.1</span>, <span class="fl">1.1</span>, <span class="fl">1.2</span>)))</span>
+<span id="cb500-14"><a href="stats-descriptive-statistics.html#cb500-14" tabindex="-1"></a></span>
+<span id="cb500-15"><a href="stats-descriptive-statistics.html#cb500-15" tabindex="-1"></a>df_cor_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb500-16"><a href="stats-descriptive-statistics.html#cb500-16" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb500-17"><a href="stats-descriptive-statistics.html#cb500-17" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-outliers-1.png" alt="" width="672" /></p>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="stats-descriptive-statistics.html#cb501-1" tabindex="-1"></a>df_cor_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb501-2"><a href="stats-descriptive-statistics.html#cb501-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;pearson&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##     rho
 ##   &lt;dbl&gt;
 ## 1 0.621</code></pre>
-<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="stats-descriptive-statistics.html#cb501-1" tabindex="-1"></a>df_cor_outliers <span class="sc">%&gt;%</span></span>
-<span id="cb501-2"><a href="stats-descriptive-statistics.html#cb501-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;spearman&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="stats-descriptive-statistics.html#cb503-1" tabindex="-1"></a>df_cor_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb503-2"><a href="stats-descriptive-statistics.html#cb503-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rho =</span> <span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&quot;spearman&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##     rho
 ##   &lt;dbl&gt;
@@ -1600,18 +1600,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Purpose</em>: Often our data are scattered across multiple sets. In this case, we need to be able to <em>join</em> data.</p>
 <p><em>Reading</em>: (None, this is the reading)
 <em>Topics</em>: Welcome, mutating joins, filtering joins, Binds and set operations</p>
-<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="stats-descriptive-statistics.html#cb503-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="stats-descriptive-statistics.html#cb505-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="stats-descriptive-statistics.html#cb505-1" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code></pre></div>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="stats-descriptive-statistics.html#cb507-1" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code></pre></div>
 </div>
 <div id="combining-data" class="section level2 hasAnchor" number="29.9">
 <h2><span class="header-section-number">29.9</span> Combining data<a href="stats-descriptive-statistics.html#combining-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1624,26 +1624,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">29.9.1</span> Dangers of Binding!<a href="stats-descriptive-statistics.html#dangers-of-binding" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As noted above, binding is a “dumb” way to combine data.</p>
 <p>Let’s look at an example using <code>bind_columns</code>. This will take two datasets and “glue” them together in whatever order the happened to be arranged in.</p>
-<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="stats-descriptive-statistics.html#cb506-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this; setup</span></span>
-<span id="cb506-2"><a href="stats-descriptive-statistics.html#cb506-2" tabindex="-1"></a>beatles1 <span class="ot">&lt;-</span></span>
-<span id="cb506-3"><a href="stats-descriptive-statistics.html#cb506-3" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb506-4"><a href="stats-descriptive-statistics.html#cb506-4" tabindex="-1"></a>    <span class="sc">~</span>band, <span class="sc">~</span>name,</span>
-<span id="cb506-5"><a href="stats-descriptive-statistics.html#cb506-5" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;John&quot;</span>,</span>
-<span id="cb506-6"><a href="stats-descriptive-statistics.html#cb506-6" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Paul&quot;</span>,</span>
-<span id="cb506-7"><a href="stats-descriptive-statistics.html#cb506-7" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;George&quot;</span>,</span>
-<span id="cb506-8"><a href="stats-descriptive-statistics.html#cb506-8" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Ringo&quot;</span></span>
-<span id="cb506-9"><a href="stats-descriptive-statistics.html#cb506-9" tabindex="-1"></a>  )</span>
-<span id="cb506-10"><a href="stats-descriptive-statistics.html#cb506-10" tabindex="-1"></a></span>
-<span id="cb506-11"><a href="stats-descriptive-statistics.html#cb506-11" tabindex="-1"></a>beatles2 <span class="ot">&lt;-</span></span>
-<span id="cb506-12"><a href="stats-descriptive-statistics.html#cb506-12" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb506-13"><a href="stats-descriptive-statistics.html#cb506-13" tabindex="-1"></a>       <span class="sc">~</span>surname, <span class="sc">~</span>instrument,</span>
-<span id="cb506-14"><a href="stats-descriptive-statistics.html#cb506-14" tabindex="-1"></a>    <span class="st">&quot;McCartney&quot;</span>,      <span class="st">&quot;bass&quot;</span>,</span>
-<span id="cb506-15"><a href="stats-descriptive-statistics.html#cb506-15" tabindex="-1"></a>     <span class="st">&quot;Harrison&quot;</span>,    <span class="st">&quot;guitar&quot;</span>,</span>
-<span id="cb506-16"><a href="stats-descriptive-statistics.html#cb506-16" tabindex="-1"></a>        <span class="st">&quot;Starr&quot;</span>,     <span class="st">&quot;drums&quot;</span>,</span>
-<span id="cb506-17"><a href="stats-descriptive-statistics.html#cb506-17" tabindex="-1"></a>       <span class="st">&quot;Lennon&quot;</span>,    <span class="st">&quot;guitar&quot;</span></span>
-<span id="cb506-18"><a href="stats-descriptive-statistics.html#cb506-18" tabindex="-1"></a>  )</span>
-<span id="cb506-19"><a href="stats-descriptive-statistics.html#cb506-19" tabindex="-1"></a></span>
-<span id="cb506-20"><a href="stats-descriptive-statistics.html#cb506-20" tabindex="-1"></a><span class="fu">bind_cols</span>(beatles1, beatles2)</span></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="stats-descriptive-statistics.html#cb508-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this; setup</span></span>
+<span id="cb508-2"><a href="stats-descriptive-statistics.html#cb508-2" tabindex="-1"></a>beatles1 <span class="ot">&lt;-</span></span>
+<span id="cb508-3"><a href="stats-descriptive-statistics.html#cb508-3" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb508-4"><a href="stats-descriptive-statistics.html#cb508-4" tabindex="-1"></a>    <span class="sc">~</span>band, <span class="sc">~</span>name,</span>
+<span id="cb508-5"><a href="stats-descriptive-statistics.html#cb508-5" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;John&quot;</span>,</span>
+<span id="cb508-6"><a href="stats-descriptive-statistics.html#cb508-6" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Paul&quot;</span>,</span>
+<span id="cb508-7"><a href="stats-descriptive-statistics.html#cb508-7" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;George&quot;</span>,</span>
+<span id="cb508-8"><a href="stats-descriptive-statistics.html#cb508-8" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Ringo&quot;</span></span>
+<span id="cb508-9"><a href="stats-descriptive-statistics.html#cb508-9" tabindex="-1"></a>  )</span>
+<span id="cb508-10"><a href="stats-descriptive-statistics.html#cb508-10" tabindex="-1"></a></span>
+<span id="cb508-11"><a href="stats-descriptive-statistics.html#cb508-11" tabindex="-1"></a>beatles2 <span class="ot">&lt;-</span></span>
+<span id="cb508-12"><a href="stats-descriptive-statistics.html#cb508-12" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb508-13"><a href="stats-descriptive-statistics.html#cb508-13" tabindex="-1"></a>       <span class="sc">~</span>surname, <span class="sc">~</span>instrument,</span>
+<span id="cb508-14"><a href="stats-descriptive-statistics.html#cb508-14" tabindex="-1"></a>    <span class="st">&quot;McCartney&quot;</span>,      <span class="st">&quot;bass&quot;</span>,</span>
+<span id="cb508-15"><a href="stats-descriptive-statistics.html#cb508-15" tabindex="-1"></a>     <span class="st">&quot;Harrison&quot;</span>,    <span class="st">&quot;guitar&quot;</span>,</span>
+<span id="cb508-16"><a href="stats-descriptive-statistics.html#cb508-16" tabindex="-1"></a>        <span class="st">&quot;Starr&quot;</span>,     <span class="st">&quot;drums&quot;</span>,</span>
+<span id="cb508-17"><a href="stats-descriptive-statistics.html#cb508-17" tabindex="-1"></a>       <span class="st">&quot;Lennon&quot;</span>,    <span class="st">&quot;guitar&quot;</span></span>
+<span id="cb508-18"><a href="stats-descriptive-statistics.html#cb508-18" tabindex="-1"></a>  )</span>
+<span id="cb508-19"><a href="stats-descriptive-statistics.html#cb508-19" tabindex="-1"></a></span>
+<span id="cb508-20"><a href="stats-descriptive-statistics.html#cb508-20" tabindex="-1"></a><span class="fu">bind_cols</span>(beatles1, beatles2)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 4
 ##   band    name   surname   instrument
 ##   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;     
@@ -1666,50 +1666,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Rather than do a dumb binding, we can use a set of columns to more intelligently <em>join</em> two datasets. Joins operate by combining only those rows of data that match on a selected set of <em>join keys</em>. For example, the following image illustrates how we would join two datasets on the columns <code>A</code> and <code>B</code>. Note that only those rows that match on both <code>A</code> and <code>B</code> are joined.</p>
 <p><img src="images/inner-join.png" /></p>
 <p>Here’s what the example would look like with R datasets:</p>
-<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="stats-descriptive-statistics.html#cb508-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb508-2"><a href="stats-descriptive-statistics.html#cb508-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb508-3"><a href="stats-descriptive-statistics.html#cb508-3" tabindex="-1"></a>  <span class="at">A =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb508-4"><a href="stats-descriptive-statistics.html#cb508-4" tabindex="-1"></a>  <span class="at">B =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb508-5"><a href="stats-descriptive-statistics.html#cb508-5" tabindex="-1"></a>  <span class="at">C =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb508-6"><a href="stats-descriptive-statistics.html#cb508-6" tabindex="-1"></a>)</span>
-<span id="cb508-7"><a href="stats-descriptive-statistics.html#cb508-7" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb508-8"><a href="stats-descriptive-statistics.html#cb508-8" tabindex="-1"></a>  <span class="at">A =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb508-9"><a href="stats-descriptive-statistics.html#cb508-9" tabindex="-1"></a>  <span class="at">B =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>),</span>
-<span id="cb508-10"><a href="stats-descriptive-statistics.html#cb508-10" tabindex="-1"></a>  <span class="at">D =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">1</span>)</span>
-<span id="cb508-11"><a href="stats-descriptive-statistics.html#cb508-11" tabindex="-1"></a>)</span>
-<span id="cb508-12"><a href="stats-descriptive-statistics.html#cb508-12" tabindex="-1"></a></span>
-<span id="cb508-13"><a href="stats-descriptive-statistics.html#cb508-13" tabindex="-1"></a><span class="fu">inner_join</span>(df1, df2, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="stats-descriptive-statistics.html#cb510-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb510-2"><a href="stats-descriptive-statistics.html#cb510-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb510-3"><a href="stats-descriptive-statistics.html#cb510-3" tabindex="-1"></a>  <span class="at">A =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb510-4"><a href="stats-descriptive-statistics.html#cb510-4" tabindex="-1"></a>  <span class="at">B =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb510-5"><a href="stats-descriptive-statistics.html#cb510-5" tabindex="-1"></a>  <span class="at">C =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb510-6"><a href="stats-descriptive-statistics.html#cb510-6" tabindex="-1"></a>)</span>
+<span id="cb510-7"><a href="stats-descriptive-statistics.html#cb510-7" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb510-8"><a href="stats-descriptive-statistics.html#cb510-8" tabindex="-1"></a>  <span class="at">A =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb510-9"><a href="stats-descriptive-statistics.html#cb510-9" tabindex="-1"></a>  <span class="at">B =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>),</span>
+<span id="cb510-10"><a href="stats-descriptive-statistics.html#cb510-10" tabindex="-1"></a>  <span class="at">D =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">1</span>)</span>
+<span id="cb510-11"><a href="stats-descriptive-statistics.html#cb510-11" tabindex="-1"></a>)</span>
+<span id="cb510-12"><a href="stats-descriptive-statistics.html#cb510-12" tabindex="-1"></a></span>
+<span id="cb510-13"><a href="stats-descriptive-statistics.html#cb510-13" tabindex="-1"></a><span class="fu">inner_join</span>(df1, df2, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 4
 ##       A     B     C     D
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1     1     1     2     4</code></pre>
 <p>Note how the joined dataset includes columns from both <code>df1</code> and <code>df2</code>. This is “the point” of joining data—to bring together different sources of data.</p>
 <p>Note that we can “chain” multiple joins to combine datasets. Sometimes this is necessary when we have different join keys between different pairs of datasets. As an example, we’ll use the following <code>beatles3</code> to <em>correctly</em> join the data.</p>
-<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="stats-descriptive-statistics.html#cb510-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this; setup</span></span>
-<span id="cb510-2"><a href="stats-descriptive-statistics.html#cb510-2" tabindex="-1"></a><span class="co"># This is our source of join key information</span></span>
-<span id="cb510-3"><a href="stats-descriptive-statistics.html#cb510-3" tabindex="-1"></a>beatles3 <span class="ot">&lt;-</span></span>
-<span id="cb510-4"><a href="stats-descriptive-statistics.html#cb510-4" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb510-5"><a href="stats-descriptive-statistics.html#cb510-5" tabindex="-1"></a>    <span class="sc">~</span>name, <span class="sc">~</span>surname,</span>
-<span id="cb510-6"><a href="stats-descriptive-statistics.html#cb510-6" tabindex="-1"></a>    <span class="st">&quot;John&quot;</span>, <span class="st">&quot;Lennon&quot;</span>,</span>
-<span id="cb510-7"><a href="stats-descriptive-statistics.html#cb510-7" tabindex="-1"></a>    <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;McCartney&quot;</span>,</span>
-<span id="cb510-8"><a href="stats-descriptive-statistics.html#cb510-8" tabindex="-1"></a>    <span class="st">&quot;George&quot;</span>, <span class="st">&quot;Harrison&quot;</span>,</span>
-<span id="cb510-9"><a href="stats-descriptive-statistics.html#cb510-9" tabindex="-1"></a>    <span class="st">&quot;Ringo&quot;</span>, <span class="st">&quot;Starr&quot;</span></span>
-<span id="cb510-10"><a href="stats-descriptive-statistics.html#cb510-10" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="stats-descriptive-statistics.html#cb512-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this; setup</span></span>
+<span id="cb512-2"><a href="stats-descriptive-statistics.html#cb512-2" tabindex="-1"></a><span class="co"># This is our source of join key information</span></span>
+<span id="cb512-3"><a href="stats-descriptive-statistics.html#cb512-3" tabindex="-1"></a>beatles3 <span class="ot">&lt;-</span></span>
+<span id="cb512-4"><a href="stats-descriptive-statistics.html#cb512-4" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb512-5"><a href="stats-descriptive-statistics.html#cb512-5" tabindex="-1"></a>    <span class="sc">~</span>name, <span class="sc">~</span>surname,</span>
+<span id="cb512-6"><a href="stats-descriptive-statistics.html#cb512-6" tabindex="-1"></a>    <span class="st">&quot;John&quot;</span>, <span class="st">&quot;Lennon&quot;</span>,</span>
+<span id="cb512-7"><a href="stats-descriptive-statistics.html#cb512-7" tabindex="-1"></a>    <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;McCartney&quot;</span>,</span>
+<span id="cb512-8"><a href="stats-descriptive-statistics.html#cb512-8" tabindex="-1"></a>    <span class="st">&quot;George&quot;</span>, <span class="st">&quot;Harrison&quot;</span>,</span>
+<span id="cb512-9"><a href="stats-descriptive-statistics.html#cb512-9" tabindex="-1"></a>    <span class="st">&quot;Ringo&quot;</span>, <span class="st">&quot;Starr&quot;</span></span>
+<span id="cb512-10"><a href="stats-descriptive-statistics.html#cb512-10" tabindex="-1"></a>  )</span></code></pre></div>
 <div id="q2-use-the-following-beatles3-to-correctly-join-beatles1" class="section level3 hasAnchor" number="29.10.1">
 <h3><span class="header-section-number">29.10.1</span> <strong>q2</strong> Use the following <code>beatles3</code> to <em>correctly</em> join <code>beatles1</code><a href="stats-descriptive-statistics.html#q2-use-the-following-beatles3-to-correctly-join-beatles1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: You will need to use two join functions to complete this task.</p>
-<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="stats-descriptive-statistics.html#cb511-1" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
-<span id="cb511-2"><a href="stats-descriptive-statistics.html#cb511-2" tabindex="-1"></a>  beatles1 <span class="sc">%&gt;%</span></span>
-<span id="cb511-3"><a href="stats-descriptive-statistics.html#cb511-3" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb511-4"><a href="stats-descriptive-statistics.html#cb511-4" tabindex="-1"></a>    beatles3,</span>
-<span id="cb511-5"><a href="stats-descriptive-statistics.html#cb511-5" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;name&quot;</span></span>
-<span id="cb511-6"><a href="stats-descriptive-statistics.html#cb511-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb511-7"><a href="stats-descriptive-statistics.html#cb511-7" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb511-8"><a href="stats-descriptive-statistics.html#cb511-8" tabindex="-1"></a>    beatles2,</span>
-<span id="cb511-9"><a href="stats-descriptive-statistics.html#cb511-9" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;surname&quot;</span></span>
-<span id="cb511-10"><a href="stats-descriptive-statistics.html#cb511-10" tabindex="-1"></a>  )</span>
-<span id="cb511-11"><a href="stats-descriptive-statistics.html#cb511-11" tabindex="-1"></a></span>
-<span id="cb511-12"><a href="stats-descriptive-statistics.html#cb511-12" tabindex="-1"></a>df_q2</span></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="stats-descriptive-statistics.html#cb513-1" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
+<span id="cb513-2"><a href="stats-descriptive-statistics.html#cb513-2" tabindex="-1"></a>  beatles1 <span class="sc">%&gt;%</span></span>
+<span id="cb513-3"><a href="stats-descriptive-statistics.html#cb513-3" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb513-4"><a href="stats-descriptive-statistics.html#cb513-4" tabindex="-1"></a>    beatles3,</span>
+<span id="cb513-5"><a href="stats-descriptive-statistics.html#cb513-5" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;name&quot;</span></span>
+<span id="cb513-6"><a href="stats-descriptive-statistics.html#cb513-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb513-7"><a href="stats-descriptive-statistics.html#cb513-7" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb513-8"><a href="stats-descriptive-statistics.html#cb513-8" tabindex="-1"></a>    beatles2,</span>
+<span id="cb513-9"><a href="stats-descriptive-statistics.html#cb513-9" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;surname&quot;</span></span>
+<span id="cb513-10"><a href="stats-descriptive-statistics.html#cb513-10" tabindex="-1"></a>  )</span>
+<span id="cb513-11"><a href="stats-descriptive-statistics.html#cb513-11" tabindex="-1"></a></span>
+<span id="cb513-12"><a href="stats-descriptive-statistics.html#cb513-12" tabindex="-1"></a>df_q2</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 4
 ##   band    name   surname   instrument
 ##   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;     
@@ -1718,26 +1718,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3 Beatles George Harrison  guitar    
 ## 4 Beatles Ringo  Starr     drums</code></pre>
 <p>Use the following test to check your work:</p>
-<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="stats-descriptive-statistics.html#cb513-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb513-2"><a href="stats-descriptive-statistics.html#cb513-2" tabindex="-1"></a><span class="co"># Reference dataset</span></span>
-<span id="cb513-3"><a href="stats-descriptive-statistics.html#cb513-3" tabindex="-1"></a>beatles_joined <span class="ot">&lt;-</span></span>
-<span id="cb513-4"><a href="stats-descriptive-statistics.html#cb513-4" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb513-5"><a href="stats-descriptive-statistics.html#cb513-5" tabindex="-1"></a>    <span class="sc">~</span>band, <span class="sc">~</span>name, <span class="sc">~</span>surname, <span class="sc">~</span>instrument,</span>
-<span id="cb513-6"><a href="stats-descriptive-statistics.html#cb513-6" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;John&quot;</span>, <span class="st">&quot;Lennon&quot;</span>, <span class="st">&quot;guitar&quot;</span>,</span>
-<span id="cb513-7"><a href="stats-descriptive-statistics.html#cb513-7" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;McCartney&quot;</span>, <span class="st">&quot;bass&quot;</span>,</span>
-<span id="cb513-8"><a href="stats-descriptive-statistics.html#cb513-8" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;George&quot;</span>, <span class="st">&quot;Harrison&quot;</span>, <span class="st">&quot;guitar&quot;</span>,</span>
-<span id="cb513-9"><a href="stats-descriptive-statistics.html#cb513-9" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Ringo&quot;</span>, <span class="st">&quot;Starr&quot;</span>, <span class="st">&quot;drums&quot;</span></span>
-<span id="cb513-10"><a href="stats-descriptive-statistics.html#cb513-10" tabindex="-1"></a>  )</span>
-<span id="cb513-11"><a href="stats-descriptive-statistics.html#cb513-11" tabindex="-1"></a><span class="co"># Check for correctness</span></span>
-<span id="cb513-12"><a href="stats-descriptive-statistics.html#cb513-12" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">all_equal</span>(df_q2, beatles_joined))</span></code></pre></div>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="stats-descriptive-statistics.html#cb515-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb515-2"><a href="stats-descriptive-statistics.html#cb515-2" tabindex="-1"></a><span class="co"># Reference dataset</span></span>
+<span id="cb515-3"><a href="stats-descriptive-statistics.html#cb515-3" tabindex="-1"></a>beatles_joined <span class="ot">&lt;-</span></span>
+<span id="cb515-4"><a href="stats-descriptive-statistics.html#cb515-4" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb515-5"><a href="stats-descriptive-statistics.html#cb515-5" tabindex="-1"></a>    <span class="sc">~</span>band, <span class="sc">~</span>name, <span class="sc">~</span>surname, <span class="sc">~</span>instrument,</span>
+<span id="cb515-6"><a href="stats-descriptive-statistics.html#cb515-6" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;John&quot;</span>, <span class="st">&quot;Lennon&quot;</span>, <span class="st">&quot;guitar&quot;</span>,</span>
+<span id="cb515-7"><a href="stats-descriptive-statistics.html#cb515-7" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;McCartney&quot;</span>, <span class="st">&quot;bass&quot;</span>,</span>
+<span id="cb515-8"><a href="stats-descriptive-statistics.html#cb515-8" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;George&quot;</span>, <span class="st">&quot;Harrison&quot;</span>, <span class="st">&quot;guitar&quot;</span>,</span>
+<span id="cb515-9"><a href="stats-descriptive-statistics.html#cb515-9" tabindex="-1"></a>    <span class="st">&quot;Beatles&quot;</span>, <span class="st">&quot;Ringo&quot;</span>, <span class="st">&quot;Starr&quot;</span>, <span class="st">&quot;drums&quot;</span></span>
+<span id="cb515-10"><a href="stats-descriptive-statistics.html#cb515-10" tabindex="-1"></a>  )</span>
+<span id="cb515-11"><a href="stats-descriptive-statistics.html#cb515-11" tabindex="-1"></a><span class="co"># Check for correctness</span></span>
+<span id="cb515-12"><a href="stats-descriptive-statistics.html#cb515-12" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">all_equal</span>(df_q2, beatles_joined))</span></code></pre></div>
 <pre><code>## Warning: `all_equal()` was deprecated in dplyr 1.1.0.
 ## ℹ Please use `all.equal()` instead.
 ## ℹ And manually order the rows/cols as needed
-## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="stats-descriptive-statistics.html#cb516-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="stats-descriptive-statistics.html#cb518-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <p>There’s a <strong>very important lesson</strong> here: In general, don’t trust <code>bind_cols</code>. It’s easy in the example above to tell there’s a problem because the data are <em>small</em>; when working with larger datasets, R will happily give you the wrong answer if you give it the wrong instructions. Whenever possible, use some form of join to combine datasets.</p>
 </div>
@@ -1773,7 +1772,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">29.11.2</span> Keys with different names<a href="stats-descriptive-statistics.html#keys-with-different-names" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>So far in our examples, join keys have had the same column name. However, there is no guarantee that our join keys will have the same names across all datasets. Thankfully, the <code>*_join()</code> functions have a way to deal with non-matching names. We can use a <em>named vector</em> to specify the key names on both sides.</p>
 <p>For instance, the <code>nycflights13</code> database has multiple tables, including one for the airpots:</p>
-<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="stats-descriptive-statistics.html#cb518-1" tabindex="-1"></a>airports</span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="stats-descriptive-statistics.html#cb520-1" tabindex="-1"></a>airports</span></code></pre></div>
 <pre><code>## # A tibble: 1,458 × 8
 ##    faa   name                             lat    lon   alt    tz dst   tzone    
 ##    &lt;chr&gt; &lt;chr&gt;                          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    
@@ -1789,14 +1788,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 0S9   Jefferson County Intl           48.1 -123.    108    -8 A     America/…
 ## # ℹ 1,448 more rows</code></pre>
 <p>Note that the airport identifier in <code>airports</code> is <code>faa</code>. However, for flights, we have to specify an airport identifier for both the <code>origin</code> and <code>dest</code>. We can use a named vector to match up the join key:</p>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="stats-descriptive-statistics.html#cb520-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb520-2"><a href="stats-descriptive-statistics.html#cb520-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb520-3"><a href="stats-descriptive-statistics.html#cb520-3" tabindex="-1"></a>  <span class="fu">select</span>(flight, origin) <span class="sc">%&gt;%</span> </span>
-<span id="cb520-4"><a href="stats-descriptive-statistics.html#cb520-4" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb520-5"><a href="stats-descriptive-statistics.html#cb520-5" tabindex="-1"></a>    airports <span class="sc">%&gt;%</span> <span class="fu">select</span>(faa, name),</span>
-<span id="cb520-6"><a href="stats-descriptive-statistics.html#cb520-6" tabindex="-1"></a>    <span class="co">#       name in `flights`   name in `airports`</span></span>
-<span id="cb520-7"><a href="stats-descriptive-statistics.html#cb520-7" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>( <span class="st">&quot;origin&quot;</span>          <span class="ot">=</span> <span class="st">&quot;faa&quot;</span>              )</span>
-<span id="cb520-8"><a href="stats-descriptive-statistics.html#cb520-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="stats-descriptive-statistics.html#cb522-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb522-2"><a href="stats-descriptive-statistics.html#cb522-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb522-3"><a href="stats-descriptive-statistics.html#cb522-3" tabindex="-1"></a>  <span class="fu">select</span>(flight, origin) <span class="sc">%&gt;%</span> </span>
+<span id="cb522-4"><a href="stats-descriptive-statistics.html#cb522-4" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb522-5"><a href="stats-descriptive-statistics.html#cb522-5" tabindex="-1"></a>    airports <span class="sc">%&gt;%</span> <span class="fu">select</span>(faa, name),</span>
+<span id="cb522-6"><a href="stats-descriptive-statistics.html#cb522-6" tabindex="-1"></a>    <span class="co">#       name in `flights`   name in `airports`</span></span>
+<span id="cb522-7"><a href="stats-descriptive-statistics.html#cb522-7" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>( <span class="st">&quot;origin&quot;</span>          <span class="ot">=</span> <span class="st">&quot;faa&quot;</span>              )</span>
+<span id="cb522-8"><a href="stats-descriptive-statistics.html#cb522-8" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 336,776 × 3
 ##    flight origin name               
 ##     &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;              
@@ -1816,13 +1815,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">29.11.3</span> <strong>q3</strong> Add the airport name<a href="stats-descriptive-statistics.html#q3-add-the-airport-name" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Complete the code below by using an appropriate join to add the airport name to the <code>flights</code> dataset.</p>
 <p><em>Aside</em>: While you’re at it, try replacing <code>left_join()</code> with <code>inner_join()</code>. What happens to the resulting data?</p>
-<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="stats-descriptive-statistics.html#cb522-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Add the airport name for the `dest` using a join</span></span>
-<span id="cb522-2"><a href="stats-descriptive-statistics.html#cb522-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb522-3"><a href="stats-descriptive-statistics.html#cb522-3" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb522-4"><a href="stats-descriptive-statistics.html#cb522-4" tabindex="-1"></a>    airports <span class="sc">%&gt;%</span> <span class="fu">select</span>(faa, name),</span>
-<span id="cb522-5"><a href="stats-descriptive-statistics.html#cb522-5" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span> <span class="ot">=</span> <span class="st">&quot;faa&quot;</span>)</span>
-<span id="cb522-6"><a href="stats-descriptive-statistics.html#cb522-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb522-7"><a href="stats-descriptive-statistics.html#cb522-7" tabindex="-1"></a>  <span class="fu">select</span>(flight, dest, name, <span class="fu">everything</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="stats-descriptive-statistics.html#cb524-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Add the airport name for the `dest` using a join</span></span>
+<span id="cb524-2"><a href="stats-descriptive-statistics.html#cb524-2" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb524-3"><a href="stats-descriptive-statistics.html#cb524-3" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb524-4"><a href="stats-descriptive-statistics.html#cb524-4" tabindex="-1"></a>    airports <span class="sc">%&gt;%</span> <span class="fu">select</span>(faa, name),</span>
+<span id="cb524-5"><a href="stats-descriptive-statistics.html#cb524-5" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span> <span class="ot">=</span> <span class="st">&quot;faa&quot;</span>)</span>
+<span id="cb524-6"><a href="stats-descriptive-statistics.html#cb524-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb524-7"><a href="stats-descriptive-statistics.html#cb524-7" tabindex="-1"></a>  <span class="fu">select</span>(flight, dest, name, <span class="fu">everything</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 336,776 × 20
 ##    flight dest  name          year month   day dep_time sched_dep_time dep_delay
 ##     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;        &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;
@@ -1855,13 +1854,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Use <code>expand_grid</code> to create a <code>criteria</code> dataframe with the <code>month</code> equal to <code>8, 9</code> and the airport identifiers in <code>dest</code> for the San Francisco, San Jose, and Oakland airports. We’ll use this in q4 for a filter join.</p>
 <p><em>Hint 1</em>: To find the airport identifiers, you can either use <code>str_detect</code> to filter the <code>airports</code> dataset, or use Google!</p>
 <p><em>Hint 2</em>: Remember to look up the documentation for a function you don’t yet know!</p>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="stats-descriptive-statistics.html#cb524-1" tabindex="-1"></a>criteria <span class="ot">&lt;-</span></span>
-<span id="cb524-2"><a href="stats-descriptive-statistics.html#cb524-2" tabindex="-1"></a>  <span class="fu">expand_grid</span>(</span>
-<span id="cb524-3"><a href="stats-descriptive-statistics.html#cb524-3" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>),</span>
-<span id="cb524-4"><a href="stats-descriptive-statistics.html#cb524-4" tabindex="-1"></a>    <span class="at">dest =</span> <span class="fu">c</span>(<span class="st">&quot;SJC&quot;</span>, <span class="st">&quot;SFO&quot;</span>, <span class="st">&quot;OAK&quot;</span>)</span>
-<span id="cb524-5"><a href="stats-descriptive-statistics.html#cb524-5" tabindex="-1"></a>  )</span>
-<span id="cb524-6"><a href="stats-descriptive-statistics.html#cb524-6" tabindex="-1"></a></span>
-<span id="cb524-7"><a href="stats-descriptive-statistics.html#cb524-7" tabindex="-1"></a>criteria</span></code></pre></div>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="stats-descriptive-statistics.html#cb526-1" tabindex="-1"></a>criteria <span class="ot">&lt;-</span></span>
+<span id="cb526-2"><a href="stats-descriptive-statistics.html#cb526-2" tabindex="-1"></a>  <span class="fu">expand_grid</span>(</span>
+<span id="cb526-3"><a href="stats-descriptive-statistics.html#cb526-3" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>),</span>
+<span id="cb526-4"><a href="stats-descriptive-statistics.html#cb526-4" tabindex="-1"></a>    <span class="at">dest =</span> <span class="fu">c</span>(<span class="st">&quot;SJC&quot;</span>, <span class="st">&quot;SFO&quot;</span>, <span class="st">&quot;OAK&quot;</span>)</span>
+<span id="cb526-5"><a href="stats-descriptive-statistics.html#cb526-5" tabindex="-1"></a>  )</span>
+<span id="cb526-6"><a href="stats-descriptive-statistics.html#cb526-6" tabindex="-1"></a></span>
+<span id="cb526-7"><a href="stats-descriptive-statistics.html#cb526-7" tabindex="-1"></a>criteria</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   month dest 
 ##   &lt;dbl&gt; &lt;chr&gt;
@@ -1872,45 +1871,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5     9 SFO  
 ## 6     9 OAK</code></pre>
 <p>Use the following test to check your work:</p>
-<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="stats-descriptive-statistics.html#cb526-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb526-2"><a href="stats-descriptive-statistics.html#cb526-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb526-3"><a href="stats-descriptive-statistics.html#cb526-3" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
-<span id="cb526-4"><a href="stats-descriptive-statistics.html#cb526-4" tabindex="-1"></a>                criteria,</span>
-<span id="cb526-5"><a href="stats-descriptive-statistics.html#cb526-5" tabindex="-1"></a>                criteria <span class="sc">%&gt;%</span></span>
-<span id="cb526-6"><a href="stats-descriptive-statistics.html#cb526-6" tabindex="-1"></a>                <span class="fu">semi_join</span>(</span>
-<span id="cb526-7"><a href="stats-descriptive-statistics.html#cb526-7" tabindex="-1"></a>                  airports <span class="sc">%&gt;%</span></span>
-<span id="cb526-8"><a href="stats-descriptive-statistics.html#cb526-8" tabindex="-1"></a>                  <span class="fu">filter</span>(</span>
-<span id="cb526-9"><a href="stats-descriptive-statistics.html#cb526-9" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;San Jose&quot;</span>) <span class="sc">|</span></span>
-<span id="cb526-10"><a href="stats-descriptive-statistics.html#cb526-10" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;San Francisco&quot;</span>) <span class="sc">|</span></span>
-<span id="cb526-11"><a href="stats-descriptive-statistics.html#cb526-11" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;Metropolitan Oakland&quot;</span>)</span>
-<span id="cb526-12"><a href="stats-descriptive-statistics.html#cb526-12" tabindex="-1"></a>                ),</span>
-<span id="cb526-13"><a href="stats-descriptive-statistics.html#cb526-13" tabindex="-1"></a>                <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span> <span class="ot">=</span> <span class="st">&quot;faa&quot;</span>)</span>
-<span id="cb526-14"><a href="stats-descriptive-statistics.html#cb526-14" tabindex="-1"></a>              )</span>
-<span id="cb526-15"><a href="stats-descriptive-statistics.html#cb526-15" tabindex="-1"></a>            )</span>
-<span id="cb526-16"><a href="stats-descriptive-statistics.html#cb526-16" tabindex="-1"></a>          )</span></code></pre></div>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="stats-descriptive-statistics.html#cb528-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb528-2"><a href="stats-descriptive-statistics.html#cb528-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb528-3"><a href="stats-descriptive-statistics.html#cb528-3" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
+<span id="cb528-4"><a href="stats-descriptive-statistics.html#cb528-4" tabindex="-1"></a>                criteria,</span>
+<span id="cb528-5"><a href="stats-descriptive-statistics.html#cb528-5" tabindex="-1"></a>                criteria <span class="sc">%&gt;%</span></span>
+<span id="cb528-6"><a href="stats-descriptive-statistics.html#cb528-6" tabindex="-1"></a>                <span class="fu">semi_join</span>(</span>
+<span id="cb528-7"><a href="stats-descriptive-statistics.html#cb528-7" tabindex="-1"></a>                  airports <span class="sc">%&gt;%</span></span>
+<span id="cb528-8"><a href="stats-descriptive-statistics.html#cb528-8" tabindex="-1"></a>                  <span class="fu">filter</span>(</span>
+<span id="cb528-9"><a href="stats-descriptive-statistics.html#cb528-9" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;San Jose&quot;</span>) <span class="sc">|</span></span>
+<span id="cb528-10"><a href="stats-descriptive-statistics.html#cb528-10" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;San Francisco&quot;</span>) <span class="sc">|</span></span>
+<span id="cb528-11"><a href="stats-descriptive-statistics.html#cb528-11" tabindex="-1"></a>                    <span class="fu">str_detect</span>(name, <span class="st">&quot;Metropolitan Oakland&quot;</span>)</span>
+<span id="cb528-12"><a href="stats-descriptive-statistics.html#cb528-12" tabindex="-1"></a>                ),</span>
+<span id="cb528-13"><a href="stats-descriptive-statistics.html#cb528-13" tabindex="-1"></a>                <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span> <span class="ot">=</span> <span class="st">&quot;faa&quot;</span>)</span>
+<span id="cb528-14"><a href="stats-descriptive-statistics.html#cb528-14" tabindex="-1"></a>              )</span>
+<span id="cb528-15"><a href="stats-descriptive-statistics.html#cb528-15" tabindex="-1"></a>            )</span>
+<span id="cb528-16"><a href="stats-descriptive-statistics.html#cb528-16" tabindex="-1"></a>          )</span></code></pre></div>
+<pre><code>## Warning: `all_equal()` was deprecated in dplyr 1.1.0.
+## ℹ Please use `all.equal()` instead.
+## ℹ And manually order the rows/cols as needed
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="stats-descriptive-statistics.html#cb528-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb528-2"><a href="stats-descriptive-statistics.html#cb528-2" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
-<span id="cb528-3"><a href="stats-descriptive-statistics.html#cb528-3" tabindex="-1"></a>                criteria,</span>
-<span id="cb528-4"><a href="stats-descriptive-statistics.html#cb528-4" tabindex="-1"></a>                criteria <span class="sc">%&gt;%</span> <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>))</span>
-<span id="cb528-5"><a href="stats-descriptive-statistics.html#cb528-5" tabindex="-1"></a>              )</span>
-<span id="cb528-6"><a href="stats-descriptive-statistics.html#cb528-6" tabindex="-1"></a>            )</span></code></pre></div>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="stats-descriptive-statistics.html#cb531-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb531-2"><a href="stats-descriptive-statistics.html#cb531-2" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
+<span id="cb531-3"><a href="stats-descriptive-statistics.html#cb531-3" tabindex="-1"></a>                criteria,</span>
+<span id="cb531-4"><a href="stats-descriptive-statistics.html#cb531-4" tabindex="-1"></a>                criteria <span class="sc">%&gt;%</span> <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>))</span>
+<span id="cb531-5"><a href="stats-descriptive-statistics.html#cb531-5" tabindex="-1"></a>              )</span>
+<span id="cb531-6"><a href="stats-descriptive-statistics.html#cb531-6" tabindex="-1"></a>            )</span></code></pre></div>
+<pre><code>## Warning: `all_equal()` was deprecated in dplyr 1.1.0.
+## ℹ Please use `all.equal()` instead.
+## ℹ And manually order the rows/cols as needed
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="stats-descriptive-statistics.html#cb530-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="stats-descriptive-statistics.html#cb534-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 </div>
 <div id="q5-filter-with-your-criteria" class="section level3 hasAnchor" number="29.11.6">
 <h3><span class="header-section-number">29.11.6</span> <strong>q5</strong> Filter with your <code>criteria</code><a href="stats-descriptive-statistics.html#q5-filter-with-your-criteria" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Use the <code>criteria</code> dataframe you produced above to filter <code>flights</code> on <code>dest</code> and <code>month</code>.</p>
 <p><em>Hint</em>: Remember to use a <em>filtering join</em> to take advantage of the <code>criteria</code> dataset we built above!</p>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="stats-descriptive-statistics.html#cb532-1" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
-<span id="cb532-2"><a href="stats-descriptive-statistics.html#cb532-2" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
-<span id="cb532-3"><a href="stats-descriptive-statistics.html#cb532-3" tabindex="-1"></a>  <span class="fu">semi_join</span>(</span>
-<span id="cb532-4"><a href="stats-descriptive-statistics.html#cb532-4" tabindex="-1"></a>    criteria,</span>
-<span id="cb532-5"><a href="stats-descriptive-statistics.html#cb532-5" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span>, <span class="st">&quot;month&quot;</span>)</span>
-<span id="cb532-6"><a href="stats-descriptive-statistics.html#cb532-6" tabindex="-1"></a>  )</span>
-<span id="cb532-7"><a href="stats-descriptive-statistics.html#cb532-7" tabindex="-1"></a></span>
-<span id="cb532-8"><a href="stats-descriptive-statistics.html#cb532-8" tabindex="-1"></a>df_q5</span></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="stats-descriptive-statistics.html#cb536-1" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
+<span id="cb536-2"><a href="stats-descriptive-statistics.html#cb536-2" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb536-3"><a href="stats-descriptive-statistics.html#cb536-3" tabindex="-1"></a>  <span class="fu">semi_join</span>(</span>
+<span id="cb536-4"><a href="stats-descriptive-statistics.html#cb536-4" tabindex="-1"></a>    criteria,</span>
+<span id="cb536-5"><a href="stats-descriptive-statistics.html#cb536-5" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;dest&quot;</span>, <span class="st">&quot;month&quot;</span>)</span>
+<span id="cb536-6"><a href="stats-descriptive-statistics.html#cb536-6" tabindex="-1"></a>  )</span>
+<span id="cb536-7"><a href="stats-descriptive-statistics.html#cb536-7" tabindex="-1"></a></span>
+<span id="cb536-8"><a href="stats-descriptive-statistics.html#cb536-8" tabindex="-1"></a>df_q5</span></code></pre></div>
 <pre><code>## # A tibble: 2,584 × 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
@@ -1929,19 +1938,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
 ## #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>Use the following test to check your work:</p>
-<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="stats-descriptive-statistics.html#cb534-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb534-2"><a href="stats-descriptive-statistics.html#cb534-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb534-3"><a href="stats-descriptive-statistics.html#cb534-3" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
-<span id="cb534-4"><a href="stats-descriptive-statistics.html#cb534-4" tabindex="-1"></a>                df_q5,</span>
-<span id="cb534-5"><a href="stats-descriptive-statistics.html#cb534-5" tabindex="-1"></a>                df_q5 <span class="sc">%&gt;%</span></span>
-<span id="cb534-6"><a href="stats-descriptive-statistics.html#cb534-6" tabindex="-1"></a>                <span class="fu">filter</span>(</span>
-<span id="cb534-7"><a href="stats-descriptive-statistics.html#cb534-7" tabindex="-1"></a>                  month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>),</span>
-<span id="cb534-8"><a href="stats-descriptive-statistics.html#cb534-8" tabindex="-1"></a>                  dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SJC&quot;</span>, <span class="st">&quot;SFO&quot;</span>, <span class="st">&quot;OAK&quot;</span>)</span>
-<span id="cb534-9"><a href="stats-descriptive-statistics.html#cb534-9" tabindex="-1"></a>                )</span>
-<span id="cb534-10"><a href="stats-descriptive-statistics.html#cb534-10" tabindex="-1"></a>              )</span>
-<span id="cb534-11"><a href="stats-descriptive-statistics.html#cb534-11" tabindex="-1"></a>            )</span></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="stats-descriptive-statistics.html#cb538-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb538-2"><a href="stats-descriptive-statistics.html#cb538-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb538-3"><a href="stats-descriptive-statistics.html#cb538-3" tabindex="-1"></a>              <span class="fu">all_equal</span>(</span>
+<span id="cb538-4"><a href="stats-descriptive-statistics.html#cb538-4" tabindex="-1"></a>                df_q5,</span>
+<span id="cb538-5"><a href="stats-descriptive-statistics.html#cb538-5" tabindex="-1"></a>                df_q5 <span class="sc">%&gt;%</span></span>
+<span id="cb538-6"><a href="stats-descriptive-statistics.html#cb538-6" tabindex="-1"></a>                <span class="fu">filter</span>(</span>
+<span id="cb538-7"><a href="stats-descriptive-statistics.html#cb538-7" tabindex="-1"></a>                  month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>),</span>
+<span id="cb538-8"><a href="stats-descriptive-statistics.html#cb538-8" tabindex="-1"></a>                  dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SJC&quot;</span>, <span class="st">&quot;SFO&quot;</span>, <span class="st">&quot;OAK&quot;</span>)</span>
+<span id="cb538-9"><a href="stats-descriptive-statistics.html#cb538-9" tabindex="-1"></a>                )</span>
+<span id="cb538-10"><a href="stats-descriptive-statistics.html#cb538-10" tabindex="-1"></a>              )</span>
+<span id="cb538-11"><a href="stats-descriptive-statistics.html#cb538-11" tabindex="-1"></a>            )</span></code></pre></div>
+<pre><code>## Warning: `all_equal()` was deprecated in dplyr 1.1.0.
+## ℹ Please use `all.equal()` instead.
+## ℹ And manually order the rows/cols as needed
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="stats-descriptive-statistics.html#cb536-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="stats-descriptive-statistics.html#cb541-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <!-- include-exit-ticket -->
 

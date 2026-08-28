@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -74,7 +74,7 @@ diamonds_train %>%
   facet_grid(~ grouping)
 ```
 
-<img src="d50-e-model03-interp-warnings-solution_files/figure-html/diamonds-lower-upper-1.png" width="672" />
+<img src="d50-e-model03-interp-warnings-solution_files/figure-html/diamonds-lower-upper-1.png" alt="" width="672" />
 
 The trend in `cut` is what we'd expect at upper values (`carat > 1`), but reversed at lower values (`carat <= 1`)! Let's see how this affects *model predictions*.
 
@@ -113,7 +113,7 @@ tibble(cut = c("Fair", "Good", "Very Good", "Premium", "Ideal")) %>%
   scale_y_log10()
 ```
 
-<img src="d50-e-model03-interp-warnings-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d50-e-model03-interp-warnings-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -157,7 +157,7 @@ tibble(cut = c("Fair", "Good", "Very Good", "Premium", "Ideal")) %>%
   scale_y_log10()
 ```
 
-<img src="d50-e-model03-interp-warnings-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d50-e-model03-interp-warnings-solution_files/figure-html/q2-task-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -208,7 +208,7 @@ tibble(
   scale_y_log10()
 ```
 
-<img src="d50-e-model03-interp-warnings-solution_files/figure-html/q3-task-1.png" width="672" />
+<img src="d50-e-model03-interp-warnings-solution_files/figure-html/q3-task-1.png" alt="" width="672" />
 
 **Observations**:
 

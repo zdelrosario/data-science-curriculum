@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>59 Vis: Control Charts | Data Science: Exercise Solutions</title>
   <meta name="description" content="59 Vis: Control Charts | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="59 Vis: Control Charts | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1086,13 +1086,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Purpose</em>: Remember in c02-michelson (q4) when you studied a <em>control chart</em>? Now that we’ve learned about confidence intervals, we can more formally study control charts. These are a key tool in <a href="https://en.wikipedia.org/wiki/Statistical_process_control">statistical process control</a>, which is how manufacturers rigorously track and control the quality of manufactured goods. Control charts help a process manager track when something has gone wrong in a manufacturing line, and are used to determine when a process is running smoothly.</p>
 <p><em>Reading</em>: <a href="https://www.itl.nist.gov/div898/handbook/mpc/section3/mpc3521.htm">Example use</a> of a control chart, based on NIST mass calibration data. (Optional)</p>
 <p><em>Prerequisites</em>: c02-michelson, e-stat06-clt</p>
-<div class="sourceCode" id="cb1267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1267-1"><a href="vis-control-charts.html#cb1267-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb1266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1266-1"><a href="vis-control-charts.html#cb1266-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1127,17 +1127,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="data-preparation" class="section level2 hasAnchor" number="59.3">
 <h2><span class="header-section-number">59.3</span> Data Preparation<a href="vis-control-charts.html#data-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To illustrate the control chart concept, let’s first generate some data that is completely random.</p>
-<div class="sourceCode" id="cb1269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1269-1"><a href="vis-control-charts.html#cb1269-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1269-2"><a href="vis-control-charts.html#cb1269-2" tabindex="-1"></a>df_data <span class="ot">&lt;-</span></span>
-<span id="cb1269-3"><a href="vis-control-charts.html#cb1269-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">X =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">1000</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1268-1"><a href="vis-control-charts.html#cb1268-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1268-2"><a href="vis-control-charts.html#cb1268-2" tabindex="-1"></a>df_data <span class="ot">&lt;-</span></span>
+<span id="cb1268-3"><a href="vis-control-charts.html#cb1268-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">X =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">1000</span>))</span></code></pre></div>
 <p>Following Step 1, we need to assign batch identifiers to group the data.</p>
 <div id="q1-use-integer-division-and-the-row_number-helper-to-group-consecutive-observations-into-groups-of-4-with-a-common-identifier-id." class="section level3 hasAnchor" number="59.3.1">
 <h3><span class="header-section-number">59.3.1</span> <strong>q1</strong> Use integer division <code>%/%</code> and the <code>row_number()</code> helper to group consecutive observations into groups of <code>4</code> with a common identifier <code>id</code>.<a href="vis-control-charts.html#q1-use-integer-division-and-the-row_number-helper-to-group-consecutive-observations-into-groups-of-4-with-a-common-identifier-id." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: Since <code>R</code> is a one-based index language, you will need to adjust the output of <code>row_number()</code> before performing the integer division <code>%/%</code>.</p>
-<div class="sourceCode" id="cb1270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1270-1"><a href="vis-control-charts.html#cb1270-1" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
-<span id="cb1270-2"><a href="vis-control-charts.html#cb1270-2" tabindex="-1"></a>  df_data <span class="sc">%&gt;%</span></span>
-<span id="cb1270-3"><a href="vis-control-charts.html#cb1270-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> (<span class="fu">row_number</span>() <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%/%</span> <span class="dv">4</span>)</span>
-<span id="cb1270-4"><a href="vis-control-charts.html#cb1270-4" tabindex="-1"></a>df_q1</span></code></pre></div>
+<div class="sourceCode" id="cb1269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1269-1"><a href="vis-control-charts.html#cb1269-1" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
+<span id="cb1269-2"><a href="vis-control-charts.html#cb1269-2" tabindex="-1"></a>  df_data <span class="sc">%&gt;%</span></span>
+<span id="cb1269-3"><a href="vis-control-charts.html#cb1269-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> (<span class="fu">row_number</span>() <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%/%</span> <span class="dv">4</span>)</span>
+<span id="cb1269-4"><a href="vis-control-charts.html#cb1269-4" tabindex="-1"></a>df_q1</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 × 2
 ##         X    id
 ##     &lt;dbl&gt; &lt;dbl&gt;
@@ -1153,22 +1153,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 -0.223     2
 ## # ℹ 990 more rows</code></pre>
 <p>Use the following to check your work.</p>
-<div class="sourceCode" id="cb1272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1272-1"><a href="vis-control-charts.html#cb1272-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb1272-2"><a href="vis-control-charts.html#cb1272-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb1272-3"><a href="vis-control-charts.html#cb1272-3" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span></span>
-<span id="cb1272-4"><a href="vis-control-charts.html#cb1272-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">&lt;=</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1272-5"><a href="vis-control-charts.html#cb1272-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sd =</span> <span class="fu">sd</span>(id)) <span class="sc">%&gt;%</span></span>
-<span id="cb1272-6"><a href="vis-control-charts.html#cb1272-6" tabindex="-1"></a>  <span class="fu">pull</span>(sd) <span class="sc">==</span> <span class="dv">0</span></span>
-<span id="cb1272-7"><a href="vis-control-charts.html#cb1272-7" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1271-1"><a href="vis-control-charts.html#cb1271-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb1271-2"><a href="vis-control-charts.html#cb1271-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb1271-3"><a href="vis-control-charts.html#cb1271-3" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span></span>
+<span id="cb1271-4"><a href="vis-control-charts.html#cb1271-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">&lt;=</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1271-5"><a href="vis-control-charts.html#cb1271-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sd =</span> <span class="fu">sd</span>(id)) <span class="sc">%&gt;%</span></span>
+<span id="cb1271-6"><a href="vis-control-charts.html#cb1271-6" tabindex="-1"></a>  <span class="fu">pull</span>(sd) <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb1271-7"><a href="vis-control-charts.html#cb1271-7" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1274-1"><a href="vis-control-charts.html#cb1274-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb1274-2"><a href="vis-control-charts.html#cb1274-2" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span></span>
-<span id="cb1274-3"><a href="vis-control-charts.html#cb1274-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">&gt;=</span> <span class="dv">997</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1274-4"><a href="vis-control-charts.html#cb1274-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sd =</span> <span class="fu">sd</span>(id)) <span class="sc">%&gt;%</span></span>
-<span id="cb1274-5"><a href="vis-control-charts.html#cb1274-5" tabindex="-1"></a>  <span class="fu">pull</span>(sd) <span class="sc">==</span> <span class="dv">0</span></span>
-<span id="cb1274-6"><a href="vis-control-charts.html#cb1274-6" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1273-1"><a href="vis-control-charts.html#cb1273-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb1273-2"><a href="vis-control-charts.html#cb1273-2" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span></span>
+<span id="cb1273-3"><a href="vis-control-charts.html#cb1273-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">&gt;=</span> <span class="dv">997</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1273-4"><a href="vis-control-charts.html#cb1273-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sd =</span> <span class="fu">sd</span>(id)) <span class="sc">%&gt;%</span></span>
+<span id="cb1273-5"><a href="vis-control-charts.html#cb1273-5" tabindex="-1"></a>  <span class="fu">pull</span>(sd) <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb1273-6"><a href="vis-control-charts.html#cb1273-6" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1276-1"><a href="vis-control-charts.html#cb1276-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1275-1"><a href="vis-control-charts.html#cb1275-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 </div>
 </div>
@@ -1179,32 +1179,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">59.4.1</span> <strong>q2</strong> Use a central limit theorem (CLT) approximation to set 3 sigma confidence interval limits on the group mean you computed above.<a href="vis-control-charts.html#q2-use-a-central-limit-theorem-clt-approximation-to-set-3-sigma-confidence-interval-limits-on-the-group-mean-you-computed-above." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Note</em>: A 3 sigma bound corresponds to a coverage probability of <code>1 - pnorm(-3) * 2</code>; approximately <span class="math inline">\(99.7%\)</span>.</p>
 <p><em>Hint</em>: Think carefully about how many samples will be in each <em>group</em>, not in your dataset in total.</p>
-<div class="sourceCode" id="cb1278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1278-1"><a href="vis-control-charts.html#cb1278-1" tabindex="-1"></a>X_grand <span class="ot">&lt;-</span></span>
-<span id="cb1278-2"><a href="vis-control-charts.html#cb1278-2" tabindex="-1"></a>  df_data <span class="sc">%&gt;%</span></span>
-<span id="cb1278-3"><a href="vis-control-charts.html#cb1278-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">X_mean =</span> <span class="fu">mean</span>(X)) <span class="sc">%&gt;%</span></span>
-<span id="cb1278-4"><a href="vis-control-charts.html#cb1278-4" tabindex="-1"></a>  <span class="fu">pull</span>(X_mean)</span>
-<span id="cb1278-5"><a href="vis-control-charts.html#cb1278-5" tabindex="-1"></a>X_sd <span class="ot">&lt;-</span></span>
-<span id="cb1278-6"><a href="vis-control-charts.html#cb1278-6" tabindex="-1"></a>  df_data <span class="sc">%&gt;%</span></span>
-<span id="cb1278-7"><a href="vis-control-charts.html#cb1278-7" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">X_sd =</span> <span class="fu">sd</span>(X)) <span class="sc">%&gt;%</span></span>
-<span id="cb1278-8"><a href="vis-control-charts.html#cb1278-8" tabindex="-1"></a>  <span class="fu">pull</span>(X_sd)</span>
-<span id="cb1278-9"><a href="vis-control-charts.html#cb1278-9" tabindex="-1"></a></span>
-<span id="cb1278-10"><a href="vis-control-charts.html#cb1278-10" tabindex="-1"></a>X_g4_lo <span class="ot">&lt;-</span> X_grand <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> X_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">4</span>)</span>
-<span id="cb1278-11"><a href="vis-control-charts.html#cb1278-11" tabindex="-1"></a>X_g4_up <span class="ot">&lt;-</span> X_grand <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> X_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">4</span>)</span>
-<span id="cb1278-12"><a href="vis-control-charts.html#cb1278-12" tabindex="-1"></a>X_g4_lo</span></code></pre></div>
+<div class="sourceCode" id="cb1277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1277-1"><a href="vis-control-charts.html#cb1277-1" tabindex="-1"></a>X_grand <span class="ot">&lt;-</span></span>
+<span id="cb1277-2"><a href="vis-control-charts.html#cb1277-2" tabindex="-1"></a>  df_data <span class="sc">%&gt;%</span></span>
+<span id="cb1277-3"><a href="vis-control-charts.html#cb1277-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">X_mean =</span> <span class="fu">mean</span>(X)) <span class="sc">%&gt;%</span></span>
+<span id="cb1277-4"><a href="vis-control-charts.html#cb1277-4" tabindex="-1"></a>  <span class="fu">pull</span>(X_mean)</span>
+<span id="cb1277-5"><a href="vis-control-charts.html#cb1277-5" tabindex="-1"></a>X_sd <span class="ot">&lt;-</span></span>
+<span id="cb1277-6"><a href="vis-control-charts.html#cb1277-6" tabindex="-1"></a>  df_data <span class="sc">%&gt;%</span></span>
+<span id="cb1277-7"><a href="vis-control-charts.html#cb1277-7" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">X_sd =</span> <span class="fu">sd</span>(X)) <span class="sc">%&gt;%</span></span>
+<span id="cb1277-8"><a href="vis-control-charts.html#cb1277-8" tabindex="-1"></a>  <span class="fu">pull</span>(X_sd)</span>
+<span id="cb1277-9"><a href="vis-control-charts.html#cb1277-9" tabindex="-1"></a></span>
+<span id="cb1277-10"><a href="vis-control-charts.html#cb1277-10" tabindex="-1"></a>X_g4_lo <span class="ot">&lt;-</span> X_grand <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> X_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">4</span>)</span>
+<span id="cb1277-11"><a href="vis-control-charts.html#cb1277-11" tabindex="-1"></a>X_g4_up <span class="ot">&lt;-</span> X_grand <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> X_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">4</span>)</span>
+<span id="cb1277-12"><a href="vis-control-charts.html#cb1277-12" tabindex="-1"></a>X_g4_lo</span></code></pre></div>
 <pre><code>## [1] -1.473529</code></pre>
-<div class="sourceCode" id="cb1280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1280-1"><a href="vis-control-charts.html#cb1280-1" tabindex="-1"></a>X_grand</span></code></pre></div>
+<div class="sourceCode" id="cb1279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1279-1"><a href="vis-control-charts.html#cb1279-1" tabindex="-1"></a>X_grand</span></code></pre></div>
 <pre><code>## [1] -0.03486206</code></pre>
-<div class="sourceCode" id="cb1282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1282-1"><a href="vis-control-charts.html#cb1282-1" tabindex="-1"></a>X_g4_up</span></code></pre></div>
+<div class="sourceCode" id="cb1281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1281-1"><a href="vis-control-charts.html#cb1281-1" tabindex="-1"></a>X_g4_up</span></code></pre></div>
 <pre><code>## [1] 1.403805</code></pre>
 <p>Use the following to check your work.</p>
-<div class="sourceCode" id="cb1284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1284-1"><a href="vis-control-charts.html#cb1284-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb1284-2"><a href="vis-control-charts.html#cb1284-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(X_g4_lo <span class="sc">+</span> <span class="dv">3</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">4</span>)) <span class="sc">&lt;</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1283-1"><a href="vis-control-charts.html#cb1283-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb1283-2"><a href="vis-control-charts.html#cb1283-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(X_g4_lo <span class="sc">+</span> <span class="dv">3</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">4</span>)) <span class="sc">&lt;</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1286-1"><a href="vis-control-charts.html#cb1286-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(X_grand) <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1285-1"><a href="vis-control-charts.html#cb1285-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(X_grand) <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1288-1"><a href="vis-control-charts.html#cb1288-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(X_g4_up <span class="sc">-</span> <span class="dv">3</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">4</span>)) <span class="sc">&lt;</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1287-1"><a href="vis-control-charts.html#cb1287-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(X_g4_up <span class="sc">-</span> <span class="dv">3</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">4</span>)) <span class="sc">&lt;</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1290-1"><a href="vis-control-charts.html#cb1290-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1289-1"><a href="vis-control-charts.html#cb1289-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Excellent!&quot;</code></pre>
 </div>
 </div>
@@ -1212,22 +1212,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">59.5</span> Visualize and Interpret<a href="vis-control-charts.html#visualize-and-interpret" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="q3-inspect-the-following-control-chart-and-answer-the-questions-under-observe-below." class="section level3 hasAnchor" number="59.5.1">
 <h3><span class="header-section-number">59.5.1</span> <strong>q3</strong> Inspect the following control chart, and answer the questions under <em>observe</em> below.<a href="vis-control-charts.html#q3-inspect-the-following-control-chart-and-answer-the-questions-under-observe-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1292-1"><a href="vis-control-charts.html#cb1292-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb1292-2"><a href="vis-control-charts.html#cb1292-2" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span></span>
-<span id="cb1292-3"><a href="vis-control-charts.html#cb1292-3" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span></span>
-<span id="cb1292-4"><a href="vis-control-charts.html#cb1292-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">X_batch =</span> <span class="fu">mean</span>(X)) <span class="sc">%&gt;%</span></span>
-<span id="cb1292-5"><a href="vis-control-charts.html#cb1292-5" tabindex="-1"></a></span>
-<span id="cb1292-6"><a href="vis-control-charts.html#cb1292-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(id, X_batch)) <span class="sc">+</span></span>
-<span id="cb1292-7"><a href="vis-control-charts.html#cb1292-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> X_g4_lo, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1292-8"><a href="vis-control-charts.html#cb1292-8" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> X_grand) <span class="sc">+</span></span>
-<span id="cb1292-9"><a href="vis-control-charts.html#cb1292-9" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> X_g4_up, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1292-10"><a href="vis-control-charts.html#cb1292-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1292-11"><a href="vis-control-charts.html#cb1292-11" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb1292-12"><a href="vis-control-charts.html#cb1292-12" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1292-13"><a href="vis-control-charts.html#cb1292-13" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Batch Index&quot;</span>,</span>
-<span id="cb1292-14"><a href="vis-control-charts.html#cb1292-14" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Batch Mean&quot;</span></span>
-<span id="cb1292-15"><a href="vis-control-charts.html#cb1292-15" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d54-e-vis10-control-chart-solution_files/figure-html/q3-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1291-1"><a href="vis-control-charts.html#cb1291-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb1291-2"><a href="vis-control-charts.html#cb1291-2" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span></span>
+<span id="cb1291-3"><a href="vis-control-charts.html#cb1291-3" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span></span>
+<span id="cb1291-4"><a href="vis-control-charts.html#cb1291-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">X_batch =</span> <span class="fu">mean</span>(X)) <span class="sc">%&gt;%</span></span>
+<span id="cb1291-5"><a href="vis-control-charts.html#cb1291-5" tabindex="-1"></a></span>
+<span id="cb1291-6"><a href="vis-control-charts.html#cb1291-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(id, X_batch)) <span class="sc">+</span></span>
+<span id="cb1291-7"><a href="vis-control-charts.html#cb1291-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> X_g4_lo, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1291-8"><a href="vis-control-charts.html#cb1291-8" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> X_grand) <span class="sc">+</span></span>
+<span id="cb1291-9"><a href="vis-control-charts.html#cb1291-9" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> X_g4_up, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1291-10"><a href="vis-control-charts.html#cb1291-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1291-11"><a href="vis-control-charts.html#cb1291-11" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1291-12"><a href="vis-control-charts.html#cb1291-12" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1291-13"><a href="vis-control-charts.html#cb1291-13" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Batch Index&quot;</span>,</span>
+<span id="cb1291-14"><a href="vis-control-charts.html#cb1291-14" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Batch Mean&quot;</span></span>
+<span id="cb1291-15"><a href="vis-control-charts.html#cb1291-15" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d54-e-vis10-control-chart-solution_files/figure-html/q3-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:
 - I would expect about <code>1 - qnorm(-3) * 2</code>—<span class="math inline">\(99.7%\)</span> of the points to lie inside the control bounds. Given that we have 250 points, I’d expect about one to lie outside.
 - One point lies outside the control limits, as we would expect if the points were completely random.
@@ -1237,23 +1237,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="control-chart-application" class="section level2 hasAnchor" number="59.6">
 <h2><span class="header-section-number">59.6</span> Control Chart: Application<a href="vis-control-charts.html#control-chart-application" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Next you will construct a control chart for a real dataset. The following code downloads and parses a dataset from the NIST website studying <a href="https://en.wikipedia.org/wiki/Proof_mass">proof masses</a>. These are comparative measurements between “exact” 1 kilogram masses, carried out by one of the world’s most-rigorous measurement societies.</p>
-<div class="sourceCode" id="cb1293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1293-1"><a href="vis-control-charts.html#cb1293-1" tabindex="-1"></a><span class="do">## NO NEED TO EDIT; the following will download and read the data</span></span>
-<span id="cb1293-2"><a href="vis-control-charts.html#cb1293-2" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.itl.nist.gov/div898/handbook/datasets/MASS.DAT&quot;</span></span>
-<span id="cb1293-3"><a href="vis-control-charts.html#cb1293-3" tabindex="-1"></a>filename <span class="ot">&lt;-</span> <span class="st">&quot;./data/nist-mass.dat&quot;</span></span>
-<span id="cb1293-4"><a href="vis-control-charts.html#cb1293-4" tabindex="-1"></a><span class="fu">download.file</span>(url, filename)</span>
-<span id="cb1293-5"><a href="vis-control-charts.html#cb1293-5" tabindex="-1"></a>df_mass <span class="ot">&lt;-</span></span>
-<span id="cb1293-6"><a href="vis-control-charts.html#cb1293-6" tabindex="-1"></a>  <span class="fu">read_table</span>(</span>
-<span id="cb1293-7"><a href="vis-control-charts.html#cb1293-7" tabindex="-1"></a>    filename,</span>
-<span id="cb1293-8"><a href="vis-control-charts.html#cb1293-8" tabindex="-1"></a>    <span class="at">skip =</span> <span class="dv">25</span>,</span>
-<span id="cb1293-9"><a href="vis-control-charts.html#cb1293-9" tabindex="-1"></a>    <span class="at">col_names =</span> <span class="fu">c</span>(</span>
-<span id="cb1293-10"><a href="vis-control-charts.html#cb1293-10" tabindex="-1"></a>      <span class="st">&quot;date&quot;</span>,</span>
-<span id="cb1293-11"><a href="vis-control-charts.html#cb1293-11" tabindex="-1"></a>      <span class="st">&quot;standard_id&quot;</span>,</span>
-<span id="cb1293-12"><a href="vis-control-charts.html#cb1293-12" tabindex="-1"></a>      <span class="st">&quot;Y&quot;</span>,</span>
-<span id="cb1293-13"><a href="vis-control-charts.html#cb1293-13" tabindex="-1"></a>      <span class="st">&quot;balance_id&quot;</span>,</span>
-<span id="cb1293-14"><a href="vis-control-charts.html#cb1293-14" tabindex="-1"></a>      <span class="st">&quot;residual_sd&quot;</span>,</span>
-<span id="cb1293-15"><a href="vis-control-charts.html#cb1293-15" tabindex="-1"></a>      <span class="st">&quot;design_id&quot;</span></span>
-<span id="cb1293-16"><a href="vis-control-charts.html#cb1293-16" tabindex="-1"></a>    )</span>
-<span id="cb1293-17"><a href="vis-control-charts.html#cb1293-17" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1292-1"><a href="vis-control-charts.html#cb1292-1" tabindex="-1"></a><span class="do">## NO NEED TO EDIT; the following will download and read the data</span></span>
+<span id="cb1292-2"><a href="vis-control-charts.html#cb1292-2" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.itl.nist.gov/div898/handbook/datasets/MASS.DAT&quot;</span></span>
+<span id="cb1292-3"><a href="vis-control-charts.html#cb1292-3" tabindex="-1"></a>filename <span class="ot">&lt;-</span> <span class="st">&quot;./data/nist-mass.dat&quot;</span></span>
+<span id="cb1292-4"><a href="vis-control-charts.html#cb1292-4" tabindex="-1"></a><span class="fu">download.file</span>(url, filename)</span>
+<span id="cb1292-5"><a href="vis-control-charts.html#cb1292-5" tabindex="-1"></a>df_mass <span class="ot">&lt;-</span></span>
+<span id="cb1292-6"><a href="vis-control-charts.html#cb1292-6" tabindex="-1"></a>  <span class="fu">read_table</span>(</span>
+<span id="cb1292-7"><a href="vis-control-charts.html#cb1292-7" tabindex="-1"></a>    filename,</span>
+<span id="cb1292-8"><a href="vis-control-charts.html#cb1292-8" tabindex="-1"></a>    <span class="at">skip =</span> <span class="dv">25</span>,</span>
+<span id="cb1292-9"><a href="vis-control-charts.html#cb1292-9" tabindex="-1"></a>    <span class="at">col_names =</span> <span class="fu">c</span>(</span>
+<span id="cb1292-10"><a href="vis-control-charts.html#cb1292-10" tabindex="-1"></a>      <span class="st">&quot;date&quot;</span>,</span>
+<span id="cb1292-11"><a href="vis-control-charts.html#cb1292-11" tabindex="-1"></a>      <span class="st">&quot;standard_id&quot;</span>,</span>
+<span id="cb1292-12"><a href="vis-control-charts.html#cb1292-12" tabindex="-1"></a>      <span class="st">&quot;Y&quot;</span>,</span>
+<span id="cb1292-13"><a href="vis-control-charts.html#cb1292-13" tabindex="-1"></a>      <span class="st">&quot;balance_id&quot;</span>,</span>
+<span id="cb1292-14"><a href="vis-control-charts.html#cb1292-14" tabindex="-1"></a>      <span class="st">&quot;residual_sd&quot;</span>,</span>
+<span id="cb1292-15"><a href="vis-control-charts.html#cb1292-15" tabindex="-1"></a>      <span class="st">&quot;design_id&quot;</span></span>
+<span id="cb1292-16"><a href="vis-control-charts.html#cb1292-16" tabindex="-1"></a>    )</span>
+<span id="cb1292-17"><a href="vis-control-charts.html#cb1292-17" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## 
 ## ── Column specification ────────────────────────────────────────────────────────
 ## cols(
@@ -1264,7 +1264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   residual_sd = col_double(),
 ##   design_id = col_double()
 ## )</code></pre>
-<div class="sourceCode" id="cb1295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1295-1"><a href="vis-control-charts.html#cb1295-1" tabindex="-1"></a>df_mass</span></code></pre></div>
+<div class="sourceCode" id="cb1294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1294-1"><a href="vis-control-charts.html#cb1294-1" tabindex="-1"></a>df_mass</span></code></pre></div>
 <pre><code>## # A tibble: 217 × 6
 ##     date standard_id     Y balance_id residual_sd design_id
 ##    &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
@@ -1283,7 +1283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>First, try plotting and interpreting the data without a control chart.</p>
 <div id="q4-plot-the-measured-values-y-against-their-date-of-measurement-date.-answer-the-questions-under-observations-below." class="section level3 hasAnchor" number="59.6.1">
 <h3><span class="header-section-number">59.6.1</span> <strong>q4</strong> Plot the measured values <code>Y</code> against their date of measurement <code>date</code>. Answer the questions under <em>Observations</em> below.<a href="vis-control-charts.html#q4-plot-the-measured-values-y-against-their-date-of-measurement-date.-answer-the-questions-under-observations-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1297-1"><a href="vis-control-charts.html#cb1297-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Plot Y vs date</span></span></code></pre></div>
+<div class="sourceCode" id="cb1296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1296-1"><a href="vis-control-charts.html#cb1296-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Plot Y vs date</span></span></code></pre></div>
 <p><strong>Observations</strong>:
 - There is considerable variation! Measurements of <em>any</em> kind are <em>not</em> exactly repeatable; variability is unavoidable.
 - There seem to be two “upward” trends; one in the late 1970’s, and another from the mid 80’s onward.
@@ -1293,60 +1293,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q5-generate-control-chart-data-for-a-batch-size-of-10." class="section level3 hasAnchor" number="59.6.2">
 <h3><span class="header-section-number">59.6.2</span> <strong>q5</strong> Generate control chart data for a batch size of <code>10</code>.<a href="vis-control-charts.html#q5-generate-control-chart-data-for-a-batch-size-of-10." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1298-1"><a href="vis-control-charts.html#cb1298-1" tabindex="-1"></a>n_group <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb1298-2"><a href="vis-control-charts.html#cb1298-2" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
-<span id="cb1298-3"><a href="vis-control-charts.html#cb1298-3" tabindex="-1"></a>  df_mass <span class="sc">%&gt;%</span></span>
-<span id="cb1298-4"><a href="vis-control-charts.html#cb1298-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group_id =</span> (<span class="fu">row_number</span>() <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%/%</span> n_group) <span class="sc">%&gt;%</span></span>
-<span id="cb1298-5"><a href="vis-control-charts.html#cb1298-5" tabindex="-1"></a>  <span class="fu">group_by</span>(group_id) <span class="sc">%&gt;%</span></span>
-<span id="cb1298-6"><a href="vis-control-charts.html#cb1298-6" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb1298-7"><a href="vis-control-charts.html#cb1298-7" tabindex="-1"></a>    <span class="at">Y_mean =</span> <span class="fu">mean</span>(Y),</span>
-<span id="cb1298-8"><a href="vis-control-charts.html#cb1298-8" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">min</span>(date)</span>
-<span id="cb1298-9"><a href="vis-control-charts.html#cb1298-9" tabindex="-1"></a>  )</span>
-<span id="cb1298-10"><a href="vis-control-charts.html#cb1298-10" tabindex="-1"></a></span>
-<span id="cb1298-11"><a href="vis-control-charts.html#cb1298-11" tabindex="-1"></a>Y_mean <span class="ot">&lt;-</span></span>
-<span id="cb1298-12"><a href="vis-control-charts.html#cb1298-12" tabindex="-1"></a>  df_mass <span class="sc">%&gt;%</span></span>
-<span id="cb1298-13"><a href="vis-control-charts.html#cb1298-13" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_mean =</span> <span class="fu">mean</span>(Y)) <span class="sc">%&gt;%</span></span>
-<span id="cb1298-14"><a href="vis-control-charts.html#cb1298-14" tabindex="-1"></a>  <span class="fu">pull</span>(Y_mean)</span>
-<span id="cb1298-15"><a href="vis-control-charts.html#cb1298-15" tabindex="-1"></a>Y_sd <span class="ot">&lt;-</span></span>
-<span id="cb1298-16"><a href="vis-control-charts.html#cb1298-16" tabindex="-1"></a>  df_mass <span class="sc">%&gt;%</span></span>
-<span id="cb1298-17"><a href="vis-control-charts.html#cb1298-17" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_sd =</span> <span class="fu">sd</span>(Y)) <span class="sc">%&gt;%</span></span>
-<span id="cb1298-18"><a href="vis-control-charts.html#cb1298-18" tabindex="-1"></a>  <span class="fu">pull</span>(Y_sd)</span>
-<span id="cb1298-19"><a href="vis-control-charts.html#cb1298-19" tabindex="-1"></a></span>
-<span id="cb1298-20"><a href="vis-control-charts.html#cb1298-20" tabindex="-1"></a>Y_g_lo <span class="ot">&lt;-</span> Y_mean <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> Y_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_group)</span>
-<span id="cb1298-21"><a href="vis-control-charts.html#cb1298-21" tabindex="-1"></a>Y_g_up <span class="ot">&lt;-</span> Y_mean <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> Y_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_group)</span>
-<span id="cb1298-22"><a href="vis-control-charts.html#cb1298-22" tabindex="-1"></a>Y_g_lo</span></code></pre></div>
+<div class="sourceCode" id="cb1297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1297-1"><a href="vis-control-charts.html#cb1297-1" tabindex="-1"></a>n_group <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb1297-2"><a href="vis-control-charts.html#cb1297-2" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
+<span id="cb1297-3"><a href="vis-control-charts.html#cb1297-3" tabindex="-1"></a>  df_mass <span class="sc">%&gt;%</span></span>
+<span id="cb1297-4"><a href="vis-control-charts.html#cb1297-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group_id =</span> (<span class="fu">row_number</span>() <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%/%</span> n_group) <span class="sc">%&gt;%</span></span>
+<span id="cb1297-5"><a href="vis-control-charts.html#cb1297-5" tabindex="-1"></a>  <span class="fu">group_by</span>(group_id) <span class="sc">%&gt;%</span></span>
+<span id="cb1297-6"><a href="vis-control-charts.html#cb1297-6" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb1297-7"><a href="vis-control-charts.html#cb1297-7" tabindex="-1"></a>    <span class="at">Y_mean =</span> <span class="fu">mean</span>(Y),</span>
+<span id="cb1297-8"><a href="vis-control-charts.html#cb1297-8" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">min</span>(date)</span>
+<span id="cb1297-9"><a href="vis-control-charts.html#cb1297-9" tabindex="-1"></a>  )</span>
+<span id="cb1297-10"><a href="vis-control-charts.html#cb1297-10" tabindex="-1"></a></span>
+<span id="cb1297-11"><a href="vis-control-charts.html#cb1297-11" tabindex="-1"></a>Y_mean <span class="ot">&lt;-</span></span>
+<span id="cb1297-12"><a href="vis-control-charts.html#cb1297-12" tabindex="-1"></a>  df_mass <span class="sc">%&gt;%</span></span>
+<span id="cb1297-13"><a href="vis-control-charts.html#cb1297-13" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_mean =</span> <span class="fu">mean</span>(Y)) <span class="sc">%&gt;%</span></span>
+<span id="cb1297-14"><a href="vis-control-charts.html#cb1297-14" tabindex="-1"></a>  <span class="fu">pull</span>(Y_mean)</span>
+<span id="cb1297-15"><a href="vis-control-charts.html#cb1297-15" tabindex="-1"></a>Y_sd <span class="ot">&lt;-</span></span>
+<span id="cb1297-16"><a href="vis-control-charts.html#cb1297-16" tabindex="-1"></a>  df_mass <span class="sc">%&gt;%</span></span>
+<span id="cb1297-17"><a href="vis-control-charts.html#cb1297-17" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_sd =</span> <span class="fu">sd</span>(Y)) <span class="sc">%&gt;%</span></span>
+<span id="cb1297-18"><a href="vis-control-charts.html#cb1297-18" tabindex="-1"></a>  <span class="fu">pull</span>(Y_sd)</span>
+<span id="cb1297-19"><a href="vis-control-charts.html#cb1297-19" tabindex="-1"></a></span>
+<span id="cb1297-20"><a href="vis-control-charts.html#cb1297-20" tabindex="-1"></a>Y_g_lo <span class="ot">&lt;-</span> Y_mean <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> Y_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_group)</span>
+<span id="cb1297-21"><a href="vis-control-charts.html#cb1297-21" tabindex="-1"></a>Y_g_up <span class="ot">&lt;-</span> Y_mean <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> Y_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_group)</span>
+<span id="cb1297-22"><a href="vis-control-charts.html#cb1297-22" tabindex="-1"></a>Y_g_lo</span></code></pre></div>
 <pre><code>## [1] -19.49853</code></pre>
-<div class="sourceCode" id="cb1300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1300-1"><a href="vis-control-charts.html#cb1300-1" tabindex="-1"></a>Y_mean</span></code></pre></div>
+<div class="sourceCode" id="cb1299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1299-1"><a href="vis-control-charts.html#cb1299-1" tabindex="-1"></a>Y_mean</span></code></pre></div>
 <pre><code>## [1] -19.46452</code></pre>
-<div class="sourceCode" id="cb1302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1302-1"><a href="vis-control-charts.html#cb1302-1" tabindex="-1"></a>Y_g_up</span></code></pre></div>
+<div class="sourceCode" id="cb1301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1301-1"><a href="vis-control-charts.html#cb1301-1" tabindex="-1"></a>Y_g_up</span></code></pre></div>
 <pre><code>## [1] -19.43051</code></pre>
 <p>Use the following to check your work.</p>
-<div class="sourceCode" id="cb1304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1304-1"><a href="vis-control-charts.html#cb1304-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb1304-2"><a href="vis-control-charts.html#cb1304-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(Y_g_lo <span class="sc">+</span> <span class="fl">19.49853</span>) <span class="sc">&lt;</span> <span class="fl">1e-4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1303-1"><a href="vis-control-charts.html#cb1303-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb1303-2"><a href="vis-control-charts.html#cb1303-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(Y_g_lo <span class="sc">+</span> <span class="fl">19.49853</span>) <span class="sc">&lt;</span> <span class="fl">1e-4</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1306-1"><a href="vis-control-charts.html#cb1306-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(Y_mean <span class="sc">+</span> <span class="fl">19.46452</span>) <span class="sc">&lt;</span> <span class="fl">1e-4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1305-1"><a href="vis-control-charts.html#cb1305-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(Y_mean <span class="sc">+</span> <span class="fl">19.46452</span>) <span class="sc">&lt;</span> <span class="fl">1e-4</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1308-1"><a href="vis-control-charts.html#cb1308-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(Y_g_up <span class="sc">+</span> <span class="fl">19.43051</span>) <span class="sc">&lt;</span> <span class="fl">1e-4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1307-1"><a href="vis-control-charts.html#cb1307-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(Y_g_up <span class="sc">+</span> <span class="fl">19.43051</span>) <span class="sc">&lt;</span> <span class="fl">1e-4</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1310-1"><a href="vis-control-charts.html#cb1310-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1309-1"><a href="vis-control-charts.html#cb1309-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Excellent!&quot;</code></pre>
 <p>Next, plot the control chart data and inspect.</p>
 </div>
 <div id="q6-run-the-following-chunk-and-answer-the-questions-under-observations-below." class="section level3 hasAnchor" number="59.6.3">
 <h3><span class="header-section-number">59.6.3</span> <strong>q6</strong> Run the following chunk and answer the questions under <em>Observations</em> below.<a href="vis-control-charts.html#q6-run-the-following-chunk-and-answer-the-questions-under-observations-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1312-1"><a href="vis-control-charts.html#cb1312-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb1312-2"><a href="vis-control-charts.html#cb1312-2" tabindex="-1"></a>df_q4 <span class="sc">%&gt;%</span></span>
-<span id="cb1312-3"><a href="vis-control-charts.html#cb1312-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, Y_mean)) <span class="sc">+</span></span>
-<span id="cb1312-4"><a href="vis-control-charts.html#cb1312-4" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> Y_g_lo, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1312-5"><a href="vis-control-charts.html#cb1312-5" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> Y_mean) <span class="sc">+</span></span>
-<span id="cb1312-6"><a href="vis-control-charts.html#cb1312-6" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> Y_g_up, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1312-7"><a href="vis-control-charts.html#cb1312-7" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1312-8"><a href="vis-control-charts.html#cb1312-8" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb1312-9"><a href="vis-control-charts.html#cb1312-9" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1312-10"><a href="vis-control-charts.html#cb1312-10" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Batch Year&quot;</span>,</span>
-<span id="cb1312-11"><a href="vis-control-charts.html#cb1312-11" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Measurement (micrograms)&quot;</span></span>
-<span id="cb1312-12"><a href="vis-control-charts.html#cb1312-12" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d54-e-vis10-control-chart-solution_files/figure-html/q6-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1311-1"><a href="vis-control-charts.html#cb1311-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb1311-2"><a href="vis-control-charts.html#cb1311-2" tabindex="-1"></a>df_q4 <span class="sc">%&gt;%</span></span>
+<span id="cb1311-3"><a href="vis-control-charts.html#cb1311-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, Y_mean)) <span class="sc">+</span></span>
+<span id="cb1311-4"><a href="vis-control-charts.html#cb1311-4" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> Y_g_lo, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1311-5"><a href="vis-control-charts.html#cb1311-5" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> Y_mean) <span class="sc">+</span></span>
+<span id="cb1311-6"><a href="vis-control-charts.html#cb1311-6" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> Y_g_up, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1311-7"><a href="vis-control-charts.html#cb1311-7" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1311-8"><a href="vis-control-charts.html#cb1311-8" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1311-9"><a href="vis-control-charts.html#cb1311-9" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1311-10"><a href="vis-control-charts.html#cb1311-10" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Batch Year&quot;</span>,</span>
+<span id="cb1311-11"><a href="vis-control-charts.html#cb1311-11" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Measurement (micrograms)&quot;</span></span>
+<span id="cb1311-12"><a href="vis-control-charts.html#cb1311-12" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d54-e-vis10-control-chart-solution_files/figure-html/q6-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:
 - There is considerable variation! Measurements of <em>any</em> kind are <em>not</em> exactly repeatable; variability is unavoidable.
 - Still the case in this control chart!

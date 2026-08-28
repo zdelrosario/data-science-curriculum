@@ -14,11 +14,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -74,7 +74,7 @@ flights %>%
 ## (`stat_bin()`).
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-distribution-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-distribution-1.png" alt="" width="672" />
 
 However, we might be interested in a few questions about these data:
 
@@ -180,7 +180,7 @@ tibble(z = rnorm(n = 1e3)) %>%
   vis_central(z)
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/central-normal-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/central-normal-1.png" alt="" width="672" />
 
 There are two primary measures of central tendency; the *mean* and *median*. The mean is the simple [arithmetic average](https://en.wikipedia.org/wiki/Arithmetic_mean): the sum of all values divided by the total number of values. The mean is denoted by $\overline{x}$ and defined by
 
@@ -231,7 +231,7 @@ flights %>% vis_central(dep_delay)
 ## (`stat_density()`).
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/central-flights-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/central-flights-1.png" alt="" width="672" />
 
 the mean and median `dep_delay` largely agree (relative to all the other data). But for the gapminder data:
 
@@ -243,7 +243,7 @@ gapminder %>%
   vis_central(gdpPercap)
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/central-gapminder-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/central-gapminder-1.png" alt="" width="672" />
 
 the mean and median `gdpPercap` disagree.[2]
 
@@ -323,7 +323,7 @@ bind_rows(
   scale_color_discrete(name = "Statistic")
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-bimodal-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-bimodal-1.png" alt="" width="672" />
 
 Here the mean and median are both close to zero, but *zero is an atypical number*! This is partly why we don't *only* compute descriptive statistics, but also do a deeper dive into our data. Here, we should probably refuse to give a single typical value; instead, it seems there might really be two populations showing up in the same dataset, so we can give two typical numbers, say `-2, +2`.
 
@@ -354,7 +354,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
   scale_color_discrete(name = "Quantile")
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/quart-vis-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/quart-vis-1.png" alt="" width="672" />
 
 *Note*: The function `qnorm` returns the quantiles of a normal distribution. We'll focus on quantiles of *samples* in this exercise.
 
@@ -516,7 +516,7 @@ flights %>%
 ## (`stat_boxplot()`).
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/q4-sol-vis-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/q4-sol-vis-1.png" alt="" width="672" />
 
 ## Dependence
 <!-- ------------------------- -->
@@ -537,7 +537,7 @@ flights %>%
 ## (`geom_point()`).
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-corr-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/vis-corr-1.png" alt="" width="672" />
 
 Two flavors of correlation help us make this idea quantitative: the *Pearson correlation* and *Spearman correlation*. Unlike our previous quantities for location and spread, these correlations are *dimensionless* (they have no units), and they are bounded between $[-1, +1]$.
 
@@ -598,7 +598,7 @@ df_line %>%
   geom_point()
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-line-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-line-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -632,7 +632,7 @@ map_dfr(
   facet_wrap(~r)
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-lineup-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-lineup-1.png" alt="" width="672" />
 
 One of the primary differences between Pearson and Spearman is that Pearson is a *linear correlation*, while Spearman is a *nonlinear correlation*. For instance, the following data
 
@@ -649,7 +649,7 @@ df_monotone %>%
   geom_point()
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-data-monotone-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-data-monotone-1.png" alt="" width="672" />
 
 have a perfect relationship between them. The Pearson correlation does not pick up on this fact, while the Spearman correlation indicates a perfect relation.
 
@@ -720,7 +720,7 @@ df_quad %>%
   geom_point()
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-data-quad-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-data-quad-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -749,7 +749,7 @@ df_cor_outliers %>%
   geom_point()
 ```
 
-<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-outliers-1.png" width="672" />
+<img src="d19-e-stat03-descriptive-solution_files/figure-html/ex-cor-outliers-1.png" alt="" width="672" />
 
 ``` r
 df_cor_outliers %>%

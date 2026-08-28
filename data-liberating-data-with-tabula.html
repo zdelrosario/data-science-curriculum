@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>53 Data: Liberating data with Tabula | Data Science: Exercise Solutions</title>
   <meta name="description" content="53 Data: Liberating data with Tabula | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="53 Data: Liberating data with Tabula | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,13 +1085,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">53</span> Data: Liberating data with Tabula<a href="data-liberating-data-with-tabula.html#data-liberating-data-with-tabula" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Sometimes data are messy—we know how to deal with that. Other times data are “locked up” in a format we can’t easily analyze, such as in a PDF. In this exercise you’ll learn how to <em>liberate</em> data from a PDF table using Tabula.</p>
 <p><em>Reading</em>: (<em>None</em>, this exercise <em>is</em> the reading.)</p>
-<div class="sourceCode" id="cb1124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1124-1"><a href="data-liberating-data-with-tabula.html#cb1124-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb1129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1129-1"><a href="data-liberating-data-with-tabula.html#cb1129-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1162,80 +1162,80 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">53.2.4</span> <strong>q4</strong> Load and clean the data.<a href="data-liberating-data-with-tabula.html#q4-load-and-clean-the-data." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Load and clean the table you extracted above. Use the column names <code>category</code> and <code>[government|business|total]_[2019|2018]</code>. Do not <em>tidy</em> (pivot) the data yet, but make sure the appropriate columns are numeric.</p>
 <p><em>Note</em>: In accounting practice, numbers in parentheses are understood to be negative, e.g. <code>(1000) = -1000</code>.</p>
-<div class="sourceCode" id="cb1126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1126-1"><a href="data-liberating-data-with-tabula.html#cb1126-1" tabindex="-1"></a>df_2019_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1126-2"><a href="data-liberating-data-with-tabula.html#cb1126-2" tabindex="-1"></a>  <span class="st">&quot;./data/needham_fs19.csv&quot;</span>,</span>
-<span id="cb1126-3"><a href="data-liberating-data-with-tabula.html#cb1126-3" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">1</span>,</span>
-<span id="cb1126-4"><a href="data-liberating-data-with-tabula.html#cb1126-4" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(</span>
-<span id="cb1126-5"><a href="data-liberating-data-with-tabula.html#cb1126-5" tabindex="-1"></a>    <span class="st">&quot;category&quot;</span>,</span>
-<span id="cb1126-6"><a href="data-liberating-data-with-tabula.html#cb1126-6" tabindex="-1"></a>    <span class="st">&quot;X2&quot;</span>,</span>
-<span id="cb1126-7"><a href="data-liberating-data-with-tabula.html#cb1126-7" tabindex="-1"></a>    <span class="st">&quot;governmental_2019&quot;</span>,</span>
-<span id="cb1126-8"><a href="data-liberating-data-with-tabula.html#cb1126-8" tabindex="-1"></a>    <span class="st">&quot;X4&quot;</span>,</span>
-<span id="cb1126-9"><a href="data-liberating-data-with-tabula.html#cb1126-9" tabindex="-1"></a>    <span class="st">&quot;governmental_2018&quot;</span>,</span>
-<span id="cb1126-10"><a href="data-liberating-data-with-tabula.html#cb1126-10" tabindex="-1"></a>    <span class="st">&quot;X6&quot;</span>,</span>
-<span id="cb1126-11"><a href="data-liberating-data-with-tabula.html#cb1126-11" tabindex="-1"></a>    <span class="st">&quot;business_2019&quot;</span>,</span>
-<span id="cb1126-12"><a href="data-liberating-data-with-tabula.html#cb1126-12" tabindex="-1"></a>    <span class="st">&quot;X8&quot;</span>,</span>
-<span id="cb1126-13"><a href="data-liberating-data-with-tabula.html#cb1126-13" tabindex="-1"></a>    <span class="st">&quot;business_2018&quot;</span>,</span>
-<span id="cb1126-14"><a href="data-liberating-data-with-tabula.html#cb1126-14" tabindex="-1"></a>    <span class="st">&quot;X10&quot;</span>,</span>
-<span id="cb1126-15"><a href="data-liberating-data-with-tabula.html#cb1126-15" tabindex="-1"></a>    <span class="st">&quot;total_2019&quot;</span>,</span>
-<span id="cb1126-16"><a href="data-liberating-data-with-tabula.html#cb1126-16" tabindex="-1"></a>    <span class="st">&quot;X12&quot;</span>,</span>
-<span id="cb1126-17"><a href="data-liberating-data-with-tabula.html#cb1126-17" tabindex="-1"></a>    <span class="st">&quot;total_2018&quot;</span></span>
-<span id="cb1126-18"><a href="data-liberating-data-with-tabula.html#cb1126-18" tabindex="-1"></a>  )</span>
-<span id="cb1126-19"><a href="data-liberating-data-with-tabula.html#cb1126-19" tabindex="-1"></a>)</span>
-<span id="cb1126-20"><a href="data-liberating-data-with-tabula.html#cb1126-20" tabindex="-1"></a></span>
-<span id="cb1126-21"><a href="data-liberating-data-with-tabula.html#cb1126-21" tabindex="-1"></a>df_2019 <span class="ot">&lt;-</span></span>
-<span id="cb1126-22"><a href="data-liberating-data-with-tabula.html#cb1126-22" tabindex="-1"></a>  df_2019_raw <span class="sc">%&gt;%</span></span>
-<span id="cb1126-23"><a href="data-liberating-data-with-tabula.html#cb1126-23" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb1126-24"><a href="data-liberating-data-with-tabula.html#cb1126-24" tabindex="-1"></a>  <span class="do">## across() allows us to apply the same mutation to multiple</span></span>
-<span id="cb1126-25"><a href="data-liberating-data-with-tabula.html#cb1126-25" tabindex="-1"></a>  <span class="do">## columns; remove all internal spaces from numbers</span></span>
-<span id="cb1126-26"><a href="data-liberating-data-with-tabula.html#cb1126-26" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>category, <span class="sc">~</span><span class="fu">str_remove_all</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb1126-27"><a href="data-liberating-data-with-tabula.html#cb1126-27" tabindex="-1"></a>  <span class="do">## Handle numbers enclosed by parentheses; make them negative</span></span>
-<span id="cb1126-28"><a href="data-liberating-data-with-tabula.html#cb1126-28" tabindex="-1"></a>  <span class="do">## and remove all parentheses for the number parser</span></span>
-<span id="cb1126-29"><a href="data-liberating-data-with-tabula.html#cb1126-29" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
-<span id="cb1126-30"><a href="data-liberating-data-with-tabula.html#cb1126-30" tabindex="-1"></a>    <span class="sc">-</span>category,</span>
-<span id="cb1126-31"><a href="data-liberating-data-with-tabula.html#cb1126-31" tabindex="-1"></a>    <span class="sc">~</span><span class="fu">if_else</span>(</span>
-<span id="cb1126-32"><a href="data-liberating-data-with-tabula.html#cb1126-32" tabindex="-1"></a>      <span class="fu">str_detect</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(&quot;</span>),</span>
-<span id="cb1126-33"><a href="data-liberating-data-with-tabula.html#cb1126-33" tabindex="-1"></a>      <span class="fu">str_c</span>(<span class="st">&quot;-&quot;</span>, <span class="fu">str_remove_all</span>(., <span class="st">&quot;[</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">)]&quot;</span>)),</span>
-<span id="cb1126-34"><a href="data-liberating-data-with-tabula.html#cb1126-34" tabindex="-1"></a>      <span class="fu">str_remove_all</span>(., <span class="st">&quot;[</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">)]&quot;</span>)</span>
-<span id="cb1126-35"><a href="data-liberating-data-with-tabula.html#cb1126-35" tabindex="-1"></a>    )</span>
-<span id="cb1126-36"><a href="data-liberating-data-with-tabula.html#cb1126-36" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb1126-37"><a href="data-liberating-data-with-tabula.html#cb1126-37" tabindex="-1"></a>  <span class="do">## Use the number parser to handle conversions</span></span>
-<span id="cb1126-38"><a href="data-liberating-data-with-tabula.html#cb1126-38" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>category, parse_number)) <span class="sc">%&gt;%</span></span>
-<span id="cb1126-39"><a href="data-liberating-data-with-tabula.html#cb1126-39" tabindex="-1"></a>  <span class="do">## Fix a couple chopped lines</span></span>
-<span id="cb1126-40"><a href="data-liberating-data-with-tabula.html#cb1126-40" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1126-41"><a href="data-liberating-data-with-tabula.html#cb1126-41" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">if_else</span>(</span>
-<span id="cb1126-42"><a href="data-liberating-data-with-tabula.html#cb1126-42" tabindex="-1"></a>      category <span class="sc">==</span> <span class="st">&quot;resources&quot;</span>,</span>
-<span id="cb1126-43"><a href="data-liberating-data-with-tabula.html#cb1126-43" tabindex="-1"></a>      <span class="st">&quot;Total assets and deferred outflow of resources&quot;</span>,</span>
-<span id="cb1126-44"><a href="data-liberating-data-with-tabula.html#cb1126-44" tabindex="-1"></a>      category</span>
-<span id="cb1126-45"><a href="data-liberating-data-with-tabula.html#cb1126-45" tabindex="-1"></a>    )</span>
-<span id="cb1126-46"><a href="data-liberating-data-with-tabula.html#cb1126-46" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1126-47"><a href="data-liberating-data-with-tabula.html#cb1126-47" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1126-48"><a href="data-liberating-data-with-tabula.html#cb1126-48" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">str_replace</span>(</span>
-<span id="cb1126-49"><a href="data-liberating-data-with-tabula.html#cb1126-49" tabindex="-1"></a>      category,</span>
-<span id="cb1126-50"><a href="data-liberating-data-with-tabula.html#cb1126-50" tabindex="-1"></a>      <span class="st">&quot;resources, and net position&quot;</span>,</span>
-<span id="cb1126-51"><a href="data-liberating-data-with-tabula.html#cb1126-51" tabindex="-1"></a>      <span class="st">&quot;Total liabilities, deferred inflow of resources, and net position&quot;</span></span>
-<span id="cb1126-52"><a href="data-liberating-data-with-tabula.html#cb1126-52" tabindex="-1"></a>    )</span>
-<span id="cb1126-53"><a href="data-liberating-data-with-tabula.html#cb1126-53" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1126-54"><a href="data-liberating-data-with-tabula.html#cb1126-54" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(governmental_2019))</span>
-<span id="cb1126-55"><a href="data-liberating-data-with-tabula.html#cb1126-55" tabindex="-1"></a>df_2019 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1131-1"><a href="data-liberating-data-with-tabula.html#cb1131-1" tabindex="-1"></a>df_2019_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1131-2"><a href="data-liberating-data-with-tabula.html#cb1131-2" tabindex="-1"></a>  <span class="st">&quot;./data/needham_fs19.csv&quot;</span>,</span>
+<span id="cb1131-3"><a href="data-liberating-data-with-tabula.html#cb1131-3" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">1</span>,</span>
+<span id="cb1131-4"><a href="data-liberating-data-with-tabula.html#cb1131-4" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(</span>
+<span id="cb1131-5"><a href="data-liberating-data-with-tabula.html#cb1131-5" tabindex="-1"></a>    <span class="st">&quot;category&quot;</span>,</span>
+<span id="cb1131-6"><a href="data-liberating-data-with-tabula.html#cb1131-6" tabindex="-1"></a>    <span class="st">&quot;X2&quot;</span>,</span>
+<span id="cb1131-7"><a href="data-liberating-data-with-tabula.html#cb1131-7" tabindex="-1"></a>    <span class="st">&quot;governmental_2019&quot;</span>,</span>
+<span id="cb1131-8"><a href="data-liberating-data-with-tabula.html#cb1131-8" tabindex="-1"></a>    <span class="st">&quot;X4&quot;</span>,</span>
+<span id="cb1131-9"><a href="data-liberating-data-with-tabula.html#cb1131-9" tabindex="-1"></a>    <span class="st">&quot;governmental_2018&quot;</span>,</span>
+<span id="cb1131-10"><a href="data-liberating-data-with-tabula.html#cb1131-10" tabindex="-1"></a>    <span class="st">&quot;X6&quot;</span>,</span>
+<span id="cb1131-11"><a href="data-liberating-data-with-tabula.html#cb1131-11" tabindex="-1"></a>    <span class="st">&quot;business_2019&quot;</span>,</span>
+<span id="cb1131-12"><a href="data-liberating-data-with-tabula.html#cb1131-12" tabindex="-1"></a>    <span class="st">&quot;X8&quot;</span>,</span>
+<span id="cb1131-13"><a href="data-liberating-data-with-tabula.html#cb1131-13" tabindex="-1"></a>    <span class="st">&quot;business_2018&quot;</span>,</span>
+<span id="cb1131-14"><a href="data-liberating-data-with-tabula.html#cb1131-14" tabindex="-1"></a>    <span class="st">&quot;X10&quot;</span>,</span>
+<span id="cb1131-15"><a href="data-liberating-data-with-tabula.html#cb1131-15" tabindex="-1"></a>    <span class="st">&quot;total_2019&quot;</span>,</span>
+<span id="cb1131-16"><a href="data-liberating-data-with-tabula.html#cb1131-16" tabindex="-1"></a>    <span class="st">&quot;X12&quot;</span>,</span>
+<span id="cb1131-17"><a href="data-liberating-data-with-tabula.html#cb1131-17" tabindex="-1"></a>    <span class="st">&quot;total_2018&quot;</span></span>
+<span id="cb1131-18"><a href="data-liberating-data-with-tabula.html#cb1131-18" tabindex="-1"></a>  )</span>
+<span id="cb1131-19"><a href="data-liberating-data-with-tabula.html#cb1131-19" tabindex="-1"></a>)</span>
+<span id="cb1131-20"><a href="data-liberating-data-with-tabula.html#cb1131-20" tabindex="-1"></a></span>
+<span id="cb1131-21"><a href="data-liberating-data-with-tabula.html#cb1131-21" tabindex="-1"></a>df_2019 <span class="ot">&lt;-</span></span>
+<span id="cb1131-22"><a href="data-liberating-data-with-tabula.html#cb1131-22" tabindex="-1"></a>  df_2019_raw <span class="sc">%&gt;%</span></span>
+<span id="cb1131-23"><a href="data-liberating-data-with-tabula.html#cb1131-23" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1131-24"><a href="data-liberating-data-with-tabula.html#cb1131-24" tabindex="-1"></a>  <span class="do">## across() allows us to apply the same mutation to multiple</span></span>
+<span id="cb1131-25"><a href="data-liberating-data-with-tabula.html#cb1131-25" tabindex="-1"></a>  <span class="do">## columns; remove all internal spaces from numbers</span></span>
+<span id="cb1131-26"><a href="data-liberating-data-with-tabula.html#cb1131-26" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>category, <span class="sc">~</span><span class="fu">str_remove_all</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb1131-27"><a href="data-liberating-data-with-tabula.html#cb1131-27" tabindex="-1"></a>  <span class="do">## Handle numbers enclosed by parentheses; make them negative</span></span>
+<span id="cb1131-28"><a href="data-liberating-data-with-tabula.html#cb1131-28" tabindex="-1"></a>  <span class="do">## and remove all parentheses for the number parser</span></span>
+<span id="cb1131-29"><a href="data-liberating-data-with-tabula.html#cb1131-29" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
+<span id="cb1131-30"><a href="data-liberating-data-with-tabula.html#cb1131-30" tabindex="-1"></a>    <span class="sc">-</span>category,</span>
+<span id="cb1131-31"><a href="data-liberating-data-with-tabula.html#cb1131-31" tabindex="-1"></a>    <span class="sc">~</span><span class="fu">if_else</span>(</span>
+<span id="cb1131-32"><a href="data-liberating-data-with-tabula.html#cb1131-32" tabindex="-1"></a>      <span class="fu">str_detect</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(&quot;</span>),</span>
+<span id="cb1131-33"><a href="data-liberating-data-with-tabula.html#cb1131-33" tabindex="-1"></a>      <span class="fu">str_c</span>(<span class="st">&quot;-&quot;</span>, <span class="fu">str_remove_all</span>(., <span class="st">&quot;[</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">)]&quot;</span>)),</span>
+<span id="cb1131-34"><a href="data-liberating-data-with-tabula.html#cb1131-34" tabindex="-1"></a>      <span class="fu">str_remove_all</span>(., <span class="st">&quot;[</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">)]&quot;</span>)</span>
+<span id="cb1131-35"><a href="data-liberating-data-with-tabula.html#cb1131-35" tabindex="-1"></a>    )</span>
+<span id="cb1131-36"><a href="data-liberating-data-with-tabula.html#cb1131-36" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb1131-37"><a href="data-liberating-data-with-tabula.html#cb1131-37" tabindex="-1"></a>  <span class="do">## Use the number parser to handle conversions</span></span>
+<span id="cb1131-38"><a href="data-liberating-data-with-tabula.html#cb1131-38" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>category, parse_number)) <span class="sc">%&gt;%</span></span>
+<span id="cb1131-39"><a href="data-liberating-data-with-tabula.html#cb1131-39" tabindex="-1"></a>  <span class="do">## Fix a couple chopped lines</span></span>
+<span id="cb1131-40"><a href="data-liberating-data-with-tabula.html#cb1131-40" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1131-41"><a href="data-liberating-data-with-tabula.html#cb1131-41" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">if_else</span>(</span>
+<span id="cb1131-42"><a href="data-liberating-data-with-tabula.html#cb1131-42" tabindex="-1"></a>      category <span class="sc">==</span> <span class="st">&quot;resources&quot;</span>,</span>
+<span id="cb1131-43"><a href="data-liberating-data-with-tabula.html#cb1131-43" tabindex="-1"></a>      <span class="st">&quot;Total assets and deferred outflow of resources&quot;</span>,</span>
+<span id="cb1131-44"><a href="data-liberating-data-with-tabula.html#cb1131-44" tabindex="-1"></a>      category</span>
+<span id="cb1131-45"><a href="data-liberating-data-with-tabula.html#cb1131-45" tabindex="-1"></a>    )</span>
+<span id="cb1131-46"><a href="data-liberating-data-with-tabula.html#cb1131-46" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1131-47"><a href="data-liberating-data-with-tabula.html#cb1131-47" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1131-48"><a href="data-liberating-data-with-tabula.html#cb1131-48" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">str_replace</span>(</span>
+<span id="cb1131-49"><a href="data-liberating-data-with-tabula.html#cb1131-49" tabindex="-1"></a>      category,</span>
+<span id="cb1131-50"><a href="data-liberating-data-with-tabula.html#cb1131-50" tabindex="-1"></a>      <span class="st">&quot;resources, and net position&quot;</span>,</span>
+<span id="cb1131-51"><a href="data-liberating-data-with-tabula.html#cb1131-51" tabindex="-1"></a>      <span class="st">&quot;Total liabilities, deferred inflow of resources, and net position&quot;</span></span>
+<span id="cb1131-52"><a href="data-liberating-data-with-tabula.html#cb1131-52" tabindex="-1"></a>    )</span>
+<span id="cb1131-53"><a href="data-liberating-data-with-tabula.html#cb1131-53" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1131-54"><a href="data-liberating-data-with-tabula.html#cb1131-54" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(governmental_2019))</span>
+<span id="cb1131-55"><a href="data-liberating-data-with-tabula.html#cb1131-55" tabindex="-1"></a>df_2019 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <p>Use the following to check your work:</p>
-<div class="sourceCode" id="cb1127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1127-1"><a href="data-liberating-data-with-tabula.html#cb1127-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; check a couple problematic values</span></span>
-<span id="cb1127-2"><a href="data-liberating-data-with-tabula.html#cb1127-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb1127-3"><a href="data-liberating-data-with-tabula.html#cb1127-3" tabindex="-1"></a>  (</span>
-<span id="cb1127-4"><a href="data-liberating-data-with-tabula.html#cb1127-4" tabindex="-1"></a>    df_2019 <span class="sc">%&gt;%</span></span>
-<span id="cb1127-5"><a href="data-liberating-data-with-tabula.html#cb1127-5" tabindex="-1"></a>    <span class="fu">filter</span>(category <span class="sc">==</span> <span class="st">&quot;Deferred outflow of resources&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1127-6"><a href="data-liberating-data-with-tabula.html#cb1127-6" tabindex="-1"></a>    <span class="fu">pull</span>(business_2019)</span>
-<span id="cb1127-7"><a href="data-liberating-data-with-tabula.html#cb1127-7" tabindex="-1"></a>  ) <span class="sc">==</span> <span class="dv">1160</span></span>
-<span id="cb1127-8"><a href="data-liberating-data-with-tabula.html#cb1127-8" tabindex="-1"></a>)</span>
-<span id="cb1127-9"><a href="data-liberating-data-with-tabula.html#cb1127-9" tabindex="-1"></a></span>
-<span id="cb1127-10"><a href="data-liberating-data-with-tabula.html#cb1127-10" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb1127-11"><a href="data-liberating-data-with-tabula.html#cb1127-11" tabindex="-1"></a>  (</span>
-<span id="cb1127-12"><a href="data-liberating-data-with-tabula.html#cb1127-12" tabindex="-1"></a>    df_2019 <span class="sc">%&gt;%</span></span>
-<span id="cb1127-13"><a href="data-liberating-data-with-tabula.html#cb1127-13" tabindex="-1"></a>    <span class="fu">filter</span>(category <span class="sc">==</span> <span class="st">&quot;Unrestricted&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1127-14"><a href="data-liberating-data-with-tabula.html#cb1127-14" tabindex="-1"></a>    <span class="fu">pull</span>(governmental_2019)</span>
-<span id="cb1127-15"><a href="data-liberating-data-with-tabula.html#cb1127-15" tabindex="-1"></a>  ) <span class="sc">==</span> <span class="sc">-</span><span class="dv">62396</span></span>
-<span id="cb1127-16"><a href="data-liberating-data-with-tabula.html#cb1127-16" tabindex="-1"></a>)</span>
-<span id="cb1127-17"><a href="data-liberating-data-with-tabula.html#cb1127-17" tabindex="-1"></a></span>
-<span id="cb1127-18"><a href="data-liberating-data-with-tabula.html#cb1127-18" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1132-1"><a href="data-liberating-data-with-tabula.html#cb1132-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; check a couple problematic values</span></span>
+<span id="cb1132-2"><a href="data-liberating-data-with-tabula.html#cb1132-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb1132-3"><a href="data-liberating-data-with-tabula.html#cb1132-3" tabindex="-1"></a>  (</span>
+<span id="cb1132-4"><a href="data-liberating-data-with-tabula.html#cb1132-4" tabindex="-1"></a>    df_2019 <span class="sc">%&gt;%</span></span>
+<span id="cb1132-5"><a href="data-liberating-data-with-tabula.html#cb1132-5" tabindex="-1"></a>    <span class="fu">filter</span>(category <span class="sc">==</span> <span class="st">&quot;Deferred outflow of resources&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1132-6"><a href="data-liberating-data-with-tabula.html#cb1132-6" tabindex="-1"></a>    <span class="fu">pull</span>(business_2019)</span>
+<span id="cb1132-7"><a href="data-liberating-data-with-tabula.html#cb1132-7" tabindex="-1"></a>  ) <span class="sc">==</span> <span class="dv">1160</span></span>
+<span id="cb1132-8"><a href="data-liberating-data-with-tabula.html#cb1132-8" tabindex="-1"></a>)</span>
+<span id="cb1132-9"><a href="data-liberating-data-with-tabula.html#cb1132-9" tabindex="-1"></a></span>
+<span id="cb1132-10"><a href="data-liberating-data-with-tabula.html#cb1132-10" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb1132-11"><a href="data-liberating-data-with-tabula.html#cb1132-11" tabindex="-1"></a>  (</span>
+<span id="cb1132-12"><a href="data-liberating-data-with-tabula.html#cb1132-12" tabindex="-1"></a>    df_2019 <span class="sc">%&gt;%</span></span>
+<span id="cb1132-13"><a href="data-liberating-data-with-tabula.html#cb1132-13" tabindex="-1"></a>    <span class="fu">filter</span>(category <span class="sc">==</span> <span class="st">&quot;Unrestricted&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1132-14"><a href="data-liberating-data-with-tabula.html#cb1132-14" tabindex="-1"></a>    <span class="fu">pull</span>(governmental_2019)</span>
+<span id="cb1132-15"><a href="data-liberating-data-with-tabula.html#cb1132-15" tabindex="-1"></a>  ) <span class="sc">==</span> <span class="sc">-</span><span class="dv">62396</span></span>
+<span id="cb1132-16"><a href="data-liberating-data-with-tabula.html#cb1132-16" tabindex="-1"></a>)</span>
+<span id="cb1132-17"><a href="data-liberating-data-with-tabula.html#cb1132-17" tabindex="-1"></a></span>
+<span id="cb1132-18"><a href="data-liberating-data-with-tabula.html#cb1132-18" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
 <p>Where Tabula really shines is in cases where you need to process <em>many</em> documents; if you find yourself needing to process a whole folder of PDF’s, consider using Tabula.</p>
 <!-- include-exit-ticket -->
 

@@ -22,11 +22,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -79,7 +79,7 @@ diamonds %>%
   geom_bar()
 ```
 
-<img src="d06-e-stat00-eda-basics-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d06-e-stat00-eda-basics-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 **Observations**:
 - The truth is actually the opposite! `Ideal` cut diamonds are *more* numerous than all other cuts! Perhaps because cutting a diamond is easier than mining a new one, gemcutters add value to a diamond by striving for an ideal cut.
@@ -101,7 +101,7 @@ diamonds %>%
   geom_point()
 ```
 
-<img src="d06-e-stat00-eda-basics-solution_files/figure-html/q2.1-task-1.png" width="672" />
+<img src="d06-e-stat00-eda-basics-solution_files/figure-html/q2.1-task-1.png" alt="" width="672" />
 
 **Observations**:
 - This graph is virtually useless! There is severe overplotting. We cannot tell address Hypothesis 2 with this graph
@@ -119,7 +119,7 @@ diamonds %>%
   geom_boxplot()
 ```
 
-<img src="d06-e-stat00-eda-basics-solution_files/figure-html/q2.2-task-1.png" width="672" />
+<img src="d06-e-stat00-eda-basics-solution_files/figure-html/q2.2-task-1.png" alt="" width="672" />
 
 **Observations**:
 - Surprisingly, `Ideal` diamonds tend to be the *least* pricey! This was very surprising to me.
@@ -141,7 +141,7 @@ diamonds %>%
   geom_boxplot()
 ```
 
-<img src="d06-e-stat00-eda-basics-solution_files/figure-html/q2.3-task-1.png" width="672" />
+<img src="d06-e-stat00-eda-basics-solution_files/figure-html/q2.3-task-1.png" alt="" width="672" />
 
 **Observations**:
 - The median of `Ideal` diamonds is a fair bit lower in `carat` than other cuts. This provides some evidence that gemcutters trade `cut` for `carat`.

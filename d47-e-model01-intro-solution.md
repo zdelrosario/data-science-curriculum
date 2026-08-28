@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -79,7 +79,7 @@ df_train %>%
   )
 ```
 
-<img src="d47-e-model01-intro-solution_files/figure-html/model-manual-1-1.png" width="672" />
+<img src="d47-e-model01-intro-solution_files/figure-html/model-manual-1-1.png" alt="" width="672" />
 
 That doesn't look very good; the line tends to miss the higher-carat values. I manually adjust the slope up by a factor of two:
 
@@ -102,7 +102,7 @@ df_train %>%
   )
 ```
 
-<img src="d47-e-model01-intro-solution_files/figure-html/model-manual-2-1.png" width="672" />
+<img src="d47-e-model01-intro-solution_files/figure-html/model-manual-2-1.png" alt="" width="672" />
 
 This *manual* approach to *fitting a model*---choosing parameter values---is labor-intensive and silly. Fortunately, there's a better way. We can *optimize* the parameter values by minimizing a chosen metric.
 
@@ -132,7 +132,7 @@ df_train %>%
   )
 ```
 
-<img src="d47-e-model01-intro-solution_files/figure-html/model-manual-3-1.png" width="672" />
+<img src="d47-e-model01-intro-solution_files/figure-html/model-manual-3-1.png" alt="" width="672" />
 
 This plot shows the *residuals* of the model, that is
 
@@ -232,7 +232,7 @@ df_train %>%
   geom_point(aes(y = price))
 ```
 
-<img src="d47-e-model01-intro-solution_files/figure-html/fitting-factors-1.png" width="672" />
+<img src="d47-e-model01-intro-solution_files/figure-html/fitting-factors-1.png" alt="" width="672" />
 
 ## Assessing a model
 
@@ -256,7 +256,7 @@ df_train %>%
   )
 ```
 
-<img src="d47-e-model01-intro-solution_files/figure-html/vis-carat-1.png" width="672" />
+<img src="d47-e-model01-intro-solution_files/figure-html/vis-carat-1.png" alt="" width="672" />
 
 Frankly, these model predictions don't look very good! We know that diamond prices probably depend on the "4 C's"; maybe your model using more predictors will be more effective?
 
@@ -279,7 +279,7 @@ df_train %>%
   )
 ```
 
-<img src="d47-e-model01-intro-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d47-e-model01-intro-solution_files/figure-html/q2-task-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -360,12 +360,12 @@ df_train %>%
 ```
 ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
+## This warning is displayed once per session.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.
 ```
 
-<img src="d47-e-model01-intro-solution_files/figure-html/predicted-vs-actual-1.png" width="672" />
+<img src="d47-e-model01-intro-solution_files/figure-html/predicted-vs-actual-1.png" alt="" width="672" />
 
 This fit looks quite poor---there is a great deal of scatter of actual values away from the predicted values. What's more, the scatter doesn't look random; there seem to be some consistent patterns (e.g. "stripes") in the plot that suggest there may be additional patterns we could incorporate in our model, if we added more variables. Let's try that!
 
@@ -495,7 +495,7 @@ df_pred_uq %>%
   theme_minimal()
 ```
 
-<img src="d47-e-model01-intro-solution_files/figure-html/pred-vis-1.png" width="672" />
+<img src="d47-e-model01-intro-solution_files/figure-html/pred-vis-1.png" alt="" width="672" />
 
 Ideally these prediction intervals should include a desired fraction of observed values; let's compute the *empirical coverage* to see if this matches our desired `level = 0.95`.
 
@@ -566,7 +566,7 @@ df_q6 %>%
   theme_minimal()
 ```
 
-<img src="d47-e-model01-intro-solution_files/figure-html/q6-task-1.png" width="672" />
+<img src="d47-e-model01-intro-solution_files/figure-html/q6-task-1.png" alt="" width="672" />
 We will discuss prediction intervals further in a future exercise. For now, know that they give us a sense of how much we should trust our model predictions.
 
 ## Summary

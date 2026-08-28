@@ -14,11 +14,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -79,7 +79,7 @@ diamonds %>%
   labs(x = "", y = "")
 ```
 
-<img src="d05-e-comm01-responding-solution_files/figure-html/vis-example-1.png" width="672" />
+<img src="d05-e-comm01-responding-solution_files/figure-html/vis-example-1.png" alt="" width="672" />
 
 Let's use the active-passive-constructive-destructive (APCD) response framework above to analyze some *discussion scenarios*. Imagine the following scenario:
 
@@ -139,7 +139,7 @@ diamonds %>%
   labs(x = "", y = "")
 ```
 
-<img src="d05-e-comm01-responding-solution_files/figure-html/vis-example-rep-1.png" width="672" />
+<img src="d05-e-comm01-responding-solution_files/figure-html/vis-example-rep-1.png" alt="" width="672" />
 
 Imagine the following scenario:
 

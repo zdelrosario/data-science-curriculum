@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>20 Vis: Histograms | Data Science: Exercise Solutions</title>
   <meta name="description" content="20 Vis: Histograms | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="20 Vis: Histograms | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,13 +1085,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">20</span> Vis: Histograms<a href="vis-histograms.html#vis-histograms" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: <em>Histograms</em> are a key tool for EDA. In this exercise we’ll get a little more practice constructing and interpreting histograms and densities.</p>
 <p><em>Reading</em>: (None, this is the reading)</p>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="vis-histograms.html#cb252-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="vis-histograms.html#cb254-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1099,70 +1099,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="histograms" class="section level2 hasAnchor" number="20.1">
 <h2><span class="header-section-number">20.1</span> Histograms<a href="vis-histograms.html#histograms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A histogram is a form of bar chart. Much like <code>geom_bar()</code>, histograms count up rows. Unlike <code>geom_bar()</code>, a histogram is well-suited to deal with continuous data. To illustrate, let’s look at the <code>displ</code> values in the <code>mpg</code> dataset with a <code>geom_bar()</code>:</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="vis-histograms.html#cb254-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
-<span id="cb254-2"><a href="vis-histograms.html#cb254-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb254-3"><a href="vis-histograms.html#cb254-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ)) <span class="sc">+</span></span>
-<span id="cb254-4"><a href="vis-histograms.html#cb254-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="vis-histograms.html#cb256-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
+<span id="cb256-2"><a href="vis-histograms.html#cb256-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb256-3"><a href="vis-histograms.html#cb256-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ)) <span class="sc">+</span></span>
+<span id="cb256-4"><a href="vis-histograms.html#cb256-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" /></p>
 <p>Some of the <code>displ</code> values only appear once, but they’re very close to similar values. This can give a misleading impression of the data. A <em>histogram</em> first “bins” the data before counting up rows. This allows us to combine values that are nearby:</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="vis-histograms.html#cb255-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
-<span id="cb255-2"><a href="vis-histograms.html#cb255-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb255-3"><a href="vis-histograms.html#cb255-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ)) <span class="sc">+</span></span>
-<span id="cb255-4"><a href="vis-histograms.html#cb255-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>)</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="vis-histograms.html#cb257-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
+<span id="cb257-2"><a href="vis-histograms.html#cb257-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb257-3"><a href="vis-histograms.html#cb257-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ)) <span class="sc">+</span></span>
+<span id="cb257-4"><a href="vis-histograms.html#cb257-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>)</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" /></p>
 <p>This view of the data gives a better impression of a “bulk” of data near <code>displ == 2</code>.</p>
 <div id="q1-make-a-histogram" class="section level3 hasAnchor" number="20.1.1">
 <h3><span class="header-section-number">20.1.1</span> <strong>q1</strong> Make a histogram<a href="vis-histograms.html#q1-make-a-histogram" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Make a histogram of <code>cty</code> fuel economy.</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="vis-histograms.html#cb256-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Make a histogram of</span></span>
-<span id="cb256-2"><a href="vis-histograms.html#cb256-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb256-3"><a href="vis-histograms.html#cb256-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty)) <span class="sc">+</span></span>
-<span id="cb256-4"><a href="vis-histograms.html#cb256-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/q1-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="vis-histograms.html#cb258-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Make a histogram of</span></span>
+<span id="cb258-2"><a href="vis-histograms.html#cb258-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb258-3"><a href="vis-histograms.html#cb258-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty)) <span class="sc">+</span></span>
+<span id="cb258-4"><a href="vis-histograms.html#cb258-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/q1-task-1.png" alt="" width="672" /></p>
 </div>
 </div>
 <div id="the-golden-rule-of-histograms" class="section level2 hasAnchor" number="20.2">
 <h2><span class="header-section-number">20.2</span> The golden rule of histograms<a href="vis-histograms.html#the-golden-rule-of-histograms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Since we have to bin the data to make a histogram, there is an important choice to be made in the number of bins. A different bin count can lead to a totally different view of the data.</p>
 <p>If we pick very few bins, we lose a lot of resolution:</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="vis-histograms.html#cb258-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
-<span id="cb258-2"><a href="vis-histograms.html#cb258-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb258-3"><a href="vis-histograms.html#cb258-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ)) <span class="sc">+</span></span>
-<span id="cb258-4"><a href="vis-histograms.html#cb258-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">5</span>)</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>This plot gives the impression that the data peaks around <code>displ == 3</code> or so. However, we get a different view with more bins,</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="vis-histograms.html#cb259-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
-<span id="cb259-2"><a href="vis-histograms.html#cb259-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb259-3"><a href="vis-histograms.html#cb259-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ)) <span class="sc">+</span></span>
-<span id="cb259-4"><a href="vis-histograms.html#cb259-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>This plot shows us a peak around <code>displ == 2</code> and another peak around <code>displ == 5</code>. Increasing the bin count again gives us yet another view,</p>
 <div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="vis-histograms.html#cb260-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
 <span id="cb260-2"><a href="vis-histograms.html#cb260-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
 <span id="cb260-3"><a href="vis-histograms.html#cb260-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ)) <span class="sc">+</span></span>
-<span id="cb260-4"><a href="vis-histograms.html#cb260-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>)</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<span id="cb260-4"><a href="vis-histograms.html#cb260-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-3-1.png" alt="" width="672" /></p>
+<p>This plot gives the impression that the data peaks around <code>displ == 3</code> or so. However, we get a different view with more bins,</p>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="vis-histograms.html#cb261-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
+<span id="cb261-2"><a href="vis-histograms.html#cb261-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb261-3"><a href="vis-histograms.html#cb261-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ)) <span class="sc">+</span></span>
+<span id="cb261-4"><a href="vis-histograms.html#cb261-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-4-1.png" alt="" width="672" /></p>
+<p>This plot shows us a peak around <code>displ == 2</code> and another peak around <code>displ == 5</code>. Increasing the bin count again gives us yet another view,</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="vis-histograms.html#cb262-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
+<span id="cb262-2"><a href="vis-histograms.html#cb262-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb262-3"><a href="vis-histograms.html#cb262-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ)) <span class="sc">+</span></span>
+<span id="cb262-4"><a href="vis-histograms.html#cb262-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-5-1.png" alt="" width="672" /></p>
 <p>We still see a peak around <code>displ == 2</code>, but now the peak near <code>displ == 5</code> seems more diffuse. Patterns that tend to persist across multiple bin sizes tend to be more trustworthy.</p>
 </div>
 <div id="frequency-polygons" class="section level2 hasAnchor" number="20.3">
 <h2><span class="header-section-number">20.3</span> Frequency polygons<a href="vis-histograms.html#frequency-polygons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Frequency polygons are a useful tool to show “histograms” with multiple groups. As we saw last time, bars can easily overlap. A frequency polygon bins the data, but shows counts using lines (rather than bars),</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="vis-histograms.html#cb261-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
-<span id="cb261-2"><a href="vis-histograms.html#cb261-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb261-3"><a href="vis-histograms.html#cb261-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb261-4"><a href="vis-histograms.html#cb261-4" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="vis-histograms.html#cb263-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
+<span id="cb263-2"><a href="vis-histograms.html#cb263-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb263-3"><a href="vis-histograms.html#cb263-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb263-4"><a href="vis-histograms.html#cb263-4" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-6-1.png" alt="" width="672" /></p>
 <p>Note how we can see all the lines, and nothing is stacked (since there are no bars).</p>
 </div>
 <div id="density-plots" class="section level2 hasAnchor" number="20.4">
 <h2><span class="header-section-number">20.4</span> Density plots<a href="vis-histograms.html#density-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There’s one more alternative to a frequency polygon, which is to plot an estimated density of the data. We’ll talk about (probability) densities later in the class, but for now, the thing to know is that densities always integrate to <code>1</code>.</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="vis-histograms.html#cb262-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
-<span id="cb262-2"><a href="vis-histograms.html#cb262-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb262-3"><a href="vis-histograms.html#cb262-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb262-4"><a href="vis-histograms.html#cb262-4" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="vis-histograms.html#cb264-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
+<span id="cb264-2"><a href="vis-histograms.html#cb264-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb264-3"><a href="vis-histograms.html#cb264-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb264-4"><a href="vis-histograms.html#cb264-4" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-7-1.png" alt="" width="672" /></p>
 <p>Density plots are better for showing where the data tends to be located. Frequency polygon plots also show where the data is located, but are better for showing the relative size of each group.</p>
 <div id="q2-interpret-a-graph" class="section level3 hasAnchor" number="20.4.1">
 <h3><span class="header-section-number">20.4.1</span> <strong>q2</strong> Interpret a graph<a href="vis-histograms.html#q2-interpret-a-graph" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1172,19 +1172,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Which <code>class</code> has the broadest distribution of <code>cty</code> values?</li>
 <li>Which graph—<code>vis1</code> or <code>vis2</code>—best helps you answer each question?</li>
 </ul>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="vis-histograms.html#cb263-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
-<span id="cb263-2"><a href="vis-histograms.html#cb263-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb263-3"><a href="vis-histograms.html#cb263-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb263-4"><a href="vis-histograms.html#cb263-4" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/q2-vis1-1.png" width="672" /></p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="vis-histograms.html#cb265-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
+<span id="cb265-2"><a href="vis-histograms.html#cb265-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb265-3"><a href="vis-histograms.html#cb265-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb265-4"><a href="vis-histograms.html#cb265-4" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/q2-vis1-1.png" alt="" width="672" /></p>
 <ul>
 <li>From this graph, it’s easy to see that <code>suv</code> is the most numerous class</li>
 </ul>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="vis-histograms.html#cb264-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
-<span id="cb264-2"><a href="vis-histograms.html#cb264-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb264-3"><a href="vis-histograms.html#cb264-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb264-4"><a href="vis-histograms.html#cb264-4" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/q2-vis2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="vis-histograms.html#cb266-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify</span></span>
+<span id="cb266-2"><a href="vis-histograms.html#cb266-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb266-3"><a href="vis-histograms.html#cb266-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb266-4"><a href="vis-histograms.html#cb266-4" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/q2-vis2-1.png" alt="" width="672" /></p>
 <ul>
 <li>From this graph, it’s easy to see that <code>subcompact</code> has the broadest distribution</li>
 </ul>
@@ -1194,27 +1194,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q3-modify-a-plot" class="section level3 hasAnchor" number="20.4.2">
 <h3><span class="header-section-number">20.4.2</span> <strong>q3</strong> Modify a plot<a href="vis-histograms.html#q3-modify-a-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Modify <code>q1-vis2</code> to use a <code>facet_wrap()</code> on the <code>class</code>. “Free” the vertical axis with the <code>scales</code> keyword to allow for a different y scale in each facet.</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="vis-histograms.html#cb265-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb265-2"><a href="vis-histograms.html#cb265-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty)) <span class="sc">+</span></span>
-<span id="cb265-3"><a href="vis-histograms.html#cb265-3" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb265-4"><a href="vis-histograms.html#cb265-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>class, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/q3-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="vis-histograms.html#cb267-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb267-2"><a href="vis-histograms.html#cb267-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty)) <span class="sc">+</span></span>
+<span id="cb267-3"><a href="vis-histograms.html#cb267-3" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb267-4"><a href="vis-histograms.html#cb267-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>class, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/q3-task-1.png" alt="" width="672" /></p>
 <p>In the reading, we learned that the “most important thing” to keep in mind with <code>geom_histogram()</code> and <code>geom_freqpoly()</code> is to <em>explore different binwidths</em>. We’ll explore this idea in the next question.</p>
 </div>
 <div id="q4-analyze-a-histogram" class="section level3 hasAnchor" number="20.4.3">
 <h3><span class="header-section-number">20.4.3</span> <strong>q4</strong> Analyze a histogram<a href="vis-histograms.html#q4-analyze-a-histogram" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Analyze the following graph; make sure to test different binwidths. What patterns do you see? Which patterns remain as you change the binwidth?</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="vis-histograms.html#cb266-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Run this chunk; play with differnet bin widths</span></span>
-<span id="cb266-2"><a href="vis-histograms.html#cb266-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb266-3"><a href="vis-histograms.html#cb266-3" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;</span> <span class="fl">1.1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb266-4"><a href="vis-histograms.html#cb266-4" tabindex="-1"></a></span>
-<span id="cb266-5"><a href="vis-histograms.html#cb266-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat)) <span class="sc">+</span></span>
-<span id="cb266-6"><a href="vis-histograms.html#cb266-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>, <span class="at">boundary =</span> <span class="fl">0.005</span>) <span class="sc">+</span></span>
-<span id="cb266-7"><a href="vis-histograms.html#cb266-7" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb266-8"><a href="vis-histograms.html#cb266-8" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
-<span id="cb266-9"><a href="vis-histograms.html#cb266-9" tabindex="-1"></a></span>
-<span id="cb266-10"><a href="vis-histograms.html#cb266-10" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d10-e-vis02-histograms-solution_files/figure-html/q4-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="vis-histograms.html#cb268-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Run this chunk; play with differnet bin widths</span></span>
+<span id="cb268-2"><a href="vis-histograms.html#cb268-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb268-3"><a href="vis-histograms.html#cb268-3" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;</span> <span class="fl">1.1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb268-4"><a href="vis-histograms.html#cb268-4" tabindex="-1"></a></span>
+<span id="cb268-5"><a href="vis-histograms.html#cb268-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat)) <span class="sc">+</span></span>
+<span id="cb268-6"><a href="vis-histograms.html#cb268-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>, <span class="at">boundary =</span> <span class="fl">0.005</span>) <span class="sc">+</span></span>
+<span id="cb268-7"><a href="vis-histograms.html#cb268-7" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb268-8"><a href="vis-histograms.html#cb268-8" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb268-9"><a href="vis-histograms.html#cb268-9" tabindex="-1"></a></span>
+<span id="cb268-10"><a href="vis-histograms.html#cb268-10" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d10-e-vis02-histograms-solution_files/figure-html/q4-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>
 - The largest number of diamonds tend to fall on <em>or above</em> even 10-ths of a carat.
 - The peak near <code>0.5</code> is very broad, compared to the others.

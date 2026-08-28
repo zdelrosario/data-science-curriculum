@@ -14,11 +14,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -66,10 +66,10 @@ df_samp_unif %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="d35-e-stat07-clt-solution_files/figure-html/recall-1.png" width="672" />
+<img src="d35-e-stat07-clt-solution_files/figure-html/recall-1.png" alt="" width="672" />
 
 If you said that the sampling distribution from the exercise above looks roughly normal, then you are correct! This is an example of the [central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem), a central idea in statistics. Here we'll introduce the central limit theorem (CLT), use it to approximate the sampling distribution for the sample mean, and in turn use that to construct an approximate *confidence interval*.
 
@@ -108,8 +108,12 @@ df_clt <-
 ```
 
 ```
-## `summarise()` has grouped output by 'n'. You can override using the `.groups`
-## argument.
+## `summarise()` has regrouped the output.
+## ℹ Summaries were computed grouped by n and id.
+## ℹ Output is grouped by n.
+## ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+## ℹ Use `summarise(.by = c(n, id))` for per-operation grouping
+##   (`?dplyr::dplyr_by`) instead.
 ```
 
 Let's visualize the sampling distribution for each sample size:
@@ -122,7 +126,7 @@ df_clt %>%
   facet_wrap(~n, scales = "free")
 ```
 
-<img src="d35-e-stat07-clt-solution_files/figure-html/vis-clt-1.png" width="672" />
+<img src="d35-e-stat07-clt-solution_files/figure-html/vis-clt-1.png" alt="" width="672" />
 
 At just `1` our sample mean is $X_1 / 1$---we're just drawing single observations from the population, so we see a uniform. At `2` we something that looks like a tent. By `9` samples we see a distribution that looks quite normal.
 
@@ -198,7 +202,7 @@ df_clt %>%
   )
 ```
 
-<img src="d35-e-stat07-clt-solution_files/figure-html/vis-unif-ci-1.png" width="672" />
+<img src="d35-e-stat07-clt-solution_files/figure-html/vis-unif-ci-1.png" alt="" width="672" />
 
 Some observations to note:
 
@@ -372,12 +376,12 @@ df_flights_sampled %>%
 ```
 ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
+## This warning is displayed once per session.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.
 ```
 
-<img src="d35-e-stat07-clt-solution_files/figure-html/flights-aa-samples-1.png" width="672" />
+<img src="d35-e-stat07-clt-solution_files/figure-html/flights-aa-samples-1.png" alt="" width="672" />
 
 These confidence intervals illustrate a number of different sampling scenarios. In some of them, we correctly determine that the mean arrival delay is confidently greater than zero. The case at $n = 100$ is inconclusive; the CI is compatible with both positive and negative mean delay times. Note the two lowest $n$ cases; there we "confidently" determine that the mean arrival delay is negative [3]. Any time we are doing estimation we are in danger of making an incorrect conclusion, even when we do the statistics correctly! Obtaining data simply decreases the probability of making a false conclusion [4].
 

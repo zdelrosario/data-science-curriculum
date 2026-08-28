@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -77,7 +77,7 @@ rbind
 ```
 ## function (..., deparse.level = 1) 
 ## .Internal(rbind(deparse.level, ...))
-## <bytecode: 0x55b515001740>
+## <bytecode: 0x563ca1efa108>
 ## <environment: namespace:base>
 ```
 
@@ -165,7 +165,7 @@ lm
 ##         z$qr <- NULL
 ##     z
 ## }
-## <bytecode: 0x55b518abcbc0>
+## <bytecode: 0x563ca5c20a60>
 ## <environment: namespace:stats>
 ```
 
@@ -252,8 +252,8 @@ rnorm(n = 10)
 ```
 
 ```
-##  [1]  1.07403789 -0.62270919 -0.43493973  0.66861217 -0.78672451  0.28279509
-##  [7]  0.01682127  0.19170868 -0.96723725  0.27472532
+##  [1] -1.05412026 -0.78923852 -1.33457761  0.40110968  1.37537165  0.16566624
+##  [7] -0.15936505 -0.01728009  1.72155216  0.85121591
 ```
 
 ## Adapting examples

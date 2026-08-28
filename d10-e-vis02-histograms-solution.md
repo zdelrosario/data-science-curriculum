@@ -14,11 +14,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -37,7 +37,7 @@ mpg %>%
   geom_bar()
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" />
 
 Some of the `displ` values only appear once, but they're very close to similar values. This can give a misleading impression of the data. A *histogram* first "bins" the data before counting up rows. This allows us to combine values that are nearby:
 
@@ -49,7 +49,7 @@ mpg %>%
   geom_histogram(bins = 20)
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" />
 
 This view of the data gives a better impression of a "bulk" of data near `displ == 2`.
 
@@ -66,10 +66,10 @@ mpg %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 ## The golden rule of histograms
 
@@ -85,7 +85,7 @@ mpg %>%
   geom_histogram(bins = 5)
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-3-1.png" alt="" width="672" />
 
 This plot gives the impression that the data peaks around `displ == 3` or so. However, we get a different view with more bins,
 
@@ -97,7 +97,7 @@ mpg %>%
   geom_histogram(bins = 10)
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-4-1.png" alt="" width="672" />
 
 This plot shows us a peak around `displ == 2` and another peak around `displ == 5`. Increasing the bin count again gives us yet another view,
 
@@ -109,7 +109,7 @@ mpg %>%
   geom_histogram(bins = 15)
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-5-1.png" alt="" width="672" />
 
 We still see a peak around `displ == 2`, but now the peak near `displ == 5` seems more diffuse. Patterns that tend to persist across multiple bin sizes tend to be more trustworthy.
 
@@ -125,7 +125,7 @@ mpg %>%
   geom_freqpoly(bins = 10)
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-6-1.png" alt="" width="672" />
 
 Note how we can see all the lines, and nothing is stacked (since there are no bars).
 
@@ -142,7 +142,7 @@ mpg %>%
   geom_density()
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/unnamed-chunk-7-1.png" alt="" width="672" />
 
 Density plots are better for showing where the data tends to be located. Frequency polygon plots also show where the data is located, but are better for showing the relative size of each group.
 
@@ -162,7 +162,7 @@ mpg %>%
   geom_freqpoly(bins = 10)
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/q2-vis1-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/q2-vis1-1.png" alt="" width="672" />
 
 - From this graph, it's easy to see that `suv` is the most numerous class
 
@@ -174,7 +174,7 @@ mpg %>%
   geom_density()
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/q2-vis2-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/q2-vis2-1.png" alt="" width="672" />
 
 - From this graph, it's easy to see that `subcompact` has the broadest distribution
 
@@ -194,7 +194,7 @@ mpg %>%
   facet_wrap(~class, scales = "free_y")
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/q3-task-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/q3-task-1.png" alt="" width="672" />
 
 In the reading, we learned that the "most important thing" to keep in mind with `geom_histogram()` and `geom_freqpoly()` is to _explore different binwidths_. We'll explore this idea in the next question.
 
@@ -216,7 +216,7 @@ diamonds %>%
   )
 ```
 
-<img src="d10-e-vis02-histograms-solution_files/figure-html/q4-task-1.png" width="672" />
+<img src="d10-e-vis02-histograms-solution_files/figure-html/q4-task-1.png" alt="" width="672" />
 
 **Observations**
 - The largest number of diamonds tend to fall on *or above* even 10-ths of a carat.

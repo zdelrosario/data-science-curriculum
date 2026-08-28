@@ -65,7 +65,7 @@ ggplot(            # 1. Starting a ggplot
   )
 ```
 
-<img src="d03-e-vis00-basics-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="d03-e-vis00-basics-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" />
 
 The core idea in ggplot is that we can break *every concievable plot* down into just a few elements:
 
@@ -92,7 +92,7 @@ ggplot(diamonds) +
   geom_point(aes(x = carat, y = price))
 ```
 
-<img src="d03-e-vis00-basics-solution_files/figure-html/q3-task-1.png" width="672" />
+<img src="d03-e-vis00-basics-solution_files/figure-html/q3-task-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -121,7 +121,7 @@ diamonds %>%
   geom_line(aes(x = carat, y = price, linewidth = n))
 ```
 
-<img src="d03-e-vis00-basics-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="d03-e-vis00-basics-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" />
 
 As with any R function, we can consult the documentation to learn more.
 
@@ -142,7 +142,7 @@ ggplot(diamonds) +
   geom_point(aes(x = carat, y = price, color = cut))
 ```
 
-<img src="d03-e-vis00-basics-solution_files/figure-html/q4-task-1.png" width="672" />
+<img src="d03-e-vis00-basics-solution_files/figure-html/q4-task-1.png" alt="" width="672" />
 
 **Observations**:
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>21 Reproducibility: Structuring Directories | Data Science: Exercise Solutions</title>
   <meta name="description" content="21 Reproducibility: Structuring Directories | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="21 Reproducibility: Structuring Directories | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1157,17 +1157,17 @@ introduce some kind of file to preserve an empty directory structure.</p>
 <h3><span class="header-section-number">21.5.3</span> <strong>q3</strong> Create an empty file called <code>.gitignore</code> under your <code>data</code> folder. You<a href="reproducibility-structuring-directories.html#q3-create-an-empty-file-called-.gitignore-under-your-data-folder.-you" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>can do this from the root of your data science repo by using the following from
 your command line:</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb267-1"><a href="reproducibility-structuring-directories.html#cb267-1" tabindex="-1"></a><span class="co"># Move to your data science directory</span></span>
-<span id="cb267-2"><a href="reproducibility-structuring-directories.html#cb267-2" tabindex="-1"></a><span class="ex">$</span> ~/path/to/your/data-science-work <span class="co"># Replace with your real directory!</span></span>
-<span id="cb267-3"><a href="reproducibility-structuring-directories.html#cb267-3" tabindex="-1"></a><span class="co"># Add the special .gitignore file</span></span>
-<span id="cb267-4"><a href="reproducibility-structuring-directories.html#cb267-4" tabindex="-1"></a><span class="ex">$</span> touch p01-name/data/.gitignore</span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb269-1"><a href="reproducibility-structuring-directories.html#cb269-1" tabindex="-1"></a><span class="co"># Move to your data science directory</span></span>
+<span id="cb269-2"><a href="reproducibility-structuring-directories.html#cb269-2" tabindex="-1"></a><span class="ex">$</span> ~/path/to/your/data-science-work <span class="co"># Replace with your real directory!</span></span>
+<span id="cb269-3"><a href="reproducibility-structuring-directories.html#cb269-3" tabindex="-1"></a><span class="co"># Add the special .gitignore file</span></span>
+<span id="cb269-4"><a href="reproducibility-structuring-directories.html#cb269-4" tabindex="-1"></a><span class="ex">$</span> touch p01-name/data/.gitignore</span></code></pre></div>
 <p>A <code>.gitignore</code> file is a <a href="https://www.atlassian.com/git/tutorials/saving-changes/gitignore">useful
 tool</a>; it
 tells git what kinds of files to <em>ignore</em> when it comes to tracking files. We’re
 using it here for a different purpose; we can now <em>commit</em> that <code>.gitignore</code> in
 order to commit our directory structure.</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb268-1"><a href="reproducibility-structuring-directories.html#cb268-1" tabindex="-1"></a><span class="ex">$</span> git add p01-name/data/.gitignore</span>
-<span id="cb268-2"><a href="reproducibility-structuring-directories.html#cb268-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">&quot;add p01 directory structure&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb270-1"><a href="reproducibility-structuring-directories.html#cb270-1" tabindex="-1"></a><span class="ex">$</span> git add p01-name/data/.gitignore</span>
+<span id="cb270-2"><a href="reproducibility-structuring-directories.html#cb270-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">&quot;add p01 directory structure&quot;</span></span></code></pre></div>
 <p>Commit and push your directory structure. You can fill this in once you start
 Project 1.</p>
 <p><strong>Key Takeaways</strong>:</p>

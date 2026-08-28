@@ -14,11 +14,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -42,7 +42,7 @@ mpg %>%
   geom_density()
 ```
 
-<img src="d15-e-vis03-boxplots-solution_files/figure-html/q1-vis1-1.png" width="672" />
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/q1-vis1-1.png" alt="" width="672" />
 
 Note that the bold line in the middle of a boxplot is the *median* of the group.
 
@@ -56,7 +56,7 @@ mpg %>%
   geom_boxplot()
 ```
 
-<img src="d15-e-vis03-boxplots-solution_files/figure-html/q1-vis2-1.png" width="672" />
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/q1-vis2-1.png" alt="" width="672" />
 
 **Observations**
 - Minivans tend to be in the middle.
@@ -94,7 +94,7 @@ mpg %>%
   geom_boxplot()
 ```
 
-<img src="d15-e-vis03-boxplots-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" />
 
 The botplot also includes *fences* (the thin vertical lines) to show where there is some---but not very much---data. The boxplot also includes a heuristic for identifying outliers, which show up as dots.
 
@@ -115,7 +115,7 @@ mpg %>%
   geom_boxplot()
 ```
 
-<img src="d15-e-vis03-boxplots-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/q2-task-1.png" alt="" width="672" />
 
 
 ## Cut helpers
@@ -140,7 +140,7 @@ diamonds %>%
   geom_boxplot()
 ```
 
-<img src="d15-e-vis03-boxplots-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 **Observations**
 - Price tends to increase with carat
@@ -161,7 +161,7 @@ mpg %>%
   coord_flip()
 ```
 
-<img src="d15-e-vis03-boxplots-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" />
 
 Coordinate flipping is especially helpful when we have a lot of categories.
 
@@ -177,7 +177,7 @@ mpg %>%
   coord_flip()
 ```
 
-<img src="d15-e-vis03-boxplots-solution_files/figure-html/q4-task-1.png" width="672" />
+<img src="d15-e-vis03-boxplots-solution_files/figure-html/q4-task-1.png" alt="" width="672" />
 
 This is a simple---but important---trick to remember when visualizing data with many categories.
 

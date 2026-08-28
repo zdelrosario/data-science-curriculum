@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>49 Model: Variability Quadrants | Data Science: Exercise Solutions</title>
   <meta name="description" content="49 Model: Variability Quadrants | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="49 Model: Variability Quadrants | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,14 +1085,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">49</span> Model: Variability Quadrants<a href="model-variability-quadrants.html#model-variability-quadrants" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: All real data have variability: repeated measurements of “the same” quantity tend to result in different values. To help you recognize different kinds of variability and choose a reasonable analysis procedure based on the kind of variability, you will learn about different <em>sources</em> of variability in this exercise.</p>
 <p><em>Reading</em>: <a href="https://drive.google.com/file/d/1nuGuPGG0zLgB72wjwfAoMiKAWQ4g7hlr/view?usp=sharing">Conceptual Tools for Handling Uncertainty</a></p>
-<div class="sourceCode" id="cb1010"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1010-1"><a href="model-variability-quadrants.html#cb1010-1" tabindex="-1"></a><span class="do">## Note: No need to edit this chunk!</span></span>
-<span id="cb1010-2"><a href="model-variability-quadrants.html#cb1010-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb1015"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1015-1"><a href="model-variability-quadrants.html#cb1015-1" tabindex="-1"></a><span class="do">## Note: No need to edit this chunk!</span></span>
+<span id="cb1015-2"><a href="model-variability-quadrants.html#cb1015-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1157,49 +1157,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="analyzing-data" class="section level2 hasAnchor" number="49.6">
 <h2><span class="header-section-number">49.6</span> Analyzing Data<a href="model-variability-quadrants.html#analyzing-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The following generates data with both <em>noise</em> and <em>deviation</em></p>
-<div class="sourceCode" id="cb1012"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1012-1"><a href="model-variability-quadrants.html#cb1012-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1012-2"><a href="model-variability-quadrants.html#cb1012-2" tabindex="-1"></a>df_meas <span class="ot">&lt;-</span></span>
-<span id="cb1012-3"><a href="model-variability-quadrants.html#cb1012-3" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
-<span id="cb1012-4"><a href="model-variability-quadrants.html#cb1012-4" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,</span>
-<span id="cb1012-5"><a href="model-variability-quadrants.html#cb1012-5" tabindex="-1"></a>    <span class="cf">function</span>(i) {</span>
-<span id="cb1012-6"><a href="model-variability-quadrants.html#cb1012-6" tabindex="-1"></a>      Y_deviation <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">meanlog =</span> <span class="dv">2</span>)</span>
-<span id="cb1012-7"><a href="model-variability-quadrants.html#cb1012-7" tabindex="-1"></a>      Y_noise <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb1012-8"><a href="model-variability-quadrants.html#cb1012-8" tabindex="-1"></a></span>
-<span id="cb1012-9"><a href="model-variability-quadrants.html#cb1012-9" tabindex="-1"></a>      <span class="fu">tibble</span>(<span class="at">Y =</span> Y_deviation <span class="sc">+</span> Y_noise) <span class="sc">%&gt;%</span></span>
-<span id="cb1012-10"><a href="model-variability-quadrants.html#cb1012-10" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">id_sample =</span> i, <span class="at">id_meas =</span> <span class="fu">row_number</span>())</span>
-<span id="cb1012-11"><a href="model-variability-quadrants.html#cb1012-11" tabindex="-1"></a>    }</span>
-<span id="cb1012-12"><a href="model-variability-quadrants.html#cb1012-12" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1017"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1017-1"><a href="model-variability-quadrants.html#cb1017-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1017-2"><a href="model-variability-quadrants.html#cb1017-2" tabindex="-1"></a>df_meas <span class="ot">&lt;-</span></span>
+<span id="cb1017-3"><a href="model-variability-quadrants.html#cb1017-3" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
+<span id="cb1017-4"><a href="model-variability-quadrants.html#cb1017-4" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,</span>
+<span id="cb1017-5"><a href="model-variability-quadrants.html#cb1017-5" tabindex="-1"></a>    <span class="cf">function</span>(i) {</span>
+<span id="cb1017-6"><a href="model-variability-quadrants.html#cb1017-6" tabindex="-1"></a>      Y_deviation <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">meanlog =</span> <span class="dv">2</span>)</span>
+<span id="cb1017-7"><a href="model-variability-quadrants.html#cb1017-7" tabindex="-1"></a>      Y_noise <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb1017-8"><a href="model-variability-quadrants.html#cb1017-8" tabindex="-1"></a></span>
+<span id="cb1017-9"><a href="model-variability-quadrants.html#cb1017-9" tabindex="-1"></a>      <span class="fu">tibble</span>(<span class="at">Y =</span> Y_deviation <span class="sc">+</span> Y_noise) <span class="sc">%&gt;%</span></span>
+<span id="cb1017-10"><a href="model-variability-quadrants.html#cb1017-10" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">id_sample =</span> i, <span class="at">id_meas =</span> <span class="fu">row_number</span>())</span>
+<span id="cb1017-11"><a href="model-variability-quadrants.html#cb1017-11" tabindex="-1"></a>    }</span>
+<span id="cb1017-12"><a href="model-variability-quadrants.html#cb1017-12" tabindex="-1"></a>  )</span></code></pre></div>
 <p><code>id_sample</code> - represents an individual part
 <code>id_meas</code> - represents an individual measurement, with multiple carried out on each part
 <code>Y</code> - an individual measurement, identified by <code>id_sample</code> and <code>id_meas</code></p>
 <p>If we make a simple histogram, we can see that the measured value <code>Y</code> is highly variable:</p>
-<div class="sourceCode" id="cb1013"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1013-1"><a href="model-variability-quadrants.html#cb1013-1" tabindex="-1"></a>df_meas <span class="sc">%&gt;%</span></span>
-<span id="cb1013-2"><a href="model-variability-quadrants.html#cb1013-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Y)) <span class="sc">+</span></span>
-<span id="cb1013-3"><a href="model-variability-quadrants.html#cb1013-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>)</span></code></pre></div>
-<p><img src="d42-e-model00-source-solution_files/figure-html/vis-data-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1018"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1018-1"><a href="model-variability-quadrants.html#cb1018-1" tabindex="-1"></a>df_meas <span class="sc">%&gt;%</span></span>
+<span id="cb1018-2"><a href="model-variability-quadrants.html#cb1018-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Y)) <span class="sc">+</span></span>
+<span id="cb1018-3"><a href="model-variability-quadrants.html#cb1018-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>)</span></code></pre></div>
+<p><img src="d42-e-model00-source-solution_files/figure-html/vis-data-1.png" alt="" width="672" /></p>
 <p>However, these data exhibit multiple <em>sources</em> of variability. The following questions will help you learn how to analyze data in light of this mixed variability.</p>
 <div id="q4-inspect-the-following-graph.-answer-the-questions-under-observations-below." class="section level3 hasAnchor" number="49.6.1">
 <h3><span class="header-section-number">49.6.1</span> <strong>q4</strong> Inspect the following graph. Answer the questions under <em>observations</em> below.<a href="model-variability-quadrants.html#q4-inspect-the-following-graph.-answer-the-questions-under-observations-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1014"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1014-1"><a href="model-variability-quadrants.html#cb1014-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb1014-2"><a href="model-variability-quadrants.html#cb1014-2" tabindex="-1"></a>df_meas <span class="sc">%&gt;%</span></span>
-<span id="cb1014-3"><a href="model-variability-quadrants.html#cb1014-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(id_sample, Y)) <span class="sc">+</span></span>
-<span id="cb1014-4"><a href="model-variability-quadrants.html#cb1014-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb1014-5"><a href="model-variability-quadrants.html#cb1014-5" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span></span>
-<span id="cb1014-6"><a href="model-variability-quadrants.html#cb1014-6" tabindex="-1"></a>      <span class="fu">group_by</span>(id_sample) <span class="sc">%&gt;%</span></span>
-<span id="cb1014-7"><a href="model-variability-quadrants.html#cb1014-7" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">Y =</span> <span class="fu">mean</span>(Y)),</span>
-<span id="cb1014-8"><a href="model-variability-quadrants.html#cb1014-8" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb1014-9"><a href="model-variability-quadrants.html#cb1014-9" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">1</span></span>
-<span id="cb1014-10"><a href="model-variability-quadrants.html#cb1014-10" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1014-11"><a href="model-variability-quadrants.html#cb1014-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb1014-12"><a href="model-variability-quadrants.html#cb1014-12" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="d42-e-model00-source-solution_files/figure-html/q4-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1019"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1019-1"><a href="model-variability-quadrants.html#cb1019-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb1019-2"><a href="model-variability-quadrants.html#cb1019-2" tabindex="-1"></a>df_meas <span class="sc">%&gt;%</span></span>
+<span id="cb1019-3"><a href="model-variability-quadrants.html#cb1019-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(id_sample, Y)) <span class="sc">+</span></span>
+<span id="cb1019-4"><a href="model-variability-quadrants.html#cb1019-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb1019-5"><a href="model-variability-quadrants.html#cb1019-5" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span></span>
+<span id="cb1019-6"><a href="model-variability-quadrants.html#cb1019-6" tabindex="-1"></a>      <span class="fu">group_by</span>(id_sample) <span class="sc">%&gt;%</span></span>
+<span id="cb1019-7"><a href="model-variability-quadrants.html#cb1019-7" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">Y =</span> <span class="fu">mean</span>(Y)),</span>
+<span id="cb1019-8"><a href="model-variability-quadrants.html#cb1019-8" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb1019-9"><a href="model-variability-quadrants.html#cb1019-9" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">1</span></span>
+<span id="cb1019-10"><a href="model-variability-quadrants.html#cb1019-10" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1019-11"><a href="model-variability-quadrants.html#cb1019-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb1019-12"><a href="model-variability-quadrants.html#cb1019-12" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="d42-e-model00-source-solution_files/figure-html/q4-task-1.png" alt="" width="672" /></p>
 <p><em>Observations</em>
 - Based on the visual, the variability due to deviation is obviously much larger than the variability due to noise: There is considerably more scatter between the red dots (each sample’s measurement mean), than there is scatter around each red dot.</p>
 <p>We can make this quantitative with an <em>analysis of variance</em>:</p>
-<div class="sourceCode" id="cb1015"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1015-1"><a href="model-variability-quadrants.html#cb1015-1" tabindex="-1"></a>fit_meas <span class="ot">&lt;-</span></span>
-<span id="cb1015-2"><a href="model-variability-quadrants.html#cb1015-2" tabindex="-1"></a>  df_meas <span class="sc">%&gt;%</span></span>
-<span id="cb1015-3"><a href="model-variability-quadrants.html#cb1015-3" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> Y <span class="sc">~</span> id_sample <span class="sc">+</span> id_meas)</span>
-<span id="cb1015-4"><a href="model-variability-quadrants.html#cb1015-4" tabindex="-1"></a><span class="fu">anova</span>(fit_meas)</span></code></pre></div>
+<div class="sourceCode" id="cb1020"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1020-1"><a href="model-variability-quadrants.html#cb1020-1" tabindex="-1"></a>fit_meas <span class="ot">&lt;-</span></span>
+<span id="cb1020-2"><a href="model-variability-quadrants.html#cb1020-2" tabindex="-1"></a>  df_meas <span class="sc">%&gt;%</span></span>
+<span id="cb1020-3"><a href="model-variability-quadrants.html#cb1020-3" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> Y <span class="sc">~</span> id_sample <span class="sc">+</span> id_meas)</span>
+<span id="cb1020-4"><a href="model-variability-quadrants.html#cb1020-4" tabindex="-1"></a><span class="fu">anova</span>(fit_meas)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Y
@@ -1217,29 +1217,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q6-compute-the-0.1-quantile-of-the-y-measurements.-would-this-be-a-conservative-value-to-use-as-a-material-strength-for-design" class="section level3 hasAnchor" number="49.6.3">
 <h3><span class="header-section-number">49.6.3</span> <strong>q6</strong> Compute the <code>0.1</code> quantile of the <code>Y</code> measurements. Would this be a conservative value to use as a material strength for design?<a href="model-variability-quadrants.html#q6-compute-the-0.1-quantile-of-the-y-measurements.-would-this-be-a-conservative-value-to-use-as-a-material-strength-for-design" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1017"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1017-1"><a href="model-variability-quadrants.html#cb1017-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Compute the 0.01 quantile of the `Y` values; complete the code below</span></span>
-<span id="cb1017-2"><a href="model-variability-quadrants.html#cb1017-2" tabindex="-1"></a><span class="co"># For comparison, here&#39;s the mean of the data</span></span>
-<span id="cb1017-3"><a href="model-variability-quadrants.html#cb1017-3" tabindex="-1"></a>Y_mean <span class="ot">&lt;-</span></span>
-<span id="cb1017-4"><a href="model-variability-quadrants.html#cb1017-4" tabindex="-1"></a>  df_meas <span class="sc">%&gt;%</span></span>
-<span id="cb1017-5"><a href="model-variability-quadrants.html#cb1017-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_mean =</span> <span class="fu">mean</span>(Y)) <span class="sc">%&gt;%</span></span>
-<span id="cb1017-6"><a href="model-variability-quadrants.html#cb1017-6" tabindex="-1"></a>  <span class="fu">pull</span>(Y_mean)</span>
-<span id="cb1017-7"><a href="model-variability-quadrants.html#cb1017-7" tabindex="-1"></a></span>
-<span id="cb1017-8"><a href="model-variability-quadrants.html#cb1017-8" tabindex="-1"></a>Y_lo <span class="ot">&lt;-</span></span>
-<span id="cb1017-9"><a href="model-variability-quadrants.html#cb1017-9" tabindex="-1"></a>  df_meas <span class="sc">%&gt;%</span></span>
-<span id="cb1017-10"><a href="model-variability-quadrants.html#cb1017-10" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_lo =</span> <span class="fu">quantile</span>(Y, <span class="at">p =</span> <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb1017-11"><a href="model-variability-quadrants.html#cb1017-11" tabindex="-1"></a>  <span class="fu">pull</span>(Y_lo)</span>
-<span id="cb1017-12"><a href="model-variability-quadrants.html#cb1017-12" tabindex="-1"></a></span>
-<span id="cb1017-13"><a href="model-variability-quadrants.html#cb1017-13" tabindex="-1"></a><span class="co"># Compare the values</span></span>
-<span id="cb1017-14"><a href="model-variability-quadrants.html#cb1017-14" tabindex="-1"></a>Y_mean</span></code></pre></div>
+<div class="sourceCode" id="cb1022"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1022-1"><a href="model-variability-quadrants.html#cb1022-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Compute the 0.01 quantile of the `Y` values; complete the code below</span></span>
+<span id="cb1022-2"><a href="model-variability-quadrants.html#cb1022-2" tabindex="-1"></a><span class="co"># For comparison, here&#39;s the mean of the data</span></span>
+<span id="cb1022-3"><a href="model-variability-quadrants.html#cb1022-3" tabindex="-1"></a>Y_mean <span class="ot">&lt;-</span></span>
+<span id="cb1022-4"><a href="model-variability-quadrants.html#cb1022-4" tabindex="-1"></a>  df_meas <span class="sc">%&gt;%</span></span>
+<span id="cb1022-5"><a href="model-variability-quadrants.html#cb1022-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_mean =</span> <span class="fu">mean</span>(Y)) <span class="sc">%&gt;%</span></span>
+<span id="cb1022-6"><a href="model-variability-quadrants.html#cb1022-6" tabindex="-1"></a>  <span class="fu">pull</span>(Y_mean)</span>
+<span id="cb1022-7"><a href="model-variability-quadrants.html#cb1022-7" tabindex="-1"></a></span>
+<span id="cb1022-8"><a href="model-variability-quadrants.html#cb1022-8" tabindex="-1"></a>Y_lo <span class="ot">&lt;-</span></span>
+<span id="cb1022-9"><a href="model-variability-quadrants.html#cb1022-9" tabindex="-1"></a>  df_meas <span class="sc">%&gt;%</span></span>
+<span id="cb1022-10"><a href="model-variability-quadrants.html#cb1022-10" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_lo =</span> <span class="fu">quantile</span>(Y, <span class="at">p =</span> <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1022-11"><a href="model-variability-quadrants.html#cb1022-11" tabindex="-1"></a>  <span class="fu">pull</span>(Y_lo)</span>
+<span id="cb1022-12"><a href="model-variability-quadrants.html#cb1022-12" tabindex="-1"></a></span>
+<span id="cb1022-13"><a href="model-variability-quadrants.html#cb1022-13" tabindex="-1"></a><span class="co"># Compare the values</span></span>
+<span id="cb1022-14"><a href="model-variability-quadrants.html#cb1022-14" tabindex="-1"></a>Y_mean</span></code></pre></div>
 <pre><code>## [1] 12.30886</code></pre>
-<div class="sourceCode" id="cb1019"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1019-1"><a href="model-variability-quadrants.html#cb1019-1" tabindex="-1"></a>Y_lo</span></code></pre></div>
+<div class="sourceCode" id="cb1024"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1024-1"><a href="model-variability-quadrants.html#cb1024-1" tabindex="-1"></a>Y_lo</span></code></pre></div>
 <pre><code>##      10% 
 ## 2.011725</code></pre>
 <p>Use the following to check your work.</p>
-<div class="sourceCode" id="cb1021"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1021-1"><a href="model-variability-quadrants.html#cb1021-1" tabindex="-1"></a><span class="do">## NO NEED TO EDIT; use this to check your work</span></span>
-<span id="cb1021-2"><a href="model-variability-quadrants.html#cb1021-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(<span class="fu">as.numeric</span>(Y_lo) <span class="sc">-</span> <span class="fl">2.0117</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1026"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1026-1"><a href="model-variability-quadrants.html#cb1026-1" tabindex="-1"></a><span class="do">## NO NEED TO EDIT; use this to check your work</span></span>
+<span id="cb1026-2"><a href="model-variability-quadrants.html#cb1026-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(<span class="fu">as.numeric</span>(Y_lo) <span class="sc">-</span> <span class="fl">2.0117</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1023"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1023-1"><a href="model-variability-quadrants.html#cb1023-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1028"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1028-1"><a href="model-variability-quadrants.html#cb1028-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <p><em>Observations</em></p>
 <ul>
@@ -1249,19 +1249,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q7-the-following-code-reduces-the-variability-due-to-noise-before-computing-the-quantile.-run-the-code-below-and-answer-the-questions-under-observations-below." class="section level3 hasAnchor" number="49.6.4">
 <h3><span class="header-section-number">49.6.4</span> <strong>q7</strong> The following code reduces the variability due to noise before computing the quantile. Run the code below, and answer the questions under <em>Observations</em> below.<a href="model-variability-quadrants.html#q7-the-following-code-reduces-the-variability-due-to-noise-before-computing-the-quantile.-run-the-code-below-and-answer-the-questions-under-observations-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1025"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1025-1"><a href="model-variability-quadrants.html#cb1025-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and answer the questions below</span></span>
-<span id="cb1025-2"><a href="model-variability-quadrants.html#cb1025-2" tabindex="-1"></a>Y_lo_improved <span class="ot">&lt;-</span></span>
-<span id="cb1025-3"><a href="model-variability-quadrants.html#cb1025-3" tabindex="-1"></a>  df_meas <span class="sc">%&gt;%</span></span>
-<span id="cb1025-4"><a href="model-variability-quadrants.html#cb1025-4" tabindex="-1"></a>  <span class="do">## Take average within each sample&#39;s measurements</span></span>
-<span id="cb1025-5"><a href="model-variability-quadrants.html#cb1025-5" tabindex="-1"></a>  <span class="fu">group_by</span>(id_sample) <span class="sc">%&gt;%</span></span>
-<span id="cb1025-6"><a href="model-variability-quadrants.html#cb1025-6" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_sample =</span> <span class="fu">mean</span>(Y)) <span class="sc">%&gt;%</span></span>
-<span id="cb1025-7"><a href="model-variability-quadrants.html#cb1025-7" tabindex="-1"></a>  <span class="do">## Take quantile over all the samples</span></span>
-<span id="cb1025-8"><a href="model-variability-quadrants.html#cb1025-8" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_lo =</span> <span class="fu">quantile</span>(Y_sample, <span class="at">p =</span> <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb1025-9"><a href="model-variability-quadrants.html#cb1025-9" tabindex="-1"></a>  <span class="fu">pull</span>(Y_lo)</span>
-<span id="cb1025-10"><a href="model-variability-quadrants.html#cb1025-10" tabindex="-1"></a>Y_lo_improved</span></code></pre></div>
+<div class="sourceCode" id="cb1030"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1030-1"><a href="model-variability-quadrants.html#cb1030-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and answer the questions below</span></span>
+<span id="cb1030-2"><a href="model-variability-quadrants.html#cb1030-2" tabindex="-1"></a>Y_lo_improved <span class="ot">&lt;-</span></span>
+<span id="cb1030-3"><a href="model-variability-quadrants.html#cb1030-3" tabindex="-1"></a>  df_meas <span class="sc">%&gt;%</span></span>
+<span id="cb1030-4"><a href="model-variability-quadrants.html#cb1030-4" tabindex="-1"></a>  <span class="do">## Take average within each sample&#39;s measurements</span></span>
+<span id="cb1030-5"><a href="model-variability-quadrants.html#cb1030-5" tabindex="-1"></a>  <span class="fu">group_by</span>(id_sample) <span class="sc">%&gt;%</span></span>
+<span id="cb1030-6"><a href="model-variability-quadrants.html#cb1030-6" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_sample =</span> <span class="fu">mean</span>(Y)) <span class="sc">%&gt;%</span></span>
+<span id="cb1030-7"><a href="model-variability-quadrants.html#cb1030-7" tabindex="-1"></a>  <span class="do">## Take quantile over all the samples</span></span>
+<span id="cb1030-8"><a href="model-variability-quadrants.html#cb1030-8" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Y_lo =</span> <span class="fu">quantile</span>(Y_sample, <span class="at">p =</span> <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1030-9"><a href="model-variability-quadrants.html#cb1030-9" tabindex="-1"></a>  <span class="fu">pull</span>(Y_lo)</span>
+<span id="cb1030-10"><a href="model-variability-quadrants.html#cb1030-10" tabindex="-1"></a>Y_lo_improved</span></code></pre></div>
 <pre><code>##      10% 
 ## 2.566182</code></pre>
-<div class="sourceCode" id="cb1027"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1027-1"><a href="model-variability-quadrants.html#cb1027-1" tabindex="-1"></a>Y_lo</span></code></pre></div>
+<div class="sourceCode" id="cb1032"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1032-1"><a href="model-variability-quadrants.html#cb1032-1" tabindex="-1"></a>Y_lo</span></code></pre></div>
 <pre><code>##      10% 
 ## 2.011725</code></pre>
 <p><em>Observations</em></p>

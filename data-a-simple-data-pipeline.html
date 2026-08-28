@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>40 Data: A Simple Data Pipeline | Data Science: Exercise Solutions</title>
   <meta name="description" content="40 Data: A Simple Data Pipeline | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="40 Data: A Simple Data Pipeline | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,18 +1085,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">40</span> Data: A Simple Data Pipeline<a href="data-a-simple-data-pipeline.html#data-a-simple-data-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Analyzing existing data is helpful, but it’s even more important to be able to <em>obtain relevant data</em>. One kind of data is survey data, which is helpful for understanding things about people. In this short exercise you’ll learn how to set up your own survey, link it to a cloud-based sheet, and automatically download that sheet for local data analysis.</p>
 <p><em>Reading</em>: (None, this exercise <em>is</em> the reading)</p>
-<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="data-a-simple-data-pipeline.html#cb831-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="data-a-simple-data-pipeline.html#cb836-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="data-a-simple-data-pipeline.html#cb833-1" tabindex="-1"></a><span class="fu">library</span>(googlesheets4)</span></code></pre></div>
+<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="data-a-simple-data-pipeline.html#cb838-1" tabindex="-1"></a><span class="fu">library</span>(googlesheets4)</span></code></pre></div>
 <div id="reading-a-sheet-with-googlesheets4" class="section level2 hasAnchor" number="40.1">
 <h2><span class="header-section-number">40.1</span> Reading a Sheet with <code>googlesheets4</code><a href="data-a-simple-data-pipeline.html#reading-a-sheet-with-googlesheets4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <a href="https://googlesheets4.tidyverse.org/">googlesheets4</a> package provides a convenient interface to Google Sheet’s API [1]. We’ll use this to set up a <em>very simple</em> data pipeline: A means to collect data at some user-facing point, and load that data for analysis.</p>
@@ -1104,21 +1104,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="public-sheets" class="section level2 hasAnchor" number="40.2">
 <h2><span class="header-section-number">40.2</span> Public sheets<a href="data-a-simple-data-pipeline.html#public-sheets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Back in c02-michelson you actually used googlesheets4 to load the speed of light data:</p>
-<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="data-a-simple-data-pipeline.html#cb834-1" tabindex="-1"></a><span class="do">## Note: No need to edit this chunk!</span></span>
-<span id="cb834-2"><a href="data-a-simple-data-pipeline.html#cb834-2" tabindex="-1"></a>url_michelson <span class="ot">&lt;-</span> <span class="st">&quot;https://docs.google.com/spreadsheets/d/1av_SXn4j0-4Rk0mQFik3LLr-uf0YdA06i3ugE6n-Zdo/edit?usp=sharing&quot;</span></span>
-<span id="cb834-3"><a href="data-a-simple-data-pipeline.html#cb834-3" tabindex="-1"></a></span>
-<span id="cb834-4"><a href="data-a-simple-data-pipeline.html#cb834-4" tabindex="-1"></a><span class="do">## Put googlesheets4 in &quot;deauthorized mode&quot;</span></span>
-<span id="cb834-5"><a href="data-a-simple-data-pipeline.html#cb834-5" tabindex="-1"></a><span class="fu">gs4_deauth</span>()</span>
-<span id="cb834-6"><a href="data-a-simple-data-pipeline.html#cb834-6" tabindex="-1"></a><span class="do">## Get sheet metadata</span></span>
-<span id="cb834-7"><a href="data-a-simple-data-pipeline.html#cb834-7" tabindex="-1"></a>ss_michelson <span class="ot">&lt;-</span> <span class="fu">gs4_get</span>(url_michelson)</span>
-<span id="cb834-8"><a href="data-a-simple-data-pipeline.html#cb834-8" tabindex="-1"></a><span class="do">## Load the sheet as a dataframe</span></span>
-<span id="cb834-9"><a href="data-a-simple-data-pipeline.html#cb834-9" tabindex="-1"></a>df_michelson <span class="ot">&lt;-</span></span>
-<span id="cb834-10"><a href="data-a-simple-data-pipeline.html#cb834-10" tabindex="-1"></a>  <span class="fu">read_sheet</span>(ss_michelson) <span class="sc">%&gt;%</span></span>
-<span id="cb834-11"><a href="data-a-simple-data-pipeline.html#cb834-11" tabindex="-1"></a>  <span class="fu">select</span>(Date, Distinctness, Temp, Velocity) <span class="sc">%&gt;%</span></span>
-<span id="cb834-12"><a href="data-a-simple-data-pipeline.html#cb834-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Distinctness =</span> <span class="fu">as_factor</span>(Distinctness))</span></code></pre></div>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="data-a-simple-data-pipeline.html#cb839-1" tabindex="-1"></a><span class="do">## Note: No need to edit this chunk!</span></span>
+<span id="cb839-2"><a href="data-a-simple-data-pipeline.html#cb839-2" tabindex="-1"></a>url_michelson <span class="ot">&lt;-</span> <span class="st">&quot;https://docs.google.com/spreadsheets/d/1av_SXn4j0-4Rk0mQFik3LLr-uf0YdA06i3ugE6n-Zdo/edit?usp=sharing&quot;</span></span>
+<span id="cb839-3"><a href="data-a-simple-data-pipeline.html#cb839-3" tabindex="-1"></a></span>
+<span id="cb839-4"><a href="data-a-simple-data-pipeline.html#cb839-4" tabindex="-1"></a><span class="do">## Put googlesheets4 in &quot;deauthorized mode&quot;</span></span>
+<span id="cb839-5"><a href="data-a-simple-data-pipeline.html#cb839-5" tabindex="-1"></a><span class="fu">gs4_deauth</span>()</span>
+<span id="cb839-6"><a href="data-a-simple-data-pipeline.html#cb839-6" tabindex="-1"></a><span class="do">## Get sheet metadata</span></span>
+<span id="cb839-7"><a href="data-a-simple-data-pipeline.html#cb839-7" tabindex="-1"></a>ss_michelson <span class="ot">&lt;-</span> <span class="fu">gs4_get</span>(url_michelson)</span>
+<span id="cb839-8"><a href="data-a-simple-data-pipeline.html#cb839-8" tabindex="-1"></a><span class="do">## Load the sheet as a dataframe</span></span>
+<span id="cb839-9"><a href="data-a-simple-data-pipeline.html#cb839-9" tabindex="-1"></a>df_michelson <span class="ot">&lt;-</span></span>
+<span id="cb839-10"><a href="data-a-simple-data-pipeline.html#cb839-10" tabindex="-1"></a>  <span class="fu">read_sheet</span>(ss_michelson) <span class="sc">%&gt;%</span></span>
+<span id="cb839-11"><a href="data-a-simple-data-pipeline.html#cb839-11" tabindex="-1"></a>  <span class="fu">select</span>(Date, Distinctness, Temp, Velocity) <span class="sc">%&gt;%</span></span>
+<span id="cb839-12"><a href="data-a-simple-data-pipeline.html#cb839-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Distinctness =</span> <span class="fu">as_factor</span>(Distinctness))</span></code></pre></div>
 <pre><code>## ✔ Reading from &quot;michelson1879&quot;.</code></pre>
 <pre><code>## ✔ Range &#39;Sheet1&#39;.</code></pre>
-<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="data-a-simple-data-pipeline.html#cb837-1" tabindex="-1"></a>df_michelson <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
+<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="data-a-simple-data-pipeline.html#cb842-1" tabindex="-1"></a>df_michelson <span class="sc">%&gt;%</span> glimpse</span></code></pre></div>
 <pre><code>## Rows: 100
 ## Columns: 4
 ## $ Date         &lt;dttm&gt; 1879-06-05, 1879-06-07, 1879-06-07, 1879-06-07, 1879-06-…
@@ -1131,8 +1131,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="private-sheets" class="section level2 hasAnchor" number="40.3">
 <h2><span class="header-section-number">40.3</span> Private sheets<a href="data-a-simple-data-pipeline.html#private-sheets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In order to load a private data sheet, you’ll need to <em>authorize</em> googlesheets4 to use your Google account. The following line should open a browser window that will ask for your permissions.</p>
-<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="data-a-simple-data-pipeline.html#cb839-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run to authorize R to use your google account</span></span>
-<span id="cb839-2"><a href="data-a-simple-data-pipeline.html#cb839-2" tabindex="-1"></a><span class="fu">gs4_auth</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="data-a-simple-data-pipeline.html#cb844-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run to authorize R to use your google account</span></span>
+<span id="cb844-2"><a href="data-a-simple-data-pipeline.html#cb844-2" tabindex="-1"></a><span class="fu">gs4_auth</span>()</span></code></pre></div>
 <p>Now that you’ve authorized your account, let’s create a very simple data-collection pipeline.</p>
 </div>
 <div id="setting-up-a-form-sheet" class="section level2 hasAnchor" number="40.4">
@@ -1151,12 +1151,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q3-copy-the-url-for-your-new-sheet-and-copy-it-below.-run-the-following-chunk-to-load-your-probably-empy-sheet." class="section level3 hasAnchor" number="40.4.3">
 <h3><span class="header-section-number">40.4.3</span> <strong>q3</strong> Copy the URL for your new sheet and copy it below. Run the following chunk to load your (probably empy) sheet.<a href="data-a-simple-data-pipeline.html#q3-copy-the-url-for-your-new-sheet-and-copy-it-below.-run-the-following-chunk-to-load-your-probably-empy-sheet." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb840-1"><a href="data-a-simple-data-pipeline.html#cb840-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: I&#39;m not going to put a URL here, as one of my personal sheets</span></span>
-<span id="cb840-2"><a href="data-a-simple-data-pipeline.html#cb840-2" tabindex="-1"></a><span class="do">##       won&#39;t work for you....</span></span>
-<span id="cb840-3"><a href="data-a-simple-data-pipeline.html#cb840-3" tabindex="-1"></a>url_custom_sheet <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb840-4"><a href="data-a-simple-data-pipeline.html#cb840-4" tabindex="-1"></a></span>
-<span id="cb840-5"><a href="data-a-simple-data-pipeline.html#cb840-5" tabindex="-1"></a>df_custom_sheet <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(url_custom_sheet)</span>
-<span id="cb840-6"><a href="data-a-simple-data-pipeline.html#cb840-6" tabindex="-1"></a>df_custom_sheet <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="data-a-simple-data-pipeline.html#cb845-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: I&#39;m not going to put a URL here, as one of my personal sheets</span></span>
+<span id="cb845-2"><a href="data-a-simple-data-pipeline.html#cb845-2" tabindex="-1"></a><span class="do">##       won&#39;t work for you....</span></span>
+<span id="cb845-3"><a href="data-a-simple-data-pipeline.html#cb845-3" tabindex="-1"></a>url_custom_sheet <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb845-4"><a href="data-a-simple-data-pipeline.html#cb845-4" tabindex="-1"></a></span>
+<span id="cb845-5"><a href="data-a-simple-data-pipeline.html#cb845-5" tabindex="-1"></a>df_custom_sheet <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(url_custom_sheet)</span>
+<span id="cb845-6"><a href="data-a-simple-data-pipeline.html#cb845-6" tabindex="-1"></a>df_custom_sheet <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <p>Now as results from your survey come in, you can simply re-run this notebook to grab the most recent version of your data for local analysis.</p>
 <p>This is <em>very simple</em> but <em>surprisingly powerful</em>: I use a pipeline exactly like this for the exit tickets!</p>
 <!-- include-exit-ticket -->

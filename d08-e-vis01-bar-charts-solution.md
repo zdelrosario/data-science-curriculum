@@ -14,11 +14,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -39,7 +39,7 @@ tibble(a = c(1, 2, 2, 3, 3, 3)) %>%
   geom_bar()
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" />
 
 - `geom_col()` is used to show `x, y` pairs. It requires both an `x` and `y` aesthetic.
 
@@ -54,7 +54,7 @@ tibble(
   geom_col()
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" />
 
 `geom_bar()` effectively counts the number of rows belonging to each unique value of the `x` aesthetic. We can do a *manual* `geom_bar()` by using the `count()` function:
 
@@ -67,7 +67,7 @@ tibble(a = c(1, 2, 2, 3, 3, 3)) %>%
   geom_col()
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-3-1.png" alt="" width="672" />
 
 ### __q1__ Convert this plot
 
@@ -81,7 +81,7 @@ mpg %>%
   geom_col()
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 ## Fundamentals of the bar chart
 
@@ -106,7 +106,7 @@ tibble(
   geom_col()
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-4-1.png" alt="" width="672" />
 
 It's hard to tell what's happening, but the bars for `a == 2` are *stacked*. But if we try to interpret this plot, it seems like `b == 3` when `a == 2`, which is not true.
 
@@ -150,7 +150,7 @@ mpg %>%
   geom_col(position = "dodge")
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q2-task-1.png" alt="" width="672" />
 
 **Observations**:
 - Since `position = "stacked"` is the default for `geom_col()`, we see not the real `hwy` values, but effectively a sum at each `cty` value!
@@ -171,7 +171,7 @@ tibble(
   geom_col()
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-5-1.png" alt="" width="672" />
 
 Stacked bar charts have their uses, but it's usually better to find a different way to show this kind of data. In particular, comparing *within* a stack is difficult, since the bars do not all start at zero. One way to make comparisons easier is to *dodge* the bars, so they all start at zero. We can do this with the `position = "dodge"` argument:
 
@@ -187,7 +187,7 @@ tibble(
   geom_col(position = "dodge")
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-6-1.png" alt="" width="672" />
 
 Note that this naturally "shrinks" some of the bars so we can fit them near the same value. Don't mistake these bars as belonging to other `a` values (like 1.75, 2.25)---this is just an artifact of the dodging.
 
@@ -205,7 +205,7 @@ mpg %>%
   geom_bar()
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-v1-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-v1-1.png" alt="" width="672" />
 
 **Observations**:
 In this dataset:
@@ -220,7 +220,7 @@ mpg %>%
   geom_bar()
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-v2-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-v2-1.png" alt="" width="672" />
 
 **Observations**:
 In this dataset:
@@ -252,7 +252,7 @@ mpg %>%
   theme(axis.text.x = element_text(angle = 270, vjust = 0.5, hjust = 0))
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-task-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-task-1.png" alt="" width="672" />
 
 **Observations**
 - Certain manufacturers seem to favor particular classes of car. For instance,
@@ -280,7 +280,7 @@ tibble(
   facet_wrap(~c)
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-7-1.png" alt="" width="672" />
 
 `facet_grid()` allows us to specify a column for horizontal and/or vertical faceting, so we can provide up to two. Here's a lineup of examples:
 
@@ -298,7 +298,7 @@ tibble(
   facet_grid(~c)
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-1.png" alt="" width="672" />
 
 ``` r
 # Vertical facets
@@ -312,7 +312,7 @@ tibble(
   facet_grid(c ~ .)
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-2.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-2.png" alt="" width="672" />
 
 ``` r
 # Two-way faceting
@@ -327,7 +327,15 @@ tibble(
   facet_grid(c ~ d)
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-3.png" width="672" />
+```
+## Warning in min(x): no non-missing arguments to min; returning Inf
+```
+
+```
+## Warning in max(x): no non-missing arguments to max; returning -Inf
+```
+
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-3.png" alt="" width="672" />
 
 In general, if you have just one variable to facet on, you can use `facet_wrap()` as a default. If you want more control and options over your faceting, use `facet_grid()`. We'll talk more about facets in a future exercise.
 
@@ -343,6 +351,6 @@ mpg %>%
   facet_wrap(~ manufacturer)
 ```
 
-<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q5-task-1.png" width="672" />
+<img src="d08-e-vis01-bar-charts-solution_files/figure-html/q5-task-1.png" alt="" width="672" />
 
 <!-- include-exit-ticket -->

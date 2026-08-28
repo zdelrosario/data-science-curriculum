@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>56 Model: Warnings when interpreting linear models | Data Science: Exercise Solutions</title>
   <meta name="description" content="56 Model: Warnings when interpreting linear models | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="56 Model: Warnings when interpreting linear models | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,19 +1085,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">56</span> Model: Warnings when interpreting linear models<a href="model-warnings-when-interpreting-linear-models.html#model-warnings-when-interpreting-linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: When fitting a model, we might like to use that model to interpret how predictors affect some outcome of interest. This is a useful thing to do, but interpreting models is also <em>very challenging</em>. This exercise will give you a <em>couple warnings</em> about interpreting models.</p>
 <p><em>Reading</em>: (None, this is the reading)</p>
-<div class="sourceCode" id="cb1191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1191-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1191-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb1196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1196-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb1193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1193-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1193-1" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
-<span id="cb1193-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1193-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<div class="sourceCode" id="cb1198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1198-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-1" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb1198-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;broom&#39;
 ## 
@@ -1105,64 +1105,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ##     bootstrap</code></pre>
 <p>For this exercise, we’ll use the familiar diamonds dataset.</p>
-<div class="sourceCode" id="cb1195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1195-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1195-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
-<span id="cb1195-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1195-2" tabindex="-1"></a><span class="co"># Create a test-validate split</span></span>
-<span id="cb1195-3"><a href="model-warnings-when-interpreting-linear-models.html#cb1195-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1195-4"><a href="model-warnings-when-interpreting-linear-models.html#cb1195-4" tabindex="-1"></a>diamonds_randomized <span class="ot">&lt;-</span></span>
-<span id="cb1195-5"><a href="model-warnings-when-interpreting-linear-models.html#cb1195-5" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb1195-6"><a href="model-warnings-when-interpreting-linear-models.html#cb1195-6" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">sample</span>(<span class="fu">dim</span>(diamonds)[<span class="dv">1</span>]))</span>
-<span id="cb1195-7"><a href="model-warnings-when-interpreting-linear-models.html#cb1195-7" tabindex="-1"></a></span>
-<span id="cb1195-8"><a href="model-warnings-when-interpreting-linear-models.html#cb1195-8" tabindex="-1"></a>diamonds_train <span class="ot">&lt;-</span></span>
-<span id="cb1195-9"><a href="model-warnings-when-interpreting-linear-models.html#cb1195-9" tabindex="-1"></a>  diamonds_randomized <span class="sc">%&gt;%</span></span>
-<span id="cb1195-10"><a href="model-warnings-when-interpreting-linear-models.html#cb1195-10" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1200-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1200-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
+<span id="cb1200-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1200-2" tabindex="-1"></a><span class="co"># Create a test-validate split</span></span>
+<span id="cb1200-3"><a href="model-warnings-when-interpreting-linear-models.html#cb1200-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1200-4"><a href="model-warnings-when-interpreting-linear-models.html#cb1200-4" tabindex="-1"></a>diamonds_randomized <span class="ot">&lt;-</span></span>
+<span id="cb1200-5"><a href="model-warnings-when-interpreting-linear-models.html#cb1200-5" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb1200-6"><a href="model-warnings-when-interpreting-linear-models.html#cb1200-6" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">sample</span>(<span class="fu">dim</span>(diamonds)[<span class="dv">1</span>]))</span>
+<span id="cb1200-7"><a href="model-warnings-when-interpreting-linear-models.html#cb1200-7" tabindex="-1"></a></span>
+<span id="cb1200-8"><a href="model-warnings-when-interpreting-linear-models.html#cb1200-8" tabindex="-1"></a>diamonds_train <span class="ot">&lt;-</span></span>
+<span id="cb1200-9"><a href="model-warnings-when-interpreting-linear-models.html#cb1200-9" tabindex="-1"></a>  diamonds_randomized <span class="sc">%&gt;%</span></span>
+<span id="cb1200-10"><a href="model-warnings-when-interpreting-linear-models.html#cb1200-10" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>)</span></code></pre></div>
 <div id="st-warning-models-are-a-function-of-the-population" class="section level2 hasAnchor" number="56.1">
 <h2><span class="header-section-number">56.1</span> 1st Warning: Models Are a Function of the Population<a href="model-warnings-when-interpreting-linear-models.html#st-warning-models-are-a-function-of-the-population" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Remember that any time we’re doing statistics, we must first <strong>define the population</strong>. That means when we’re fitting models, we need to pay attention to the data we feed the model for training.</p>
 <p>Let’s start with a curious observation; look at the effect of <code>cut</code> on <code>price</code> at low and high carat values:</p>
-<div class="sourceCode" id="cb1196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1196-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
-<span id="cb1196-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-2" tabindex="-1"></a>diamonds_train <span class="sc">%&gt;%</span></span>
-<span id="cb1196-3"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1196-4"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-4" tabindex="-1"></a>    <span class="at">grouping =</span> <span class="fu">if_else</span>(carat <span class="sc">&lt;</span> <span class="fl">1.0</span>, <span class="st">&quot;Lower carat&quot;</span>, <span class="st">&quot;Upper carat&quot;</span>)</span>
-<span id="cb1196-5"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-5" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1196-6"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-6" tabindex="-1"></a></span>
-<span id="cb1196-7"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, price)) <span class="sc">+</span></span>
-<span id="cb1196-8"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-8" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb1196-9"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-9" tabindex="-1"></a></span>
-<span id="cb1196-10"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-10" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb1196-11"><a href="model-warnings-when-interpreting-linear-models.html#cb1196-11" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span> grouping)</span></code></pre></div>
-<p><img src="d50-e-model03-interp-warnings-solution_files/figure-html/diamonds-lower-upper-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1201-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
+<span id="cb1201-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-2" tabindex="-1"></a>diamonds_train <span class="sc">%&gt;%</span></span>
+<span id="cb1201-3"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1201-4"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-4" tabindex="-1"></a>    <span class="at">grouping =</span> <span class="fu">if_else</span>(carat <span class="sc">&lt;</span> <span class="fl">1.0</span>, <span class="st">&quot;Lower carat&quot;</span>, <span class="st">&quot;Upper carat&quot;</span>)</span>
+<span id="cb1201-5"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-5" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1201-6"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-6" tabindex="-1"></a></span>
+<span id="cb1201-7"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, price)) <span class="sc">+</span></span>
+<span id="cb1201-8"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-8" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb1201-9"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-9" tabindex="-1"></a></span>
+<span id="cb1201-10"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-10" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb1201-11"><a href="model-warnings-when-interpreting-linear-models.html#cb1201-11" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span> grouping)</span></code></pre></div>
+<p><img src="d50-e-model03-interp-warnings-solution_files/figure-html/diamonds-lower-upper-1.png" alt="" width="672" /></p>
 <p>The trend in <code>cut</code> is what we’d expect at upper values (<code>carat &gt; 1</code>), but reversed at lower values (<code>carat &lt;= 1</code>)! Let’s see how this affects <em>model predictions</em>.</p>
 <div id="q1-compare-two-models." class="section level3 hasAnchor" number="56.1.1">
 <h3><span class="header-section-number">56.1.1</span> <strong>q1</strong> Compare two models.<a href="model-warnings-when-interpreting-linear-models.html#q1-compare-two-models." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Fit two models on <code>diamonds_train</code>, one for <code>carat &lt;= 1</code> and one for <code>carat &gt; 1</code>. Use only <code>cut</code> as the predictor. First, make a prediction about how the predictions for the two models will compare, and then inspect the model results below.</p>
-<div class="sourceCode" id="cb1197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1197-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-1" tabindex="-1"></a>fit_lower <span class="ot">&lt;-</span></span>
-<span id="cb1197-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-2" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
-<span id="cb1197-3"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-3" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;=</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1197-4"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-4" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> price <span class="sc">~</span> cut)</span>
-<span id="cb1197-5"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-5" tabindex="-1"></a></span>
-<span id="cb1197-6"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-6" tabindex="-1"></a>fit_upper <span class="ot">&lt;-</span></span>
-<span id="cb1197-7"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-7" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
-<span id="cb1197-8"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-8" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1197-9"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-9" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> price <span class="sc">~</span> cut)</span>
-<span id="cb1197-10"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-10" tabindex="-1"></a></span>
-<span id="cb1197-11"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-11" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify this code</span></span>
-<span id="cb1197-12"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-12" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">cut =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb1197-13"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-13" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1197-14"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-14" tabindex="-1"></a>    <span class="at">cut =</span> <span class="fu">fct_relevel</span>(cut, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>)</span>
-<span id="cb1197-15"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-15" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1197-16"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-16" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_lower, <span class="at">var =</span> <span class="st">&quot;price_pred-lower&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1197-17"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-17" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_upper, <span class="at">var =</span> <span class="st">&quot;price_pred-upper&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1197-18"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-18" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb1197-19"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-19" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;model&quot;</span>),</span>
-<span id="cb1197-20"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-20" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;-&quot;</span>,</span>
-<span id="cb1197-21"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-21" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">&quot;price&quot;</span>)</span>
-<span id="cb1197-22"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-22" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1197-23"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-23" tabindex="-1"></a></span>
-<span id="cb1197-24"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-24" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, price_pred, <span class="at">color =</span> model)) <span class="sc">+</span></span>
-<span id="cb1197-25"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-25" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> model)) <span class="sc">+</span></span>
-<span id="cb1197-26"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-26" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1197-27"><a href="model-warnings-when-interpreting-linear-models.html#cb1197-27" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code></pre></div>
-<p><img src="d50-e-model03-interp-warnings-solution_files/figure-html/q1-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1202-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-1" tabindex="-1"></a>fit_lower <span class="ot">&lt;-</span></span>
+<span id="cb1202-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-2" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
+<span id="cb1202-3"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-3" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;=</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1202-4"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-4" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> price <span class="sc">~</span> cut)</span>
+<span id="cb1202-5"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-5" tabindex="-1"></a></span>
+<span id="cb1202-6"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-6" tabindex="-1"></a>fit_upper <span class="ot">&lt;-</span></span>
+<span id="cb1202-7"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-7" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
+<span id="cb1202-8"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-8" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1202-9"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-9" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> price <span class="sc">~</span> cut)</span>
+<span id="cb1202-10"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-10" tabindex="-1"></a></span>
+<span id="cb1202-11"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-11" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify this code</span></span>
+<span id="cb1202-12"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-12" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">cut =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1202-13"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-13" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1202-14"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-14" tabindex="-1"></a>    <span class="at">cut =</span> <span class="fu">fct_relevel</span>(cut, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>)</span>
+<span id="cb1202-15"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-15" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1202-16"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-16" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_lower, <span class="at">var =</span> <span class="st">&quot;price_pred-lower&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1202-17"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-17" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_upper, <span class="at">var =</span> <span class="st">&quot;price_pred-upper&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1202-18"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-18" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb1202-19"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-19" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;model&quot;</span>),</span>
+<span id="cb1202-20"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-20" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;-&quot;</span>,</span>
+<span id="cb1202-21"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-21" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">&quot;price&quot;</span>)</span>
+<span id="cb1202-22"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-22" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1202-23"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-23" tabindex="-1"></a></span>
+<span id="cb1202-24"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-24" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, price_pred, <span class="at">color =</span> model)) <span class="sc">+</span></span>
+<span id="cb1202-25"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-25" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> model)) <span class="sc">+</span></span>
+<span id="cb1202-26"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-26" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1202-27"><a href="model-warnings-when-interpreting-linear-models.html#cb1202-27" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code></pre></div>
+<p><img src="d50-e-model03-interp-warnings-solution_files/figure-html/q1-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>I expected the lower model to have decreasing price with increasing cut, and the upper model to have the reverse trend.</li>
@@ -1173,34 +1173,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q2-change-the-model" class="section level3 hasAnchor" number="56.1.2">
 <h3><span class="header-section-number">56.1.2</span> <strong>q2</strong> Change the model<a href="model-warnings-when-interpreting-linear-models.html#q2-change-the-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Repeat the same exercise above, but instead of <code>price ~ cut</code> fit <code>carat ~ cut</code>. Interpret the model results: Can the behavior we see below help explain the behavior above?</p>
-<div class="sourceCode" id="cb1198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1198-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-1" tabindex="-1"></a>fit_carat_lower <span class="ot">&lt;-</span></span>
-<span id="cb1198-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-2" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
-<span id="cb1198-3"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-3" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;=</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1198-4"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-4" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> carat <span class="sc">~</span> cut)</span>
-<span id="cb1198-5"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-5" tabindex="-1"></a></span>
-<span id="cb1198-6"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-6" tabindex="-1"></a>fit_carat_upper <span class="ot">&lt;-</span></span>
-<span id="cb1198-7"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-7" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
-<span id="cb1198-8"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-8" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1198-9"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-9" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> carat <span class="sc">~</span> cut)</span>
-<span id="cb1198-10"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-10" tabindex="-1"></a></span>
-<span id="cb1198-11"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-11" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this code</span></span>
-<span id="cb1198-12"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-12" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">cut =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb1198-13"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-13" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1198-14"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-14" tabindex="-1"></a>    <span class="at">cut =</span> <span class="fu">fct_relevel</span>(cut, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>)</span>
-<span id="cb1198-15"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-15" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1198-16"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-16" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_carat_lower, <span class="at">var =</span> <span class="st">&quot;carat_pred-lower&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1198-17"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-17" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_carat_upper, <span class="at">var =</span> <span class="st">&quot;carat_pred-upper&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1198-18"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-18" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb1198-19"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-19" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;model&quot;</span>),</span>
-<span id="cb1198-20"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-20" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;-&quot;</span>,</span>
-<span id="cb1198-21"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-21" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">&quot;carat&quot;</span>)</span>
-<span id="cb1198-22"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-22" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1198-23"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-23" tabindex="-1"></a></span>
-<span id="cb1198-24"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-24" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, carat_pred, <span class="at">color =</span> model)) <span class="sc">+</span></span>
-<span id="cb1198-25"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-25" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> model)) <span class="sc">+</span></span>
-<span id="cb1198-26"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-26" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1198-27"><a href="model-warnings-when-interpreting-linear-models.html#cb1198-27" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code></pre></div>
-<p><img src="d50-e-model03-interp-warnings-solution_files/figure-html/q2-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1203-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-1" tabindex="-1"></a>fit_carat_lower <span class="ot">&lt;-</span></span>
+<span id="cb1203-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-2" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
+<span id="cb1203-3"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-3" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;=</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1203-4"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-4" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> carat <span class="sc">~</span> cut)</span>
+<span id="cb1203-5"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-5" tabindex="-1"></a></span>
+<span id="cb1203-6"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-6" tabindex="-1"></a>fit_carat_upper <span class="ot">&lt;-</span></span>
+<span id="cb1203-7"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-7" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
+<span id="cb1203-8"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-8" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1203-9"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-9" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> carat <span class="sc">~</span> cut)</span>
+<span id="cb1203-10"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-10" tabindex="-1"></a></span>
+<span id="cb1203-11"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-11" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this code</span></span>
+<span id="cb1203-12"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-12" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">cut =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1203-13"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-13" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1203-14"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-14" tabindex="-1"></a>    <span class="at">cut =</span> <span class="fu">fct_relevel</span>(cut, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>)</span>
+<span id="cb1203-15"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-15" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1203-16"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-16" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_carat_lower, <span class="at">var =</span> <span class="st">&quot;carat_pred-lower&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1203-17"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-17" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_carat_upper, <span class="at">var =</span> <span class="st">&quot;carat_pred-upper&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1203-18"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-18" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb1203-19"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-19" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;model&quot;</span>),</span>
+<span id="cb1203-20"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-20" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;-&quot;</span>,</span>
+<span id="cb1203-21"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-21" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">&quot;carat&quot;</span>)</span>
+<span id="cb1203-22"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-22" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1203-23"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-23" tabindex="-1"></a></span>
+<span id="cb1203-24"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-24" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, carat_pred, <span class="at">color =</span> model)) <span class="sc">+</span></span>
+<span id="cb1203-25"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-25" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> model)) <span class="sc">+</span></span>
+<span id="cb1203-26"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-26" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1203-27"><a href="model-warnings-when-interpreting-linear-models.html#cb1203-27" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code></pre></div>
+<p><img src="d50-e-model03-interp-warnings-solution_files/figure-html/q2-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>We see that the lower model has carat <em>decreasing</em> with increasing cut, while the upper model gives carat a relatively <em>flat relationship</em> with cut.</li>
@@ -1215,37 +1215,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The following task will demonstrate this effect.</p>
 <div id="q3-fit-two-models-one-with-both-carat-and-cut-and-another-with-cut-only.-fit-only-to-the-low-carat-diamonds-carat-1.-use-the-provided-code-to-compare-the-model-behavior-with-cut-and-answer-the-questions-under-observations-below." class="section level3 hasAnchor" number="56.2.1">
 <h3><span class="header-section-number">56.2.1</span> <strong>q3</strong> Fit two models, one with both carat and cut, and another with cut only. Fit only to the low-carat diamonds (<code>carat &lt;= 1</code>). Use the provided code to compare the model behavior with <code>cut</code>, and answer the questions under <em>observations</em> below.<a href="model-warnings-when-interpreting-linear-models.html#q3-fit-two-models-one-with-both-carat-and-cut-and-another-with-cut-only.-fit-only-to-the-low-carat-diamonds-carat-1.-use-the-provided-code-to-compare-the-model-behavior-with-cut-and-answer-the-questions-under-observations-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1199-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-1" tabindex="-1"></a>fit_carat_cut <span class="ot">&lt;-</span></span>
-<span id="cb1199-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-2" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
-<span id="cb1199-3"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-3" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;=</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1199-4"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-4" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> price <span class="sc">~</span> carat <span class="sc">+</span> cut)</span>
-<span id="cb1199-5"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-5" tabindex="-1"></a></span>
-<span id="cb1199-6"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-6" tabindex="-1"></a>fit_cut_only <span class="ot">&lt;-</span></span>
-<span id="cb1199-7"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-7" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
-<span id="cb1199-8"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-8" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;=</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1199-9"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-9" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> price <span class="sc">~</span> cut)</span>
-<span id="cb1199-10"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-10" tabindex="-1"></a></span>
-<span id="cb1199-11"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-11" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this code</span></span>
-<span id="cb1199-12"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-12" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb1199-13"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-13" tabindex="-1"></a>    <span class="at">cut =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>),</span>
-<span id="cb1199-14"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-14" tabindex="-1"></a>    <span class="at">carat =</span> <span class="fu">c</span>(<span class="fl">0.4</span>)</span>
-<span id="cb1199-15"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-15" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1199-16"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-16" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1199-17"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-17" tabindex="-1"></a>    <span class="at">cut =</span> <span class="fu">fct_relevel</span>(cut, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>)</span>
-<span id="cb1199-18"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-18" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1199-19"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-19" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_carat_cut, <span class="at">var =</span> <span class="st">&quot;price_pred-carat_cut&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1199-20"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-20" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_cut_only, <span class="at">var =</span> <span class="st">&quot;price_pred-cut_only&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1199-21"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-21" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb1199-22"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-22" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;model&quot;</span>),</span>
-<span id="cb1199-23"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-23" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;-&quot;</span>,</span>
-<span id="cb1199-24"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-24" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">&quot;price&quot;</span>)</span>
-<span id="cb1199-25"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-25" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1199-26"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-26" tabindex="-1"></a></span>
-<span id="cb1199-27"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-27" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, price_pred, <span class="at">color =</span> model)) <span class="sc">+</span></span>
-<span id="cb1199-28"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-28" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> model)) <span class="sc">+</span></span>
-<span id="cb1199-29"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-29" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1199-30"><a href="model-warnings-when-interpreting-linear-models.html#cb1199-30" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code></pre></div>
-<p><img src="d50-e-model03-interp-warnings-solution_files/figure-html/q3-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1204-1"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-1" tabindex="-1"></a>fit_carat_cut <span class="ot">&lt;-</span></span>
+<span id="cb1204-2"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-2" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
+<span id="cb1204-3"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-3" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;=</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1204-4"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-4" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> price <span class="sc">~</span> carat <span class="sc">+</span> cut)</span>
+<span id="cb1204-5"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-5" tabindex="-1"></a></span>
+<span id="cb1204-6"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-6" tabindex="-1"></a>fit_cut_only <span class="ot">&lt;-</span></span>
+<span id="cb1204-7"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-7" tabindex="-1"></a>  diamonds_train <span class="sc">%&gt;%</span></span>
+<span id="cb1204-8"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-8" tabindex="-1"></a>  <span class="fu">filter</span>(carat <span class="sc">&lt;=</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1204-9"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-9" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">formula =</span> price <span class="sc">~</span> cut)</span>
+<span id="cb1204-10"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-10" tabindex="-1"></a></span>
+<span id="cb1204-11"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-11" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this code</span></span>
+<span id="cb1204-12"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-12" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb1204-13"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-13" tabindex="-1"></a>    <span class="at">cut =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>),</span>
+<span id="cb1204-14"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-14" tabindex="-1"></a>    <span class="at">carat =</span> <span class="fu">c</span>(<span class="fl">0.4</span>)</span>
+<span id="cb1204-15"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-15" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1204-16"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-16" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1204-17"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-17" tabindex="-1"></a>    <span class="at">cut =</span> <span class="fu">fct_relevel</span>(cut, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>)</span>
+<span id="cb1204-18"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-18" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1204-19"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-19" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_carat_cut, <span class="at">var =</span> <span class="st">&quot;price_pred-carat_cut&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1204-20"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-20" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_cut_only, <span class="at">var =</span> <span class="st">&quot;price_pred-cut_only&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1204-21"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-21" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb1204-22"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-22" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;model&quot;</span>),</span>
+<span id="cb1204-23"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-23" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;-&quot;</span>,</span>
+<span id="cb1204-24"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-24" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">&quot;price&quot;</span>)</span>
+<span id="cb1204-25"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-25" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1204-26"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-26" tabindex="-1"></a></span>
+<span id="cb1204-27"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-27" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut, price_pred, <span class="at">color =</span> model)) <span class="sc">+</span></span>
+<span id="cb1204-28"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-28" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> model)) <span class="sc">+</span></span>
+<span id="cb1204-29"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-29" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1204-30"><a href="model-warnings-when-interpreting-linear-models.html#cb1204-30" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code></pre></div>
+<p><img src="d50-e-model03-interp-warnings-solution_files/figure-html/q3-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li><code>cut</code> has a negative effect on <code>price</code> for the <code>cut_only</code> model.</li>

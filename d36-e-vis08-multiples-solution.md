@@ -28,7 +28,7 @@ economics %>%
   facet_wrap(~variable, scales = "free_y")
 ```
 
-<img src="d36-e-vis08-multiples-solution_files/figure-html/ex-economics-multiples-1.png" width="672" />
+<img src="d36-e-vis08-multiples-solution_files/figure-html/ex-economics-multiples-1.png" alt="" width="672" />
 
 The "multiples" are the different panels; above we've separated the different variables into their own panel. This allows us to compare trends simply by lookin across at different panels. The faceting above works well for comparing trends: It's clear by inspection whether the various trends are increasing, decreasing, etc.
 
@@ -43,7 +43,7 @@ mpg %>%
   facet_wrap(~class)
 ```
 
-<img src="d36-e-vis08-multiples-solution_files/figure-html/ex-mpg-multiples-1.png" width="672" />
+<img src="d36-e-vis08-multiples-solution_files/figure-html/ex-mpg-multiples-1.png" alt="" width="672" />
 
 With these scatterplots it's more difficult to "keep in our heads" the absolute positions of the other points as we look across the multiples. Instead we could add some "ghost" points:
 
@@ -62,7 +62,7 @@ mpg %>%
   theme_minimal()
 ```
 
-<img src="d36-e-vis08-multiples-solution_files/figure-html/ex-mpg-multiples-ghosts-1.png" width="672" />
+<img src="d36-e-vis08-multiples-solution_files/figure-html/ex-mpg-multiples-ghosts-1.png" alt="" width="672" />
 
 There's a trick to getting the visual above; removing the facet variable from an internal dataframe prevents the faceting of that layer. This combined with a second point layer gives the "ghost" point effect.
 
@@ -79,7 +79,7 @@ diamonds %>%
   geom_point()
 ```
 
-<img src="d36-e-vis08-multiples-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d36-e-vis08-multiples-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 
 ``` r
@@ -93,7 +93,7 @@ diamonds %>%
   facet_wrap(~cut)
 ```
 
-<img src="d36-e-vis08-multiples-solution_files/figure-html/q1-solution-1.png" width="672" />
+<img src="d36-e-vis08-multiples-solution_files/figure-html/q1-solution-1.png" alt="" width="672" />
 
 ## Organizing Factors
 <!-- -------------------------------------------------- -->
@@ -119,7 +119,7 @@ mpg %>%
   )
 ```
 
-<img src="d36-e-vis08-multiples-solution_files/figure-html/ex-mpg-manufacturers-1.png" width="672" />
+<img src="d36-e-vis08-multiples-solution_files/figure-html/ex-mpg-manufacturers-1.png" alt="" width="672" />
 
 There's *a lot* going on this figure, including a number of subtle points. Let's list them out:
 
@@ -176,7 +176,7 @@ as_tibble(iris) %>%
   )
 ```
 
-<img src="d36-e-vis08-multiples-solution_files/figure-html/q2-solution-1.png" width="672" />
+<img src="d36-e-vis08-multiples-solution_files/figure-html/q2-solution-1.png" alt="" width="672" />
 
 I chose to put the measurements of the same part close together, to facilitate
 comparison of the common plant features across different species.

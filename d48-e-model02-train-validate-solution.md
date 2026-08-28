@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -77,7 +77,7 @@ df_truth %>%
   )
 ```
 
-<img src="d48-e-model02-train-validate-solution_files/figure-html/polynomial-setup-1.png" width="672" />
+<img src="d48-e-model02-train-validate-solution_files/figure-html/polynomial-setup-1.png" alt="" width="672" />
 
 In what follows, we will behave as though we only have access to `df_measurements`---this is to model a "real" case where we have limited data. We will attempt to fit a polynomial to the data; remember that a polynomial of degree $d$ is a function of the form
 
@@ -115,7 +115,7 @@ df_truth %>%
   theme_minimal()
 ```
 
-<img src="d48-e-model02-train-validate-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d48-e-model02-train-validate-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -156,7 +156,7 @@ df_truth %>%
   theme_minimal()
 ```
 
-<img src="d48-e-model02-train-validate-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d48-e-model02-train-validate-solution_files/figure-html/q2-task-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -240,7 +240,7 @@ df_truth %>%
   scale_color_discrete(name = "Data")
 ```
 
-<img src="d48-e-model02-train-validate-solution_files/figure-html/split-validation-1.png" width="672" />
+<img src="d48-e-model02-train-validate-solution_files/figure-html/split-validation-1.png" alt="" width="672" />
 
 **Idea**:
 
@@ -301,7 +301,7 @@ df_sweep %>%
   )
 ```
 
-<img src="d48-e-model02-train-validate-solution_files/figure-html/q4-task-1.png" width="672" />
+<img src="d48-e-model02-train-validate-solution_files/figure-html/q4-task-1.png" alt="" width="672" />
 
 **Observations**
 
@@ -442,7 +442,7 @@ bind_rows(
   facet_grid(source ~ .)
 ```
 
-<img src="d48-e-model02-train-validate-solution_files/figure-html/q6-task-1.png" width="672" />
+<img src="d48-e-model02-train-validate-solution_files/figure-html/q6-task-1.png" alt="" width="672" />
 
 **Observations**:
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>52 Data: Liberating data with WebPlotDigitizer | Data Science: Exercise Solutions</title>
   <meta name="description" content="52 Data: Liberating data with WebPlotDigitizer | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="52 Data: Liberating data with WebPlotDigitizer | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1086,13 +1086,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Purpose</em>: Sometimes data are messy—we know how to deal with that. Other times data are “locked up” in a format we can’t easily analyze, such as in an image. In this exercise you’ll learn how to <em>liberate</em> data from a plot using WebPlotDigitizer.</p>
 <p><em>Reading</em>: (<em>None</em>, this exercise <em>is</em> the reading.)</p>
 <p><em>Optional Reading</em>: <a href="https://youtu.be/P7GbGdMvopU">WebPlotDigitizer tutorial video</a> ~ 19 minutes. (I recommend you give this a watch if you want some inspiration on other use cases: There are a lot of very clever ways to use this tool!)</p>
-<div class="sourceCode" id="cb1115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1115-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1115-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb1120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1120-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1120-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1164,11 +1164,11 @@ Congrats! You just <em>liberated</em> data from a plot!</p>
 <h2><span class="header-section-number">52.3</span> Use the extracted data<a href="data-liberating-data-with-webplotdigitizer.html#use-the-extracted-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="q4-load-the-price-and-production-datasets-you-extracted.-join-and-plot-price-vs-production-what-kind-of-relationship-do-you-see" class="section level3 hasAnchor" number="52.3.1">
 <h3><span class="header-section-number">52.3.1</span> <strong>q4</strong> Load the price and production datasets you extracted. Join and plot price vs production; what kind of relationship do you see?<a href="data-liberating-data-with-webplotdigitizer.html#q4-load-the-price-and-production-datasets-you-extracted.-join-and-plot-price-vs-production-what-kind-of-relationship-do-you-see" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1117-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1117-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Your filenames may vary!</span></span>
-<span id="cb1117-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1117-2" tabindex="-1"></a>df_price <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1117-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1117-3" tabindex="-1"></a>  <span class="st">&quot;./data/beef_price.csv&quot;</span>,</span>
-<span id="cb1117-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1117-4" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;price_percent&quot;</span>)</span>
-<span id="cb1117-5"><a href="data-liberating-data-with-webplotdigitizer.html#cb1117-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1122-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1122-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Your filenames may vary!</span></span>
+<span id="cb1122-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1122-2" tabindex="-1"></a>df_price <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1122-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1122-3" tabindex="-1"></a>  <span class="st">&quot;./data/beef_price.csv&quot;</span>,</span>
+<span id="cb1122-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1122-4" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;price_percent&quot;</span>)</span>
+<span id="cb1122-5"><a href="data-liberating-data-with-webplotdigitizer.html#cb1122-5" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Rows: 232 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -1177,10 +1177,10 @@ Congrats! You just <em>liberated</em> data from a plot!</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb1119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1119-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1119-1" tabindex="-1"></a>df_production <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1119-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1119-2" tabindex="-1"></a>  <span class="st">&quot;./data/beef_production.csv&quot;</span>,</span>
-<span id="cb1119-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1119-3" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;production_percent&quot;</span>)</span>
-<span id="cb1119-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1119-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1124-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1124-1" tabindex="-1"></a>df_production <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1124-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1124-2" tabindex="-1"></a>  <span class="st">&quot;./data/beef_production.csv&quot;</span>,</span>
+<span id="cb1124-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1124-3" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;production_percent&quot;</span>)</span>
+<span id="cb1124-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1124-4" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Rows: 227 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -1189,24 +1189,24 @@ Congrats! You just <em>liberated</em> data from a plot!</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb1121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1121-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1121-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: I&#39;m relying on WebPlotDigitizer to produce dates in order to</span></span>
-<span id="cb1121-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1121-2" tabindex="-1"></a><span class="do">## make this join work. This will probably fail if you have numbers</span></span>
-<span id="cb1121-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1121-3" tabindex="-1"></a><span class="do">## rather than dates.</span></span>
-<span id="cb1121-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1121-4" tabindex="-1"></a>df_both <span class="ot">&lt;-</span></span>
-<span id="cb1121-5"><a href="data-liberating-data-with-webplotdigitizer.html#cb1121-5" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
-<span id="cb1121-6"><a href="data-liberating-data-with-webplotdigitizer.html#cb1121-6" tabindex="-1"></a>    df_price,</span>
-<span id="cb1121-7"><a href="data-liberating-data-with-webplotdigitizer.html#cb1121-7" tabindex="-1"></a>    df_production,</span>
-<span id="cb1121-8"><a href="data-liberating-data-with-webplotdigitizer.html#cb1121-8" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;date&quot;</span></span>
-<span id="cb1121-9"><a href="data-liberating-data-with-webplotdigitizer.html#cb1121-9" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1126-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: I&#39;m relying on WebPlotDigitizer to produce dates in order to</span></span>
+<span id="cb1126-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-2" tabindex="-1"></a><span class="do">## make this join work. This will probably fail if you have numbers</span></span>
+<span id="cb1126-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-3" tabindex="-1"></a><span class="do">## rather than dates.</span></span>
+<span id="cb1126-4"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-4" tabindex="-1"></a>df_both <span class="ot">&lt;-</span></span>
+<span id="cb1126-5"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-5" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb1126-6"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-6" tabindex="-1"></a>    df_price,</span>
+<span id="cb1126-7"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-7" tabindex="-1"></a>    df_production,</span>
+<span id="cb1126-8"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-8" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;date&quot;</span></span>
+<span id="cb1126-9"><a href="data-liberating-data-with-webplotdigitizer.html#cb1126-9" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Warning in inner_join(df_price, df_production, by = &quot;date&quot;): Detected an unexpected many-to-many relationship between `x` and `y`.
 ## ℹ Row 7 of `x` matches multiple rows in `y`.
 ## ℹ Row 2 of `y` matches multiple rows in `x`.
 ## ℹ If a many-to-many relationship is expected, set `relationship =
 ##   &quot;many-to-many&quot;` to silence this warning.</code></pre>
-<div class="sourceCode" id="cb1123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1123-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1123-1" tabindex="-1"></a>df_both <span class="sc">%&gt;%</span></span>
-<span id="cb1123-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1123-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(production_percent, price_percent, <span class="at">color =</span> date)) <span class="sc">+</span></span>
-<span id="cb1123-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1123-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="d45-e-data14-webplotdigitizer-solution_files/figure-html/q4-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1128-1"><a href="data-liberating-data-with-webplotdigitizer.html#cb1128-1" tabindex="-1"></a>df_both <span class="sc">%&gt;%</span></span>
+<span id="cb1128-2"><a href="data-liberating-data-with-webplotdigitizer.html#cb1128-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(production_percent, price_percent, <span class="at">color =</span> date)) <span class="sc">+</span></span>
+<span id="cb1128-3"><a href="data-liberating-data-with-webplotdigitizer.html#cb1128-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="d45-e-data14-webplotdigitizer-solution_files/figure-html/q4-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>In the middle of the pandemic beef production dropped quickly without a large change in price.</li>

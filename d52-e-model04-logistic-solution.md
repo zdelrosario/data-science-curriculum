@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -305,7 +305,7 @@ tibble(p = seq(0, 1, length.out = 100)) %>%
   labs(x = "Probability", y = "Logit Value (log-odds ratio)")
 ```
 
-<img src="d52-e-model04-logistic-solution_files/figure-html/vis-logit-1.png" width="672" />
+<img src="d52-e-model04-logistic-solution_files/figure-html/vis-logit-1.png" alt="" width="672" />
 
 And this is what it looks like to carry out the *inverse mapping* from log-odds ratios to probabilities:
 
@@ -322,7 +322,7 @@ tibble(p = seq(0, 1, length.out = 100)) %>%
   labs(y = "Probability", x = "Logit Value (log-odds ratio)")
 ```
 
-<img src="d52-e-model04-logistic-solution_files/figure-html/vis-invlogit-1.png" width="672" />
+<img src="d52-e-model04-logistic-solution_files/figure-html/vis-invlogit-1.png" alt="" width="672" />
 
 This curve (the inverse-logit) is the one we'll stretch and shift in order to fit a logistic regression.
 
@@ -369,7 +369,7 @@ df_basic %>%
   )
 ```
 
-<img src="d52-e-model04-logistic-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d52-e-model04-logistic-solution_files/figure-html/q2-task-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -402,7 +402,7 @@ df_basic %>%
 ## # A tibble: 1 × 4
 ##      TP    FP    TN    FN
 ##   <int> <int> <int> <int>
-## 1    39    30    20     8
+## 1    31    35    24     7
 ```
 
 These numbers don't mean a whole lot on their own; we'll use them to compare performance across models. Next you'll practice using R functions to carry out logistic regression for classification, and build a model to compare against this basic one.
@@ -470,7 +470,7 @@ df_q4 %>%
   )
 ```
 
-<img src="d52-e-model04-logistic-solution_files/figure-html/q4-task-1.png" width="672" />
+<img src="d52-e-model04-logistic-solution_files/figure-html/q4-task-1.png" alt="" width="672" />
 
 Use the following to check your code.
 
@@ -525,7 +525,7 @@ df_q4 %>%
 ## # A tibble: 1 × 4
 ##      TP    FP    TN    FN
 ##   <int> <int> <int> <int>
-## 1    28     5    45    19
+## 1    27     1    58    11
 ```
 
 **Observations**:

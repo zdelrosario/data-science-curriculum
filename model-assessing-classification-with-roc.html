@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>58 Model: Assessing Classification with ROC | Data Science: Exercise Solutions</title>
   <meta name="description" content="58 Model: Assessing Classification with ROC | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="58 Model: Assessing Classification with ROC | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,187 +1085,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">58</span> Model: Assessing Classification with ROC<a href="model-assessing-classification-with-roc.html#model-assessing-classification-with-roc" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: With regression models, we used model metrics in order to assess and select a model (e.g. choose which features we should use). In order to do the same with classification models, we need some quantitative measure of accuracy. However, assessing the “accuracy” of a classifier is far more complicated. To do this, we’ll need to understand the <em>receiver operating characteristic</em>.</p>
 <p><em>Reading</em>: <a href="https://www.youtube.com/watch?v=4jRBRDbJemM">StatQuest: ROC and AUC… clearly explained!</a> (Required, ~17 minutes)</p>
-<div class="sourceCode" id="cb1236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1236-1"><a href="model-assessing-classification-with-roc.html#cb1236-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb1241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1241-1"><a href="model-assessing-classification-with-roc.html#cb1241-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb1238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1238-1"><a href="model-assessing-classification-with-roc.html#cb1238-1" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
-<span id="cb1238-2"><a href="model-assessing-classification-with-roc.html#cb1238-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<div class="sourceCode" id="cb1243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1243-1"><a href="model-assessing-classification-with-roc.html#cb1243-1" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb1243-2"><a href="model-assessing-classification-with-roc.html#cb1243-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;broom&#39;
 ## 
 ## The following object is masked from &#39;package:modelr&#39;:
 ## 
 ##     bootstrap</code></pre>
-<div class="sourceCode" id="cb1240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1240-1"><a href="model-assessing-classification-with-roc.html#cb1240-1" tabindex="-1"></a><span class="do">## We&#39;ll need the logit and inverse-logit functions to &quot;warp space&quot;</span></span>
-<span id="cb1240-2"><a href="model-assessing-classification-with-roc.html#cb1240-2" tabindex="-1"></a>logit <span class="ot">&lt;-</span> <span class="cf">function</span>(p) {</span>
-<span id="cb1240-3"><a href="model-assessing-classification-with-roc.html#cb1240-3" tabindex="-1"></a>  odds_ratio <span class="ot">&lt;-</span> p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb1240-4"><a href="model-assessing-classification-with-roc.html#cb1240-4" tabindex="-1"></a>  <span class="fu">log</span>(odds_ratio)</span>
-<span id="cb1240-5"><a href="model-assessing-classification-with-roc.html#cb1240-5" tabindex="-1"></a>}</span>
-<span id="cb1240-6"><a href="model-assessing-classification-with-roc.html#cb1240-6" tabindex="-1"></a></span>
-<span id="cb1240-7"><a href="model-assessing-classification-with-roc.html#cb1240-7" tabindex="-1"></a>inv.logit <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1240-8"><a href="model-assessing-classification-with-roc.html#cb1240-8" tabindex="-1"></a>  <span class="fu">exp</span>(x) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(x))</span>
-<span id="cb1240-9"><a href="model-assessing-classification-with-roc.html#cb1240-9" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1245-1"><a href="model-assessing-classification-with-roc.html#cb1245-1" tabindex="-1"></a><span class="do">## We&#39;ll need the logit and inverse-logit functions to &quot;warp space&quot;</span></span>
+<span id="cb1245-2"><a href="model-assessing-classification-with-roc.html#cb1245-2" tabindex="-1"></a>logit <span class="ot">&lt;-</span> <span class="cf">function</span>(p) {</span>
+<span id="cb1245-3"><a href="model-assessing-classification-with-roc.html#cb1245-3" tabindex="-1"></a>  odds_ratio <span class="ot">&lt;-</span> p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb1245-4"><a href="model-assessing-classification-with-roc.html#cb1245-4" tabindex="-1"></a>  <span class="fu">log</span>(odds_ratio)</span>
+<span id="cb1245-5"><a href="model-assessing-classification-with-roc.html#cb1245-5" tabindex="-1"></a>}</span>
+<span id="cb1245-6"><a href="model-assessing-classification-with-roc.html#cb1245-6" tabindex="-1"></a></span>
+<span id="cb1245-7"><a href="model-assessing-classification-with-roc.html#cb1245-7" tabindex="-1"></a>inv.logit <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1245-8"><a href="model-assessing-classification-with-roc.html#cb1245-8" tabindex="-1"></a>  <span class="fu">exp</span>(x) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(x))</span>
+<span id="cb1245-9"><a href="model-assessing-classification-with-roc.html#cb1245-9" tabindex="-1"></a>}</span></code></pre></div>
 <div id="setup-4" class="section level2 hasAnchor" number="58.1">
 <h2><span class="header-section-number">58.1</span> Setup<a href="model-assessing-classification-with-roc.html#setup-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>Note: The following chunk contains <em>a lot of stuff</em>, but you already did this in e-model04-logistic!</p>
-<div class="sourceCode" id="cb1241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1241-1"><a href="model-assessing-classification-with-roc.html#cb1241-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; you did all this in a previous exercise!</span></span>
-<span id="cb1241-2"><a href="model-assessing-classification-with-roc.html#cb1241-2" tabindex="-1"></a>url_disease <span class="ot">&lt;-</span> <span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data&quot;</span></span>
-<span id="cb1241-3"><a href="model-assessing-classification-with-roc.html#cb1241-3" tabindex="-1"></a>filename_disease <span class="ot">&lt;-</span> <span class="st">&quot;./data/uci_heart_disease.csv&quot;</span></span>
-<span id="cb1241-4"><a href="model-assessing-classification-with-roc.html#cb1241-4" tabindex="-1"></a></span>
-<span id="cb1241-5"><a href="model-assessing-classification-with-roc.html#cb1241-5" tabindex="-1"></a><span class="do">## Download the data locally</span></span>
-<span id="cb1241-6"><a href="model-assessing-classification-with-roc.html#cb1241-6" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_download</span>(</span>
-<span id="cb1241-7"><a href="model-assessing-classification-with-roc.html#cb1241-7" tabindex="-1"></a>        url_disease,</span>
-<span id="cb1241-8"><a href="model-assessing-classification-with-roc.html#cb1241-8" tabindex="-1"></a>        <span class="at">destfile =</span> filename_disease</span>
-<span id="cb1241-9"><a href="model-assessing-classification-with-roc.html#cb1241-9" tabindex="-1"></a>      )</span>
-<span id="cb1241-10"><a href="model-assessing-classification-with-roc.html#cb1241-10" tabindex="-1"></a></span>
-<span id="cb1241-11"><a href="model-assessing-classification-with-roc.html#cb1241-11" tabindex="-1"></a><span class="do">## Wrangle the data</span></span>
-<span id="cb1241-12"><a href="model-assessing-classification-with-roc.html#cb1241-12" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb1241-13"><a href="model-assessing-classification-with-roc.html#cb1241-13" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span>,</span>
-<span id="cb1241-14"><a href="model-assessing-classification-with-roc.html#cb1241-14" tabindex="-1"></a>  <span class="st">&quot;sex&quot;</span>,</span>
-<span id="cb1241-15"><a href="model-assessing-classification-with-roc.html#cb1241-15" tabindex="-1"></a>  <span class="st">&quot;cp&quot;</span>,</span>
-<span id="cb1241-16"><a href="model-assessing-classification-with-roc.html#cb1241-16" tabindex="-1"></a>  <span class="st">&quot;trestbps&quot;</span>,</span>
-<span id="cb1241-17"><a href="model-assessing-classification-with-roc.html#cb1241-17" tabindex="-1"></a>  <span class="st">&quot;chol&quot;</span>,</span>
-<span id="cb1241-18"><a href="model-assessing-classification-with-roc.html#cb1241-18" tabindex="-1"></a>  <span class="st">&quot;fbs&quot;</span>,</span>
-<span id="cb1241-19"><a href="model-assessing-classification-with-roc.html#cb1241-19" tabindex="-1"></a>  <span class="st">&quot;restecg&quot;</span>,</span>
-<span id="cb1241-20"><a href="model-assessing-classification-with-roc.html#cb1241-20" tabindex="-1"></a>  <span class="st">&quot;thalach&quot;</span>,</span>
-<span id="cb1241-21"><a href="model-assessing-classification-with-roc.html#cb1241-21" tabindex="-1"></a>  <span class="st">&quot;exang&quot;</span>,</span>
-<span id="cb1241-22"><a href="model-assessing-classification-with-roc.html#cb1241-22" tabindex="-1"></a>  <span class="st">&quot;oldpeak&quot;</span>,</span>
-<span id="cb1241-23"><a href="model-assessing-classification-with-roc.html#cb1241-23" tabindex="-1"></a>  <span class="st">&quot;slope&quot;</span>,</span>
-<span id="cb1241-24"><a href="model-assessing-classification-with-roc.html#cb1241-24" tabindex="-1"></a>  <span class="st">&quot;ca&quot;</span>,</span>
-<span id="cb1241-25"><a href="model-assessing-classification-with-roc.html#cb1241-25" tabindex="-1"></a>  <span class="st">&quot;thal&quot;</span>,</span>
-<span id="cb1241-26"><a href="model-assessing-classification-with-roc.html#cb1241-26" tabindex="-1"></a>  <span class="st">&quot;num&quot;</span></span>
-<span id="cb1241-27"><a href="model-assessing-classification-with-roc.html#cb1241-27" tabindex="-1"></a>)</span>
-<span id="cb1241-28"><a href="model-assessing-classification-with-roc.html#cb1241-28" tabindex="-1"></a></span>
-<span id="cb1241-29"><a href="model-assessing-classification-with-roc.html#cb1241-29" tabindex="-1"></a><span class="do">## Recoding functions</span></span>
-<span id="cb1241-30"><a href="model-assessing-classification-with-roc.html#cb1241-30" tabindex="-1"></a>convert_sex <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1241-31"><a href="model-assessing-classification-with-roc.html#cb1241-31" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb1241-32"><a href="model-assessing-classification-with-roc.html#cb1241-32" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;male&quot;</span>,</span>
-<span id="cb1241-33"><a href="model-assessing-classification-with-roc.html#cb1241-33" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;female&quot;</span>,</span>
-<span id="cb1241-34"><a href="model-assessing-classification-with-roc.html#cb1241-34" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb1241-35"><a href="model-assessing-classification-with-roc.html#cb1241-35" tabindex="-1"></a>  )</span>
-<span id="cb1241-36"><a href="model-assessing-classification-with-roc.html#cb1241-36" tabindex="-1"></a>}</span>
-<span id="cb1241-37"><a href="model-assessing-classification-with-roc.html#cb1241-37" tabindex="-1"></a>convert_cp <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1241-38"><a href="model-assessing-classification-with-roc.html#cb1241-38" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb1241-39"><a href="model-assessing-classification-with-roc.html#cb1241-39" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;typical angina&quot;</span>,</span>
-<span id="cb1241-40"><a href="model-assessing-classification-with-roc.html#cb1241-40" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;atypical angina&quot;</span>,</span>
-<span id="cb1241-41"><a href="model-assessing-classification-with-roc.html#cb1241-41" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;non-anginal pain&quot;</span>,</span>
-<span id="cb1241-42"><a href="model-assessing-classification-with-roc.html#cb1241-42" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;asymptomatic&quot;</span>,</span>
-<span id="cb1241-43"><a href="model-assessing-classification-with-roc.html#cb1241-43" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb1241-44"><a href="model-assessing-classification-with-roc.html#cb1241-44" tabindex="-1"></a>  )</span>
-<span id="cb1241-45"><a href="model-assessing-classification-with-roc.html#cb1241-45" tabindex="-1"></a>}</span>
-<span id="cb1241-46"><a href="model-assessing-classification-with-roc.html#cb1241-46" tabindex="-1"></a>convert_fbs <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1241-47"><a href="model-assessing-classification-with-roc.html#cb1241-47" tabindex="-1"></a>  <span class="fu">if_else</span>(x <span class="sc">==</span> <span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb1241-48"><a href="model-assessing-classification-with-roc.html#cb1241-48" tabindex="-1"></a>}</span>
-<span id="cb1241-49"><a href="model-assessing-classification-with-roc.html#cb1241-49" tabindex="-1"></a>convert_restecv <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1241-50"><a href="model-assessing-classification-with-roc.html#cb1241-50" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb1241-51"><a href="model-assessing-classification-with-roc.html#cb1241-51" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;normal&quot;</span>,</span>
-<span id="cb1241-52"><a href="model-assessing-classification-with-roc.html#cb1241-52" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;ST-T wave abnormality&quot;</span>,</span>
-<span id="cb1241-53"><a href="model-assessing-classification-with-roc.html#cb1241-53" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;Estes&#39; criteria&quot;</span>,</span>
-<span id="cb1241-54"><a href="model-assessing-classification-with-roc.html#cb1241-54" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb1241-55"><a href="model-assessing-classification-with-roc.html#cb1241-55" tabindex="-1"></a>  )</span>
-<span id="cb1241-56"><a href="model-assessing-classification-with-roc.html#cb1241-56" tabindex="-1"></a>}</span>
-<span id="cb1241-57"><a href="model-assessing-classification-with-roc.html#cb1241-57" tabindex="-1"></a>convert_exang <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1241-58"><a href="model-assessing-classification-with-roc.html#cb1241-58" tabindex="-1"></a>  <span class="fu">if_else</span>(x <span class="sc">==</span> <span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb1241-59"><a href="model-assessing-classification-with-roc.html#cb1241-59" tabindex="-1"></a>}</span>
-<span id="cb1241-60"><a href="model-assessing-classification-with-roc.html#cb1241-60" tabindex="-1"></a>convert_slope <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1241-61"><a href="model-assessing-classification-with-roc.html#cb1241-61" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb1241-62"><a href="model-assessing-classification-with-roc.html#cb1241-62" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;upsloping&quot;</span>,</span>
-<span id="cb1241-63"><a href="model-assessing-classification-with-roc.html#cb1241-63" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;flat&quot;</span>,</span>
-<span id="cb1241-64"><a href="model-assessing-classification-with-roc.html#cb1241-64" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;downsloping&quot;</span>,</span>
-<span id="cb1241-65"><a href="model-assessing-classification-with-roc.html#cb1241-65" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb1241-66"><a href="model-assessing-classification-with-roc.html#cb1241-66" tabindex="-1"></a>  )</span>
-<span id="cb1241-67"><a href="model-assessing-classification-with-roc.html#cb1241-67" tabindex="-1"></a>}</span>
-<span id="cb1241-68"><a href="model-assessing-classification-with-roc.html#cb1241-68" tabindex="-1"></a>convert_thal <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1241-69"><a href="model-assessing-classification-with-roc.html#cb1241-69" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb1241-70"><a href="model-assessing-classification-with-roc.html#cb1241-70" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;normal&quot;</span>,</span>
-<span id="cb1241-71"><a href="model-assessing-classification-with-roc.html#cb1241-71" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> <span class="st">&quot;fixed defect&quot;</span>,</span>
-<span id="cb1241-72"><a href="model-assessing-classification-with-roc.html#cb1241-72" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">&quot;reversible defect&quot;</span>,</span>
-<span id="cb1241-73"><a href="model-assessing-classification-with-roc.html#cb1241-73" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb1241-74"><a href="model-assessing-classification-with-roc.html#cb1241-74" tabindex="-1"></a>  )</span>
-<span id="cb1241-75"><a href="model-assessing-classification-with-roc.html#cb1241-75" tabindex="-1"></a>}</span>
-<span id="cb1241-76"><a href="model-assessing-classification-with-roc.html#cb1241-76" tabindex="-1"></a></span>
-<span id="cb1241-77"><a href="model-assessing-classification-with-roc.html#cb1241-77" tabindex="-1"></a><span class="do">## Load and wrangle</span></span>
-<span id="cb1241-78"><a href="model-assessing-classification-with-roc.html#cb1241-78" tabindex="-1"></a>df_data <span class="ot">&lt;-</span></span>
-<span id="cb1241-79"><a href="model-assessing-classification-with-roc.html#cb1241-79" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
-<span id="cb1241-80"><a href="model-assessing-classification-with-roc.html#cb1241-80" tabindex="-1"></a>    filename_disease,</span>
-<span id="cb1241-81"><a href="model-assessing-classification-with-roc.html#cb1241-81" tabindex="-1"></a>    <span class="at">col_names =</span> col_names,</span>
-<span id="cb1241-82"><a href="model-assessing-classification-with-roc.html#cb1241-82" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
-<span id="cb1241-83"><a href="model-assessing-classification-with-roc.html#cb1241-83" tabindex="-1"></a>      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-84"><a href="model-assessing-classification-with-roc.html#cb1241-84" tabindex="-1"></a>      <span class="st">&quot;sex&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-85"><a href="model-assessing-classification-with-roc.html#cb1241-85" tabindex="-1"></a>      <span class="st">&quot;cp&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-86"><a href="model-assessing-classification-with-roc.html#cb1241-86" tabindex="-1"></a>      <span class="st">&quot;trestbps&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-87"><a href="model-assessing-classification-with-roc.html#cb1241-87" tabindex="-1"></a>      <span class="st">&quot;chol&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-88"><a href="model-assessing-classification-with-roc.html#cb1241-88" tabindex="-1"></a>      <span class="st">&quot;fbs&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-89"><a href="model-assessing-classification-with-roc.html#cb1241-89" tabindex="-1"></a>      <span class="st">&quot;restecg&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-90"><a href="model-assessing-classification-with-roc.html#cb1241-90" tabindex="-1"></a>      <span class="st">&quot;thalach&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-91"><a href="model-assessing-classification-with-roc.html#cb1241-91" tabindex="-1"></a>      <span class="st">&quot;exang&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-92"><a href="model-assessing-classification-with-roc.html#cb1241-92" tabindex="-1"></a>      <span class="st">&quot;oldpeak&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-93"><a href="model-assessing-classification-with-roc.html#cb1241-93" tabindex="-1"></a>      <span class="st">&quot;slope&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-94"><a href="model-assessing-classification-with-roc.html#cb1241-94" tabindex="-1"></a>      <span class="st">&quot;ca&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-95"><a href="model-assessing-classification-with-roc.html#cb1241-95" tabindex="-1"></a>      <span class="st">&quot;thal&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
-<span id="cb1241-96"><a href="model-assessing-classification-with-roc.html#cb1241-96" tabindex="-1"></a>      <span class="st">&quot;num&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>()</span>
-<span id="cb1241-97"><a href="model-assessing-classification-with-roc.html#cb1241-97" tabindex="-1"></a>    )</span>
-<span id="cb1241-98"><a href="model-assessing-classification-with-roc.html#cb1241-98" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1241-99"><a href="model-assessing-classification-with-roc.html#cb1241-99" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1241-100"><a href="model-assessing-classification-with-roc.html#cb1241-100" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">convert_sex</span>(sex),</span>
-<span id="cb1241-101"><a href="model-assessing-classification-with-roc.html#cb1241-101" tabindex="-1"></a>    <span class="at">cp =</span> <span class="fu">convert_cp</span>(cp),</span>
-<span id="cb1241-102"><a href="model-assessing-classification-with-roc.html#cb1241-102" tabindex="-1"></a>    <span class="at">fbs =</span> <span class="fu">convert_fbs</span>(fbs),</span>
-<span id="cb1241-103"><a href="model-assessing-classification-with-roc.html#cb1241-103" tabindex="-1"></a>    <span class="at">restecg =</span> <span class="fu">convert_restecv</span>(restecg),</span>
-<span id="cb1241-104"><a href="model-assessing-classification-with-roc.html#cb1241-104" tabindex="-1"></a>    <span class="at">exang =</span> <span class="fu">convert_exang</span>(exang),</span>
-<span id="cb1241-105"><a href="model-assessing-classification-with-roc.html#cb1241-105" tabindex="-1"></a>    <span class="at">slope =</span> <span class="fu">convert_slope</span>(slope),</span>
-<span id="cb1241-106"><a href="model-assessing-classification-with-roc.html#cb1241-106" tabindex="-1"></a>    <span class="at">thal =</span> <span class="fu">convert_thal</span>(thal)</span>
-<span id="cb1241-107"><a href="model-assessing-classification-with-roc.html#cb1241-107" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1241-108"><a href="model-assessing-classification-with-roc.html#cb1241-108" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1241-109"><a href="model-assessing-classification-with-roc.html#cb1241-109" tabindex="-1"></a>  <span class="do">## Filter rows with NA&#39;s (you did this in e-data13-cleaning)</span></span>
-<span id="cb1241-110"><a href="model-assessing-classification-with-roc.html#cb1241-110" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ca), <span class="sc">!</span><span class="fu">is.na</span>(thal)) <span class="sc">%&gt;%</span></span>
-<span id="cb1241-111"><a href="model-assessing-classification-with-roc.html#cb1241-111" tabindex="-1"></a>  <span class="do">## Create binary outcome for heart disease</span></span>
-<span id="cb1241-112"><a href="model-assessing-classification-with-roc.html#cb1241-112" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">heart_disease =</span> num <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1246-1"><a href="model-assessing-classification-with-roc.html#cb1246-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; you did all this in a previous exercise!</span></span>
+<span id="cb1246-2"><a href="model-assessing-classification-with-roc.html#cb1246-2" tabindex="-1"></a>url_disease <span class="ot">&lt;-</span> <span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data&quot;</span></span>
+<span id="cb1246-3"><a href="model-assessing-classification-with-roc.html#cb1246-3" tabindex="-1"></a>filename_disease <span class="ot">&lt;-</span> <span class="st">&quot;./data/uci_heart_disease.csv&quot;</span></span>
+<span id="cb1246-4"><a href="model-assessing-classification-with-roc.html#cb1246-4" tabindex="-1"></a></span>
+<span id="cb1246-5"><a href="model-assessing-classification-with-roc.html#cb1246-5" tabindex="-1"></a><span class="do">## Download the data locally</span></span>
+<span id="cb1246-6"><a href="model-assessing-classification-with-roc.html#cb1246-6" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_download</span>(</span>
+<span id="cb1246-7"><a href="model-assessing-classification-with-roc.html#cb1246-7" tabindex="-1"></a>        url_disease,</span>
+<span id="cb1246-8"><a href="model-assessing-classification-with-roc.html#cb1246-8" tabindex="-1"></a>        <span class="at">destfile =</span> filename_disease</span>
+<span id="cb1246-9"><a href="model-assessing-classification-with-roc.html#cb1246-9" tabindex="-1"></a>      )</span>
+<span id="cb1246-10"><a href="model-assessing-classification-with-roc.html#cb1246-10" tabindex="-1"></a></span>
+<span id="cb1246-11"><a href="model-assessing-classification-with-roc.html#cb1246-11" tabindex="-1"></a><span class="do">## Wrangle the data</span></span>
+<span id="cb1246-12"><a href="model-assessing-classification-with-roc.html#cb1246-12" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1246-13"><a href="model-assessing-classification-with-roc.html#cb1246-13" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span>,</span>
+<span id="cb1246-14"><a href="model-assessing-classification-with-roc.html#cb1246-14" tabindex="-1"></a>  <span class="st">&quot;sex&quot;</span>,</span>
+<span id="cb1246-15"><a href="model-assessing-classification-with-roc.html#cb1246-15" tabindex="-1"></a>  <span class="st">&quot;cp&quot;</span>,</span>
+<span id="cb1246-16"><a href="model-assessing-classification-with-roc.html#cb1246-16" tabindex="-1"></a>  <span class="st">&quot;trestbps&quot;</span>,</span>
+<span id="cb1246-17"><a href="model-assessing-classification-with-roc.html#cb1246-17" tabindex="-1"></a>  <span class="st">&quot;chol&quot;</span>,</span>
+<span id="cb1246-18"><a href="model-assessing-classification-with-roc.html#cb1246-18" tabindex="-1"></a>  <span class="st">&quot;fbs&quot;</span>,</span>
+<span id="cb1246-19"><a href="model-assessing-classification-with-roc.html#cb1246-19" tabindex="-1"></a>  <span class="st">&quot;restecg&quot;</span>,</span>
+<span id="cb1246-20"><a href="model-assessing-classification-with-roc.html#cb1246-20" tabindex="-1"></a>  <span class="st">&quot;thalach&quot;</span>,</span>
+<span id="cb1246-21"><a href="model-assessing-classification-with-roc.html#cb1246-21" tabindex="-1"></a>  <span class="st">&quot;exang&quot;</span>,</span>
+<span id="cb1246-22"><a href="model-assessing-classification-with-roc.html#cb1246-22" tabindex="-1"></a>  <span class="st">&quot;oldpeak&quot;</span>,</span>
+<span id="cb1246-23"><a href="model-assessing-classification-with-roc.html#cb1246-23" tabindex="-1"></a>  <span class="st">&quot;slope&quot;</span>,</span>
+<span id="cb1246-24"><a href="model-assessing-classification-with-roc.html#cb1246-24" tabindex="-1"></a>  <span class="st">&quot;ca&quot;</span>,</span>
+<span id="cb1246-25"><a href="model-assessing-classification-with-roc.html#cb1246-25" tabindex="-1"></a>  <span class="st">&quot;thal&quot;</span>,</span>
+<span id="cb1246-26"><a href="model-assessing-classification-with-roc.html#cb1246-26" tabindex="-1"></a>  <span class="st">&quot;num&quot;</span></span>
+<span id="cb1246-27"><a href="model-assessing-classification-with-roc.html#cb1246-27" tabindex="-1"></a>)</span>
+<span id="cb1246-28"><a href="model-assessing-classification-with-roc.html#cb1246-28" tabindex="-1"></a></span>
+<span id="cb1246-29"><a href="model-assessing-classification-with-roc.html#cb1246-29" tabindex="-1"></a><span class="do">## Recoding functions</span></span>
+<span id="cb1246-30"><a href="model-assessing-classification-with-roc.html#cb1246-30" tabindex="-1"></a>convert_sex <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1246-31"><a href="model-assessing-classification-with-roc.html#cb1246-31" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb1246-32"><a href="model-assessing-classification-with-roc.html#cb1246-32" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;male&quot;</span>,</span>
+<span id="cb1246-33"><a href="model-assessing-classification-with-roc.html#cb1246-33" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;female&quot;</span>,</span>
+<span id="cb1246-34"><a href="model-assessing-classification-with-roc.html#cb1246-34" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb1246-35"><a href="model-assessing-classification-with-roc.html#cb1246-35" tabindex="-1"></a>  )</span>
+<span id="cb1246-36"><a href="model-assessing-classification-with-roc.html#cb1246-36" tabindex="-1"></a>}</span>
+<span id="cb1246-37"><a href="model-assessing-classification-with-roc.html#cb1246-37" tabindex="-1"></a>convert_cp <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1246-38"><a href="model-assessing-classification-with-roc.html#cb1246-38" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb1246-39"><a href="model-assessing-classification-with-roc.html#cb1246-39" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;typical angina&quot;</span>,</span>
+<span id="cb1246-40"><a href="model-assessing-classification-with-roc.html#cb1246-40" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;atypical angina&quot;</span>,</span>
+<span id="cb1246-41"><a href="model-assessing-classification-with-roc.html#cb1246-41" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;non-anginal pain&quot;</span>,</span>
+<span id="cb1246-42"><a href="model-assessing-classification-with-roc.html#cb1246-42" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">&quot;asymptomatic&quot;</span>,</span>
+<span id="cb1246-43"><a href="model-assessing-classification-with-roc.html#cb1246-43" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb1246-44"><a href="model-assessing-classification-with-roc.html#cb1246-44" tabindex="-1"></a>  )</span>
+<span id="cb1246-45"><a href="model-assessing-classification-with-roc.html#cb1246-45" tabindex="-1"></a>}</span>
+<span id="cb1246-46"><a href="model-assessing-classification-with-roc.html#cb1246-46" tabindex="-1"></a>convert_fbs <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1246-47"><a href="model-assessing-classification-with-roc.html#cb1246-47" tabindex="-1"></a>  <span class="fu">if_else</span>(x <span class="sc">==</span> <span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb1246-48"><a href="model-assessing-classification-with-roc.html#cb1246-48" tabindex="-1"></a>}</span>
+<span id="cb1246-49"><a href="model-assessing-classification-with-roc.html#cb1246-49" tabindex="-1"></a>convert_restecv <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1246-50"><a href="model-assessing-classification-with-roc.html#cb1246-50" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb1246-51"><a href="model-assessing-classification-with-roc.html#cb1246-51" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;normal&quot;</span>,</span>
+<span id="cb1246-52"><a href="model-assessing-classification-with-roc.html#cb1246-52" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;ST-T wave abnormality&quot;</span>,</span>
+<span id="cb1246-53"><a href="model-assessing-classification-with-roc.html#cb1246-53" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;Estes&#39; criteria&quot;</span>,</span>
+<span id="cb1246-54"><a href="model-assessing-classification-with-roc.html#cb1246-54" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb1246-55"><a href="model-assessing-classification-with-roc.html#cb1246-55" tabindex="-1"></a>  )</span>
+<span id="cb1246-56"><a href="model-assessing-classification-with-roc.html#cb1246-56" tabindex="-1"></a>}</span>
+<span id="cb1246-57"><a href="model-assessing-classification-with-roc.html#cb1246-57" tabindex="-1"></a>convert_exang <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1246-58"><a href="model-assessing-classification-with-roc.html#cb1246-58" tabindex="-1"></a>  <span class="fu">if_else</span>(x <span class="sc">==</span> <span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb1246-59"><a href="model-assessing-classification-with-roc.html#cb1246-59" tabindex="-1"></a>}</span>
+<span id="cb1246-60"><a href="model-assessing-classification-with-roc.html#cb1246-60" tabindex="-1"></a>convert_slope <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1246-61"><a href="model-assessing-classification-with-roc.html#cb1246-61" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb1246-62"><a href="model-assessing-classification-with-roc.html#cb1246-62" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;upsloping&quot;</span>,</span>
+<span id="cb1246-63"><a href="model-assessing-classification-with-roc.html#cb1246-63" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">&quot;flat&quot;</span>,</span>
+<span id="cb1246-64"><a href="model-assessing-classification-with-roc.html#cb1246-64" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;downsloping&quot;</span>,</span>
+<span id="cb1246-65"><a href="model-assessing-classification-with-roc.html#cb1246-65" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb1246-66"><a href="model-assessing-classification-with-roc.html#cb1246-66" tabindex="-1"></a>  )</span>
+<span id="cb1246-67"><a href="model-assessing-classification-with-roc.html#cb1246-67" tabindex="-1"></a>}</span>
+<span id="cb1246-68"><a href="model-assessing-classification-with-roc.html#cb1246-68" tabindex="-1"></a>convert_thal <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1246-69"><a href="model-assessing-classification-with-roc.html#cb1246-69" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb1246-70"><a href="model-assessing-classification-with-roc.html#cb1246-70" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;normal&quot;</span>,</span>
+<span id="cb1246-71"><a href="model-assessing-classification-with-roc.html#cb1246-71" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> <span class="st">&quot;fixed defect&quot;</span>,</span>
+<span id="cb1246-72"><a href="model-assessing-classification-with-roc.html#cb1246-72" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">&quot;reversible defect&quot;</span>,</span>
+<span id="cb1246-73"><a href="model-assessing-classification-with-roc.html#cb1246-73" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb1246-74"><a href="model-assessing-classification-with-roc.html#cb1246-74" tabindex="-1"></a>  )</span>
+<span id="cb1246-75"><a href="model-assessing-classification-with-roc.html#cb1246-75" tabindex="-1"></a>}</span>
+<span id="cb1246-76"><a href="model-assessing-classification-with-roc.html#cb1246-76" tabindex="-1"></a></span>
+<span id="cb1246-77"><a href="model-assessing-classification-with-roc.html#cb1246-77" tabindex="-1"></a><span class="do">## Load and wrangle</span></span>
+<span id="cb1246-78"><a href="model-assessing-classification-with-roc.html#cb1246-78" tabindex="-1"></a>df_data <span class="ot">&lt;-</span></span>
+<span id="cb1246-79"><a href="model-assessing-classification-with-roc.html#cb1246-79" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb1246-80"><a href="model-assessing-classification-with-roc.html#cb1246-80" tabindex="-1"></a>    filename_disease,</span>
+<span id="cb1246-81"><a href="model-assessing-classification-with-roc.html#cb1246-81" tabindex="-1"></a>    <span class="at">col_names =</span> col_names,</span>
+<span id="cb1246-82"><a href="model-assessing-classification-with-roc.html#cb1246-82" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb1246-83"><a href="model-assessing-classification-with-roc.html#cb1246-83" tabindex="-1"></a>      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-84"><a href="model-assessing-classification-with-roc.html#cb1246-84" tabindex="-1"></a>      <span class="st">&quot;sex&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-85"><a href="model-assessing-classification-with-roc.html#cb1246-85" tabindex="-1"></a>      <span class="st">&quot;cp&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-86"><a href="model-assessing-classification-with-roc.html#cb1246-86" tabindex="-1"></a>      <span class="st">&quot;trestbps&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-87"><a href="model-assessing-classification-with-roc.html#cb1246-87" tabindex="-1"></a>      <span class="st">&quot;chol&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-88"><a href="model-assessing-classification-with-roc.html#cb1246-88" tabindex="-1"></a>      <span class="st">&quot;fbs&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-89"><a href="model-assessing-classification-with-roc.html#cb1246-89" tabindex="-1"></a>      <span class="st">&quot;restecg&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-90"><a href="model-assessing-classification-with-roc.html#cb1246-90" tabindex="-1"></a>      <span class="st">&quot;thalach&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-91"><a href="model-assessing-classification-with-roc.html#cb1246-91" tabindex="-1"></a>      <span class="st">&quot;exang&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-92"><a href="model-assessing-classification-with-roc.html#cb1246-92" tabindex="-1"></a>      <span class="st">&quot;oldpeak&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-93"><a href="model-assessing-classification-with-roc.html#cb1246-93" tabindex="-1"></a>      <span class="st">&quot;slope&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-94"><a href="model-assessing-classification-with-roc.html#cb1246-94" tabindex="-1"></a>      <span class="st">&quot;ca&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-95"><a href="model-assessing-classification-with-roc.html#cb1246-95" tabindex="-1"></a>      <span class="st">&quot;thal&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>(),</span>
+<span id="cb1246-96"><a href="model-assessing-classification-with-roc.html#cb1246-96" tabindex="-1"></a>      <span class="st">&quot;num&quot;</span> <span class="ot">=</span> <span class="fu">col_number</span>()</span>
+<span id="cb1246-97"><a href="model-assessing-classification-with-roc.html#cb1246-97" tabindex="-1"></a>    )</span>
+<span id="cb1246-98"><a href="model-assessing-classification-with-roc.html#cb1246-98" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1246-99"><a href="model-assessing-classification-with-roc.html#cb1246-99" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1246-100"><a href="model-assessing-classification-with-roc.html#cb1246-100" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">convert_sex</span>(sex),</span>
+<span id="cb1246-101"><a href="model-assessing-classification-with-roc.html#cb1246-101" tabindex="-1"></a>    <span class="at">cp =</span> <span class="fu">convert_cp</span>(cp),</span>
+<span id="cb1246-102"><a href="model-assessing-classification-with-roc.html#cb1246-102" tabindex="-1"></a>    <span class="at">fbs =</span> <span class="fu">convert_fbs</span>(fbs),</span>
+<span id="cb1246-103"><a href="model-assessing-classification-with-roc.html#cb1246-103" tabindex="-1"></a>    <span class="at">restecg =</span> <span class="fu">convert_restecv</span>(restecg),</span>
+<span id="cb1246-104"><a href="model-assessing-classification-with-roc.html#cb1246-104" tabindex="-1"></a>    <span class="at">exang =</span> <span class="fu">convert_exang</span>(exang),</span>
+<span id="cb1246-105"><a href="model-assessing-classification-with-roc.html#cb1246-105" tabindex="-1"></a>    <span class="at">slope =</span> <span class="fu">convert_slope</span>(slope),</span>
+<span id="cb1246-106"><a href="model-assessing-classification-with-roc.html#cb1246-106" tabindex="-1"></a>    <span class="at">thal =</span> <span class="fu">convert_thal</span>(thal)</span>
+<span id="cb1246-107"><a href="model-assessing-classification-with-roc.html#cb1246-107" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1246-108"><a href="model-assessing-classification-with-roc.html#cb1246-108" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1246-109"><a href="model-assessing-classification-with-roc.html#cb1246-109" tabindex="-1"></a>  <span class="do">## Filter rows with NA&#39;s (you did this in e-data13-cleaning)</span></span>
+<span id="cb1246-110"><a href="model-assessing-classification-with-roc.html#cb1246-110" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ca), <span class="sc">!</span><span class="fu">is.na</span>(thal)) <span class="sc">%&gt;%</span></span>
+<span id="cb1246-111"><a href="model-assessing-classification-with-roc.html#cb1246-111" tabindex="-1"></a>  <span class="do">## Create binary outcome for heart disease</span></span>
+<span id="cb1246-112"><a href="model-assessing-classification-with-roc.html#cb1246-112" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">heart_disease =</span> num <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details,
 ## e.g.:
 ##   dat &lt;- vroom(...)
 ##   problems(dat)</code></pre>
-<div class="sourceCode" id="cb1243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1243-1"><a href="model-assessing-classification-with-roc.html#cb1243-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1243-2"><a href="model-assessing-classification-with-roc.html#cb1243-2" tabindex="-1"></a></span>
-<span id="cb1243-3"><a href="model-assessing-classification-with-roc.html#cb1243-3" tabindex="-1"></a>df_train <span class="ot">&lt;-</span></span>
-<span id="cb1243-4"><a href="model-assessing-classification-with-roc.html#cb1243-4" tabindex="-1"></a>  df_data <span class="sc">%&gt;%</span></span>
-<span id="cb1243-5"><a href="model-assessing-classification-with-roc.html#cb1243-5" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">200</span>)</span>
-<span id="cb1243-6"><a href="model-assessing-classification-with-roc.html#cb1243-6" tabindex="-1"></a></span>
-<span id="cb1243-7"><a href="model-assessing-classification-with-roc.html#cb1243-7" tabindex="-1"></a>df_validate <span class="ot">&lt;-</span></span>
-<span id="cb1243-8"><a href="model-assessing-classification-with-roc.html#cb1243-8" tabindex="-1"></a>  <span class="fu">anti_join</span>(</span>
-<span id="cb1243-9"><a href="model-assessing-classification-with-roc.html#cb1243-9" tabindex="-1"></a>    df_data,</span>
-<span id="cb1243-10"><a href="model-assessing-classification-with-roc.html#cb1243-10" tabindex="-1"></a>    df_train,</span>
-<span id="cb1243-11"><a href="model-assessing-classification-with-roc.html#cb1243-11" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;rowid&quot;</span></span>
-<span id="cb1243-12"><a href="model-assessing-classification-with-roc.html#cb1243-12" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1248-1"><a href="model-assessing-classification-with-roc.html#cb1248-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1248-2"><a href="model-assessing-classification-with-roc.html#cb1248-2" tabindex="-1"></a></span>
+<span id="cb1248-3"><a href="model-assessing-classification-with-roc.html#cb1248-3" tabindex="-1"></a>df_train <span class="ot">&lt;-</span></span>
+<span id="cb1248-4"><a href="model-assessing-classification-with-roc.html#cb1248-4" tabindex="-1"></a>  df_data <span class="sc">%&gt;%</span></span>
+<span id="cb1248-5"><a href="model-assessing-classification-with-roc.html#cb1248-5" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">200</span>)</span>
+<span id="cb1248-6"><a href="model-assessing-classification-with-roc.html#cb1248-6" tabindex="-1"></a></span>
+<span id="cb1248-7"><a href="model-assessing-classification-with-roc.html#cb1248-7" tabindex="-1"></a>df_validate <span class="ot">&lt;-</span></span>
+<span id="cb1248-8"><a href="model-assessing-classification-with-roc.html#cb1248-8" tabindex="-1"></a>  <span class="fu">anti_join</span>(</span>
+<span id="cb1248-9"><a href="model-assessing-classification-with-roc.html#cb1248-9" tabindex="-1"></a>    df_data,</span>
+<span id="cb1248-10"><a href="model-assessing-classification-with-roc.html#cb1248-10" tabindex="-1"></a>    df_train,</span>
+<span id="cb1248-11"><a href="model-assessing-classification-with-roc.html#cb1248-11" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;rowid&quot;</span></span>
+<span id="cb1248-12"><a href="model-assessing-classification-with-roc.html#cb1248-12" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
 <div id="assessing-a-classifier" class="section level2 hasAnchor" number="58.2">
 <h2><span class="header-section-number">58.2</span> Assessing a Classifier<a href="model-assessing-classification-with-roc.html#assessing-a-classifier" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>What makes for a “good” or a “bad” classifier? When studying continuous models, we studied a variety of diagnostic plots and error metrics to assess model accuracy. However, since we’re now dealing with a discrete response, our metrics are going to look very different. In order to assess a classifier, we’re going to need to build up some concepts.</p>
 <p>To learn these concepts, let’s return to the basic model from the previous modeling exercise:</p>
-<div class="sourceCode" id="cb1244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1244-1"><a href="model-assessing-classification-with-roc.html#cb1244-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb1244-2"><a href="model-assessing-classification-with-roc.html#cb1244-2" tabindex="-1"></a><span class="do">## Fit a basic logistic regression model: biological-sex only</span></span>
-<span id="cb1244-3"><a href="model-assessing-classification-with-roc.html#cb1244-3" tabindex="-1"></a>fit_basic <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb1244-4"><a href="model-assessing-classification-with-roc.html#cb1244-4" tabindex="-1"></a>  <span class="at">formula =</span> heart_disease <span class="sc">~</span> sex,</span>
-<span id="cb1244-5"><a href="model-assessing-classification-with-roc.html#cb1244-5" tabindex="-1"></a>  <span class="at">data =</span> df_train,</span>
-<span id="cb1244-6"><a href="model-assessing-classification-with-roc.html#cb1244-6" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
-<span id="cb1244-7"><a href="model-assessing-classification-with-roc.html#cb1244-7" tabindex="-1"></a>)</span>
-<span id="cb1244-8"><a href="model-assessing-classification-with-roc.html#cb1244-8" tabindex="-1"></a></span>
-<span id="cb1244-9"><a href="model-assessing-classification-with-roc.html#cb1244-9" tabindex="-1"></a><span class="do">## Predict the heart disease probabilities on the validation data</span></span>
-<span id="cb1244-10"><a href="model-assessing-classification-with-roc.html#cb1244-10" tabindex="-1"></a>df_basic <span class="ot">&lt;-</span></span>
-<span id="cb1244-11"><a href="model-assessing-classification-with-roc.html#cb1244-11" tabindex="-1"></a>  df_validate <span class="sc">%&gt;%</span></span>
-<span id="cb1244-12"><a href="model-assessing-classification-with-roc.html#cb1244-12" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_basic, <span class="at">var =</span> <span class="st">&quot;log_odds_ratio&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1244-13"><a href="model-assessing-classification-with-roc.html#cb1244-13" tabindex="-1"></a>  <span class="fu">arrange</span>(log_odds_ratio) <span class="sc">%&gt;%</span></span>
-<span id="cb1244-14"><a href="model-assessing-classification-with-roc.html#cb1244-14" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">&quot;order&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1244-15"><a href="model-assessing-classification-with-roc.html#cb1244-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_heart_disease =</span> <span class="fu">inv.logit</span>(log_odds_ratio))</span></code></pre></div>
+<div class="sourceCode" id="cb1249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1249-1"><a href="model-assessing-classification-with-roc.html#cb1249-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb1249-2"><a href="model-assessing-classification-with-roc.html#cb1249-2" tabindex="-1"></a><span class="do">## Fit a basic logistic regression model: biological-sex only</span></span>
+<span id="cb1249-3"><a href="model-assessing-classification-with-roc.html#cb1249-3" tabindex="-1"></a>fit_basic <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb1249-4"><a href="model-assessing-classification-with-roc.html#cb1249-4" tabindex="-1"></a>  <span class="at">formula =</span> heart_disease <span class="sc">~</span> sex,</span>
+<span id="cb1249-5"><a href="model-assessing-classification-with-roc.html#cb1249-5" tabindex="-1"></a>  <span class="at">data =</span> df_train,</span>
+<span id="cb1249-6"><a href="model-assessing-classification-with-roc.html#cb1249-6" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
+<span id="cb1249-7"><a href="model-assessing-classification-with-roc.html#cb1249-7" tabindex="-1"></a>)</span>
+<span id="cb1249-8"><a href="model-assessing-classification-with-roc.html#cb1249-8" tabindex="-1"></a></span>
+<span id="cb1249-9"><a href="model-assessing-classification-with-roc.html#cb1249-9" tabindex="-1"></a><span class="do">## Predict the heart disease probabilities on the validation data</span></span>
+<span id="cb1249-10"><a href="model-assessing-classification-with-roc.html#cb1249-10" tabindex="-1"></a>df_basic <span class="ot">&lt;-</span></span>
+<span id="cb1249-11"><a href="model-assessing-classification-with-roc.html#cb1249-11" tabindex="-1"></a>  df_validate <span class="sc">%&gt;%</span></span>
+<span id="cb1249-12"><a href="model-assessing-classification-with-roc.html#cb1249-12" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_basic, <span class="at">var =</span> <span class="st">&quot;log_odds_ratio&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1249-13"><a href="model-assessing-classification-with-roc.html#cb1249-13" tabindex="-1"></a>  <span class="fu">arrange</span>(log_odds_ratio) <span class="sc">%&gt;%</span></span>
+<span id="cb1249-14"><a href="model-assessing-classification-with-roc.html#cb1249-14" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">&quot;order&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1249-15"><a href="model-assessing-classification-with-roc.html#cb1249-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_heart_disease =</span> <span class="fu">inv.logit</span>(log_odds_ratio))</span></code></pre></div>
 </div>
 <div id="positives-and-negatives" class="section level2 hasAnchor" number="58.3">
 <h2><span class="header-section-number">58.3</span> Positives and negatives<a href="model-assessing-classification-with-roc.html#positives-and-negatives" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1313,61 +1313,60 @@ FN | Total count of False Negatives |</div>
 <h3><span class="header-section-number">58.4.1</span> <strong>q1</strong> Compute the true positive rate (TPR) and false positive rate (FPR) using the model fitted above, calculating on the validation data.<a href="model-assessing-classification-with-roc.html#q1-compute-the-true-positive-rate-tpr-and-false-positive-rate-fpr-using-the-model-fitted-above-calculating-on-the-validation-data." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint 1</em>: Remember that you can use <code>summarize(n = sum(boolean))</code> to count the number of <code>TRUE</code> values in a variable <code>boolean</code>. Feel free to compute intermediate boolean values with things like <code>mutate(boolean = (x &lt; 0) &amp; flag)</code> before your summarize.</p>
 <p><em>Hint 2</em>: We did part of this in the previous modeling exercise!</p>
-<div class="sourceCode" id="cb1245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1245-1"><a href="model-assessing-classification-with-roc.html#cb1245-1" tabindex="-1"></a>pr_threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb1245-2"><a href="model-assessing-classification-with-roc.html#cb1245-2" tabindex="-1"></a></span>
-<span id="cb1245-3"><a href="model-assessing-classification-with-roc.html#cb1245-3" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
-<span id="cb1245-4"><a href="model-assessing-classification-with-roc.html#cb1245-4" tabindex="-1"></a>  df_basic <span class="sc">%&gt;%</span></span>
-<span id="cb1245-5"><a href="model-assessing-classification-with-roc.html#cb1245-5" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1245-6"><a href="model-assessing-classification-with-roc.html#cb1245-6" tabindex="-1"></a>    <span class="at">true_positive =</span> (pr_heart_disease <span class="sc">&gt;</span> pr_threshold) <span class="sc">&amp;</span> heart_disease,</span>
-<span id="cb1245-7"><a href="model-assessing-classification-with-roc.html#cb1245-7" tabindex="-1"></a>    <span class="at">false_positive =</span> (pr_heart_disease <span class="sc">&gt;</span> pr_threshold) <span class="sc">&amp;</span> <span class="sc">!</span>heart_disease,</span>
-<span id="cb1245-8"><a href="model-assessing-classification-with-roc.html#cb1245-8" tabindex="-1"></a>    <span class="at">true_negative =</span> (pr_heart_disease <span class="sc">&lt;=</span> pr_threshold) <span class="sc">&amp;</span> <span class="sc">!</span>heart_disease,</span>
-<span id="cb1245-9"><a href="model-assessing-classification-with-roc.html#cb1245-9" tabindex="-1"></a>    <span class="at">false_negative =</span> (pr_heart_disease <span class="sc">&lt;=</span> pr_threshold) <span class="sc">&amp;</span> heart_disease</span>
-<span id="cb1245-10"><a href="model-assessing-classification-with-roc.html#cb1245-10" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1245-11"><a href="model-assessing-classification-with-roc.html#cb1245-11" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb1245-12"><a href="model-assessing-classification-with-roc.html#cb1245-12" tabindex="-1"></a>    <span class="at">TP =</span> <span class="fu">sum</span>(true_positive),</span>
-<span id="cb1245-13"><a href="model-assessing-classification-with-roc.html#cb1245-13" tabindex="-1"></a>    <span class="at">FP =</span> <span class="fu">sum</span>(false_positive),</span>
-<span id="cb1245-14"><a href="model-assessing-classification-with-roc.html#cb1245-14" tabindex="-1"></a>    <span class="at">TN =</span> <span class="fu">sum</span>(true_negative),</span>
-<span id="cb1245-15"><a href="model-assessing-classification-with-roc.html#cb1245-15" tabindex="-1"></a>    <span class="at">FN =</span> <span class="fu">sum</span>(false_negative)</span>
-<span id="cb1245-16"><a href="model-assessing-classification-with-roc.html#cb1245-16" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1245-17"><a href="model-assessing-classification-with-roc.html#cb1245-17" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1245-18"><a href="model-assessing-classification-with-roc.html#cb1245-18" tabindex="-1"></a>    <span class="at">TPR =</span> TP <span class="sc">/</span> (TP <span class="sc">+</span> FN),</span>
-<span id="cb1245-19"><a href="model-assessing-classification-with-roc.html#cb1245-19" tabindex="-1"></a>    <span class="at">FPR =</span> FP <span class="sc">/</span> (FP <span class="sc">+</span> TN)</span>
-<span id="cb1245-20"><a href="model-assessing-classification-with-roc.html#cb1245-20" tabindex="-1"></a>  )</span>
-<span id="cb1245-21"><a href="model-assessing-classification-with-roc.html#cb1245-21" tabindex="-1"></a></span>
-<span id="cb1245-22"><a href="model-assessing-classification-with-roc.html#cb1245-22" tabindex="-1"></a>df_q1</span></code></pre></div>
+<div class="sourceCode" id="cb1250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1250-1"><a href="model-assessing-classification-with-roc.html#cb1250-1" tabindex="-1"></a>pr_threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb1250-2"><a href="model-assessing-classification-with-roc.html#cb1250-2" tabindex="-1"></a></span>
+<span id="cb1250-3"><a href="model-assessing-classification-with-roc.html#cb1250-3" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
+<span id="cb1250-4"><a href="model-assessing-classification-with-roc.html#cb1250-4" tabindex="-1"></a>  df_basic <span class="sc">%&gt;%</span></span>
+<span id="cb1250-5"><a href="model-assessing-classification-with-roc.html#cb1250-5" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1250-6"><a href="model-assessing-classification-with-roc.html#cb1250-6" tabindex="-1"></a>    <span class="at">true_positive =</span> (pr_heart_disease <span class="sc">&gt;</span> pr_threshold) <span class="sc">&amp;</span> heart_disease,</span>
+<span id="cb1250-7"><a href="model-assessing-classification-with-roc.html#cb1250-7" tabindex="-1"></a>    <span class="at">false_positive =</span> (pr_heart_disease <span class="sc">&gt;</span> pr_threshold) <span class="sc">&amp;</span> <span class="sc">!</span>heart_disease,</span>
+<span id="cb1250-8"><a href="model-assessing-classification-with-roc.html#cb1250-8" tabindex="-1"></a>    <span class="at">true_negative =</span> (pr_heart_disease <span class="sc">&lt;=</span> pr_threshold) <span class="sc">&amp;</span> <span class="sc">!</span>heart_disease,</span>
+<span id="cb1250-9"><a href="model-assessing-classification-with-roc.html#cb1250-9" tabindex="-1"></a>    <span class="at">false_negative =</span> (pr_heart_disease <span class="sc">&lt;=</span> pr_threshold) <span class="sc">&amp;</span> heart_disease</span>
+<span id="cb1250-10"><a href="model-assessing-classification-with-roc.html#cb1250-10" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1250-11"><a href="model-assessing-classification-with-roc.html#cb1250-11" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb1250-12"><a href="model-assessing-classification-with-roc.html#cb1250-12" tabindex="-1"></a>    <span class="at">TP =</span> <span class="fu">sum</span>(true_positive),</span>
+<span id="cb1250-13"><a href="model-assessing-classification-with-roc.html#cb1250-13" tabindex="-1"></a>    <span class="at">FP =</span> <span class="fu">sum</span>(false_positive),</span>
+<span id="cb1250-14"><a href="model-assessing-classification-with-roc.html#cb1250-14" tabindex="-1"></a>    <span class="at">TN =</span> <span class="fu">sum</span>(true_negative),</span>
+<span id="cb1250-15"><a href="model-assessing-classification-with-roc.html#cb1250-15" tabindex="-1"></a>    <span class="at">FN =</span> <span class="fu">sum</span>(false_negative)</span>
+<span id="cb1250-16"><a href="model-assessing-classification-with-roc.html#cb1250-16" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1250-17"><a href="model-assessing-classification-with-roc.html#cb1250-17" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1250-18"><a href="model-assessing-classification-with-roc.html#cb1250-18" tabindex="-1"></a>    <span class="at">TPR =</span> TP <span class="sc">/</span> (TP <span class="sc">+</span> FN),</span>
+<span id="cb1250-19"><a href="model-assessing-classification-with-roc.html#cb1250-19" tabindex="-1"></a>    <span class="at">FPR =</span> FP <span class="sc">/</span> (FP <span class="sc">+</span> TN)</span>
+<span id="cb1250-20"><a href="model-assessing-classification-with-roc.html#cb1250-20" tabindex="-1"></a>  )</span>
+<span id="cb1250-21"><a href="model-assessing-classification-with-roc.html#cb1250-21" tabindex="-1"></a></span>
+<span id="cb1250-22"><a href="model-assessing-classification-with-roc.html#cb1250-22" tabindex="-1"></a>df_q1</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 6
 ##      TP    FP    TN    FN   TPR   FPR
 ##   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1    26    37    24    10 0.722 0.607</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb1247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1247-1"><a href="model-assessing-classification-with-roc.html#cb1247-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; use this to check your work</span></span>
-<span id="cb1247-2"><a href="model-assessing-classification-with-roc.html#cb1247-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb1247-3"><a href="model-assessing-classification-with-roc.html#cb1247-3" tabindex="-1"></a>  <span class="fu">all_equal</span>(</span>
-<span id="cb1247-4"><a href="model-assessing-classification-with-roc.html#cb1247-4" tabindex="-1"></a>    df_q1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(TPR, FPR),</span>
-<span id="cb1247-5"><a href="model-assessing-classification-with-roc.html#cb1247-5" tabindex="-1"></a>    df_validate <span class="sc">%&gt;%</span></span>
-<span id="cb1247-6"><a href="model-assessing-classification-with-roc.html#cb1247-6" tabindex="-1"></a>      <span class="fu">add_predictions</span>(fit_basic, <span class="at">var =</span> <span class="st">&quot;l_heart_disease&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1247-7"><a href="model-assessing-classification-with-roc.html#cb1247-7" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">pr_heart_disease =</span> <span class="fu">inv.logit</span>(l_heart_disease)) <span class="sc">%&gt;%</span></span>
-<span id="cb1247-8"><a href="model-assessing-classification-with-roc.html#cb1247-8" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
-<span id="cb1247-9"><a href="model-assessing-classification-with-roc.html#cb1247-9" tabindex="-1"></a>      <span class="at">TP =</span> <span class="fu">sum</span>((pr_heart_disease <span class="sc">&gt;</span> pr_threshold) <span class="sc">&amp;</span> heart_disease),</span>
-<span id="cb1247-10"><a href="model-assessing-classification-with-roc.html#cb1247-10" tabindex="-1"></a>      <span class="at">FP =</span> <span class="fu">sum</span>((pr_heart_disease <span class="sc">&gt;</span> pr_threshold) <span class="sc">&amp;</span> <span class="sc">!</span>heart_disease),</span>
-<span id="cb1247-11"><a href="model-assessing-classification-with-roc.html#cb1247-11" tabindex="-1"></a>      <span class="at">TN =</span> <span class="fu">sum</span>((pr_heart_disease <span class="sc">&lt;=</span> pr_threshold) <span class="sc">&amp;</span> <span class="sc">!</span>heart_disease),</span>
-<span id="cb1247-12"><a href="model-assessing-classification-with-roc.html#cb1247-12" tabindex="-1"></a>      <span class="at">FN =</span> <span class="fu">sum</span>((pr_heart_disease <span class="sc">&lt;=</span> pr_threshold) <span class="sc">&amp;</span> heart_disease)</span>
-<span id="cb1247-13"><a href="model-assessing-classification-with-roc.html#cb1247-13" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb1247-14"><a href="model-assessing-classification-with-roc.html#cb1247-14" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb1247-15"><a href="model-assessing-classification-with-roc.html#cb1247-15" tabindex="-1"></a>      <span class="at">TPR =</span> TP <span class="sc">/</span> (TP <span class="sc">+</span> FN),</span>
-<span id="cb1247-16"><a href="model-assessing-classification-with-roc.html#cb1247-16" tabindex="-1"></a>      <span class="at">FPR =</span> FP <span class="sc">/</span> (FP <span class="sc">+</span> TN)</span>
-<span id="cb1247-17"><a href="model-assessing-classification-with-roc.html#cb1247-17" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb1247-18"><a href="model-assessing-classification-with-roc.html#cb1247-18" tabindex="-1"></a>    <span class="fu">select</span>(TPR, FPR)</span>
-<span id="cb1247-19"><a href="model-assessing-classification-with-roc.html#cb1247-19" tabindex="-1"></a>  )</span>
-<span id="cb1247-20"><a href="model-assessing-classification-with-roc.html#cb1247-20" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1252-1"><a href="model-assessing-classification-with-roc.html#cb1252-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; use this to check your work</span></span>
+<span id="cb1252-2"><a href="model-assessing-classification-with-roc.html#cb1252-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb1252-3"><a href="model-assessing-classification-with-roc.html#cb1252-3" tabindex="-1"></a>  <span class="fu">all_equal</span>(</span>
+<span id="cb1252-4"><a href="model-assessing-classification-with-roc.html#cb1252-4" tabindex="-1"></a>    df_q1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(TPR, FPR),</span>
+<span id="cb1252-5"><a href="model-assessing-classification-with-roc.html#cb1252-5" tabindex="-1"></a>    df_validate <span class="sc">%&gt;%</span></span>
+<span id="cb1252-6"><a href="model-assessing-classification-with-roc.html#cb1252-6" tabindex="-1"></a>      <span class="fu">add_predictions</span>(fit_basic, <span class="at">var =</span> <span class="st">&quot;l_heart_disease&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1252-7"><a href="model-assessing-classification-with-roc.html#cb1252-7" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">pr_heart_disease =</span> <span class="fu">inv.logit</span>(l_heart_disease)) <span class="sc">%&gt;%</span></span>
+<span id="cb1252-8"><a href="model-assessing-classification-with-roc.html#cb1252-8" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
+<span id="cb1252-9"><a href="model-assessing-classification-with-roc.html#cb1252-9" tabindex="-1"></a>      <span class="at">TP =</span> <span class="fu">sum</span>((pr_heart_disease <span class="sc">&gt;</span> pr_threshold) <span class="sc">&amp;</span> heart_disease),</span>
+<span id="cb1252-10"><a href="model-assessing-classification-with-roc.html#cb1252-10" tabindex="-1"></a>      <span class="at">FP =</span> <span class="fu">sum</span>((pr_heart_disease <span class="sc">&gt;</span> pr_threshold) <span class="sc">&amp;</span> <span class="sc">!</span>heart_disease),</span>
+<span id="cb1252-11"><a href="model-assessing-classification-with-roc.html#cb1252-11" tabindex="-1"></a>      <span class="at">TN =</span> <span class="fu">sum</span>((pr_heart_disease <span class="sc">&lt;=</span> pr_threshold) <span class="sc">&amp;</span> <span class="sc">!</span>heart_disease),</span>
+<span id="cb1252-12"><a href="model-assessing-classification-with-roc.html#cb1252-12" tabindex="-1"></a>      <span class="at">FN =</span> <span class="fu">sum</span>((pr_heart_disease <span class="sc">&lt;=</span> pr_threshold) <span class="sc">&amp;</span> heart_disease)</span>
+<span id="cb1252-13"><a href="model-assessing-classification-with-roc.html#cb1252-13" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb1252-14"><a href="model-assessing-classification-with-roc.html#cb1252-14" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb1252-15"><a href="model-assessing-classification-with-roc.html#cb1252-15" tabindex="-1"></a>      <span class="at">TPR =</span> TP <span class="sc">/</span> (TP <span class="sc">+</span> FN),</span>
+<span id="cb1252-16"><a href="model-assessing-classification-with-roc.html#cb1252-16" tabindex="-1"></a>      <span class="at">FPR =</span> FP <span class="sc">/</span> (FP <span class="sc">+</span> TN)</span>
+<span id="cb1252-17"><a href="model-assessing-classification-with-roc.html#cb1252-17" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb1252-18"><a href="model-assessing-classification-with-roc.html#cb1252-18" tabindex="-1"></a>    <span class="fu">select</span>(TPR, FPR)</span>
+<span id="cb1252-19"><a href="model-assessing-classification-with-roc.html#cb1252-19" tabindex="-1"></a>  )</span>
+<span id="cb1252-20"><a href="model-assessing-classification-with-roc.html#cb1252-20" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning: `all_equal()` was deprecated in dplyr 1.1.0.
 ## ℹ Please use `all.equal()` instead.
 ## ℹ And manually order the rows/cols as needed
-## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1250-1"><a href="model-assessing-classification-with-roc.html#cb1250-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1255-1"><a href="model-assessing-classification-with-roc.html#cb1255-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Excellent!&quot;</code></pre>
 </div>
 </div>
@@ -1378,29 +1377,22 @@ FN | Total count of False Negatives |</div>
 <p>To compute an ROC curve, we could construct a confusion matrix at a variety of thresholds, compute the TPR and FPR for each, and repeat. However, there’s a small bit of “shortcut code” we could use to do the same thing. The following chunk illustrates how to compute an ROC curve.</p>
 <div id="q2-inspect-the-following-roc-curve-for-the-basic-classifier-and-assess-its-performance.-is-this-an-effective-classifier-how-do-you-know" class="section level3 hasAnchor" number="58.5.1">
 <h3><span class="header-section-number">58.5.1</span> <strong>q2</strong> Inspect the following ROC curve for the basic classifier and assess its performance. Is this an effective classifier? How do you know?<a href="model-assessing-classification-with-roc.html#q2-inspect-the-following-roc-curve-for-the-basic-classifier-and-assess-its-performance.-is-this-an-effective-classifier-how-do-you-know" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1252-1"><a href="model-assessing-classification-with-roc.html#cb1252-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
-<span id="cb1252-2"><a href="model-assessing-classification-with-roc.html#cb1252-2" tabindex="-1"></a>df_basic <span class="sc">%&gt;%</span></span>
-<span id="cb1252-3"><a href="model-assessing-classification-with-roc.html#cb1252-3" tabindex="-1"></a>  <span class="do">## Begin: Shortcut code for computing an ROC</span></span>
-<span id="cb1252-4"><a href="model-assessing-classification-with-roc.html#cb1252-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pr_heart_disease)) <span class="sc">%&gt;%</span></span>
-<span id="cb1252-5"><a href="model-assessing-classification-with-roc.html#cb1252-5" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb1252-6"><a href="model-assessing-classification-with-roc.html#cb1252-6" tabindex="-1"></a>    <span class="at">true_positive_rate =</span> <span class="fu">cumsum</span>(heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(heart_disease),</span>
-<span id="cb1252-7"><a href="model-assessing-classification-with-roc.html#cb1252-7" tabindex="-1"></a>    <span class="at">false_positive_rate =</span> <span class="fu">cumsum</span>(<span class="sc">!</span>heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span>heart_disease)</span>
-<span id="cb1252-8"><a href="model-assessing-classification-with-roc.html#cb1252-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1252-9"><a href="model-assessing-classification-with-roc.html#cb1252-9" tabindex="-1"></a>  <span class="do">## End: Shortcut code for computing an ROC</span></span>
-<span id="cb1252-10"><a href="model-assessing-classification-with-roc.html#cb1252-10" tabindex="-1"></a></span>
-<span id="cb1252-11"><a href="model-assessing-classification-with-roc.html#cb1252-11" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(false_positive_rate, true_positive_rate)) <span class="sc">+</span></span>
-<span id="cb1252-12"><a href="model-assessing-classification-with-roc.html#cb1252-12" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb1252-13"><a href="model-assessing-classification-with-roc.html#cb1252-13" tabindex="-1"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
-<span id="cb1252-14"><a href="model-assessing-classification-with-roc.html#cb1252-14" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb1252-15"><a href="model-assessing-classification-with-roc.html#cb1252-15" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<pre><code>## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-## dplyr 1.1.0.
-## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
-<p><img src="d53-e-model05-roc-solution_files/figure-html/q2-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1257-1"><a href="model-assessing-classification-with-roc.html#cb1257-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; run and inspect</span></span>
+<span id="cb1257-2"><a href="model-assessing-classification-with-roc.html#cb1257-2" tabindex="-1"></a>df_basic <span class="sc">%&gt;%</span></span>
+<span id="cb1257-3"><a href="model-assessing-classification-with-roc.html#cb1257-3" tabindex="-1"></a>  <span class="do">## Begin: Shortcut code for computing an ROC</span></span>
+<span id="cb1257-4"><a href="model-assessing-classification-with-roc.html#cb1257-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pr_heart_disease)) <span class="sc">%&gt;%</span></span>
+<span id="cb1257-5"><a href="model-assessing-classification-with-roc.html#cb1257-5" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1257-6"><a href="model-assessing-classification-with-roc.html#cb1257-6" tabindex="-1"></a>    <span class="at">true_positive_rate =</span> <span class="fu">cumsum</span>(heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(heart_disease),</span>
+<span id="cb1257-7"><a href="model-assessing-classification-with-roc.html#cb1257-7" tabindex="-1"></a>    <span class="at">false_positive_rate =</span> <span class="fu">cumsum</span>(<span class="sc">!</span>heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span>heart_disease)</span>
+<span id="cb1257-8"><a href="model-assessing-classification-with-roc.html#cb1257-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1257-9"><a href="model-assessing-classification-with-roc.html#cb1257-9" tabindex="-1"></a>  <span class="do">## End: Shortcut code for computing an ROC</span></span>
+<span id="cb1257-10"><a href="model-assessing-classification-with-roc.html#cb1257-10" tabindex="-1"></a></span>
+<span id="cb1257-11"><a href="model-assessing-classification-with-roc.html#cb1257-11" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(false_positive_rate, true_positive_rate)) <span class="sc">+</span></span>
+<span id="cb1257-12"><a href="model-assessing-classification-with-roc.html#cb1257-12" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1257-13"><a href="model-assessing-classification-with-roc.html#cb1257-13" tabindex="-1"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
+<span id="cb1257-14"><a href="model-assessing-classification-with-roc.html#cb1257-14" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1257-15"><a href="model-assessing-classification-with-roc.html#cb1257-15" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="d53-e-model05-roc-solution_files/figure-html/q2-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>This is a highly ineffective classifier; the ROC curve is very near the diagonal, indicating the classifier is not much better (for some thresholds—worse than) random guessing.</li>
@@ -1413,43 +1405,36 @@ FN | Total count of False Negatives |</div>
 <p>Let’s get some practice reading ROC curves.</p>
 <div id="q3-inspect-the-following-roc-curve.-is-this-an-effective-classifier-what-explains-this-models-performance-is-this-model-valid-for-prediction" class="section level3 hasAnchor" number="58.6.1">
 <h3><span class="header-section-number">58.6.1</span> <strong>q3</strong> Inspect the following ROC curve. Is this an effective classifier? What explains this model’s performance? Is this model valid for prediction?<a href="model-assessing-classification-with-roc.html#q3-inspect-the-following-roc-curve.-is-this-an-effective-classifier-what-explains-this-models-performance-is-this-model-valid-for-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1254-1"><a href="model-assessing-classification-with-roc.html#cb1254-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb1254-2"><a href="model-assessing-classification-with-roc.html#cb1254-2" tabindex="-1"></a>fit_cheating <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb1254-3"><a href="model-assessing-classification-with-roc.html#cb1254-3" tabindex="-1"></a>  <span class="at">formula =</span> heart_disease <span class="sc">~</span> num,</span>
-<span id="cb1254-4"><a href="model-assessing-classification-with-roc.html#cb1254-4" tabindex="-1"></a>  <span class="at">data =</span> df_train,</span>
-<span id="cb1254-5"><a href="model-assessing-classification-with-roc.html#cb1254-5" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
-<span id="cb1254-6"><a href="model-assessing-classification-with-roc.html#cb1254-6" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1258-1"><a href="model-assessing-classification-with-roc.html#cb1258-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb1258-2"><a href="model-assessing-classification-with-roc.html#cb1258-2" tabindex="-1"></a>fit_cheating <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb1258-3"><a href="model-assessing-classification-with-roc.html#cb1258-3" tabindex="-1"></a>  <span class="at">formula =</span> heart_disease <span class="sc">~</span> num,</span>
+<span id="cb1258-4"><a href="model-assessing-classification-with-roc.html#cb1258-4" tabindex="-1"></a>  <span class="at">data =</span> df_train,</span>
+<span id="cb1258-5"><a href="model-assessing-classification-with-roc.html#cb1258-5" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
+<span id="cb1258-6"><a href="model-assessing-classification-with-roc.html#cb1258-6" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
 <pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
-<div class="sourceCode" id="cb1257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1257-1"><a href="model-assessing-classification-with-roc.html#cb1257-1" tabindex="-1"></a>df_cheating <span class="ot">&lt;-</span></span>
-<span id="cb1257-2"><a href="model-assessing-classification-with-roc.html#cb1257-2" tabindex="-1"></a>  df_validate <span class="sc">%&gt;%</span></span>
-<span id="cb1257-3"><a href="model-assessing-classification-with-roc.html#cb1257-3" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_cheating, <span class="at">var =</span> <span class="st">&quot;log_odds_ratio&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1257-4"><a href="model-assessing-classification-with-roc.html#cb1257-4" tabindex="-1"></a>  <span class="fu">arrange</span>(log_odds_ratio) <span class="sc">%&gt;%</span></span>
-<span id="cb1257-5"><a href="model-assessing-classification-with-roc.html#cb1257-5" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">&quot;order&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1257-6"><a href="model-assessing-classification-with-roc.html#cb1257-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_heart_disease =</span> <span class="fu">inv.logit</span>(log_odds_ratio))</span>
-<span id="cb1257-7"><a href="model-assessing-classification-with-roc.html#cb1257-7" tabindex="-1"></a></span>
-<span id="cb1257-8"><a href="model-assessing-classification-with-roc.html#cb1257-8" tabindex="-1"></a>df_cheating <span class="sc">%&gt;%</span></span>
-<span id="cb1257-9"><a href="model-assessing-classification-with-roc.html#cb1257-9" tabindex="-1"></a>  <span class="do">## Begin: Shortcut code for computing an ROC</span></span>
-<span id="cb1257-10"><a href="model-assessing-classification-with-roc.html#cb1257-10" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pr_heart_disease)) <span class="sc">%&gt;%</span></span>
-<span id="cb1257-11"><a href="model-assessing-classification-with-roc.html#cb1257-11" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb1257-12"><a href="model-assessing-classification-with-roc.html#cb1257-12" tabindex="-1"></a>    <span class="at">true_positive_rate =</span> <span class="fu">cumsum</span>(heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(heart_disease),</span>
-<span id="cb1257-13"><a href="model-assessing-classification-with-roc.html#cb1257-13" tabindex="-1"></a>    <span class="at">false_positive_rate =</span> <span class="fu">cumsum</span>(<span class="sc">!</span>heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span>heart_disease)</span>
-<span id="cb1257-14"><a href="model-assessing-classification-with-roc.html#cb1257-14" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1257-15"><a href="model-assessing-classification-with-roc.html#cb1257-15" tabindex="-1"></a>  <span class="do">## End: Shortcut code for computing an ROC</span></span>
-<span id="cb1257-16"><a href="model-assessing-classification-with-roc.html#cb1257-16" tabindex="-1"></a></span>
-<span id="cb1257-17"><a href="model-assessing-classification-with-roc.html#cb1257-17" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(false_positive_rate, true_positive_rate)) <span class="sc">+</span></span>
-<span id="cb1257-18"><a href="model-assessing-classification-with-roc.html#cb1257-18" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb1257-19"><a href="model-assessing-classification-with-roc.html#cb1257-19" tabindex="-1"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
-<span id="cb1257-20"><a href="model-assessing-classification-with-roc.html#cb1257-20" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb1257-21"><a href="model-assessing-classification-with-roc.html#cb1257-21" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<pre><code>## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-## dplyr 1.1.0.
-## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
-<p><img src="d53-e-model05-roc-solution_files/figure-html/q3-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1261-1"><a href="model-assessing-classification-with-roc.html#cb1261-1" tabindex="-1"></a>df_cheating <span class="ot">&lt;-</span></span>
+<span id="cb1261-2"><a href="model-assessing-classification-with-roc.html#cb1261-2" tabindex="-1"></a>  df_validate <span class="sc">%&gt;%</span></span>
+<span id="cb1261-3"><a href="model-assessing-classification-with-roc.html#cb1261-3" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_cheating, <span class="at">var =</span> <span class="st">&quot;log_odds_ratio&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1261-4"><a href="model-assessing-classification-with-roc.html#cb1261-4" tabindex="-1"></a>  <span class="fu">arrange</span>(log_odds_ratio) <span class="sc">%&gt;%</span></span>
+<span id="cb1261-5"><a href="model-assessing-classification-with-roc.html#cb1261-5" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">&quot;order&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1261-6"><a href="model-assessing-classification-with-roc.html#cb1261-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_heart_disease =</span> <span class="fu">inv.logit</span>(log_odds_ratio))</span>
+<span id="cb1261-7"><a href="model-assessing-classification-with-roc.html#cb1261-7" tabindex="-1"></a></span>
+<span id="cb1261-8"><a href="model-assessing-classification-with-roc.html#cb1261-8" tabindex="-1"></a>df_cheating <span class="sc">%&gt;%</span></span>
+<span id="cb1261-9"><a href="model-assessing-classification-with-roc.html#cb1261-9" tabindex="-1"></a>  <span class="do">## Begin: Shortcut code for computing an ROC</span></span>
+<span id="cb1261-10"><a href="model-assessing-classification-with-roc.html#cb1261-10" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pr_heart_disease)) <span class="sc">%&gt;%</span></span>
+<span id="cb1261-11"><a href="model-assessing-classification-with-roc.html#cb1261-11" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1261-12"><a href="model-assessing-classification-with-roc.html#cb1261-12" tabindex="-1"></a>    <span class="at">true_positive_rate =</span> <span class="fu">cumsum</span>(heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(heart_disease),</span>
+<span id="cb1261-13"><a href="model-assessing-classification-with-roc.html#cb1261-13" tabindex="-1"></a>    <span class="at">false_positive_rate =</span> <span class="fu">cumsum</span>(<span class="sc">!</span>heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span>heart_disease)</span>
+<span id="cb1261-14"><a href="model-assessing-classification-with-roc.html#cb1261-14" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1261-15"><a href="model-assessing-classification-with-roc.html#cb1261-15" tabindex="-1"></a>  <span class="do">## End: Shortcut code for computing an ROC</span></span>
+<span id="cb1261-16"><a href="model-assessing-classification-with-roc.html#cb1261-16" tabindex="-1"></a></span>
+<span id="cb1261-17"><a href="model-assessing-classification-with-roc.html#cb1261-17" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(false_positive_rate, true_positive_rate)) <span class="sc">+</span></span>
+<span id="cb1261-18"><a href="model-assessing-classification-with-roc.html#cb1261-18" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1261-19"><a href="model-assessing-classification-with-roc.html#cb1261-19" tabindex="-1"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
+<span id="cb1261-20"><a href="model-assessing-classification-with-roc.html#cb1261-20" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1261-21"><a href="model-assessing-classification-with-roc.html#cb1261-21" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="d53-e-model05-roc-solution_files/figure-html/q3-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>This is an <em>optimal</em> classifier; we can achieve TPR = 1 with FPR = 0. In fact, it’s <em>suspiciously good</em>….</li>
@@ -1459,72 +1444,58 @@ FN | Total count of False Negatives |</div>
 </div>
 <div id="q4-fit-a-model-to-the-training-data-and-predict-class-probabilities-on-the-validation-data.-compare-your-models-performance-to-that-of-fit_baseline-fitted-below." class="section level3 hasAnchor" number="58.6.2">
 <h3><span class="header-section-number">58.6.2</span> <strong>q4</strong> Fit a model to the training data, and predict class probabilities on the validation data. Compare your model’s performance to that of <code>fit_baseline</code> (fitted below).<a href="model-assessing-classification-with-roc.html#q4-fit-a-model-to-the-training-data-and-predict-class-probabilities-on-the-validation-data.-compare-your-models-performance-to-that-of-fit_baseline-fitted-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1259-1"><a href="model-assessing-classification-with-roc.html#cb1259-1" tabindex="-1"></a>fit_q4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb1259-2"><a href="model-assessing-classification-with-roc.html#cb1259-2" tabindex="-1"></a>  <span class="at">formula =</span> heart_disease <span class="sc">~</span> age <span class="sc">+</span> cp <span class="sc">+</span> trestbps,</span>
-<span id="cb1259-3"><a href="model-assessing-classification-with-roc.html#cb1259-3" tabindex="-1"></a>  <span class="at">data =</span> df_train,</span>
-<span id="cb1259-4"><a href="model-assessing-classification-with-roc.html#cb1259-4" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
-<span id="cb1259-5"><a href="model-assessing-classification-with-roc.html#cb1259-5" tabindex="-1"></a>)</span>
-<span id="cb1259-6"><a href="model-assessing-classification-with-roc.html#cb1259-6" tabindex="-1"></a></span>
-<span id="cb1259-7"><a href="model-assessing-classification-with-roc.html#cb1259-7" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
-<span id="cb1259-8"><a href="model-assessing-classification-with-roc.html#cb1259-8" tabindex="-1"></a>  df_validate <span class="sc">%&gt;%</span></span>
-<span id="cb1259-9"><a href="model-assessing-classification-with-roc.html#cb1259-9" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_q4, <span class="at">var =</span> <span class="st">&quot;log_odds_ratio&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-10"><a href="model-assessing-classification-with-roc.html#cb1259-10" tabindex="-1"></a>  <span class="fu">arrange</span>(log_odds_ratio) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-11"><a href="model-assessing-classification-with-roc.html#cb1259-11" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">&quot;order&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-12"><a href="model-assessing-classification-with-roc.html#cb1259-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_heart_disease =</span> <span class="fu">inv.logit</span>(log_odds_ratio))</span>
-<span id="cb1259-13"><a href="model-assessing-classification-with-roc.html#cb1259-13" tabindex="-1"></a></span>
-<span id="cb1259-14"><a href="model-assessing-classification-with-roc.html#cb1259-14" tabindex="-1"></a><span class="do">## Here&#39;s another model for comparison</span></span>
-<span id="cb1259-15"><a href="model-assessing-classification-with-roc.html#cb1259-15" tabindex="-1"></a>fit_baseline <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb1259-16"><a href="model-assessing-classification-with-roc.html#cb1259-16" tabindex="-1"></a>  <span class="at">formula =</span> heart_disease <span class="sc">~</span> sex <span class="sc">+</span> cp <span class="sc">+</span> trestbps,</span>
-<span id="cb1259-17"><a href="model-assessing-classification-with-roc.html#cb1259-17" tabindex="-1"></a>  <span class="at">data =</span> df_train,</span>
-<span id="cb1259-18"><a href="model-assessing-classification-with-roc.html#cb1259-18" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
-<span id="cb1259-19"><a href="model-assessing-classification-with-roc.html#cb1259-19" tabindex="-1"></a>)</span>
-<span id="cb1259-20"><a href="model-assessing-classification-with-roc.html#cb1259-20" tabindex="-1"></a></span>
-<span id="cb1259-21"><a href="model-assessing-classification-with-roc.html#cb1259-21" tabindex="-1"></a>df_baseline <span class="ot">&lt;-</span></span>
-<span id="cb1259-22"><a href="model-assessing-classification-with-roc.html#cb1259-22" tabindex="-1"></a>  df_validate <span class="sc">%&gt;%</span></span>
-<span id="cb1259-23"><a href="model-assessing-classification-with-roc.html#cb1259-23" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_baseline, <span class="at">var =</span> <span class="st">&quot;log_odds_ratio&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-24"><a href="model-assessing-classification-with-roc.html#cb1259-24" tabindex="-1"></a>  <span class="fu">arrange</span>(log_odds_ratio) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-25"><a href="model-assessing-classification-with-roc.html#cb1259-25" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">&quot;order&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-26"><a href="model-assessing-classification-with-roc.html#cb1259-26" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_heart_disease =</span> <span class="fu">inv.logit</span>(log_odds_ratio))</span>
-<span id="cb1259-27"><a href="model-assessing-classification-with-roc.html#cb1259-27" tabindex="-1"></a></span>
-<span id="cb1259-28"><a href="model-assessing-classification-with-roc.html#cb1259-28" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb1259-29"><a href="model-assessing-classification-with-roc.html#cb1259-29" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb1259-30"><a href="model-assessing-classification-with-roc.html#cb1259-30" tabindex="-1"></a>  df_q4 <span class="sc">%&gt;%</span></span>
-<span id="cb1259-31"><a href="model-assessing-classification-with-roc.html#cb1259-31" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(pr_heart_disease)) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-32"><a href="model-assessing-classification-with-roc.html#cb1259-32" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
-<span id="cb1259-33"><a href="model-assessing-classification-with-roc.html#cb1259-33" tabindex="-1"></a>      <span class="at">true_positive_rate =</span> <span class="fu">cumsum</span>(heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(heart_disease),</span>
-<span id="cb1259-34"><a href="model-assessing-classification-with-roc.html#cb1259-34" tabindex="-1"></a>      <span class="at">false_positive_rate =</span> <span class="fu">cumsum</span>(<span class="sc">!</span>heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span>heart_disease)</span>
-<span id="cb1259-35"><a href="model-assessing-classification-with-roc.html#cb1259-35" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-36"><a href="model-assessing-classification-with-roc.html#cb1259-36" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;Personal&quot;</span>),</span>
-<span id="cb1259-37"><a href="model-assessing-classification-with-roc.html#cb1259-37" tabindex="-1"></a>  df_baseline <span class="sc">%&gt;%</span></span>
-<span id="cb1259-38"><a href="model-assessing-classification-with-roc.html#cb1259-38" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(pr_heart_disease)) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-39"><a href="model-assessing-classification-with-roc.html#cb1259-39" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
-<span id="cb1259-40"><a href="model-assessing-classification-with-roc.html#cb1259-40" tabindex="-1"></a>      <span class="at">true_positive_rate =</span> <span class="fu">cumsum</span>(heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(heart_disease),</span>
-<span id="cb1259-41"><a href="model-assessing-classification-with-roc.html#cb1259-41" tabindex="-1"></a>      <span class="at">false_positive_rate =</span> <span class="fu">cumsum</span>(<span class="sc">!</span>heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span>heart_disease)</span>
-<span id="cb1259-42"><a href="model-assessing-classification-with-roc.html#cb1259-42" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-43"><a href="model-assessing-classification-with-roc.html#cb1259-43" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;Baseline&quot;</span>)</span>
-<span id="cb1259-44"><a href="model-assessing-classification-with-roc.html#cb1259-44" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1259-45"><a href="model-assessing-classification-with-roc.html#cb1259-45" tabindex="-1"></a></span>
-<span id="cb1259-46"><a href="model-assessing-classification-with-roc.html#cb1259-46" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(false_positive_rate, true_positive_rate, <span class="at">color =</span> model)) <span class="sc">+</span></span>
-<span id="cb1259-47"><a href="model-assessing-classification-with-roc.html#cb1259-47" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb1259-48"><a href="model-assessing-classification-with-roc.html#cb1259-48" tabindex="-1"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
-<span id="cb1259-49"><a href="model-assessing-classification-with-roc.html#cb1259-49" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb1259-50"><a href="model-assessing-classification-with-roc.html#cb1259-50" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb1259-51"><a href="model-assessing-classification-with-roc.html#cb1259-51" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-## dplyr 1.1.0.
-## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
-<pre><code>## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-## dplyr 1.1.0.
-## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
-<p><img src="d53-e-model05-roc-solution_files/figure-html/q4-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1262-1"><a href="model-assessing-classification-with-roc.html#cb1262-1" tabindex="-1"></a>fit_q4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb1262-2"><a href="model-assessing-classification-with-roc.html#cb1262-2" tabindex="-1"></a>  <span class="at">formula =</span> heart_disease <span class="sc">~</span> age <span class="sc">+</span> cp <span class="sc">+</span> trestbps,</span>
+<span id="cb1262-3"><a href="model-assessing-classification-with-roc.html#cb1262-3" tabindex="-1"></a>  <span class="at">data =</span> df_train,</span>
+<span id="cb1262-4"><a href="model-assessing-classification-with-roc.html#cb1262-4" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
+<span id="cb1262-5"><a href="model-assessing-classification-with-roc.html#cb1262-5" tabindex="-1"></a>)</span>
+<span id="cb1262-6"><a href="model-assessing-classification-with-roc.html#cb1262-6" tabindex="-1"></a></span>
+<span id="cb1262-7"><a href="model-assessing-classification-with-roc.html#cb1262-7" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
+<span id="cb1262-8"><a href="model-assessing-classification-with-roc.html#cb1262-8" tabindex="-1"></a>  df_validate <span class="sc">%&gt;%</span></span>
+<span id="cb1262-9"><a href="model-assessing-classification-with-roc.html#cb1262-9" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_q4, <span class="at">var =</span> <span class="st">&quot;log_odds_ratio&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-10"><a href="model-assessing-classification-with-roc.html#cb1262-10" tabindex="-1"></a>  <span class="fu">arrange</span>(log_odds_ratio) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-11"><a href="model-assessing-classification-with-roc.html#cb1262-11" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">&quot;order&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-12"><a href="model-assessing-classification-with-roc.html#cb1262-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_heart_disease =</span> <span class="fu">inv.logit</span>(log_odds_ratio))</span>
+<span id="cb1262-13"><a href="model-assessing-classification-with-roc.html#cb1262-13" tabindex="-1"></a></span>
+<span id="cb1262-14"><a href="model-assessing-classification-with-roc.html#cb1262-14" tabindex="-1"></a><span class="do">## Here&#39;s another model for comparison</span></span>
+<span id="cb1262-15"><a href="model-assessing-classification-with-roc.html#cb1262-15" tabindex="-1"></a>fit_baseline <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb1262-16"><a href="model-assessing-classification-with-roc.html#cb1262-16" tabindex="-1"></a>  <span class="at">formula =</span> heart_disease <span class="sc">~</span> sex <span class="sc">+</span> cp <span class="sc">+</span> trestbps,</span>
+<span id="cb1262-17"><a href="model-assessing-classification-with-roc.html#cb1262-17" tabindex="-1"></a>  <span class="at">data =</span> df_train,</span>
+<span id="cb1262-18"><a href="model-assessing-classification-with-roc.html#cb1262-18" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
+<span id="cb1262-19"><a href="model-assessing-classification-with-roc.html#cb1262-19" tabindex="-1"></a>)</span>
+<span id="cb1262-20"><a href="model-assessing-classification-with-roc.html#cb1262-20" tabindex="-1"></a></span>
+<span id="cb1262-21"><a href="model-assessing-classification-with-roc.html#cb1262-21" tabindex="-1"></a>df_baseline <span class="ot">&lt;-</span></span>
+<span id="cb1262-22"><a href="model-assessing-classification-with-roc.html#cb1262-22" tabindex="-1"></a>  df_validate <span class="sc">%&gt;%</span></span>
+<span id="cb1262-23"><a href="model-assessing-classification-with-roc.html#cb1262-23" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_baseline, <span class="at">var =</span> <span class="st">&quot;log_odds_ratio&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-24"><a href="model-assessing-classification-with-roc.html#cb1262-24" tabindex="-1"></a>  <span class="fu">arrange</span>(log_odds_ratio) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-25"><a href="model-assessing-classification-with-roc.html#cb1262-25" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">&quot;order&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-26"><a href="model-assessing-classification-with-roc.html#cb1262-26" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_heart_disease =</span> <span class="fu">inv.logit</span>(log_odds_ratio))</span>
+<span id="cb1262-27"><a href="model-assessing-classification-with-roc.html#cb1262-27" tabindex="-1"></a></span>
+<span id="cb1262-28"><a href="model-assessing-classification-with-roc.html#cb1262-28" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb1262-29"><a href="model-assessing-classification-with-roc.html#cb1262-29" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb1262-30"><a href="model-assessing-classification-with-roc.html#cb1262-30" tabindex="-1"></a>  df_q4 <span class="sc">%&gt;%</span></span>
+<span id="cb1262-31"><a href="model-assessing-classification-with-roc.html#cb1262-31" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(pr_heart_disease)) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-32"><a href="model-assessing-classification-with-roc.html#cb1262-32" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb1262-33"><a href="model-assessing-classification-with-roc.html#cb1262-33" tabindex="-1"></a>      <span class="at">true_positive_rate =</span> <span class="fu">cumsum</span>(heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(heart_disease),</span>
+<span id="cb1262-34"><a href="model-assessing-classification-with-roc.html#cb1262-34" tabindex="-1"></a>      <span class="at">false_positive_rate =</span> <span class="fu">cumsum</span>(<span class="sc">!</span>heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span>heart_disease)</span>
+<span id="cb1262-35"><a href="model-assessing-classification-with-roc.html#cb1262-35" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-36"><a href="model-assessing-classification-with-roc.html#cb1262-36" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;Personal&quot;</span>),</span>
+<span id="cb1262-37"><a href="model-assessing-classification-with-roc.html#cb1262-37" tabindex="-1"></a>  df_baseline <span class="sc">%&gt;%</span></span>
+<span id="cb1262-38"><a href="model-assessing-classification-with-roc.html#cb1262-38" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(pr_heart_disease)) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-39"><a href="model-assessing-classification-with-roc.html#cb1262-39" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb1262-40"><a href="model-assessing-classification-with-roc.html#cb1262-40" tabindex="-1"></a>      <span class="at">true_positive_rate =</span> <span class="fu">cumsum</span>(heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(heart_disease),</span>
+<span id="cb1262-41"><a href="model-assessing-classification-with-roc.html#cb1262-41" tabindex="-1"></a>      <span class="at">false_positive_rate =</span> <span class="fu">cumsum</span>(<span class="sc">!</span>heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span>heart_disease)</span>
+<span id="cb1262-42"><a href="model-assessing-classification-with-roc.html#cb1262-42" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-43"><a href="model-assessing-classification-with-roc.html#cb1262-43" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;Baseline&quot;</span>)</span>
+<span id="cb1262-44"><a href="model-assessing-classification-with-roc.html#cb1262-44" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1262-45"><a href="model-assessing-classification-with-roc.html#cb1262-45" tabindex="-1"></a></span>
+<span id="cb1262-46"><a href="model-assessing-classification-with-roc.html#cb1262-46" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(false_positive_rate, true_positive_rate, <span class="at">color =</span> model)) <span class="sc">+</span></span>
+<span id="cb1262-47"><a href="model-assessing-classification-with-roc.html#cb1262-47" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1262-48"><a href="model-assessing-classification-with-roc.html#cb1262-48" tabindex="-1"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
+<span id="cb1262-49"><a href="model-assessing-classification-with-roc.html#cb1262-49" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1262-50"><a href="model-assessing-classification-with-roc.html#cb1262-50" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1262-51"><a href="model-assessing-classification-with-roc.html#cb1262-51" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
+<p><img src="d53-e-model05-roc-solution_files/figure-html/q4-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>My model <code>fit_q4</code> is comparable in performance to <code>fit_baseline</code>; it outperforms (in TPR for fixed FPR) in some places, and underperforms in others.</li>
@@ -1538,49 +1509,45 @@ FN | Total count of False Negatives |</div>
 <p>The following chunk plots potential <code>pr_threshold</code> against achieved TPR values for your model. Use this image to pick a classifier threshold.</p>
 <div id="q5-pick-a-target-tpr-value-for-your-heart-disease-predictor-what-is-a-reasonable-value-for-tpr-and-why-did-yo-pick-that-value-what-values-of-pr_threshold-meet-or-exceed-that-target-tpr-what-specific-value-for-pr_threshold-do-you-choose-and-why" class="section level3 hasAnchor" number="58.7.1">
 <h3><span class="header-section-number">58.7.1</span> <strong>q5</strong> Pick a target TPR value for your heart disease predictor; what is a reasonable value for <code>TPR</code>, and why did yo pick that value? What values of <code>pr_threshold</code> meet or exceed that target TPR? What specific value for <code>pr_threshold</code> do you choose, and why?<a href="model-assessing-classification-with-roc.html#q5-pick-a-target-tpr-value-for-your-heart-disease-predictor-what-is-a-reasonable-value-for-tpr-and-why-did-yo-pick-that-value-what-values-of-pr_threshold-meet-or-exceed-that-target-tpr-what-specific-value-for-pr_threshold-do-you-choose-and-why" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1262-1"><a href="model-assessing-classification-with-roc.html#cb1262-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; use these data to pick a threshold</span></span>
-<span id="cb1262-2"><a href="model-assessing-classification-with-roc.html#cb1262-2" tabindex="-1"></a>df_thresholds <span class="ot">&lt;-</span></span>
-<span id="cb1262-3"><a href="model-assessing-classification-with-roc.html#cb1262-3" tabindex="-1"></a>  df_q4 <span class="sc">%&gt;%</span></span>
-<span id="cb1262-4"><a href="model-assessing-classification-with-roc.html#cb1262-4" tabindex="-1"></a>  <span class="do">## Begin: Shortcut code for computing an ROC</span></span>
-<span id="cb1262-5"><a href="model-assessing-classification-with-roc.html#cb1262-5" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pr_heart_disease)) <span class="sc">%&gt;%</span></span>
-<span id="cb1262-6"><a href="model-assessing-classification-with-roc.html#cb1262-6" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb1262-7"><a href="model-assessing-classification-with-roc.html#cb1262-7" tabindex="-1"></a>    <span class="at">pr_heart_disease =</span> pr_heart_disease,</span>
-<span id="cb1262-8"><a href="model-assessing-classification-with-roc.html#cb1262-8" tabindex="-1"></a>    <span class="at">true_positive_rate =</span> <span class="fu">cumsum</span>(heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(heart_disease),</span>
-<span id="cb1262-9"><a href="model-assessing-classification-with-roc.html#cb1262-9" tabindex="-1"></a>    <span class="at">false_positive_rate =</span> <span class="fu">cumsum</span>(<span class="sc">!</span>heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span>heart_disease)</span>
-<span id="cb1262-10"><a href="model-assessing-classification-with-roc.html#cb1262-10" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-## dplyr 1.1.0.
-## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
-<div class="sourceCode" id="cb1264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1264-1"><a href="model-assessing-classification-with-roc.html#cb1264-1" tabindex="-1"></a>  <span class="do">## End: Shortcut code for computing an ROC</span></span>
-<span id="cb1264-2"><a href="model-assessing-classification-with-roc.html#cb1264-2" tabindex="-1"></a></span>
-<span id="cb1264-3"><a href="model-assessing-classification-with-roc.html#cb1264-3" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Pick a threshold using df_thresholds above</span></span>
-<span id="cb1264-4"><a href="model-assessing-classification-with-roc.html#cb1264-4" tabindex="-1"></a>df_thresholds <span class="sc">%&gt;%</span></span>
-<span id="cb1264-5"><a href="model-assessing-classification-with-roc.html#cb1264-5" tabindex="-1"></a>  <span class="fu">filter</span>(true_positive_rate <span class="sc">&gt;=</span> <span class="fl">0.9</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1264-6"><a href="model-assessing-classification-with-roc.html#cb1264-6" tabindex="-1"></a>  <span class="fu">filter</span>(false_positive_rate <span class="sc">==</span> <span class="fu">min</span>(false_positive_rate))</span></code></pre></div>
-<pre><code>## # A tibble: 2 × 3
-##   pr_heart_disease true_positive_rate false_positive_rate
-##              &lt;dbl&gt;              &lt;dbl&gt;               &lt;dbl&gt;
-## 1            0.252              0.917               0.492
-## 2            0.249              0.944               0.492</code></pre>
-<div class="sourceCode" id="cb1266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1266-1"><a href="model-assessing-classification-with-roc.html#cb1266-1" tabindex="-1"></a>pr_threshold <span class="ot">&lt;-</span> <span class="fl">0.249</span></span>
-<span id="cb1266-2"><a href="model-assessing-classification-with-roc.html#cb1266-2" tabindex="-1"></a>tpr_achieved <span class="ot">&lt;-</span> <span class="fl">0.944</span></span>
-<span id="cb1266-3"><a href="model-assessing-classification-with-roc.html#cb1266-3" tabindex="-1"></a>fpr_achieved <span class="ot">&lt;-</span> <span class="fl">0.492</span></span>
-<span id="cb1266-4"><a href="model-assessing-classification-with-roc.html#cb1266-4" tabindex="-1"></a></span>
-<span id="cb1266-5"><a href="model-assessing-classification-with-roc.html#cb1266-5" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; use this visual to help your decision</span></span>
-<span id="cb1266-6"><a href="model-assessing-classification-with-roc.html#cb1266-6" tabindex="-1"></a>df_thresholds <span class="sc">%&gt;%</span></span>
-<span id="cb1266-7"><a href="model-assessing-classification-with-roc.html#cb1266-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(true_positive_rate, pr_heart_disease)) <span class="sc">+</span></span>
-<span id="cb1266-8"><a href="model-assessing-classification-with-roc.html#cb1266-8" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> tpr_achieved, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb1266-9"><a href="model-assessing-classification-with-roc.html#cb1266-9" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> pr_threshold, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb1266-10"><a href="model-assessing-classification-with-roc.html#cb1266-10" tabindex="-1"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
-<span id="cb1266-11"><a href="model-assessing-classification-with-roc.html#cb1266-11" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1266-12"><a href="model-assessing-classification-with-roc.html#cb1266-12" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;True Positive Rate&quot;</span>,</span>
-<span id="cb1266-13"><a href="model-assessing-classification-with-roc.html#cb1266-13" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Pr Threshold&quot;</span></span>
-<span id="cb1266-14"><a href="model-assessing-classification-with-roc.html#cb1266-14" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d53-e-model05-roc-solution_files/figure-html/q5-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1263-1"><a href="model-assessing-classification-with-roc.html#cb1263-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this; use these data to pick a threshold</span></span>
+<span id="cb1263-2"><a href="model-assessing-classification-with-roc.html#cb1263-2" tabindex="-1"></a>df_thresholds <span class="ot">&lt;-</span></span>
+<span id="cb1263-3"><a href="model-assessing-classification-with-roc.html#cb1263-3" tabindex="-1"></a>  df_q4 <span class="sc">%&gt;%</span></span>
+<span id="cb1263-4"><a href="model-assessing-classification-with-roc.html#cb1263-4" tabindex="-1"></a>  <span class="do">## Begin: Shortcut code for computing an ROC</span></span>
+<span id="cb1263-5"><a href="model-assessing-classification-with-roc.html#cb1263-5" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pr_heart_disease)) <span class="sc">%&gt;%</span></span>
+<span id="cb1263-6"><a href="model-assessing-classification-with-roc.html#cb1263-6" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1263-7"><a href="model-assessing-classification-with-roc.html#cb1263-7" tabindex="-1"></a>    <span class="at">pr_heart_disease =</span> pr_heart_disease,</span>
+<span id="cb1263-8"><a href="model-assessing-classification-with-roc.html#cb1263-8" tabindex="-1"></a>    <span class="at">true_positive_rate =</span> <span class="fu">cumsum</span>(heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(heart_disease),</span>
+<span id="cb1263-9"><a href="model-assessing-classification-with-roc.html#cb1263-9" tabindex="-1"></a>    <span class="at">false_positive_rate =</span> <span class="fu">cumsum</span>(<span class="sc">!</span>heart_disease) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span>heart_disease)</span>
+<span id="cb1263-10"><a href="model-assessing-classification-with-roc.html#cb1263-10" tabindex="-1"></a>  )</span>
+<span id="cb1263-11"><a href="model-assessing-classification-with-roc.html#cb1263-11" tabindex="-1"></a>  <span class="do">## End: Shortcut code for computing an ROC</span></span>
+<span id="cb1263-12"><a href="model-assessing-classification-with-roc.html#cb1263-12" tabindex="-1"></a></span>
+<span id="cb1263-13"><a href="model-assessing-classification-with-roc.html#cb1263-13" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Pick a threshold using df_thresholds above</span></span>
+<span id="cb1263-14"><a href="model-assessing-classification-with-roc.html#cb1263-14" tabindex="-1"></a>df_thresholds <span class="sc">%&gt;%</span></span>
+<span id="cb1263-15"><a href="model-assessing-classification-with-roc.html#cb1263-15" tabindex="-1"></a>  <span class="fu">filter</span>(true_positive_rate <span class="sc">&gt;=</span> <span class="fl">0.9</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1263-16"><a href="model-assessing-classification-with-roc.html#cb1263-16" tabindex="-1"></a>  <span class="fu">filter</span>(false_positive_rate <span class="sc">==</span> <span class="fu">min</span>(false_positive_rate))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 21
+##   order rowid   age sex    cp         trestbps  chol fbs   restecg thalach exang
+##   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;
+## 1    35   268    59 male   non-angin…      126   218 TRUE  normal      134 FALSE
+## 2    34   262    58 female atypical …      136   319 TRUE  Estes&#39;…     152 FALSE
+## # ℹ 10 more variables: oldpeak &lt;dbl&gt;, slope &lt;chr&gt;, ca &lt;dbl&gt;, thal &lt;chr&gt;,
+## #   num &lt;dbl&gt;, heart_disease &lt;lgl&gt;, log_odds_ratio &lt;dbl&gt;,
+## #   pr_heart_disease &lt;dbl&gt;, true_positive_rate &lt;dbl&gt;, false_positive_rate &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb1265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1265-1"><a href="model-assessing-classification-with-roc.html#cb1265-1" tabindex="-1"></a>pr_threshold <span class="ot">&lt;-</span> <span class="fl">0.249</span></span>
+<span id="cb1265-2"><a href="model-assessing-classification-with-roc.html#cb1265-2" tabindex="-1"></a>tpr_achieved <span class="ot">&lt;-</span> <span class="fl">0.944</span></span>
+<span id="cb1265-3"><a href="model-assessing-classification-with-roc.html#cb1265-3" tabindex="-1"></a>fpr_achieved <span class="ot">&lt;-</span> <span class="fl">0.492</span></span>
+<span id="cb1265-4"><a href="model-assessing-classification-with-roc.html#cb1265-4" tabindex="-1"></a></span>
+<span id="cb1265-5"><a href="model-assessing-classification-with-roc.html#cb1265-5" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; use this visual to help your decision</span></span>
+<span id="cb1265-6"><a href="model-assessing-classification-with-roc.html#cb1265-6" tabindex="-1"></a>df_thresholds <span class="sc">%&gt;%</span></span>
+<span id="cb1265-7"><a href="model-assessing-classification-with-roc.html#cb1265-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(true_positive_rate, pr_heart_disease)) <span class="sc">+</span></span>
+<span id="cb1265-8"><a href="model-assessing-classification-with-roc.html#cb1265-8" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> tpr_achieved, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1265-9"><a href="model-assessing-classification-with-roc.html#cb1265-9" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> pr_threshold, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1265-10"><a href="model-assessing-classification-with-roc.html#cb1265-10" tabindex="-1"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
+<span id="cb1265-11"><a href="model-assessing-classification-with-roc.html#cb1265-11" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1265-12"><a href="model-assessing-classification-with-roc.html#cb1265-12" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;True Positive Rate&quot;</span>,</span>
+<span id="cb1265-13"><a href="model-assessing-classification-with-roc.html#cb1265-13" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Pr Threshold&quot;</span></span>
+<span id="cb1265-14"><a href="model-assessing-classification-with-roc.html#cb1265-14" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d53-e-model05-roc-solution_files/figure-html/q5-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>I pick <code>TPR &gt; 0.9</code>, as I want to catch the vast majority of patients with the disease.</li>

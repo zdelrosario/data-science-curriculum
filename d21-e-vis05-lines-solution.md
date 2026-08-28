@@ -14,11 +14,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -44,7 +44,7 @@ tibble(
   geom_line()
 ```
 
-<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" />
 
 There are couple ways we can deal with non 1:1 data.
 
@@ -63,7 +63,7 @@ gapminder %>%
   geom_line()
 ```
 
-<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" />
 
 This gives us a valid line plot, but it hides a lot of the differences among countries.
 
@@ -83,11 +83,15 @@ gapminder %>%
 ```
 
 ```
-## `summarise()` has grouped output by 'continent'. You can override using the
-## `.groups` argument.
+## `summarise()` has regrouped the output.
+## ℹ Summaries were computed grouped by continent and year.
+## ℹ Output is grouped by continent.
+## ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+## ℹ Use `summarise(.by = c(continent, year))` for per-operation grouping
+##   (`?dplyr::dplyr_by`) instead.
 ```
 
-<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-3-1.png" alt="" width="672" />
 
 This plot gives us a better sense of the disparities in life expectancy across continents.
 
@@ -103,7 +107,7 @@ gapminder %>%
   geom_line()
 ```
 
-<img src="d21-e-vis05-lines-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d21-e-vis05-lines-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 ### __q2__ Diagnose this plot
 
@@ -117,7 +121,7 @@ mpg %>%
   geom_line()
 ```
 
-<img src="d21-e-vis05-lines-solution_files/figure-html/q2-vis-1.png" width="672" />
+<img src="d21-e-vis05-lines-solution_files/figure-html/q2-vis-1.png" alt="" width="672" />
 
 **Observations**:
 - A line plot assumes the underlying data have a *function* relationship; that is, that there is one y value for every x value
@@ -142,12 +146,16 @@ gapminder %>%
 ```
 
 ```
-## `summarise()` has grouped output by 'continent'. You can override using the
-## `.groups` argument.
+## `summarise()` has regrouped the output.
 ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+## ℹ Summaries were computed grouped by continent and year.
+## ℹ Output is grouped by continent.
+## ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+## ℹ Use `summarise(.by = c(continent, year))` for per-operation grouping
+##   (`?dplyr::dplyr_by`) instead.
 ```
 
-<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-4-1.png" alt="" width="672" />
 
 However, `geom_smooth()` also works in cases where the data are more "sparse".
 
@@ -164,7 +172,7 @@ mpg %>%
 ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 ```
 
-<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-5-1.png" alt="" width="672" />
 
 One advantage of `geom_smooth()` is that it will automatically generate a *confidence region*. This is automatically reported as a light grey region, unless we turn it off.
 
@@ -181,7 +189,7 @@ mpg %>%
 ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 ```
 
-<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-6-1.png" alt="" width="672" />
 
 We will talk later in the class about confidence intervals; for now, know that a wider confidence band indicates a less trustworthy fit of the model. For instance, we can see that the model has only one data point at `displ == 7`. Consequently, the model is less confident about the trend in that region.
 
@@ -203,7 +211,7 @@ economics %>%
 ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 ```
 
-<img src="d21-e-vis05-lines-solution_files/figure-html/q3-task-1.png" width="672" />
+<img src="d21-e-vis05-lines-solution_files/figure-html/q3-task-1.png" alt="" width="672" />
 
 **Observations**:
 - The `Raw` data indicate short-term cyclical patterns that occur over a few years

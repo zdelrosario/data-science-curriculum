@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -88,7 +88,7 @@ tibble(
   )
 ```
 
-<img src="d39-e-stat10-randomization-solution_files/figure-html/vis-design-1.png" width="672" />
+<img src="d39-e-stat10-randomization-solution_files/figure-html/vis-design-1.png" alt="" width="672" />
 
 Now let's simulate the results of the experiment!
 
@@ -165,12 +165,12 @@ tibble(
 ```
 ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
+## This warning is displayed once per session.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.
 ```
 
-<img src="d39-e-stat10-randomization-solution_files/figure-html/vis-design-river-1.png" width="672" />
+<img src="d39-e-stat10-randomization-solution_files/figure-html/vis-design-river-1.png" alt="" width="672" />
 
 While fertilizer leads to an increase in crop yield, additional water also leads to a higher crop yield. These are the only plots we have available for planting, and it's too expensive to move the river, so we'll have to figure out how to place the plots to deal with this experimental reality.
 
@@ -301,7 +301,7 @@ bind_rows(
   theme_minimal()
 ```
 
-<img src="d39-e-stat10-randomization-solution_files/figure-html/vis-cf-1.png" width="672" />
+<img src="d39-e-stat10-randomization-solution_files/figure-html/vis-cf-1.png" alt="" width="672" />
 
 In the naive case, we've placed all our treatments at locations where the river has a low effect, and our controls at locations where the river has a high effect. This results in a consistent effect that reverses the perceived difference between treatment and control.
 

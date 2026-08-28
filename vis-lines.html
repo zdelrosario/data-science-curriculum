@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>30 Vis: Lines | Data Science: Exercise Solutions</title>
   <meta name="description" content="30 Vis: Lines | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="30 Vis: Lines | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,75 +1085,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">30</span> Vis: Lines<a href="vis-lines.html#vis-lines" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: <em>Line plots</em> are a key tool for EDA. In contrast with a scatterplot, a line plot assumes the data have a <em>function</em> relation. This can create an issue if we try to plot data that do not satisfy our assumptions. In this exercise, we’ll practice some best-practices for constructing line plots.</p>
 <p><em>Reading</em>: (None, this is the reading)</p>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="vis-lines.html#cb538-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="vis-lines.html#cb543-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="vis-lines.html#cb540-1" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="vis-lines.html#cb545-1" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code></pre></div>
 <div id="line-plots" class="section level2 hasAnchor" number="30.1">
 <h2><span class="header-section-number">30.1</span> Line plots<a href="vis-lines.html#line-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We can make a line plot using the <code>geom_line()</code> geometry. Line plots are a lot like bar charts: The data must be 1:1 in order to have a line plot. Let’s look at what can go wrong when our data are not 1:1:</p>
-<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="vis-lines.html#cb541-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb541-2"><a href="vis-lines.html#cb541-2" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb541-3"><a href="vis-lines.html#cb541-3" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb541-4"><a href="vis-lines.html#cb541-4" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span>
-<span id="cb541-5"><a href="vis-lines.html#cb541-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb541-6"><a href="vis-lines.html#cb541-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb541-7"><a href="vis-lines.html#cb541-7" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="vis-lines.html#cb546-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb546-2"><a href="vis-lines.html#cb546-2" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb546-3"><a href="vis-lines.html#cb546-3" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb546-4"><a href="vis-lines.html#cb546-4" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb546-5"><a href="vis-lines.html#cb546-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb546-6"><a href="vis-lines.html#cb546-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb546-7"><a href="vis-lines.html#cb546-7" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" /></p>
 <p>There are couple ways we can deal with non 1:1 data.</p>
 <div id="summarize-the-data" class="section level3 hasAnchor" number="30.1.1">
 <h3><span class="header-section-number">30.1.1</span> Summarize the data<a href="vis-lines.html#summarize-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If we can pick a meaningful summary function, then we can summarize the data at a variety of <code>x</code> values and plot the summary as our <code>y</code>. For instance, we could compute the average life expentancy across all nations reported in the Gapminder dataset:</p>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="vis-lines.html#cb542-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb542-2"><a href="vis-lines.html#cb542-2" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
-<span id="cb542-3"><a href="vis-lines.html#cb542-3" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
-<span id="cb542-4"><a href="vis-lines.html#cb542-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">lifeExp =</span> <span class="fu">mean</span>(lifeExp)) <span class="sc">%&gt;%</span> </span>
-<span id="cb542-5"><a href="vis-lines.html#cb542-5" tabindex="-1"></a>  </span>
-<span id="cb542-6"><a href="vis-lines.html#cb542-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, lifeExp)) <span class="sc">+</span></span>
-<span id="cb542-7"><a href="vis-lines.html#cb542-7" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="vis-lines.html#cb547-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb547-2"><a href="vis-lines.html#cb547-2" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
+<span id="cb547-3"><a href="vis-lines.html#cb547-3" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb547-4"><a href="vis-lines.html#cb547-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">lifeExp =</span> <span class="fu">mean</span>(lifeExp)) <span class="sc">%&gt;%</span> </span>
+<span id="cb547-5"><a href="vis-lines.html#cb547-5" tabindex="-1"></a>  </span>
+<span id="cb547-6"><a href="vis-lines.html#cb547-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, lifeExp)) <span class="sc">+</span></span>
+<span id="cb547-7"><a href="vis-lines.html#cb547-7" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" /></p>
 <p>This gives us a valid line plot, but it hides a lot of the differences among countries.</p>
 </div>
 <div id="show-additional-variables" class="section level3 hasAnchor" number="30.1.2">
 <h3><span class="header-section-number">30.1.2</span> Show additional variables<a href="vis-lines.html#show-additional-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Rather than summarize so aggressively, we can instead map an additional variable to an additional aesthetic. If the data are 1:1 within each group, then we can make a valid line plot.</p>
-<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="vis-lines.html#cb543-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb543-2"><a href="vis-lines.html#cb543-2" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
-<span id="cb543-3"><a href="vis-lines.html#cb543-3" tabindex="-1"></a>  <span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span> </span>
-<span id="cb543-4"><a href="vis-lines.html#cb543-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">lifeExp =</span> <span class="fu">mean</span>(lifeExp)) <span class="sc">%&gt;%</span> </span>
-<span id="cb543-5"><a href="vis-lines.html#cb543-5" tabindex="-1"></a>  </span>
-<span id="cb543-6"><a href="vis-lines.html#cb543-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
-<span id="cb543-7"><a href="vis-lines.html#cb543-7" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;continent&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="vis-lines.html#cb548-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb548-2"><a href="vis-lines.html#cb548-2" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
+<span id="cb548-3"><a href="vis-lines.html#cb548-3" tabindex="-1"></a>  <span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span> </span>
+<span id="cb548-4"><a href="vis-lines.html#cb548-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">lifeExp =</span> <span class="fu">mean</span>(lifeExp)) <span class="sc">%&gt;%</span> </span>
+<span id="cb548-5"><a href="vis-lines.html#cb548-5" tabindex="-1"></a>  </span>
+<span id="cb548-6"><a href="vis-lines.html#cb548-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb548-7"><a href="vis-lines.html#cb548-7" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<pre><code>## `summarise()` has regrouped the output.
+## ℹ Summaries were computed grouped by continent and year.
+## ℹ Output is grouped by continent.
+## ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+## ℹ Use `summarise(.by = c(continent, year))` for per-operation grouping
+##   (`?dplyr::dplyr_by`) instead.</code></pre>
+<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-3-1.png" alt="" width="672" /></p>
 <p>This plot gives us a better sense of the disparities in life expectancy across continents.</p>
 </div>
 <div id="q1-fix-this-plot" class="section level3 hasAnchor" number="30.1.3">
 <h3><span class="header-section-number">30.1.3</span> <strong>q1</strong> Fix this plot<a href="vis-lines.html#q1-fix-this-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The following graph doesn’t work as its author intended. Based on what we learned above, fix the following code.</p>
-<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="vis-lines.html#cb545-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
-<span id="cb545-2"><a href="vis-lines.html#cb545-2" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb545-3"><a href="vis-lines.html#cb545-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, lifeExp, <span class="at">color =</span> country)) <span class="sc">+</span></span>
-<span id="cb545-4"><a href="vis-lines.html#cb545-4" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="d21-e-vis05-lines-solution_files/figure-html/q1-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="vis-lines.html#cb550-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb550-2"><a href="vis-lines.html#cb550-2" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb550-3"><a href="vis-lines.html#cb550-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, lifeExp, <span class="at">color =</span> country)) <span class="sc">+</span></span>
+<span id="cb550-4"><a href="vis-lines.html#cb550-4" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="d21-e-vis05-lines-solution_files/figure-html/q1-task-1.png" alt="" width="672" /></p>
 </div>
 <div id="q2-diagnose-this-plot" class="section level3 hasAnchor" number="30.1.4">
 <h3><span class="header-section-number">30.1.4</span> <strong>q2</strong> Diagnose this plot<a href="vis-lines.html#q2-diagnose-this-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A line plot makes <em>a certain assumption</em> about the underlying data. What assumption is this? How does that assumption relate to the following graph? Put differently, why is the use of <code>geom_line</code> a bad idea for the following dataset?</p>
-<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="vis-lines.html#cb546-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: No need to edit; just answer the questions</span></span>
-<span id="cb546-2"><a href="vis-lines.html#cb546-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb546-3"><a href="vis-lines.html#cb546-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
-<span id="cb546-4"><a href="vis-lines.html#cb546-4" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="d21-e-vis05-lines-solution_files/figure-html/q2-vis-1.png" width="672" /></p>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="vis-lines.html#cb551-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: No need to edit; just answer the questions</span></span>
+<span id="cb551-2"><a href="vis-lines.html#cb551-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb551-3"><a href="vis-lines.html#cb551-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
+<span id="cb551-4"><a href="vis-lines.html#cb551-4" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="d21-e-vis05-lines-solution_files/figure-html/q2-vis-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:
 - A line plot assumes the underlying data have a <em>function</em> relationship; that is, that there is one y value for every x value
 - The <code>mpg</code> dataset does not have a function relation between <code>displ</code> and <code>hwy</code>; there are cars with identical values of <code>displ</code> but different values of <code>hwy</code></p>
@@ -1162,48 +1166,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="smoothing-data" class="section level2 hasAnchor" number="30.2">
 <h2><span class="header-section-number">30.2</span> Smoothing data<a href="vis-lines.html#smoothing-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There’s one more way we can make a line plot out of a non 1:1 dataset which is much more heavy-handed than the previous methods: We can fit a statistical model to the data, and plot the predictions from the model. There is a family of statistical models called <em>smoothings</em> that are implemented in <code>geom_smooth()</code>. These are very similar to taking averages at different values of <code>x</code>:</p>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="vis-lines.html#cb547-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb547-2"><a href="vis-lines.html#cb547-2" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
-<span id="cb547-3"><a href="vis-lines.html#cb547-3" tabindex="-1"></a>  </span>
-<span id="cb547-4"><a href="vis-lines.html#cb547-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
-<span id="cb547-5"><a href="vis-lines.html#cb547-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
-<span id="cb547-6"><a href="vis-lines.html#cb547-6" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> </span>
-<span id="cb547-7"><a href="vis-lines.html#cb547-7" tabindex="-1"></a>      <span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span> </span>
-<span id="cb547-8"><a href="vis-lines.html#cb547-8" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">lifeExp =</span> <span class="fu">mean</span>(lifeExp)),</span>
-<span id="cb547-9"><a href="vis-lines.html#cb547-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb547-10"><a href="vis-lines.html#cb547-10" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;continent&#39;. You can override using the
-## `.groups` argument.
-## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="vis-lines.html#cb552-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb552-2"><a href="vis-lines.html#cb552-2" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
+<span id="cb552-3"><a href="vis-lines.html#cb552-3" tabindex="-1"></a>  </span>
+<span id="cb552-4"><a href="vis-lines.html#cb552-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb552-5"><a href="vis-lines.html#cb552-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb552-6"><a href="vis-lines.html#cb552-6" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> </span>
+<span id="cb552-7"><a href="vis-lines.html#cb552-7" tabindex="-1"></a>      <span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span> </span>
+<span id="cb552-8"><a href="vis-lines.html#cb552-8" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">lifeExp =</span> <span class="fu">mean</span>(lifeExp)),</span>
+<span id="cb552-9"><a href="vis-lines.html#cb552-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb552-10"><a href="vis-lines.html#cb552-10" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## `summarise()` has regrouped the output.
+## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
+## ℹ Summaries were computed grouped by continent and year.
+## ℹ Output is grouped by continent.
+## ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+## ℹ Use `summarise(.by = c(continent, year))` for per-operation grouping
+##   (`?dplyr::dplyr_by`) instead.</code></pre>
+<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-4-1.png" alt="" width="672" /></p>
 <p>However, <code>geom_smooth()</code> also works in cases where the data are more “sparse”.</p>
-<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="vis-lines.html#cb549-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb549-2"><a href="vis-lines.html#cb549-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> </span>
-<span id="cb549-3"><a href="vis-lines.html#cb549-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
-<span id="cb549-4"><a href="vis-lines.html#cb549-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb549-5"><a href="vis-lines.html#cb549-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="vis-lines.html#cb554-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb554-2"><a href="vis-lines.html#cb554-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> </span>
+<span id="cb554-3"><a href="vis-lines.html#cb554-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
+<span id="cb554-4"><a href="vis-lines.html#cb554-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb554-5"><a href="vis-lines.html#cb554-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-5-1.png" alt="" width="672" /></p>
 <p>One advantage of <code>geom_smooth()</code> is that it will automatically generate a <em>confidence region</em>. This is automatically reported as a light grey region, unless we turn it off.</p>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="vis-lines.html#cb551-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb551-2"><a href="vis-lines.html#cb551-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> </span>
-<span id="cb551-3"><a href="vis-lines.html#cb551-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
-<span id="cb551-4"><a href="vis-lines.html#cb551-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb551-5"><a href="vis-lines.html#cb551-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="vis-lines.html#cb556-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb556-2"><a href="vis-lines.html#cb556-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> </span>
+<span id="cb556-3"><a href="vis-lines.html#cb556-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span></span>
+<span id="cb556-4"><a href="vis-lines.html#cb556-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb556-5"><a href="vis-lines.html#cb556-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="d21-e-vis05-lines-solution_files/figure-html/unnamed-chunk-6-1.png" alt="" width="672" /></p>
 <p>We will talk later in the class about confidence intervals; for now, know that a wider confidence band indicates a less trustworthy fit of the model. For instance, we can see that the model has only one data point at <code>displ == 7</code>. Consequently, the model is less confident about the trend in that region.</p>
 <div id="q3-compare-raw-and-smoothed-data" class="section level3 hasAnchor" number="30.2.1">
 <h3><span class="header-section-number">30.2.1</span> <strong>q3</strong> Compare raw and smoothed data<a href="vis-lines.html#q3-compare-raw-and-smoothed-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The following graph shows both the raw data and a smoothed version. Describe the trends that you can see in the different curves.</p>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="vis-lines.html#cb553-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: No need to edit; just interpret the graph</span></span>
-<span id="cb553-2"><a href="vis-lines.html#cb553-2" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
-<span id="cb553-3"><a href="vis-lines.html#cb553-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, unemploy)) <span class="sc">+</span></span>
-<span id="cb553-4"><a href="vis-lines.html#cb553-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;Raw&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb553-5"><a href="vis-lines.html#cb553-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;Smoothed&quot;</span>), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb553-6"><a href="vis-lines.html#cb553-6" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Source&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="vis-lines.html#cb558-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: No need to edit; just interpret the graph</span></span>
+<span id="cb558-2"><a href="vis-lines.html#cb558-2" tabindex="-1"></a>economics <span class="sc">%&gt;%</span></span>
+<span id="cb558-3"><a href="vis-lines.html#cb558-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, unemploy)) <span class="sc">+</span></span>
+<span id="cb558-4"><a href="vis-lines.html#cb558-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;Raw&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb558-5"><a href="vis-lines.html#cb558-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;Smoothed&quot;</span>), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb558-6"><a href="vis-lines.html#cb558-6" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Source&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="d21-e-vis05-lines-solution_files/figure-html/q3-task-1.png" width="672" /></p>
+<p><img src="d21-e-vis05-lines-solution_files/figure-html/q3-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:
 - The <code>Raw</code> data indicate short-term cyclical patterns that occur over a few years
 - The <code>Smoothed</code> data indicate a longer-term trend occurring over decades</p>

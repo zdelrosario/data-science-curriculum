@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -47,7 +47,7 @@ mpg %>%
   coord_flip()
 ```
 
-<img src="d44-e-vis09-improve-solution_files/figure-html/q1-vis-1.png" width="672" />
+<img src="d44-e-vis09-improve-solution_files/figure-html/q1-vis-1.png" alt="" width="672" />
 
 Create your improved graph here
 
@@ -61,7 +61,7 @@ mpg %>%
   coord_flip()
 ```
 
-<img src="d44-e-vis09-improve-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d44-e-vis09-improve-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 ### __q2__ Use concepts from the reading to improve the following graph. *Make sure your graph shows all the same variables*, no more and no fewer.
 
@@ -76,7 +76,7 @@ as_tibble(mtcars) %>%
   facet_wrap(~model)
 ```
 
-<img src="d44-e-vis09-improve-solution_files/figure-html/q2-vis-1.png" width="672" />
+<img src="d44-e-vis09-improve-solution_files/figure-html/q2-vis-1.png" alt="" width="672" />
 
 Create your improved graph here
 
@@ -95,7 +95,7 @@ as_tibble(mtcars) %>%
   coord_flip()
 ```
 
-<img src="d44-e-vis09-improve-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d44-e-vis09-improve-solution_files/figure-html/q2-task-1.png" alt="" width="672" />
 
 ### __q3__ Use concepts from the reading to improve the following graph. *Make sure your graph shows all the same variables*, no more and no fewer.
 
@@ -107,7 +107,7 @@ diamonds %>%
   geom_bar()
 ```
 
-<img src="d44-e-vis09-improve-solution_files/figure-html/q3-vis-1.png" width="672" />
+<img src="d44-e-vis09-improve-solution_files/figure-html/q3-vis-1.png" alt="" width="672" />
 
 Create your improved graph here
 
@@ -122,7 +122,7 @@ diamonds %>%
   geom_line()
 ```
 
-<img src="d44-e-vis09-improve-solution_files/figure-html/q3-task-1.png" width="672" />
+<img src="d44-e-vis09-improve-solution_files/figure-html/q3-task-1.png" alt="" width="672" />
 
 ### __q4__ Use concepts from the reading to improve the following graph. *Make sure your graph shows all the same variables*, no more and no fewer.
 
@@ -136,7 +136,7 @@ diamonds %>%
   labs(x = "")
 ```
 
-<img src="d44-e-vis09-improve-solution_files/figure-html/q4-vis-1.png" width="672" />
+<img src="d44-e-vis09-improve-solution_files/figure-html/q4-vis-1.png" alt="" width="672" />
 
 Create your improved graph here
 
@@ -149,6 +149,6 @@ diamonds %>%
   geom_bar()
 ```
 
-<img src="d44-e-vis09-improve-solution_files/figure-html/q4-task-1.png" width="672" />
+<img src="d44-e-vis09-improve-solution_files/figure-html/q4-task-1.png" alt="" width="672" />
 
 <!-- include-exit-ticket -->

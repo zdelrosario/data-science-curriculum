@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -553,37 +553,37 @@ df_q4 %>% summary()
 ```
 
 ```
-##       age            sex                 cp               trestbps    
-##  Min.   :29.00   Length:303         Length:303         Min.   : 94.0  
-##  1st Qu.:48.00   Class :character   Class :character   1st Qu.:120.0  
-##  Median :56.00   Mode  :character   Mode  :character   Median :130.0  
-##  Mean   :54.44                                         Mean   :131.7  
-##  3rd Qu.:61.00                                         3rd Qu.:140.0  
-##  Max.   :77.00                                         Max.   :200.0  
-##                                                                       
-##       chol          fbs            restecg             thalach     
-##  Min.   :126.0   Mode :logical   Length:303         Min.   : 71.0  
-##  1st Qu.:211.0   FALSE:258       Class :character   1st Qu.:133.5  
-##  Median :241.0   TRUE :45        Mode  :character   Median :153.0  
-##  Mean   :246.7                                      Mean   :149.6  
-##  3rd Qu.:275.0                                      3rd Qu.:166.0  
-##  Max.   :564.0                                      Max.   :202.0  
-##                                                                    
-##    exang            oldpeak        slope                 ca        
-##  Mode :logical   Min.   :0.00   Length:303         Min.   :0.0000  
-##  FALSE:204       1st Qu.:0.00   Class :character   1st Qu.:0.0000  
-##  TRUE :99        Median :0.80   Mode  :character   Median :0.0000  
-##                  Mean   :1.04                      Mean   :0.6722  
-##                  3rd Qu.:1.60                      3rd Qu.:1.0000  
-##                  Max.   :6.20                      Max.   :3.0000  
-##                                                    NA's   :4       
-##      thal                num        
-##  Length:303         Min.   :0.0000  
-##  Class :character   1st Qu.:0.0000  
-##  Mode  :character   Median :0.0000  
-##                     Mean   :0.9373  
-##                     3rd Qu.:2.0000  
-##                     Max.   :4.0000  
+##       age               sex              cp         trestbps    
+##  Min.   :29.00   Length   :303   Length   :303   Min.   : 94.0  
+##  1st Qu.:48.00   N.unique :  2   N.unique :  4   1st Qu.:120.0  
+##  Median :56.00   N.blank  :  0   N.blank  :  0   Median :130.0  
+##  Mean   :54.44   Min.nchar:  4   Min.nchar: 12   Mean   :131.7  
+##  3rd Qu.:61.00   Max.nchar:  6   Max.nchar: 16   3rd Qu.:140.0  
+##  Max.   :77.00                                   Max.   :200.0  
+##                                                                 
+##       chol          fbs               restecg       thalach     
+##  Min.   :126.0   Mode :logical   Length   :303   Min.   : 71.0  
+##  1st Qu.:211.0   FALSE:258       N.unique :  3   1st Qu.:133.5  
+##  Median :241.0   TRUE :45        N.blank  :  0   Median :153.0  
+##  Mean   :246.7                   Min.nchar:  6   Mean   :149.6  
+##  3rd Qu.:275.0                   Max.nchar: 21   3rd Qu.:166.0  
+##  Max.   :564.0                                   Max.   :202.0  
+##                                                                 
+##    exang            oldpeak           slope           ca        
+##  Mode :logical   Min.   :0.00   Length   :303   Min.   :0.0000  
+##  FALSE:204       1st Qu.:0.00   N.unique :  3   1st Qu.:0.0000  
+##  TRUE :99        Median :0.80   N.blank  :  0   Median :0.0000  
+##                  Mean   :1.04   Min.nchar:  4   Mean   :0.6722  
+##                  3rd Qu.:1.60   Max.nchar: 11   3rd Qu.:1.0000  
+##                  Max.   :6.20                   Max.   :3.0000  
+##                                                 NAs    :4       
+##         thal          num        
+##  Length   :303   Min.   :0.0000  
+##  N.unique :  3   1st Qu.:0.0000  
+##  N.blank  :  0   Median :0.0000  
+##  Min.nchar:  6   Mean   :0.9373  
+##  Max.nchar: 17   3rd Qu.:2.0000  
+##  NAs      :  2   Max.   :4.0000  
 ## 
 ```
 

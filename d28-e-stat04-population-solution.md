@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -49,7 +49,7 @@ tibble(z = seq(-4, +4, length.out = 500)) %>%
   geom_line()
 ```
 
-<img src="d28-e-stat04-population-solution_files/figure-html/ex-population-normal-1.png" width="672" />
+<img src="d28-e-stat04-population-solution_files/figure-html/ex-population-normal-1.png" alt="" width="672" />
 
 Here our population is an infinite pool of observations all following the standard normal distribution. If this sounds abstract and unrealistic, good! Remember that the normal distribution (and indeed all named distributions) are *abstract, mathematical objects* that we use to model real phenomena.
 
@@ -78,16 +78,16 @@ tibble(z = seq(-4, +4, length.out = 500)) %>%
 ```
 ## Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `after_stat(density)` instead.
-## This warning is displayed once every 8 hours.
+## This warning is displayed once per session.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="d28-e-stat04-population-solution_files/figure-html/ex-samples-normal-1.png" width="672" />
+<img src="d28-e-stat04-population-solution_files/figure-html/ex-samples-normal-1.png" alt="" width="672" />
 
 As we've seen before, as we draw more observations (a larger sample), their histogram tends to look more like the underlying population.
 
@@ -105,7 +105,7 @@ flights %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
 ```
@@ -114,7 +114,7 @@ flights %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
 ```
@@ -122,7 +122,7 @@ flights %>%
 ## (`stat_bin()`).
 ```
 
-<img src="d28-e-stat04-population-solution_files/figure-html/ex-population-flights-1.png" width="672" />
+<img src="d28-e-stat04-population-solution_files/figure-html/ex-population-flights-1.png" alt="" width="672" />
 
 This is the set of **all** flights originating from `EWR`, `LGA`, and `JFK` in 2013, in terms of their `air_time`. Note that this distribution is decidedly *not normal*; we would be foolish to try to model it as such!
 
@@ -178,7 +178,7 @@ df_sample %>%
   )
 ```
 
-<img src="d28-e-stat04-population-solution_files/figure-html/vis-samples-1.png" width="672" />
+<img src="d28-e-stat04-population-solution_files/figure-html/vis-samples-1.png" alt="" width="672" />
 
 Every one of these samples has its own sample mean; let's add that as an additional point:
 
@@ -203,7 +203,7 @@ df_sample %>%
   )
 ```
 
-<img src="d28-e-stat04-population-solution_files/figure-html/vis-samples-wmean-1.png" width="672" />
+<img src="d28-e-stat04-population-solution_files/figure-html/vis-samples-wmean-1.png" alt="" width="672" />
 
 Thus, there is a "red dot" associated with each of the 5,000 samples. Let's visualize the individual sample mean values (red dots above) as a histogram:
 
@@ -223,10 +223,10 @@ df_sample %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="d28-e-stat04-population-solution_files/figure-html/mean-estimates-vis-1.png" width="672" />
+<img src="d28-e-stat04-population-solution_files/figure-html/mean-estimates-vis-1.png" alt="" width="672" />
 
 Remember that the standard normal has population mean zero (vertical line); the distribution we see here is of the sample mean values. These results indicate that we frequently land near zero (the true population value) but we obtain values as wide as `-2` and `+2`. This is because we have limited data from our population, and our estimate is not guaranteed to be close to its population value. As we gather more data, we'll tend to produce better estimates.
 
@@ -255,7 +255,7 @@ map_dfr(
   )
 ```
 
-<img src="d28-e-stat04-population-solution_files/figure-html/mean-estimates-converge-1.png" width="672" />
+<img src="d28-e-stat04-population-solution_files/figure-html/mean-estimates-converge-1.png" alt="" width="672" />
 
 As we might expect, the distribution of estimated means concentrates on the population mean (zero) as we increase the sample size $n$. As we gather more data, our estimate has a greater probability of landing close to the true value.
 
@@ -276,10 +276,10 @@ df_sample %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="d28-e-stat04-population-solution_files/figure-html/sd-estimates-vis-1.png" width="672" />
+<img src="d28-e-stat04-population-solution_files/figure-html/sd-estimates-vis-1.png" alt="" width="672" />
 
 Note that this doesn't look much like a normal distribution. This should make some intuitive sense: The standard deviation is guaranteed to be non-negative, so it can't possibly follow a normal distribution, which can take values anywhere from $-\infty$ to $+\infty$.
 
@@ -314,10 +314,10 @@ df_samp_unif %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="d28-e-stat04-population-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d28-e-stat04-population-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 **Observations**:
 

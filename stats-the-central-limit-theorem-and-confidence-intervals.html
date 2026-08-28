@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>42 Stats: The Central Limit Theorem and Confidence Intervals | Data Science: Exercise Solutions</title>
   <meta name="description" content="42 Stats: The Central Limit Theorem and Confidence Intervals | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="42 Stats: The Central Limit Theorem and Confidence Intervals | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1086,86 +1086,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Purpose</em>: When studying sampled data, we need a principled way to report our results with their uncertainties. Confidence intervals (CI) are an excellent way to summarize results, and the central limit theorem (CLT) helps us to construct these intervals.</p>
 <p><em>Reading</em>: (None, this is the reading)</p>
 <p><em>Topics</em>: The central limit theorem (CLT), confidence intervals</p>
-<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb875-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb875-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb877-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb877-1" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code></pre></div>
+<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb882-1" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code></pre></div>
 <div id="central-limit-theorem" class="section level2 hasAnchor" number="42.1">
 <h2><span class="header-section-number">42.1</span> Central Limit Theorem<a href="stats-the-central-limit-theorem-and-confidence-intervals.html#central-limit-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Let’s return to a result from <code>e-stat04-population</code>:</p>
-<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this</span></span>
-<span id="cb878-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb878-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-3" tabindex="-1"></a>n_observations <span class="ot">&lt;-</span> <span class="dv">9</span></span>
-<span id="cb878-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-4" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="fl">5e3</span></span>
-<span id="cb878-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-5" tabindex="-1"></a></span>
-<span id="cb878-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-6" tabindex="-1"></a>df_samp_unif <span class="ot">&lt;-</span></span>
-<span id="cb878-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-7" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
-<span id="cb878-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-8" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span>n_samples,</span>
-<span id="cb878-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-9" tabindex="-1"></a>    <span class="cf">function</span>(id) {</span>
-<span id="cb878-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-10" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
-<span id="cb878-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-11" tabindex="-1"></a>        <span class="at">Z =</span> <span class="fu">runif</span>(n_observations),</span>
-<span id="cb878-12"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-12" tabindex="-1"></a>        <span class="at">id =</span> id</span>
-<span id="cb878-13"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-13" tabindex="-1"></a>      )</span>
-<span id="cb878-14"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-14" tabindex="-1"></a>    }</span>
-<span id="cb878-15"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-15" tabindex="-1"></a>  )</span>
-<span id="cb878-16"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-16" tabindex="-1"></a></span>
-<span id="cb878-17"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-17" tabindex="-1"></a>df_samp_unif <span class="sc">%&gt;%</span></span>
-<span id="cb878-18"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-18" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span></span>
-<span id="cb878-19"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-19" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">stat =</span> <span class="fu">mean</span>(Z)) <span class="sc">%&gt;%</span></span>
-<span id="cb878-20"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-20" tabindex="-1"></a></span>
-<span id="cb878-21"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-21" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(stat)) <span class="sc">+</span></span>
-<span id="cb878-22"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-22" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb878-23"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-23" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb878-24"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-24" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Estimated Mean&quot;</span>,</span>
-<span id="cb878-25"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-25" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Sampling Distribution: Estimated Mean&quot;</span>,</span>
-<span id="cb878-26"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-26" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Population: Uniform&quot;</span></span>
-<span id="cb878-27"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb878-27" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="d35-e-stat07-clt-solution_files/figure-html/recall-1.png" width="672" /></p>
+<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this</span></span>
+<span id="cb883-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb883-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-3" tabindex="-1"></a>n_observations <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb883-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-4" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="fl">5e3</span></span>
+<span id="cb883-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-5" tabindex="-1"></a></span>
+<span id="cb883-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-6" tabindex="-1"></a>df_samp_unif <span class="ot">&lt;-</span></span>
+<span id="cb883-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-7" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
+<span id="cb883-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-8" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span>n_samples,</span>
+<span id="cb883-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-9" tabindex="-1"></a>    <span class="cf">function</span>(id) {</span>
+<span id="cb883-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-10" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
+<span id="cb883-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-11" tabindex="-1"></a>        <span class="at">Z =</span> <span class="fu">runif</span>(n_observations),</span>
+<span id="cb883-12"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-12" tabindex="-1"></a>        <span class="at">id =</span> id</span>
+<span id="cb883-13"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-13" tabindex="-1"></a>      )</span>
+<span id="cb883-14"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-14" tabindex="-1"></a>    }</span>
+<span id="cb883-15"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-15" tabindex="-1"></a>  )</span>
+<span id="cb883-16"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-16" tabindex="-1"></a></span>
+<span id="cb883-17"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-17" tabindex="-1"></a>df_samp_unif <span class="sc">%&gt;%</span></span>
+<span id="cb883-18"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-18" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span></span>
+<span id="cb883-19"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-19" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">stat =</span> <span class="fu">mean</span>(Z)) <span class="sc">%&gt;%</span></span>
+<span id="cb883-20"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-20" tabindex="-1"></a></span>
+<span id="cb883-21"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-21" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(stat)) <span class="sc">+</span></span>
+<span id="cb883-22"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-22" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb883-23"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-23" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb883-24"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-24" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Estimated Mean&quot;</span>,</span>
+<span id="cb883-25"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-25" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Sampling Distribution: Estimated Mean&quot;</span>,</span>
+<span id="cb883-26"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-26" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Population: Uniform&quot;</span></span>
+<span id="cb883-27"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-27" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+<p><img src="d35-e-stat07-clt-solution_files/figure-html/recall-1.png" alt="" width="672" /></p>
 <p>If you said that the sampling distribution from the exercise above looks roughly normal, then you are correct! This is an example of the <a href="https://en.wikipedia.org/wiki/Central_limit_theorem">central limit theorem</a>, a central idea in statistics. Here we’ll introduce the central limit theorem (CLT), use it to approximate the sampling distribution for the sample mean, and in turn use that to construct an approximate <em>confidence interval</em>.</p>
 <p>For populations satisfying mild conditions[1], the sample mean <span class="math inline">\(\overline{X}\)</span> converges to a normal distribution as the sample size <span class="math inline">\(n\)</span> approaches infinity. Specifically</p>
 <p><span class="math display">\[\overline{X} \stackrel{d}{\to} N(\mu, \sigma^2 / n),\]</span></p>
 <p>where <span class="math inline">\(\mu\)</span> is the mean of the population, <span class="math inline">\(\sigma\)</span> is the standard deviation of the population, and <span class="math inline">\(\stackrel{d}{\to}\)</span> means <a href="https://en.wikipedia.org/wiki/Convergence_of_random_variables#Convergence_in_distribution"><em>converges in distribution</em></a>, a technical definition that is beyond the scope of this lesson.</p>
 <p>Below I simulate sampling from a uniform distribution and compute the mean at different sample sizes to illustrate the CLT:</p>
-<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb880-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb880-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-3" tabindex="-1"></a>n_repl <span class="ot">&lt;-</span> <span class="fl">5e3</span></span>
-<span id="cb880-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-4" tabindex="-1"></a></span>
-<span id="cb880-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-5" tabindex="-1"></a>df_clt <span class="ot">&lt;-</span></span>
-<span id="cb880-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-6" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
-<span id="cb880-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-7" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span>n_repl,</span>
-<span id="cb880-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-8" tabindex="-1"></a>    <span class="cf">function</span>(id) {</span>
-<span id="cb880-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-9" tabindex="-1"></a>      <span class="fu">map_dfr</span>(</span>
-<span id="cb880-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-10" tabindex="-1"></a>        <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">81</span>, <span class="dv">729</span>),</span>
-<span id="cb880-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-11" tabindex="-1"></a>        <span class="cf">function</span>(n) {</span>
-<span id="cb880-12"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-12" tabindex="-1"></a>          <span class="fu">tibble</span>(</span>
-<span id="cb880-13"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-13" tabindex="-1"></a>            <span class="at">Z =</span> <span class="fu">runif</span>(n),</span>
-<span id="cb880-14"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-14" tabindex="-1"></a>            <span class="at">n =</span> n,</span>
-<span id="cb880-15"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-15" tabindex="-1"></a>            <span class="at">id =</span> id</span>
-<span id="cb880-16"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-16" tabindex="-1"></a>          )</span>
-<span id="cb880-17"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-17" tabindex="-1"></a>        }</span>
-<span id="cb880-18"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-18" tabindex="-1"></a>      )</span>
-<span id="cb880-19"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-19" tabindex="-1"></a>    }</span>
-<span id="cb880-20"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-20" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb880-21"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-21" tabindex="-1"></a>  <span class="fu">group_by</span>(n, id) <span class="sc">%&gt;%</span></span>
-<span id="cb880-22"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb880-22" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Z), <span class="at">sd =</span> <span class="fu">sd</span>(Z))</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;n&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb885-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb885-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-3" tabindex="-1"></a>n_repl <span class="ot">&lt;-</span> <span class="fl">5e3</span></span>
+<span id="cb885-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-4" tabindex="-1"></a></span>
+<span id="cb885-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-5" tabindex="-1"></a>df_clt <span class="ot">&lt;-</span></span>
+<span id="cb885-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-6" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
+<span id="cb885-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-7" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span>n_repl,</span>
+<span id="cb885-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-8" tabindex="-1"></a>    <span class="cf">function</span>(id) {</span>
+<span id="cb885-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-9" tabindex="-1"></a>      <span class="fu">map_dfr</span>(</span>
+<span id="cb885-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-10" tabindex="-1"></a>        <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">81</span>, <span class="dv">729</span>),</span>
+<span id="cb885-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-11" tabindex="-1"></a>        <span class="cf">function</span>(n) {</span>
+<span id="cb885-12"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-12" tabindex="-1"></a>          <span class="fu">tibble</span>(</span>
+<span id="cb885-13"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-13" tabindex="-1"></a>            <span class="at">Z =</span> <span class="fu">runif</span>(n),</span>
+<span id="cb885-14"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-14" tabindex="-1"></a>            <span class="at">n =</span> n,</span>
+<span id="cb885-15"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-15" tabindex="-1"></a>            <span class="at">id =</span> id</span>
+<span id="cb885-16"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-16" tabindex="-1"></a>          )</span>
+<span id="cb885-17"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-17" tabindex="-1"></a>        }</span>
+<span id="cb885-18"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-18" tabindex="-1"></a>      )</span>
+<span id="cb885-19"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-19" tabindex="-1"></a>    }</span>
+<span id="cb885-20"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-20" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb885-21"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-21" tabindex="-1"></a>  <span class="fu">group_by</span>(n, id) <span class="sc">%&gt;%</span></span>
+<span id="cb885-22"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-22" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Z), <span class="at">sd =</span> <span class="fu">sd</span>(Z))</span></code></pre></div>
+<pre><code>## `summarise()` has regrouped the output.
+## ℹ Summaries were computed grouped by n and id.
+## ℹ Output is grouped by n.
+## ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+## ℹ Use `summarise(.by = c(n, id))` for per-operation grouping
+##   (`?dplyr::dplyr_by`) instead.</code></pre>
 <p>Let’s visualize the sampling distribution for each sample size:</p>
-<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb882-1" tabindex="-1"></a>df_clt <span class="sc">%&gt;%</span></span>
-<span id="cb882-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb882-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(mean)) <span class="sc">+</span></span>
-<span id="cb882-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb882-3" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb882-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb882-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>n, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
-<p><img src="d35-e-stat07-clt-solution_files/figure-html/vis-clt-1.png" width="672" /></p>
+<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-1" tabindex="-1"></a>df_clt <span class="sc">%&gt;%</span></span>
+<span id="cb887-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(mean)) <span class="sc">+</span></span>
+<span id="cb887-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-3" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb887-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>n, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+<p><img src="d35-e-stat07-clt-solution_files/figure-html/vis-clt-1.png" alt="" width="672" /></p>
 <p>At just <code>1</code> our sample mean is <span class="math inline">\(X_1 / 1\)</span>—we’re just drawing single observations from the population, so we see a uniform. At <code>2</code> we something that looks like a tent. By <code>9</code> samples we see a distribution that looks quite normal.</p>
 <p>The CLT doesn’t work for <em>all</em> problems. The CLT is often used for sums of random variables—the mean is one such sum. However, something like a quantile is not estimated by a sum of random variables, so we can’t use the CLT to approximate a sampling distribution. We already learned that we can use <em>bootstrap resampling</em> to approximate a sampling distribution. An advantage of the CLT approach is that it is <em>dead simple</em>—once we know the math.</p>
 <p>Note that the CLT tells us about estimates like the sample mean, it does <em>not</em> tell us anything about the distribution of the underlying population. We will use the CLT to help construct <em>confidence intervals</em>.</p>
@@ -1177,43 +1181,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>First, let’s use some moment arithmetic to build a normal distribution with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma / \sqrt{n}\)</span> out of a standard normal <span class="math inline">\(Z\)</span>. This gives us</p>
 <p><span class="math display">\[X = \mu + (\sigma / \sqrt{n}) Z.\]</span></p>
 <p>Now imagine we wanted to select two endpoints to give us the middle <span class="math inline">\(95%\)</span> of this distribution. We could do this with <span class="math inline">\(qnorm()\)</span> with the appropriate values of <code>mean, sd</code>. But using the definition of <span class="math inline">\(X\)</span> above, we can also do this by using the appropriate quantiles of the standard normal <span class="math inline">\(Z\)</span>. The following code gives the upper quantile.</p>
-<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb883-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-2" tabindex="-1"></a>z_c <span class="ot">&lt;-</span> <span class="fu">qnorm</span>( <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span>) <span class="sc">/</span> <span class="dv">2</span> )</span>
-<span id="cb883-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb883-3" tabindex="-1"></a>z_c</span></code></pre></div>
+<div class="sourceCode" id="cb888"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb888-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb888-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-2" tabindex="-1"></a>z_c <span class="ot">&lt;-</span> <span class="fu">qnorm</span>( <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span>) <span class="sc">/</span> <span class="dv">2</span> )</span>
+<span id="cb888-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-3" tabindex="-1"></a>z_c</span></code></pre></div>
 <pre><code>## [1] 1.959964</code></pre>
 <p>This is approximately <code>1.96</code> when seeking a <span class="math inline">\(95%\)</span> confidence level—this is a value that’s so famous, it gets its own <a href="https://en.wikipedia.org/wiki/97.5th_percentile_point">Wikipedia page</a>. Since the standard normal distribution is symmetric about zero, we can use the same value <code>z_c</code> with a negative sign for the appropriate lower quantile.</p>
 <p>Note that our confidence level <span class="math inline">\(C\)</span> is often reported as an “alpha level” instead <span class="math inline">\(\alpha = 1 - C\)</span>. This can be a more convenient way to compute <code>z_c</code>, and it gives an identical value.</p>
-<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb885-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb885-2" tabindex="-1"></a><span class="sc">-</span><span class="fu">qnorm</span>(<span class="fl">0.05</span> <span class="sc">/</span> <span class="dv">2</span>) <span class="co"># The same value as qnorm( 1 - (1 - 0.95) / 2 )</span></span></code></pre></div>
+<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb890-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb890-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb890-2" tabindex="-1"></a><span class="sc">-</span><span class="fu">qnorm</span>(<span class="fl">0.05</span> <span class="sc">/</span> <span class="dv">2</span>) <span class="co"># The same value as qnorm( 1 - (1 - 0.95) / 2 )</span></span></code></pre></div>
 <pre><code>## [1] 1.959964</code></pre>
 <p><em>Here’s the procedure</em>, we’ll build lower and upper bounds for an interval based on the sample mean and sample standard error <span class="math inline">\([\hat{mu} - z_c \hat{\text{SE}}, \hat{mu} + z_c \hat{\text{SE}}]\)</span>. I construct this interval for each sample in <code>df_clt</code>, and check whether the interval contains the population mean of <code>0.5</code>. The following code visualizes the first <code>100</code> intervals.</p>
-<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb887-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-2" tabindex="-1"></a>df_clt <span class="sc">%&gt;%</span></span>
-<span id="cb887-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-3" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb887-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-4" tabindex="-1"></a>    n <span class="sc">&gt;</span> <span class="dv">1</span>,</span>
-<span id="cb887-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-5" tabindex="-1"></a>    id <span class="sc">&lt;=</span> <span class="dv">100</span></span>
-<span id="cb887-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb887-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-7" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb887-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-8" tabindex="-1"></a>    <span class="at">se =</span> sd <span class="sc">/</span> <span class="fu">sqrt</span>(n),</span>
-<span id="cb887-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-9" tabindex="-1"></a>    <span class="at">lo =</span> mean <span class="sc">-</span> z_c <span class="sc">*</span> se,</span>
-<span id="cb887-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-10" tabindex="-1"></a>    <span class="at">hi =</span> mean <span class="sc">+</span> z_c <span class="sc">*</span> se</span>
-<span id="cb887-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-11" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb887-12"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-12" tabindex="-1"></a></span>
-<span id="cb887-13"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-13" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(id)) <span class="sc">+</span></span>
-<span id="cb887-14"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-14" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb887-15"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-15" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(</span>
-<span id="cb887-16"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-16" tabindex="-1"></a>    <span class="at">ymin =</span> lo,</span>
-<span id="cb887-17"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-17" tabindex="-1"></a>    <span class="at">ymax =</span> hi,</span>
-<span id="cb887-18"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-18" tabindex="-1"></a>    <span class="at">color =</span> (lo <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">&amp;</span> (<span class="fl">0.5</span> <span class="sc">&lt;=</span> hi)</span>
-<span id="cb887-19"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-19" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb887-20"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-20" tabindex="-1"></a>  <span class="fu">facet_grid</span>(n<span class="sc">~</span>.) <span class="sc">+</span></span>
-<span id="cb887-21"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-21" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;CI Contains True Mean&quot;</span>) <span class="sc">+</span></span>
-<span id="cb887-22"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-22" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb887-23"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-23" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb887-24"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-24" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Replication&quot;</span>,</span>
-<span id="cb887-25"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-25" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Estimated Mean&quot;</span></span>
-<span id="cb887-26"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb887-26" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d35-e-stat07-clt-solution_files/figure-html/vis-unif-ci-1.png" width="672" /></p>
+<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb892-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb892-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-2" tabindex="-1"></a>df_clt <span class="sc">%&gt;%</span></span>
+<span id="cb892-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-3" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb892-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-4" tabindex="-1"></a>    n <span class="sc">&gt;</span> <span class="dv">1</span>,</span>
+<span id="cb892-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-5" tabindex="-1"></a>    id <span class="sc">&lt;=</span> <span class="dv">100</span></span>
+<span id="cb892-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb892-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-7" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb892-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-8" tabindex="-1"></a>    <span class="at">se =</span> sd <span class="sc">/</span> <span class="fu">sqrt</span>(n),</span>
+<span id="cb892-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-9" tabindex="-1"></a>    <span class="at">lo =</span> mean <span class="sc">-</span> z_c <span class="sc">*</span> se,</span>
+<span id="cb892-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-10" tabindex="-1"></a>    <span class="at">hi =</span> mean <span class="sc">+</span> z_c <span class="sc">*</span> se</span>
+<span id="cb892-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-11" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb892-12"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-12" tabindex="-1"></a></span>
+<span id="cb892-13"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-13" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(id)) <span class="sc">+</span></span>
+<span id="cb892-14"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-14" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb892-15"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-15" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(</span>
+<span id="cb892-16"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-16" tabindex="-1"></a>    <span class="at">ymin =</span> lo,</span>
+<span id="cb892-17"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-17" tabindex="-1"></a>    <span class="at">ymax =</span> hi,</span>
+<span id="cb892-18"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-18" tabindex="-1"></a>    <span class="at">color =</span> (lo <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">&amp;</span> (<span class="fl">0.5</span> <span class="sc">&lt;=</span> hi)</span>
+<span id="cb892-19"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-19" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb892-20"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-20" tabindex="-1"></a>  <span class="fu">facet_grid</span>(n<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb892-21"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-21" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;CI Contains True Mean&quot;</span>) <span class="sc">+</span></span>
+<span id="cb892-22"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-22" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb892-23"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-23" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb892-24"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-24" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Replication&quot;</span>,</span>
+<span id="cb892-25"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-25" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Estimated Mean&quot;</span></span>
+<span id="cb892-26"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb892-26" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d35-e-stat07-clt-solution_files/figure-html/vis-unif-ci-1.png" alt="" width="672" /></p>
 <p>Some observations to note:</p>
 <ul>
 <li>The confidence intervals tend to be larger when <span class="math inline">\(n\)</span> is small, and shrink as <span class="math inline">\(n\)</span> increases.</li>
@@ -1221,17 +1225,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Every confidence interval either <strong>does</strong> or <strong>does not</strong> include the true value. Therefore a single confidence interval actually has no probability associated with it. The “confidence” is not in a single interval, but rather in the procedure that generated the interval.</li>
 </ul>
 <p>The following code estimates the frequency with which each interval includes the true mean; this quantity is called <em>coverage</em>, and it should match the nominal <span class="math inline">\(95%\)</span> we selected above.</p>
-<div class="sourceCode" id="cb888"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb888-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb888-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-2" tabindex="-1"></a>df_clt <span class="sc">%&gt;%</span></span>
-<span id="cb888-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-3" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb888-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb888-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-5" tabindex="-1"></a>    <span class="at">se =</span> sd <span class="sc">/</span> <span class="fu">sqrt</span>(n),</span>
-<span id="cb888-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-6" tabindex="-1"></a>    <span class="at">lo =</span> mean <span class="sc">-</span> z_c <span class="sc">*</span> se,</span>
-<span id="cb888-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-7" tabindex="-1"></a>    <span class="at">hi =</span> mean <span class="sc">+</span> z_c <span class="sc">*</span> se,</span>
-<span id="cb888-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-8" tabindex="-1"></a>    <span class="at">flag =</span> (lo <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">&amp;</span> (<span class="fl">0.5</span> <span class="sc">&lt;=</span> hi)</span>
-<span id="cb888-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-9" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb888-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-10" tabindex="-1"></a>  <span class="fu">group_by</span>(n) <span class="sc">%&gt;%</span></span>
-<span id="cb888-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb888-11" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">coverage =</span> <span class="fu">mean</span>(flag))</span></code></pre></div>
+<div class="sourceCode" id="cb893"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb893-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb893-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-2" tabindex="-1"></a>df_clt <span class="sc">%&gt;%</span></span>
+<span id="cb893-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-3" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb893-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb893-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-5" tabindex="-1"></a>    <span class="at">se =</span> sd <span class="sc">/</span> <span class="fu">sqrt</span>(n),</span>
+<span id="cb893-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-6" tabindex="-1"></a>    <span class="at">lo =</span> mean <span class="sc">-</span> z_c <span class="sc">*</span> se,</span>
+<span id="cb893-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-7" tabindex="-1"></a>    <span class="at">hi =</span> mean <span class="sc">+</span> z_c <span class="sc">*</span> se,</span>
+<span id="cb893-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-8" tabindex="-1"></a>    <span class="at">flag =</span> (lo <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">&amp;</span> (<span class="fl">0.5</span> <span class="sc">&lt;=</span> hi)</span>
+<span id="cb893-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-9" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb893-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-10" tabindex="-1"></a>  <span class="fu">group_by</span>(n) <span class="sc">%&gt;%</span></span>
+<span id="cb893-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-11" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">coverage =</span> <span class="fu">mean</span>(flag))</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 2
 ##       n coverage
 ##   &lt;dbl&gt;    &lt;dbl&gt;
@@ -1248,18 +1252,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q1-make-a-clt-approximation-for-a-confidence-interval" class="section level3 hasAnchor" number="42.2.1">
 <h3><span class="header-section-number">42.2.1</span> <strong>q1</strong> Make a CLT approximation for a confidence interval<a href="stats-the-central-limit-theorem-and-confidence-intervals.html#q1-make-a-clt-approximation-for-a-confidence-interval" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Using the CLT, approximate a <span class="math inline">\(99\%\)</span> confidence interval for the population mean using the sample <code>z_q1</code>.</p>
-<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb890-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Estimate a 99% confidence interval with the sample below</span></span>
-<span id="cb890-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb890-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb890-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb890-3" tabindex="-1"></a>z_q1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
-<span id="cb890-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb890-4" tabindex="-1"></a>lo_q1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(z_q1) <span class="sc">-</span> <span class="fu">qnorm</span>( <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.99</span>) <span class="sc">/</span> <span class="dv">2</span> ) <span class="sc">*</span> <span class="fu">sd</span>(z_q1) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">100</span>)</span>
-<span id="cb890-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb890-5" tabindex="-1"></a>hi_q1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(z_q1) <span class="sc">+</span> <span class="fu">qnorm</span>( <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.99</span>) <span class="sc">/</span> <span class="dv">2</span> ) <span class="sc">*</span> <span class="fu">sd</span>(z_q1) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb895-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Estimate a 99% confidence interval with the sample below</span></span>
+<span id="cb895-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb895-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb895-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb895-3" tabindex="-1"></a>z_q1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb895-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb895-4" tabindex="-1"></a>lo_q1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(z_q1) <span class="sc">-</span> <span class="fu">qnorm</span>( <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.99</span>) <span class="sc">/</span> <span class="dv">2</span> ) <span class="sc">*</span> <span class="fu">sd</span>(z_q1) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">100</span>)</span>
+<span id="cb895-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb895-5" tabindex="-1"></a>hi_q1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(z_q1) <span class="sc">+</span> <span class="fu">qnorm</span>( <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.99</span>) <span class="sc">/</span> <span class="dv">2</span> ) <span class="sc">*</span> <span class="fu">sd</span>(z_q1) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">100</span>)</span></code></pre></div>
 <p>Use the following tests to check your answer.</p>
-<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb891-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb891-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb891-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb891-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(lo_q1 <span class="sc">-</span> <span class="fl">0.4444163</span>) <span class="sc">&lt;</span> <span class="fl">1e-6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb896"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb896-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb896-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb896-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb896-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(lo_q1 <span class="sc">-</span> <span class="fl">0.4444163</span>) <span class="sc">&lt;</span> <span class="fl">1e-6</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb893"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb893-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb893-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(hi_q1 <span class="sc">-</span> <span class="fl">1.406819</span>) <span class="sc">&lt;</span> <span class="fl">1e-6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb898"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb898-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb898-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(hi_q1 <span class="sc">-</span> <span class="fl">1.406819</span>) <span class="sc">&lt;</span> <span class="fl">1e-6</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb895-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb900"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb900-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb900-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 </div>
 </div>
@@ -1268,80 +1272,80 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- -------------------------------------------------- -->
 <p>Why would we bother with constructing a confidence interval? Let’s take a look at a real example with the NYC flight data.</p>
 <p>Let’s suppose we were trying to determine whether the mean arrival delay time of American Airlines (<code>AA</code>) flights is greater than zero. We have the population of 2013 flights, so we can answer this definitively:</p>
-<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb897-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb897-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-2" tabindex="-1"></a>df_flights_aa <span class="ot">&lt;-</span></span>
-<span id="cb897-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-3" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
-<span id="cb897-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-4" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb897-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(</span>
-<span id="cb897-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-6" tabindex="-1"></a>    arr_delay,</span>
-<span id="cb897-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-7" tabindex="-1"></a>    <span class="fu">c</span>(</span>
-<span id="cb897-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-8" tabindex="-1"></a>      <span class="st">&quot;mean&quot;</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">mean</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb897-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-9" tabindex="-1"></a>      <span class="st">&quot;sd&quot;</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">sd</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb897-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-10" tabindex="-1"></a>      <span class="st">&quot;n&quot;</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">length</span>(.)</span>
-<span id="cb897-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-11" tabindex="-1"></a>    )</span>
-<span id="cb897-12"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-12" tabindex="-1"></a>  ))</span>
-<span id="cb897-13"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb897-13" tabindex="-1"></a>df_flights_aa</span></code></pre></div>
+<div class="sourceCode" id="cb902"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb902-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb902-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-2" tabindex="-1"></a>df_flights_aa <span class="ot">&lt;-</span></span>
+<span id="cb902-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-3" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb902-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-4" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb902-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(</span>
+<span id="cb902-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-6" tabindex="-1"></a>    arr_delay,</span>
+<span id="cb902-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-7" tabindex="-1"></a>    <span class="fu">c</span>(</span>
+<span id="cb902-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-8" tabindex="-1"></a>      <span class="st">&quot;mean&quot;</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">mean</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb902-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-9" tabindex="-1"></a>      <span class="st">&quot;sd&quot;</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">sd</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb902-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-10" tabindex="-1"></a>      <span class="st">&quot;n&quot;</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">length</span>(.)</span>
+<span id="cb902-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-11" tabindex="-1"></a>    )</span>
+<span id="cb902-12"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-12" tabindex="-1"></a>  ))</span>
+<span id="cb902-13"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb902-13" tabindex="-1"></a>df_flights_aa</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 3
 ##   arr_delay_mean arr_delay_sd arr_delay_n
 ##            &lt;dbl&gt;        &lt;dbl&gt;       &lt;int&gt;
 ## 1          0.364         42.5       32729</code></pre>
 <p>The <code>arr_delay_mean</code> is greater than zero, so case closed.</p>
 <p>But imagine we only had a sample of flights, rather than the whole population. The following code randomly samples the <code>AA</code> flights, and repeats this process at a few different sample sizes. I also construct confidence intervals: If the confidence interval has its lower bound greater than zero, then we can be reasonably confident the mean delay time is greater than zero.</p>
-<div class="sourceCode" id="cb899"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb899-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb899-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb899-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-3" tabindex="-1"></a></span>
-<span id="cb899-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-4" tabindex="-1"></a><span class="co"># Downsample at different sample sizes, construct a confidence interval</span></span>
-<span id="cb899-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-5" tabindex="-1"></a>df_flights_sampled <span class="ot">&lt;-</span></span>
-<span id="cb899-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-6" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
-<span id="cb899-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-7" tabindex="-1"></a>    <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">250</span>, <span class="dv">500</span>), <span class="co"># Sample sizes</span></span>
-<span id="cb899-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-8" tabindex="-1"></a>    <span class="cf">function</span>(n) {</span>
-<span id="cb899-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-9" tabindex="-1"></a>      flights <span class="sc">%&gt;%</span></span>
-<span id="cb899-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-10" tabindex="-1"></a>        <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb899-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-11" tabindex="-1"></a>        <span class="fu">slice_sample</span>(<span class="at">n =</span> n) <span class="sc">%&gt;%</span></span>
-<span id="cb899-12"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-12" tabindex="-1"></a>        <span class="fu">summarize</span>(<span class="fu">across</span>(</span>
-<span id="cb899-13"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-13" tabindex="-1"></a>          arr_delay,</span>
-<span id="cb899-14"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-14" tabindex="-1"></a>          <span class="fu">c</span>(</span>
-<span id="cb899-15"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-15" tabindex="-1"></a>            <span class="st">&quot;mean&quot;</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">mean</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb899-16"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-16" tabindex="-1"></a>            <span class="st">&quot;se&quot;</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">sd</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">length</span>(.)</span>
-<span id="cb899-17"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-17" tabindex="-1"></a>          )</span>
-<span id="cb899-18"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-18" tabindex="-1"></a>        )) <span class="sc">%&gt;%</span></span>
-<span id="cb899-19"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-19" tabindex="-1"></a>        <span class="fu">mutate</span>(</span>
-<span id="cb899-20"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-20" tabindex="-1"></a>          <span class="at">arr_delay_lo =</span> arr_delay_mean <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> arr_delay_se,</span>
-<span id="cb899-21"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-21" tabindex="-1"></a>          <span class="at">arr_delay_hi =</span> arr_delay_mean <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> arr_delay_se,</span>
-<span id="cb899-22"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-22" tabindex="-1"></a>          <span class="at">n =</span> n</span>
-<span id="cb899-23"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-23" tabindex="-1"></a>        )</span>
-<span id="cb899-24"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-24" tabindex="-1"></a>    }</span>
-<span id="cb899-25"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-25" tabindex="-1"></a>  )</span>
-<span id="cb899-26"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-26" tabindex="-1"></a></span>
-<span id="cb899-27"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-27" tabindex="-1"></a><span class="co"># Visualize</span></span>
-<span id="cb899-28"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-28" tabindex="-1"></a>df_flights_sampled <span class="sc">%&gt;%</span></span>
-<span id="cb899-29"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-29" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, arr_delay_mean)) <span class="sc">+</span></span>
-<span id="cb899-30"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-30" tabindex="-1"></a>  <span class="fu">geom_hline</span>(</span>
-<span id="cb899-31"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-31" tabindex="-1"></a>    <span class="at">data =</span> df_flights_aa,</span>
-<span id="cb899-32"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-32" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">yintercept =</span> arr_delay_mean),</span>
-<span id="cb899-33"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-33" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.1</span></span>
-<span id="cb899-34"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-34" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb899-35"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-35" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb899-36"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-36" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(</span>
-<span id="cb899-37"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-37" tabindex="-1"></a>    <span class="at">ymin =</span> arr_delay_lo,</span>
-<span id="cb899-38"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-38" tabindex="-1"></a>    <span class="at">ymax =</span> arr_delay_hi,</span>
-<span id="cb899-39"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-39" tabindex="-1"></a>    <span class="at">color =</span> (<span class="dv">0</span> <span class="sc">&lt;</span> arr_delay_lo)</span>
-<span id="cb899-40"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-40" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb899-41"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-41" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb899-42"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-42" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
-<span id="cb899-43"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-43" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Confidently Greater than Zero?&quot;</span>) <span class="sc">+</span></span>
-<span id="cb899-44"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-44" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb899-45"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-45" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb899-46"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-46" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Observations&quot;</span>,</span>
-<span id="cb899-47"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-47" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Arrival Delay (minutes)&quot;</span>,</span>
-<span id="cb899-48"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-48" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;American Airlines Delays&quot;</span></span>
-<span id="cb899-49"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb899-49" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb904-1"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb904-2"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb904-3"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-3" tabindex="-1"></a></span>
+<span id="cb904-4"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-4" tabindex="-1"></a><span class="co"># Downsample at different sample sizes, construct a confidence interval</span></span>
+<span id="cb904-5"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-5" tabindex="-1"></a>df_flights_sampled <span class="ot">&lt;-</span></span>
+<span id="cb904-6"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-6" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
+<span id="cb904-7"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-7" tabindex="-1"></a>    <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">250</span>, <span class="dv">500</span>), <span class="co"># Sample sizes</span></span>
+<span id="cb904-8"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-8" tabindex="-1"></a>    <span class="cf">function</span>(n) {</span>
+<span id="cb904-9"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-9" tabindex="-1"></a>      flights <span class="sc">%&gt;%</span></span>
+<span id="cb904-10"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-10" tabindex="-1"></a>        <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb904-11"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-11" tabindex="-1"></a>        <span class="fu">slice_sample</span>(<span class="at">n =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb904-12"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-12" tabindex="-1"></a>        <span class="fu">summarize</span>(<span class="fu">across</span>(</span>
+<span id="cb904-13"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-13" tabindex="-1"></a>          arr_delay,</span>
+<span id="cb904-14"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-14" tabindex="-1"></a>          <span class="fu">c</span>(</span>
+<span id="cb904-15"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-15" tabindex="-1"></a>            <span class="st">&quot;mean&quot;</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">mean</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb904-16"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-16" tabindex="-1"></a>            <span class="st">&quot;se&quot;</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">sd</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">length</span>(.)</span>
+<span id="cb904-17"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-17" tabindex="-1"></a>          )</span>
+<span id="cb904-18"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-18" tabindex="-1"></a>        )) <span class="sc">%&gt;%</span></span>
+<span id="cb904-19"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-19" tabindex="-1"></a>        <span class="fu">mutate</span>(</span>
+<span id="cb904-20"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-20" tabindex="-1"></a>          <span class="at">arr_delay_lo =</span> arr_delay_mean <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> arr_delay_se,</span>
+<span id="cb904-21"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-21" tabindex="-1"></a>          <span class="at">arr_delay_hi =</span> arr_delay_mean <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> arr_delay_se,</span>
+<span id="cb904-22"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-22" tabindex="-1"></a>          <span class="at">n =</span> n</span>
+<span id="cb904-23"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-23" tabindex="-1"></a>        )</span>
+<span id="cb904-24"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-24" tabindex="-1"></a>    }</span>
+<span id="cb904-25"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-25" tabindex="-1"></a>  )</span>
+<span id="cb904-26"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-26" tabindex="-1"></a></span>
+<span id="cb904-27"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-27" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb904-28"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-28" tabindex="-1"></a>df_flights_sampled <span class="sc">%&gt;%</span></span>
+<span id="cb904-29"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-29" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, arr_delay_mean)) <span class="sc">+</span></span>
+<span id="cb904-30"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-30" tabindex="-1"></a>  <span class="fu">geom_hline</span>(</span>
+<span id="cb904-31"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-31" tabindex="-1"></a>    <span class="at">data =</span> df_flights_aa,</span>
+<span id="cb904-32"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-32" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">yintercept =</span> arr_delay_mean),</span>
+<span id="cb904-33"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-33" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.1</span></span>
+<span id="cb904-34"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-34" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb904-35"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-35" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb904-36"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-36" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(</span>
+<span id="cb904-37"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-37" tabindex="-1"></a>    <span class="at">ymin =</span> arr_delay_lo,</span>
+<span id="cb904-38"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-38" tabindex="-1"></a>    <span class="at">ymax =</span> arr_delay_hi,</span>
+<span id="cb904-39"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-39" tabindex="-1"></a>    <span class="at">color =</span> (<span class="dv">0</span> <span class="sc">&lt;</span> arr_delay_lo)</span>
+<span id="cb904-40"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-40" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb904-41"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-41" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb904-42"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-42" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb904-43"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-43" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Confidently Greater than Zero?&quot;</span>) <span class="sc">+</span></span>
+<span id="cb904-44"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-44" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb904-45"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-45" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb904-46"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-46" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Observations&quot;</span>,</span>
+<span id="cb904-47"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-47" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Arrival Delay (minutes)&quot;</span>,</span>
+<span id="cb904-48"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-48" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;American Airlines Delays&quot;</span></span>
+<span id="cb904-49"><a href="stats-the-central-limit-theorem-and-confidence-intervals.html#cb904-49" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
+## This warning is displayed once per session.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.</code></pre>
-<p><img src="d35-e-stat07-clt-solution_files/figure-html/flights-aa-samples-1.png" width="672" /></p>
+<p><img src="d35-e-stat07-clt-solution_files/figure-html/flights-aa-samples-1.png" alt="" width="672" /></p>
 <p>These confidence intervals illustrate a number of different sampling scenarios. In some of them, we correctly determine that the mean arrival delay is confidently greater than zero. The case at <span class="math inline">\(n = 100\)</span> is inconclusive; the CI is compatible with both positive and negative mean delay times. Note the two lowest <span class="math inline">\(n\)</span> cases; there we “confidently” determine that the mean arrival delay is negative [3]. Any time we are doing estimation we are in danger of making an incorrect conclusion, even when we do the statistics correctly! Obtaining data simply decreases the probability of making a false conclusion [4].</p>
 <p>However, combining all our available information to form a confidence interval is a principled way to report our results. A confidence interval gives us a plausible range of values for the population value, and by its width gives us a sense of how accurate our estimate is likely to be.</p>
 </div>

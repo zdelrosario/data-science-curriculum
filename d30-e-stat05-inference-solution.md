@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -59,10 +59,10 @@ df_data_norm %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="d30-e-stat05-inference-solution_files/figure-html/gen-data-1.png" width="672" />
+<img src="d30-e-stat05-inference-solution_files/figure-html/gen-data-1.png" alt="" width="672" />
 
 The sample (histogram) does not look identical to the population (solid curve). But it can't, because we don't have all the observations in the population. The key assumption we make in statistical inference is that *the sample "looks like" the population*. In technical terms, such a sample is *representative* of a chosen population.
 
@@ -83,7 +83,7 @@ df_data_norm %>%
   geom_freqpoly(aes(color = source, linetype = source), bins = 15)
 ```
 
-<img src="d30-e-stat05-inference-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="d30-e-stat05-inference-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" />
 
 Note that the `Resampled` set looks exactly like the `Original` sample. This is not what we want. Instead, we have to resample *with replacement*.
 
@@ -102,7 +102,7 @@ df_data_norm %>%
   geom_freqpoly(aes(color = source, linetype = source), bins = 15)
 ```
 
-<img src="d30-e-stat05-inference-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="d30-e-stat05-inference-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" />
 
 Once we have resampled the sample, we can compute any statistics we care about:
 
@@ -214,10 +214,10 @@ df_resample_norm %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="d30-e-stat05-inference-solution_files/figure-html/resamples-vis-1.png" width="672" />
+<img src="d30-e-stat05-inference-solution_files/figure-html/resamples-vis-1.png" alt="" width="672" />
 
 In the example above, I set `times = 1000` but show only the first nine. Generally, a larger value of `times` is better, but a good rule of thumb is to do at least `1000` resamples.
 
@@ -362,10 +362,10 @@ df_q1 %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="d30-e-stat05-inference-solution_files/figure-html/q1-vis-1.png" width="672" />
+<img src="d30-e-stat05-inference-solution_files/figure-html/q1-vis-1.png" alt="" width="672" />
 
 This plot gives us an (approximate) sampling distribution for the standard deviation. A reasonable next step would be to compute the *standard error*.
 
@@ -471,10 +471,10 @@ df_demo %>%
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="d30-e-stat05-inference-solution_files/figure-html/q3_vis-1.png" width="672" />
+<img src="d30-e-stat05-inference-solution_files/figure-html/q3_vis-1.png" alt="" width="672" />
 
 The following test will verify that your `df_q2` is correct:
 

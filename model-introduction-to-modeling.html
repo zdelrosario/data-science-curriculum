@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>54 Model: Introduction to Modeling | Data Science: Exercise Solutions</title>
   <meta name="description" content="54 Model: Introduction to Modeling | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="54 Model: Introduction to Modeling | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,98 +1085,98 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">54</span> Model: Introduction to Modeling<a href="model-introduction-to-modeling.html#model-introduction-to-modeling" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Modeling is a key tool for data science: We will use models to understand the relationships between variables and to make predictions. <strong>Building models is subtle and difficult</strong>. To that end, this will be a high-level tour through the key parts of building and assessing a model. In this exercise, you’ll learn what a model is, how to <em>fit</em> a model, how to <em>assess</em> a fitted model, some ways to <em>improve</em> a model, and how to <em>quantify</em> how trustworthy a model is.</p>
 <p><em>Reading</em>: (<em>None</em>, this exercise <em>is</em> the reading.)</p>
-<div class="sourceCode" id="cb1128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1128-1"><a href="model-introduction-to-modeling.html#cb1128-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb1133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1133-1"><a href="model-introduction-to-modeling.html#cb1133-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb1130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1130-1"><a href="model-introduction-to-modeling.html#cb1130-1" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
-<span id="cb1130-2"><a href="model-introduction-to-modeling.html#cb1130-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<div class="sourceCode" id="cb1135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1135-1"><a href="model-introduction-to-modeling.html#cb1135-1" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb1135-2"><a href="model-introduction-to-modeling.html#cb1135-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;broom&#39;
 ## 
 ## The following object is masked from &#39;package:modelr&#39;:
 ## 
 ##     bootstrap</code></pre>
-<div class="sourceCode" id="cb1132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1132-1"><a href="model-introduction-to-modeling.html#cb1132-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
-<span id="cb1132-2"><a href="model-introduction-to-modeling.html#cb1132-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1132-3"><a href="model-introduction-to-modeling.html#cb1132-3" tabindex="-1"></a></span>
-<span id="cb1132-4"><a href="model-introduction-to-modeling.html#cb1132-4" tabindex="-1"></a><span class="do">## Select training data</span></span>
-<span id="cb1132-5"><a href="model-introduction-to-modeling.html#cb1132-5" tabindex="-1"></a>df_train <span class="ot">&lt;-</span></span>
-<span id="cb1132-6"><a href="model-introduction-to-modeling.html#cb1132-6" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb1132-7"><a href="model-introduction-to-modeling.html#cb1132-7" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="fl">1e4</span>)</span>
-<span id="cb1132-8"><a href="model-introduction-to-modeling.html#cb1132-8" tabindex="-1"></a></span>
-<span id="cb1132-9"><a href="model-introduction-to-modeling.html#cb1132-9" tabindex="-1"></a><span class="do">## Select test data</span></span>
-<span id="cb1132-10"><a href="model-introduction-to-modeling.html#cb1132-10" tabindex="-1"></a>df_test <span class="ot">&lt;-</span></span>
-<span id="cb1132-11"><a href="model-introduction-to-modeling.html#cb1132-11" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb1132-12"><a href="model-introduction-to-modeling.html#cb1132-12" tabindex="-1"></a>  <span class="fu">slice</span>((<span class="fl">1e4</span> <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span><span class="fl">2e4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1137-1"><a href="model-introduction-to-modeling.html#cb1137-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
+<span id="cb1137-2"><a href="model-introduction-to-modeling.html#cb1137-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1137-3"><a href="model-introduction-to-modeling.html#cb1137-3" tabindex="-1"></a></span>
+<span id="cb1137-4"><a href="model-introduction-to-modeling.html#cb1137-4" tabindex="-1"></a><span class="do">## Select training data</span></span>
+<span id="cb1137-5"><a href="model-introduction-to-modeling.html#cb1137-5" tabindex="-1"></a>df_train <span class="ot">&lt;-</span></span>
+<span id="cb1137-6"><a href="model-introduction-to-modeling.html#cb1137-6" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb1137-7"><a href="model-introduction-to-modeling.html#cb1137-7" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="fl">1e4</span>)</span>
+<span id="cb1137-8"><a href="model-introduction-to-modeling.html#cb1137-8" tabindex="-1"></a></span>
+<span id="cb1137-9"><a href="model-introduction-to-modeling.html#cb1137-9" tabindex="-1"></a><span class="do">## Select test data</span></span>
+<span id="cb1137-10"><a href="model-introduction-to-modeling.html#cb1137-10" tabindex="-1"></a>df_test <span class="ot">&lt;-</span></span>
+<span id="cb1137-11"><a href="model-introduction-to-modeling.html#cb1137-11" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb1137-12"><a href="model-introduction-to-modeling.html#cb1137-12" tabindex="-1"></a>  <span class="fu">slice</span>((<span class="fl">1e4</span> <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span><span class="fl">2e4</span>)</span></code></pre></div>
 <div id="a-simple-model" class="section level2 hasAnchor" number="54.1">
 <h2><span class="header-section-number">54.1</span> A simple model<a href="model-introduction-to-modeling.html#a-simple-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In what follows, we’ll try to fit a <em>linear, one-dimensional</em> model for the <code>price</code> of a diamond. It will be <em>linear</em> in the sense that it will be a linear function of its inputs; i.e. for an input <span class="math inline">\(x\)</span> we’ll limit ourselves to scaling the input <span class="math inline">\(\beta \times x\)</span>. It will also be <em>one-dimensional</em> in the sense that we will only consider one input; namely, the <code>carat</code> of the diamond. Thus, my model for predicted price <span class="math inline">\(\hat{f}\)</span> will be</p>
 <p><span class="math display">\[\hat{f} = \beta_0 + \beta_{\text{carat}} (\text{carat}) + \epsilon,\]</span></p>
 <p>where <span class="math inline">\(\epsilon\)</span> is an <em>additive error</em> term, which we’ll model as a random variable. Remember that <span class="math inline">\(\hat{f}\)</span> notation indicates an estimate for the quantity <span class="math inline">\(f\)</span>. To start modeling, I’ll choose <em>parameters</em> for my model by selecting values for the slope and intercept.</p>
-<div class="sourceCode" id="cb1133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1133-1"><a href="model-introduction-to-modeling.html#cb1133-1" tabindex="-1"></a><span class="do">## Set model parameter values [theta]</span></span>
-<span id="cb1133-2"><a href="model-introduction-to-modeling.html#cb1133-2" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="sc">/</span> <span class="fl">0.5</span> <span class="co"># Eyeball: $1000 / (1/2) carat</span></span>
-<span id="cb1133-3"><a href="model-introduction-to-modeling.html#cb1133-3" tabindex="-1"></a>intercept <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb1133-4"><a href="model-introduction-to-modeling.html#cb1133-4" tabindex="-1"></a></span>
-<span id="cb1133-5"><a href="model-introduction-to-modeling.html#cb1133-5" tabindex="-1"></a><span class="do">## Represent model as an `abline`</span></span>
-<span id="cb1133-6"><a href="model-introduction-to-modeling.html#cb1133-6" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1133-7"><a href="model-introduction-to-modeling.html#cb1133-7" tabindex="-1"></a></span>
-<span id="cb1133-8"><a href="model-introduction-to-modeling.html#cb1133-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb1133-9"><a href="model-introduction-to-modeling.html#cb1133-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1133-10"><a href="model-introduction-to-modeling.html#cb1133-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
-<span id="cb1133-11"><a href="model-introduction-to-modeling.html#cb1133-11" tabindex="-1"></a>    <span class="at">slope =</span> slope,</span>
-<span id="cb1133-12"><a href="model-introduction-to-modeling.html#cb1133-12" tabindex="-1"></a>    <span class="at">intercept =</span> intercept,</span>
-<span id="cb1133-13"><a href="model-introduction-to-modeling.html#cb1133-13" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>,</span>
-<span id="cb1133-14"><a href="model-introduction-to-modeling.html#cb1133-14" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
-<span id="cb1133-15"><a href="model-introduction-to-modeling.html#cb1133-15" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d47-e-model01-intro-solution_files/figure-html/model-manual-1-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1138-1"><a href="model-introduction-to-modeling.html#cb1138-1" tabindex="-1"></a><span class="do">## Set model parameter values [theta]</span></span>
+<span id="cb1138-2"><a href="model-introduction-to-modeling.html#cb1138-2" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="sc">/</span> <span class="fl">0.5</span> <span class="co"># Eyeball: $1000 / (1/2) carat</span></span>
+<span id="cb1138-3"><a href="model-introduction-to-modeling.html#cb1138-3" tabindex="-1"></a>intercept <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1138-4"><a href="model-introduction-to-modeling.html#cb1138-4" tabindex="-1"></a></span>
+<span id="cb1138-5"><a href="model-introduction-to-modeling.html#cb1138-5" tabindex="-1"></a><span class="do">## Represent model as an `abline`</span></span>
+<span id="cb1138-6"><a href="model-introduction-to-modeling.html#cb1138-6" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1138-7"><a href="model-introduction-to-modeling.html#cb1138-7" tabindex="-1"></a></span>
+<span id="cb1138-8"><a href="model-introduction-to-modeling.html#cb1138-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb1138-9"><a href="model-introduction-to-modeling.html#cb1138-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1138-10"><a href="model-introduction-to-modeling.html#cb1138-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
+<span id="cb1138-11"><a href="model-introduction-to-modeling.html#cb1138-11" tabindex="-1"></a>    <span class="at">slope =</span> slope,</span>
+<span id="cb1138-12"><a href="model-introduction-to-modeling.html#cb1138-12" tabindex="-1"></a>    <span class="at">intercept =</span> intercept,</span>
+<span id="cb1138-13"><a href="model-introduction-to-modeling.html#cb1138-13" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>,</span>
+<span id="cb1138-14"><a href="model-introduction-to-modeling.html#cb1138-14" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
+<span id="cb1138-15"><a href="model-introduction-to-modeling.html#cb1138-15" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d47-e-model01-intro-solution_files/figure-html/model-manual-1-1.png" alt="" width="672" /></p>
 <p>That doesn’t look very good; the line tends to miss the higher-carat values. I manually adjust the slope up by a factor of two:</p>
-<div class="sourceCode" id="cb1134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1134-1"><a href="model-introduction-to-modeling.html#cb1134-1" tabindex="-1"></a><span class="do">## Set model parameter values [theta]</span></span>
-<span id="cb1134-2"><a href="model-introduction-to-modeling.html#cb1134-2" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="dv">2000</span> <span class="sc">/</span> <span class="fl">0.5</span> <span class="co"># Adjusted by factor of 2</span></span>
-<span id="cb1134-3"><a href="model-introduction-to-modeling.html#cb1134-3" tabindex="-1"></a>intercept <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb1134-4"><a href="model-introduction-to-modeling.html#cb1134-4" tabindex="-1"></a></span>
-<span id="cb1134-5"><a href="model-introduction-to-modeling.html#cb1134-5" tabindex="-1"></a><span class="do">## Represent model as an `abline`</span></span>
-<span id="cb1134-6"><a href="model-introduction-to-modeling.html#cb1134-6" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1134-7"><a href="model-introduction-to-modeling.html#cb1134-7" tabindex="-1"></a></span>
-<span id="cb1134-8"><a href="model-introduction-to-modeling.html#cb1134-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb1134-9"><a href="model-introduction-to-modeling.html#cb1134-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1134-10"><a href="model-introduction-to-modeling.html#cb1134-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
-<span id="cb1134-11"><a href="model-introduction-to-modeling.html#cb1134-11" tabindex="-1"></a>    <span class="at">slope =</span> slope,</span>
-<span id="cb1134-12"><a href="model-introduction-to-modeling.html#cb1134-12" tabindex="-1"></a>    <span class="at">intercept =</span> intercept,</span>
-<span id="cb1134-13"><a href="model-introduction-to-modeling.html#cb1134-13" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>,</span>
-<span id="cb1134-14"><a href="model-introduction-to-modeling.html#cb1134-14" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
-<span id="cb1134-15"><a href="model-introduction-to-modeling.html#cb1134-15" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d47-e-model01-intro-solution_files/figure-html/model-manual-2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1139-1"><a href="model-introduction-to-modeling.html#cb1139-1" tabindex="-1"></a><span class="do">## Set model parameter values [theta]</span></span>
+<span id="cb1139-2"><a href="model-introduction-to-modeling.html#cb1139-2" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="dv">2000</span> <span class="sc">/</span> <span class="fl">0.5</span> <span class="co"># Adjusted by factor of 2</span></span>
+<span id="cb1139-3"><a href="model-introduction-to-modeling.html#cb1139-3" tabindex="-1"></a>intercept <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1139-4"><a href="model-introduction-to-modeling.html#cb1139-4" tabindex="-1"></a></span>
+<span id="cb1139-5"><a href="model-introduction-to-modeling.html#cb1139-5" tabindex="-1"></a><span class="do">## Represent model as an `abline`</span></span>
+<span id="cb1139-6"><a href="model-introduction-to-modeling.html#cb1139-6" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1139-7"><a href="model-introduction-to-modeling.html#cb1139-7" tabindex="-1"></a></span>
+<span id="cb1139-8"><a href="model-introduction-to-modeling.html#cb1139-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb1139-9"><a href="model-introduction-to-modeling.html#cb1139-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1139-10"><a href="model-introduction-to-modeling.html#cb1139-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
+<span id="cb1139-11"><a href="model-introduction-to-modeling.html#cb1139-11" tabindex="-1"></a>    <span class="at">slope =</span> slope,</span>
+<span id="cb1139-12"><a href="model-introduction-to-modeling.html#cb1139-12" tabindex="-1"></a>    <span class="at">intercept =</span> intercept,</span>
+<span id="cb1139-13"><a href="model-introduction-to-modeling.html#cb1139-13" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>,</span>
+<span id="cb1139-14"><a href="model-introduction-to-modeling.html#cb1139-14" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
+<span id="cb1139-15"><a href="model-introduction-to-modeling.html#cb1139-15" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d47-e-model01-intro-solution_files/figure-html/model-manual-2-1.png" alt="" width="672" /></p>
 <p>This <em>manual</em> approach to <em>fitting a model</em>—choosing parameter values—is labor-intensive and silly. Fortunately, there’s a better way. We can <em>optimize</em> the parameter values by minimizing a chosen metric.</p>
 <p>First, let’s visualize the quantities we will seek to minimize:</p>
-<div class="sourceCode" id="cb1135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1135-1"><a href="model-introduction-to-modeling.html#cb1135-1" tabindex="-1"></a><span class="do">## Set model parameter values [theta]</span></span>
-<span id="cb1135-2"><a href="model-introduction-to-modeling.html#cb1135-2" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="dv">2000</span> <span class="sc">/</span> <span class="fl">0.5</span></span>
-<span id="cb1135-3"><a href="model-introduction-to-modeling.html#cb1135-3" tabindex="-1"></a>intercept <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb1135-4"><a href="model-introduction-to-modeling.html#cb1135-4" tabindex="-1"></a></span>
-<span id="cb1135-5"><a href="model-introduction-to-modeling.html#cb1135-5" tabindex="-1"></a><span class="do">## Compute predicted values</span></span>
-<span id="cb1135-6"><a href="model-introduction-to-modeling.html#cb1135-6" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1135-7"><a href="model-introduction-to-modeling.html#cb1135-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">price_pred =</span> slope <span class="sc">*</span> carat <span class="sc">+</span> intercept) <span class="sc">%&gt;%</span></span>
-<span id="cb1135-8"><a href="model-introduction-to-modeling.html#cb1135-8" tabindex="-1"></a></span>
-<span id="cb1135-9"><a href="model-introduction-to-modeling.html#cb1135-9" tabindex="-1"></a>  <span class="do">## Visualize *residuals* as vertical bars</span></span>
-<span id="cb1135-10"><a href="model-introduction-to-modeling.html#cb1135-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb1135-11"><a href="model-introduction-to-modeling.html#cb1135-11" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1135-12"><a href="model-introduction-to-modeling.html#cb1135-12" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb1135-13"><a href="model-introduction-to-modeling.html#cb1135-13" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">xend =</span> carat, <span class="at">yend =</span> price_pred),</span>
-<span id="cb1135-14"><a href="model-introduction-to-modeling.html#cb1135-14" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
-<span id="cb1135-15"><a href="model-introduction-to-modeling.html#cb1135-15" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1135-16"><a href="model-introduction-to-modeling.html#cb1135-16" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
-<span id="cb1135-17"><a href="model-introduction-to-modeling.html#cb1135-17" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> price_pred),</span>
-<span id="cb1135-18"><a href="model-introduction-to-modeling.html#cb1135-18" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>,</span>
-<span id="cb1135-19"><a href="model-introduction-to-modeling.html#cb1135-19" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
-<span id="cb1135-20"><a href="model-introduction-to-modeling.html#cb1135-20" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d47-e-model01-intro-solution_files/figure-html/model-manual-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1140-1"><a href="model-introduction-to-modeling.html#cb1140-1" tabindex="-1"></a><span class="do">## Set model parameter values [theta]</span></span>
+<span id="cb1140-2"><a href="model-introduction-to-modeling.html#cb1140-2" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="dv">2000</span> <span class="sc">/</span> <span class="fl">0.5</span></span>
+<span id="cb1140-3"><a href="model-introduction-to-modeling.html#cb1140-3" tabindex="-1"></a>intercept <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1140-4"><a href="model-introduction-to-modeling.html#cb1140-4" tabindex="-1"></a></span>
+<span id="cb1140-5"><a href="model-introduction-to-modeling.html#cb1140-5" tabindex="-1"></a><span class="do">## Compute predicted values</span></span>
+<span id="cb1140-6"><a href="model-introduction-to-modeling.html#cb1140-6" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1140-7"><a href="model-introduction-to-modeling.html#cb1140-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">price_pred =</span> slope <span class="sc">*</span> carat <span class="sc">+</span> intercept) <span class="sc">%&gt;%</span></span>
+<span id="cb1140-8"><a href="model-introduction-to-modeling.html#cb1140-8" tabindex="-1"></a></span>
+<span id="cb1140-9"><a href="model-introduction-to-modeling.html#cb1140-9" tabindex="-1"></a>  <span class="do">## Visualize *residuals* as vertical bars</span></span>
+<span id="cb1140-10"><a href="model-introduction-to-modeling.html#cb1140-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb1140-11"><a href="model-introduction-to-modeling.html#cb1140-11" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1140-12"><a href="model-introduction-to-modeling.html#cb1140-12" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb1140-13"><a href="model-introduction-to-modeling.html#cb1140-13" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">xend =</span> carat, <span class="at">yend =</span> price_pred),</span>
+<span id="cb1140-14"><a href="model-introduction-to-modeling.html#cb1140-14" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
+<span id="cb1140-15"><a href="model-introduction-to-modeling.html#cb1140-15" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1140-16"><a href="model-introduction-to-modeling.html#cb1140-16" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb1140-17"><a href="model-introduction-to-modeling.html#cb1140-17" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> price_pred),</span>
+<span id="cb1140-18"><a href="model-introduction-to-modeling.html#cb1140-18" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>,</span>
+<span id="cb1140-19"><a href="model-introduction-to-modeling.html#cb1140-19" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
+<span id="cb1140-20"><a href="model-introduction-to-modeling.html#cb1140-20" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d47-e-model01-intro-solution_files/figure-html/model-manual-3-1.png" alt="" width="672" /></p>
 <p>This plot shows the <em>residuals</em> of the model, that is</p>
 <p><span class="math display">\[\text{Residual}_i(\theta) = \hat{f}_i(\theta) - f_i,\]</span></p>
 <p>where <span class="math inline">\(f_i\)</span> is the i-th observed output value (<code>price</code>), <span class="math inline">\(\hat{f}_i(\theta)\)</span> is the i-th prediction from the model (<code>price_pred</code>), and <span class="math inline">\(\theta\)</span> is the set of parameter values for the model. For instance, the <em>linear, one-dimensional</em> model above has as parameters <code>theta = c(slope, intercept)</code>. We can use these residuals to define an error metric and fit a model.</p>
@@ -1186,15 +1186,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Define the <em>mean squared error</em> (MSE) via</p>
 <p><span class="math display">\[\text{MSE}(\theta) = \frac{1}{n} \sum_{i=1}^n \text{Residual}_i(\theta)^2 = \frac{1}{n} \sum_{i=1}^n (\hat{f}_i(\theta) - f_i)^2.\]</span></p>
 <p>This is a summary of the total error of the model. While we could carry out this optimization by hand, the <code>R</code> routine <code>lm()</code> (which stands for <em>linear model</em>) automates this procedure. We simply give it <code>data</code> over which to fit the model, and a <code>formula</code> defining which inputs and output to consider.</p>
-<div class="sourceCode" id="cb1136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1136-1"><a href="model-introduction-to-modeling.html#cb1136-1" tabindex="-1"></a><span class="do">## Fit model</span></span>
-<span id="cb1136-2"><a href="model-introduction-to-modeling.html#cb1136-2" tabindex="-1"></a>fit_carat <span class="ot">&lt;-</span></span>
-<span id="cb1136-3"><a href="model-introduction-to-modeling.html#cb1136-3" tabindex="-1"></a>  df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1136-4"><a href="model-introduction-to-modeling.html#cb1136-4" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
-<span id="cb1136-5"><a href="model-introduction-to-modeling.html#cb1136-5" tabindex="-1"></a>    <span class="at">data =</span> .,               <span class="co"># Data for fit</span></span>
-<span id="cb1136-6"><a href="model-introduction-to-modeling.html#cb1136-6" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> carat <span class="co"># Formula for fit</span></span>
-<span id="cb1136-7"><a href="model-introduction-to-modeling.html#cb1136-7" tabindex="-1"></a>  )</span>
-<span id="cb1136-8"><a href="model-introduction-to-modeling.html#cb1136-8" tabindex="-1"></a></span>
-<span id="cb1136-9"><a href="model-introduction-to-modeling.html#cb1136-9" tabindex="-1"></a>fit_carat <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1141-1"><a href="model-introduction-to-modeling.html#cb1141-1" tabindex="-1"></a><span class="do">## Fit model</span></span>
+<span id="cb1141-2"><a href="model-introduction-to-modeling.html#cb1141-2" tabindex="-1"></a>fit_carat <span class="ot">&lt;-</span></span>
+<span id="cb1141-3"><a href="model-introduction-to-modeling.html#cb1141-3" tabindex="-1"></a>  df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1141-4"><a href="model-introduction-to-modeling.html#cb1141-4" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
+<span id="cb1141-5"><a href="model-introduction-to-modeling.html#cb1141-5" tabindex="-1"></a>    <span class="at">data =</span> .,               <span class="co"># Data for fit</span></span>
+<span id="cb1141-6"><a href="model-introduction-to-modeling.html#cb1141-6" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> carat <span class="co"># Formula for fit</span></span>
+<span id="cb1141-7"><a href="model-introduction-to-modeling.html#cb1141-7" tabindex="-1"></a>  )</span>
+<span id="cb1141-8"><a href="model-introduction-to-modeling.html#cb1141-8" tabindex="-1"></a></span>
+<span id="cb1141-9"><a href="model-introduction-to-modeling.html#cb1141-9" tabindex="-1"></a>fit_carat <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 5
 ##   term        estimate std.error statistic   p.value
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
@@ -1208,14 +1208,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Copy the code above to fit a model of the form</p>
 <p><span class="math display">\[\widehat{\text{price}} = \beta_0 + \beta_{\text{carat}} (\text{carat}) + \beta_{\text{cut}} (\text{cut}) + \epsilon.\]</span></p>
 <p>Answer the questions below to investigate how this model form handles the variable <code>cut</code>.</p>
-<div class="sourceCode" id="cb1138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1138-1"><a href="model-introduction-to-modeling.html#cb1138-1" tabindex="-1"></a>fit_q1 <span class="ot">&lt;-</span></span>
-<span id="cb1138-2"><a href="model-introduction-to-modeling.html#cb1138-2" tabindex="-1"></a>  df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1138-3"><a href="model-introduction-to-modeling.html#cb1138-3" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
-<span id="cb1138-4"><a href="model-introduction-to-modeling.html#cb1138-4" tabindex="-1"></a>    <span class="at">data =</span> .,</span>
-<span id="cb1138-5"><a href="model-introduction-to-modeling.html#cb1138-5" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> carat <span class="sc">+</span> cut</span>
-<span id="cb1138-6"><a href="model-introduction-to-modeling.html#cb1138-6" tabindex="-1"></a>  )</span>
-<span id="cb1138-7"><a href="model-introduction-to-modeling.html#cb1138-7" tabindex="-1"></a></span>
-<span id="cb1138-8"><a href="model-introduction-to-modeling.html#cb1138-8" tabindex="-1"></a>fit_q1 <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1143-1"><a href="model-introduction-to-modeling.html#cb1143-1" tabindex="-1"></a>fit_q1 <span class="ot">&lt;-</span></span>
+<span id="cb1143-2"><a href="model-introduction-to-modeling.html#cb1143-2" tabindex="-1"></a>  df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1143-3"><a href="model-introduction-to-modeling.html#cb1143-3" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
+<span id="cb1143-4"><a href="model-introduction-to-modeling.html#cb1143-4" tabindex="-1"></a>    <span class="at">data =</span> .,</span>
+<span id="cb1143-5"><a href="model-introduction-to-modeling.html#cb1143-5" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> carat <span class="sc">+</span> cut</span>
+<span id="cb1143-6"><a href="model-introduction-to-modeling.html#cb1143-6" tabindex="-1"></a>  )</span>
+<span id="cb1143-7"><a href="model-introduction-to-modeling.html#cb1143-7" tabindex="-1"></a></span>
+<span id="cb1143-8"><a href="model-introduction-to-modeling.html#cb1143-8" tabindex="-1"></a>fit_q1 <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 5
 ##   term        estimate std.error statistic  p.value
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -1235,56 +1235,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 <p><em>Aside</em>: Handling <em>factors</em> in modeling is handled automatically by <code>lm()</code> by introducing <a href="https://en.wikipedia.org/wiki/Dummy_variable_(statistics)"><em>dummy variables</em></a>. Conceptually, what the linear model does is fit a single <em>contant value</em> for each level of the factor. This gives us a different prediction for each factor level, as the next example shows.</p>
-<div class="sourceCode" id="cb1140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1140-1"><a href="model-introduction-to-modeling.html#cb1140-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; just run and inspect</span></span>
-<span id="cb1140-2"><a href="model-introduction-to-modeling.html#cb1140-2" tabindex="-1"></a>fit_cut <span class="ot">&lt;-</span></span>
-<span id="cb1140-3"><a href="model-introduction-to-modeling.html#cb1140-3" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
-<span id="cb1140-4"><a href="model-introduction-to-modeling.html#cb1140-4" tabindex="-1"></a>    <span class="at">data =</span> df_train,</span>
-<span id="cb1140-5"><a href="model-introduction-to-modeling.html#cb1140-5" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> cut</span>
-<span id="cb1140-6"><a href="model-introduction-to-modeling.html#cb1140-6" tabindex="-1"></a>  )</span>
-<span id="cb1140-7"><a href="model-introduction-to-modeling.html#cb1140-7" tabindex="-1"></a></span>
-<span id="cb1140-8"><a href="model-introduction-to-modeling.html#cb1140-8" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1140-9"><a href="model-introduction-to-modeling.html#cb1140-9" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_cut, <span class="at">var =</span> <span class="st">&quot;price_pred&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1140-10"><a href="model-introduction-to-modeling.html#cb1140-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut)) <span class="sc">+</span></span>
-<span id="cb1140-11"><a href="model-introduction-to-modeling.html#cb1140-11" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> price_pred, <span class="at">ymax =</span> price_pred), <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1140-12"><a href="model-introduction-to-modeling.html#cb1140-12" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> price))</span></code></pre></div>
-<p><img src="d47-e-model01-intro-solution_files/figure-html/fitting-factors-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1145-1"><a href="model-introduction-to-modeling.html#cb1145-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; just run and inspect</span></span>
+<span id="cb1145-2"><a href="model-introduction-to-modeling.html#cb1145-2" tabindex="-1"></a>fit_cut <span class="ot">&lt;-</span></span>
+<span id="cb1145-3"><a href="model-introduction-to-modeling.html#cb1145-3" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
+<span id="cb1145-4"><a href="model-introduction-to-modeling.html#cb1145-4" tabindex="-1"></a>    <span class="at">data =</span> df_train,</span>
+<span id="cb1145-5"><a href="model-introduction-to-modeling.html#cb1145-5" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> cut</span>
+<span id="cb1145-6"><a href="model-introduction-to-modeling.html#cb1145-6" tabindex="-1"></a>  )</span>
+<span id="cb1145-7"><a href="model-introduction-to-modeling.html#cb1145-7" tabindex="-1"></a></span>
+<span id="cb1145-8"><a href="model-introduction-to-modeling.html#cb1145-8" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1145-9"><a href="model-introduction-to-modeling.html#cb1145-9" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_cut, <span class="at">var =</span> <span class="st">&quot;price_pred&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1145-10"><a href="model-introduction-to-modeling.html#cb1145-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cut)) <span class="sc">+</span></span>
+<span id="cb1145-11"><a href="model-introduction-to-modeling.html#cb1145-11" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> price_pred, <span class="at">ymax =</span> price_pred), <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1145-12"><a href="model-introduction-to-modeling.html#cb1145-12" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> price))</span></code></pre></div>
+<p><img src="d47-e-model01-intro-solution_files/figure-html/fitting-factors-1.png" alt="" width="672" /></p>
 </div>
 </div>
 <div id="assessing-a-model" class="section level2 hasAnchor" number="54.3">
 <h2><span class="header-section-number">54.3</span> Assessing a model<a href="model-introduction-to-modeling.html#assessing-a-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Next, let’s visually inspect the results of model <code>fit_carat</code> using the function <code>modelr::add_predictions()</code>:</p>
-<div class="sourceCode" id="cb1141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1141-1"><a href="model-introduction-to-modeling.html#cb1141-1" tabindex="-1"></a><span class="do">## Compute predicted values</span></span>
-<span id="cb1141-2"><a href="model-introduction-to-modeling.html#cb1141-2" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1141-3"><a href="model-introduction-to-modeling.html#cb1141-3" tabindex="-1"></a>  <span class="fu">add_predictions</span>(</span>
-<span id="cb1141-4"><a href="model-introduction-to-modeling.html#cb1141-4" tabindex="-1"></a>    <span class="at">model =</span> fit_carat,</span>
-<span id="cb1141-5"><a href="model-introduction-to-modeling.html#cb1141-5" tabindex="-1"></a>    <span class="at">var =</span> <span class="st">&quot;price_pred&quot;</span></span>
-<span id="cb1141-6"><a href="model-introduction-to-modeling.html#cb1141-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1141-7"><a href="model-introduction-to-modeling.html#cb1141-7" tabindex="-1"></a></span>
-<span id="cb1141-8"><a href="model-introduction-to-modeling.html#cb1141-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb1141-9"><a href="model-introduction-to-modeling.html#cb1141-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1141-10"><a href="model-introduction-to-modeling.html#cb1141-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
-<span id="cb1141-11"><a href="model-introduction-to-modeling.html#cb1141-11" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> price_pred),</span>
-<span id="cb1141-12"><a href="model-introduction-to-modeling.html#cb1141-12" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>,</span>
-<span id="cb1141-13"><a href="model-introduction-to-modeling.html#cb1141-13" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
-<span id="cb1141-14"><a href="model-introduction-to-modeling.html#cb1141-14" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d47-e-model01-intro-solution_files/figure-html/vis-carat-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1146-1"><a href="model-introduction-to-modeling.html#cb1146-1" tabindex="-1"></a><span class="do">## Compute predicted values</span></span>
+<span id="cb1146-2"><a href="model-introduction-to-modeling.html#cb1146-2" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1146-3"><a href="model-introduction-to-modeling.html#cb1146-3" tabindex="-1"></a>  <span class="fu">add_predictions</span>(</span>
+<span id="cb1146-4"><a href="model-introduction-to-modeling.html#cb1146-4" tabindex="-1"></a>    <span class="at">model =</span> fit_carat,</span>
+<span id="cb1146-5"><a href="model-introduction-to-modeling.html#cb1146-5" tabindex="-1"></a>    <span class="at">var =</span> <span class="st">&quot;price_pred&quot;</span></span>
+<span id="cb1146-6"><a href="model-introduction-to-modeling.html#cb1146-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1146-7"><a href="model-introduction-to-modeling.html#cb1146-7" tabindex="-1"></a></span>
+<span id="cb1146-8"><a href="model-introduction-to-modeling.html#cb1146-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb1146-9"><a href="model-introduction-to-modeling.html#cb1146-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1146-10"><a href="model-introduction-to-modeling.html#cb1146-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb1146-11"><a href="model-introduction-to-modeling.html#cb1146-11" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> price_pred),</span>
+<span id="cb1146-12"><a href="model-introduction-to-modeling.html#cb1146-12" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>,</span>
+<span id="cb1146-13"><a href="model-introduction-to-modeling.html#cb1146-13" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
+<span id="cb1146-14"><a href="model-introduction-to-modeling.html#cb1146-14" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d47-e-model01-intro-solution_files/figure-html/vis-carat-1.png" alt="" width="672" /></p>
 <p>Frankly, these model predictions don’t look very good! We know that diamond prices probably depend on the “4 C’s”; maybe your model using more predictors will be more effective?</p>
 <div id="q2-repeat-the-code-above-from-chunk-vis-carat-to-produce-a-similar-visual-with-your-model-fit_q1.-this-visual-is-unlikely-to-be-effective-note-in-your-observations-why-that-might-be." class="section level3 hasAnchor" number="54.3.1">
 <h3><span class="header-section-number">54.3.1</span> <strong>q2</strong> Repeat the code above from chunk <code>vis-carat</code> to produce a similar visual with your model <code>fit_q1</code>. <em>This visual is unlikely to be effective</em>, note in your observations why that might be.<a href="model-introduction-to-modeling.html#q2-repeat-the-code-above-from-chunk-vis-carat-to-produce-a-similar-visual-with-your-model-fit_q1.-this-visual-is-unlikely-to-be-effective-note-in-your-observations-why-that-might-be." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1142-1"><a href="model-introduction-to-modeling.html#cb1142-1" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1142-2"><a href="model-introduction-to-modeling.html#cb1142-2" tabindex="-1"></a>  <span class="fu">add_predictions</span>(</span>
-<span id="cb1142-3"><a href="model-introduction-to-modeling.html#cb1142-3" tabindex="-1"></a>    <span class="at">model =</span> fit_q1,</span>
-<span id="cb1142-4"><a href="model-introduction-to-modeling.html#cb1142-4" tabindex="-1"></a>    <span class="at">var =</span> <span class="st">&quot;price_pred&quot;</span></span>
-<span id="cb1142-5"><a href="model-introduction-to-modeling.html#cb1142-5" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1142-6"><a href="model-introduction-to-modeling.html#cb1142-6" tabindex="-1"></a></span>
-<span id="cb1142-7"><a href="model-introduction-to-modeling.html#cb1142-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
-<span id="cb1142-8"><a href="model-introduction-to-modeling.html#cb1142-8" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1142-9"><a href="model-introduction-to-modeling.html#cb1142-9" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
-<span id="cb1142-10"><a href="model-introduction-to-modeling.html#cb1142-10" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> price_pred),</span>
-<span id="cb1142-11"><a href="model-introduction-to-modeling.html#cb1142-11" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>,</span>
-<span id="cb1142-12"><a href="model-introduction-to-modeling.html#cb1142-12" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
-<span id="cb1142-13"><a href="model-introduction-to-modeling.html#cb1142-13" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d47-e-model01-intro-solution_files/figure-html/q2-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1147-1"><a href="model-introduction-to-modeling.html#cb1147-1" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1147-2"><a href="model-introduction-to-modeling.html#cb1147-2" tabindex="-1"></a>  <span class="fu">add_predictions</span>(</span>
+<span id="cb1147-3"><a href="model-introduction-to-modeling.html#cb1147-3" tabindex="-1"></a>    <span class="at">model =</span> fit_q1,</span>
+<span id="cb1147-4"><a href="model-introduction-to-modeling.html#cb1147-4" tabindex="-1"></a>    <span class="at">var =</span> <span class="st">&quot;price_pred&quot;</span></span>
+<span id="cb1147-5"><a href="model-introduction-to-modeling.html#cb1147-5" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1147-6"><a href="model-introduction-to-modeling.html#cb1147-6" tabindex="-1"></a></span>
+<span id="cb1147-7"><a href="model-introduction-to-modeling.html#cb1147-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb1147-8"><a href="model-introduction-to-modeling.html#cb1147-8" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1147-9"><a href="model-introduction-to-modeling.html#cb1147-9" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb1147-10"><a href="model-introduction-to-modeling.html#cb1147-10" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> price_pred),</span>
+<span id="cb1147-11"><a href="model-introduction-to-modeling.html#cb1147-11" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>,</span>
+<span id="cb1147-12"><a href="model-introduction-to-modeling.html#cb1147-12" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
+<span id="cb1147-13"><a href="model-introduction-to-modeling.html#cb1147-13" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d47-e-model01-intro-solution_files/figure-html/q2-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>A diamond can have a different value of <code>cut</code> at a fixed value of <code>carat</code>; this means our model can take different values at a fixed value of <code>carat</code>. This leads to the “squiggles” we see above.</li>
@@ -1295,10 +1295,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="model-diagnostics" class="section level2 hasAnchor" number="54.4">
 <h2><span class="header-section-number">54.4</span> Model Diagnostics<a href="model-introduction-to-modeling.html#model-diagnostics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The plot above allows us to visually assess the model performance, but sometimes we’ll want a quick <em>numerical summary</em> of model accuracy, particularly when comparing multiple models for the same data. The functions <code>modelr::mse</code> and <code>modelr::rsquare</code> are two <em>error metrics</em> we can use to summarize accuracy:</p>
-<div class="sourceCode" id="cb1143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1143-1"><a href="model-introduction-to-modeling.html#cb1143-1" tabindex="-1"></a><span class="do">## Compute metrics</span></span>
-<span id="cb1143-2"><a href="model-introduction-to-modeling.html#cb1143-2" tabindex="-1"></a><span class="fu">mse</span>(fit_carat, df_train)</span></code></pre></div>
+<div class="sourceCode" id="cb1148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1148-1"><a href="model-introduction-to-modeling.html#cb1148-1" tabindex="-1"></a><span class="do">## Compute metrics</span></span>
+<span id="cb1148-2"><a href="model-introduction-to-modeling.html#cb1148-2" tabindex="-1"></a><span class="fu">mse</span>(fit_carat, df_train)</span></code></pre></div>
 <pre><code>## [1] 309104.4</code></pre>
-<div class="sourceCode" id="cb1145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1145-1"><a href="model-introduction-to-modeling.html#cb1145-1" tabindex="-1"></a><span class="fu">rsquare</span>(fit_carat, df_train)</span></code></pre></div>
+<div class="sourceCode" id="cb1150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1150-1"><a href="model-introduction-to-modeling.html#cb1150-1" tabindex="-1"></a><span class="fu">rsquare</span>(fit_carat, df_train)</span></code></pre></div>
 <pre><code>## [1] 0.7491572</code></pre>
 <ul>
 <li><code>mse</code> is the <a href="https://en.wikipedia.org/wiki/Mean_squared_error"><em>mean squared error</em></a>. Lower values are more accurate.
@@ -1313,9 +1313,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="q3-compute-the-mse-and-rsquare-for-your-model-fit_q1-and-compare-the-values-against-those-for-fit_carat.-is-your-model-more-accurate" class="section level3 hasAnchor" number="54.4.1">
 <h3><span class="header-section-number">54.4.1</span> <strong>q3</strong> Compute the <code>mse</code> and <code>rsquare</code> for your model <code>fit_q1</code>, and compare the values against those for <code>fit_carat</code>. Is your model more accurate?<a href="model-introduction-to-modeling.html#q3-compute-the-mse-and-rsquare-for-your-model-fit_q1-and-compare-the-values-against-those-for-fit_carat.-is-your-model-more-accurate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1147-1"><a href="model-introduction-to-modeling.html#cb1147-1" tabindex="-1"></a><span class="fu">mse</span>(fit_q1, df_train)</span></code></pre></div>
+<div class="sourceCode" id="cb1152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1152-1"><a href="model-introduction-to-modeling.html#cb1152-1" tabindex="-1"></a><span class="fu">mse</span>(fit_q1, df_train)</span></code></pre></div>
 <pre><code>## [1] 290675.2</code></pre>
-<div class="sourceCode" id="cb1149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1149-1"><a href="model-introduction-to-modeling.html#cb1149-1" tabindex="-1"></a><span class="fu">rsquare</span>(fit_q1, df_train)</span></code></pre></div>
+<div class="sourceCode" id="cb1154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1154-1"><a href="model-introduction-to-modeling.html#cb1154-1" tabindex="-1"></a><span class="fu">rsquare</span>(fit_q1, df_train)</span></code></pre></div>
 <pre><code>## [1] 0.7641128</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1323,23 +1323,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p><em>Aside</em>: What’s an acceptable r-squared value? That really depends on the application. For some physics-related problems <span class="math inline">\(R \approx 0.9\)</span> might be considered unacceptably low, while for some human-behavior related problems <span class="math inline">\(R \approx 0.7\)</span> might be considered quite good!</p>
 <p>While it’s difficult to visualize model results against <em>multiple variables</em>, we can always compare <em>predicted vs actual</em> values. If the model fit were perfect, then the predicted <span class="math inline">\(\hat{f}\)</span> and actual <span class="math inline">\(f\)</span> values would like along a straight line with slope one.</p>
-<div class="sourceCode" id="cb1151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1151-1"><a href="model-introduction-to-modeling.html#cb1151-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb1151-2"><a href="model-introduction-to-modeling.html#cb1151-2" tabindex="-1"></a><span class="do">## predicted vs actual</span></span>
-<span id="cb1151-3"><a href="model-introduction-to-modeling.html#cb1151-3" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1151-4"><a href="model-introduction-to-modeling.html#cb1151-4" tabindex="-1"></a>  <span class="fu">add_predictions</span>(</span>
-<span id="cb1151-5"><a href="model-introduction-to-modeling.html#cb1151-5" tabindex="-1"></a>    <span class="at">model =</span> fit_carat,</span>
-<span id="cb1151-6"><a href="model-introduction-to-modeling.html#cb1151-6" tabindex="-1"></a>    <span class="at">var =</span> <span class="st">&quot;price_pred&quot;</span></span>
-<span id="cb1151-7"><a href="model-introduction-to-modeling.html#cb1151-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1151-8"><a href="model-introduction-to-modeling.html#cb1151-8" tabindex="-1"></a></span>
-<span id="cb1151-9"><a href="model-introduction-to-modeling.html#cb1151-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(price, price_pred)) <span class="sc">+</span></span>
-<span id="cb1151-10"><a href="model-introduction-to-modeling.html#cb1151-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;grey50&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb1151-11"><a href="model-introduction-to-modeling.html#cb1151-11" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1156-1"><a href="model-introduction-to-modeling.html#cb1156-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb1156-2"><a href="model-introduction-to-modeling.html#cb1156-2" tabindex="-1"></a><span class="do">## predicted vs actual</span></span>
+<span id="cb1156-3"><a href="model-introduction-to-modeling.html#cb1156-3" tabindex="-1"></a>df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1156-4"><a href="model-introduction-to-modeling.html#cb1156-4" tabindex="-1"></a>  <span class="fu">add_predictions</span>(</span>
+<span id="cb1156-5"><a href="model-introduction-to-modeling.html#cb1156-5" tabindex="-1"></a>    <span class="at">model =</span> fit_carat,</span>
+<span id="cb1156-6"><a href="model-introduction-to-modeling.html#cb1156-6" tabindex="-1"></a>    <span class="at">var =</span> <span class="st">&quot;price_pred&quot;</span></span>
+<span id="cb1156-7"><a href="model-introduction-to-modeling.html#cb1156-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1156-8"><a href="model-introduction-to-modeling.html#cb1156-8" tabindex="-1"></a></span>
+<span id="cb1156-9"><a href="model-introduction-to-modeling.html#cb1156-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(price, price_pred)) <span class="sc">+</span></span>
+<span id="cb1156-10"><a href="model-introduction-to-modeling.html#cb1156-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;grey50&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1156-11"><a href="model-introduction-to-modeling.html#cb1156-11" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
+## This warning is displayed once per session.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.</code></pre>
-<p><img src="d47-e-model01-intro-solution_files/figure-html/predicted-vs-actual-1.png" width="672" /></p>
+<p><img src="d47-e-model01-intro-solution_files/figure-html/predicted-vs-actual-1.png" alt="" width="672" /></p>
 <p>This fit looks quite poor—there is a great deal of scatter of actual values away from the predicted values. What’s more, the scatter doesn’t look random; there seem to be some consistent patterns (e.g. “stripes”) in the plot that suggest there may be additional patterns we could incorporate in our model, if we added more variables. Let’s try that!</p>
 </div>
 </div>
@@ -1351,16 +1351,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Fit a model <code>fit_4c</code> of the form:</p>
 <p><span class="math display">\[\widehat{\text{price}} = \beta_0 + \beta_{\text{carat}} (\text{carat}) + \beta_{\text{cut}} (\text{cut}) + \beta_{\text{color}} (\text{color}) + \beta_{\text{clarity}} (\text{clarity}) + \epsilon.\]</span></p>
 <p>Compute the <code>mse</code> and <code>rsquare</code> of your new model, and compare against the previous models.</p>
-<div class="sourceCode" id="cb1153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1153-1"><a href="model-introduction-to-modeling.html#cb1153-1" tabindex="-1"></a>fit_4c <span class="ot">&lt;-</span></span>
-<span id="cb1153-2"><a href="model-introduction-to-modeling.html#cb1153-2" tabindex="-1"></a>  df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1153-3"><a href="model-introduction-to-modeling.html#cb1153-3" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
-<span id="cb1153-4"><a href="model-introduction-to-modeling.html#cb1153-4" tabindex="-1"></a>    <span class="at">data =</span> .,</span>
-<span id="cb1153-5"><a href="model-introduction-to-modeling.html#cb1153-5" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> carat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity</span>
-<span id="cb1153-6"><a href="model-introduction-to-modeling.html#cb1153-6" tabindex="-1"></a>  )</span>
-<span id="cb1153-7"><a href="model-introduction-to-modeling.html#cb1153-7" tabindex="-1"></a></span>
-<span id="cb1153-8"><a href="model-introduction-to-modeling.html#cb1153-8" tabindex="-1"></a><span class="fu">rsquare</span>(fit_q1, df_train)</span></code></pre></div>
+<div class="sourceCode" id="cb1158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1158-1"><a href="model-introduction-to-modeling.html#cb1158-1" tabindex="-1"></a>fit_4c <span class="ot">&lt;-</span></span>
+<span id="cb1158-2"><a href="model-introduction-to-modeling.html#cb1158-2" tabindex="-1"></a>  df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1158-3"><a href="model-introduction-to-modeling.html#cb1158-3" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
+<span id="cb1158-4"><a href="model-introduction-to-modeling.html#cb1158-4" tabindex="-1"></a>    <span class="at">data =</span> .,</span>
+<span id="cb1158-5"><a href="model-introduction-to-modeling.html#cb1158-5" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> carat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity</span>
+<span id="cb1158-6"><a href="model-introduction-to-modeling.html#cb1158-6" tabindex="-1"></a>  )</span>
+<span id="cb1158-7"><a href="model-introduction-to-modeling.html#cb1158-7" tabindex="-1"></a></span>
+<span id="cb1158-8"><a href="model-introduction-to-modeling.html#cb1158-8" tabindex="-1"></a><span class="fu">rsquare</span>(fit_q1, df_train)</span></code></pre></div>
 <pre><code>## [1] 0.7641128</code></pre>
-<div class="sourceCode" id="cb1155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1155-1"><a href="model-introduction-to-modeling.html#cb1155-1" tabindex="-1"></a><span class="fu">rsquare</span>(fit_4c, df_train)</span></code></pre></div>
+<div class="sourceCode" id="cb1160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1160-1"><a href="model-introduction-to-modeling.html#cb1160-1" tabindex="-1"></a><span class="fu">rsquare</span>(fit_4c, df_train)</span></code></pre></div>
 <pre><code>## [1] 0.897396</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1373,28 +1373,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quantifying-uncertainty" class="section level2 hasAnchor" number="54.6">
 <h2><span class="header-section-number">54.6</span> Quantifying uncertainty<a href="model-introduction-to-modeling.html#quantifying-uncertainty" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ve talked about <strong>confidence intervals</strong> before for estimates like the sample mean. Let’s take a (brief) look now at <em>prediction intervals</em> (PI). The code below approximates prediction intervals based on the <code>fit_carat</code> model.</p>
-<div class="sourceCode" id="cb1157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1157-1"><a href="model-introduction-to-modeling.html#cb1157-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
-<span id="cb1157-2"><a href="model-introduction-to-modeling.html#cb1157-2" tabindex="-1"></a><span class="do">## Helper function to compute uncertainty bounds</span></span>
-<span id="cb1157-3"><a href="model-introduction-to-modeling.html#cb1157-3" tabindex="-1"></a>add_uncertainties <span class="ot">&lt;-</span> <span class="cf">function</span>(data, model, <span class="at">prefix =</span> <span class="st">&quot;pred&quot;</span>, ...) {</span>
-<span id="cb1157-4"><a href="model-introduction-to-modeling.html#cb1157-4" tabindex="-1"></a>  df_fit <span class="ot">&lt;-</span></span>
-<span id="cb1157-5"><a href="model-introduction-to-modeling.html#cb1157-5" tabindex="-1"></a>    stats<span class="sc">::</span><span class="fu">predict</span>(model, data, ...) <span class="sc">%&gt;%</span></span>
-<span id="cb1157-6"><a href="model-introduction-to-modeling.html#cb1157-6" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1157-7"><a href="model-introduction-to-modeling.html#cb1157-7" tabindex="-1"></a>    <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">str_c</span>(prefix, <span class="st">&quot;_&quot;</span>, .))</span>
-<span id="cb1157-8"><a href="model-introduction-to-modeling.html#cb1157-8" tabindex="-1"></a></span>
-<span id="cb1157-9"><a href="model-introduction-to-modeling.html#cb1157-9" tabindex="-1"></a>  <span class="fu">bind_cols</span>(data, df_fit)</span>
-<span id="cb1157-10"><a href="model-introduction-to-modeling.html#cb1157-10" tabindex="-1"></a>}</span>
-<span id="cb1157-11"><a href="model-introduction-to-modeling.html#cb1157-11" tabindex="-1"></a></span>
-<span id="cb1157-12"><a href="model-introduction-to-modeling.html#cb1157-12" tabindex="-1"></a><span class="do">## Generate predictions with uncertainties</span></span>
-<span id="cb1157-13"><a href="model-introduction-to-modeling.html#cb1157-13" tabindex="-1"></a>df_pred_uq <span class="ot">&lt;-</span></span>
-<span id="cb1157-14"><a href="model-introduction-to-modeling.html#cb1157-14" tabindex="-1"></a>  df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1157-15"><a href="model-introduction-to-modeling.html#cb1157-15" tabindex="-1"></a>  <span class="fu">add_uncertainties</span>(</span>
-<span id="cb1157-16"><a href="model-introduction-to-modeling.html#cb1157-16" tabindex="-1"></a>    <span class="at">model =</span> fit_carat,</span>
-<span id="cb1157-17"><a href="model-introduction-to-modeling.html#cb1157-17" tabindex="-1"></a>    <span class="at">prefix =</span> <span class="st">&quot;pred&quot;</span>,</span>
-<span id="cb1157-18"><a href="model-introduction-to-modeling.html#cb1157-18" tabindex="-1"></a>    <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>,</span>
-<span id="cb1157-19"><a href="model-introduction-to-modeling.html#cb1157-19" tabindex="-1"></a>    <span class="at">level =</span> <span class="fl">0.95</span></span>
-<span id="cb1157-20"><a href="model-introduction-to-modeling.html#cb1157-20" tabindex="-1"></a>  )</span>
-<span id="cb1157-21"><a href="model-introduction-to-modeling.html#cb1157-21" tabindex="-1"></a></span>
-<span id="cb1157-22"><a href="model-introduction-to-modeling.html#cb1157-22" tabindex="-1"></a>df_pred_uq <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1162-1"><a href="model-introduction-to-modeling.html#cb1162-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
+<span id="cb1162-2"><a href="model-introduction-to-modeling.html#cb1162-2" tabindex="-1"></a><span class="do">## Helper function to compute uncertainty bounds</span></span>
+<span id="cb1162-3"><a href="model-introduction-to-modeling.html#cb1162-3" tabindex="-1"></a>add_uncertainties <span class="ot">&lt;-</span> <span class="cf">function</span>(data, model, <span class="at">prefix =</span> <span class="st">&quot;pred&quot;</span>, ...) {</span>
+<span id="cb1162-4"><a href="model-introduction-to-modeling.html#cb1162-4" tabindex="-1"></a>  df_fit <span class="ot">&lt;-</span></span>
+<span id="cb1162-5"><a href="model-introduction-to-modeling.html#cb1162-5" tabindex="-1"></a>    stats<span class="sc">::</span><span class="fu">predict</span>(model, data, ...) <span class="sc">%&gt;%</span></span>
+<span id="cb1162-6"><a href="model-introduction-to-modeling.html#cb1162-6" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1162-7"><a href="model-introduction-to-modeling.html#cb1162-7" tabindex="-1"></a>    <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">str_c</span>(prefix, <span class="st">&quot;_&quot;</span>, .))</span>
+<span id="cb1162-8"><a href="model-introduction-to-modeling.html#cb1162-8" tabindex="-1"></a></span>
+<span id="cb1162-9"><a href="model-introduction-to-modeling.html#cb1162-9" tabindex="-1"></a>  <span class="fu">bind_cols</span>(data, df_fit)</span>
+<span id="cb1162-10"><a href="model-introduction-to-modeling.html#cb1162-10" tabindex="-1"></a>}</span>
+<span id="cb1162-11"><a href="model-introduction-to-modeling.html#cb1162-11" tabindex="-1"></a></span>
+<span id="cb1162-12"><a href="model-introduction-to-modeling.html#cb1162-12" tabindex="-1"></a><span class="do">## Generate predictions with uncertainties</span></span>
+<span id="cb1162-13"><a href="model-introduction-to-modeling.html#cb1162-13" tabindex="-1"></a>df_pred_uq <span class="ot">&lt;-</span></span>
+<span id="cb1162-14"><a href="model-introduction-to-modeling.html#cb1162-14" tabindex="-1"></a>  df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1162-15"><a href="model-introduction-to-modeling.html#cb1162-15" tabindex="-1"></a>  <span class="fu">add_uncertainties</span>(</span>
+<span id="cb1162-16"><a href="model-introduction-to-modeling.html#cb1162-16" tabindex="-1"></a>    <span class="at">model =</span> fit_carat,</span>
+<span id="cb1162-17"><a href="model-introduction-to-modeling.html#cb1162-17" tabindex="-1"></a>    <span class="at">prefix =</span> <span class="st">&quot;pred&quot;</span>,</span>
+<span id="cb1162-18"><a href="model-introduction-to-modeling.html#cb1162-18" tabindex="-1"></a>    <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>,</span>
+<span id="cb1162-19"><a href="model-introduction-to-modeling.html#cb1162-19" tabindex="-1"></a>    <span class="at">level =</span> <span class="fl">0.95</span></span>
+<span id="cb1162-20"><a href="model-introduction-to-modeling.html#cb1162-20" tabindex="-1"></a>  )</span>
+<span id="cb1162-21"><a href="model-introduction-to-modeling.html#cb1162-21" tabindex="-1"></a></span>
+<span id="cb1162-22"><a href="model-introduction-to-modeling.html#cb1162-22" tabindex="-1"></a>df_pred_uq <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 10,000
 ## Columns: 13
 ## $ carat    &lt;dbl&gt; 0.23, 0.21, 0.23, 0.29, 0.31, 0.24, 0.24, 0.26, 0.22, 0.23, 0…
@@ -1413,36 +1413,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The helper function <code>add_uncertainties()</code> added the columns <code>pred_fit</code> (the predicted price), as well as two new columns: <code>pred_lwr</code> and <code>pred_upr</code>. These are the bounds of a <em>prediction interval</em> (PI), an interview meant to capture <em>not</em> a future sample statistic, <em>but rather</em> a future observation.</p>
 <p>The following visualization illustrates the computed prediction intervals: I visualize the prediction intervals with <code>geom_errorbar</code>. Note that we get a PI <em>for each observation</em>; every dot gets an interval.</p>
 <p>Since we have access to the true values <code>price</code>, we can assess whether the true observed values fall within the model prediction intervals; this happens when the diagonal falls within the interval on a predicted-vs-actual plot.</p>
-<div class="sourceCode" id="cb1159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1159-1"><a href="model-introduction-to-modeling.html#cb1159-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
-<span id="cb1159-2"><a href="model-introduction-to-modeling.html#cb1159-2" tabindex="-1"></a><span class="co"># Visualize</span></span>
-<span id="cb1159-3"><a href="model-introduction-to-modeling.html#cb1159-3" tabindex="-1"></a>df_pred_uq <span class="sc">%&gt;%</span></span>
-<span id="cb1159-4"><a href="model-introduction-to-modeling.html#cb1159-4" tabindex="-1"></a>  <span class="fu">filter</span>(price <span class="sc">&lt;</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1159-5"><a href="model-introduction-to-modeling.html#cb1159-5" tabindex="-1"></a></span>
-<span id="cb1159-6"><a href="model-introduction-to-modeling.html#cb1159-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(price)) <span class="sc">+</span></span>
-<span id="cb1159-7"><a href="model-introduction-to-modeling.html#cb1159-7" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;grey50&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1159-8"><a href="model-introduction-to-modeling.html#cb1159-8" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
-<span id="cb1159-9"><a href="model-introduction-to-modeling.html#cb1159-9" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(pred_lwr <span class="sc">&lt;=</span> price <span class="sc">&amp;</span> price <span class="sc">&lt;=</span> pred_upr),</span>
-<span id="cb1159-10"><a href="model-introduction-to-modeling.html#cb1159-10" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> pred_lwr, <span class="at">ymax =</span> pred_upr),</span>
-<span id="cb1159-11"><a href="model-introduction-to-modeling.html#cb1159-11" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">0</span>,</span>
-<span id="cb1159-12"><a href="model-introduction-to-modeling.html#cb1159-12" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.5</span>,</span>
-<span id="cb1159-13"><a href="model-introduction-to-modeling.html#cb1159-13" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>,</span>
-<span id="cb1159-14"><a href="model-introduction-to-modeling.html#cb1159-14" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;darkturquoise&quot;</span></span>
-<span id="cb1159-15"><a href="model-introduction-to-modeling.html#cb1159-15" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1159-16"><a href="model-introduction-to-modeling.html#cb1159-16" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
-<span id="cb1159-17"><a href="model-introduction-to-modeling.html#cb1159-17" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(price <span class="sc">&lt;</span> pred_lwr <span class="sc">|</span> pred_upr <span class="sc">&lt;</span> price),</span>
-<span id="cb1159-18"><a href="model-introduction-to-modeling.html#cb1159-18" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> pred_lwr, <span class="at">ymax =</span> pred_upr),</span>
-<span id="cb1159-19"><a href="model-introduction-to-modeling.html#cb1159-19" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">0</span>,</span>
-<span id="cb1159-20"><a href="model-introduction-to-modeling.html#cb1159-20" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.5</span>,</span>
-<span id="cb1159-21"><a href="model-introduction-to-modeling.html#cb1159-21" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
-<span id="cb1159-22"><a href="model-introduction-to-modeling.html#cb1159-22" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1159-23"><a href="model-introduction-to-modeling.html#cb1159-23" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred_fit), <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb1159-24"><a href="model-introduction-to-modeling.html#cb1159-24" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="d47-e-model01-intro-solution_files/figure-html/pred-vis-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1164-1"><a href="model-introduction-to-modeling.html#cb1164-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
+<span id="cb1164-2"><a href="model-introduction-to-modeling.html#cb1164-2" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb1164-3"><a href="model-introduction-to-modeling.html#cb1164-3" tabindex="-1"></a>df_pred_uq <span class="sc">%&gt;%</span></span>
+<span id="cb1164-4"><a href="model-introduction-to-modeling.html#cb1164-4" tabindex="-1"></a>  <span class="fu">filter</span>(price <span class="sc">&lt;</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1164-5"><a href="model-introduction-to-modeling.html#cb1164-5" tabindex="-1"></a></span>
+<span id="cb1164-6"><a href="model-introduction-to-modeling.html#cb1164-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(price)) <span class="sc">+</span></span>
+<span id="cb1164-7"><a href="model-introduction-to-modeling.html#cb1164-7" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;grey50&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1164-8"><a href="model-introduction-to-modeling.html#cb1164-8" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb1164-9"><a href="model-introduction-to-modeling.html#cb1164-9" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(pred_lwr <span class="sc">&lt;=</span> price <span class="sc">&amp;</span> price <span class="sc">&lt;=</span> pred_upr),</span>
+<span id="cb1164-10"><a href="model-introduction-to-modeling.html#cb1164-10" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> pred_lwr, <span class="at">ymax =</span> pred_upr),</span>
+<span id="cb1164-11"><a href="model-introduction-to-modeling.html#cb1164-11" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">0</span>,</span>
+<span id="cb1164-12"><a href="model-introduction-to-modeling.html#cb1164-12" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.5</span>,</span>
+<span id="cb1164-13"><a href="model-introduction-to-modeling.html#cb1164-13" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb1164-14"><a href="model-introduction-to-modeling.html#cb1164-14" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;darkturquoise&quot;</span></span>
+<span id="cb1164-15"><a href="model-introduction-to-modeling.html#cb1164-15" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1164-16"><a href="model-introduction-to-modeling.html#cb1164-16" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb1164-17"><a href="model-introduction-to-modeling.html#cb1164-17" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(price <span class="sc">&lt;</span> pred_lwr <span class="sc">|</span> pred_upr <span class="sc">&lt;</span> price),</span>
+<span id="cb1164-18"><a href="model-introduction-to-modeling.html#cb1164-18" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> pred_lwr, <span class="at">ymax =</span> pred_upr),</span>
+<span id="cb1164-19"><a href="model-introduction-to-modeling.html#cb1164-19" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">0</span>,</span>
+<span id="cb1164-20"><a href="model-introduction-to-modeling.html#cb1164-20" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.5</span>,</span>
+<span id="cb1164-21"><a href="model-introduction-to-modeling.html#cb1164-21" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
+<span id="cb1164-22"><a href="model-introduction-to-modeling.html#cb1164-22" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1164-23"><a href="model-introduction-to-modeling.html#cb1164-23" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred_fit), <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb1164-24"><a href="model-introduction-to-modeling.html#cb1164-24" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="d47-e-model01-intro-solution_files/figure-html/pred-vis-1.png" alt="" width="672" /></p>
 <p>Ideally these prediction intervals should include a desired fraction of observed values; let’s compute the <em>empirical coverage</em> to see if this matches our desired <code>level = 0.95</code>.</p>
-<div class="sourceCode" id="cb1160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1160-1"><a href="model-introduction-to-modeling.html#cb1160-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
-<span id="cb1160-2"><a href="model-introduction-to-modeling.html#cb1160-2" tabindex="-1"></a><span class="co"># Compute empirical coverage</span></span>
-<span id="cb1160-3"><a href="model-introduction-to-modeling.html#cb1160-3" tabindex="-1"></a>df_pred_uq <span class="sc">%&gt;%</span></span>
-<span id="cb1160-4"><a href="model-introduction-to-modeling.html#cb1160-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">coverage =</span> <span class="fu">mean</span>(pred_lwr <span class="sc">&lt;=</span> price <span class="sc">&amp;</span> price <span class="sc">&lt;=</span> pred_upr))</span></code></pre></div>
+<div class="sourceCode" id="cb1165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1165-1"><a href="model-introduction-to-modeling.html#cb1165-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
+<span id="cb1165-2"><a href="model-introduction-to-modeling.html#cb1165-2" tabindex="-1"></a><span class="co"># Compute empirical coverage</span></span>
+<span id="cb1165-3"><a href="model-introduction-to-modeling.html#cb1165-3" tabindex="-1"></a>df_pred_uq <span class="sc">%&gt;%</span></span>
+<span id="cb1165-4"><a href="model-introduction-to-modeling.html#cb1165-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">coverage =</span> <span class="fu">mean</span>(pred_lwr <span class="sc">&lt;=</span> price <span class="sc">&amp;</span> price <span class="sc">&lt;=</span> pred_upr))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   coverage
 ##      &lt;dbl&gt;
@@ -1450,45 +1450,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The empirical coverage is quite close to our desired level.</p>
 <div id="q6-use-the-helper-function-add_uncertainties-to-add-prediction-intervals-to-df_train-based-on-the-model-fit_4c." class="section level3 hasAnchor" number="54.6.1">
 <h3><span class="header-section-number">54.6.1</span> <strong>q6</strong> Use the helper function <code>add_uncertainties()</code> to add prediction intervals to <code>df_train</code> based on the model <code>fit_4c</code>.<a href="model-introduction-to-modeling.html#q6-use-the-helper-function-add_uncertainties-to-add-prediction-intervals-to-df_train-based-on-the-model-fit_4c." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1162-1"><a href="model-introduction-to-modeling.html#cb1162-1" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
-<span id="cb1162-2"><a href="model-introduction-to-modeling.html#cb1162-2" tabindex="-1"></a>  df_train <span class="sc">%&gt;%</span></span>
-<span id="cb1162-3"><a href="model-introduction-to-modeling.html#cb1162-3" tabindex="-1"></a>  <span class="fu">add_uncertainties</span>(</span>
-<span id="cb1162-4"><a href="model-introduction-to-modeling.html#cb1162-4" tabindex="-1"></a>    <span class="at">model =</span> fit_4c,</span>
-<span id="cb1162-5"><a href="model-introduction-to-modeling.html#cb1162-5" tabindex="-1"></a>    <span class="at">prefix =</span> <span class="st">&quot;pred&quot;</span>,</span>
-<span id="cb1162-6"><a href="model-introduction-to-modeling.html#cb1162-6" tabindex="-1"></a>    <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>,</span>
-<span id="cb1162-7"><a href="model-introduction-to-modeling.html#cb1162-7" tabindex="-1"></a>    <span class="at">level =</span> <span class="fl">0.95</span></span>
-<span id="cb1162-8"><a href="model-introduction-to-modeling.html#cb1162-8" tabindex="-1"></a>  )</span>
-<span id="cb1162-9"><a href="model-introduction-to-modeling.html#cb1162-9" tabindex="-1"></a></span>
-<span id="cb1162-10"><a href="model-introduction-to-modeling.html#cb1162-10" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit code below</span></span>
-<span id="cb1162-11"><a href="model-introduction-to-modeling.html#cb1162-11" tabindex="-1"></a><span class="co"># Compute empirical coverage</span></span>
-<span id="cb1162-12"><a href="model-introduction-to-modeling.html#cb1162-12" tabindex="-1"></a>df_q6 <span class="sc">%&gt;%</span></span>
-<span id="cb1162-13"><a href="model-introduction-to-modeling.html#cb1162-13" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">coverage =</span> <span class="fu">mean</span>(pred_lwr <span class="sc">&lt;=</span> price <span class="sc">&amp;</span> price <span class="sc">&lt;=</span> pred_upr))</span></code></pre></div>
+<div class="sourceCode" id="cb1167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1167-1"><a href="model-introduction-to-modeling.html#cb1167-1" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
+<span id="cb1167-2"><a href="model-introduction-to-modeling.html#cb1167-2" tabindex="-1"></a>  df_train <span class="sc">%&gt;%</span></span>
+<span id="cb1167-3"><a href="model-introduction-to-modeling.html#cb1167-3" tabindex="-1"></a>  <span class="fu">add_uncertainties</span>(</span>
+<span id="cb1167-4"><a href="model-introduction-to-modeling.html#cb1167-4" tabindex="-1"></a>    <span class="at">model =</span> fit_4c,</span>
+<span id="cb1167-5"><a href="model-introduction-to-modeling.html#cb1167-5" tabindex="-1"></a>    <span class="at">prefix =</span> <span class="st">&quot;pred&quot;</span>,</span>
+<span id="cb1167-6"><a href="model-introduction-to-modeling.html#cb1167-6" tabindex="-1"></a>    <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>,</span>
+<span id="cb1167-7"><a href="model-introduction-to-modeling.html#cb1167-7" tabindex="-1"></a>    <span class="at">level =</span> <span class="fl">0.95</span></span>
+<span id="cb1167-8"><a href="model-introduction-to-modeling.html#cb1167-8" tabindex="-1"></a>  )</span>
+<span id="cb1167-9"><a href="model-introduction-to-modeling.html#cb1167-9" tabindex="-1"></a></span>
+<span id="cb1167-10"><a href="model-introduction-to-modeling.html#cb1167-10" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit code below</span></span>
+<span id="cb1167-11"><a href="model-introduction-to-modeling.html#cb1167-11" tabindex="-1"></a><span class="co"># Compute empirical coverage</span></span>
+<span id="cb1167-12"><a href="model-introduction-to-modeling.html#cb1167-12" tabindex="-1"></a>df_q6 <span class="sc">%&gt;%</span></span>
+<span id="cb1167-13"><a href="model-introduction-to-modeling.html#cb1167-13" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">coverage =</span> <span class="fu">mean</span>(pred_lwr <span class="sc">&lt;=</span> price <span class="sc">&amp;</span> price <span class="sc">&lt;=</span> pred_upr))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   coverage
 ##      &lt;dbl&gt;
 ## 1    0.956</code></pre>
-<div class="sourceCode" id="cb1164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1164-1"><a href="model-introduction-to-modeling.html#cb1164-1" tabindex="-1"></a><span class="co"># Visualize</span></span>
-<span id="cb1164-2"><a href="model-introduction-to-modeling.html#cb1164-2" tabindex="-1"></a>df_q6 <span class="sc">%&gt;%</span></span>
-<span id="cb1164-3"><a href="model-introduction-to-modeling.html#cb1164-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(price)) <span class="sc">+</span></span>
-<span id="cb1164-4"><a href="model-introduction-to-modeling.html#cb1164-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;grey50&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1164-5"><a href="model-introduction-to-modeling.html#cb1164-5" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
-<span id="cb1164-6"><a href="model-introduction-to-modeling.html#cb1164-6" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(pred_lwr <span class="sc">&lt;=</span> price <span class="sc">&amp;</span> price <span class="sc">&lt;=</span> pred_upr),</span>
-<span id="cb1164-7"><a href="model-introduction-to-modeling.html#cb1164-7" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> pred_lwr, <span class="at">ymax =</span> pred_upr),</span>
-<span id="cb1164-8"><a href="model-introduction-to-modeling.html#cb1164-8" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">0</span>,</span>
-<span id="cb1164-9"><a href="model-introduction-to-modeling.html#cb1164-9" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.1</span>,</span>
-<span id="cb1164-10"><a href="model-introduction-to-modeling.html#cb1164-10" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">5</span>,</span>
-<span id="cb1164-11"><a href="model-introduction-to-modeling.html#cb1164-11" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;darkturquoise&quot;</span></span>
-<span id="cb1164-12"><a href="model-introduction-to-modeling.html#cb1164-12" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1164-13"><a href="model-introduction-to-modeling.html#cb1164-13" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
-<span id="cb1164-14"><a href="model-introduction-to-modeling.html#cb1164-14" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(price <span class="sc">&lt;</span> pred_lwr <span class="sc">|</span> pred_upr <span class="sc">&lt;</span> price),</span>
-<span id="cb1164-15"><a href="model-introduction-to-modeling.html#cb1164-15" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> pred_lwr, <span class="at">ymax =</span> pred_upr),</span>
-<span id="cb1164-16"><a href="model-introduction-to-modeling.html#cb1164-16" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">0</span>,</span>
-<span id="cb1164-17"><a href="model-introduction-to-modeling.html#cb1164-17" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.1</span>,</span>
-<span id="cb1164-18"><a href="model-introduction-to-modeling.html#cb1164-18" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
-<span id="cb1164-19"><a href="model-introduction-to-modeling.html#cb1164-19" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1164-20"><a href="model-introduction-to-modeling.html#cb1164-20" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred_fit), <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb1164-21"><a href="model-introduction-to-modeling.html#cb1164-21" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="d47-e-model01-intro-solution_files/figure-html/q6-task-1.png" width="672" />
+<div class="sourceCode" id="cb1169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1169-1"><a href="model-introduction-to-modeling.html#cb1169-1" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb1169-2"><a href="model-introduction-to-modeling.html#cb1169-2" tabindex="-1"></a>df_q6 <span class="sc">%&gt;%</span></span>
+<span id="cb1169-3"><a href="model-introduction-to-modeling.html#cb1169-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(price)) <span class="sc">+</span></span>
+<span id="cb1169-4"><a href="model-introduction-to-modeling.html#cb1169-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;grey50&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1169-5"><a href="model-introduction-to-modeling.html#cb1169-5" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb1169-6"><a href="model-introduction-to-modeling.html#cb1169-6" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(pred_lwr <span class="sc">&lt;=</span> price <span class="sc">&amp;</span> price <span class="sc">&lt;=</span> pred_upr),</span>
+<span id="cb1169-7"><a href="model-introduction-to-modeling.html#cb1169-7" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> pred_lwr, <span class="at">ymax =</span> pred_upr),</span>
+<span id="cb1169-8"><a href="model-introduction-to-modeling.html#cb1169-8" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">0</span>,</span>
+<span id="cb1169-9"><a href="model-introduction-to-modeling.html#cb1169-9" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.1</span>,</span>
+<span id="cb1169-10"><a href="model-introduction-to-modeling.html#cb1169-10" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">5</span>,</span>
+<span id="cb1169-11"><a href="model-introduction-to-modeling.html#cb1169-11" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;darkturquoise&quot;</span></span>
+<span id="cb1169-12"><a href="model-introduction-to-modeling.html#cb1169-12" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1169-13"><a href="model-introduction-to-modeling.html#cb1169-13" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb1169-14"><a href="model-introduction-to-modeling.html#cb1169-14" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(price <span class="sc">&lt;</span> pred_lwr <span class="sc">|</span> pred_upr <span class="sc">&lt;</span> price),</span>
+<span id="cb1169-15"><a href="model-introduction-to-modeling.html#cb1169-15" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> pred_lwr, <span class="at">ymax =</span> pred_upr),</span>
+<span id="cb1169-16"><a href="model-introduction-to-modeling.html#cb1169-16" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">0</span>,</span>
+<span id="cb1169-17"><a href="model-introduction-to-modeling.html#cb1169-17" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.1</span>,</span>
+<span id="cb1169-18"><a href="model-introduction-to-modeling.html#cb1169-18" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;salmon&quot;</span></span>
+<span id="cb1169-19"><a href="model-introduction-to-modeling.html#cb1169-19" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1169-20"><a href="model-introduction-to-modeling.html#cb1169-20" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred_fit), <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb1169-21"><a href="model-introduction-to-modeling.html#cb1169-21" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="d47-e-model01-intro-solution_files/figure-html/q6-task-1.png" alt="" width="672" />
 We will discuss prediction intervals further in a future exercise. For now, know that they give us a sense of how much we should trust our model predictions.</p>
 </div>
 </div>
@@ -1507,10 +1507,10 @@ We will discuss prediction intervals further in a future exercise. For now, know
 <div id="preview" class="section level2 hasAnchor" number="54.8">
 <h2><span class="header-section-number">54.8</span> Preview<a href="model-introduction-to-modeling.html#preview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Notice that in this exercise, we only used <code>df_test</code>, but I <em>also</em> defined a tibble <code>df_train</code>. What happens when we fit the model on <code>df_train</code>, but assess it on <code>df_test</code>?</p>
-<div class="sourceCode" id="cb1165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1165-1"><a href="model-introduction-to-modeling.html#cb1165-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
-<span id="cb1165-2"><a href="model-introduction-to-modeling.html#cb1165-2" tabindex="-1"></a><span class="fu">rsquare</span>(fit_4c, df_train)</span></code></pre></div>
+<div class="sourceCode" id="cb1170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1170-1"><a href="model-introduction-to-modeling.html#cb1170-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
+<span id="cb1170-2"><a href="model-introduction-to-modeling.html#cb1170-2" tabindex="-1"></a><span class="fu">rsquare</span>(fit_4c, df_train)</span></code></pre></div>
 <pre><code>## [1] 0.897396</code></pre>
-<div class="sourceCode" id="cb1167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1167-1"><a href="model-introduction-to-modeling.html#cb1167-1" tabindex="-1"></a><span class="fu">rsquare</span>(fit_4c, df_test)</span></code></pre></div>
+<div class="sourceCode" id="cb1172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1172-1"><a href="model-introduction-to-modeling.html#cb1172-1" tabindex="-1"></a><span class="fu">rsquare</span>(fit_4c, df_test)</span></code></pre></div>
 <pre><code>## [1] 0.7860757</code></pre>
 <p>Note that <code>rsquare</code> on the <em>training data</em> <code>df_train</code> is much higher than <code>rsquare</code> on the <em>test data</em> <code>df_test</code>. This indicates that the assessment of model accuracy is <em>overly optimistic</em> when assessing the model with <code>df_train</code>. We will explore this idea more in <code>e-stat12-models-train-test</code>.</p>
 <!-- include-exit-ticket -->

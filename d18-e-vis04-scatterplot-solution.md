@@ -14,11 +14,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -41,7 +41,7 @@ mpg %>%
   geom_point()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" />
 
 Part of the *power* of the scatterplot is that it's a flexible way to *show all the data*. Unlike bar charts (where our data needs to be 1:1), a scatterplot easily deals with multiple `y` values for the same `x` simply by plotting multiple points.
 
@@ -63,7 +63,7 @@ mpg %>%
   geom_jitter()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" />
 
 Now that we've jittered the data, we can see little "clusters" of points where we'd previously seen a single point. Unfortunately, jittering introduces some "lies" into our visual: We have to be careful not to interpret the jittering as true variability in the data.
 
@@ -86,7 +86,7 @@ mpg %>%
   )
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 ### Count
 
@@ -100,7 +100,7 @@ mpg %>%
   geom_count()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-3-1.png" alt="" width="672" />
 
 Personally, I find `geom_count()` to be much more effective at showing this dataset, compared with `geom_jitter()`.
 
@@ -116,7 +116,7 @@ diamonds %>%
   geom_point(alpha = 1/20)
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-4-1.png" alt="" width="672" />
 
 I like specifying `alpha` using a fraction; in this way, I can easily tell what number of overlapping points will appear solid. For instance, with `alpha = 1/20`, I know that a region of solid color is at least 20 overlapping points.
 
@@ -131,7 +131,7 @@ mpg %>%
   geom_point()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/unnamed-chunk-5-1.png" alt="" width="672" />
 
 In the plot above, we're getting a misleading impression of the data, again due to overplotting.
 
@@ -149,7 +149,7 @@ mpg %>%
   geom_jitter(width = 0.1, height = 0.5)
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q2-task-1.png" alt="" width="672" />
 
 The `color` aesthetic really only works when we have a *limited* number of factor levels.
 
@@ -167,7 +167,7 @@ ggplot(
   geom_point()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-1-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-1-1.png" alt="" width="672" />
 
 However, ggplot makes a number of sensible defaults to help save us typing. Ggplot assumes an order for `data, mapping`, so we can drop the keywords:
 
@@ -181,7 +181,7 @@ ggplot(
   geom_point()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-2-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-2-1.png" alt="" width="672" />
 
 Similarly the aesthetic function `aes()` assumes the first two arguments will be `x, y`, so we can drop those arguments as well. Once we know what we're doing, we can write some really short code:
 
@@ -192,7 +192,7 @@ ggplot(mpg, aes(displ, hwy)) +
   geom_point()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-3-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-3-1.png" alt="" width="672" />
 
 Above `geom_point()` inherits the `mapping` from the base `ggplot` call; however, we can override this. This can be helpful for a number of different purposes: The following example uses the same `x` mapping for both `geom_point()` calls, but uses a different `y` mapping for each.
 
@@ -204,7 +204,7 @@ ggplot(mpg, aes(x = displ)) +
   geom_point(aes(y = cty, color = "cty"))
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-4-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/exposition-4-1.png" alt="" width="672" />
 
 Later, we'll learn more concise ways to construct graphs like the one above. But for now, we'll practice using layers to add more information to scatterplots.
 
@@ -236,7 +236,7 @@ mpg %>%
   )
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q3-task-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q3-task-1.png" alt="" width="672" />
 
 ### __q4__ Interpret a scatterplot
 
@@ -256,7 +256,7 @@ mpg %>%
   )
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q4-task-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/q4-task-1.png" alt="" width="672" />
 
 **Observations**:
 - `hwy` mileage tends to be larger; driving on the highway is more efficient
@@ -280,7 +280,7 @@ economics %>%
   geom_col()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-bar-raw-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-bar-raw-1.png" alt="" width="672" />
 
 Here we're emphasizing zero, so we don't see much of a change
 
@@ -292,7 +292,7 @@ economics %>%
   geom_point()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-point-raw-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-point-raw-1.png" alt="" width="672" />
 
 Here's we're not emphasizing zero; the scale is adjusted to emphasize the trend in the data.
 
@@ -310,7 +310,7 @@ economics %>%
   geom_col()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-bar-change-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-bar-change-1.png" alt="" width="672" />
 
 Here we're emphasizing zero, so we can easily see the month of negative change.
 
@@ -323,7 +323,7 @@ economics %>%
   geom_point()
 ```
 
-<img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-point-change-1.png" width="672" />
+<img src="d18-e-vis04-scatterplot-solution_files/figure-html/vis-point-change-1.png" alt="" width="672" />
 
 Here we're not emphasizing zero; we can easily see the outlier month, but we have to read the axis to see that this is a case of negative growth.
 

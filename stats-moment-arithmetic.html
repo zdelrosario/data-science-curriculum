@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>41 Stats: Moment Arithmetic | Data Science: Exercise Solutions</title>
   <meta name="description" content="41 Stats: Moment Arithmetic | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="41 Stats: Moment Arithmetic | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1115,13 +1115,13 @@ For instance, a standard normal <span class="math inline">\(Z\)</span> has</p>
 <div id="q1" class="section level3 hasAnchor" number="41.3.1">
 <h3><span class="header-section-number">41.3.1</span> <strong>q1</strong><a href="stats-moment-arithmetic.html#q1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Compute the mean of <span class="math inline">\(2 Z + 3\)</span>, where <span class="math inline">\(Z\)</span> is a standard normal.</p>
-<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="stats-moment-arithmetic.html#cb841-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the mean of 2 Z + 3</span></span>
-<span id="cb841-2"><a href="stats-moment-arithmetic.html#cb841-2" tabindex="-1"></a>E_q1 <span class="ot">&lt;-</span> <span class="dv">3</span></span></code></pre></div>
+<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="stats-moment-arithmetic.html#cb846-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the mean of 2 Z + 3</span></span>
+<span id="cb846-2"><a href="stats-moment-arithmetic.html#cb846-2" tabindex="-1"></a>E_q1 <span class="ot">&lt;-</span> <span class="dv">3</span></span></code></pre></div>
 <p>Use the following test to check your answer.</p>
-<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="stats-moment-arithmetic.html#cb842-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb842-2"><a href="stats-moment-arithmetic.html#cb842-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(E_q1, <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="stats-moment-arithmetic.html#cb847-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb847-2"><a href="stats-moment-arithmetic.html#cb847-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(E_q1, <span class="dv">3</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="stats-moment-arithmetic.html#cb844-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="stats-moment-arithmetic.html#cb849-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <p>Since the expectation is linear, it also satisfies</p>
 <p><span class="math display">\[\mathbb{E}[aX + bY] = a \mathbb{E}[X] + b \mathbb{E}[Y].\]</span></p>
@@ -1129,13 +1129,13 @@ For instance, a standard normal <span class="math inline">\(Z\)</span> has</p>
 <div id="q2" class="section level3 hasAnchor" number="41.3.2">
 <h3><span class="header-section-number">41.3.2</span> <strong>q2</strong><a href="stats-moment-arithmetic.html#q2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Compute the mean of <span class="math inline">\(2 Z_1 + 3 Z_2\)</span>, where <span class="math inline">\(Z_1, Z_2\)</span> are separate standard normals.</p>
-<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="stats-moment-arithmetic.html#cb846-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the mean of 2 Z1 + 3 Z2</span></span>
-<span id="cb846-2"><a href="stats-moment-arithmetic.html#cb846-2" tabindex="-1"></a>E_q2 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">0</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> <span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="stats-moment-arithmetic.html#cb851-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the mean of 2 Z1 + 3 Z2</span></span>
+<span id="cb851-2"><a href="stats-moment-arithmetic.html#cb851-2" tabindex="-1"></a>E_q2 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">0</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> <span class="dv">0</span></span></code></pre></div>
 <p>Use the following test to check your answer.</p>
-<div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="stats-moment-arithmetic.html#cb847-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb847-2"><a href="stats-moment-arithmetic.html#cb847-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(E_q2, <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="stats-moment-arithmetic.html#cb852-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb852-2"><a href="stats-moment-arithmetic.html#cb852-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(E_q2, <span class="dv">0</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="stats-moment-arithmetic.html#cb849-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="stats-moment-arithmetic.html#cb854-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great!&quot;</code></pre>
 </div>
 </div>
@@ -1147,13 +1147,13 @@ For instance, a standard normal <span class="math inline">\(Z\)</span> has</p>
 <div id="q3" class="section level3 hasAnchor" number="41.4.1">
 <h3><span class="header-section-number">41.4.1</span> <strong>q3</strong><a href="stats-moment-arithmetic.html#q3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Compute the variance of <span class="math inline">\(2 Z + 3\)</span>, where <span class="math inline">\(Z\)</span> is a standard normal.</p>
-<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="stats-moment-arithmetic.html#cb851-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the mean of 2 Z + 3</span></span>
-<span id="cb851-2"><a href="stats-moment-arithmetic.html#cb851-2" tabindex="-1"></a>V_q3 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">^</span> <span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="stats-moment-arithmetic.html#cb856-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the mean of 2 Z + 3</span></span>
+<span id="cb856-2"><a href="stats-moment-arithmetic.html#cb856-2" tabindex="-1"></a>V_q3 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">^</span> <span class="dv">2</span></span></code></pre></div>
 <p>Use the following test to check your answer.</p>
-<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="stats-moment-arithmetic.html#cb852-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb852-2"><a href="stats-moment-arithmetic.html#cb852-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(V_q3, <span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="stats-moment-arithmetic.html#cb857-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb857-2"><a href="stats-moment-arithmetic.html#cb857-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(V_q3, <span class="dv">4</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="stats-moment-arithmetic.html#cb854-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="stats-moment-arithmetic.html#cb859-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 <p>The variance of a <em>sum</em> of random variables is a bit more complicated</p>
 <p><span class="math display">\[\mathbb{V}[aX + bY] = a^2 \mathbb{V}[X] + b^2 \mathbb{V}[Y] + 2ab \text{Cov}[X, Y],\]</span>
@@ -1162,13 +1162,13 @@ where <span class="math inline">\(\text{Cov}[X, Y]\)</span> denotes the <a href=
 <div id="q4" class="section level3 hasAnchor" number="41.4.2">
 <h3><span class="header-section-number">41.4.2</span> <strong>q4</strong><a href="stats-moment-arithmetic.html#q4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Compute the variance of <span class="math inline">\(2 Z_1 + 3 Z_2\)</span>, where <span class="math inline">\(Z_1, Z_2\)</span> are <em>uncorrelated</em> standard normals.</p>
-<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="stats-moment-arithmetic.html#cb856-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the variance of 2 Z1 + 3 Z2</span></span>
-<span id="cb856-2"><a href="stats-moment-arithmetic.html#cb856-2" tabindex="-1"></a>V_q4 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="stats-moment-arithmetic.html#cb861-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the variance of 2 Z1 + 3 Z2</span></span>
+<span id="cb861-2"><a href="stats-moment-arithmetic.html#cb861-2" tabindex="-1"></a>V_q4 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
 <p>Use the following test to check your answer.</p>
-<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="stats-moment-arithmetic.html#cb857-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb857-2"><a href="stats-moment-arithmetic.html#cb857-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(V_q4, <span class="dv">13</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="stats-moment-arithmetic.html#cb862-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb862-2"><a href="stats-moment-arithmetic.html#cb862-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(V_q4, <span class="dv">13</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="stats-moment-arithmetic.html#cb859-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="stats-moment-arithmetic.html#cb864-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 </div>
 </div>
@@ -1180,32 +1180,32 @@ where <span class="math inline">\(\text{Cov}[X, Y]\)</span> denotes the <a href=
 <h3><span class="header-section-number">41.5.1</span> <strong>q5</strong><a href="stats-moment-arithmetic.html#q5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Compute the mean and variance of <span class="math inline">\((X - 1) / 2\)</span>, where</p>
 <p><span class="math display">\[\mathbb{E}[X] = 1, \mathbb{V}[X] = 4\]</span>.</p>
-<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="stats-moment-arithmetic.html#cb861-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the mean and variance</span></span>
-<span id="cb861-2"><a href="stats-moment-arithmetic.html#cb861-2" tabindex="-1"></a>E_q3 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb861-3"><a href="stats-moment-arithmetic.html#cb861-3" tabindex="-1"></a>V_q3 <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="stats-moment-arithmetic.html#cb866-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the mean and variance</span></span>
+<span id="cb866-2"><a href="stats-moment-arithmetic.html#cb866-2" tabindex="-1"></a>E_q3 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb866-3"><a href="stats-moment-arithmetic.html#cb866-3" tabindex="-1"></a>V_q3 <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
 <p>Use the following test to check your answer.</p>
-<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="stats-moment-arithmetic.html#cb862-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb862-2"><a href="stats-moment-arithmetic.html#cb862-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(E_q3, <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="stats-moment-arithmetic.html#cb867-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb867-2"><a href="stats-moment-arithmetic.html#cb867-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(E_q3, <span class="dv">0</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="stats-moment-arithmetic.html#cb864-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(V_q3, <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="stats-moment-arithmetic.html#cb869-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(V_q3, <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="stats-moment-arithmetic.html#cb866-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="stats-moment-arithmetic.html#cb871-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 <p>This process of centering (setting the mean to zero) and scaling a random variable is called <em>standardization</em>. For instance, if <span class="math inline">\(X\)</span> is a normal random variable, then <span class="math inline">\((X - \mu) / \sigma = Z\)</span> is a standard normal.</p>
 </div>
 <div id="q6" class="section level3 hasAnchor" number="41.5.2">
 <h3><span class="header-section-number">41.5.2</span> <strong>q6</strong><a href="stats-moment-arithmetic.html#q6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Compute the mean and variance of <span class="math inline">\(1 + 2 Z\)</span>, where <span class="math inline">\(Z\)</span> is a standard normal.</p>
-<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="stats-moment-arithmetic.html#cb868-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the mean and variance</span></span>
-<span id="cb868-2"><a href="stats-moment-arithmetic.html#cb868-2" tabindex="-1"></a>E_q4 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb868-3"><a href="stats-moment-arithmetic.html#cb868-3" tabindex="-1"></a>V_q4 <span class="ot">&lt;-</span> <span class="dv">4</span></span></code></pre></div>
+<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="stats-moment-arithmetic.html#cb873-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the mean and variance</span></span>
+<span id="cb873-2"><a href="stats-moment-arithmetic.html#cb873-2" tabindex="-1"></a>E_q4 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb873-3"><a href="stats-moment-arithmetic.html#cb873-3" tabindex="-1"></a>V_q4 <span class="ot">&lt;-</span> <span class="dv">4</span></span></code></pre></div>
 <p>Use the following test to check your answer.</p>
-<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="stats-moment-arithmetic.html#cb869-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb869-2"><a href="stats-moment-arithmetic.html#cb869-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(E_q4, <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="stats-moment-arithmetic.html#cb874-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb874-2"><a href="stats-moment-arithmetic.html#cb874-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(E_q4, <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="stats-moment-arithmetic.html#cb871-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(V_q4, <span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb876-1"><a href="stats-moment-arithmetic.html#cb876-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(assertthat<span class="sc">::</span><span class="fu">are_equal</span>(V_q4, <span class="dv">4</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="stats-moment-arithmetic.html#cb873-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="stats-moment-arithmetic.html#cb878-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Excellent!&quot;</code></pre>
 <p>This example illustrates that we can create a normal with desired mean and standard deviation by transforming a standard normal <span class="math inline">\(\mu + \sigma Z = X\)</span>.</p>
 </div>

@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -167,7 +167,7 @@ bind_rows(
   facet_grid(source ~ .)
 ```
 
-<img src="d40-e-stat11-ci-pi-solution_files/figure-html/diamonds-vis-1.png" width="672" />
+<img src="d40-e-stat11-ci-pi-solution_files/figure-html/diamonds-vis-1.png" alt="" width="672" />
 Take a quick look at the plot above, and make a prediction (to yourself) whether the normally-approximated CI and PI will behave well in this case. Then continue on to q2.
 
 ### __q2__ Estimate CI and PI
@@ -228,12 +228,12 @@ df_q2 %>%
 ```
 ## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
 ## of ggplot2 3.3.4.
-## This warning is displayed once every 8 hours.
+## This warning is displayed once per session.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.
 ```
 
-<img src="d40-e-stat11-ci-pi-solution_files/figure-html/q2-vis-1.png" width="672" />
+<img src="d40-e-stat11-ci-pi-solution_files/figure-html/q2-vis-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -280,7 +280,7 @@ left_join(
 ```
 ## Warning: Using `by = character()` to perform a cross join was deprecated in dplyr 1.1.0.
 ## ℹ Please use `cross_join()` instead.
-## This warning is displayed once every 8 hours.
+## This warning is displayed once per session.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.
 ```

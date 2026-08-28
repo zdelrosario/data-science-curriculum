@@ -12,11 +12,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -344,7 +344,6 @@ assertthat::assert_that(
 ## Warning: `all_equal()` was deprecated in dplyr 1.1.0.
 ## ℹ Please use `all.equal()` instead.
 ## ℹ And manually order the rows/cols as needed
-## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.
 ```
@@ -377,7 +376,7 @@ To compute an ROC curve, we could construct a confusion matrix at a variety of t
 df_basic %>%
   ## Begin: Shortcut code for computing an ROC
   arrange(desc(pr_heart_disease)) %>%
-  summarize(
+  mutate(
     true_positive_rate = cumsum(heart_disease) / sum(heart_disease),
     false_positive_rate = cumsum(!heart_disease) / sum(!heart_disease)
   ) %>%
@@ -390,17 +389,7 @@ df_basic %>%
   theme_minimal()
 ```
 
-```
-## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-## dplyr 1.1.0.
-## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.
-```
-
-<img src="d53-e-model05-roc-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d53-e-model05-roc-solution_files/figure-html/q2-task-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -442,7 +431,7 @@ df_cheating <-
 df_cheating %>%
   ## Begin: Shortcut code for computing an ROC
   arrange(desc(pr_heart_disease)) %>%
-  summarize(
+  mutate(
     true_positive_rate = cumsum(heart_disease) / sum(heart_disease),
     false_positive_rate = cumsum(!heart_disease) / sum(!heart_disease)
   ) %>%
@@ -455,17 +444,7 @@ df_cheating %>%
   theme_minimal()
 ```
 
-```
-## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-## dplyr 1.1.0.
-## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.
-```
-
-<img src="d53-e-model05-roc-solution_files/figure-html/q3-task-1.png" width="672" />
+<img src="d53-e-model05-roc-solution_files/figure-html/q3-task-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -509,14 +488,14 @@ df_baseline <-
 bind_rows(
   df_q4 %>%
     arrange(desc(pr_heart_disease)) %>%
-    summarize(
+    mutate(
       true_positive_rate = cumsum(heart_disease) / sum(heart_disease),
       false_positive_rate = cumsum(!heart_disease) / sum(!heart_disease)
     ) %>%
     mutate(model = "Personal"),
   df_baseline %>%
     arrange(desc(pr_heart_disease)) %>%
-    summarize(
+    mutate(
       true_positive_rate = cumsum(heart_disease) / sum(heart_disease),
       false_positive_rate = cumsum(!heart_disease) / sum(!heart_disease)
     ) %>%
@@ -531,27 +510,7 @@ bind_rows(
   theme(legend.position = "bottom")
 ```
 
-```
-## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-## dplyr 1.1.0.
-## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.
-```
-
-```
-## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-## dplyr 1.1.0.
-## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.
-```
-
-<img src="d53-e-model05-roc-solution_files/figure-html/q4-task-1.png" width="672" />
+<img src="d53-e-model05-roc-solution_files/figure-html/q4-task-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -573,24 +532,11 @@ df_thresholds <-
   df_q4 %>%
   ## Begin: Shortcut code for computing an ROC
   arrange(desc(pr_heart_disease)) %>%
-  summarize(
+  mutate(
     pr_heart_disease = pr_heart_disease,
     true_positive_rate = cumsum(heart_disease) / sum(heart_disease),
     false_positive_rate = cumsum(!heart_disease) / sum(!heart_disease)
   )
-```
-
-```
-## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-## dplyr 1.1.0.
-## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.
-```
-
-``` r
   ## End: Shortcut code for computing an ROC
 
 ## TODO: Pick a threshold using df_thresholds above
@@ -600,11 +546,14 @@ df_thresholds %>%
 ```
 
 ```
-## # A tibble: 2 × 3
-##   pr_heart_disease true_positive_rate false_positive_rate
-##              <dbl>              <dbl>               <dbl>
-## 1            0.252              0.917               0.492
-## 2            0.249              0.944               0.492
+## # A tibble: 2 × 21
+##   order rowid   age sex    cp         trestbps  chol fbs   restecg thalach exang
+##   <int> <int> <dbl> <chr>  <chr>         <dbl> <dbl> <lgl> <chr>     <dbl> <lgl>
+## 1    35   268    59 male   non-angin…      126   218 TRUE  normal      134 FALSE
+## 2    34   262    58 female atypical …      136   319 TRUE  Estes'…     152 FALSE
+## # ℹ 10 more variables: oldpeak <dbl>, slope <chr>, ca <dbl>, thal <chr>,
+## #   num <dbl>, heart_disease <lgl>, log_odds_ratio <dbl>,
+## #   pr_heart_disease <dbl>, true_positive_rate <dbl>, false_positive_rate <dbl>
 ```
 
 ``` r
@@ -624,7 +573,7 @@ df_thresholds %>%
   )
 ```
 
-<img src="d53-e-model05-roc-solution_files/figure-html/q5-task-1.png" width="672" />
+<img src="d53-e-model05-roc-solution_files/figure-html/q5-task-1.png" alt="" width="672" />
 
 **Observations**:
 

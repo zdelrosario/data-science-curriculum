@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>32 Data: Working with strings | Data Science: Exercise Solutions</title>
   <meta name="description" content="32 Data: Working with strings | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="32 Data: Working with strings | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1088,13 +1088,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Topics</em>: Regular expressions, <code>stringr</code> package functions, pivoting</p>
 <p><em>Note</em>: The <a href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf">stringr cheatsheet</a> is a helpful reference for this exercise!
 - If this link is broken, try searching “Rstudio stringr cheatsheet” on the web.</p>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="data-working-with-strings.html#cb560-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="data-working-with-strings.html#cb565-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1107,34 +1107,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">32.1.1</span> Detect<a href="data-working-with-strings.html#detect" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <!-- ------------------------- -->
 <p>The function <code>str_detect()</code> allows us to <em>detect</em> the presence of a particular pattern. For instance, we can give it a fixed pattern such as:</p>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="data-working-with-strings.html#cb562-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb562-2"><a href="data-working-with-strings.html#cb562-2" tabindex="-1"></a>strings <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb562-3"><a href="data-working-with-strings.html#cb562-3" tabindex="-1"></a>  <span class="st">&quot;Team Alpha&quot;</span>,</span>
-<span id="cb562-4"><a href="data-working-with-strings.html#cb562-4" tabindex="-1"></a>  <span class="st">&quot;Team Beta&quot;</span>,</span>
-<span id="cb562-5"><a href="data-working-with-strings.html#cb562-5" tabindex="-1"></a>  <span class="st">&quot;Group 1&quot;</span>,</span>
-<span id="cb562-6"><a href="data-working-with-strings.html#cb562-6" tabindex="-1"></a>  <span class="st">&quot;Group 2&quot;</span></span>
-<span id="cb562-7"><a href="data-working-with-strings.html#cb562-7" tabindex="-1"></a>)</span>
-<span id="cb562-8"><a href="data-working-with-strings.html#cb562-8" tabindex="-1"></a></span>
-<span id="cb562-9"><a href="data-working-with-strings.html#cb562-9" tabindex="-1"></a><span class="fu">str_detect</span>(</span>
-<span id="cb562-10"><a href="data-working-with-strings.html#cb562-10" tabindex="-1"></a>  <span class="at">string =</span> strings,</span>
-<span id="cb562-11"><a href="data-working-with-strings.html#cb562-11" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;Team&quot;</span></span>
-<span id="cb562-12"><a href="data-working-with-strings.html#cb562-12" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="data-working-with-strings.html#cb567-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb567-2"><a href="data-working-with-strings.html#cb567-2" tabindex="-1"></a>strings <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb567-3"><a href="data-working-with-strings.html#cb567-3" tabindex="-1"></a>  <span class="st">&quot;Team Alpha&quot;</span>,</span>
+<span id="cb567-4"><a href="data-working-with-strings.html#cb567-4" tabindex="-1"></a>  <span class="st">&quot;Team Beta&quot;</span>,</span>
+<span id="cb567-5"><a href="data-working-with-strings.html#cb567-5" tabindex="-1"></a>  <span class="st">&quot;Group 1&quot;</span>,</span>
+<span id="cb567-6"><a href="data-working-with-strings.html#cb567-6" tabindex="-1"></a>  <span class="st">&quot;Group 2&quot;</span></span>
+<span id="cb567-7"><a href="data-working-with-strings.html#cb567-7" tabindex="-1"></a>)</span>
+<span id="cb567-8"><a href="data-working-with-strings.html#cb567-8" tabindex="-1"></a></span>
+<span id="cb567-9"><a href="data-working-with-strings.html#cb567-9" tabindex="-1"></a><span class="fu">str_detect</span>(</span>
+<span id="cb567-10"><a href="data-working-with-strings.html#cb567-10" tabindex="-1"></a>  <span class="at">string =</span> strings,</span>
+<span id="cb567-11"><a href="data-working-with-strings.html#cb567-11" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;Team&quot;</span></span>
+<span id="cb567-12"><a href="data-working-with-strings.html#cb567-12" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1]  TRUE  TRUE FALSE FALSE</code></pre>
 <p><code>str_detect()</code> checks whether the given <code>pattern</code> is within the given <code>string</code>. This function returns a <em>boolean</em>—a <code>TRUE</code> or <code>FALSE</code> value—and furthermore it is <em>vectorized</em>—it returns a boolean vector of <code>T/F</code> values corresponding to each original entry.</p>
 <p>Since <code>str_detect()</code> returns boolean values, we can use it as a helper in
 <code>filter()</code> calls. For instance, in the <code>mpg</code> dataset there are automobiles with
 <code>trans</code> that are automatic or manual.</p>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="data-working-with-strings.html#cb564-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb564-2"><a href="data-working-with-strings.html#cb564-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb564-3"><a href="data-working-with-strings.html#cb564-3" tabindex="-1"></a>  <span class="fu">select</span>(trans) <span class="sc">%&gt;%</span></span>
-<span id="cb564-4"><a href="data-working-with-strings.html#cb564-4" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="data-working-with-strings.html#cb569-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb569-2"><a href="data-working-with-strings.html#cb569-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb569-3"><a href="data-working-with-strings.html#cb569-3" tabindex="-1"></a>  <span class="fu">select</span>(trans) <span class="sc">%&gt;%</span></span>
+<span id="cb569-4"><a href="data-working-with-strings.html#cb569-4" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 234
 ## Columns: 1
 ## $ trans &lt;chr&gt; &quot;auto(l5)&quot;, &quot;manual(m5)&quot;, &quot;manual(m6)&quot;, &quot;auto(av)&quot;, &quot;auto(l5)&quot;, …</code></pre>
 <p>We can’t simply check whether <code>trans == "auto"</code>, because no string will <em>exactly</em> match that fixed pattern. But we can instead check for a substring.</p>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="data-working-with-strings.html#cb566-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb566-2"><a href="data-working-with-strings.html#cb566-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb566-3"><a href="data-working-with-strings.html#cb566-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(trans, <span class="st">&quot;auto&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="data-working-with-strings.html#cb571-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb571-2"><a href="data-working-with-strings.html#cb571-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb571-3"><a href="data-working-with-strings.html#cb571-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(trans, <span class="st">&quot;auto&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 157 × 11
 ##    manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class
 ##    &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
@@ -1152,10 +1152,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q1-filter-the-mpg-dataset-down-to-manual-vehicles-using-str_detect." class="section level3 hasAnchor" number="32.1.2">
 <h3><span class="header-section-number">32.1.2</span> <strong>q1</strong> Filter the <code>mpg</code> dataset down to <code>manual</code> vehicles using <code>str_detect()</code>.<a href="data-working-with-strings.html#q1-filter-the-mpg-dataset-down-to-manual-vehicles-using-str_detect." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="data-working-with-strings.html#cb568-1" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
-<span id="cb568-2"><a href="data-working-with-strings.html#cb568-2" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
-<span id="cb568-3"><a href="data-working-with-strings.html#cb568-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(trans, <span class="st">&quot;manual&quot;</span>))</span>
-<span id="cb568-4"><a href="data-working-with-strings.html#cb568-4" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="data-working-with-strings.html#cb573-1" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
+<span id="cb573-2"><a href="data-working-with-strings.html#cb573-2" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
+<span id="cb573-3"><a href="data-working-with-strings.html#cb573-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(trans, <span class="st">&quot;manual&quot;</span>))</span>
+<span id="cb573-4"><a href="data-working-with-strings.html#cb573-4" tabindex="-1"></a>df_q1 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 77
 ## Columns: 11
 ## $ manufacturer &lt;chr&gt; &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;…
@@ -1170,23 +1170,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ fl           &lt;chr&gt; &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;r&quot;, &quot;r…
 ## $ class        &lt;chr&gt; &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;, &quot;c…</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="data-working-with-strings.html#cb570-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb570-2"><a href="data-working-with-strings.html#cb570-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb570-3"><a href="data-working-with-strings.html#cb570-3" tabindex="-1"></a>              <span class="fu">all</span>(</span>
-<span id="cb570-4"><a href="data-working-with-strings.html#cb570-4" tabindex="-1"></a>                df_q1 <span class="sc">%&gt;%</span></span>
-<span id="cb570-5"><a href="data-working-with-strings.html#cb570-5" tabindex="-1"></a>                <span class="fu">pull</span>(trans) <span class="sc">%&gt;%</span></span>
-<span id="cb570-6"><a href="data-working-with-strings.html#cb570-6" tabindex="-1"></a>                <span class="fu">str_detect</span>(., <span class="st">&quot;manual&quot;</span>)</span>
-<span id="cb570-7"><a href="data-working-with-strings.html#cb570-7" tabindex="-1"></a>              )</span>
-<span id="cb570-8"><a href="data-working-with-strings.html#cb570-8" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="data-working-with-strings.html#cb575-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb575-2"><a href="data-working-with-strings.html#cb575-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb575-3"><a href="data-working-with-strings.html#cb575-3" tabindex="-1"></a>              <span class="fu">all</span>(</span>
+<span id="cb575-4"><a href="data-working-with-strings.html#cb575-4" tabindex="-1"></a>                df_q1 <span class="sc">%&gt;%</span></span>
+<span id="cb575-5"><a href="data-working-with-strings.html#cb575-5" tabindex="-1"></a>                <span class="fu">pull</span>(trans) <span class="sc">%&gt;%</span></span>
+<span id="cb575-6"><a href="data-working-with-strings.html#cb575-6" tabindex="-1"></a>                <span class="fu">str_detect</span>(., <span class="st">&quot;manual&quot;</span>)</span>
+<span id="cb575-7"><a href="data-working-with-strings.html#cb575-7" tabindex="-1"></a>              )</span>
+<span id="cb575-8"><a href="data-working-with-strings.html#cb575-8" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="data-working-with-strings.html#cb572-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="data-working-with-strings.html#cb577-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great job!&quot;</code></pre>
 <p>Part of the power of learning <em>regular expressions</em> is that we can write <em>patterns</em>, rather than exact matches. Notice that the <code>drv</code> variable in <code>mpg</code> takes either character or digit values. What if we wanted to filter out all the cases that had digits?</p>
-<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="data-working-with-strings.html#cb574-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb574-2"><a href="data-working-with-strings.html#cb574-2" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb574-3"><a href="data-working-with-strings.html#cb574-3" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">str_detect</span>(drv, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d&quot;</span>)</span>
-<span id="cb574-4"><a href="data-working-with-strings.html#cb574-4" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb574-5"><a href="data-working-with-strings.html#cb574-5" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="data-working-with-strings.html#cb579-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb579-2"><a href="data-working-with-strings.html#cb579-2" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb579-3"><a href="data-working-with-strings.html#cb579-3" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">str_detect</span>(drv, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d&quot;</span>)</span>
+<span id="cb579-4"><a href="data-working-with-strings.html#cb579-4" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb579-5"><a href="data-working-with-strings.html#cb579-5" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 131
 ## Columns: 11
 ## $ manufacturer &lt;chr&gt; &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;…
@@ -1204,10 +1204,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q2-use-str_detect-and-an-appropriate-regular-expression-to-filter-mpg-for-only-those-values-of-trans-that-have-a-digit." class="section level3 hasAnchor" number="32.1.3">
 <h3><span class="header-section-number">32.1.3</span> <strong>q2</strong> Use <code>str_detect()</code> and an appropriate regular expression to filter <code>mpg</code> for <em>only</em> those values of <code>trans</code> that have a digit.<a href="data-working-with-strings.html#q2-use-str_detect-and-an-appropriate-regular-expression-to-filter-mpg-for-only-those-values-of-trans-that-have-a-digit." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="data-working-with-strings.html#cb576-1" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
-<span id="cb576-2"><a href="data-working-with-strings.html#cb576-2" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
-<span id="cb576-3"><a href="data-working-with-strings.html#cb576-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(trans, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d&quot;</span>))</span>
-<span id="cb576-4"><a href="data-working-with-strings.html#cb576-4" tabindex="-1"></a>df_q2 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="data-working-with-strings.html#cb581-1" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
+<span id="cb581-2"><a href="data-working-with-strings.html#cb581-2" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
+<span id="cb581-3"><a href="data-working-with-strings.html#cb581-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(trans, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d&quot;</span>))</span>
+<span id="cb581-4"><a href="data-working-with-strings.html#cb581-4" tabindex="-1"></a>df_q2 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 229
 ## Columns: 11
 ## $ manufacturer &lt;chr&gt; &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;…
@@ -1222,66 +1222,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ fl           &lt;chr&gt; &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p…
 ## $ class        &lt;chr&gt; &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;, &quot;c…</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="data-working-with-strings.html#cb578-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb578-2"><a href="data-working-with-strings.html#cb578-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb578-3"><a href="data-working-with-strings.html#cb578-3" tabindex="-1"></a>              <span class="fu">all</span>(</span>
-<span id="cb578-4"><a href="data-working-with-strings.html#cb578-4" tabindex="-1"></a>                df_q2 <span class="sc">%&gt;%</span></span>
-<span id="cb578-5"><a href="data-working-with-strings.html#cb578-5" tabindex="-1"></a>                <span class="fu">pull</span>(trans) <span class="sc">%&gt;%</span></span>
-<span id="cb578-6"><a href="data-working-with-strings.html#cb578-6" tabindex="-1"></a>                <span class="fu">str_detect</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d&quot;</span>)</span>
-<span id="cb578-7"><a href="data-working-with-strings.html#cb578-7" tabindex="-1"></a>              )</span>
-<span id="cb578-8"><a href="data-working-with-strings.html#cb578-8" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="data-working-with-strings.html#cb583-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb583-2"><a href="data-working-with-strings.html#cb583-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb583-3"><a href="data-working-with-strings.html#cb583-3" tabindex="-1"></a>              <span class="fu">all</span>(</span>
+<span id="cb583-4"><a href="data-working-with-strings.html#cb583-4" tabindex="-1"></a>                df_q2 <span class="sc">%&gt;%</span></span>
+<span id="cb583-5"><a href="data-working-with-strings.html#cb583-5" tabindex="-1"></a>                <span class="fu">pull</span>(trans) <span class="sc">%&gt;%</span></span>
+<span id="cb583-6"><a href="data-working-with-strings.html#cb583-6" tabindex="-1"></a>                <span class="fu">str_detect</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d&quot;</span>)</span>
+<span id="cb583-7"><a href="data-working-with-strings.html#cb583-7" tabindex="-1"></a>              )</span>
+<span id="cb583-8"><a href="data-working-with-strings.html#cb583-8" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="data-working-with-strings.html#cb580-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="data-working-with-strings.html#cb585-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 </div>
 <div id="extract" class="section level3 hasAnchor" number="32.1.4">
 <h3><span class="header-section-number">32.1.4</span> Extract<a href="data-working-with-strings.html#extract" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <!-- ------------------------- -->
 <p>While <code>str_detect()</code> is useful for filtering, <code>str_extract()</code> is useful with <code>mutate()</code>. This function returns the <em>first extracted substring</em>, as demonstrated below.</p>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="data-working-with-strings.html#cb582-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb582-2"><a href="data-working-with-strings.html#cb582-2" tabindex="-1"></a><span class="fu">str_extract</span>(</span>
-<span id="cb582-3"><a href="data-working-with-strings.html#cb582-3" tabindex="-1"></a>  <span class="at">string =</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;123&quot;</span>),</span>
-<span id="cb582-4"><a href="data-working-with-strings.html#cb582-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d{3}&quot;</span></span>
-<span id="cb582-5"><a href="data-working-with-strings.html#cb582-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="data-working-with-strings.html#cb587-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb587-2"><a href="data-working-with-strings.html#cb587-2" tabindex="-1"></a><span class="fu">str_extract</span>(</span>
+<span id="cb587-3"><a href="data-working-with-strings.html#cb587-3" tabindex="-1"></a>  <span class="at">string =</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;123&quot;</span>),</span>
+<span id="cb587-4"><a href="data-working-with-strings.html#cb587-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d{3}&quot;</span></span>
+<span id="cb587-5"><a href="data-working-with-strings.html#cb587-5" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] NA    NA    &quot;123&quot;</code></pre>
 <p>Note that if <code>str_extract()</code> doesn’t find a extract, it will return <code>NA</code>. Also, here that I’m using a <em>quantifier</em>; as we saw in the reading, <code>{}</code> notation will allow us to specify the number of repetitions to seek.</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="data-working-with-strings.html#cb584-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb584-2"><a href="data-working-with-strings.html#cb584-2" tabindex="-1"></a><span class="fu">str_extract</span>(</span>
-<span id="cb584-3"><a href="data-working-with-strings.html#cb584-3" tabindex="-1"></a>  <span class="at">string =</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;123&quot;</span>),</span>
-<span id="cb584-4"><a href="data-working-with-strings.html#cb584-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d{2}&quot;</span></span>
-<span id="cb584-5"><a href="data-working-with-strings.html#cb584-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="data-working-with-strings.html#cb589-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb589-2"><a href="data-working-with-strings.html#cb589-2" tabindex="-1"></a><span class="fu">str_extract</span>(</span>
+<span id="cb589-3"><a href="data-working-with-strings.html#cb589-3" tabindex="-1"></a>  <span class="at">string =</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;123&quot;</span>),</span>
+<span id="cb589-4"><a href="data-working-with-strings.html#cb589-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d{2}&quot;</span></span>
+<span id="cb589-5"><a href="data-working-with-strings.html#cb589-5" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] NA   NA   &quot;12&quot;</code></pre>
 <p>Notice that this only returns the first two digits in the extract, and neglects the third. If we don’t know the specific number we’re looking for, we can use <code>+</code> to select one or more characters:</p>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="data-working-with-strings.html#cb586-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb586-2"><a href="data-working-with-strings.html#cb586-2" tabindex="-1"></a><span class="fu">str_extract</span>(</span>
-<span id="cb586-3"><a href="data-working-with-strings.html#cb586-3" tabindex="-1"></a>  <span class="at">string =</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;123&quot;</span>),</span>
-<span id="cb586-4"><a href="data-working-with-strings.html#cb586-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d+&quot;</span></span>
-<span id="cb586-5"><a href="data-working-with-strings.html#cb586-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="data-working-with-strings.html#cb591-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb591-2"><a href="data-working-with-strings.html#cb591-2" tabindex="-1"></a><span class="fu">str_extract</span>(</span>
+<span id="cb591-3"><a href="data-working-with-strings.html#cb591-3" tabindex="-1"></a>  <span class="at">string =</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;123&quot;</span>),</span>
+<span id="cb591-4"><a href="data-working-with-strings.html#cb591-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d+&quot;</span></span>
+<span id="cb591-5"><a href="data-working-with-strings.html#cb591-5" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] NA    NA    &quot;123&quot;</code></pre>
 <p>We can also use the <code>[[:alpha:]]</code> special symbol to select alphabetic characters only:</p>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="data-working-with-strings.html#cb588-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb588-2"><a href="data-working-with-strings.html#cb588-2" tabindex="-1"></a><span class="fu">str_extract</span>(</span>
-<span id="cb588-3"><a href="data-working-with-strings.html#cb588-3" tabindex="-1"></a>  <span class="at">string =</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;123&quot;</span>),</span>
-<span id="cb588-4"><a href="data-working-with-strings.html#cb588-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;[[:alpha:]]+&quot;</span></span>
-<span id="cb588-5"><a href="data-working-with-strings.html#cb588-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="data-working-with-strings.html#cb593-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb593-2"><a href="data-working-with-strings.html#cb593-2" tabindex="-1"></a><span class="fu">str_extract</span>(</span>
+<span id="cb593-3"><a href="data-working-with-strings.html#cb593-3" tabindex="-1"></a>  <span class="at">string =</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;123&quot;</span>),</span>
+<span id="cb593-4"><a href="data-working-with-strings.html#cb593-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;[[:alpha:]]+&quot;</span></span>
+<span id="cb593-5"><a href="data-working-with-strings.html#cb593-5" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] &quot;abc&quot; &quot;xyz&quot; NA</code></pre>
 <p>And finally the wildcard <code>.</code> allows us to match any character:</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="data-working-with-strings.html#cb590-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb590-2"><a href="data-working-with-strings.html#cb590-2" tabindex="-1"></a><span class="fu">str_extract</span>(</span>
-<span id="cb590-3"><a href="data-working-with-strings.html#cb590-3" tabindex="-1"></a>  <span class="at">string =</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;123&quot;</span>),</span>
-<span id="cb590-4"><a href="data-working-with-strings.html#cb590-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;.+&quot;</span></span>
-<span id="cb590-5"><a href="data-working-with-strings.html#cb590-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="data-working-with-strings.html#cb595-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb595-2"><a href="data-working-with-strings.html#cb595-2" tabindex="-1"></a><span class="fu">str_extract</span>(</span>
+<span id="cb595-3"><a href="data-working-with-strings.html#cb595-3" tabindex="-1"></a>  <span class="at">string =</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;123&quot;</span>),</span>
+<span id="cb595-4"><a href="data-working-with-strings.html#cb595-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;.+&quot;</span></span>
+<span id="cb595-5"><a href="data-working-with-strings.html#cb595-5" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] &quot;abc&quot; &quot;xyz&quot; &quot;123&quot;</code></pre>
 </div>
 <div id="q3-match-alphabet-characters" class="section level3 hasAnchor" number="32.1.5">
 <h3><span class="header-section-number">32.1.5</span> <strong>q3</strong> Match alphabet characters<a href="data-working-with-strings.html#q3-match-alphabet-characters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Notice that the <code>trans</code> column of <code>mpg</code> has many entries of the form <code>auto|manual\\([[:alpha:]]\\d\\)</code>; use <code>str_mutate()</code> to create a new column <code>tmp</code> with just the code inside the parentheses extracting <code>[[:alpha:]]\\d</code>.</p>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="data-working-with-strings.html#cb592-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Mutate `trans` to extract</span></span>
-<span id="cb592-2"><a href="data-working-with-strings.html#cb592-2" tabindex="-1"></a>df_q3 <span class="ot">&lt;-</span></span>
-<span id="cb592-3"><a href="data-working-with-strings.html#cb592-3" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
-<span id="cb592-4"><a href="data-working-with-strings.html#cb592-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tmp =</span> <span class="fu">str_extract</span>(trans, <span class="st">&quot;[[:alpha:]]</span><span class="sc">\\</span><span class="st">d&quot;</span>))</span>
-<span id="cb592-5"><a href="data-working-with-strings.html#cb592-5" tabindex="-1"></a>df_q3 <span class="sc">%&gt;%</span></span>
-<span id="cb592-6"><a href="data-working-with-strings.html#cb592-6" tabindex="-1"></a>  <span class="fu">select</span>(tmp)</span></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="data-working-with-strings.html#cb597-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Mutate `trans` to extract</span></span>
+<span id="cb597-2"><a href="data-working-with-strings.html#cb597-2" tabindex="-1"></a>df_q3 <span class="ot">&lt;-</span></span>
+<span id="cb597-3"><a href="data-working-with-strings.html#cb597-3" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
+<span id="cb597-4"><a href="data-working-with-strings.html#cb597-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tmp =</span> <span class="fu">str_extract</span>(trans, <span class="st">&quot;[[:alpha:]]</span><span class="sc">\\</span><span class="st">d&quot;</span>))</span>
+<span id="cb597-5"><a href="data-working-with-strings.html#cb597-5" tabindex="-1"></a>df_q3 <span class="sc">%&gt;%</span></span>
+<span id="cb597-6"><a href="data-working-with-strings.html#cb597-6" tabindex="-1"></a>  <span class="fu">select</span>(tmp)</span></code></pre></div>
 <pre><code>## # A tibble: 234 × 1
 ##    tmp  
 ##    &lt;chr&gt;
@@ -1297,29 +1297,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 m6   
 ## # ℹ 224 more rows</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="data-working-with-strings.html#cb594-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb594-2"><a href="data-working-with-strings.html#cb594-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb594-3"><a href="data-working-with-strings.html#cb594-3" tabindex="-1"></a>              (df_q3 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(tmp)) <span class="sc">%&gt;%</span> <span class="fu">dim</span>(.) <span class="sc">%&gt;%</span> .[[<span class="dv">1</span>]]) <span class="sc">==</span> <span class="dv">5</span></span>
-<span id="cb594-4"><a href="data-working-with-strings.html#cb594-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="data-working-with-strings.html#cb599-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb599-2"><a href="data-working-with-strings.html#cb599-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb599-3"><a href="data-working-with-strings.html#cb599-3" tabindex="-1"></a>              (df_q3 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(tmp)) <span class="sc">%&gt;%</span> <span class="fu">dim</span>(.) <span class="sc">%&gt;%</span> .[[<span class="dv">1</span>]]) <span class="sc">==</span> <span class="dv">5</span></span>
+<span id="cb599-4"><a href="data-working-with-strings.html#cb599-4" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="data-working-with-strings.html#cb596-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="data-working-with-strings.html#cb601-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 </div>
 <div id="match-and-capture-groups" class="section level3 hasAnchor" number="32.1.6">
 <h3><span class="header-section-number">32.1.6</span> Match and Capture Groups<a href="data-working-with-strings.html#match-and-capture-groups" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <!-- ------------------------- -->
 <p>The <code>str_match()</code> function is similar to <code>str_extract()</code>, but it allows us to specify multiple “pieces” of a string to match with <em>capture groups</em>. A capture group is a pattern within parentheses; for instance, imagine we were trying to parse phone numbers, all with different formatting. We could use three capture groups for the three pieces of the phone number:</p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="data-working-with-strings.html#cb598-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb598-2"><a href="data-working-with-strings.html#cb598-2" tabindex="-1"></a>phone_numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb598-3"><a href="data-working-with-strings.html#cb598-3" tabindex="-1"></a>  <span class="st">&quot;(814) 555 1234&quot;</span>,</span>
-<span id="cb598-4"><a href="data-working-with-strings.html#cb598-4" tabindex="-1"></a>  <span class="st">&quot;650-555-1234&quot;</span>,</span>
-<span id="cb598-5"><a href="data-working-with-strings.html#cb598-5" tabindex="-1"></a>  <span class="st">&quot;8005551234&quot;</span></span>
-<span id="cb598-6"><a href="data-working-with-strings.html#cb598-6" tabindex="-1"></a>)</span>
-<span id="cb598-7"><a href="data-working-with-strings.html#cb598-7" tabindex="-1"></a></span>
-<span id="cb598-8"><a href="data-working-with-strings.html#cb598-8" tabindex="-1"></a><span class="fu">str_match</span>(</span>
-<span id="cb598-9"><a href="data-working-with-strings.html#cb598-9" tabindex="-1"></a>  phone_numbers,</span>
-<span id="cb598-10"><a href="data-working-with-strings.html#cb598-10" tabindex="-1"></a>  <span class="st">&quot;(</span><span class="sc">\\</span><span class="st">d{3}).*(</span><span class="sc">\\</span><span class="st">d{3}).*(</span><span class="sc">\\</span><span class="st">d{4})&quot;</span></span>
-<span id="cb598-11"><a href="data-working-with-strings.html#cb598-11" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="data-working-with-strings.html#cb603-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb603-2"><a href="data-working-with-strings.html#cb603-2" tabindex="-1"></a>phone_numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb603-3"><a href="data-working-with-strings.html#cb603-3" tabindex="-1"></a>  <span class="st">&quot;(814) 555 1234&quot;</span>,</span>
+<span id="cb603-4"><a href="data-working-with-strings.html#cb603-4" tabindex="-1"></a>  <span class="st">&quot;650-555-1234&quot;</span>,</span>
+<span id="cb603-5"><a href="data-working-with-strings.html#cb603-5" tabindex="-1"></a>  <span class="st">&quot;8005551234&quot;</span></span>
+<span id="cb603-6"><a href="data-working-with-strings.html#cb603-6" tabindex="-1"></a>)</span>
+<span id="cb603-7"><a href="data-working-with-strings.html#cb603-7" tabindex="-1"></a></span>
+<span id="cb603-8"><a href="data-working-with-strings.html#cb603-8" tabindex="-1"></a><span class="fu">str_match</span>(</span>
+<span id="cb603-9"><a href="data-working-with-strings.html#cb603-9" tabindex="-1"></a>  phone_numbers,</span>
+<span id="cb603-10"><a href="data-working-with-strings.html#cb603-10" tabindex="-1"></a>  <span class="st">&quot;(</span><span class="sc">\\</span><span class="st">d{3}).*(</span><span class="sc">\\</span><span class="st">d{3}).*(</span><span class="sc">\\</span><span class="st">d{4})&quot;</span></span>
+<span id="cb603-11"><a href="data-working-with-strings.html#cb603-11" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##      [,1]            [,2]  [,3]  [,4]  
 ## [1,] &quot;814) 555 1234&quot; &quot;814&quot; &quot;555&quot; &quot;1234&quot;
 ## [2,] &quot;650-555-1234&quot;  &quot;650&quot; &quot;555&quot; &quot;1234&quot;
@@ -1328,34 +1328,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q4-modify-the-pattern-below-to-extract-the-x-y-pairs-separately." class="section level3 hasAnchor" number="32.1.7">
 <h3><span class="header-section-number">32.1.7</span> <strong>q4</strong> Modify the pattern below to extract the x, y pairs separately.<a href="data-working-with-strings.html#q4-modify-the-pattern-below-to-extract-the-x-y-pairs-separately." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="data-working-with-strings.html#cb600-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
-<span id="cb600-2"><a href="data-working-with-strings.html#cb600-2" tabindex="-1"></a>points <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb600-3"><a href="data-working-with-strings.html#cb600-3" tabindex="-1"></a>  <span class="st">&quot;x=1, y=2&quot;</span>,</span>
-<span id="cb600-4"><a href="data-working-with-strings.html#cb600-4" tabindex="-1"></a>  <span class="st">&quot;x=3, y=2&quot;</span>,</span>
-<span id="cb600-5"><a href="data-working-with-strings.html#cb600-5" tabindex="-1"></a>  <span class="st">&quot;x=10, y=4&quot;</span></span>
-<span id="cb600-6"><a href="data-working-with-strings.html#cb600-6" tabindex="-1"></a>)</span>
-<span id="cb600-7"><a href="data-working-with-strings.html#cb600-7" tabindex="-1"></a></span>
-<span id="cb600-8"><a href="data-working-with-strings.html#cb600-8" tabindex="-1"></a>q4 <span class="ot">&lt;-</span></span>
-<span id="cb600-9"><a href="data-working-with-strings.html#cb600-9" tabindex="-1"></a>  <span class="fu">str_match</span>(</span>
-<span id="cb600-10"><a href="data-working-with-strings.html#cb600-10" tabindex="-1"></a>    points,</span>
-<span id="cb600-11"><a href="data-working-with-strings.html#cb600-11" tabindex="-1"></a>    <span class="at">pattern =</span> <span class="st">&quot;x=(</span><span class="sc">\\</span><span class="st">d+), y=(</span><span class="sc">\\</span><span class="st">d+)&quot;</span></span>
-<span id="cb600-12"><a href="data-working-with-strings.html#cb600-12" tabindex="-1"></a>  )</span>
-<span id="cb600-13"><a href="data-working-with-strings.html#cb600-13" tabindex="-1"></a></span>
-<span id="cb600-14"><a href="data-working-with-strings.html#cb600-14" tabindex="-1"></a>q4</span></code></pre></div>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="data-working-with-strings.html#cb605-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
+<span id="cb605-2"><a href="data-working-with-strings.html#cb605-2" tabindex="-1"></a>points <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb605-3"><a href="data-working-with-strings.html#cb605-3" tabindex="-1"></a>  <span class="st">&quot;x=1, y=2&quot;</span>,</span>
+<span id="cb605-4"><a href="data-working-with-strings.html#cb605-4" tabindex="-1"></a>  <span class="st">&quot;x=3, y=2&quot;</span>,</span>
+<span id="cb605-5"><a href="data-working-with-strings.html#cb605-5" tabindex="-1"></a>  <span class="st">&quot;x=10, y=4&quot;</span></span>
+<span id="cb605-6"><a href="data-working-with-strings.html#cb605-6" tabindex="-1"></a>)</span>
+<span id="cb605-7"><a href="data-working-with-strings.html#cb605-7" tabindex="-1"></a></span>
+<span id="cb605-8"><a href="data-working-with-strings.html#cb605-8" tabindex="-1"></a>q4 <span class="ot">&lt;-</span></span>
+<span id="cb605-9"><a href="data-working-with-strings.html#cb605-9" tabindex="-1"></a>  <span class="fu">str_match</span>(</span>
+<span id="cb605-10"><a href="data-working-with-strings.html#cb605-10" tabindex="-1"></a>    points,</span>
+<span id="cb605-11"><a href="data-working-with-strings.html#cb605-11" tabindex="-1"></a>    <span class="at">pattern =</span> <span class="st">&quot;x=(</span><span class="sc">\\</span><span class="st">d+), y=(</span><span class="sc">\\</span><span class="st">d+)&quot;</span></span>
+<span id="cb605-12"><a href="data-working-with-strings.html#cb605-12" tabindex="-1"></a>  )</span>
+<span id="cb605-13"><a href="data-working-with-strings.html#cb605-13" tabindex="-1"></a></span>
+<span id="cb605-14"><a href="data-working-with-strings.html#cb605-14" tabindex="-1"></a>q4</span></code></pre></div>
 <pre><code>##      [,1]        [,2] [,3]
 ## [1,] &quot;x=1, y=2&quot;  &quot;1&quot;  &quot;2&quot; 
 ## [2,] &quot;x=3, y=2&quot;  &quot;3&quot;  &quot;2&quot; 
 ## [3,] &quot;x=10, y=4&quot; &quot;10&quot; &quot;4&quot;</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="data-working-with-strings.html#cb602-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb602-2"><a href="data-working-with-strings.html#cb602-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb602-3"><a href="data-working-with-strings.html#cb602-3" tabindex="-1"></a>              <span class="fu">all</span>(</span>
-<span id="cb602-4"><a href="data-working-with-strings.html#cb602-4" tabindex="-1"></a>                q4[, <span class="sc">-</span><span class="dv">1</span>] <span class="sc">==</span></span>
-<span id="cb602-5"><a href="data-working-with-strings.html#cb602-5" tabindex="-1"></a>                <span class="fu">t</span>(<span class="fu">matrix</span>(<span class="fu">as.character</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">4</span>)), <span class="at">nrow =</span> <span class="dv">2</span>))</span>
-<span id="cb602-6"><a href="data-working-with-strings.html#cb602-6" tabindex="-1"></a>              )</span>
-<span id="cb602-7"><a href="data-working-with-strings.html#cb602-7" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="data-working-with-strings.html#cb607-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb607-2"><a href="data-working-with-strings.html#cb607-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb607-3"><a href="data-working-with-strings.html#cb607-3" tabindex="-1"></a>              <span class="fu">all</span>(</span>
+<span id="cb607-4"><a href="data-working-with-strings.html#cb607-4" tabindex="-1"></a>                q4[, <span class="sc">-</span><span class="dv">1</span>] <span class="sc">==</span></span>
+<span id="cb607-5"><a href="data-working-with-strings.html#cb607-5" tabindex="-1"></a>                <span class="fu">t</span>(<span class="fu">matrix</span>(<span class="fu">as.character</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">4</span>)), <span class="at">nrow =</span> <span class="dv">2</span>))</span>
+<span id="cb607-6"><a href="data-working-with-strings.html#cb607-6" tabindex="-1"></a>              )</span>
+<span id="cb607-7"><a href="data-working-with-strings.html#cb607-7" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="data-working-with-strings.html#cb604-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="data-working-with-strings.html#cb609-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Excellent!&quot;</code></pre>
 </div>
 </div>
@@ -1363,24 +1363,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">32.2</span> Removal<a href="data-working-with-strings.html#removal" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>One last <code>stringr</code> function that’s helpful to know: <code>str_remove()</code> will simply remove the <em>first</em> matched pattern in a string. This is particularly helpful for dealing with prefixes and suffixes.</p>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="data-working-with-strings.html#cb606-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb606-2"><a href="data-working-with-strings.html#cb606-2" tabindex="-1"></a>string_quantiles <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb606-3"><a href="data-working-with-strings.html#cb606-3" tabindex="-1"></a>  <span class="st">&quot;q0.01&quot;</span>,</span>
-<span id="cb606-4"><a href="data-working-with-strings.html#cb606-4" tabindex="-1"></a>  <span class="st">&quot;q0.5&quot;</span>,</span>
-<span id="cb606-5"><a href="data-working-with-strings.html#cb606-5" tabindex="-1"></a>  <span class="st">&quot;q0.999&quot;</span></span>
-<span id="cb606-6"><a href="data-working-with-strings.html#cb606-6" tabindex="-1"></a>)</span>
-<span id="cb606-7"><a href="data-working-with-strings.html#cb606-7" tabindex="-1"></a></span>
-<span id="cb606-8"><a href="data-working-with-strings.html#cb606-8" tabindex="-1"></a>string_quantiles <span class="sc">%&gt;%</span></span>
-<span id="cb606-9"><a href="data-working-with-strings.html#cb606-9" tabindex="-1"></a>  <span class="fu">str_remove</span>(., <span class="st">&quot;q&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb606-10"><a href="data-working-with-strings.html#cb606-10" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="data-working-with-strings.html#cb611-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb611-2"><a href="data-working-with-strings.html#cb611-2" tabindex="-1"></a>string_quantiles <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb611-3"><a href="data-working-with-strings.html#cb611-3" tabindex="-1"></a>  <span class="st">&quot;q0.01&quot;</span>,</span>
+<span id="cb611-4"><a href="data-working-with-strings.html#cb611-4" tabindex="-1"></a>  <span class="st">&quot;q0.5&quot;</span>,</span>
+<span id="cb611-5"><a href="data-working-with-strings.html#cb611-5" tabindex="-1"></a>  <span class="st">&quot;q0.999&quot;</span></span>
+<span id="cb611-6"><a href="data-working-with-strings.html#cb611-6" tabindex="-1"></a>)</span>
+<span id="cb611-7"><a href="data-working-with-strings.html#cb611-7" tabindex="-1"></a></span>
+<span id="cb611-8"><a href="data-working-with-strings.html#cb611-8" tabindex="-1"></a>string_quantiles <span class="sc">%&gt;%</span></span>
+<span id="cb611-9"><a href="data-working-with-strings.html#cb611-9" tabindex="-1"></a>  <span class="fu">str_remove</span>(., <span class="st">&quot;q&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb611-10"><a href="data-working-with-strings.html#cb611-10" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span></code></pre></div>
 <pre><code>## [1] 0.010 0.500 0.999</code></pre>
 <div id="q5-use-str_remove-to-get-mutate-trans-to-remove-the-parentheses-and-all-characters-between." class="section level3 hasAnchor" number="32.2.1">
 <h3><span class="header-section-number">32.2.1</span> <strong>q5</strong> Use <code>str_remove()</code> to get mutate <code>trans</code> to remove the parentheses and all characters between.<a href="data-working-with-strings.html#q5-use-str_remove-to-get-mutate-trans-to-remove-the-parentheses-and-all-characters-between." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: Note that parentheses are <em>special characters</em>, so you’ll need to <em>escape</em> them as you did above.</p>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="data-working-with-strings.html#cb608-1" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
-<span id="cb608-2"><a href="data-working-with-strings.html#cb608-2" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
-<span id="cb608-3"><a href="data-working-with-strings.html#cb608-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">trans =</span> <span class="fu">str_remove</span>(trans, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(.*</span><span class="sc">\\</span><span class="st">)&quot;</span>))</span>
-<span id="cb608-4"><a href="data-working-with-strings.html#cb608-4" tabindex="-1"></a>df_q5</span></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="data-working-with-strings.html#cb613-1" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
+<span id="cb613-2"><a href="data-working-with-strings.html#cb613-2" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>
+<span id="cb613-3"><a href="data-working-with-strings.html#cb613-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">trans =</span> <span class="fu">str_remove</span>(trans, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(.*</span><span class="sc">\\</span><span class="st">)&quot;</span>))</span>
+<span id="cb613-4"><a href="data-working-with-strings.html#cb613-4" tabindex="-1"></a>df_q5</span></code></pre></div>
 <pre><code>## # A tibble: 234 × 11
 ##    manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class
 ##    &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
@@ -1396,17 +1396,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…
 ## # ℹ 224 more rows</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="data-working-with-strings.html#cb610-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb610-2"><a href="data-working-with-strings.html#cb610-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb610-3"><a href="data-working-with-strings.html#cb610-3" tabindex="-1"></a>              <span class="fu">all</span>(</span>
-<span id="cb610-4"><a href="data-working-with-strings.html#cb610-4" tabindex="-1"></a>                df_q5 <span class="sc">%&gt;%</span></span>
-<span id="cb610-5"><a href="data-working-with-strings.html#cb610-5" tabindex="-1"></a>                <span class="fu">pull</span>(trans) <span class="sc">%&gt;%</span></span>
-<span id="cb610-6"><a href="data-working-with-strings.html#cb610-6" tabindex="-1"></a>                <span class="fu">str_detect</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(.*</span><span class="sc">\\</span><span class="st">)&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb610-7"><a href="data-working-with-strings.html#cb610-7" tabindex="-1"></a>                <span class="sc">!</span>.</span>
-<span id="cb610-8"><a href="data-working-with-strings.html#cb610-8" tabindex="-1"></a>              )</span>
-<span id="cb610-9"><a href="data-working-with-strings.html#cb610-9" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="data-working-with-strings.html#cb615-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb615-2"><a href="data-working-with-strings.html#cb615-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb615-3"><a href="data-working-with-strings.html#cb615-3" tabindex="-1"></a>              <span class="fu">all</span>(</span>
+<span id="cb615-4"><a href="data-working-with-strings.html#cb615-4" tabindex="-1"></a>                df_q5 <span class="sc">%&gt;%</span></span>
+<span id="cb615-5"><a href="data-working-with-strings.html#cb615-5" tabindex="-1"></a>                <span class="fu">pull</span>(trans) <span class="sc">%&gt;%</span></span>
+<span id="cb615-6"><a href="data-working-with-strings.html#cb615-6" tabindex="-1"></a>                <span class="fu">str_detect</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(.*</span><span class="sc">\\</span><span class="st">)&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb615-7"><a href="data-working-with-strings.html#cb615-7" tabindex="-1"></a>                <span class="sc">!</span>.</span>
+<span id="cb615-8"><a href="data-working-with-strings.html#cb615-8" tabindex="-1"></a>              )</span>
+<span id="cb615-9"><a href="data-working-with-strings.html#cb615-9" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="data-working-with-strings.html#cb612-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="data-working-with-strings.html#cb617-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Well done!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Well done!&quot;</code></pre>
 </div>
 </div>
@@ -1415,15 +1415,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- -------------------------------------------------- -->
 <p>Now we’re going to put all these ideas together—special characters, quantifiers, and capture groups—in order to solve a data tidying issue.</p>
 <p>Other functions like <code>pivot_longer</code> and <code>pivot_wider</code> also take regex patterns. We can use these to help solve data tidying problems. Let’s return to the alloy data from <code>e-data03-pivot-basics</code>; the version of the data below do not have the convenient <code>_</code> separators in the column names.</p>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="data-working-with-strings.html#cb614-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb614-2"><a href="data-working-with-strings.html#cb614-2" tabindex="-1"></a>alloys <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb614-3"><a href="data-working-with-strings.html#cb614-3" tabindex="-1"></a>  <span class="sc">~</span>thick,  <span class="sc">~</span>E00,  <span class="sc">~</span>mu00,  <span class="sc">~</span>E45,  <span class="sc">~</span>mu45, <span class="sc">~</span>rep,</span>
-<span id="cb614-4"><a href="data-working-with-strings.html#cb614-4" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.321</span>, <span class="dv">10700</span>,  <span class="fl">0.329</span>,    <span class="dv">1</span>,</span>
-<span id="cb614-5"><a href="data-working-with-strings.html#cb614-5" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.323</span>, <span class="dv">10500</span>,  <span class="fl">0.331</span>,    <span class="dv">2</span>,</span>
-<span id="cb614-6"><a href="data-working-with-strings.html#cb614-6" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10400</span>,  <span class="fl">0.329</span>, <span class="dv">10400</span>,  <span class="fl">0.318</span>,    <span class="dv">1</span>,</span>
-<span id="cb614-7"><a href="data-working-with-strings.html#cb614-7" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10300</span>,  <span class="fl">0.319</span>, <span class="dv">10500</span>,  <span class="fl">0.326</span>,    <span class="dv">2</span></span>
-<span id="cb614-8"><a href="data-working-with-strings.html#cb614-8" tabindex="-1"></a>)</span>
-<span id="cb614-9"><a href="data-working-with-strings.html#cb614-9" tabindex="-1"></a>alloys</span></code></pre></div>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="data-working-with-strings.html#cb619-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb619-2"><a href="data-working-with-strings.html#cb619-2" tabindex="-1"></a>alloys <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb619-3"><a href="data-working-with-strings.html#cb619-3" tabindex="-1"></a>  <span class="sc">~</span>thick,  <span class="sc">~</span>E00,  <span class="sc">~</span>mu00,  <span class="sc">~</span>E45,  <span class="sc">~</span>mu45, <span class="sc">~</span>rep,</span>
+<span id="cb619-4"><a href="data-working-with-strings.html#cb619-4" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.321</span>, <span class="dv">10700</span>,  <span class="fl">0.329</span>,    <span class="dv">1</span>,</span>
+<span id="cb619-5"><a href="data-working-with-strings.html#cb619-5" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.323</span>, <span class="dv">10500</span>,  <span class="fl">0.331</span>,    <span class="dv">2</span>,</span>
+<span id="cb619-6"><a href="data-working-with-strings.html#cb619-6" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10400</span>,  <span class="fl">0.329</span>, <span class="dv">10400</span>,  <span class="fl">0.318</span>,    <span class="dv">1</span>,</span>
+<span id="cb619-7"><a href="data-working-with-strings.html#cb619-7" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10300</span>,  <span class="fl">0.319</span>, <span class="dv">10500</span>,  <span class="fl">0.326</span>,    <span class="dv">2</span></span>
+<span id="cb619-8"><a href="data-working-with-strings.html#cb619-8" tabindex="-1"></a>)</span>
+<span id="cb619-9"><a href="data-working-with-strings.html#cb619-9" tabindex="-1"></a>alloys</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 6
 ##   thick   E00  mu00   E45  mu45   rep
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1434,17 +1434,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As described in the RegexOne tutorial, you can use <em>capture groups</em> in parentheses <code>(...)</code> to define different groups in your regex pattern. These can be used along with the <code>pivot_</code> functions, for instance when you want to break apart column names into multiple groups.</p>
 <div id="q6-use-your-knowledge-of-regular-expressions-along-with-the-names_pattern-argument-to-successfully-tidy-the-alloys-data." class="section level3 hasAnchor" number="32.3.1">
 <h3><span class="header-section-number">32.3.1</span> <strong>q6</strong> Use your knowledge of regular expressions along with the <code>names_pattern</code> argument to successfully tidy the <code>alloys</code> data.<a href="data-working-with-strings.html#q6-use-your-knowledge-of-regular-expressions-along-with-the-names_pattern-argument-to-successfully-tidy-the-alloys-data." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="data-working-with-strings.html#cb616-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Tidy `alloys`</span></span>
-<span id="cb616-2"><a href="data-working-with-strings.html#cb616-2" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
-<span id="cb616-3"><a href="data-working-with-strings.html#cb616-3" tabindex="-1"></a>  alloys <span class="sc">%&gt;%</span></span>
-<span id="cb616-4"><a href="data-working-with-strings.html#cb616-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb616-5"><a href="data-working-with-strings.html#cb616-5" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;property&quot;</span>, <span class="st">&quot;angle&quot;</span>),</span>
-<span id="cb616-6"><a href="data-working-with-strings.html#cb616-6" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;([[:alpha:]]+)(</span><span class="sc">\\</span><span class="st">d+)&quot;</span>,</span>
-<span id="cb616-7"><a href="data-working-with-strings.html#cb616-7" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>,</span>
-<span id="cb616-8"><a href="data-working-with-strings.html#cb616-8" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">d&quot;</span>)</span>
-<span id="cb616-9"><a href="data-working-with-strings.html#cb616-9" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb616-10"><a href="data-working-with-strings.html#cb616-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">angle =</span> <span class="fu">as.integer</span>(angle))</span>
-<span id="cb616-11"><a href="data-working-with-strings.html#cb616-11" tabindex="-1"></a>df_q6</span></code></pre></div>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="data-working-with-strings.html#cb621-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Tidy `alloys`</span></span>
+<span id="cb621-2"><a href="data-working-with-strings.html#cb621-2" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
+<span id="cb621-3"><a href="data-working-with-strings.html#cb621-3" tabindex="-1"></a>  alloys <span class="sc">%&gt;%</span></span>
+<span id="cb621-4"><a href="data-working-with-strings.html#cb621-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb621-5"><a href="data-working-with-strings.html#cb621-5" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;property&quot;</span>, <span class="st">&quot;angle&quot;</span>),</span>
+<span id="cb621-6"><a href="data-working-with-strings.html#cb621-6" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;([[:alpha:]]+)(</span><span class="sc">\\</span><span class="st">d+)&quot;</span>,</span>
+<span id="cb621-7"><a href="data-working-with-strings.html#cb621-7" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>,</span>
+<span id="cb621-8"><a href="data-working-with-strings.html#cb621-8" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">d&quot;</span>)</span>
+<span id="cb621-9"><a href="data-working-with-strings.html#cb621-9" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb621-10"><a href="data-working-with-strings.html#cb621-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">angle =</span> <span class="fu">as.integer</span>(angle))</span>
+<span id="cb621-11"><a href="data-working-with-strings.html#cb621-11" tabindex="-1"></a>df_q6</span></code></pre></div>
 <pre><code>## # A tibble: 16 × 5
 ##    thick   rep property angle     value
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;     &lt;dbl&gt;
@@ -1465,12 +1465,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 15 0.032     2 E           45 10500    
 ## 16 0.032     2 mu          45     0.326</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="data-working-with-strings.html#cb618-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb618-2"><a href="data-working-with-strings.html#cb618-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">dim</span>(df_q6)[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">16</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="data-working-with-strings.html#cb623-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb623-2"><a href="data-working-with-strings.html#cb623-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">dim</span>(df_q6)[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">16</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="data-working-with-strings.html#cb620-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">dim</span>(df_q6)[<span class="dv">2</span>] <span class="sc">==</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="data-working-with-strings.html#cb625-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">dim</span>(df_q6)[<span class="dv">2</span>] <span class="sc">==</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="data-working-with-strings.html#cb622-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Awesome!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="data-working-with-strings.html#cb627-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Awesome!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Awesome!&quot;</code></pre>
 <!-- include-exit-ticket -->
 </div>

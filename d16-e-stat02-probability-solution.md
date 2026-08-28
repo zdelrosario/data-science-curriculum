@@ -17,11 +17,11 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -65,7 +65,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
   scale_fill_discrete(name = "")
 ```
 
-<img src="d16-e-stat02-probability-solution_files/figure-html/set-vis-1.png" width="672" />
+<img src="d16-e-stat02-probability-solution_files/figure-html/set-vis-1.png" alt="" width="672" />
 
 Note that a frequency is defined *not* in terms of a density, but rather in terms of a sample $X$. The following example code draws a sample from a standard normal, and computes the frequency with which values in the sample $X$ lie in the set $A$.
 
@@ -83,7 +83,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      91  0.91
+## 1         100      96  0.96
 ```
 
 Now it's your turn!
@@ -104,7 +104,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      54  0.54
+## 1         100      48  0.48
 ```
 
 **Observations**:
@@ -129,7 +129,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
   scale_fill_discrete(name = "")
 ```
 
-<img src="d16-e-stat02-probability-solution_files/figure-html/q1-vis-1.png" width="672" />
+<img src="d16-e-stat02-probability-solution_files/figure-html/q1-vis-1.png" alt="" width="672" />
 
 Based on this visual, we might expect `fr = 0.5`. This was (likely) not the value that our *frequency* took, but it is the precise value of the *probability* that $Z <= 0.5$.
 
@@ -155,10 +155,10 @@ map_dfr(
 ## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1          10       5 0.5  
-## 2         100      54 0.54 
-## 3        1000     500 0.5  
-## 4       10000    5004 0.500
+## 1          10       2 0.2  
+## 2         100      44 0.44 
+## 3        1000     488 0.488
+## 4       10000    4999 0.500
 ```
 
 This is because *probability* is actually defined[1] in terms of the limit
@@ -189,10 +189,10 @@ map_dfr(
 ## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1          10       9 0.9  
-## 2         100      94 0.94 
-## 3        1000     946 0.946
-## 4       10000    9515 0.952
+## 1          10      10 1    
+## 2         100      97 0.97 
+## 3        1000     959 0.959
+## 4       10000    9552 0.955
 ```
 
 **Observations**:
@@ -269,7 +269,7 @@ tibble(z = seq(-3, +3, length.out = 500)) %>%
   scale_color_discrete(name = "")
 ```
 
-<img src="d16-e-stat02-probability-solution_files/figure-html/q3-vis-1.png" width="672" />
+<img src="d16-e-stat02-probability-solution_files/figure-html/q3-vis-1.png" alt="" width="672" />
 
 Note that this set $A$ has nonzero height but zero width. Zero width corresponds to zero area, and thus zero probability.
 
@@ -294,7 +294,7 @@ tibble(z = seq(-3, +3, length.out = 1000)) %>%
   )
 ```
 
-<img src="d16-e-stat02-probability-solution_files/figure-html/vis-pdf-1.png" width="672" />
+<img src="d16-e-stat02-probability-solution_files/figure-html/vis-pdf-1.png" alt="" width="672" />
 
 There is also a [cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function), which is related to the PDF $\rho(x)$ via
 
@@ -316,7 +316,7 @@ tibble(z = seq(-3, +3, length.out = 1000)) %>%
   )
 ```
 
-<img src="d16-e-stat02-probability-solution_files/figure-html/vis-cdf-1.png" width="672" />
+<img src="d16-e-stat02-probability-solution_files/figure-html/vis-cdf-1.png" alt="" width="672" />
 
 Note that, by definition, the CDF gives the probability over the set $A(x) = {x' | x' <= x}$ (this is just all the values less than the value we're considering $x$). Thus the CDF returns a probability (which explains the `p` prefix for R functions).
 

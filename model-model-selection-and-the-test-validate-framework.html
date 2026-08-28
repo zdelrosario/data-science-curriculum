@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>55 Model: Model Selection and the Test-Validate Framework | Data Science: Exercise Solutions</title>
   <meta name="description" content="55 Model: Model Selection and the Test-Validate Framework | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="55 Model: Model Selection and the Test-Validate Framework | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,19 +1085,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">55</span> Model: Model Selection and the Test-Validate Framework<a href="model-model-selection-and-the-test-validate-framework.html#model-model-selection-and-the-test-validate-framework" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: When designing a model, we need to make choices about the model form. However, since we are <em>optimizing</em> the model to fit our data, we need to be careful not to bias our assessments and make poor modeling choices. We can use a <em>training</em> and <em>validation</em> split of our data to help make these choices. To understand these issues, we’ll discuss underfitting, overfitting, and the test-validate framework.</p>
 <p><em>Reading</em>: <a href="https://en.wikipedia.org/wiki/Training,_validation,_and_test_sets">Training, validation, and test sets</a> (Optional)</p>
-<div class="sourceCode" id="cb1169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1169-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1169-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb1174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1174-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb1171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1171-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1171-1" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
-<span id="cb1171-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1171-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<div class="sourceCode" id="cb1176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1176-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1176-1" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb1176-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1176-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;broom&#39;
 ## 
@@ -1109,36 +1109,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">55.1</span> Illustrative Case: Polynomial Regression<a href="model-model-selection-and-the-test-validate-framework.html#illustrative-case-polynomial-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>To illustrate the ideas behind the test-validate framework, let’s study a very simple problem: Fitting a polynomial. The following code sets up this example.</p>
-<div class="sourceCode" id="cb1173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1173-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
-<span id="cb1173-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1173-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-3" tabindex="-1"></a></span>
-<span id="cb1173-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-4" tabindex="-1"></a><span class="co"># Ground-truth function we seek to approximate</span></span>
-<span id="cb1173-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-5" tabindex="-1"></a>fcn_true <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="dv">12</span> <span class="sc">*</span> (x <span class="sc">-</span> <span class="fl">0.5</span>)<span class="sc">^</span><span class="dv">3</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">1</span>}</span>
-<span id="cb1173-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-6" tabindex="-1"></a></span>
-<span id="cb1173-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-7" tabindex="-1"></a><span class="co"># Generate data</span></span>
-<span id="cb1173-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-8" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb1173-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-9" tabindex="-1"></a>df_truth <span class="ot">&lt;-</span></span>
-<span id="cb1173-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-10" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> n_samples)) <span class="sc">%&gt;%</span></span>
-<span id="cb1173-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-11" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1173-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-12" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">fcn_true</span>(x),                     <span class="co"># True values</span></span>
-<span id="cb1173-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-13" tabindex="-1"></a>    <span class="at">y_meas =</span> y <span class="sc">+</span> <span class="fl">0.05</span> <span class="sc">*</span> <span class="fu">rnorm</span>(n_samples) <span class="co"># Measured with noise</span></span>
-<span id="cb1173-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-14" tabindex="-1"></a>  )</span>
-<span id="cb1173-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-15" tabindex="-1"></a></span>
-<span id="cb1173-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-16" tabindex="-1"></a><span class="co"># Select training data</span></span>
-<span id="cb1173-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-17" tabindex="-1"></a>df_measurements <span class="ot">&lt;-</span></span>
-<span id="cb1173-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-18" tabindex="-1"></a>  df_truth <span class="sc">%&gt;%</span></span>
-<span id="cb1173-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-19" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1173-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-20" tabindex="-1"></a>  <span class="fu">select</span>(x, y_meas)</span>
-<span id="cb1173-21"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-21" tabindex="-1"></a></span>
-<span id="cb1173-22"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-22" tabindex="-1"></a><span class="co"># Visualize</span></span>
-<span id="cb1173-23"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-23" tabindex="-1"></a>df_truth <span class="sc">%&gt;%</span></span>
-<span id="cb1173-24"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-24" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb1173-25"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-25" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb1173-26"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-26" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb1173-27"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-27" tabindex="-1"></a>    <span class="at">data =</span> df_measurements,</span>
-<span id="cb1173-28"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-28" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> y_meas, <span class="at">color =</span> <span class="st">&quot;Measurements&quot;</span>)</span>
-<span id="cb1173-29"><a href="model-model-selection-and-the-test-validate-framework.html#cb1173-29" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d48-e-model02-train-validate-solution_files/figure-html/polynomial-setup-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1178-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
+<span id="cb1178-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1178-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-3" tabindex="-1"></a></span>
+<span id="cb1178-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-4" tabindex="-1"></a><span class="co"># Ground-truth function we seek to approximate</span></span>
+<span id="cb1178-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-5" tabindex="-1"></a>fcn_true <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="dv">12</span> <span class="sc">*</span> (x <span class="sc">-</span> <span class="fl">0.5</span>)<span class="sc">^</span><span class="dv">3</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">1</span>}</span>
+<span id="cb1178-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-6" tabindex="-1"></a></span>
+<span id="cb1178-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-7" tabindex="-1"></a><span class="co"># Generate data</span></span>
+<span id="cb1178-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-8" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1178-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-9" tabindex="-1"></a>df_truth <span class="ot">&lt;-</span></span>
+<span id="cb1178-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-10" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> n_samples)) <span class="sc">%&gt;%</span></span>
+<span id="cb1178-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-11" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1178-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-12" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">fcn_true</span>(x),                     <span class="co"># True values</span></span>
+<span id="cb1178-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-13" tabindex="-1"></a>    <span class="at">y_meas =</span> y <span class="sc">+</span> <span class="fl">0.05</span> <span class="sc">*</span> <span class="fu">rnorm</span>(n_samples) <span class="co"># Measured with noise</span></span>
+<span id="cb1178-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-14" tabindex="-1"></a>  )</span>
+<span id="cb1178-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-15" tabindex="-1"></a></span>
+<span id="cb1178-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-16" tabindex="-1"></a><span class="co"># Select training data</span></span>
+<span id="cb1178-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-17" tabindex="-1"></a>df_measurements <span class="ot">&lt;-</span></span>
+<span id="cb1178-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-18" tabindex="-1"></a>  df_truth <span class="sc">%&gt;%</span></span>
+<span id="cb1178-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-19" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1178-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-20" tabindex="-1"></a>  <span class="fu">select</span>(x, y_meas)</span>
+<span id="cb1178-21"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-21" tabindex="-1"></a></span>
+<span id="cb1178-22"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-22" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb1178-23"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-23" tabindex="-1"></a>df_truth <span class="sc">%&gt;%</span></span>
+<span id="cb1178-24"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-24" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb1178-25"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-25" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb1178-26"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-26" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb1178-27"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-27" tabindex="-1"></a>    <span class="at">data =</span> df_measurements,</span>
+<span id="cb1178-28"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-28" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> y_meas, <span class="at">color =</span> <span class="st">&quot;Measurements&quot;</span>)</span>
+<span id="cb1178-29"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-29" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d48-e-model02-train-validate-solution_files/figure-html/polynomial-setup-1.png" alt="" width="672" /></p>
 <p>In what follows, we will behave as though we only have access to <code>df_measurements</code>—this is to model a “real” case where we have limited data. We will attempt to fit a polynomial to the data; remember that a polynomial of degree <span class="math inline">\(d\)</span> is a function of the form</p>
 <p><span class="math display">\[f_{\text{polynomial}}(x) = \sum_{i=0}^d \beta_i x^i,\]</span></p>
 <p>where the <span class="math inline">\(\beta_i\)</span> are coefficients, and <span class="math inline">\(x^0 = 1\)</span> is a constant.</p>
@@ -1148,27 +1148,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The following code fits a polynomial of degree 2 to the available data <code>df_measurements</code>.</p>
 <div id="q1-run-the-following-code-and-inspect-the-visual-results.-describe-whether-the-model-predicted-captures-the-trends-in-the-measured-data-black-dots." class="section level3 hasAnchor" number="55.2.1">
 <h3><span class="header-section-number">55.2.1</span> <strong>q1</strong> Run the following code and inspect the (visual) results. Describe whether the model (<code>Predicted</code>) captures the “trends” in the measured data (black dots).<a href="model-model-selection-and-the-test-validate-framework.html#q1-run-the-following-code-and-inspect-the-visual-results.-describe-whether-the-model-predicted-captures-the-trends-in-the-measured-data-black-dots." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1174-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this code; run and inspect</span></span>
-<span id="cb1174-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-2" tabindex="-1"></a><span class="co"># Fit a polynomial of degree = 2</span></span>
-<span id="cb1174-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-3" tabindex="-1"></a>fit_d2 <span class="ot">&lt;-</span></span>
-<span id="cb1174-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-4" tabindex="-1"></a>  df_measurements <span class="sc">%&gt;%</span></span>
-<span id="cb1174-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-5" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
-<span id="cb1174-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-6" tabindex="-1"></a>    <span class="at">data =</span> .,</span>
-<span id="cb1174-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-7" tabindex="-1"></a>    <span class="at">formula =</span> y_meas <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="at">degree =</span> <span class="dv">2</span>)</span>
-<span id="cb1174-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-8" tabindex="-1"></a>  )</span>
-<span id="cb1174-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-9" tabindex="-1"></a></span>
-<span id="cb1174-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-10" tabindex="-1"></a><span class="co"># Visualize the results</span></span>
-<span id="cb1174-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-11" tabindex="-1"></a>df_truth <span class="sc">%&gt;%</span></span>
-<span id="cb1174-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-12" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_d2, <span class="at">var =</span> <span class="st">&quot;y_pred&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1174-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-13" tabindex="-1"></a></span>
-<span id="cb1174-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-14" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
-<span id="cb1174-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-15" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y, <span class="at">color =</span> <span class="st">&quot;True&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb1174-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-16" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y_pred, <span class="at">color =</span> <span class="st">&quot;Predicted&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb1174-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-17" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df_measurements, <span class="fu">aes</span>(<span class="at">y =</span> y_meas)) <span class="sc">+</span></span>
-<span id="cb1174-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-18" tabindex="-1"></a></span>
-<span id="cb1174-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-19" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1174-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1174-20" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="d48-e-model02-train-validate-solution_files/figure-html/q1-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1179-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this code; run and inspect</span></span>
+<span id="cb1179-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-2" tabindex="-1"></a><span class="co"># Fit a polynomial of degree = 2</span></span>
+<span id="cb1179-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-3" tabindex="-1"></a>fit_d2 <span class="ot">&lt;-</span></span>
+<span id="cb1179-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-4" tabindex="-1"></a>  df_measurements <span class="sc">%&gt;%</span></span>
+<span id="cb1179-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-5" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
+<span id="cb1179-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-6" tabindex="-1"></a>    <span class="at">data =</span> .,</span>
+<span id="cb1179-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-7" tabindex="-1"></a>    <span class="at">formula =</span> y_meas <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="at">degree =</span> <span class="dv">2</span>)</span>
+<span id="cb1179-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-8" tabindex="-1"></a>  )</span>
+<span id="cb1179-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-9" tabindex="-1"></a></span>
+<span id="cb1179-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-10" tabindex="-1"></a><span class="co"># Visualize the results</span></span>
+<span id="cb1179-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-11" tabindex="-1"></a>df_truth <span class="sc">%&gt;%</span></span>
+<span id="cb1179-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-12" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_d2, <span class="at">var =</span> <span class="st">&quot;y_pred&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1179-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-13" tabindex="-1"></a></span>
+<span id="cb1179-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-14" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb1179-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-15" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y, <span class="at">color =</span> <span class="st">&quot;True&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb1179-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-16" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y_pred, <span class="at">color =</span> <span class="st">&quot;Predicted&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb1179-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-17" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df_measurements, <span class="fu">aes</span>(<span class="at">y =</span> y_meas)) <span class="sc">+</span></span>
+<span id="cb1179-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-18" tabindex="-1"></a></span>
+<span id="cb1179-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-19" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1179-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1179-20" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="d48-e-model02-train-validate-solution_files/figure-html/q1-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>The <code>Predicted</code> values do not capture the trend in the measured points, nor in the <code>True</code> function.</li>
@@ -1181,30 +1181,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s increase the polynomial order and re-fit the data to try to solve the underfitting problem.</p>
 <div id="q2-copy-the-code-from-above-to-fit-a-degree-17-polynomial-to-the-measurements." class="section level3 hasAnchor" number="55.3.1">
 <h3><span class="header-section-number">55.3.1</span> <strong>q2</strong> Copy the code from above to fit a <code>degree = 17</code> polynomial to the measurements.<a href="model-model-selection-and-the-test-validate-framework.html#q2-copy-the-code-from-above-to-fit-a-degree-17-polynomial-to-the-measurements." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1175-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Fit a high-degree polynomial to df_measurements</span></span>
-<span id="cb1175-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-2" tabindex="-1"></a>fit_over <span class="ot">&lt;-</span></span>
-<span id="cb1175-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-3" tabindex="-1"></a>  df_measurements <span class="sc">%&gt;%</span></span>
-<span id="cb1175-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-4" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">data =</span> ., <span class="at">formula =</span> y_meas <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="at">degree =</span> <span class="dv">17</span>))</span>
-<span id="cb1175-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-5" tabindex="-1"></a></span>
-<span id="cb1175-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-6" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify code below</span></span>
-<span id="cb1175-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-7" tabindex="-1"></a>y_limits <span class="ot">&lt;-</span></span>
-<span id="cb1175-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-8" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb1175-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-9" tabindex="-1"></a>    df_truth <span class="sc">%&gt;%</span> <span class="fu">pull</span>(y) <span class="sc">%&gt;%</span> <span class="fu">min</span>(),</span>
-<span id="cb1175-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-10" tabindex="-1"></a>    df_truth <span class="sc">%&gt;%</span> <span class="fu">pull</span>(y) <span class="sc">%&gt;%</span> <span class="fu">max</span>()</span>
-<span id="cb1175-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-11" tabindex="-1"></a>  )</span>
-<span id="cb1175-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-12" tabindex="-1"></a></span>
-<span id="cb1175-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-13" tabindex="-1"></a>df_truth <span class="sc">%&gt;%</span></span>
-<span id="cb1175-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-14" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_over, <span class="at">var =</span> <span class="st">&quot;y_pred&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1175-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-15" tabindex="-1"></a></span>
-<span id="cb1175-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-16" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
-<span id="cb1175-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-17" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y, <span class="at">color =</span> <span class="st">&quot;True&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb1175-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-18" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y_pred, <span class="at">color =</span> <span class="st">&quot;Predicted&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb1175-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-19" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df_measurements, <span class="fu">aes</span>(<span class="at">y =</span> y_meas)) <span class="sc">+</span></span>
-<span id="cb1175-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-20" tabindex="-1"></a></span>
-<span id="cb1175-21"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-21" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1175-22"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-22" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> y_limits) <span class="sc">+</span></span>
-<span id="cb1175-23"><a href="model-model-selection-and-the-test-validate-framework.html#cb1175-23" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="d48-e-model02-train-validate-solution_files/figure-html/q2-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1180-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Fit a high-degree polynomial to df_measurements</span></span>
+<span id="cb1180-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-2" tabindex="-1"></a>fit_over <span class="ot">&lt;-</span></span>
+<span id="cb1180-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-3" tabindex="-1"></a>  df_measurements <span class="sc">%&gt;%</span></span>
+<span id="cb1180-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-4" tabindex="-1"></a>  <span class="fu">lm</span>(<span class="at">data =</span> ., <span class="at">formula =</span> y_meas <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="at">degree =</span> <span class="dv">17</span>))</span>
+<span id="cb1180-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-5" tabindex="-1"></a></span>
+<span id="cb1180-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-6" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify code below</span></span>
+<span id="cb1180-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-7" tabindex="-1"></a>y_limits <span class="ot">&lt;-</span></span>
+<span id="cb1180-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-8" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb1180-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-9" tabindex="-1"></a>    df_truth <span class="sc">%&gt;%</span> <span class="fu">pull</span>(y) <span class="sc">%&gt;%</span> <span class="fu">min</span>(),</span>
+<span id="cb1180-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-10" tabindex="-1"></a>    df_truth <span class="sc">%&gt;%</span> <span class="fu">pull</span>(y) <span class="sc">%&gt;%</span> <span class="fu">max</span>()</span>
+<span id="cb1180-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-11" tabindex="-1"></a>  )</span>
+<span id="cb1180-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-12" tabindex="-1"></a></span>
+<span id="cb1180-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-13" tabindex="-1"></a>df_truth <span class="sc">%&gt;%</span></span>
+<span id="cb1180-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-14" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit_over, <span class="at">var =</span> <span class="st">&quot;y_pred&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1180-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-15" tabindex="-1"></a></span>
+<span id="cb1180-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-16" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb1180-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-17" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y, <span class="at">color =</span> <span class="st">&quot;True&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb1180-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-18" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y_pred, <span class="at">color =</span> <span class="st">&quot;Predicted&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb1180-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-19" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df_measurements, <span class="fu">aes</span>(<span class="at">y =</span> y_meas)) <span class="sc">+</span></span>
+<span id="cb1180-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-20" tabindex="-1"></a></span>
+<span id="cb1180-21"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-21" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1180-22"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-22" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> y_limits) <span class="sc">+</span></span>
+<span id="cb1180-23"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-23" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="d48-e-model02-train-validate-solution_files/figure-html/q2-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>The predictions are <em>perfect</em> at the measured points.</li>
@@ -1222,10 +1222,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q3-compute-the-mse-for-the-2nd-and-high-degree-polynomial-models-on-df_measurements.-which-model-has-the-lower-error-which-hyperparameter-value-polynomial-degree-would-you-choose-based-solely-on-these-numbers" class="section level3 hasAnchor" number="55.3.2">
 <h3><span class="header-section-number">55.3.2</span> <strong>q3</strong> Compute the <code>mse</code> for the 2nd and high-degree polynomial models on <code>df_measurements</code>. Which model has the lower error? Which hyperparameter value (polynomial degree) would you choose, based <em>solely</em> on these numbers?<a href="model-model-selection-and-the-test-validate-framework.html#q3-compute-the-mse-for-the-2nd-and-high-degree-polynomial-models-on-df_measurements.-which-model-has-the-lower-error-which-hyperparameter-value-polynomial-degree-would-you-choose-based-solely-on-these-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: We learned how to do this in <code>e-stat11-models-intro</code>.</p>
-<div class="sourceCode" id="cb1176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1176-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1176-1" tabindex="-1"></a><span class="co"># </span><span class="al">TASK</span><span class="co">: Compute the mse for fit_d2 and fit_over on df_measurements</span></span>
-<span id="cb1176-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1176-2" tabindex="-1"></a><span class="fu">mse</span>(fit_d2, df_measurements)</span></code></pre></div>
+<div class="sourceCode" id="cb1181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1181-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-1" tabindex="-1"></a><span class="co"># </span><span class="al">TASK</span><span class="co">: Compute the mse for fit_d2 and fit_over on df_measurements</span></span>
+<span id="cb1181-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-2" tabindex="-1"></a><span class="fu">mse</span>(fit_d2, df_measurements)</span></code></pre></div>
 <pre><code>## [1] 0.03025928</code></pre>
-<div class="sourceCode" id="cb1178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1178-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1178-1" tabindex="-1"></a><span class="fu">mse</span>(fit_over, df_measurements)</span></code></pre></div>
+<div class="sourceCode" id="cb1183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1183-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1183-1" tabindex="-1"></a><span class="fu">mse</span>(fit_over, df_measurements)</span></code></pre></div>
 <pre><code>## [1] 0.001280951</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1238,37 +1238,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="a-solution-validation-data" class="section level2 hasAnchor" number="55.4">
 <h2><span class="header-section-number">55.4</span> A Solution: Validation Data<a href="model-model-selection-and-the-test-validate-framework.html#a-solution-validation-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A solution to the problem above is to reserve a set of <em>validation data</em> to tune the hyperparameters of our model. Note that this requires us to <em>split</em> our data into different sets: training data and validation data. The following code makes that split on <code>df_measurements</code>.</p>
-<div class="sourceCode" id="cb1180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1180-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
-<span id="cb1180-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1180-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-3" tabindex="-1"></a></span>
-<span id="cb1180-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-4" tabindex="-1"></a><span class="co"># Select &quot;training&quot; data from our available measurements</span></span>
-<span id="cb1180-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-5" tabindex="-1"></a>df_train <span class="ot">&lt;-</span></span>
-<span id="cb1180-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-6" tabindex="-1"></a>  df_measurements <span class="sc">%&gt;%</span></span>
-<span id="cb1180-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-7" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb1180-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-8" tabindex="-1"></a></span>
-<span id="cb1180-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-9" tabindex="-1"></a><span class="co"># Use the remaining data as &quot;validation&quot; data</span></span>
-<span id="cb1180-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-10" tabindex="-1"></a>df_validate <span class="ot">&lt;-</span></span>
-<span id="cb1180-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-11" tabindex="-1"></a>  <span class="fu">anti_join</span>(</span>
-<span id="cb1180-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-12" tabindex="-1"></a>    df_measurements,</span>
-<span id="cb1180-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-13" tabindex="-1"></a>    df_train,</span>
-<span id="cb1180-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-14" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;x&quot;</span></span>
-<span id="cb1180-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-15" tabindex="-1"></a>  )</span>
-<span id="cb1180-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-16" tabindex="-1"></a></span>
-<span id="cb1180-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-17" tabindex="-1"></a><span class="co"># Visualize the split</span></span>
-<span id="cb1180-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-18" tabindex="-1"></a>df_truth <span class="sc">%&gt;%</span></span>
-<span id="cb1180-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-19" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb1180-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-20" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb1180-21"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-21" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb1180-22"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-22" tabindex="-1"></a>    <span class="at">data =</span> df_train <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">source =</span> <span class="st">&quot;Train&quot;</span>),</span>
-<span id="cb1180-23"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-23" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> y_meas, <span class="at">color =</span> source)</span>
-<span id="cb1180-24"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-24" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1180-25"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-25" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb1180-26"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-26" tabindex="-1"></a>    <span class="at">data =</span> df_validate <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">source =</span> <span class="st">&quot;Validate&quot;</span>),</span>
-<span id="cb1180-27"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-27" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> y_meas, <span class="at">color =</span> source)</span>
-<span id="cb1180-28"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-28" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1180-29"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-29" tabindex="-1"></a></span>
-<span id="cb1180-30"><a href="model-model-selection-and-the-test-validate-framework.html#cb1180-30" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Data&quot;</span>)</span></code></pre></div>
-<p><img src="d48-e-model02-train-validate-solution_files/figure-html/split-validation-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1185-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this chunk</span></span>
+<span id="cb1185-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1185-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-3" tabindex="-1"></a></span>
+<span id="cb1185-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-4" tabindex="-1"></a><span class="co"># Select &quot;training&quot; data from our available measurements</span></span>
+<span id="cb1185-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-5" tabindex="-1"></a>df_train <span class="ot">&lt;-</span></span>
+<span id="cb1185-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-6" tabindex="-1"></a>  df_measurements <span class="sc">%&gt;%</span></span>
+<span id="cb1185-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-7" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb1185-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-8" tabindex="-1"></a></span>
+<span id="cb1185-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-9" tabindex="-1"></a><span class="co"># Use the remaining data as &quot;validation&quot; data</span></span>
+<span id="cb1185-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-10" tabindex="-1"></a>df_validate <span class="ot">&lt;-</span></span>
+<span id="cb1185-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-11" tabindex="-1"></a>  <span class="fu">anti_join</span>(</span>
+<span id="cb1185-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-12" tabindex="-1"></a>    df_measurements,</span>
+<span id="cb1185-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-13" tabindex="-1"></a>    df_train,</span>
+<span id="cb1185-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-14" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;x&quot;</span></span>
+<span id="cb1185-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-15" tabindex="-1"></a>  )</span>
+<span id="cb1185-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-16" tabindex="-1"></a></span>
+<span id="cb1185-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-17" tabindex="-1"></a><span class="co"># Visualize the split</span></span>
+<span id="cb1185-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-18" tabindex="-1"></a>df_truth <span class="sc">%&gt;%</span></span>
+<span id="cb1185-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-19" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb1185-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-20" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb1185-21"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-21" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb1185-22"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-22" tabindex="-1"></a>    <span class="at">data =</span> df_train <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">source =</span> <span class="st">&quot;Train&quot;</span>),</span>
+<span id="cb1185-23"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-23" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> y_meas, <span class="at">color =</span> source)</span>
+<span id="cb1185-24"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-24" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1185-25"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-25" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb1185-26"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-26" tabindex="-1"></a>    <span class="at">data =</span> df_validate <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">source =</span> <span class="st">&quot;Validate&quot;</span>),</span>
+<span id="cb1185-27"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-27" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> y_meas, <span class="at">color =</span> source)</span>
+<span id="cb1185-28"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-28" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1185-29"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-29" tabindex="-1"></a></span>
+<span id="cb1185-30"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-30" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Data&quot;</span>)</span></code></pre></div>
+<p><img src="d48-e-model02-train-validate-solution_files/figure-html/split-validation-1.png" alt="" width="672" /></p>
 <p><strong>Idea</strong>:</p>
 <ul>
 <li>Fit the model on the <em>training</em> data <code>df_train</code>.</li>
@@ -1276,49 +1276,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Use the assessment on validation data to choose the polynomial order.</li>
 </ul>
 <p>The following code <em>sweeps</em> through different values of polynomial order, fits a polynomial, and computes the associated error on both the <code>Train</code> and <code>Validate</code> sets.</p>
-<div class="sourceCode" id="cb1181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1181-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this code</span></span>
-<span id="cb1181-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-2" tabindex="-1"></a>df_sweep <span class="ot">&lt;-</span></span>
-<span id="cb1181-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-3" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
-<span id="cb1181-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-4" tabindex="-1"></a>    <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">9</span>, <span class="at">by =</span> <span class="dv">1</span>),</span>
-<span id="cb1181-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-5" tabindex="-1"></a>    <span class="cf">function</span>(order) {</span>
-<span id="cb1181-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-6" tabindex="-1"></a>      <span class="co"># Fit a temporary model</span></span>
-<span id="cb1181-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-7" tabindex="-1"></a>      fit_tmp <span class="ot">&lt;-</span></span>
-<span id="cb1181-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-8" tabindex="-1"></a>        <span class="fu">lm</span>(</span>
-<span id="cb1181-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-9" tabindex="-1"></a>          <span class="at">data =</span> df_train,</span>
-<span id="cb1181-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-10" tabindex="-1"></a>          <span class="at">formula =</span> y_meas <span class="sc">~</span> <span class="fu">poly</span>(x, order)</span>
-<span id="cb1181-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-11" tabindex="-1"></a>        )</span>
-<span id="cb1181-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-12" tabindex="-1"></a></span>
-<span id="cb1181-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-13" tabindex="-1"></a>      <span class="co"># Compute error on the Train and Validate sets</span></span>
-<span id="cb1181-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-14" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
-<span id="cb1181-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-15" tabindex="-1"></a>        <span class="at">error_Train =</span> <span class="fu">mse</span>(fit_tmp, df_train),</span>
-<span id="cb1181-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-16" tabindex="-1"></a>        <span class="at">error_Validate =</span> <span class="fu">mse</span>(fit_tmp, df_validate),</span>
-<span id="cb1181-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-17" tabindex="-1"></a>        <span class="at">order =</span> order</span>
-<span id="cb1181-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-18" tabindex="-1"></a>      )</span>
-<span id="cb1181-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-19" tabindex="-1"></a>    }</span>
-<span id="cb1181-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-20" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1181-21"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-21" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb1181-22"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-22" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;source&quot;</span>),</span>
-<span id="cb1181-23"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-23" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
-<span id="cb1181-24"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-24" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">&quot;error&quot;</span>)</span>
-<span id="cb1181-25"><a href="model-model-selection-and-the-test-validate-framework.html#cb1181-25" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1186-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this code</span></span>
+<span id="cb1186-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-2" tabindex="-1"></a>df_sweep <span class="ot">&lt;-</span></span>
+<span id="cb1186-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-3" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
+<span id="cb1186-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-4" tabindex="-1"></a>    <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">9</span>, <span class="at">by =</span> <span class="dv">1</span>),</span>
+<span id="cb1186-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-5" tabindex="-1"></a>    <span class="cf">function</span>(order) {</span>
+<span id="cb1186-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-6" tabindex="-1"></a>      <span class="co"># Fit a temporary model</span></span>
+<span id="cb1186-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-7" tabindex="-1"></a>      fit_tmp <span class="ot">&lt;-</span></span>
+<span id="cb1186-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-8" tabindex="-1"></a>        <span class="fu">lm</span>(</span>
+<span id="cb1186-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-9" tabindex="-1"></a>          <span class="at">data =</span> df_train,</span>
+<span id="cb1186-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-10" tabindex="-1"></a>          <span class="at">formula =</span> y_meas <span class="sc">~</span> <span class="fu">poly</span>(x, order)</span>
+<span id="cb1186-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-11" tabindex="-1"></a>        )</span>
+<span id="cb1186-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-12" tabindex="-1"></a></span>
+<span id="cb1186-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-13" tabindex="-1"></a>      <span class="co"># Compute error on the Train and Validate sets</span></span>
+<span id="cb1186-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-14" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
+<span id="cb1186-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-15" tabindex="-1"></a>        <span class="at">error_Train =</span> <span class="fu">mse</span>(fit_tmp, df_train),</span>
+<span id="cb1186-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-16" tabindex="-1"></a>        <span class="at">error_Validate =</span> <span class="fu">mse</span>(fit_tmp, df_validate),</span>
+<span id="cb1186-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-17" tabindex="-1"></a>        <span class="at">order =</span> order</span>
+<span id="cb1186-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-18" tabindex="-1"></a>      )</span>
+<span id="cb1186-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-19" tabindex="-1"></a>    }</span>
+<span id="cb1186-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-20" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1186-21"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-21" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb1186-22"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-22" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;source&quot;</span>),</span>
+<span id="cb1186-23"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-23" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb1186-24"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-24" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">&quot;error&quot;</span>)</span>
+<span id="cb1186-25"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-25" tabindex="-1"></a>  )</span></code></pre></div>
 <p>In the next task, you will compare the resulting error metrics.</p>
 <div id="q4-inspect-the-results-of-the-degree-sweep-and-answer-the-questions-below." class="section level3 hasAnchor" number="55.4.1">
 <h3><span class="header-section-number">55.4.1</span> <strong>q4</strong> Inspect the results of the degree sweep, and answer the questions below.<a href="model-model-selection-and-the-test-validate-framework.html#q4-inspect-the-results-of-the-degree-sweep-and-answer-the-questions-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1182-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; inspect and write your observations</span></span>
-<span id="cb1182-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-2" tabindex="-1"></a>df_sweep <span class="sc">%&gt;%</span></span>
-<span id="cb1182-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(order, error, <span class="at">color =</span> source)) <span class="sc">+</span></span>
-<span id="cb1182-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-4" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb1182-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-5" tabindex="-1"></a></span>
-<span id="cb1182-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-6" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb1182-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-7" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb1182-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-8" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Method&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1182-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-9" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">1e-3</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb1182-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1182-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-11" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1182-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-12" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Polynomial Order&quot;</span>,</span>
-<span id="cb1182-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-13" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Mean Squared Error&quot;</span></span>
-<span id="cb1182-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1182-14" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d48-e-model02-train-validate-solution_files/figure-html/q4-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1187-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; inspect and write your observations</span></span>
+<span id="cb1187-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-2" tabindex="-1"></a>df_sweep <span class="sc">%&gt;%</span></span>
+<span id="cb1187-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(order, error, <span class="at">color =</span> source)) <span class="sc">+</span></span>
+<span id="cb1187-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-4" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb1187-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-5" tabindex="-1"></a></span>
+<span id="cb1187-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-6" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb1187-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-7" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1187-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-8" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Method&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1187-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-9" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">1e-3</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1187-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1187-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-11" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1187-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-12" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Polynomial Order&quot;</span>,</span>
+<span id="cb1187-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-13" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Mean Squared Error&quot;</span></span>
+<span id="cb1187-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1187-14" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d48-e-model02-train-validate-solution_files/figure-html/q4-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong></p>
 <ul>
 <li>Training error is minimized at polynomial order 8, or possibly higher.</li>
@@ -1346,48 +1346,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[\hat{y}_5 = \beta_0 + \beta_1 x + \beta_2 x^2+ \beta_3 x^3+ \beta_4 x^4 + \beta_5 x^5 + \epsilon.\]</span></p>
 <p>In effect, we are <em>adding another predictor</em> of the form <span class="math inline">\(\beta_i x^i\)</span> every time we increase the polynomial order. Increasing polynomial order is just one way we increase model flexibility; another way is to <em>add additional variables to the model</em>.</p>
 <p>For instance, in the diamonds dataset we have a number of variables that we could use as predictors:</p>
-<div class="sourceCode" id="cb1183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1183-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1183-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb1183-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1183-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>price) <span class="sc">%&gt;%</span></span>
-<span id="cb1183-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1183-3" tabindex="-1"></a>  <span class="fu">names</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1188-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1188-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb1188-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1188-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>price) <span class="sc">%&gt;%</span></span>
+<span id="cb1188-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1188-3" tabindex="-1"></a>  <span class="fu">names</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;carat&quot;   &quot;cut&quot;     &quot;color&quot;   &quot;clarity&quot; &quot;depth&quot;   &quot;table&quot;   &quot;x&quot;      
 ## [8] &quot;y&quot;       &quot;z&quot;</code></pre>
 <p>Let’s put the train-validation idea to work! Below I set up training and validation sets of the diamonds data, and train a very silly model that blindly uses all the variables available as predictors. The challenge: Can you beat this model?</p>
-<div class="sourceCode" id="cb1185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1185-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
-<span id="cb1185-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-2" tabindex="-1"></a><span class="co"># Create a test-validate split</span></span>
-<span id="cb1185-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1185-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-4" tabindex="-1"></a>diamonds_randomized <span class="ot">&lt;-</span></span>
-<span id="cb1185-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-5" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb1185-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-6" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">sample</span>(<span class="fu">dim</span>(diamonds)[<span class="dv">1</span>]))</span>
-<span id="cb1185-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-7" tabindex="-1"></a></span>
-<span id="cb1185-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-8" tabindex="-1"></a>diamonds_train <span class="ot">&lt;-</span></span>
-<span id="cb1185-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-9" tabindex="-1"></a>  diamonds_randomized <span class="sc">%&gt;%</span></span>
-<span id="cb1185-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-10" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>)</span>
-<span id="cb1185-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-11" tabindex="-1"></a></span>
-<span id="cb1185-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-12" tabindex="-1"></a>diamonds_validate <span class="ot">&lt;-</span></span>
-<span id="cb1185-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-13" tabindex="-1"></a>  diamonds_randomized <span class="sc">%&gt;%</span></span>
-<span id="cb1185-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-14" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">10001</span><span class="sc">:</span><span class="dv">20000</span>)</span>
-<span id="cb1185-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-15" tabindex="-1"></a></span>
-<span id="cb1185-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-16" tabindex="-1"></a><span class="co"># Try to beat this naive model that uses all variables!</span></span>
-<span id="cb1185-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-17" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span></span>
-<span id="cb1185-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-18" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
-<span id="cb1185-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-19" tabindex="-1"></a>    <span class="at">data =</span> diamonds_train,</span>
-<span id="cb1185-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-20" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> . <span class="co"># The `.` notation here means &quot;use all variables&quot;</span></span>
-<span id="cb1185-21"><a href="model-model-selection-and-the-test-validate-framework.html#cb1185-21" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1190-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
+<span id="cb1190-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-2" tabindex="-1"></a><span class="co"># Create a test-validate split</span></span>
+<span id="cb1190-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1190-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-4" tabindex="-1"></a>diamonds_randomized <span class="ot">&lt;-</span></span>
+<span id="cb1190-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-5" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb1190-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-6" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">sample</span>(<span class="fu">dim</span>(diamonds)[<span class="dv">1</span>]))</span>
+<span id="cb1190-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-7" tabindex="-1"></a></span>
+<span id="cb1190-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-8" tabindex="-1"></a>diamonds_train <span class="ot">&lt;-</span></span>
+<span id="cb1190-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-9" tabindex="-1"></a>  diamonds_randomized <span class="sc">%&gt;%</span></span>
+<span id="cb1190-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-10" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>)</span>
+<span id="cb1190-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-11" tabindex="-1"></a></span>
+<span id="cb1190-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-12" tabindex="-1"></a>diamonds_validate <span class="ot">&lt;-</span></span>
+<span id="cb1190-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-13" tabindex="-1"></a>  diamonds_randomized <span class="sc">%&gt;%</span></span>
+<span id="cb1190-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-14" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">10001</span><span class="sc">:</span><span class="dv">20000</span>)</span>
+<span id="cb1190-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-15" tabindex="-1"></a></span>
+<span id="cb1190-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-16" tabindex="-1"></a><span class="co"># Try to beat this naive model that uses all variables!</span></span>
+<span id="cb1190-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-17" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span></span>
+<span id="cb1190-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-18" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
+<span id="cb1190-19"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-19" tabindex="-1"></a>    <span class="at">data =</span> diamonds_train,</span>
+<span id="cb1190-20"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-20" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> . <span class="co"># The `.` notation here means &quot;use all variables&quot;</span></span>
+<span id="cb1190-21"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-21" tabindex="-1"></a>  )</span></code></pre></div>
 <div id="q5-build-your-own-model" class="section level3 hasAnchor" number="55.6.1">
 <h3><span class="header-section-number">55.6.1</span> <strong>q5</strong> Build your own model!<a href="model-model-selection-and-the-test-validate-framework.html#q5-build-your-own-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Choose which predictors to include by modifying the <code>formula</code> argument below. Use the validation data to help guide your choice. Answer the questions below.</p>
 <p><em>Hint</em>: We’ve done EDA on <code>diamonds</code> before. <em>Use your knowledge</em> from that past EDA to choose variables you think will be informative for predicting the <code>price</code>.</p>
-<div class="sourceCode" id="cb1186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1186-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is just one possible model!</span></span>
-<span id="cb1186-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-2" tabindex="-1"></a>fit_q5 <span class="ot">&lt;-</span></span>
-<span id="cb1186-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-3" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
-<span id="cb1186-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-4" tabindex="-1"></a>    <span class="at">data =</span> diamonds_train,</span>
-<span id="cb1186-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-5" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> carat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity</span>
-<span id="cb1186-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-6" tabindex="-1"></a>  )</span>
-<span id="cb1186-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-7" tabindex="-1"></a></span>
-<span id="cb1186-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-8" tabindex="-1"></a><span class="co"># Compare the two models on the validation set</span></span>
-<span id="cb1186-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1186-9" tabindex="-1"></a><span class="fu">mse</span>(fit_q5, diamonds_validate)</span></code></pre></div>
+<div class="sourceCode" id="cb1191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1191-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1191-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This is just one possible model!</span></span>
+<span id="cb1191-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1191-2" tabindex="-1"></a>fit_q5 <span class="ot">&lt;-</span></span>
+<span id="cb1191-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1191-3" tabindex="-1"></a>  <span class="fu">lm</span>(</span>
+<span id="cb1191-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1191-4" tabindex="-1"></a>    <span class="at">data =</span> diamonds_train,</span>
+<span id="cb1191-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1191-5" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> carat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity</span>
+<span id="cb1191-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1191-6" tabindex="-1"></a>  )</span>
+<span id="cb1191-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1191-7" tabindex="-1"></a></span>
+<span id="cb1191-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1191-8" tabindex="-1"></a><span class="co"># Compare the two models on the validation set</span></span>
+<span id="cb1191-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1191-9" tabindex="-1"></a><span class="fu">mse</span>(fit_q5, diamonds_validate)</span></code></pre></div>
 <pre><code>## [1] 1306804</code></pre>
-<div class="sourceCode" id="cb1188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1188-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1188-1" tabindex="-1"></a><span class="fu">mse</span>(fit_full, diamonds_validate)</span></code></pre></div>
+<div class="sourceCode" id="cb1193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1193-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1193-1" tabindex="-1"></a><span class="fu">mse</span>(fit_full, diamonds_validate)</span></code></pre></div>
 <pre><code>## [1] 1568726</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1409,25 +1409,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q6-visualize-a-histogram-for-the-prices-of-diamonds_train_bad-and-diamonds_validate_bad.-answer-the-questions-below." class="section level3 hasAnchor" number="55.6.2">
 <h3><span class="header-section-number">55.6.2</span> <strong>q6</strong> Visualize a histogram for the prices of <code>diamonds_train_bad</code> and <code>diamonds_validate_bad</code>. Answer the questions below.<a href="model-model-selection-and-the-test-validate-framework.html#q6-visualize-a-histogram-for-the-prices-of-diamonds_train_bad-and-diamonds_validate_bad.-answer-the-questions-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1190-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this part</span></span>
-<span id="cb1190-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-2" tabindex="-1"></a>diamonds_train_bad <span class="ot">&lt;-</span></span>
-<span id="cb1190-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-3" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb1190-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-4" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>)</span>
-<span id="cb1190-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-5" tabindex="-1"></a></span>
-<span id="cb1190-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-6" tabindex="-1"></a>diamonds_validate_bad <span class="ot">&lt;-</span></span>
-<span id="cb1190-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-7" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb1190-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-8" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">10001</span><span class="sc">:</span><span class="dv">20000</span>)</span>
-<span id="cb1190-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-9" tabindex="-1"></a></span>
-<span id="cb1190-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-10" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Visualize a histogram of prices for both `bad` sets.</span></span>
-<span id="cb1190-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-11" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb1190-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-12" tabindex="-1"></a>  diamonds_train_bad <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">source =</span> <span class="st">&quot;Train&quot;</span>),</span>
-<span id="cb1190-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-13" tabindex="-1"></a>  diamonds_validate_bad <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">source =</span> <span class="st">&quot;Validate&quot;</span>)</span>
-<span id="cb1190-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-14" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb1190-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-15" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(price)) <span class="sc">+</span></span>
-<span id="cb1190-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-16" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span></span>
-<span id="cb1190-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-17" tabindex="-1"></a></span>
-<span id="cb1190-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1190-18" tabindex="-1"></a>  <span class="fu">facet_grid</span>(source <span class="sc">~</span> .)</span></code></pre></div>
-<p><img src="d48-e-model02-train-validate-solution_files/figure-html/q6-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1195-1"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this part</span></span>
+<span id="cb1195-2"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-2" tabindex="-1"></a>diamonds_train_bad <span class="ot">&lt;-</span></span>
+<span id="cb1195-3"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-3" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb1195-4"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-4" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>)</span>
+<span id="cb1195-5"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-5" tabindex="-1"></a></span>
+<span id="cb1195-6"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-6" tabindex="-1"></a>diamonds_validate_bad <span class="ot">&lt;-</span></span>
+<span id="cb1195-7"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-7" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb1195-8"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-8" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">10001</span><span class="sc">:</span><span class="dv">20000</span>)</span>
+<span id="cb1195-9"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-9" tabindex="-1"></a></span>
+<span id="cb1195-10"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-10" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Visualize a histogram of prices for both `bad` sets.</span></span>
+<span id="cb1195-11"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-11" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb1195-12"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-12" tabindex="-1"></a>  diamonds_train_bad <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">source =</span> <span class="st">&quot;Train&quot;</span>),</span>
+<span id="cb1195-13"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-13" tabindex="-1"></a>  diamonds_validate_bad <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">source =</span> <span class="st">&quot;Validate&quot;</span>)</span>
+<span id="cb1195-14"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-14" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb1195-15"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-15" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(price)) <span class="sc">+</span></span>
+<span id="cb1195-16"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-16" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span></span>
+<span id="cb1195-17"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-17" tabindex="-1"></a></span>
+<span id="cb1195-18"><a href="model-model-selection-and-the-test-validate-framework.html#cb1195-18" tabindex="-1"></a>  <span class="fu">facet_grid</span>(source <span class="sc">~</span> .)</span></code></pre></div>
+<p><img src="d48-e-model02-train-validate-solution_files/figure-html/q6-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li><code>diamonds_test_bad</code> and <code>diamonds_validate_bad</code> have very little overlap! It seems the <code>diamonds</code> datset has some ordering along <code>price</code>, which greatly affects our split.</li>

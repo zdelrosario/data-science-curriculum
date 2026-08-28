@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>12 Vis: Data Visualization Basics | Data Science: Exercise Solutions</title>
   <meta name="description" content="12 Vis: Data Visualization Basics | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="12 Vis: Data Visualization Basics | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1124,7 +1124,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb80-9"><a href="vis-data-visualization-basics.html#cb80-9" tabindex="-1"></a>      <span class="at">y =</span> depth    <span class="co"># 5.2. Mapping the `y` variable</span></span>
 <span id="cb80-10"><a href="vis-data-visualization-basics.html#cb80-10" tabindex="-1"></a>    )</span>
 <span id="cb80-11"><a href="vis-data-visualization-basics.html#cb80-11" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d03-e-vis00-basics-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="d03-e-vis00-basics-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" /></p>
 <p>The core idea in ggplot is that we can break <em>every concievable plot</em> down into just a few elements:</p>
 <ul>
 <li>Data (the <code>data</code> argument): The data to visualize</li>
@@ -1141,7 +1141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="vis-data-visualization-basics.html#cb81-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Complete this code</span></span>
 <span id="cb81-2"><a href="vis-data-visualization-basics.html#cb81-2" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds) <span class="sc">+</span></span>
 <span id="cb81-3"><a href="vis-data-visualization-basics.html#cb81-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price))</span></code></pre></div>
-<p><img src="d03-e-vis00-basics-solution_files/figure-html/q3-task-1.png" width="672" /></p>
+<p><img src="d03-e-vis00-basics-solution_files/figure-html/q3-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li><code>price</code> generally increases with <code>carat</code></li>
@@ -1164,7 +1164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb82-10"><a href="vis-data-visualization-basics.html#cb82-10" tabindex="-1"></a>  <span class="co"># additional `linewidth` argument to aes()</span></span>
 <span id="cb82-11"><a href="vis-data-visualization-basics.html#cb82-11" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb82-12"><a href="vis-data-visualization-basics.html#cb82-12" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price, <span class="at">linewidth =</span> n))</span></code></pre></div>
-<p><img src="d03-e-vis00-basics-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="d03-e-vis00-basics-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" /></p>
 <p>As with any R function, we can consult the documentation to learn more.</p>
 <div id="q4-read-the-docs" class="section level3 hasAnchor" number="12.2.1">
 <h3><span class="header-section-number">12.2.1</span> <strong>q4</strong> Read the docs<a href="vis-data-visualization-basics.html#q4-read-the-docs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1177,7 +1177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="vis-data-visualization-basics.html#cb83-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Complete this code</span></span>
 <span id="cb83-2"><a href="vis-data-visualization-basics.html#cb83-2" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds) <span class="sc">+</span></span>
 <span id="cb83-3"><a href="vis-data-visualization-basics.html#cb83-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price, <span class="at">color =</span> cut))</span></code></pre></div>
-<p><img src="d03-e-vis00-basics-solution_files/figure-html/q4-task-1.png" width="672" /></p>
+<p><img src="d03-e-vis00-basics-solution_files/figure-html/q4-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li><code>price</code> generally increases with <code>carat</code></li>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>26 Stats: Probability | Data Science: Exercise Solutions</title>
   <meta name="description" content="26 Stats: Probability | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="26 Stats: Probability | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1088,13 +1088,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Topics</em>: Frequency, probability, probability density function (PDF), cumulative distribution function (CDF)</p>
 <p>“Probability is the most important concept in modern science, especially as
 nobody has the slightest notion what it means.” — Bertrand Russell</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="stats-probability.html#cb361-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="stats-probability.html#cb363-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1114,88 +1114,63 @@ For the example above, we have</p>
   \end{aligned}\]</span></p>
 <p>Note that this definition of frequency considers both a <em>set</em> <span class="math inline">\(A\)</span> and a sample <span class="math inline">\(X\)</span>. We need to define both <span class="math inline">\(A, X\)</span> in order to compute a frequency.</p>
 <p>As an example, let’s consider the set <span class="math inline">\(A\)</span> to be the set of <span class="math inline">\(Z\)</span> values such that <span class="math inline">\(-1.96 &lt;= Z &lt;= +1.96\)</span>: We denote this set as <span class="math inline">\(A = {Z | -1.96 &lt;= Z &lt;= +1.96}\)</span>. Let’s also let <span class="math inline">\(Z\)</span> be a sample from a standard (<code>mean = 0, sd = 1</code>) normal. The following figure illustrates the set <span class="math inline">\(A\)</span> against a standard normal density.</p>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="stats-probability.html#cb363-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb363-2"><a href="stats-probability.html#cb363-2" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb363-3"><a href="stats-probability.html#cb363-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
-<span id="cb363-4"><a href="stats-probability.html#cb363-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
-<span id="cb363-5"><a href="stats-probability.html#cb363-5" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
-<span id="cb363-6"><a href="stats-probability.html#cb363-6" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">-</span><span class="fl">1.96</span> <span class="sc">&lt;=</span> z, z <span class="sc">&lt;=</span> <span class="sc">+</span><span class="fl">1.96</span>),</span>
-<span id="cb363-7"><a href="stats-probability.html#cb363-7" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> d, <span class="at">fill =</span> <span class="st">&quot;Set A&quot;</span>),</span>
-<span id="cb363-8"><a href="stats-probability.html#cb363-8" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">3</span></span>
-<span id="cb363-9"><a href="stats-probability.html#cb363-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb363-10"><a href="stats-probability.html#cb363-10" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb363-11"><a href="stats-probability.html#cb363-11" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="d16-e-stat02-probability-solution_files/figure-html/set-vis-1.png" width="672" /></p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="stats-probability.html#cb365-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb365-2"><a href="stats-probability.html#cb365-2" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb365-3"><a href="stats-probability.html#cb365-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
+<span id="cb365-4"><a href="stats-probability.html#cb365-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
+<span id="cb365-5"><a href="stats-probability.html#cb365-5" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
+<span id="cb365-6"><a href="stats-probability.html#cb365-6" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">-</span><span class="fl">1.96</span> <span class="sc">&lt;=</span> z, z <span class="sc">&lt;=</span> <span class="sc">+</span><span class="fl">1.96</span>),</span>
+<span id="cb365-7"><a href="stats-probability.html#cb365-7" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> d, <span class="at">fill =</span> <span class="st">&quot;Set A&quot;</span>),</span>
+<span id="cb365-8"><a href="stats-probability.html#cb365-8" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">3</span></span>
+<span id="cb365-9"><a href="stats-probability.html#cb365-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb365-10"><a href="stats-probability.html#cb365-10" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb365-11"><a href="stats-probability.html#cb365-11" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="d16-e-stat02-probability-solution_files/figure-html/set-vis-1.png" alt="" width="672" /></p>
 <p>Note that a frequency is defined <em>not</em> in terms of a density, but rather in terms of a sample <span class="math inline">\(X\)</span>. The following example code draws a sample from a standard normal, and computes the frequency with which values in the sample <span class="math inline">\(X\)</span> lie in the set <span class="math inline">\(A\)</span>.</p>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="stats-probability.html#cb364-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb364-2"><a href="stats-probability.html#cb364-2" tabindex="-1"></a>df_z <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
-<span id="cb364-3"><a href="stats-probability.html#cb364-3" tabindex="-1"></a></span>
-<span id="cb364-4"><a href="stats-probability.html#cb364-4" tabindex="-1"></a>df_z <span class="sc">%&gt;%</span></span>
-<span id="cb364-5"><a href="stats-probability.html#cb364-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">in_A =</span> (<span class="sc">-</span><span class="fl">1.96</span> <span class="sc">&lt;=</span> z) <span class="sc">&amp;</span> (z <span class="sc">&lt;=</span> <span class="sc">+</span><span class="fl">1.96</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb364-6"><a href="stats-probability.html#cb364-6" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count_total =</span> <span class="fu">n</span>(), <span class="at">count_A =</span> <span class="fu">sum</span>(in_A), <span class="at">fr =</span> <span class="fu">mean</span>(in_A))</span></code></pre></div>
-<pre><code>## # A tibble: 1 × 3
-##   count_total count_A    fr
-##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
-## 1         100      91  0.91</code></pre>
-<p>Now it’s your turn!</p>
-<div id="q1-let-a-z-z-0.-complete-the-following-code-to-compute-count_total-count_a-and-fr.-before-executing-the-code-make-a-prediction-about-the-value-of-fr.-did-the-computed-fr-value-match-your-prediction" class="section level3 hasAnchor" number="26.1.1">
-<h3><span class="header-section-number">26.1.1</span> <strong>q1</strong> Let <span class="math inline">\(A = {Z | Z &lt;= 0}\)</span>. Complete the following code to compute <code>count_total</code>, <code>count_A</code>, and <code>fr</code>. Before executing the code, <strong>make a prediction</strong> about the value of <code>fr</code>. Did the computed <code>fr</code> value match your prediction?<a href="stats-probability.html#q1-let-a-z-z-0.-complete-the-following-code-to-compute-count_total-count_a-and-fr.-before-executing-the-code-make-a-prediction-about-the-value-of-fr.-did-the-computed-fr-value-match-your-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="stats-probability.html#cb366-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
 <span id="cb366-2"><a href="stats-probability.html#cb366-2" tabindex="-1"></a>df_z <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
 <span id="cb366-3"><a href="stats-probability.html#cb366-3" tabindex="-1"></a></span>
 <span id="cb366-4"><a href="stats-probability.html#cb366-4" tabindex="-1"></a>df_z <span class="sc">%&gt;%</span></span>
-<span id="cb366-5"><a href="stats-probability.html#cb366-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">in_A =</span> (z <span class="sc">&lt;=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb366-5"><a href="stats-probability.html#cb366-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">in_A =</span> (<span class="sc">-</span><span class="fl">1.96</span> <span class="sc">&lt;=</span> z) <span class="sc">&amp;</span> (z <span class="sc">&lt;=</span> <span class="sc">+</span><span class="fl">1.96</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb366-6"><a href="stats-probability.html#cb366-6" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count_total =</span> <span class="fu">n</span>(), <span class="at">count_A =</span> <span class="fu">sum</span>(in_A), <span class="at">fr =</span> <span class="fu">mean</span>(in_A))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
-## 1         100      54  0.54</code></pre>
+## 1         100      96  0.96</code></pre>
+<p>Now it’s your turn!</p>
+<div id="q1-let-a-z-z-0.-complete-the-following-code-to-compute-count_total-count_a-and-fr.-before-executing-the-code-make-a-prediction-about-the-value-of-fr.-did-the-computed-fr-value-match-your-prediction" class="section level3 hasAnchor" number="26.1.1">
+<h3><span class="header-section-number">26.1.1</span> <strong>q1</strong> Let <span class="math inline">\(A = {Z | Z &lt;= 0}\)</span>. Complete the following code to compute <code>count_total</code>, <code>count_A</code>, and <code>fr</code>. Before executing the code, <strong>make a prediction</strong> about the value of <code>fr</code>. Did the computed <code>fr</code> value match your prediction?<a href="stats-probability.html#q1-let-a-z-z-0.-complete-the-following-code-to-compute-count_total-count_a-and-fr.-before-executing-the-code-make-a-prediction-about-the-value-of-fr.-did-the-computed-fr-value-match-your-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="stats-probability.html#cb368-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb368-2"><a href="stats-probability.html#cb368-2" tabindex="-1"></a>df_z <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
+<span id="cb368-3"><a href="stats-probability.html#cb368-3" tabindex="-1"></a></span>
+<span id="cb368-4"><a href="stats-probability.html#cb368-4" tabindex="-1"></a>df_z <span class="sc">%&gt;%</span></span>
+<span id="cb368-5"><a href="stats-probability.html#cb368-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">in_A =</span> (z <span class="sc">&lt;=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb368-6"><a href="stats-probability.html#cb368-6" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count_total =</span> <span class="fu">n</span>(), <span class="at">count_A =</span> <span class="fu">sum</span>(in_A), <span class="at">fr =</span> <span class="fu">mean</span>(in_A))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 3
+##   count_total count_A    fr
+##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
+## 1         100      48  0.48</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>I predicted <code>fr = 0.5</code></li>
 <li>The value of <code>fr</code> I computed was <code>0.52</code>, not quite the same. This is due to randomness in the calculation.</li>
 </ul>
 <p>The following graph visualizes the set <span class="math inline">\(A = {z | z &lt;= 0}\)</span> against a standard normal density.</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="stats-probability.html#cb368-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb368-2"><a href="stats-probability.html#cb368-2" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb368-3"><a href="stats-probability.html#cb368-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
-<span id="cb368-4"><a href="stats-probability.html#cb368-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
-<span id="cb368-5"><a href="stats-probability.html#cb368-5" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
-<span id="cb368-6"><a href="stats-probability.html#cb368-6" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(z <span class="sc">&lt;=</span> <span class="dv">0</span>),</span>
-<span id="cb368-7"><a href="stats-probability.html#cb368-7" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> d, <span class="at">fill =</span> <span class="st">&quot;Set A&quot;</span>),</span>
-<span id="cb368-8"><a href="stats-probability.html#cb368-8" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">3</span></span>
-<span id="cb368-9"><a href="stats-probability.html#cb368-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb368-10"><a href="stats-probability.html#cb368-10" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb368-11"><a href="stats-probability.html#cb368-11" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="d16-e-stat02-probability-solution_files/figure-html/q1-vis-1.png" width="672" /></p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="stats-probability.html#cb370-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb370-2"><a href="stats-probability.html#cb370-2" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb370-3"><a href="stats-probability.html#cb370-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
+<span id="cb370-4"><a href="stats-probability.html#cb370-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
+<span id="cb370-5"><a href="stats-probability.html#cb370-5" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
+<span id="cb370-6"><a href="stats-probability.html#cb370-6" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(z <span class="sc">&lt;=</span> <span class="dv">0</span>),</span>
+<span id="cb370-7"><a href="stats-probability.html#cb370-7" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> d, <span class="at">fill =</span> <span class="st">&quot;Set A&quot;</span>),</span>
+<span id="cb370-8"><a href="stats-probability.html#cb370-8" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">3</span></span>
+<span id="cb370-9"><a href="stats-probability.html#cb370-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb370-10"><a href="stats-probability.html#cb370-10" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb370-11"><a href="stats-probability.html#cb370-11" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="d16-e-stat02-probability-solution_files/figure-html/q1-vis-1.png" alt="" width="672" /></p>
 <p>Based on this visual, we might expect <code>fr = 0.5</code>. This was (likely) not the value that our <em>frequency</em> took, but it is the precise value of the <em>probability</em> that <span class="math inline">\(Z &lt;= 0.5\)</span>.</p>
 <p>Remember in the previous stats exercise that when running <code>rnorm</code> with larger values of <code>n</code> we obtained histograms closer to the normal density? Something very similar happens with frequency and probability:</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="stats-probability.html#cb369-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb369-2"><a href="stats-probability.html#cb369-2" tabindex="-1"></a><span class="fu">map_dfr</span>(</span>
-<span id="cb369-3"><a href="stats-probability.html#cb369-3" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="fl">1e4</span>),</span>
-<span id="cb369-4"><a href="stats-probability.html#cb369-4" tabindex="-1"></a>  <span class="cf">function</span>(n_samples) {</span>
-<span id="cb369-5"><a href="stats-probability.html#cb369-5" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb369-6"><a href="stats-probability.html#cb369-6" tabindex="-1"></a>      <span class="at">z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n_samples),</span>
-<span id="cb369-7"><a href="stats-probability.html#cb369-7" tabindex="-1"></a>      <span class="at">n =</span> n_samples</span>
-<span id="cb369-8"><a href="stats-probability.html#cb369-8" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb369-9"><a href="stats-probability.html#cb369-9" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">in_A =</span> (z <span class="sc">&lt;=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb369-10"><a href="stats-probability.html#cb369-10" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">count_total =</span> <span class="fu">n</span>(), <span class="at">count_A =</span> <span class="fu">sum</span>(in_A), <span class="at">fr =</span> <span class="fu">mean</span>(in_A))</span>
-<span id="cb369-11"><a href="stats-probability.html#cb369-11" tabindex="-1"></a>  }</span>
-<span id="cb369-12"><a href="stats-probability.html#cb369-12" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>## # A tibble: 4 × 3
-##   count_total count_A    fr
-##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
-## 1          10       5 0.5  
-## 2         100      54 0.54 
-## 3        1000     500 0.5  
-## 4       10000    5004 0.500</code></pre>
-<p>This is because <em>probability</em> is actually defined[1] in terms of the limit</p>
-<p><span class="math display">\[\mathbb{P}_{\rho}[X \in A] = \lim_{n \to \infty} F_{X_n}(A),\]</span></p>
-<p>where <span class="math inline">\(X_n\)</span> is a sample of size <span class="math inline">\(n\)</span> drawn from the density <span class="math inline">\(X_n \sim \rho\)</span>.[2]</p>
-</div>
-<div id="q2-modify-the-code-below-to-consider-the-set-a-z--1.96-z-1.96.-what-value-does-fr-appear-to-be-limiting-towards" class="section level3 hasAnchor" number="26.1.2">
-<h3><span class="header-section-number">26.1.2</span> <strong>q2</strong>: Modify the code below to consider the set <span class="math inline">\(A = {z | -1.96 &lt;= z &lt;= +1.96}\)</span>. What value does <code>fr</code> appear to be limiting towards?<a href="stats-probability.html#q2-modify-the-code-below-to-consider-the-set-a-z--1.96-z-1.96.-what-value-does-fr-appear-to-be-limiting-towards" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="stats-probability.html#cb371-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Modify the code below</span></span>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="stats-probability.html#cb371-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
 <span id="cb371-2"><a href="stats-probability.html#cb371-2" tabindex="-1"></a><span class="fu">map_dfr</span>(</span>
 <span id="cb371-3"><a href="stats-probability.html#cb371-3" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="fl">1e4</span>),</span>
 <span id="cb371-4"><a href="stats-probability.html#cb371-4" tabindex="-1"></a>  <span class="cf">function</span>(n_samples) {</span>
@@ -1203,17 +1178,42 @@ For the example above, we have</p>
 <span id="cb371-6"><a href="stats-probability.html#cb371-6" tabindex="-1"></a>      <span class="at">z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n_samples),</span>
 <span id="cb371-7"><a href="stats-probability.html#cb371-7" tabindex="-1"></a>      <span class="at">n =</span> n_samples</span>
 <span id="cb371-8"><a href="stats-probability.html#cb371-8" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb371-9"><a href="stats-probability.html#cb371-9" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">in_A =</span> (<span class="sc">-</span><span class="fl">1.96</span> <span class="sc">&lt;=</span> z) <span class="sc">&amp;</span> (z <span class="sc">&lt;=</span> <span class="sc">+</span><span class="fl">1.96</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb371-9"><a href="stats-probability.html#cb371-9" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">in_A =</span> (z <span class="sc">&lt;=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb371-10"><a href="stats-probability.html#cb371-10" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">count_total =</span> <span class="fu">n</span>(), <span class="at">count_A =</span> <span class="fu">sum</span>(in_A), <span class="at">fr =</span> <span class="fu">mean</span>(in_A))</span>
 <span id="cb371-11"><a href="stats-probability.html#cb371-11" tabindex="-1"></a>  }</span>
 <span id="cb371-12"><a href="stats-probability.html#cb371-12" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
-## 1          10       9 0.9  
-## 2         100      94 0.94 
-## 3        1000     946 0.946
-## 4       10000    9515 0.952</code></pre>
+## 1          10       2 0.2  
+## 2         100      44 0.44 
+## 3        1000     488 0.488
+## 4       10000    4999 0.500</code></pre>
+<p>This is because <em>probability</em> is actually defined[1] in terms of the limit</p>
+<p><span class="math display">\[\mathbb{P}_{\rho}[X \in A] = \lim_{n \to \infty} F_{X_n}(A),\]</span></p>
+<p>where <span class="math inline">\(X_n\)</span> is a sample of size <span class="math inline">\(n\)</span> drawn from the density <span class="math inline">\(X_n \sim \rho\)</span>.[2]</p>
+</div>
+<div id="q2-modify-the-code-below-to-consider-the-set-a-z--1.96-z-1.96.-what-value-does-fr-appear-to-be-limiting-towards" class="section level3 hasAnchor" number="26.1.2">
+<h3><span class="header-section-number">26.1.2</span> <strong>q2</strong>: Modify the code below to consider the set <span class="math inline">\(A = {z | -1.96 &lt;= z &lt;= +1.96}\)</span>. What value does <code>fr</code> appear to be limiting towards?<a href="stats-probability.html#q2-modify-the-code-below-to-consider-the-set-a-z--1.96-z-1.96.-what-value-does-fr-appear-to-be-limiting-towards" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="stats-probability.html#cb373-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Modify the code below</span></span>
+<span id="cb373-2"><a href="stats-probability.html#cb373-2" tabindex="-1"></a><span class="fu">map_dfr</span>(</span>
+<span id="cb373-3"><a href="stats-probability.html#cb373-3" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="fl">1e4</span>),</span>
+<span id="cb373-4"><a href="stats-probability.html#cb373-4" tabindex="-1"></a>  <span class="cf">function</span>(n_samples) {</span>
+<span id="cb373-5"><a href="stats-probability.html#cb373-5" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb373-6"><a href="stats-probability.html#cb373-6" tabindex="-1"></a>      <span class="at">z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n_samples),</span>
+<span id="cb373-7"><a href="stats-probability.html#cb373-7" tabindex="-1"></a>      <span class="at">n =</span> n_samples</span>
+<span id="cb373-8"><a href="stats-probability.html#cb373-8" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb373-9"><a href="stats-probability.html#cb373-9" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">in_A =</span> (<span class="sc">-</span><span class="fl">1.96</span> <span class="sc">&lt;=</span> z) <span class="sc">&amp;</span> (z <span class="sc">&lt;=</span> <span class="sc">+</span><span class="fl">1.96</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb373-10"><a href="stats-probability.html#cb373-10" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">count_total =</span> <span class="fu">n</span>(), <span class="at">count_A =</span> <span class="fu">sum</span>(in_A), <span class="at">fr =</span> <span class="fu">mean</span>(in_A))</span>
+<span id="cb373-11"><a href="stats-probability.html#cb373-11" tabindex="-1"></a>  }</span>
+<span id="cb373-12"><a href="stats-probability.html#cb373-12" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 3
+##   count_total count_A    fr
+##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
+## 1          10      10 1    
+## 2         100      97 0.97 
+## 3        1000     959 0.959
+## 4       10000    9552 0.955</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li><code>fr</code> is limiting towards <code>~0.95</code></li>
@@ -1237,18 +1237,18 @@ For the example above, we have</p>
 <div id="q3-modify-the-code-below-to-consider-the-set-a-z-z-2." class="section level3 hasAnchor" number="26.3.1">
 <h3><span class="header-section-number">26.3.1</span> <strong>q3</strong> Modify the code below to consider the set <span class="math inline">\(A = {z | z = 2}\)</span>.<a href="stats-probability.html#q3-modify-the-code-below-to-consider-the-set-a-z-z-2." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: Remember the difference between <code>=</code> and <code>==</code>!</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="stats-probability.html#cb373-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Modify the code below</span></span>
-<span id="cb373-2"><a href="stats-probability.html#cb373-2" tabindex="-1"></a><span class="fu">map_dfr</span>(</span>
-<span id="cb373-3"><a href="stats-probability.html#cb373-3" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="fl">1e4</span>),</span>
-<span id="cb373-4"><a href="stats-probability.html#cb373-4" tabindex="-1"></a>  <span class="cf">function</span>(n_samples) {</span>
-<span id="cb373-5"><a href="stats-probability.html#cb373-5" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb373-6"><a href="stats-probability.html#cb373-6" tabindex="-1"></a>      <span class="at">z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n_samples),</span>
-<span id="cb373-7"><a href="stats-probability.html#cb373-7" tabindex="-1"></a>      <span class="at">n =</span> n_samples</span>
-<span id="cb373-8"><a href="stats-probability.html#cb373-8" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb373-9"><a href="stats-probability.html#cb373-9" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">in_A =</span> (z <span class="sc">==</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb373-10"><a href="stats-probability.html#cb373-10" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">count_total =</span> <span class="fu">n</span>(), <span class="at">count_A =</span> <span class="fu">sum</span>(in_A), <span class="at">fr =</span> <span class="fu">mean</span>(in_A))</span>
-<span id="cb373-11"><a href="stats-probability.html#cb373-11" tabindex="-1"></a>  }</span>
-<span id="cb373-12"><a href="stats-probability.html#cb373-12" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="stats-probability.html#cb375-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Modify the code below</span></span>
+<span id="cb375-2"><a href="stats-probability.html#cb375-2" tabindex="-1"></a><span class="fu">map_dfr</span>(</span>
+<span id="cb375-3"><a href="stats-probability.html#cb375-3" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="fl">1e4</span>),</span>
+<span id="cb375-4"><a href="stats-probability.html#cb375-4" tabindex="-1"></a>  <span class="cf">function</span>(n_samples) {</span>
+<span id="cb375-5"><a href="stats-probability.html#cb375-5" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb375-6"><a href="stats-probability.html#cb375-6" tabindex="-1"></a>      <span class="at">z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n_samples),</span>
+<span id="cb375-7"><a href="stats-probability.html#cb375-7" tabindex="-1"></a>      <span class="at">n =</span> n_samples</span>
+<span id="cb375-8"><a href="stats-probability.html#cb375-8" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb375-9"><a href="stats-probability.html#cb375-9" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">in_A =</span> (z <span class="sc">==</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb375-10"><a href="stats-probability.html#cb375-10" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">count_total =</span> <span class="fu">n</span>(), <span class="at">count_A =</span> <span class="fu">sum</span>(in_A), <span class="at">fr =</span> <span class="fu">mean</span>(in_A))</span>
+<span id="cb375-11"><a href="stats-probability.html#cb375-11" tabindex="-1"></a>  }</span>
+<span id="cb375-12"><a href="stats-probability.html#cb375-12" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;
@@ -1261,17 +1261,17 @@ For the example above, we have</p>
 <li><code>fr</code> is consistenly zero</li>
 </ul>
 <p>We can also understand this phenomenon in terms of areas; the following graph visualizes the set <span class="math inline">\(A = {z | z = 2}\)</span> against a standard normal.</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="stats-probability.html#cb375-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb375-2"><a href="stats-probability.html#cb375-2" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb375-3"><a href="stats-probability.html#cb375-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
-<span id="cb375-4"><a href="stats-probability.html#cb375-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
-<span id="cb375-5"><a href="stats-probability.html#cb375-5" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb375-6"><a href="stats-probability.html#cb375-6" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">z =</span> <span class="dv">2</span>, <span class="at">d =</span> <span class="fu">dnorm</span>(<span class="dv">2</span>)),</span>
-<span id="cb375-7"><a href="stats-probability.html#cb375-7" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(z, <span class="dv">0</span>, <span class="at">xend =</span> <span class="dv">2</span>, <span class="at">yend =</span> d, <span class="at">color =</span> <span class="st">&quot;Set A&quot;</span>)</span>
-<span id="cb375-8"><a href="stats-probability.html#cb375-8" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb375-9"><a href="stats-probability.html#cb375-9" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb375-10"><a href="stats-probability.html#cb375-10" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="d16-e-stat02-probability-solution_files/figure-html/q3-vis-1.png" width="672" /></p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="stats-probability.html#cb377-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb377-2"><a href="stats-probability.html#cb377-2" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb377-3"><a href="stats-probability.html#cb377-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
+<span id="cb377-4"><a href="stats-probability.html#cb377-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
+<span id="cb377-5"><a href="stats-probability.html#cb377-5" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb377-6"><a href="stats-probability.html#cb377-6" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">z =</span> <span class="dv">2</span>, <span class="at">d =</span> <span class="fu">dnorm</span>(<span class="dv">2</span>)),</span>
+<span id="cb377-7"><a href="stats-probability.html#cb377-7" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(z, <span class="dv">0</span>, <span class="at">xend =</span> <span class="dv">2</span>, <span class="at">yend =</span> d, <span class="at">color =</span> <span class="st">&quot;Set A&quot;</span>)</span>
+<span id="cb377-8"><a href="stats-probability.html#cb377-8" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb377-9"><a href="stats-probability.html#cb377-9" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb377-10"><a href="stats-probability.html#cb377-10" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="d16-e-stat02-probability-solution_files/figure-html/q3-vis-1.png" alt="" width="672" /></p>
 <p>Note that this set <span class="math inline">\(A\)</span> has nonzero height but zero width. Zero width corresponds to zero area, and thus zero probability.</p>
 <p><em>This is weird</em>. If we’re using a distribution to model something physical, say a material property, this means that any specific material property has zero probability of occurring. But in practice, some specific value will be realized! If you’d like to learn more, take a look at Note [3].</p>
 </div>
@@ -1280,43 +1280,43 @@ For the example above, we have</p>
 <h2><span class="header-section-number">26.4</span> Two expressions of the same information<a href="stats-probability.html#two-expressions-of-the-same-information" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ------------------------- -->
 <p>There is a bit more terminology associated with distributions. The <span class="math inline">\(\rho(x)\)</span> we considered above is called a <a href="https://en.wikipedia.org/wiki/Probability_density_function">probability density function</a> (PDF); it is the function we integrate in order to obtain a probability. In R, the PDF has the <code>d</code> prefix, for instance <code>dnorm</code>. For example, the standard normal has the following PDF.</p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="stats-probability.html#cb376-1" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb376-2"><a href="stats-probability.html#cb376-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
-<span id="cb376-3"><a href="stats-probability.html#cb376-3" tabindex="-1"></a></span>
-<span id="cb376-4"><a href="stats-probability.html#cb376-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
-<span id="cb376-5"><a href="stats-probability.html#cb376-5" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb376-6"><a href="stats-probability.html#cb376-6" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb376-7"><a href="stats-probability.html#cb376-7" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;z&quot;</span>,</span>
-<span id="cb376-8"><a href="stats-probability.html#cb376-8" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Probability Density&quot;</span>,</span>
-<span id="cb376-9"><a href="stats-probability.html#cb376-9" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Probability Density Function&quot;</span></span>
-<span id="cb376-10"><a href="stats-probability.html#cb376-10" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d16-e-stat02-probability-solution_files/figure-html/vis-pdf-1.png" width="672" /></p>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="stats-probability.html#cb378-1" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb378-2"><a href="stats-probability.html#cb378-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z)) <span class="sc">%&gt;%</span></span>
+<span id="cb378-3"><a href="stats-probability.html#cb378-3" tabindex="-1"></a></span>
+<span id="cb378-4"><a href="stats-probability.html#cb378-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
+<span id="cb378-5"><a href="stats-probability.html#cb378-5" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb378-6"><a href="stats-probability.html#cb378-6" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb378-7"><a href="stats-probability.html#cb378-7" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;z&quot;</span>,</span>
+<span id="cb378-8"><a href="stats-probability.html#cb378-8" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Probability Density&quot;</span>,</span>
+<span id="cb378-9"><a href="stats-probability.html#cb378-9" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Probability Density Function&quot;</span></span>
+<span id="cb378-10"><a href="stats-probability.html#cb378-10" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d16-e-stat02-probability-solution_files/figure-html/vis-pdf-1.png" alt="" width="672" /></p>
 <p>There is also a <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function">cumulative distribution function</a>, which is related to the PDF <span class="math inline">\(\rho(x)\)</span> via</p>
 <p><span class="math display">\[R(x) = \int_{-\infty}^x \rho(s) ds.\]</span></p>
 <p>In R, the CDF has the prefix <code>p</code>, such as <code>pnorm</code>. For example, the standard normal has the following CDF.</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="stats-probability.html#cb377-1" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb377-2"><a href="stats-probability.html#cb377-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">pnorm</span>(z)) <span class="sc">%&gt;%</span></span>
-<span id="cb377-3"><a href="stats-probability.html#cb377-3" tabindex="-1"></a></span>
-<span id="cb377-4"><a href="stats-probability.html#cb377-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, p)) <span class="sc">+</span></span>
-<span id="cb377-5"><a href="stats-probability.html#cb377-5" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb377-6"><a href="stats-probability.html#cb377-6" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb377-7"><a href="stats-probability.html#cb377-7" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;z&quot;</span>,</span>
-<span id="cb377-8"><a href="stats-probability.html#cb377-8" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Probability&quot;</span>,</span>
-<span id="cb377-9"><a href="stats-probability.html#cb377-9" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Cumulative Distribution Function&quot;</span></span>
-<span id="cb377-10"><a href="stats-probability.html#cb377-10" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d16-e-stat02-probability-solution_files/figure-html/vis-cdf-1.png" width="672" /></p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="stats-probability.html#cb379-1" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">+</span><span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb379-2"><a href="stats-probability.html#cb379-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">pnorm</span>(z)) <span class="sc">%&gt;%</span></span>
+<span id="cb379-3"><a href="stats-probability.html#cb379-3" tabindex="-1"></a></span>
+<span id="cb379-4"><a href="stats-probability.html#cb379-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, p)) <span class="sc">+</span></span>
+<span id="cb379-5"><a href="stats-probability.html#cb379-5" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb379-6"><a href="stats-probability.html#cb379-6" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb379-7"><a href="stats-probability.html#cb379-7" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;z&quot;</span>,</span>
+<span id="cb379-8"><a href="stats-probability.html#cb379-8" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Probability&quot;</span>,</span>
+<span id="cb379-9"><a href="stats-probability.html#cb379-9" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Cumulative Distribution Function&quot;</span></span>
+<span id="cb379-10"><a href="stats-probability.html#cb379-10" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d16-e-stat02-probability-solution_files/figure-html/vis-cdf-1.png" alt="" width="672" /></p>
 <p>Note that, by definition, the CDF gives the probability over the set <span class="math inline">\(A(x) = {x&#39; | x&#39; &lt;= x}\)</span> (this is just all the values less than the value we’re considering <span class="math inline">\(x\)</span>). Thus the CDF returns a probability (which explains the <code>p</code> prefix for R functions).</p>
 <div id="q4-use-pnorm-to-compute-the-probability-that-z-normmean-0-sd-1-is-less-than-or-equal-to-zero.-compare-this-against-your-frequency-prediction-from-q1." class="section level3 hasAnchor" number="26.4.1">
 <h3><span class="header-section-number">26.4.1</span> <strong>q4</strong> Use <code>pnorm</code> to compute the probability that <code>Z ~ norm(mean = 0, sd = 1)</code> is less than or equal to zero. Compare this against your frequency prediction from <strong>q1</strong>.<a href="stats-probability.html#q4-use-pnorm-to-compute-the-probability-that-z-normmean-0-sd-1-is-less-than-or-equal-to-zero.-compare-this-against-your-frequency-prediction-from-q1." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="stats-probability.html#cb378-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the probability that Z &lt;= 0, assign to p0</span></span>
-<span id="cb378-2"><a href="stats-probability.html#cb378-2" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="at">q =</span> <span class="dv">0</span>)</span>
-<span id="cb378-3"><a href="stats-probability.html#cb378-3" tabindex="-1"></a>p0</span></code></pre></div>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="stats-probability.html#cb380-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the probability that Z &lt;= 0, assign to p0</span></span>
+<span id="cb380-2"><a href="stats-probability.html#cb380-2" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="at">q =</span> <span class="dv">0</span>)</span>
+<span id="cb380-3"><a href="stats-probability.html#cb380-3" tabindex="-1"></a>p0</span></code></pre></div>
 <pre><code>## [1] 0.5</code></pre>
 <p>Use the following code to check your answer.</p>
-<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="stats-probability.html#cb380-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb380-2"><a href="stats-probability.html#cb380-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(p0 <span class="sc">==</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="stats-probability.html#cb382-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb382-2"><a href="stats-probability.html#cb382-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(p0 <span class="sc">==</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="stats-probability.html#cb382-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="stats-probability.html#cb384-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1327,15 +1327,15 @@ For the example above, we have</p>
 </div>
 <div id="q5-using-the-identity-above-use-pnorm-to-compute-the-probability-that--1.96-z-1.96-with-z-normmean-0-sd-1." class="section level3 hasAnchor" number="26.4.2">
 <h3><span class="header-section-number">26.4.2</span> <strong>q5</strong> Using the identity above, use <code>pnorm</code> to compute the probability that <span class="math inline">\(-1.96 &lt;= Z &lt;= +1.96\)</span> with <code>Z ~ norm(mean = 0, sd = 1)</code>.<a href="stats-probability.html#q5-using-the-identity-above-use-pnorm-to-compute-the-probability-that--1.96-z-1.96-with-z-normmean-0-sd-1." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="stats-probability.html#cb384-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the probability that -1.96 &lt;= Z &lt;= +1.96, assign to pI</span></span>
-<span id="cb384-2"><a href="stats-probability.html#cb384-2" tabindex="-1"></a>pI <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="at">q =</span> <span class="sc">+</span><span class="fl">1.96</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="at">q =</span> <span class="sc">-</span><span class="fl">1.96</span>)</span>
-<span id="cb384-3"><a href="stats-probability.html#cb384-3" tabindex="-1"></a>pI</span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="stats-probability.html#cb386-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the probability that -1.96 &lt;= Z &lt;= +1.96, assign to pI</span></span>
+<span id="cb386-2"><a href="stats-probability.html#cb386-2" tabindex="-1"></a>pI <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="at">q =</span> <span class="sc">+</span><span class="fl">1.96</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="at">q =</span> <span class="sc">-</span><span class="fl">1.96</span>)</span>
+<span id="cb386-3"><a href="stats-probability.html#cb386-3" tabindex="-1"></a>pI</span></code></pre></div>
 <pre><code>## [1] 0.9500042</code></pre>
 <p>Use the following code to check your answer.</p>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="stats-probability.html#cb386-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb386-2"><a href="stats-probability.html#cb386-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(pI <span class="sc">-</span> <span class="fl">0.95</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="stats-probability.html#cb388-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb388-2"><a href="stats-probability.html#cb388-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(pI <span class="sc">-</span> <span class="fl">0.95</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="stats-probability.html#cb388-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="stats-probability.html#cb390-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <!-- include-exit-ticket -->
 </div>

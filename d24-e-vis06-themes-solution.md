@@ -16,7 +16,7 @@ mpg %>%
   geom_point()
 ```
 
-<img src="d24-e-vis06-themes-solution_files/figure-html/q1-task-1.png" width="672" />
+<img src="d24-e-vis06-themes-solution_files/figure-html/q1-task-1.png" alt="" width="672" />
 
 
 ``` r
@@ -27,7 +27,7 @@ mpg %>%
   theme_void()
 ```
 
-<img src="d24-e-vis06-themes-solution_files/figure-html/q1-solution-1.png" width="672" />
+<img src="d24-e-vis06-themes-solution_files/figure-html/q1-solution-1.png" alt="" width="672" />
 
 When I make presentation-quality figures, I often start with the following stub code:
 
@@ -77,7 +77,7 @@ mpg %>%
   )
 ```
 
-<img src="d24-e-vis06-themes-solution_files/figure-html/q2-task-1.png" width="672" />
+<img src="d24-e-vis06-themes-solution_files/figure-html/q2-task-1.png" alt="" width="672" />
 
 
 ``` r
@@ -91,7 +91,7 @@ mpg %>%
   )
 ```
 
-<img src="d24-e-vis06-themes-solution_files/figure-html/q2-solution-1.png" width="672" />
+<img src="d24-e-vis06-themes-solution_files/figure-html/q2-solution-1.png" alt="" width="672" />
 
 **Observations**:
 
@@ -115,7 +115,7 @@ mpg %>%
   )
 ```
 
-<img src="d24-e-vis06-themes-solution_files/figure-html/q3-task-1.png" width="672" />
+<img src="d24-e-vis06-themes-solution_files/figure-html/q3-task-1.png" alt="" width="672" />
 
 Here's one possible graph:
 
@@ -138,11 +138,11 @@ mpg %>%
 ```
 ## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
 ## ℹ Please use the `linewidth` argument instead.
-## This warning is displayed once every 8 hours.
+## This warning is displayed once per session.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.
 ```
 
-<img src="d24-e-vis06-themes-solution_files/figure-html/q3-solution-1.png" width="672" />
+<img src="d24-e-vis06-themes-solution_files/figure-html/q3-solution-1.png" alt="" width="672" />
 
 <!-- include-exit-ticket -->

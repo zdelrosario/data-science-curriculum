@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>18 Vis: Bar Charts | Data Science: Exercise Solutions</title>
   <meta name="description" content="18 Vis: Bar Charts | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="18 Vis: Bar Charts | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1087,11 +1087,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Reading</em>: (None, this is the reading)</p>
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="vis-bar-charts.html#cb192-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1106,7 +1106,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb194-2"><a href="vis-bar-charts.html#cb194-2" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">a =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb194-3"><a href="vis-bar-charts.html#cb194-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> a)) <span class="sc">+</span></span>
 <span id="cb194-4"><a href="vis-bar-charts.html#cb194-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" /></p>
 <ul>
 <li><code>geom_col()</code> is used to show <code>x, y</code> pairs. It requires both an <code>x</code> and <code>y</code> aesthetic.</li>
 </ul>
@@ -1117,14 +1117,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb195-5"><a href="vis-bar-charts.html#cb195-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
 <span id="cb195-6"><a href="vis-bar-charts.html#cb195-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> b)) <span class="sc">+</span></span>
 <span id="cb195-7"><a href="vis-bar-charts.html#cb195-7" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" /></p>
 <p><code>geom_bar()</code> effectively counts the number of rows belonging to each unique value of the <code>x</code> aesthetic. We can do a <em>manual</em> <code>geom_bar()</code> by using the <code>count()</code> function:</p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="vis-bar-charts.html#cb196-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Do not edit this</span></span>
 <span id="cb196-2"><a href="vis-bar-charts.html#cb196-2" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">a =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb196-3"><a href="vis-bar-charts.html#cb196-3" tabindex="-1"></a>  <span class="fu">count</span>(a) <span class="sc">%&gt;%</span> <span class="co"># Count adds the column `n` of counts</span></span>
 <span id="cb196-4"><a href="vis-bar-charts.html#cb196-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> n)) <span class="sc">+</span></span>
 <span id="cb196-5"><a href="vis-bar-charts.html#cb196-5" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-3-1.png" alt="" width="672" /></p>
 <div id="q1-convert-this-plot" class="section level3 hasAnchor" number="18.1.1">
 <h3><span class="header-section-number">18.1.1</span> <strong>q1</strong> Convert this plot<a href="vis-bar-charts.html#q1-convert-this-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Convert the following <code>geom_bar()</code> plot into the same visual using <code>geom_col()</code>.</p>
@@ -1132,7 +1132,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb197-2"><a href="vis-bar-charts.html#cb197-2" tabindex="-1"></a>  <span class="fu">count</span>(trans) <span class="sc">%&gt;%</span></span>
 <span id="cb197-3"><a href="vis-bar-charts.html#cb197-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> trans, <span class="at">y =</span> n)) <span class="sc">+</span></span>
 <span id="cb197-4"><a href="vis-bar-charts.html#cb197-4" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q1-task-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q1-task-1.png" alt="" width="672" /></p>
 </div>
 </div>
 <div id="fundamentals-of-the-bar-chart" class="section level2 hasAnchor" number="18.2">
@@ -1157,7 +1157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb198-5"><a href="vis-bar-charts.html#cb198-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
 <span id="cb198-6"><a href="vis-bar-charts.html#cb198-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> b)) <span class="sc">+</span></span>
 <span id="cb198-7"><a href="vis-bar-charts.html#cb198-7" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-4-1.png" alt="" width="672" /></p>
 <p>It’s hard to tell what’s happening, but the bars for <code>a == 2</code> are <em>stacked</em>. But if we try to interpret this plot, it seems like <code>b == 3</code> when <code>a == 2</code>, which is not true.</p>
 <p>*There’s an exception when we have additional aesthetics such as <code>fill</code> or <code>color</code>.</p>
 <p>For the <code>mpg</code> dataset, we can see that the pairs <code>cty, hwy</code> clearly don’t have this one-to-one property:</p>
@@ -1184,7 +1184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="vis-bar-charts.html#cb201-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
 <span id="cb201-2"><a href="vis-bar-charts.html#cb201-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
 <span id="cb201-3"><a href="vis-bar-charts.html#cb201-3" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q2-task-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q2-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:
 - Since <code>position = "stacked"</code> is the default for <code>geom_col()</code>, we see not the real <code>hwy</code> values, but effectively a sum at each <code>cty</code> value!</p>
 </div>
@@ -1200,7 +1200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb202-6"><a href="vis-bar-charts.html#cb202-6" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
 <span id="cb202-7"><a href="vis-bar-charts.html#cb202-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> b, <span class="at">fill =</span> c)) <span class="sc">+</span></span>
 <span id="cb202-8"><a href="vis-bar-charts.html#cb202-8" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-5-1.png" alt="" width="672" /></p>
 <p>Stacked bar charts have their uses, but it’s usually better to find a different way to show this kind of data. In particular, comparing <em>within</em> a stack is difficult, since the bars do not all start at zero. One way to make comparisons easier is to <em>dodge</em> the bars, so they all start at zero. We can do this with the <code>position = "dodge"</code> argument:</p>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="vis-bar-charts.html#cb203-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Do not edit this</span></span>
 <span id="cb203-2"><a href="vis-bar-charts.html#cb203-2" tabindex="-1"></a><span class="fu">tibble</span>(</span>
@@ -1210,7 +1210,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb203-6"><a href="vis-bar-charts.html#cb203-6" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
 <span id="cb203-7"><a href="vis-bar-charts.html#cb203-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> b, <span class="at">fill =</span> c)) <span class="sc">+</span></span>
 <span id="cb203-8"><a href="vis-bar-charts.html#cb203-8" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-6-1.png" alt="" width="672" /></p>
 <p>Note that this naturally “shrinks” some of the bars so we can fit them near the same value. Don’t mistake these bars as belonging to other <code>a</code> values (like 1.75, 2.25)—this is just an artifact of the dodging.</p>
 <p>Note that we need to put the <code>position = "dodge"</code> argument inside the relevant geometry, and not, say, <code>ggplot()</code>.</p>
 <div id="q3-compare-these-plots" class="section level3 hasAnchor" number="18.3.1">
@@ -1220,7 +1220,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb204-2"><a href="vis-bar-charts.html#cb204-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
 <span id="cb204-3"><a href="vis-bar-charts.html#cb204-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> class, <span class="at">fill =</span> class)) <span class="sc">+</span></span>
 <span id="cb204-4"><a href="vis-bar-charts.html#cb204-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-v1-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-v1-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:
 In this dataset:
 - <code>SUV</code>’s are most numerous, followed by <code>compact</code> and <code>midsize</code>
@@ -1229,7 +1229,7 @@ In this dataset:
 <span id="cb205-2"><a href="vis-bar-charts.html#cb205-2" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
 <span id="cb205-3"><a href="vis-bar-charts.html#cb205-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(class, <span class="at">fill =</span> drv)) <span class="sc">+</span></span>
 <span id="cb205-4"><a href="vis-bar-charts.html#cb205-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-v2-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-v2-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:
 In this dataset:
 - <code>SUV</code>’s are most numerous, followed by <code>compact</code> and <code>midsize</code>
@@ -1258,7 +1258,7 @@ In this dataset:
 <span id="cb206-2"><a href="vis-bar-charts.html#cb206-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> manufacturer, <span class="at">fill =</span> class)) <span class="sc">+</span></span>
 <span id="cb206-3"><a href="vis-bar-charts.html#cb206-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
 <span id="cb206-4"><a href="vis-bar-charts.html#cb206-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">270</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="dv">0</span>))</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-task-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q4-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>
 - Certain manufacturers seem to favor particular classes of car. For instance,
 <em>in this dataset</em>:
@@ -1280,7 +1280,7 @@ In this dataset:
 <span id="cb207-7"><a href="vis-bar-charts.html#cb207-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> b)) <span class="sc">+</span></span>
 <span id="cb207-8"><a href="vis-bar-charts.html#cb207-8" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
 <span id="cb207-9"><a href="vis-bar-charts.html#cb207-9" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>c)</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-7-1.png" alt="" width="672" /></p>
 <p><code>facet_grid()</code> allows us to specify a column for horizontal and/or vertical faceting, so we can provide up to two. Here’s a lineup of examples:</p>
 <div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="vis-bar-charts.html#cb208-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Do not edit this</span></span>
 <span id="cb208-2"><a href="vis-bar-charts.html#cb208-2" tabindex="-1"></a><span class="co"># Horizontal facets</span></span>
@@ -1292,7 +1292,7 @@ In this dataset:
 <span id="cb208-8"><a href="vis-bar-charts.html#cb208-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> b)) <span class="sc">+</span></span>
 <span id="cb208-9"><a href="vis-bar-charts.html#cb208-9" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
 <span id="cb208-10"><a href="vis-bar-charts.html#cb208-10" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>c)</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-1.png" alt="" width="672" /></p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="vis-bar-charts.html#cb209-1" tabindex="-1"></a><span class="co"># Vertical facets</span></span>
 <span id="cb209-2"><a href="vis-bar-charts.html#cb209-2" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb209-3"><a href="vis-bar-charts.html#cb209-3" tabindex="-1"></a>  <span class="at">a =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
@@ -1302,7 +1302,7 @@ In this dataset:
 <span id="cb209-7"><a href="vis-bar-charts.html#cb209-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> b)) <span class="sc">+</span></span>
 <span id="cb209-8"><a href="vis-bar-charts.html#cb209-8" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
 <span id="cb209-9"><a href="vis-bar-charts.html#cb209-9" tabindex="-1"></a>  <span class="fu">facet_grid</span>(c <span class="sc">~</span> .)</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-2.png" alt="" width="672" /></p>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="vis-bar-charts.html#cb210-1" tabindex="-1"></a><span class="co"># Two-way faceting</span></span>
 <span id="cb210-2"><a href="vis-bar-charts.html#cb210-2" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb210-3"><a href="vis-bar-charts.html#cb210-3" tabindex="-1"></a>  <span class="at">a =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
@@ -1313,16 +1313,18 @@ In this dataset:
 <span id="cb210-8"><a href="vis-bar-charts.html#cb210-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> b)) <span class="sc">+</span></span>
 <span id="cb210-9"><a href="vis-bar-charts.html#cb210-9" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
 <span id="cb210-10"><a href="vis-bar-charts.html#cb210-10" tabindex="-1"></a>  <span class="fu">facet_grid</span>(c <span class="sc">~</span> d)</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-3.png" width="672" /></p>
+<pre><code>## Warning in min(x): no non-missing arguments to min; returning Inf</code></pre>
+<pre><code>## Warning in max(x): no non-missing arguments to max; returning -Inf</code></pre>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/unnamed-chunk-8-3.png" alt="" width="672" /></p>
 <p>In general, if you have just one variable to facet on, you can use <code>facet_wrap()</code> as a default. If you want more control and options over your faceting, use <code>facet_grid()</code>. We’ll talk more about facets in a future exercise.</p>
 <div id="q5-improve-this-plot" class="section level3 hasAnchor" number="18.4.1">
 <h3><span class="header-section-number">18.4.1</span> <strong>q5</strong> Improve this plot<a href="vis-bar-charts.html#q5-improve-this-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The following graph is hard to read. Experiment with other choices of faceting to make the visual more convenient to read.</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="vis-bar-charts.html#cb211-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb211-2"><a href="vis-bar-charts.html#cb211-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cyl)) <span class="sc">+</span></span>
-<span id="cb211-3"><a href="vis-bar-charts.html#cb211-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb211-4"><a href="vis-bar-charts.html#cb211-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> manufacturer)</span></code></pre></div>
-<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q5-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="vis-bar-charts.html#cb213-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb213-2"><a href="vis-bar-charts.html#cb213-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cyl)) <span class="sc">+</span></span>
+<span id="cb213-3"><a href="vis-bar-charts.html#cb213-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb213-4"><a href="vis-bar-charts.html#cb213-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> manufacturer)</span></code></pre></div>
+<p><img src="d08-e-vis01-bar-charts-solution_files/figure-html/q5-task-1.png" alt="" width="672" /></p>
 <!-- include-exit-ticket -->
 
 </div>

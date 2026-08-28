@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>22 Stats: Intro to Densities | Data Science: Exercise Solutions</title>
   <meta name="description" content="22 Stats: Intro to Densities | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="22 Stats: Intro to Densities | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,13 +1085,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">22</span> Stats: Intro to Densities<a href="stats-intro-to-densities.html#stats-intro-to-densities" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: We will use <em>densities</em> to model and understand data. To that end, we’ll need to understand some key ideas about densities. Namely, we’ll discuss <em>random variables</em>, how we model random variables with densities, and the importance of <em>random seeds</em>. We’re not going to learn everything we need to work with data in this single exercise, but this will be our starting point.</p>
 <p><em>Reading</em>: (None; this exercise <em>is</em> the reading.)</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="stats-intro-to-densities.html#cb269-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="stats-intro-to-densities.html#cb271-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1101,25 +1101,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- -------------------------------------------------- -->
 <p>Fundamentally, a density is a <em>function</em>: It takes an input, and returns an output. A density has a special interpretation though; it represents the <em>relative chance</em> of particular values occurring.</p>
 <p>First, let’s look at a density of some real data:</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="stats-intro-to-densities.html#cb271-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
-<span id="cb271-2"><a href="stats-intro-to-densities.html#cb271-2" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;midsize&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb271-3"><a href="stats-intro-to-densities.html#cb271-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb271-4"><a href="stats-intro-to-densities.html#cb271-4" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p><img src="d12-e-stat01-densities-solution_files/figure-html/ex-mpg-1.png" width="672" /></p>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="stats-intro-to-densities.html#cb273-1" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span></span>
+<span id="cb273-2"><a href="stats-intro-to-densities.html#cb273-2" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;midsize&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb273-3"><a href="stats-intro-to-densities.html#cb273-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(cty, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb273-4"><a href="stats-intro-to-densities.html#cb273-4" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
+<p><img src="d12-e-stat01-densities-solution_files/figure-html/ex-mpg-1.png" alt="" width="672" /></p>
 <p>This density indicates that a value around <code>18</code> is more prevalent than other values of <code>cty</code>, at least for <code>midsize</code> vehicles in this dataset. Note that the plot above was generated by taking a set of <code>cty</code> values and smoothing them to create a density.</p>
 <p>Next, let’s look at a normal density:</p>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="stats-intro-to-densities.html#cb272-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb272-2"><a href="stats-intro-to-densities.html#cb272-2" tabindex="-1"></a>df_norm_d <span class="ot">&lt;-</span></span>
-<span id="cb272-3"><a href="stats-intro-to-densities.html#cb272-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">+</span><span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb272-4"><a href="stats-intro-to-densities.html#cb272-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>))</span>
-<span id="cb272-5"><a href="stats-intro-to-densities.html#cb272-5" tabindex="-1"></a></span>
-<span id="cb272-6"><a href="stats-intro-to-densities.html#cb272-6" tabindex="-1"></a>df_norm_d <span class="sc">%&gt;%</span></span>
-<span id="cb272-7"><a href="stats-intro-to-densities.html#cb272-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
-<span id="cb272-8"><a href="stats-intro-to-densities.html#cb272-8" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb272-9"><a href="stats-intro-to-densities.html#cb272-9" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb272-10"><a href="stats-intro-to-densities.html#cb272-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;density&quot;</span></span>
-<span id="cb272-11"><a href="stats-intro-to-densities.html#cb272-11" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d12-e-stat01-densities-solution_files/figure-html/ex-density-1.png" width="672" /></p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="stats-intro-to-densities.html#cb274-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb274-2"><a href="stats-intro-to-densities.html#cb274-2" tabindex="-1"></a>df_norm_d <span class="ot">&lt;-</span></span>
+<span id="cb274-3"><a href="stats-intro-to-densities.html#cb274-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">z =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">+</span><span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb274-4"><a href="stats-intro-to-densities.html#cb274-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dnorm</span>(z, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>))</span>
+<span id="cb274-5"><a href="stats-intro-to-densities.html#cb274-5" tabindex="-1"></a></span>
+<span id="cb274-6"><a href="stats-intro-to-densities.html#cb274-6" tabindex="-1"></a>df_norm_d <span class="sc">%&gt;%</span></span>
+<span id="cb274-7"><a href="stats-intro-to-densities.html#cb274-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(z, d)) <span class="sc">+</span></span>
+<span id="cb274-8"><a href="stats-intro-to-densities.html#cb274-8" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb274-9"><a href="stats-intro-to-densities.html#cb274-9" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb274-10"><a href="stats-intro-to-densities.html#cb274-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;density&quot;</span></span>
+<span id="cb274-11"><a href="stats-intro-to-densities.html#cb274-11" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d12-e-stat01-densities-solution_files/figure-html/ex-density-1.png" alt="" width="672" /></p>
 <p>This plot of a <em>normal density</em> shows that the value <code>z = 0</code> is most likely, while values both larger and smaller are less likely to occur. Note that the the density above was generated by <code>dnorm(z, mean = 0, sd = 1)</code>. The values <code>[mean, sd]</code> are called <em>parameters</em>. Rather than requiring an entire dataset to define this density, the normal is fully defined by specifying values for <code>mean</code> and <code>sd</code>.</p>
 <p>However, note that the normal density is quite a bit simpler than the density of <code>cty</code> values above. This is a general trend; “named” densities like the normal are simplified models we use to represent real data. Picking an appropriate model is part of the challenge in statistics.</p>
 <p><code>R</code> comes with a great many densities implemented:</p>
@@ -1152,30 +1152,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In <code>R</code> we access a density by prefixing its name with the letter <code>d</code>.</p>
 <div id="q1-modify-the-code-below-to-evaluate-a-uniform-density-with-min--1-and-max-1.-assign-this-value-to-d." class="section level3 hasAnchor" number="22.1.1">
 <h3><span class="header-section-number">22.1.1</span> <strong>q1</strong> Modify the code below to evaluate a uniform density with <code>min = -1</code> and <code>max = +1</code>. Assign this value to <code>d</code>.<a href="stats-intro-to-densities.html#q1-modify-the-code-below-to-evaluate-a-uniform-density-with-min--1-and-max-1.-assign-this-value-to-d." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="stats-intro-to-densities.html#cb273-1" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
-<span id="cb273-2"><a href="stats-intro-to-densities.html#cb273-2" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">+</span><span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb273-3"><a href="stats-intro-to-densities.html#cb273-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dunif</span>(x, <span class="at">min =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max =</span> <span class="sc">+</span><span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="stats-intro-to-densities.html#cb275-1" tabindex="-1"></a>df_q1 <span class="ot">&lt;-</span></span>
+<span id="cb275-2"><a href="stats-intro-to-densities.html#cb275-2" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">+</span><span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb275-3"><a href="stats-intro-to-densities.html#cb275-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dunif</span>(x, <span class="at">min =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max =</span> <span class="sc">+</span><span class="dv">1</span>))</span></code></pre></div>
 <p>Use the following test to check your answer.</p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="stats-intro-to-densities.html#cb274-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
-<span id="cb274-2"><a href="stats-intro-to-densities.html#cb274-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb274-3"><a href="stats-intro-to-densities.html#cb274-3" tabindex="-1"></a>  <span class="fu">all</span>(</span>
-<span id="cb274-4"><a href="stats-intro-to-densities.html#cb274-4" tabindex="-1"></a>    df_q1 <span class="sc">%&gt;%</span></span>
-<span id="cb274-5"><a href="stats-intro-to-densities.html#cb274-5" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="sc">-</span><span class="dv">1</span> <span class="sc">&lt;=</span> x, x <span class="sc">&lt;=</span> <span class="sc">+</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb274-6"><a href="stats-intro-to-densities.html#cb274-6" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">flag =</span> d <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb274-7"><a href="stats-intro-to-densities.html#cb274-7" tabindex="-1"></a>      <span class="fu">pull</span>(flag)</span>
-<span id="cb274-8"><a href="stats-intro-to-densities.html#cb274-8" tabindex="-1"></a>    )</span>
-<span id="cb274-9"><a href="stats-intro-to-densities.html#cb274-9" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="stats-intro-to-densities.html#cb276-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this</span></span>
+<span id="cb276-2"><a href="stats-intro-to-densities.html#cb276-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb276-3"><a href="stats-intro-to-densities.html#cb276-3" tabindex="-1"></a>  <span class="fu">all</span>(</span>
+<span id="cb276-4"><a href="stats-intro-to-densities.html#cb276-4" tabindex="-1"></a>    df_q1 <span class="sc">%&gt;%</span></span>
+<span id="cb276-5"><a href="stats-intro-to-densities.html#cb276-5" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="sc">-</span><span class="dv">1</span> <span class="sc">&lt;=</span> x, x <span class="sc">&lt;=</span> <span class="sc">+</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb276-6"><a href="stats-intro-to-densities.html#cb276-6" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">flag =</span> d <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb276-7"><a href="stats-intro-to-densities.html#cb276-7" tabindex="-1"></a>      <span class="fu">pull</span>(flag)</span>
+<span id="cb276-8"><a href="stats-intro-to-densities.html#cb276-8" tabindex="-1"></a>    )</span>
+<span id="cb276-9"><a href="stats-intro-to-densities.html#cb276-9" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="stats-intro-to-densities.html#cb276-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb276-2"><a href="stats-intro-to-densities.html#cb276-2" tabindex="-1"></a>  <span class="fu">all</span>(</span>
-<span id="cb276-3"><a href="stats-intro-to-densities.html#cb276-3" tabindex="-1"></a>    df_q1 <span class="sc">%&gt;%</span></span>
-<span id="cb276-4"><a href="stats-intro-to-densities.html#cb276-4" tabindex="-1"></a>      <span class="fu">filter</span>((x <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">|</span> (<span class="sc">+</span><span class="dv">1</span> <span class="sc">&lt;</span> x)) <span class="sc">%&gt;%</span></span>
-<span id="cb276-5"><a href="stats-intro-to-densities.html#cb276-5" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">flag =</span> d <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb276-6"><a href="stats-intro-to-densities.html#cb276-6" tabindex="-1"></a>      <span class="fu">pull</span>(flag)</span>
-<span id="cb276-7"><a href="stats-intro-to-densities.html#cb276-7" tabindex="-1"></a>    )</span>
-<span id="cb276-8"><a href="stats-intro-to-densities.html#cb276-8" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="stats-intro-to-densities.html#cb278-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb278-2"><a href="stats-intro-to-densities.html#cb278-2" tabindex="-1"></a>  <span class="fu">all</span>(</span>
+<span id="cb278-3"><a href="stats-intro-to-densities.html#cb278-3" tabindex="-1"></a>    df_q1 <span class="sc">%&gt;%</span></span>
+<span id="cb278-4"><a href="stats-intro-to-densities.html#cb278-4" tabindex="-1"></a>      <span class="fu">filter</span>((x <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">|</span> (<span class="sc">+</span><span class="dv">1</span> <span class="sc">&lt;</span> x)) <span class="sc">%&gt;%</span></span>
+<span id="cb278-5"><a href="stats-intro-to-densities.html#cb278-5" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">flag =</span> d <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb278-6"><a href="stats-intro-to-densities.html#cb278-6" tabindex="-1"></a>      <span class="fu">pull</span>(flag)</span>
+<span id="cb278-7"><a href="stats-intro-to-densities.html#cb278-7" tabindex="-1"></a>    )</span>
+<span id="cb278-8"><a href="stats-intro-to-densities.html#cb278-8" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="stats-intro-to-densities.html#cb278-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="stats-intro-to-densities.html#cb280-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 </div>
 </div>
@@ -1184,37 +1184,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- -------------------------------------------------- -->
 <p>What does it <em>practically</em> mean for a value to be more or less likely? A density gives information about a <em>random variable</em>. A random variable is a quantity that takes a random value every time we observe it. For instance: If we roll a six-sided die, it will (unpredictably) land on values <code>1</code> through <code>6</code>. In my research, I use random variables to model material properties: Every component that comes off an assembly line will have a different strength associated with it. In order to design for a desired rate of failure, I model this variability with a random variable. A single value from a random variable—a roll of the die or a single value of material strength—is called a <em>realization</em>.</p>
 <p>Let’s illustrate this idea by using a normal density to define a <em>random variable</em> <code>Z</code>. This is sometimes denoted <code>Z ~ norm(mean, sd)</code>, which means <code>Z</code> is density as a normal density with <code>mean</code> and <code>sd</code>. The code below illustrates what it looks like when we draw a few samples of <code>Z</code>.</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="stats-intro-to-densities.html#cb280-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb280-2"><a href="stats-intro-to-densities.html#cb280-2" tabindex="-1"></a>df_norm_samp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>))</span>
-<span id="cb280-3"><a href="stats-intro-to-densities.html#cb280-3" tabindex="-1"></a></span>
-<span id="cb280-4"><a href="stats-intro-to-densities.html#cb280-4" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb280-5"><a href="stats-intro-to-densities.html#cb280-5" tabindex="-1"></a>  <span class="do">## Plot a *sample*</span></span>
-<span id="cb280-6"><a href="stats-intro-to-densities.html#cb280-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb280-7"><a href="stats-intro-to-densities.html#cb280-7" tabindex="-1"></a>    <span class="at">data =</span> df_norm_samp,</span>
-<span id="cb280-8"><a href="stats-intro-to-densities.html#cb280-8" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(Z, <span class="fu">after_stat</span>(density)),</span>
-<span id="cb280-9"><a href="stats-intro-to-densities.html#cb280-9" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">20</span></span>
-<span id="cb280-10"><a href="stats-intro-to-densities.html#cb280-10" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb280-11"><a href="stats-intro-to-densities.html#cb280-11" tabindex="-1"></a>  <span class="do">## Plot a *density*</span></span>
-<span id="cb280-12"><a href="stats-intro-to-densities.html#cb280-12" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
-<span id="cb280-13"><a href="stats-intro-to-densities.html#cb280-13" tabindex="-1"></a>    <span class="at">data =</span> df_norm_d,</span>
-<span id="cb280-14"><a href="stats-intro-to-densities.html#cb280-14" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(z, d)</span>
-<span id="cb280-15"><a href="stats-intro-to-densities.html#cb280-15" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d12-e-stat01-densities-solution_files/figure-html/ex-samples-1.png" width="672" /></p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="stats-intro-to-densities.html#cb282-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb282-2"><a href="stats-intro-to-densities.html#cb282-2" tabindex="-1"></a>df_norm_samp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>))</span>
+<span id="cb282-3"><a href="stats-intro-to-densities.html#cb282-3" tabindex="-1"></a></span>
+<span id="cb282-4"><a href="stats-intro-to-densities.html#cb282-4" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb282-5"><a href="stats-intro-to-densities.html#cb282-5" tabindex="-1"></a>  <span class="do">## Plot a *sample*</span></span>
+<span id="cb282-6"><a href="stats-intro-to-densities.html#cb282-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb282-7"><a href="stats-intro-to-densities.html#cb282-7" tabindex="-1"></a>    <span class="at">data =</span> df_norm_samp,</span>
+<span id="cb282-8"><a href="stats-intro-to-densities.html#cb282-8" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(Z, <span class="fu">after_stat</span>(density)),</span>
+<span id="cb282-9"><a href="stats-intro-to-densities.html#cb282-9" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">20</span></span>
+<span id="cb282-10"><a href="stats-intro-to-densities.html#cb282-10" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb282-11"><a href="stats-intro-to-densities.html#cb282-11" tabindex="-1"></a>  <span class="do">## Plot a *density*</span></span>
+<span id="cb282-12"><a href="stats-intro-to-densities.html#cb282-12" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb282-13"><a href="stats-intro-to-densities.html#cb282-13" tabindex="-1"></a>    <span class="at">data =</span> df_norm_d,</span>
+<span id="cb282-14"><a href="stats-intro-to-densities.html#cb282-14" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(z, d)</span>
+<span id="cb282-15"><a href="stats-intro-to-densities.html#cb282-15" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d12-e-stat01-densities-solution_files/figure-html/ex-samples-1.png" alt="" width="672" /></p>
 <p>Note that the histogram of <code>Z</code> values looks like a “blocky” version of the density. If we draw many more samples, the histogram will start to strongly resemble the density from which it was drawn:</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="stats-intro-to-densities.html#cb281-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb281-2"><a href="stats-intro-to-densities.html#cb281-2" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb281-3"><a href="stats-intro-to-densities.html#cb281-3" tabindex="-1"></a>  <span class="do">## Plot a *sample*</span></span>
-<span id="cb281-4"><a href="stats-intro-to-densities.html#cb281-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb281-5"><a href="stats-intro-to-densities.html#cb281-5" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fl">1e5</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)),</span>
-<span id="cb281-6"><a href="stats-intro-to-densities.html#cb281-6" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(Z, <span class="fu">after_stat</span>(density)),</span>
-<span id="cb281-7"><a href="stats-intro-to-densities.html#cb281-7" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">40</span></span>
-<span id="cb281-8"><a href="stats-intro-to-densities.html#cb281-8" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb281-9"><a href="stats-intro-to-densities.html#cb281-9" tabindex="-1"></a>  <span class="do">## Plot a *density*</span></span>
-<span id="cb281-10"><a href="stats-intro-to-densities.html#cb281-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
-<span id="cb281-11"><a href="stats-intro-to-densities.html#cb281-11" tabindex="-1"></a>    <span class="at">data =</span> df_norm_d,</span>
-<span id="cb281-12"><a href="stats-intro-to-densities.html#cb281-12" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(z, d)</span>
-<span id="cb281-13"><a href="stats-intro-to-densities.html#cb281-13" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d12-e-stat01-densities-solution_files/figure-html/ex-more-samples-1.png" width="672" /></p>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="stats-intro-to-densities.html#cb283-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb283-2"><a href="stats-intro-to-densities.html#cb283-2" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb283-3"><a href="stats-intro-to-densities.html#cb283-3" tabindex="-1"></a>  <span class="do">## Plot a *sample*</span></span>
+<span id="cb283-4"><a href="stats-intro-to-densities.html#cb283-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb283-5"><a href="stats-intro-to-densities.html#cb283-5" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fl">1e5</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)),</span>
+<span id="cb283-6"><a href="stats-intro-to-densities.html#cb283-6" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(Z, <span class="fu">after_stat</span>(density)),</span>
+<span id="cb283-7"><a href="stats-intro-to-densities.html#cb283-7" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">40</span></span>
+<span id="cb283-8"><a href="stats-intro-to-densities.html#cb283-8" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb283-9"><a href="stats-intro-to-densities.html#cb283-9" tabindex="-1"></a>  <span class="do">## Plot a *density*</span></span>
+<span id="cb283-10"><a href="stats-intro-to-densities.html#cb283-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb283-11"><a href="stats-intro-to-densities.html#cb283-11" tabindex="-1"></a>    <span class="at">data =</span> df_norm_d,</span>
+<span id="cb283-12"><a href="stats-intro-to-densities.html#cb283-12" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(z, d)</span>
+<span id="cb283-13"><a href="stats-intro-to-densities.html#cb283-13" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d12-e-stat01-densities-solution_files/figure-html/ex-more-samples-1.png" alt="" width="672" /></p>
 <p>To clarify some terms:</p>
 <ul>
 <li>A <strong>realization</strong> is a single observed value of a random variable. A realization is a single value, e.g. <code>rnorm(n = 1)</code>.</li>
@@ -1224,18 +1224,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q2-plot-densities-for-z-values-in-df_q2.-use-aesthetics-to-plot-a-separate-curve-for-different-values-of-n.-comment-on-which-values-of-n-give-a-density-closer-to-normal." class="section level3 hasAnchor" number="22.2.1">
 <h3><span class="header-section-number">22.2.1</span> <strong>q2</strong> Plot densities for <code>Z</code> values in <code>df_q2</code>. Use aesthetics to plot a separate curve for different values of <code>n</code>. Comment on which values of <code>n</code> give a density closer to “normal”.<a href="stats-intro-to-densities.html#q2-plot-densities-for-z-values-in-df_q2.-use-aesthetics-to-plot-a-separate-curve-for-different-values-of-n.-comment-on-which-values-of-n-give-a-density-closer-to-normal." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Hint</em>: You may need to use the <code>group</code> aesthetic, in addition to <code>color</code> or <code>fill</code>.</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="stats-intro-to-densities.html#cb282-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Use the data generated here</span></span>
-<span id="cb282-2"><a href="stats-intro-to-densities.html#cb282-2" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(</span>
-<span id="cb282-3"><a href="stats-intro-to-densities.html#cb282-3" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="fl">1e3</span>),</span>
-<span id="cb282-4"><a href="stats-intro-to-densities.html#cb282-4" tabindex="-1"></a>  <span class="cf">function</span>(nsamp) {</span>
-<span id="cb282-5"><a href="stats-intro-to-densities.html#cb282-5" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> nsamp), <span class="at">n =</span> nsamp)</span>
-<span id="cb282-6"><a href="stats-intro-to-densities.html#cb282-6" tabindex="-1"></a>  }</span>
-<span id="cb282-7"><a href="stats-intro-to-densities.html#cb282-7" tabindex="-1"></a>)</span>
-<span id="cb282-8"><a href="stats-intro-to-densities.html#cb282-8" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create the figure</span></span>
-<span id="cb282-9"><a href="stats-intro-to-densities.html#cb282-9" tabindex="-1"></a>df_q2 <span class="sc">%&gt;%</span></span>
-<span id="cb282-10"><a href="stats-intro-to-densities.html#cb282-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Z, <span class="at">color =</span> n, <span class="at">group =</span> n)) <span class="sc">+</span></span>
-<span id="cb282-11"><a href="stats-intro-to-densities.html#cb282-11" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p><img src="d12-e-stat01-densities-solution_files/figure-html/q2-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="stats-intro-to-densities.html#cb284-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Use the data generated here</span></span>
+<span id="cb284-2"><a href="stats-intro-to-densities.html#cb284-2" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(</span>
+<span id="cb284-3"><a href="stats-intro-to-densities.html#cb284-3" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="fl">1e3</span>),</span>
+<span id="cb284-4"><a href="stats-intro-to-densities.html#cb284-4" tabindex="-1"></a>  <span class="cf">function</span>(nsamp) {</span>
+<span id="cb284-5"><a href="stats-intro-to-densities.html#cb284-5" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> nsamp), <span class="at">n =</span> nsamp)</span>
+<span id="cb284-6"><a href="stats-intro-to-densities.html#cb284-6" tabindex="-1"></a>  }</span>
+<span id="cb284-7"><a href="stats-intro-to-densities.html#cb284-7" tabindex="-1"></a>)</span>
+<span id="cb284-8"><a href="stats-intro-to-densities.html#cb284-8" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Create the figure</span></span>
+<span id="cb284-9"><a href="stats-intro-to-densities.html#cb284-9" tabindex="-1"></a>df_q2 <span class="sc">%&gt;%</span></span>
+<span id="cb284-10"><a href="stats-intro-to-densities.html#cb284-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Z, <span class="at">color =</span> n, <span class="at">group =</span> n)) <span class="sc">+</span></span>
+<span id="cb284-11"><a href="stats-intro-to-densities.html#cb284-11" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
+<p><img src="d12-e-stat01-densities-solution_files/figure-html/q2-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>
 - The larger the value of <code>n</code>, the closer the density tends to be to normal.</p>
 </div>
@@ -1246,15 +1246,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>A <em>very common misconception</em> is that drawing more samples will make <em>anything</em> look like a normal density. <strong>This is not the case!</strong> The following exercise will help us understand that the normal density is <em>just a model</em>, and <em>not</em> what we should expect all randomness to look like.</p>
 <div id="q3-run-the-code-below-and-inspect-the-resulting-histogram.-increase-n_diamonds-below-to-increase-the-number-of-samples-drawn-do-this-a-few-times-for-an-increasing-number-of-samples.-answer-the-questions-under-observations-below." class="section level3 hasAnchor" number="22.3.1">
 <h3><span class="header-section-number">22.3.1</span> <strong>q3</strong> Run the code below and inspect the resulting histogram. Increase <code>n_diamonds</code> below to increase the number of samples drawn: Do this a few times for an increasing number of samples. Answer the questions under <em>observations</em> below.<a href="stats-intro-to-densities.html#q3-run-the-code-below-and-inspect-the-resulting-histogram.-increase-n_diamonds-below-to-increase-the-number-of-samples-drawn-do-this-a-few-times-for-an-increasing-number-of-samples.-answer-the-questions-under-observations-below." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="stats-intro-to-densities.html#cb283-1" tabindex="-1"></a>n_diamonds <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb283-2"><a href="stats-intro-to-densities.html#cb283-2" tabindex="-1"></a></span>
-<span id="cb283-3"><a href="stats-intro-to-densities.html#cb283-3" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb283-4"><a href="stats-intro-to-densities.html#cb283-4" tabindex="-1"></a>  <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb283-5"><a href="stats-intro-to-densities.html#cb283-5" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> n_diamonds) <span class="sc">%&gt;%</span></span>
-<span id="cb283-6"><a href="stats-intro-to-densities.html#cb283-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat)) <span class="sc">+</span></span>
-<span id="cb283-7"><a href="stats-intro-to-densities.html#cb283-7" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="d12-e-stat01-densities-solution_files/figure-html/q3-task-1.png" width="672" /></p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="stats-intro-to-densities.html#cb285-1" tabindex="-1"></a>n_diamonds <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb285-2"><a href="stats-intro-to-densities.html#cb285-2" tabindex="-1"></a></span>
+<span id="cb285-3"><a href="stats-intro-to-densities.html#cb285-3" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb285-4"><a href="stats-intro-to-densities.html#cb285-4" tabindex="-1"></a>  <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb285-5"><a href="stats-intro-to-densities.html#cb285-5" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> n_diamonds) <span class="sc">%&gt;%</span></span>
+<span id="cb285-6"><a href="stats-intro-to-densities.html#cb285-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(carat)) <span class="sc">+</span></span>
+<span id="cb285-7"><a href="stats-intro-to-densities.html#cb285-7" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+<p><img src="d12-e-stat01-densities-solution_files/figure-html/q3-task-1.png" alt="" width="672" /></p>
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>The histogram does not look normal for any <code>n_diamonds</code>, and indeed it should not. We’ve seen before that there are very “special” values of <code>carat</code> that gemcutters seem to favor. That “social” feature of diamonds is not at all captured by a normal density.</li>
@@ -1267,36 +1267,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">22.4</span> Random Seeds: Setting the State<a href="stats-intro-to-densities.html#random-seeds-setting-the-state" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- -------------------------------------------------- -->
 <p>Remember that random variables are <em>random</em>. That means if we draw samples multiple times, we’re bound to get different values. For example, run the following code chunk multiple times.</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="stats-intro-to-densities.html#cb285-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change; run this multiple times!</span></span>
-<span id="cb285-2"><a href="stats-intro-to-densities.html#cb285-2" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## [1] -0.6931902 -1.6377063  1.0619610 -2.1439573 -1.4050955</code></pre>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="stats-intro-to-densities.html#cb287-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change; run this multiple times!</span></span>
+<span id="cb287-2"><a href="stats-intro-to-densities.html#cb287-2" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## [1] -0.01896319  0.51916133  0.77672109  0.78923581  0.39378909</code></pre>
 <p>What this means is we’ll get a slightly different picture every time we draw a sample. <strong>This is the challenge with randomness</strong>: Since we could have drawn a different set of samples, we need to know the degree to which we can trust conclusions drawn from data. Being <em>statistically literate</em> means knowing how much to trust your data.</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="stats-intro-to-densities.html#cb287-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb287-2"><a href="stats-intro-to-densities.html#cb287-2" tabindex="-1"></a>df_samp_multi <span class="ot">&lt;-</span></span>
-<span id="cb287-3"><a href="stats-intro-to-densities.html#cb287-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="at">Run =</span> <span class="st">&quot;A&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb287-4"><a href="stats-intro-to-densities.html#cb287-4" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb287-5"><a href="stats-intro-to-densities.html#cb287-5" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="at">Run =</span> <span class="st">&quot;B&quot;</span>)</span>
-<span id="cb287-6"><a href="stats-intro-to-densities.html#cb287-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb287-7"><a href="stats-intro-to-densities.html#cb287-7" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb287-8"><a href="stats-intro-to-densities.html#cb287-8" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="at">Run =</span> <span class="st">&quot;C&quot;</span>)</span>
-<span id="cb287-9"><a href="stats-intro-to-densities.html#cb287-9" tabindex="-1"></a>  )</span>
-<span id="cb287-10"><a href="stats-intro-to-densities.html#cb287-10" tabindex="-1"></a></span>
-<span id="cb287-11"><a href="stats-intro-to-densities.html#cb287-11" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb287-12"><a href="stats-intro-to-densities.html#cb287-12" tabindex="-1"></a>  <span class="do">## Plot *fitted density*</span></span>
-<span id="cb287-13"><a href="stats-intro-to-densities.html#cb287-13" tabindex="-1"></a>  <span class="fu">geom_density</span>(</span>
-<span id="cb287-14"><a href="stats-intro-to-densities.html#cb287-14" tabindex="-1"></a>    <span class="at">data =</span> df_samp_multi,</span>
-<span id="cb287-15"><a href="stats-intro-to-densities.html#cb287-15" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(Z, <span class="at">color =</span> Run, <span class="at">group =</span> Run)</span>
-<span id="cb287-16"><a href="stats-intro-to-densities.html#cb287-16" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb287-17"><a href="stats-intro-to-densities.html#cb287-17" tabindex="-1"></a>  <span class="do">## Plot a *density*</span></span>
-<span id="cb287-18"><a href="stats-intro-to-densities.html#cb287-18" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
-<span id="cb287-19"><a href="stats-intro-to-densities.html#cb287-19" tabindex="-1"></a>    <span class="at">data =</span> df_norm_d,</span>
-<span id="cb287-20"><a href="stats-intro-to-densities.html#cb287-20" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(z, d)</span>
-<span id="cb287-21"><a href="stats-intro-to-densities.html#cb287-21" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="d12-e-stat01-densities-solution_files/figure-html/ex-multiple-vis-1.png" width="672" /></p>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="stats-intro-to-densities.html#cb289-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb289-2"><a href="stats-intro-to-densities.html#cb289-2" tabindex="-1"></a>df_samp_multi <span class="ot">&lt;-</span></span>
+<span id="cb289-3"><a href="stats-intro-to-densities.html#cb289-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="at">Run =</span> <span class="st">&quot;A&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb289-4"><a href="stats-intro-to-densities.html#cb289-4" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb289-5"><a href="stats-intro-to-densities.html#cb289-5" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="at">Run =</span> <span class="st">&quot;B&quot;</span>)</span>
+<span id="cb289-6"><a href="stats-intro-to-densities.html#cb289-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb289-7"><a href="stats-intro-to-densities.html#cb289-7" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb289-8"><a href="stats-intro-to-densities.html#cb289-8" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="at">Run =</span> <span class="st">&quot;C&quot;</span>)</span>
+<span id="cb289-9"><a href="stats-intro-to-densities.html#cb289-9" tabindex="-1"></a>  )</span>
+<span id="cb289-10"><a href="stats-intro-to-densities.html#cb289-10" tabindex="-1"></a></span>
+<span id="cb289-11"><a href="stats-intro-to-densities.html#cb289-11" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb289-12"><a href="stats-intro-to-densities.html#cb289-12" tabindex="-1"></a>  <span class="do">## Plot *fitted density*</span></span>
+<span id="cb289-13"><a href="stats-intro-to-densities.html#cb289-13" tabindex="-1"></a>  <span class="fu">geom_density</span>(</span>
+<span id="cb289-14"><a href="stats-intro-to-densities.html#cb289-14" tabindex="-1"></a>    <span class="at">data =</span> df_samp_multi,</span>
+<span id="cb289-15"><a href="stats-intro-to-densities.html#cb289-15" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(Z, <span class="at">color =</span> Run, <span class="at">group =</span> Run)</span>
+<span id="cb289-16"><a href="stats-intro-to-densities.html#cb289-16" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb289-17"><a href="stats-intro-to-densities.html#cb289-17" tabindex="-1"></a>  <span class="do">## Plot a *density*</span></span>
+<span id="cb289-18"><a href="stats-intro-to-densities.html#cb289-18" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb289-19"><a href="stats-intro-to-densities.html#cb289-19" tabindex="-1"></a>    <span class="at">data =</span> df_norm_d,</span>
+<span id="cb289-20"><a href="stats-intro-to-densities.html#cb289-20" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(z, d)</span>
+<span id="cb289-21"><a href="stats-intro-to-densities.html#cb289-21" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="d12-e-stat01-densities-solution_files/figure-html/ex-multiple-vis-1.png" alt="" width="672" /></p>
 <p><em>However</em> for simulation purposes, we often want to be able to repeat a calculation. In order to do this, we can set the <em>state</em> of our random number generator by setting the <em>seed</em>. To illustrate, try running the following chunk multiple times.</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="stats-intro-to-densities.html#cb288-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change; run this multiple times!</span></span>
-<span id="cb288-2"><a href="stats-intro-to-densities.html#cb288-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb288-3"><a href="stats-intro-to-densities.html#cb288-3" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="stats-intro-to-densities.html#cb290-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change; run this multiple times!</span></span>
+<span id="cb290-2"><a href="stats-intro-to-densities.html#cb290-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb290-3"><a href="stats-intro-to-densities.html#cb290-3" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## [1] -0.3260365  0.5524619 -0.6749438  0.2143595  0.3107692</code></pre>
 <p>The values are identical every time!</p>
 <!-- include-exit-ticket -->

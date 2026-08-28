@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>23 Data: Pivoting Data | Data Science: Exercise Solutions</title>
   <meta name="description" content="23 Data: Pivoting Data | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="23 Data: Pivoting Data | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1086,13 +1086,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Purpose</em>: Data is easiest to use when it is <em>tidy</em>. In fact, the tidyverse (including ggplot, dplyr, etc.) is specifically designed to use tidy data. But not all data we’ll encounter is tidy! To that end, in this exercise we’ll learn how to tidy our data by <em>pivoting</em>.</p>
 <p>As a result of learning how to quickly <em>tidy</em> data, you’ll vastly expand the set of datasets you can analyze. Rather than fighting with data, you’ll be able to quickly wrangle and extract insights.</p>
 <p><em>Reading</em>: (None, this is the reading)</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="data-pivoting-data.html#cb290-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="data-pivoting-data.html#cb292-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1109,14 +1109,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Not all data are presented in tidy form; in this case it can be difficult to tell what the variables are. Let’s practice distinguishing between the <em>columns</em> and the <em>variables</em>.</p>
 <div id="q1-what-are-the-variables-in-the-following-dataset" class="section level3 hasAnchor" number="23.1.1">
 <h3><span class="header-section-number">23.1.1</span> <strong>q1</strong> What are the variables in the following dataset?<a href="data-pivoting-data.html#q1-what-are-the-variables-in-the-following-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="data-pivoting-data.html#cb292-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb292-2"><a href="data-pivoting-data.html#cb292-2" tabindex="-1"></a>cases <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb292-3"><a href="data-pivoting-data.html#cb292-3" tabindex="-1"></a>  <span class="sc">~</span>Country, <span class="sc">~</span><span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2013</span><span class="st">`</span>,</span>
-<span id="cb292-4"><a href="data-pivoting-data.html#cb292-4" tabindex="-1"></a>      <span class="st">&quot;FR&quot;</span>,    <span class="dv">7000</span>,    <span class="dv">6900</span>,    <span class="dv">7000</span>,</span>
-<span id="cb292-5"><a href="data-pivoting-data.html#cb292-5" tabindex="-1"></a>      <span class="st">&quot;DE&quot;</span>,    <span class="dv">5800</span>,    <span class="dv">6000</span>,    <span class="dv">6200</span>,</span>
-<span id="cb292-6"><a href="data-pivoting-data.html#cb292-6" tabindex="-1"></a>      <span class="st">&quot;US&quot;</span>,   <span class="dv">15000</span>,   <span class="dv">14000</span>,   <span class="dv">13000</span></span>
-<span id="cb292-7"><a href="data-pivoting-data.html#cb292-7" tabindex="-1"></a>)</span>
-<span id="cb292-8"><a href="data-pivoting-data.html#cb292-8" tabindex="-1"></a>cases</span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="data-pivoting-data.html#cb294-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb294-2"><a href="data-pivoting-data.html#cb294-2" tabindex="-1"></a>cases <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb294-3"><a href="data-pivoting-data.html#cb294-3" tabindex="-1"></a>  <span class="sc">~</span>Country, <span class="sc">~</span><span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2013</span><span class="st">`</span>,</span>
+<span id="cb294-4"><a href="data-pivoting-data.html#cb294-4" tabindex="-1"></a>      <span class="st">&quot;FR&quot;</span>,    <span class="dv">7000</span>,    <span class="dv">6900</span>,    <span class="dv">7000</span>,</span>
+<span id="cb294-5"><a href="data-pivoting-data.html#cb294-5" tabindex="-1"></a>      <span class="st">&quot;DE&quot;</span>,    <span class="dv">5800</span>,    <span class="dv">6000</span>,    <span class="dv">6200</span>,</span>
+<span id="cb294-6"><a href="data-pivoting-data.html#cb294-6" tabindex="-1"></a>      <span class="st">&quot;US&quot;</span>,   <span class="dv">15000</span>,   <span class="dv">14000</span>,   <span class="dv">13000</span></span>
+<span id="cb294-7"><a href="data-pivoting-data.html#cb294-7" tabindex="-1"></a>)</span>
+<span id="cb294-8"><a href="data-pivoting-data.html#cb294-8" tabindex="-1"></a>cases</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 4
 ##   Country `2011` `2012` `2013`
 ##   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -1134,15 +1134,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>FR, DE, and US</li>
 </ol></li>
 </ul>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="data-pivoting-data.html#cb294-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Modify with your multiple choice number answer</span></span>
-<span id="cb294-2"><a href="data-pivoting-data.html#cb294-2" tabindex="-1"></a>q1_answer <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb294-3"><a href="data-pivoting-data.html#cb294-3" tabindex="-1"></a></span>
-<span id="cb294-4"><a href="data-pivoting-data.html#cb294-4" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: The following will test your answer</span></span>
-<span id="cb294-5"><a href="data-pivoting-data.html#cb294-5" tabindex="-1"></a><span class="cf">if</span> (((q1_answer <span class="sc">+</span> <span class="dv">56</span>) <span class="sc">%%</span> <span class="dv">3</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">&amp;</span> (q1_answer <span class="sc">&gt;</span> <span class="dv">0</span>)) {</span>
-<span id="cb294-6"><a href="data-pivoting-data.html#cb294-6" tabindex="-1"></a>  <span class="st">&quot;Correct!&quot;</span></span>
-<span id="cb294-7"><a href="data-pivoting-data.html#cb294-7" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb294-8"><a href="data-pivoting-data.html#cb294-8" tabindex="-1"></a>  <span class="st">&quot;Incorrect!&quot;</span></span>
-<span id="cb294-9"><a href="data-pivoting-data.html#cb294-9" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="data-pivoting-data.html#cb296-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Modify with your multiple choice number answer</span></span>
+<span id="cb296-2"><a href="data-pivoting-data.html#cb296-2" tabindex="-1"></a>q1_answer <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb296-3"><a href="data-pivoting-data.html#cb296-3" tabindex="-1"></a></span>
+<span id="cb296-4"><a href="data-pivoting-data.html#cb296-4" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: The following will test your answer</span></span>
+<span id="cb296-5"><a href="data-pivoting-data.html#cb296-5" tabindex="-1"></a><span class="cf">if</span> (((q1_answer <span class="sc">+</span> <span class="dv">56</span>) <span class="sc">%%</span> <span class="dv">3</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">&amp;</span> (q1_answer <span class="sc">&gt;</span> <span class="dv">0</span>)) {</span>
+<span id="cb296-6"><a href="data-pivoting-data.html#cb296-6" tabindex="-1"></a>  <span class="st">&quot;Correct!&quot;</span></span>
+<span id="cb296-7"><a href="data-pivoting-data.html#cb296-7" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb296-8"><a href="data-pivoting-data.html#cb296-8" tabindex="-1"></a>  <span class="st">&quot;Incorrect!&quot;</span></span>
+<span id="cb296-9"><a href="data-pivoting-data.html#cb296-9" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Incorrect!&quot;</code></pre>
 <p>Check out the solution manual to see the reasons.
 1. Incorrect: <code>2011</code> (and etc.) are values for the <code>year</code> variable.
@@ -1151,15 +1151,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q2-what-are-the-variables-in-the-following-dataset" class="section level3 hasAnchor" number="23.1.2">
 <h3><span class="header-section-number">23.1.2</span> <strong>q2</strong> What are the variables in the following dataset?<a href="data-pivoting-data.html#q2-what-are-the-variables-in-the-following-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="data-pivoting-data.html#cb296-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb296-2"><a href="data-pivoting-data.html#cb296-2" tabindex="-1"></a>alloys <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb296-3"><a href="data-pivoting-data.html#cb296-3" tabindex="-1"></a>  <span class="sc">~</span>thick, <span class="sc">~</span>E_00, <span class="sc">~</span>mu_00, <span class="sc">~</span>E_45, <span class="sc">~</span>mu_45, <span class="sc">~</span>rep,</span>
-<span id="cb296-4"><a href="data-pivoting-data.html#cb296-4" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.321</span>, <span class="dv">10700</span>,  <span class="fl">0.329</span>,    <span class="dv">1</span>,</span>
-<span id="cb296-5"><a href="data-pivoting-data.html#cb296-5" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.323</span>, <span class="dv">10500</span>,  <span class="fl">0.331</span>,    <span class="dv">2</span>,</span>
-<span id="cb296-6"><a href="data-pivoting-data.html#cb296-6" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10400</span>,  <span class="fl">0.329</span>, <span class="dv">10400</span>,  <span class="fl">0.318</span>,    <span class="dv">1</span>,</span>
-<span id="cb296-7"><a href="data-pivoting-data.html#cb296-7" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10300</span>,  <span class="fl">0.319</span>, <span class="dv">10500</span>,  <span class="fl">0.326</span>,    <span class="dv">2</span></span>
-<span id="cb296-8"><a href="data-pivoting-data.html#cb296-8" tabindex="-1"></a>)</span>
-<span id="cb296-9"><a href="data-pivoting-data.html#cb296-9" tabindex="-1"></a>alloys</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="data-pivoting-data.html#cb298-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb298-2"><a href="data-pivoting-data.html#cb298-2" tabindex="-1"></a>alloys <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb298-3"><a href="data-pivoting-data.html#cb298-3" tabindex="-1"></a>  <span class="sc">~</span>thick, <span class="sc">~</span>E_00, <span class="sc">~</span>mu_00, <span class="sc">~</span>E_45, <span class="sc">~</span>mu_45, <span class="sc">~</span>rep,</span>
+<span id="cb298-4"><a href="data-pivoting-data.html#cb298-4" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.321</span>, <span class="dv">10700</span>,  <span class="fl">0.329</span>,    <span class="dv">1</span>,</span>
+<span id="cb298-5"><a href="data-pivoting-data.html#cb298-5" tabindex="-1"></a>   <span class="fl">0.022</span>, <span class="dv">10600</span>,  <span class="fl">0.323</span>, <span class="dv">10500</span>,  <span class="fl">0.331</span>,    <span class="dv">2</span>,</span>
+<span id="cb298-6"><a href="data-pivoting-data.html#cb298-6" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10400</span>,  <span class="fl">0.329</span>, <span class="dv">10400</span>,  <span class="fl">0.318</span>,    <span class="dv">1</span>,</span>
+<span id="cb298-7"><a href="data-pivoting-data.html#cb298-7" tabindex="-1"></a>   <span class="fl">0.032</span>, <span class="dv">10300</span>,  <span class="fl">0.319</span>, <span class="dv">10500</span>,  <span class="fl">0.326</span>,    <span class="dv">2</span></span>
+<span id="cb298-8"><a href="data-pivoting-data.html#cb298-8" tabindex="-1"></a>)</span>
+<span id="cb298-9"><a href="data-pivoting-data.html#cb298-9" tabindex="-1"></a>alloys</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 6
 ##   thick  E_00 mu_00  E_45 mu_45   rep
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1178,15 +1178,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>thick, E, mu, rep, angle</li>
 </ol></li>
 </ul>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="data-pivoting-data.html#cb298-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Modify with your multiple choice number answer</span></span>
-<span id="cb298-2"><a href="data-pivoting-data.html#cb298-2" tabindex="-1"></a>q2_answer <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb298-3"><a href="data-pivoting-data.html#cb298-3" tabindex="-1"></a></span>
-<span id="cb298-4"><a href="data-pivoting-data.html#cb298-4" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: The following will test your answer</span></span>
-<span id="cb298-5"><a href="data-pivoting-data.html#cb298-5" tabindex="-1"></a><span class="cf">if</span> (((q2_answer <span class="sc">+</span> <span class="dv">38</span>) <span class="sc">%%</span> <span class="dv">3</span> <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">&amp;</span> (q2_answer <span class="sc">&gt;</span> <span class="dv">0</span>)) {</span>
-<span id="cb298-6"><a href="data-pivoting-data.html#cb298-6" tabindex="-1"></a>  <span class="st">&quot;Correct!&quot;</span></span>
-<span id="cb298-7"><a href="data-pivoting-data.html#cb298-7" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb298-8"><a href="data-pivoting-data.html#cb298-8" tabindex="-1"></a>  <span class="st">&quot;Incorrect!&quot;</span></span>
-<span id="cb298-9"><a href="data-pivoting-data.html#cb298-9" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="data-pivoting-data.html#cb300-1" tabindex="-1"></a><span class="do">## </span><span class="al">TODO</span><span class="do">: Modify with your multiple choice number answer</span></span>
+<span id="cb300-2"><a href="data-pivoting-data.html#cb300-2" tabindex="-1"></a>q2_answer <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb300-3"><a href="data-pivoting-data.html#cb300-3" tabindex="-1"></a></span>
+<span id="cb300-4"><a href="data-pivoting-data.html#cb300-4" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: The following will test your answer</span></span>
+<span id="cb300-5"><a href="data-pivoting-data.html#cb300-5" tabindex="-1"></a><span class="cf">if</span> (((q2_answer <span class="sc">+</span> <span class="dv">38</span>) <span class="sc">%%</span> <span class="dv">3</span> <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">&amp;</span> (q2_answer <span class="sc">&gt;</span> <span class="dv">0</span>)) {</span>
+<span id="cb300-6"><a href="data-pivoting-data.html#cb300-6" tabindex="-1"></a>  <span class="st">&quot;Correct!&quot;</span></span>
+<span id="cb300-7"><a href="data-pivoting-data.html#cb300-7" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb300-8"><a href="data-pivoting-data.html#cb300-8" tabindex="-1"></a>  <span class="st">&quot;Incorrect!&quot;</span></span>
+<span id="cb300-9"><a href="data-pivoting-data.html#cb300-9" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Incorrect!&quot;</code></pre>
 <p>Check out the solution manual to see the reasons.
 1. Incorrect: <code>E_00</code> (and etc.) are <em>mixed</em>; they contain both variable names and value
@@ -1200,13 +1200,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="pivot-longer" class="section level3 hasAnchor" number="23.2.1">
 <h3><span class="header-section-number">23.2.1</span> Pivot longer<a href="data-pivoting-data.html#pivot-longer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>First, let’s see how <code>pivot_longer</code> works on the <code>cases</code> data. Run the following code chunk:</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="data-pivoting-data.html#cb300-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb300-2"><a href="data-pivoting-data.html#cb300-2" tabindex="-1"></a>cases <span class="sc">%&gt;%</span></span>
-<span id="cb300-3"><a href="data-pivoting-data.html#cb300-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb300-4"><a href="data-pivoting-data.html#cb300-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>,</span>
-<span id="cb300-5"><a href="data-pivoting-data.html#cb300-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb300-6"><a href="data-pivoting-data.html#cb300-6" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="st">`</span><span class="at">2013</span><span class="st">`</span>)</span>
-<span id="cb300-7"><a href="data-pivoting-data.html#cb300-7" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="data-pivoting-data.html#cb302-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb302-2"><a href="data-pivoting-data.html#cb302-2" tabindex="-1"></a>cases <span class="sc">%&gt;%</span></span>
+<span id="cb302-3"><a href="data-pivoting-data.html#cb302-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb302-4"><a href="data-pivoting-data.html#cb302-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>,</span>
+<span id="cb302-5"><a href="data-pivoting-data.html#cb302-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb302-6"><a href="data-pivoting-data.html#cb302-6" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="st">`</span><span class="at">2013</span><span class="st">`</span>)</span>
+<span id="cb302-7"><a href="data-pivoting-data.html#cb302-7" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 9 × 3
 ##   Country Year      n
 ##   &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
@@ -1231,15 +1231,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 <p>However, there’s a problem with the <code>Year</code> column:</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="data-pivoting-data.html#cb302-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb302-2"><a href="data-pivoting-data.html#cb302-2" tabindex="-1"></a>cases <span class="sc">%&gt;%</span></span>
-<span id="cb302-3"><a href="data-pivoting-data.html#cb302-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb302-4"><a href="data-pivoting-data.html#cb302-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>,</span>
-<span id="cb302-5"><a href="data-pivoting-data.html#cb302-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb302-6"><a href="data-pivoting-data.html#cb302-6" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="st">`</span><span class="at">2013</span><span class="st">`</span>)</span>
-<span id="cb302-7"><a href="data-pivoting-data.html#cb302-7" tabindex="-1"></a></span>
-<span id="cb302-8"><a href="data-pivoting-data.html#cb302-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb302-9"><a href="data-pivoting-data.html#cb302-9" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Year =</span> <span class="fu">mean</span>(Year))</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="data-pivoting-data.html#cb304-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb304-2"><a href="data-pivoting-data.html#cb304-2" tabindex="-1"></a>cases <span class="sc">%&gt;%</span></span>
+<span id="cb304-3"><a href="data-pivoting-data.html#cb304-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb304-4"><a href="data-pivoting-data.html#cb304-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>,</span>
+<span id="cb304-5"><a href="data-pivoting-data.html#cb304-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb304-6"><a href="data-pivoting-data.html#cb304-6" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="st">`</span><span class="at">2013</span><span class="st">`</span>)</span>
+<span id="cb304-7"><a href="data-pivoting-data.html#cb304-7" tabindex="-1"></a></span>
+<span id="cb304-8"><a href="data-pivoting-data.html#cb304-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb304-9"><a href="data-pivoting-data.html#cb304-9" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Year =</span> <span class="fu">mean</span>(Year))</span></code></pre></div>
 <pre><code>## Warning: There was 1 warning in `summarize()`.
 ## ℹ In argument: `Year = mean(Year)`.
 ## Caused by warning in `mean.default()`:
@@ -1249,14 +1249,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   &lt;dbl&gt;
 ## 1    NA</code></pre>
 <p>The summary failed! That’s because the <code>Year</code> column is full of strings, rather than integers. We can fix this via mutation:</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="data-pivoting-data.html#cb305-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb305-2"><a href="data-pivoting-data.html#cb305-2" tabindex="-1"></a>cases <span class="sc">%&gt;%</span></span>
-<span id="cb305-3"><a href="data-pivoting-data.html#cb305-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb305-4"><a href="data-pivoting-data.html#cb305-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>,</span>
-<span id="cb305-5"><a href="data-pivoting-data.html#cb305-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb305-6"><a href="data-pivoting-data.html#cb305-6" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="st">`</span><span class="at">2013</span><span class="st">`</span>)</span>
-<span id="cb305-7"><a href="data-pivoting-data.html#cb305-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb305-8"><a href="data-pivoting-data.html#cb305-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="data-pivoting-data.html#cb307-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb307-2"><a href="data-pivoting-data.html#cb307-2" tabindex="-1"></a>cases <span class="sc">%&gt;%</span></span>
+<span id="cb307-3"><a href="data-pivoting-data.html#cb307-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb307-4"><a href="data-pivoting-data.html#cb307-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>,</span>
+<span id="cb307-5"><a href="data-pivoting-data.html#cb307-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb307-6"><a href="data-pivoting-data.html#cb307-6" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="st">`</span><span class="at">2013</span><span class="st">`</span>)</span>
+<span id="cb307-7"><a href="data-pivoting-data.html#cb307-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb307-8"><a href="data-pivoting-data.html#cb307-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span></code></pre></div>
 <pre><code>## # A tibble: 9 × 3
 ##   Country  Year     n
 ##   &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt;
@@ -1271,23 +1271,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 9 US       2013 13000</code></pre>
 <p>Now the data are tidy and of the proper type.</p>
 <p>Let’s look at another example:</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="data-pivoting-data.html#cb307-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb307-2"><a href="data-pivoting-data.html#cb307-2" tabindex="-1"></a>ansc <span class="ot">&lt;-</span></span>
-<span id="cb307-3"><a href="data-pivoting-data.html#cb307-3" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb307-4"><a href="data-pivoting-data.html#cb307-4" tabindex="-1"></a>    <span class="sc">~</span><span class="st">`</span><span class="at">x-1</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">x-2</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">y-1</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">y-2</span><span class="st">`</span>,</span>
-<span id="cb307-5"><a href="data-pivoting-data.html#cb307-5" tabindex="-1"></a>        <span class="dv">10</span>,     <span class="dv">10</span>,   <span class="fl">8.04</span>,   <span class="fl">9.14</span>,</span>
-<span id="cb307-6"><a href="data-pivoting-data.html#cb307-6" tabindex="-1"></a>         <span class="dv">8</span>,      <span class="dv">8</span>,   <span class="fl">6.95</span>,   <span class="fl">8.14</span>,</span>
-<span id="cb307-7"><a href="data-pivoting-data.html#cb307-7" tabindex="-1"></a>        <span class="dv">13</span>,     <span class="dv">13</span>,   <span class="fl">7.58</span>,   <span class="fl">8.74</span>,</span>
-<span id="cb307-8"><a href="data-pivoting-data.html#cb307-8" tabindex="-1"></a>         <span class="dv">9</span>,      <span class="dv">9</span>,   <span class="fl">8.81</span>,   <span class="fl">8.77</span>,</span>
-<span id="cb307-9"><a href="data-pivoting-data.html#cb307-9" tabindex="-1"></a>        <span class="dv">11</span>,     <span class="dv">11</span>,   <span class="fl">8.33</span>,   <span class="fl">9.26</span>,</span>
-<span id="cb307-10"><a href="data-pivoting-data.html#cb307-10" tabindex="-1"></a>        <span class="dv">14</span>,     <span class="dv">14</span>,   <span class="fl">9.96</span>,   <span class="fl">8.10</span>,</span>
-<span id="cb307-11"><a href="data-pivoting-data.html#cb307-11" tabindex="-1"></a>         <span class="dv">6</span>,      <span class="dv">6</span>,   <span class="fl">7.24</span>,   <span class="fl">6.13</span>,</span>
-<span id="cb307-12"><a href="data-pivoting-data.html#cb307-12" tabindex="-1"></a>         <span class="dv">4</span>,      <span class="dv">4</span>,   <span class="fl">4.26</span>,   <span class="fl">3.10</span>,</span>
-<span id="cb307-13"><a href="data-pivoting-data.html#cb307-13" tabindex="-1"></a>        <span class="dv">12</span>,     <span class="dv">12</span>,  <span class="fl">10.84</span>,   <span class="fl">9.13</span>,</span>
-<span id="cb307-14"><a href="data-pivoting-data.html#cb307-14" tabindex="-1"></a>         <span class="dv">7</span>,      <span class="dv">7</span>,   <span class="fl">4.82</span>,   <span class="fl">7.26</span>,</span>
-<span id="cb307-15"><a href="data-pivoting-data.html#cb307-15" tabindex="-1"></a>         <span class="dv">5</span>,      <span class="dv">5</span>,   <span class="fl">5.68</span>,   <span class="fl">4.74</span></span>
-<span id="cb307-16"><a href="data-pivoting-data.html#cb307-16" tabindex="-1"></a>  )</span>
-<span id="cb307-17"><a href="data-pivoting-data.html#cb307-17" tabindex="-1"></a>ansc</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="data-pivoting-data.html#cb309-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb309-2"><a href="data-pivoting-data.html#cb309-2" tabindex="-1"></a>ansc <span class="ot">&lt;-</span></span>
+<span id="cb309-3"><a href="data-pivoting-data.html#cb309-3" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb309-4"><a href="data-pivoting-data.html#cb309-4" tabindex="-1"></a>    <span class="sc">~</span><span class="st">`</span><span class="at">x-1</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">x-2</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">y-1</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">y-2</span><span class="st">`</span>,</span>
+<span id="cb309-5"><a href="data-pivoting-data.html#cb309-5" tabindex="-1"></a>        <span class="dv">10</span>,     <span class="dv">10</span>,   <span class="fl">8.04</span>,   <span class="fl">9.14</span>,</span>
+<span id="cb309-6"><a href="data-pivoting-data.html#cb309-6" tabindex="-1"></a>         <span class="dv">8</span>,      <span class="dv">8</span>,   <span class="fl">6.95</span>,   <span class="fl">8.14</span>,</span>
+<span id="cb309-7"><a href="data-pivoting-data.html#cb309-7" tabindex="-1"></a>        <span class="dv">13</span>,     <span class="dv">13</span>,   <span class="fl">7.58</span>,   <span class="fl">8.74</span>,</span>
+<span id="cb309-8"><a href="data-pivoting-data.html#cb309-8" tabindex="-1"></a>         <span class="dv">9</span>,      <span class="dv">9</span>,   <span class="fl">8.81</span>,   <span class="fl">8.77</span>,</span>
+<span id="cb309-9"><a href="data-pivoting-data.html#cb309-9" tabindex="-1"></a>        <span class="dv">11</span>,     <span class="dv">11</span>,   <span class="fl">8.33</span>,   <span class="fl">9.26</span>,</span>
+<span id="cb309-10"><a href="data-pivoting-data.html#cb309-10" tabindex="-1"></a>        <span class="dv">14</span>,     <span class="dv">14</span>,   <span class="fl">9.96</span>,   <span class="fl">8.10</span>,</span>
+<span id="cb309-11"><a href="data-pivoting-data.html#cb309-11" tabindex="-1"></a>         <span class="dv">6</span>,      <span class="dv">6</span>,   <span class="fl">7.24</span>,   <span class="fl">6.13</span>,</span>
+<span id="cb309-12"><a href="data-pivoting-data.html#cb309-12" tabindex="-1"></a>         <span class="dv">4</span>,      <span class="dv">4</span>,   <span class="fl">4.26</span>,   <span class="fl">3.10</span>,</span>
+<span id="cb309-13"><a href="data-pivoting-data.html#cb309-13" tabindex="-1"></a>        <span class="dv">12</span>,     <span class="dv">12</span>,  <span class="fl">10.84</span>,   <span class="fl">9.13</span>,</span>
+<span id="cb309-14"><a href="data-pivoting-data.html#cb309-14" tabindex="-1"></a>         <span class="dv">7</span>,      <span class="dv">7</span>,   <span class="fl">4.82</span>,   <span class="fl">7.26</span>,</span>
+<span id="cb309-15"><a href="data-pivoting-data.html#cb309-15" tabindex="-1"></a>         <span class="dv">5</span>,      <span class="dv">5</span>,   <span class="fl">5.68</span>,   <span class="fl">4.74</span></span>
+<span id="cb309-16"><a href="data-pivoting-data.html#cb309-16" tabindex="-1"></a>  )</span>
+<span id="cb309-17"><a href="data-pivoting-data.html#cb309-17" tabindex="-1"></a>ansc</span></code></pre></div>
 <pre><code>## # A tibble: 11 × 4
 ##    `x-1` `x-2` `y-1` `y-2`
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1304,13 +1304,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 11     5     5  5.68  4.74</code></pre>
 <p>This dataset is too wide; the digit after each <code>x</code> or <code>y</code> denotes a different dataset. The case is tricky to pivot though: We need to separate the trailing digits (in the column names) while preserving the <code>x, y</code> column names.</p>
 <p>We can use a combination of the <code>names_sep</code> argument and the special “.value” in <code>names_to</code>:</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="data-pivoting-data.html#cb309-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb309-2"><a href="data-pivoting-data.html#cb309-2" tabindex="-1"></a>ansc <span class="sc">%&gt;%</span></span>
-<span id="cb309-3"><a href="data-pivoting-data.html#cb309-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb309-4"><a href="data-pivoting-data.html#cb309-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;set&quot;</span>),</span>
-<span id="cb309-5"><a href="data-pivoting-data.html#cb309-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;-&quot;</span>,</span>
-<span id="cb309-6"><a href="data-pivoting-data.html#cb309-6" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>()</span>
-<span id="cb309-7"><a href="data-pivoting-data.html#cb309-7" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="data-pivoting-data.html#cb311-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb311-2"><a href="data-pivoting-data.html#cb311-2" tabindex="-1"></a>ansc <span class="sc">%&gt;%</span></span>
+<span id="cb311-3"><a href="data-pivoting-data.html#cb311-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb311-4"><a href="data-pivoting-data.html#cb311-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;set&quot;</span>),</span>
+<span id="cb311-5"><a href="data-pivoting-data.html#cb311-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;-&quot;</span>,</span>
+<span id="cb311-6"><a href="data-pivoting-data.html#cb311-6" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>()</span>
+<span id="cb311-7"><a href="data-pivoting-data.html#cb311-7" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 22 × 3
 ##    set       x     y
 ##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1329,14 +1329,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 - With <code>.value</code> in <code>names_to</code>, we do <em>not</em> provide the <code>values_to</code> column names. We are instead signaling that the value names come from the existing column names
 - <code>everything()</code> is a convenient way to select all columns</p>
 <p>Let’s look at one more use of <code>pivot_longer</code> on the <code>alloys</code> dataset.</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="data-pivoting-data.html#cb311-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb311-2"><a href="data-pivoting-data.html#cb311-2" tabindex="-1"></a>alloys <span class="sc">%&gt;%</span></span>
-<span id="cb311-3"><a href="data-pivoting-data.html#cb311-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb311-4"><a href="data-pivoting-data.html#cb311-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;angle&quot;</span>),</span>
-<span id="cb311-5"><a href="data-pivoting-data.html#cb311-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
-<span id="cb311-6"><a href="data-pivoting-data.html#cb311-6" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;val&quot;</span>,</span>
-<span id="cb311-7"><a href="data-pivoting-data.html#cb311-7" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>thick, <span class="sc">-</span>rep) <span class="co"># Use all columns in the pivot, *EXCEPT* these two</span></span>
-<span id="cb311-8"><a href="data-pivoting-data.html#cb311-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="data-pivoting-data.html#cb313-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb313-2"><a href="data-pivoting-data.html#cb313-2" tabindex="-1"></a>alloys <span class="sc">%&gt;%</span></span>
+<span id="cb313-3"><a href="data-pivoting-data.html#cb313-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb313-4"><a href="data-pivoting-data.html#cb313-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;angle&quot;</span>),</span>
+<span id="cb313-5"><a href="data-pivoting-data.html#cb313-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb313-6"><a href="data-pivoting-data.html#cb313-6" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;val&quot;</span>,</span>
+<span id="cb313-7"><a href="data-pivoting-data.html#cb313-7" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>thick, <span class="sc">-</span>rep) <span class="co"># Use all columns in the pivot, *EXCEPT* these two</span></span>
+<span id="cb313-8"><a href="data-pivoting-data.html#cb313-8" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 16 × 5
 ##    thick   rep var   angle       val
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;
@@ -1370,18 +1370,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="pivot-wider" class="section level3 hasAnchor" number="23.2.2">
 <h3><span class="header-section-number">23.2.2</span> Pivot wider<a href="data-pivoting-data.html#pivot-wider" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We’ll continue tidying the <code>alloys</code> dataset with <code>pivot_wider</code>.</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="data-pivoting-data.html#cb313-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
-<span id="cb313-2"><a href="data-pivoting-data.html#cb313-2" tabindex="-1"></a>alloys <span class="sc">%&gt;%</span></span>
-<span id="cb313-3"><a href="data-pivoting-data.html#cb313-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb313-4"><a href="data-pivoting-data.html#cb313-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;angle&quot;</span>),</span>
-<span id="cb313-5"><a href="data-pivoting-data.html#cb313-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
-<span id="cb313-6"><a href="data-pivoting-data.html#cb313-6" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;val&quot;</span>,</span>
-<span id="cb313-7"><a href="data-pivoting-data.html#cb313-7" tabindex="-1"></a>    <span class="fu">starts_with</span>(<span class="st">&quot;E&quot;</span>) <span class="sc">|</span> <span class="fu">starts_with</span>(<span class="st">&quot;mu&quot;</span>)</span>
-<span id="cb313-8"><a href="data-pivoting-data.html#cb313-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb313-9"><a href="data-pivoting-data.html#cb313-9" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb313-10"><a href="data-pivoting-data.html#cb313-10" tabindex="-1"></a>    <span class="at">names_from =</span> var, <span class="co"># Cell entries to turn into new column names</span></span>
-<span id="cb313-11"><a href="data-pivoting-data.html#cb313-11" tabindex="-1"></a>    <span class="at">values_from =</span> val <span class="co"># Values to associate with the new column(s)</span></span>
-<span id="cb313-12"><a href="data-pivoting-data.html#cb313-12" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="data-pivoting-data.html#cb315-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; execute</span></span>
+<span id="cb315-2"><a href="data-pivoting-data.html#cb315-2" tabindex="-1"></a>alloys <span class="sc">%&gt;%</span></span>
+<span id="cb315-3"><a href="data-pivoting-data.html#cb315-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb315-4"><a href="data-pivoting-data.html#cb315-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;angle&quot;</span>),</span>
+<span id="cb315-5"><a href="data-pivoting-data.html#cb315-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb315-6"><a href="data-pivoting-data.html#cb315-6" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;val&quot;</span>,</span>
+<span id="cb315-7"><a href="data-pivoting-data.html#cb315-7" tabindex="-1"></a>    <span class="fu">starts_with</span>(<span class="st">&quot;E&quot;</span>) <span class="sc">|</span> <span class="fu">starts_with</span>(<span class="st">&quot;mu&quot;</span>)</span>
+<span id="cb315-8"><a href="data-pivoting-data.html#cb315-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb315-9"><a href="data-pivoting-data.html#cb315-9" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb315-10"><a href="data-pivoting-data.html#cb315-10" tabindex="-1"></a>    <span class="at">names_from =</span> var, <span class="co"># Cell entries to turn into new column names</span></span>
+<span id="cb315-11"><a href="data-pivoting-data.html#cb315-11" tabindex="-1"></a>    <span class="at">values_from =</span> val <span class="co"># Values to associate with the new column(s)</span></span>
+<span id="cb315-12"><a href="data-pivoting-data.html#cb315-12" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 8 × 5
 ##   thick   rep angle     E    mu
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1409,29 +1409,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="pivoting-exercises" class="section level2 hasAnchor" number="23.3">
 <h2><span class="header-section-number">23.3</span> Pivoting: Exercises<a href="data-pivoting-data.html#pivoting-exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To practice using <code>pivot_longer</code> and <code>pivot_wider</code>, we’re going to work with the following small dataset:</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="data-pivoting-data.html#cb315-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; this is setup for the exercises</span></span>
-<span id="cb315-2"><a href="data-pivoting-data.html#cb315-2" tabindex="-1"></a>df_base <span class="ot">&lt;-</span></span>
-<span id="cb315-3"><a href="data-pivoting-data.html#cb315-3" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb315-4"><a href="data-pivoting-data.html#cb315-4" tabindex="-1"></a>    <span class="sc">~</span><span class="st">`</span><span class="at">X-0</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">X-1</span><span class="st">`</span>, <span class="sc">~</span>key,</span>
-<span id="cb315-5"><a href="data-pivoting-data.html#cb315-5" tabindex="-1"></a>         <span class="dv">1</span>,      <span class="dv">9</span>,  <span class="st">&quot;A&quot;</span>,</span>
-<span id="cb315-6"><a href="data-pivoting-data.html#cb315-6" tabindex="-1"></a>         <span class="dv">2</span>,      <span class="dv">8</span>,  <span class="st">&quot;B&quot;</span>,</span>
-<span id="cb315-7"><a href="data-pivoting-data.html#cb315-7" tabindex="-1"></a>         <span class="dv">3</span>,      <span class="dv">7</span>,  <span class="st">&quot;C&quot;</span></span>
-<span id="cb315-8"><a href="data-pivoting-data.html#cb315-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="data-pivoting-data.html#cb317-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; this is setup for the exercises</span></span>
+<span id="cb317-2"><a href="data-pivoting-data.html#cb317-2" tabindex="-1"></a>df_base <span class="ot">&lt;-</span></span>
+<span id="cb317-3"><a href="data-pivoting-data.html#cb317-3" tabindex="-1"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb317-4"><a href="data-pivoting-data.html#cb317-4" tabindex="-1"></a>    <span class="sc">~</span><span class="st">`</span><span class="at">X-0</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">X-1</span><span class="st">`</span>, <span class="sc">~</span>key,</span>
+<span id="cb317-5"><a href="data-pivoting-data.html#cb317-5" tabindex="-1"></a>         <span class="dv">1</span>,      <span class="dv">9</span>,  <span class="st">&quot;A&quot;</span>,</span>
+<span id="cb317-6"><a href="data-pivoting-data.html#cb317-6" tabindex="-1"></a>         <span class="dv">2</span>,      <span class="dv">8</span>,  <span class="st">&quot;B&quot;</span>,</span>
+<span id="cb317-7"><a href="data-pivoting-data.html#cb317-7" tabindex="-1"></a>         <span class="dv">3</span>,      <span class="dv">7</span>,  <span class="st">&quot;C&quot;</span></span>
+<span id="cb317-8"><a href="data-pivoting-data.html#cb317-8" tabindex="-1"></a>  )</span></code></pre></div>
 <p>We’re going to play a game: I’m going to modify the data, and your job is to pivot it back to equal <code>df_base</code>.</p>
 <div id="q3-unpivot-the-data" class="section level3 hasAnchor" number="23.3.1">
 <h3><span class="header-section-number">23.3.1</span> <strong>q3</strong> Unpivot the data<a href="data-pivoting-data.html#q3-unpivot-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Recover <code>df_base</code> from <code>df_q3</code> by using a <em>single</em> pivot and no other functions.</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="data-pivoting-data.html#cb316-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; this is setup for the exercise</span></span>
-<span id="cb316-2"><a href="data-pivoting-data.html#cb316-2" tabindex="-1"></a>df_q3 <span class="ot">&lt;-</span></span>
-<span id="cb316-3"><a href="data-pivoting-data.html#cb316-3" tabindex="-1"></a>  df_base <span class="sc">%&gt;%</span></span>
-<span id="cb316-4"><a href="data-pivoting-data.html#cb316-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb316-5"><a href="data-pivoting-data.html#cb316-5" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;id&quot;</span>,</span>
-<span id="cb316-6"><a href="data-pivoting-data.html#cb316-6" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;(</span><span class="sc">\\</span><span class="st">d)&quot;</span>,</span>
-<span id="cb316-7"><a href="data-pivoting-data.html#cb316-7" tabindex="-1"></a>    <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">id =</span> as.integer),</span>
-<span id="cb316-8"><a href="data-pivoting-data.html#cb316-8" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>,</span>
-<span id="cb316-9"><a href="data-pivoting-data.html#cb316-9" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>key</span>
-<span id="cb316-10"><a href="data-pivoting-data.html#cb316-10" tabindex="-1"></a>  )</span>
-<span id="cb316-11"><a href="data-pivoting-data.html#cb316-11" tabindex="-1"></a>df_q3</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="data-pivoting-data.html#cb318-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; this is setup for the exercise</span></span>
+<span id="cb318-2"><a href="data-pivoting-data.html#cb318-2" tabindex="-1"></a>df_q3 <span class="ot">&lt;-</span></span>
+<span id="cb318-3"><a href="data-pivoting-data.html#cb318-3" tabindex="-1"></a>  df_base <span class="sc">%&gt;%</span></span>
+<span id="cb318-4"><a href="data-pivoting-data.html#cb318-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb318-5"><a href="data-pivoting-data.html#cb318-5" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;id&quot;</span>,</span>
+<span id="cb318-6"><a href="data-pivoting-data.html#cb318-6" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;(</span><span class="sc">\\</span><span class="st">d)&quot;</span>,</span>
+<span id="cb318-7"><a href="data-pivoting-data.html#cb318-7" tabindex="-1"></a>    <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">id =</span> as.integer),</span>
+<span id="cb318-8"><a href="data-pivoting-data.html#cb318-8" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>,</span>
+<span id="cb318-9"><a href="data-pivoting-data.html#cb318-9" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>key</span>
+<span id="cb318-10"><a href="data-pivoting-data.html#cb318-10" tabindex="-1"></a>  )</span>
+<span id="cb318-11"><a href="data-pivoting-data.html#cb318-11" tabindex="-1"></a>df_q3</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 3
 ##   key      id value
 ##   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt;
@@ -1443,38 +1443,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6 C         1     7</code></pre>
 <p>Undo the modification using a single pivot. Don’t worry about column order.</p>
 <p><em>Hint</em>: The <code>names_prefix</code> argument will help here!</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="data-pivoting-data.html#cb318-1" tabindex="-1"></a>df_q3_res <span class="ot">&lt;-</span></span>
-<span id="cb318-2"><a href="data-pivoting-data.html#cb318-2" tabindex="-1"></a>  df_q3 <span class="sc">%&gt;%</span></span>
-<span id="cb318-3"><a href="data-pivoting-data.html#cb318-3" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb318-4"><a href="data-pivoting-data.html#cb318-4" tabindex="-1"></a>    <span class="at">names_from =</span> id,</span>
-<span id="cb318-5"><a href="data-pivoting-data.html#cb318-5" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">&quot;X-&quot;</span>,</span>
-<span id="cb318-6"><a href="data-pivoting-data.html#cb318-6" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
-<span id="cb318-7"><a href="data-pivoting-data.html#cb318-7" tabindex="-1"></a>  )</span>
-<span id="cb318-8"><a href="data-pivoting-data.html#cb318-8" tabindex="-1"></a></span>
-<span id="cb318-9"><a href="data-pivoting-data.html#cb318-9" tabindex="-1"></a>df_q3_res</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="data-pivoting-data.html#cb320-1" tabindex="-1"></a>df_q3_res <span class="ot">&lt;-</span></span>
+<span id="cb320-2"><a href="data-pivoting-data.html#cb320-2" tabindex="-1"></a>  df_q3 <span class="sc">%&gt;%</span></span>
+<span id="cb320-3"><a href="data-pivoting-data.html#cb320-3" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb320-4"><a href="data-pivoting-data.html#cb320-4" tabindex="-1"></a>    <span class="at">names_from =</span> id,</span>
+<span id="cb320-5"><a href="data-pivoting-data.html#cb320-5" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">&quot;X-&quot;</span>,</span>
+<span id="cb320-6"><a href="data-pivoting-data.html#cb320-6" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
+<span id="cb320-7"><a href="data-pivoting-data.html#cb320-7" tabindex="-1"></a>  )</span>
+<span id="cb320-8"><a href="data-pivoting-data.html#cb320-8" tabindex="-1"></a></span>
+<span id="cb320-9"><a href="data-pivoting-data.html#cb320-9" tabindex="-1"></a>df_q3_res</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 3
 ##   key   `X-0` `X-1`
 ##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 A         1     9
 ## 2 B         2     8
 ## 3 C         3     7</code></pre>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="data-pivoting-data.html#cb320-1" tabindex="-1"></a><span class="fu">all.equal</span>(</span>
-<span id="cb320-2"><a href="data-pivoting-data.html#cb320-2" tabindex="-1"></a>  df_base, </span>
-<span id="cb320-3"><a href="data-pivoting-data.html#cb320-3" tabindex="-1"></a>  df_q3_res <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">names</span>(df_base))</span>
-<span id="cb320-4"><a href="data-pivoting-data.html#cb320-4" tabindex="-1"></a>) <span class="co"># Checks equality; returns TRUE if equal</span></span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="data-pivoting-data.html#cb322-1" tabindex="-1"></a><span class="fu">all.equal</span>(</span>
+<span id="cb322-2"><a href="data-pivoting-data.html#cb322-2" tabindex="-1"></a>  df_base, </span>
+<span id="cb322-3"><a href="data-pivoting-data.html#cb322-3" tabindex="-1"></a>  df_q3_res <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">names</span>(df_base))</span>
+<span id="cb322-4"><a href="data-pivoting-data.html#cb322-4" tabindex="-1"></a>) <span class="co"># Checks equality; returns TRUE if equal</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="q4-unpivot-the-data" class="section level3 hasAnchor" number="23.3.2">
 <h3><span class="header-section-number">23.3.2</span> <strong>q4</strong> Unpivot the data<a href="data-pivoting-data.html#q4-unpivot-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Recover <code>df_base</code> from <code>df_q4</code> by using a <em>single</em> pivot and no other functions.</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="data-pivoting-data.html#cb322-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; this is setup for the exercise</span></span>
-<span id="cb322-2"><a href="data-pivoting-data.html#cb322-2" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
-<span id="cb322-3"><a href="data-pivoting-data.html#cb322-3" tabindex="-1"></a>  df_base <span class="sc">%&gt;%</span></span>
-<span id="cb322-4"><a href="data-pivoting-data.html#cb322-4" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb322-5"><a href="data-pivoting-data.html#cb322-5" tabindex="-1"></a>    <span class="at">names_from =</span> key,</span>
-<span id="cb322-6"><a href="data-pivoting-data.html#cb322-6" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="st">`</span><span class="at">X-0</span><span class="st">`</span></span>
-<span id="cb322-7"><a href="data-pivoting-data.html#cb322-7" tabindex="-1"></a>  )</span>
-<span id="cb322-8"><a href="data-pivoting-data.html#cb322-8" tabindex="-1"></a>df_q4</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="data-pivoting-data.html#cb324-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; this is setup for the exercise</span></span>
+<span id="cb324-2"><a href="data-pivoting-data.html#cb324-2" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
+<span id="cb324-3"><a href="data-pivoting-data.html#cb324-3" tabindex="-1"></a>  df_base <span class="sc">%&gt;%</span></span>
+<span id="cb324-4"><a href="data-pivoting-data.html#cb324-4" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb324-5"><a href="data-pivoting-data.html#cb324-5" tabindex="-1"></a>    <span class="at">names_from =</span> key,</span>
+<span id="cb324-6"><a href="data-pivoting-data.html#cb324-6" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="st">`</span><span class="at">X-0</span><span class="st">`</span></span>
+<span id="cb324-7"><a href="data-pivoting-data.html#cb324-7" tabindex="-1"></a>  )</span>
+<span id="cb324-8"><a href="data-pivoting-data.html#cb324-8" tabindex="-1"></a>df_q4</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 4
 ##   `X-1`     A     B     C
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1483,79 +1483,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3     7    NA    NA     3</code></pre>
 <p>Undo the modification using a single pivot. Don’t worry about column order.</p>
 <p><em>Hint</em>: You’ll need a way to drop <code>NA</code> values in the pivot (without filtering). Check the documentation for <code>pivot_longer</code>.</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="data-pivoting-data.html#cb324-1" tabindex="-1"></a>df_q4_res <span class="ot">&lt;-</span></span>
-<span id="cb324-2"><a href="data-pivoting-data.html#cb324-2" tabindex="-1"></a>  df_q4 <span class="sc">%&gt;%</span></span>
-<span id="cb324-3"><a href="data-pivoting-data.html#cb324-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb324-4"><a href="data-pivoting-data.html#cb324-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;key&quot;</span>,</span>
-<span id="cb324-5"><a href="data-pivoting-data.html#cb324-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;X-0&quot;</span>,</span>
-<span id="cb324-6"><a href="data-pivoting-data.html#cb324-6" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb324-7"><a href="data-pivoting-data.html#cb324-7" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(A, B, C)</span>
-<span id="cb324-8"><a href="data-pivoting-data.html#cb324-8" tabindex="-1"></a>  )</span>
-<span id="cb324-9"><a href="data-pivoting-data.html#cb324-9" tabindex="-1"></a></span>
-<span id="cb324-10"><a href="data-pivoting-data.html#cb324-10" tabindex="-1"></a>df_q4_res</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="data-pivoting-data.html#cb326-1" tabindex="-1"></a>df_q4_res <span class="ot">&lt;-</span></span>
+<span id="cb326-2"><a href="data-pivoting-data.html#cb326-2" tabindex="-1"></a>  df_q4 <span class="sc">%&gt;%</span></span>
+<span id="cb326-3"><a href="data-pivoting-data.html#cb326-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb326-4"><a href="data-pivoting-data.html#cb326-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;key&quot;</span>,</span>
+<span id="cb326-5"><a href="data-pivoting-data.html#cb326-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;X-0&quot;</span>,</span>
+<span id="cb326-6"><a href="data-pivoting-data.html#cb326-6" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb326-7"><a href="data-pivoting-data.html#cb326-7" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(A, B, C)</span>
+<span id="cb326-8"><a href="data-pivoting-data.html#cb326-8" tabindex="-1"></a>  )</span>
+<span id="cb326-9"><a href="data-pivoting-data.html#cb326-9" tabindex="-1"></a></span>
+<span id="cb326-10"><a href="data-pivoting-data.html#cb326-10" tabindex="-1"></a>df_q4_res</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 3
 ##   `X-1` key   `X-0`
 ##   &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
 ## 1     9 A         1
 ## 2     8 B         2
 ## 3     7 C         3</code></pre>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="data-pivoting-data.html#cb326-1" tabindex="-1"></a><span class="fu">all.equal</span>(</span>
-<span id="cb326-2"><a href="data-pivoting-data.html#cb326-2" tabindex="-1"></a>  df_base, </span>
-<span id="cb326-3"><a href="data-pivoting-data.html#cb326-3" tabindex="-1"></a>  df_q4_res <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">names</span>(df_base))</span>
-<span id="cb326-4"><a href="data-pivoting-data.html#cb326-4" tabindex="-1"></a>) <span class="co"># Checks equality; returns TRUE if equal</span></span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="data-pivoting-data.html#cb328-1" tabindex="-1"></a><span class="fu">all.equal</span>(</span>
+<span id="cb328-2"><a href="data-pivoting-data.html#cb328-2" tabindex="-1"></a>  df_base, </span>
+<span id="cb328-3"><a href="data-pivoting-data.html#cb328-3" tabindex="-1"></a>  df_q4_res <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">names</span>(df_base))</span>
+<span id="cb328-4"><a href="data-pivoting-data.html#cb328-4" tabindex="-1"></a>) <span class="co"># Checks equality; returns TRUE if equal</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="q5-unpivot-the-data" class="section level3 hasAnchor" number="23.3.3">
 <h3><span class="header-section-number">23.3.3</span> <strong>q5</strong> Unpivot the data<a href="data-pivoting-data.html#q5-unpivot-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Recover <code>df_base</code> from <code>df_q5</code> by using a <em>single</em> pivot and no other functions.</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="data-pivoting-data.html#cb328-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; this is setup for the exercise</span></span>
-<span id="cb328-2"><a href="data-pivoting-data.html#cb328-2" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
-<span id="cb328-3"><a href="data-pivoting-data.html#cb328-3" tabindex="-1"></a>  df_base <span class="sc">%&gt;%</span></span>
-<span id="cb328-4"><a href="data-pivoting-data.html#cb328-4" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb328-5"><a href="data-pivoting-data.html#cb328-5" tabindex="-1"></a>    <span class="at">names_from =</span> key,</span>
-<span id="cb328-6"><a href="data-pivoting-data.html#cb328-6" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="sc">-</span>key</span>
-<span id="cb328-7"><a href="data-pivoting-data.html#cb328-7" tabindex="-1"></a>  )</span>
-<span id="cb328-8"><a href="data-pivoting-data.html#cb328-8" tabindex="-1"></a>df_q5</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="data-pivoting-data.html#cb330-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; this is setup for the exercise</span></span>
+<span id="cb330-2"><a href="data-pivoting-data.html#cb330-2" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
+<span id="cb330-3"><a href="data-pivoting-data.html#cb330-3" tabindex="-1"></a>  df_base <span class="sc">%&gt;%</span></span>
+<span id="cb330-4"><a href="data-pivoting-data.html#cb330-4" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb330-5"><a href="data-pivoting-data.html#cb330-5" tabindex="-1"></a>    <span class="at">names_from =</span> key,</span>
+<span id="cb330-6"><a href="data-pivoting-data.html#cb330-6" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="sc">-</span>key</span>
+<span id="cb330-7"><a href="data-pivoting-data.html#cb330-7" tabindex="-1"></a>  )</span>
+<span id="cb330-8"><a href="data-pivoting-data.html#cb330-8" tabindex="-1"></a>df_q5</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 6
 ##   `X-0_A` `X-0_B` `X-0_C` `X-1_A` `X-1_B` `X-1_C`
 ##     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
 ## 1       1       2       3       9       8       7</code></pre>
 <p>Undo the modification using a single pivot. Don’t worry about column order.</p>
 <p><em>Hint</em>: For this one, you’ll need to use the special <code>.value</code> entry in <code>names_to</code>.</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="data-pivoting-data.html#cb330-1" tabindex="-1"></a>df_q5_res <span class="ot">&lt;-</span></span>
-<span id="cb330-2"><a href="data-pivoting-data.html#cb330-2" tabindex="-1"></a>  df_q5 <span class="sc">%&gt;%</span></span>
-<span id="cb330-3"><a href="data-pivoting-data.html#cb330-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb330-4"><a href="data-pivoting-data.html#cb330-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;key&quot;</span>),</span>
-<span id="cb330-5"><a href="data-pivoting-data.html#cb330-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
-<span id="cb330-6"><a href="data-pivoting-data.html#cb330-6" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>()</span>
-<span id="cb330-7"><a href="data-pivoting-data.html#cb330-7" tabindex="-1"></a>  )</span>
-<span id="cb330-8"><a href="data-pivoting-data.html#cb330-8" tabindex="-1"></a></span>
-<span id="cb330-9"><a href="data-pivoting-data.html#cb330-9" tabindex="-1"></a>df_q5_res</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="data-pivoting-data.html#cb332-1" tabindex="-1"></a>df_q5_res <span class="ot">&lt;-</span></span>
+<span id="cb332-2"><a href="data-pivoting-data.html#cb332-2" tabindex="-1"></a>  df_q5 <span class="sc">%&gt;%</span></span>
+<span id="cb332-3"><a href="data-pivoting-data.html#cb332-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb332-4"><a href="data-pivoting-data.html#cb332-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;key&quot;</span>),</span>
+<span id="cb332-5"><a href="data-pivoting-data.html#cb332-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb332-6"><a href="data-pivoting-data.html#cb332-6" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>()</span>
+<span id="cb332-7"><a href="data-pivoting-data.html#cb332-7" tabindex="-1"></a>  )</span>
+<span id="cb332-8"><a href="data-pivoting-data.html#cb332-8" tabindex="-1"></a></span>
+<span id="cb332-9"><a href="data-pivoting-data.html#cb332-9" tabindex="-1"></a>df_q5_res</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 3
 ##   key   `X-0` `X-1`
 ##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 A         1     9
 ## 2 B         2     8
 ## 3 C         3     7</code></pre>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="data-pivoting-data.html#cb332-1" tabindex="-1"></a><span class="fu">all.equal</span>(</span>
-<span id="cb332-2"><a href="data-pivoting-data.html#cb332-2" tabindex="-1"></a>  df_base, </span>
-<span id="cb332-3"><a href="data-pivoting-data.html#cb332-3" tabindex="-1"></a>  df_q5_res <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">names</span>(df_base))</span>
-<span id="cb332-4"><a href="data-pivoting-data.html#cb332-4" tabindex="-1"></a>) <span class="co"># Checks equality; returns TRUE if equal</span></span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="data-pivoting-data.html#cb334-1" tabindex="-1"></a><span class="fu">all.equal</span>(</span>
+<span id="cb334-2"><a href="data-pivoting-data.html#cb334-2" tabindex="-1"></a>  df_base, </span>
+<span id="cb334-3"><a href="data-pivoting-data.html#cb334-3" tabindex="-1"></a>  df_q5_res <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">names</span>(df_base))</span>
+<span id="cb334-4"><a href="data-pivoting-data.html#cb334-4" tabindex="-1"></a>) <span class="co"># Checks equality; returns TRUE if equal</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="q6-make-your-own" class="section level3 hasAnchor" number="23.3.4">
 <h3><span class="header-section-number">23.3.4</span> <strong>q6</strong> Make your own!<a href="data-pivoting-data.html#q6-make-your-own" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Using a single pivot on <code>df_base</code> create your own <em>challenge</em> dataframe. You will share this with the rest of the class as a puzzle, so make sure to solve your own challenge so you have a solution!</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="data-pivoting-data.html#cb334-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; this is setup for the exercise</span></span>
-<span id="cb334-2"><a href="data-pivoting-data.html#cb334-2" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
-<span id="cb334-3"><a href="data-pivoting-data.html#cb334-3" tabindex="-1"></a>  df_base <span class="sc">%&gt;%</span></span>
-<span id="cb334-4"><a href="data-pivoting-data.html#cb334-4" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="data-pivoting-data.html#cb336-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit; this is setup for the exercise</span></span>
+<span id="cb336-2"><a href="data-pivoting-data.html#cb336-2" tabindex="-1"></a>df_q6 <span class="ot">&lt;-</span></span>
+<span id="cb336-3"><a href="data-pivoting-data.html#cb336-3" tabindex="-1"></a>  df_base <span class="sc">%&gt;%</span></span>
+<span id="cb336-4"><a href="data-pivoting-data.html#cb336-4" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 3
 ## Columns: 3
 ## $ `X-0` &lt;dbl&gt; 1, 2, 3
 ## $ `X-1` &lt;dbl&gt; 9, 8, 7
 ## $ key   &lt;chr&gt; &quot;A&quot;, &quot;B&quot;, &quot;C&quot;</code></pre>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="data-pivoting-data.html#cb336-1" tabindex="-1"></a>df_q6</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="data-pivoting-data.html#cb338-1" tabindex="-1"></a>df_q6</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 3
 ##   `X-0` `X-1` key  
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
@@ -1563,25 +1563,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2     2     8 B    
 ## 3     3     7 C</code></pre>
 <p>Don’t forget to create a solution!</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="data-pivoting-data.html#cb338-1" tabindex="-1"></a>df_q6_res <span class="ot">&lt;-</span></span>
-<span id="cb338-2"><a href="data-pivoting-data.html#cb338-2" tabindex="-1"></a>  df_q6 <span class="sc">%&gt;%</span></span>
-<span id="cb338-3"><a href="data-pivoting-data.html#cb338-3" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="data-pivoting-data.html#cb340-1" tabindex="-1"></a>df_q6_res <span class="ot">&lt;-</span></span>
+<span id="cb340-2"><a href="data-pivoting-data.html#cb340-2" tabindex="-1"></a>  df_q6 <span class="sc">%&gt;%</span></span>
+<span id="cb340-3"><a href="data-pivoting-data.html#cb340-3" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 3
 ## Columns: 3
 ## $ `X-0` &lt;dbl&gt; 1, 2, 3
 ## $ `X-1` &lt;dbl&gt; 9, 8, 7
 ## $ key   &lt;chr&gt; &quot;A&quot;, &quot;B&quot;, &quot;C&quot;</code></pre>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="data-pivoting-data.html#cb340-1" tabindex="-1"></a>df_q6_res</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="data-pivoting-data.html#cb342-1" tabindex="-1"></a>df_q6_res</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 3
 ##   `X-0` `X-1` key  
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
 ## 1     1     9 A    
 ## 2     2     8 B    
 ## 3     3     7 C</code></pre>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="data-pivoting-data.html#cb342-1" tabindex="-1"></a><span class="fu">all.equal</span>(</span>
-<span id="cb342-2"><a href="data-pivoting-data.html#cb342-2" tabindex="-1"></a>  df_base, </span>
-<span id="cb342-3"><a href="data-pivoting-data.html#cb342-3" tabindex="-1"></a>  df_q6_res <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">names</span>(df_base))</span>
-<span id="cb342-4"><a href="data-pivoting-data.html#cb342-4" tabindex="-1"></a>) <span class="co"># Checks equality; returns TRUE if equal</span></span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="data-pivoting-data.html#cb344-1" tabindex="-1"></a><span class="fu">all.equal</span>(</span>
+<span id="cb344-2"><a href="data-pivoting-data.html#cb344-2" tabindex="-1"></a>  df_base, </span>
+<span id="cb344-3"><a href="data-pivoting-data.html#cb344-3" tabindex="-1"></a>  df_q6_res <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">names</span>(df_base))</span>
+<span id="cb344-4"><a href="data-pivoting-data.html#cb344-4" tabindex="-1"></a>) <span class="co"># Checks equality; returns TRUE if equal</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p><em>Optional reading</em>:
 - <a href="https://tidyselect.r-lib.org/reference/language.html">selection language</a></p>

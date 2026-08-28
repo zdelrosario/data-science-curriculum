@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>48 Stats: Fitting Distributions | Data Science: Exercise Solutions</title>
   <meta name="description" content="48 Stats: Fitting Distributions | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="48 Stats: Fitting Distributions | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1084,39 +1084,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="stats-fitting-distributions" class="section level1 hasAnchor" number="48">
 <h1><span class="header-section-number">48</span> Stats: Fitting Distributions<a href="stats-fitting-distributions.html#stats-fitting-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: We use distributions to model random quantities. However, in order to model physical phenomena, we should <em>fit</em> the distributions using data. In this short exercise you’ll learn some functions for fitting distributions to data.</p>
-<div class="sourceCode" id="cb990"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb990-1"><a href="stats-fitting-distributions.html#cb990-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb995"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb995-1"><a href="stats-fitting-distributions.html#cb995-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb992"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb992-1"><a href="stats-fitting-distributions.html#cb992-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div>
+<div class="sourceCode" id="cb997"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb997-1"><a href="stats-fitting-distributions.html#cb997-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;MASS&#39;
 ## 
 ## The following object is masked from &#39;package:dplyr&#39;:
 ## 
 ##     select</code></pre>
-<div class="sourceCode" id="cb994"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb994-1"><a href="stats-fitting-distributions.html#cb994-1" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<div class="sourceCode" id="cb999"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb999-1"><a href="stats-fitting-distributions.html#cb999-1" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
 <div id="aside-masking" class="section level2 hasAnchor" number="48.1">
 <h2><span class="header-section-number">48.1</span> Aside: Masking<a href="stats-fitting-distributions.html#aside-masking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Note that when we load the <code>MASS</code> and <code>tidyverse</code> packages, we will find that their functions <em>conflict</em>. To deal with this, we’ll need to learn how to specify a <em>namespace</em> when calling a function. To do this, use the <code>::</code> notation; i.e. <code>namespace::function</code>. For instance, to call <code>filter</code> from <code>dplyr</code>, we would write <code>dplyr::filter()</code>.</p>
 <p>One of the specific conflicts between <code>MASS</code> and <code>tidyverse</code> is the <code>select</code> function. Try running the chunk below; it will throw an error:</p>
-<div class="sourceCode" id="cb995"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb995-1"><a href="stats-fitting-distributions.html#cb995-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb995-2"><a href="stats-fitting-distributions.html#cb995-2" tabindex="-1"></a>  <span class="fu">select</span>(carat, cut) <span class="sc">%&gt;%</span></span>
-<span id="cb995-3"><a href="stats-fitting-distributions.html#cb995-3" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1000"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1000-1"><a href="stats-fitting-distributions.html#cb1000-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb1000-2"><a href="stats-fitting-distributions.html#cb1000-2" tabindex="-1"></a>  <span class="fu">select</span>(carat, cut) <span class="sc">%&gt;%</span></span>
+<span id="cb1000-3"><a href="stats-fitting-distributions.html#cb1000-3" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
 <p>This error occurs because <code>MASS</code> <em>also</em> provides a <code>select</code> function.</p>
 <div id="q0-fix-the-following-code" class="section level3 hasAnchor" number="48.1.1">
 <h3><span class="header-section-number">48.1.1</span> <strong>q0</strong> Fix the following code!<a href="stats-fitting-distributions.html#q0-fix-the-following-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Use the namespace <code>::</code> operator to use the correct <code>select()</code> function.</p>
-<div class="sourceCode" id="cb996"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb996-1"><a href="stats-fitting-distributions.html#cb996-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb996-2"><a href="stats-fitting-distributions.html#cb996-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(carat, cut) <span class="sc">%&gt;%</span></span>
-<span id="cb996-3"><a href="stats-fitting-distributions.html#cb996-3" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1001"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1001-1"><a href="stats-fitting-distributions.html#cb1001-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb1001-2"><a href="stats-fitting-distributions.html#cb1001-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(carat, cut) <span class="sc">%&gt;%</span></span>
+<span id="cb1001-3"><a href="stats-fitting-distributions.html#cb1001-3" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 53,940
 ## Columns: 2
 ## $ carat &lt;dbl&gt; 0.23, 0.21, 0.23, 0.29, 0.31, 0.24, 0.24, 0.26, 0.22, 0.23, 0.30…
@@ -1127,18 +1127,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">48.2</span> Distribution Parameters and Fitting<a href="stats-fitting-distributions.html#distribution-parameters-and-fitting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The function <code>rnorm()</code> requires values for <code>mean</code> and <code>sd</code>; while <code>rnorm()</code> has defaults for these arguments, if we are trying to model a random event in the real world, we should set <code>mean, sd</code> based on data. The process of estimating parameters such as <code>mean, sd</code> for a distribution is called <em>fitting</em>. Fitting a distribution is often accomplished through <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation"><em>maximum likelihood estimation</em></a> (MLE); rather than discuss the gory details of MLE, we will simply use MLE as a technology to do useful work.</p>
 <p>First, let’s look at an example of MLE carried out with the function <code>MASS::fitdistr()</code>.</p>
-<div class="sourceCode" id="cb998"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb998-1"><a href="stats-fitting-distributions.html#cb998-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
-<span id="cb998-2"><a href="stats-fitting-distributions.html#cb998-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb998-3"><a href="stats-fitting-distributions.html#cb998-3" tabindex="-1"></a>df_data_norm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>))</span>
-<span id="cb998-4"><a href="stats-fitting-distributions.html#cb998-4" tabindex="-1"></a></span>
-<span id="cb998-5"><a href="stats-fitting-distributions.html#cb998-5" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Example use of fitdistr()</span></span>
-<span id="cb998-6"><a href="stats-fitting-distributions.html#cb998-6" tabindex="-1"></a>df_est_norm <span class="ot">&lt;-</span></span>
-<span id="cb998-7"><a href="stats-fitting-distributions.html#cb998-7" tabindex="-1"></a>  df_data_norm <span class="sc">%&gt;%</span></span>
-<span id="cb998-8"><a href="stats-fitting-distributions.html#cb998-8" tabindex="-1"></a>  <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span></span>
-<span id="cb998-9"><a href="stats-fitting-distributions.html#cb998-9" tabindex="-1"></a>  <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;normal&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb998-10"><a href="stats-fitting-distributions.html#cb998-10" tabindex="-1"></a>  <span class="fu">tidy</span>()</span>
-<span id="cb998-11"><a href="stats-fitting-distributions.html#cb998-11" tabindex="-1"></a></span>
-<span id="cb998-12"><a href="stats-fitting-distributions.html#cb998-12" tabindex="-1"></a>df_est_norm</span></code></pre></div>
+<div class="sourceCode" id="cb1003"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1003-1"><a href="stats-fitting-distributions.html#cb1003-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
+<span id="cb1003-2"><a href="stats-fitting-distributions.html#cb1003-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1003-3"><a href="stats-fitting-distributions.html#cb1003-3" tabindex="-1"></a>df_data_norm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>))</span>
+<span id="cb1003-4"><a href="stats-fitting-distributions.html#cb1003-4" tabindex="-1"></a></span>
+<span id="cb1003-5"><a href="stats-fitting-distributions.html#cb1003-5" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Example use of fitdistr()</span></span>
+<span id="cb1003-6"><a href="stats-fitting-distributions.html#cb1003-6" tabindex="-1"></a>df_est_norm <span class="ot">&lt;-</span></span>
+<span id="cb1003-7"><a href="stats-fitting-distributions.html#cb1003-7" tabindex="-1"></a>  df_data_norm <span class="sc">%&gt;%</span></span>
+<span id="cb1003-8"><a href="stats-fitting-distributions.html#cb1003-8" tabindex="-1"></a>  <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span></span>
+<span id="cb1003-9"><a href="stats-fitting-distributions.html#cb1003-9" tabindex="-1"></a>  <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;normal&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1003-10"><a href="stats-fitting-distributions.html#cb1003-10" tabindex="-1"></a>  <span class="fu">tidy</span>()</span>
+<span id="cb1003-11"><a href="stats-fitting-distributions.html#cb1003-11" tabindex="-1"></a></span>
+<span id="cb1003-12"><a href="stats-fitting-distributions.html#cb1003-12" tabindex="-1"></a>df_est_norm</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   term  estimate std.error
 ##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
@@ -1152,12 +1152,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q1-compute-the-mean-and-sd" class="section level3 hasAnchor" number="48.2.1">
 <h3><span class="header-section-number">48.2.1</span> <strong>q1</strong> Compute the mean and SD<a href="stats-fitting-distributions.html#q1-compute-the-mean-and-sd" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Compute the sample mean and standard deviation of <code>x</code> in <code>df_data_norm</code>. Compare these values to those you computed with <code>fitdistr()</code>.</p>
-<div class="sourceCode" id="cb1000"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1000-1"><a href="stats-fitting-distributions.html#cb1000-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the sample mean and sd of `df_data_norm %&gt;% pull(x)`</span></span>
-<span id="cb1000-2"><a href="stats-fitting-distributions.html#cb1000-2" tabindex="-1"></a>mean_est <span class="ot">&lt;-</span> df_data_norm <span class="sc">%&gt;%</span> <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span> <span class="fu">mean</span>()</span>
-<span id="cb1000-3"><a href="stats-fitting-distributions.html#cb1000-3" tabindex="-1"></a>sd_est <span class="ot">&lt;-</span> df_data_norm <span class="sc">%&gt;%</span> <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span> <span class="fu">sd</span>()</span>
-<span id="cb1000-4"><a href="stats-fitting-distributions.html#cb1000-4" tabindex="-1"></a>mean_est</span></code></pre></div>
+<div class="sourceCode" id="cb1005"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1005-1"><a href="stats-fitting-distributions.html#cb1005-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Compute the sample mean and sd of `df_data_norm %&gt;% pull(x)`</span></span>
+<span id="cb1005-2"><a href="stats-fitting-distributions.html#cb1005-2" tabindex="-1"></a>mean_est <span class="ot">&lt;-</span> df_data_norm <span class="sc">%&gt;%</span> <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span> <span class="fu">mean</span>()</span>
+<span id="cb1005-3"><a href="stats-fitting-distributions.html#cb1005-3" tabindex="-1"></a>sd_est <span class="ot">&lt;-</span> df_data_norm <span class="sc">%&gt;%</span> <span class="fu">pull</span>(x) <span class="sc">%&gt;%</span> <span class="fu">sd</span>()</span>
+<span id="cb1005-4"><a href="stats-fitting-distributions.html#cb1005-4" tabindex="-1"></a>mean_est</span></code></pre></div>
 <pre><code>## [1] 1.876029</code></pre>
-<div class="sourceCode" id="cb1002"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1002-1"><a href="stats-fitting-distributions.html#cb1002-1" tabindex="-1"></a>sd_est</span></code></pre></div>
+<div class="sourceCode" id="cb1007"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1007-1"><a href="stats-fitting-distributions.html#cb1007-1" tabindex="-1"></a>sd_est</span></code></pre></div>
 <pre><code>## [1] 0.9321467</code></pre>
 <p><strong>Observations</strong>:</p>
 <ul>
@@ -1169,17 +1169,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">48.2.2</span> <strong>q2</strong> Fit a Weibull distribution<a href="stats-fitting-distributions.html#q2-fit-a-weibull-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Use the function <code>fitdistr()</code> to fit a <code>"weibull"</code> distribution to the realizations <code>y</code> in <code>df_data_weibull</code>.</p>
 <p><em>Note</em>: The <a href="https://en.wikipedia.org/wiki/Weibull_distribution">weibull distribution</a> is used to model many physical phenomena, including the strength of composite materials.</p>
-<div class="sourceCode" id="cb1004"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1004-1"><a href="stats-fitting-distributions.html#cb1004-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
-<span id="cb1004-2"><a href="stats-fitting-distributions.html#cb1004-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1004-3"><a href="stats-fitting-distributions.html#cb1004-3" tabindex="-1"></a>df_data_weibull <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">y =</span> <span class="fu">rweibull</span>(<span class="dv">50</span>, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">4</span>))</span>
-<span id="cb1004-4"><a href="stats-fitting-distributions.html#cb1004-4" tabindex="-1"></a></span>
-<span id="cb1004-5"><a href="stats-fitting-distributions.html#cb1004-5" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Use the `fitdistr()` function to estimate parameters</span></span>
-<span id="cb1004-6"><a href="stats-fitting-distributions.html#cb1004-6" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
-<span id="cb1004-7"><a href="stats-fitting-distributions.html#cb1004-7" tabindex="-1"></a>  df_data_weibull <span class="sc">%&gt;%</span></span>
-<span id="cb1004-8"><a href="stats-fitting-distributions.html#cb1004-8" tabindex="-1"></a>  <span class="fu">pull</span>(y) <span class="sc">%&gt;%</span></span>
-<span id="cb1004-9"><a href="stats-fitting-distributions.html#cb1004-9" tabindex="-1"></a>  <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;weibull&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1004-10"><a href="stats-fitting-distributions.html#cb1004-10" tabindex="-1"></a>  <span class="fu">tidy</span>()</span>
-<span id="cb1004-11"><a href="stats-fitting-distributions.html#cb1004-11" tabindex="-1"></a>df_q2</span></code></pre></div>
+<div class="sourceCode" id="cb1009"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1009-1"><a href="stats-fitting-distributions.html#cb1009-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit this setup</span></span>
+<span id="cb1009-2"><a href="stats-fitting-distributions.html#cb1009-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1009-3"><a href="stats-fitting-distributions.html#cb1009-3" tabindex="-1"></a>df_data_weibull <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">y =</span> <span class="fu">rweibull</span>(<span class="dv">50</span>, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">4</span>))</span>
+<span id="cb1009-4"><a href="stats-fitting-distributions.html#cb1009-4" tabindex="-1"></a></span>
+<span id="cb1009-5"><a href="stats-fitting-distributions.html#cb1009-5" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Use the `fitdistr()` function to estimate parameters</span></span>
+<span id="cb1009-6"><a href="stats-fitting-distributions.html#cb1009-6" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
+<span id="cb1009-7"><a href="stats-fitting-distributions.html#cb1009-7" tabindex="-1"></a>  df_data_weibull <span class="sc">%&gt;%</span></span>
+<span id="cb1009-8"><a href="stats-fitting-distributions.html#cb1009-8" tabindex="-1"></a>  <span class="fu">pull</span>(y) <span class="sc">%&gt;%</span></span>
+<span id="cb1009-9"><a href="stats-fitting-distributions.html#cb1009-9" tabindex="-1"></a>  <span class="fu">fitdistr</span>(<span class="at">densfun =</span> <span class="st">&quot;weibull&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1009-10"><a href="stats-fitting-distributions.html#cb1009-10" tabindex="-1"></a>  <span class="fu">tidy</span>()</span>
+<span id="cb1009-11"><a href="stats-fitting-distributions.html#cb1009-11" tabindex="-1"></a>df_q2</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   term  estimate std.error
 ##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
@@ -1191,24 +1191,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">48.2.3</span> <strong>q3</strong> Extract the parameter estimates<a href="stats-fitting-distributions.html#q3-extract-the-parameter-estimates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Extract the estimates <code>shape_est</code> and <code>scale_est</code> from <code>df_q2</code>, and use them to estimate the probability that <code>Y &lt;= 2</code>.</p>
 <p><em>Hint</em>: <code>pr_true</code> contains the true probability; modify that code to compute the estimated probability.</p>
-<div class="sourceCode" id="cb1006"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1006-1"><a href="stats-fitting-distributions.html#cb1006-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify this line</span></span>
-<span id="cb1006-2"><a href="stats-fitting-distributions.html#cb1006-2" tabindex="-1"></a>pr_true <span class="ot">&lt;-</span> <span class="fu">pweibull</span>(<span class="at">q =</span> <span class="dv">2</span>, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">4</span>)</span>
-<span id="cb1006-3"><a href="stats-fitting-distributions.html#cb1006-3" tabindex="-1"></a></span>
-<span id="cb1006-4"><a href="stats-fitting-distributions.html#cb1006-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb1006-5"><a href="stats-fitting-distributions.html#cb1006-5" tabindex="-1"></a>shape_est <span class="ot">&lt;-</span></span>
-<span id="cb1006-6"><a href="stats-fitting-distributions.html#cb1006-6" tabindex="-1"></a>  df_q2 <span class="sc">%&gt;%</span></span>
-<span id="cb1006-7"><a href="stats-fitting-distributions.html#cb1006-7" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;shape&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1006-8"><a href="stats-fitting-distributions.html#cb1006-8" tabindex="-1"></a>  <span class="fu">pull</span>(estimate)</span>
-<span id="cb1006-9"><a href="stats-fitting-distributions.html#cb1006-9" tabindex="-1"></a>scale_est <span class="ot">&lt;-</span></span>
-<span id="cb1006-10"><a href="stats-fitting-distributions.html#cb1006-10" tabindex="-1"></a>  df_q2 <span class="sc">%&gt;%</span></span>
-<span id="cb1006-11"><a href="stats-fitting-distributions.html#cb1006-11" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;scale&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1006-12"><a href="stats-fitting-distributions.html#cb1006-12" tabindex="-1"></a>  <span class="fu">pull</span>(estimate)</span>
-<span id="cb1006-13"><a href="stats-fitting-distributions.html#cb1006-13" tabindex="-1"></a></span>
-<span id="cb1006-14"><a href="stats-fitting-distributions.html#cb1006-14" tabindex="-1"></a>pr_est <span class="ot">&lt;-</span> <span class="fu">pweibull</span>(<span class="at">q =</span> <span class="dv">2</span>, <span class="at">shape =</span> shape_est, <span class="at">scale =</span> scale_est)</span>
-<span id="cb1006-15"><a href="stats-fitting-distributions.html#cb1006-15" tabindex="-1"></a></span>
-<span id="cb1006-16"><a href="stats-fitting-distributions.html#cb1006-16" tabindex="-1"></a>pr_true</span></code></pre></div>
+<div class="sourceCode" id="cb1011"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1011-1"><a href="stats-fitting-distributions.html#cb1011-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to modify this line</span></span>
+<span id="cb1011-2"><a href="stats-fitting-distributions.html#cb1011-2" tabindex="-1"></a>pr_true <span class="ot">&lt;-</span> <span class="fu">pweibull</span>(<span class="at">q =</span> <span class="dv">2</span>, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">4</span>)</span>
+<span id="cb1011-3"><a href="stats-fitting-distributions.html#cb1011-3" tabindex="-1"></a></span>
+<span id="cb1011-4"><a href="stats-fitting-distributions.html#cb1011-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1011-5"><a href="stats-fitting-distributions.html#cb1011-5" tabindex="-1"></a>shape_est <span class="ot">&lt;-</span></span>
+<span id="cb1011-6"><a href="stats-fitting-distributions.html#cb1011-6" tabindex="-1"></a>  df_q2 <span class="sc">%&gt;%</span></span>
+<span id="cb1011-7"><a href="stats-fitting-distributions.html#cb1011-7" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;shape&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1011-8"><a href="stats-fitting-distributions.html#cb1011-8" tabindex="-1"></a>  <span class="fu">pull</span>(estimate)</span>
+<span id="cb1011-9"><a href="stats-fitting-distributions.html#cb1011-9" tabindex="-1"></a>scale_est <span class="ot">&lt;-</span></span>
+<span id="cb1011-10"><a href="stats-fitting-distributions.html#cb1011-10" tabindex="-1"></a>  df_q2 <span class="sc">%&gt;%</span></span>
+<span id="cb1011-11"><a href="stats-fitting-distributions.html#cb1011-11" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;scale&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1011-12"><a href="stats-fitting-distributions.html#cb1011-12" tabindex="-1"></a>  <span class="fu">pull</span>(estimate)</span>
+<span id="cb1011-13"><a href="stats-fitting-distributions.html#cb1011-13" tabindex="-1"></a></span>
+<span id="cb1011-14"><a href="stats-fitting-distributions.html#cb1011-14" tabindex="-1"></a>pr_est <span class="ot">&lt;-</span> <span class="fu">pweibull</span>(<span class="at">q =</span> <span class="dv">2</span>, <span class="at">shape =</span> shape_est, <span class="at">scale =</span> scale_est)</span>
+<span id="cb1011-15"><a href="stats-fitting-distributions.html#cb1011-15" tabindex="-1"></a></span>
+<span id="cb1011-16"><a href="stats-fitting-distributions.html#cb1011-16" tabindex="-1"></a>pr_true</span></code></pre></div>
 <pre><code>## [1] 0.2211992</code></pre>
-<div class="sourceCode" id="cb1008"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1008-1"><a href="stats-fitting-distributions.html#cb1008-1" tabindex="-1"></a>pr_est</span></code></pre></div>
+<div class="sourceCode" id="cb1013"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1013-1"><a href="stats-fitting-distributions.html#cb1013-1" tabindex="-1"></a>pr_est</span></code></pre></div>
 <pre><code>## [1] 0.1988446</code></pre>
 <p>You’ll probably find that <code>pr_true != pr_est</code>! As we saw in <code>e-stat06-clt</code> we should really compute a <em>confidence interval</em> to assess our degree of confidence in this probability estimate. However, it’s not obvious how we can use the ideas of the Central Limit Theorem to put a confidence interval around <code>pr_est. [We can use](https://rsample.tidymodels.org/articles/Working_with_rsets.html#keeping-tidy) the</code>broom<code>package with the</code>rsample` package to use bootstrap resampling to estimate confidence intervals in this setting.</p>
 <!-- include-exit-ticket -->

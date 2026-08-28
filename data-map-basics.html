@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>38 Data: Map Basics | Data Science: Exercise Solutions</title>
   <meta name="description" content="38 Data: Map Basics | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="38 Data: Map Basics | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,13 +1085,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">38</span> Data: Map Basics<a href="data-map-basics.html#data-map-basics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: The <code>map()</code> function and its variants are extremely useful for automating iterative tasks. We’ll learn the basics through this short exercise.</p>
 <p><em>Reading</em>: (None, this is the reading)</p>
-<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="data-map-basics.html#cb793-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="data-map-basics.html#cb798-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1099,14 +1099,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="loops-vs-mapping" class="section level2 hasAnchor" number="38.1">
 <h2><span class="header-section-number">38.1</span> Loops vs mapping<a href="data-map-basics.html#loops-vs-mapping" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The core idea of <code>map()</code> is that it’s an alternative to writing a <code>for</code> loop. In a lot of <code>for</code> loops, we’re computing</p>
-<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb795-1"><a href="data-map-basics.html#cb795-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb795-2"><a href="data-map-basics.html#cb795-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
-<span id="cb795-3"><a href="data-map-basics.html#cb795-3" tabindex="-1"></a>v <span class="sc">^</span> <span class="dv">2</span> <span class="co"># Vectorized operation</span></span></code></pre></div>
+<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="data-map-basics.html#cb800-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb800-2"><a href="data-map-basics.html#cb800-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb800-3"><a href="data-map-basics.html#cb800-3" tabindex="-1"></a>v <span class="sc">^</span> <span class="dv">2</span> <span class="co"># Vectorized operation</span></span></code></pre></div>
 <pre><code>##  [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
 <p>However, if we have a non-vectorized function, we can still use <code>map()</code> to apply it to a vector:</p>
-<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="data-map-basics.html#cb797-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb797-2"><a href="data-map-basics.html#cb797-2" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {x <span class="sc">^</span> <span class="dv">2</span>}</span>
-<span id="cb797-3"><a href="data-map-basics.html#cb797-3" tabindex="-1"></a><span class="fu">map</span>(v, f)</span></code></pre></div>
+<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="data-map-basics.html#cb802-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb802-2"><a href="data-map-basics.html#cb802-2" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {x <span class="sc">^</span> <span class="dv">2</span>}</span>
+<span id="cb802-3"><a href="data-map-basics.html#cb802-3" tabindex="-1"></a><span class="fu">map</span>(v, f)</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] 1
 ## 
@@ -1137,54 +1137,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [[10]]
 ## [1] 100</code></pre>
 <p>The result prints in a weird way; that’s because we’ve made a list, rather than a vector. To specify that we want our output to be a vector of floating point values, we can use <code>map_dbl()</code>:</p>
-<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="data-map-basics.html#cb799-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb799-2"><a href="data-map-basics.html#cb799-2" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {x <span class="sc">^</span> <span class="dv">2</span>}</span>
-<span id="cb799-3"><a href="data-map-basics.html#cb799-3" tabindex="-1"></a><span class="fu">map_dbl</span>(v, f)</span></code></pre></div>
+<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="data-map-basics.html#cb804-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb804-2"><a href="data-map-basics.html#cb804-2" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {x <span class="sc">^</span> <span class="dv">2</span>}</span>
+<span id="cb804-3"><a href="data-map-basics.html#cb804-3" tabindex="-1"></a><span class="fu">map_dbl</span>(v, f)</span></code></pre></div>
 <pre><code>##  [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
 <p>Function notation in R is a little weird; we don’t need to explicitly <code>return</code> our resulting value. Instead, the last line of the function will automatically be the return value:</p>
-<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="data-map-basics.html#cb801-1" tabindex="-1"></a>f2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb801-2"><a href="data-map-basics.html#cb801-2" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">2</span> <span class="co"># Do an intermediate calculation</span></span>
-<span id="cb801-3"><a href="data-map-basics.html#cb801-3" tabindex="-1"></a>  x2 <span class="sc">^</span> <span class="dv">2</span>      <span class="co"># The last value of the function is automatically returned as the output</span></span>
-<span id="cb801-4"><a href="data-map-basics.html#cb801-4" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="data-map-basics.html#cb806-1" tabindex="-1"></a>f2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb806-2"><a href="data-map-basics.html#cb806-2" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">2</span> <span class="co"># Do an intermediate calculation</span></span>
+<span id="cb806-3"><a href="data-map-basics.html#cb806-3" tabindex="-1"></a>  x2 <span class="sc">^</span> <span class="dv">2</span>      <span class="co"># The last value of the function is automatically returned as the output</span></span>
+<span id="cb806-4"><a href="data-map-basics.html#cb806-4" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="formula-notation" class="section level2 hasAnchor" number="38.2">
 <h2><span class="header-section-number">38.2</span> Formula notation<a href="data-map-basics.html#formula-notation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Rather than define a <code>function()</code>, we can use R’s <em>formula notation</em>. For example, to compute powers of <code>10</code>, we could do:</p>
-<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="data-map-basics.html#cb802-1" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this example</span></span>
-<span id="cb802-2"><a href="data-map-basics.html#cb802-2" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="sc">~</span> <span class="dv">10</span> <span class="sc">^</span> .x)</span></code></pre></div>
+<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="data-map-basics.html#cb807-1" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this example</span></span>
+<span id="cb807-2"><a href="data-map-basics.html#cb807-2" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="sc">~</span> <span class="dv">10</span> <span class="sc">^</span> .x)</span></code></pre></div>
 <pre><code>## [1]   10  100 1000</code></pre>
 <p>The tilde <code>~</code> operator signals to R that we’re doing something special: defining a formula. The <code>.x</code> symbol is the argument for this new function. Basically, we are taking a formal function definition, such as</p>
-<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="data-map-basics.html#cb804-1" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this example</span></span>
-<span id="cb804-2"><a href="data-map-basics.html#cb804-2" tabindex="-1"></a>pow10 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="dv">10</span> <span class="sc">^</span> x}</span></code></pre></div>
+<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="data-map-basics.html#cb809-1" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No need to change this example</span></span>
+<span id="cb809-2"><a href="data-map-basics.html#cb809-2" tabindex="-1"></a>pow10 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="dv">10</span> <span class="sc">^</span> x}</span></code></pre></div>
 <p>And defining a more compact version with <code>~ 10 ^ x.</code>. We’ve actually already seen this formula notation when we use <code>facet_grid()</code> and <code>facet_wrap()</code>, though it’s used in a very different way in that context.</p>
 <div id="q1-add-a-prefix" class="section level3 hasAnchor" number="38.2.1">
 <h3><span class="header-section-number">38.2.1</span> <strong>q1</strong> Add a prefix<a href="data-map-basics.html#q1-add-a-prefix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Use <code>map_chr()</code> to prepend the string <code>"N: "</code> to the numbers in <code>v_nums</code>. Use formula notation with <code>str_c()</code> as your map function.</p>
 <p><em>Hint</em>: The function <code>str_c()</code> combines two or more objects into one string.</p>
-<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="data-map-basics.html#cb805-1" tabindex="-1"></a>v_nums <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb805-2"><a href="data-map-basics.html#cb805-2" tabindex="-1"></a>v_q1 <span class="ot">&lt;-</span> <span class="fu">map_chr</span>(v_nums, <span class="sc">~</span> <span class="fu">str_c</span>(<span class="st">&quot;N: &quot;</span>, .x))</span>
-<span id="cb805-3"><a href="data-map-basics.html#cb805-3" tabindex="-1"></a></span>
-<span id="cb805-4"><a href="data-map-basics.html#cb805-4" tabindex="-1"></a>v_q1</span></code></pre></div>
+<div class="sourceCode" id="cb810"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb810-1"><a href="data-map-basics.html#cb810-1" tabindex="-1"></a>v_nums <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb810-2"><a href="data-map-basics.html#cb810-2" tabindex="-1"></a>v_q1 <span class="ot">&lt;-</span> <span class="fu">map_chr</span>(v_nums, <span class="sc">~</span> <span class="fu">str_c</span>(<span class="st">&quot;N: &quot;</span>, .x))</span>
+<span id="cb810-3"><a href="data-map-basics.html#cb810-3" tabindex="-1"></a></span>
+<span id="cb810-4"><a href="data-map-basics.html#cb810-4" tabindex="-1"></a>v_q1</span></code></pre></div>
 <pre><code>## [1] &quot;N: 1&quot; &quot;N: 2&quot; &quot;N: 3&quot;</code></pre>
 <p>Use the following test to check your work.</p>
-<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="data-map-basics.html#cb807-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb807-2"><a href="data-map-basics.html#cb807-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(v_q1, <span class="fu">c</span>(<span class="st">&quot;N: 1&quot;</span>, <span class="st">&quot;N: 2&quot;</span>, <span class="st">&quot;N: 3&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb812"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb812-1"><a href="data-map-basics.html#cb812-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb812-2"><a href="data-map-basics.html#cb812-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(v_q1, <span class="fu">c</span>(<span class="st">&quot;N: 1&quot;</span>, <span class="st">&quot;N: 2&quot;</span>, <span class="st">&quot;N: 3&quot;</span>)))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="data-map-basics.html#cb809-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="data-map-basics.html#cb814-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great job!&quot;</code></pre>
 <p>Formula notation is another way to pass arguments to functions; I find this a little more readable than passing arguments to <code>map()</code>.</p>
 </div>
 <div id="q2-compute-a-log" class="section level3 hasAnchor" number="38.2.2">
 <h3><span class="header-section-number">38.2.2</span> <strong>q2</strong> Compute a log<a href="data-map-basics.html#q2-compute-a-log" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Use <code>map_dbl()</code> to compute the <code>log</code> with <code>base = 2</code> of the numbers in <code>v_nums</code>. Use formula notation with <code>log()</code> as your map function.</p>
-<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="data-map-basics.html#cb811-1" tabindex="-1"></a>v_q2 <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(v_nums, <span class="sc">~</span> <span class="fu">log</span>(.x, <span class="at">base =</span> <span class="dv">2</span>))</span>
-<span id="cb811-2"><a href="data-map-basics.html#cb811-2" tabindex="-1"></a></span>
-<span id="cb811-3"><a href="data-map-basics.html#cb811-3" tabindex="-1"></a>v_q2</span></code></pre></div>
+<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="data-map-basics.html#cb816-1" tabindex="-1"></a>v_q2 <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(v_nums, <span class="sc">~</span> <span class="fu">log</span>(.x, <span class="at">base =</span> <span class="dv">2</span>))</span>
+<span id="cb816-2"><a href="data-map-basics.html#cb816-2" tabindex="-1"></a></span>
+<span id="cb816-3"><a href="data-map-basics.html#cb816-3" tabindex="-1"></a>v_q2</span></code></pre></div>
 <pre><code>## [1] 0.000000 1.000000 1.584963</code></pre>
-<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb813-1"><a href="data-map-basics.html#cb813-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb813-2"><a href="data-map-basics.html#cb813-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(v_q2, <span class="fu">log</span>(v_nums, <span class="at">base =</span> <span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="data-map-basics.html#cb818-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb818-2"><a href="data-map-basics.html#cb818-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">setequal</span>(v_q2, <span class="fu">log</span>(v_nums, <span class="at">base =</span> <span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="data-map-basics.html#cb815-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="data-map-basics.html#cb820-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <!-- include-exit-ticket -->
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>19 Data: Deriving Quantities | Data Science: Exercise Solutions</title>
   <meta name="description" content="19 Data: Deriving Quantities | Data Science: Exercise Solutions" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="19 Data: Deriving Quantities | Data Science: Exercise Solutions" />
   <meta property="og:type" content="book" />
@@ -1085,13 +1085,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">19</span> Data: Deriving Quantities<a href="data-deriving-quantities.html#data-deriving-quantities" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Purpose</em>: Often our data will not tell us <em>directly</em> what we want to know; in these cases we need to <em>derive</em> new quantities from our data. In this exercise, we’ll work with <code>mutate()</code> to create new columns by operating on existing variables, and use <code>group_by()</code> with <code>summarize()</code> to compute aggregate statistics (summaries!) of our data.</p>
 <p><em>Reading</em>: (None, this is the reading)</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="data-deriving-quantities.html#cb212-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="data-deriving-quantities.html#cb214-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -1102,8 +1102,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q1-a-little-refresher" class="section level3 hasAnchor" number="19.1.1">
 <h3><span class="header-section-number">19.1.1</span> <strong>q1</strong> A little refresher<a href="data-deriving-quantities.html#q1-a-little-refresher" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>What is the difference between these two versions of code? How are they the same? How are they different?</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="data-deriving-quantities.html#cb214-1" tabindex="-1"></a><span class="do">## Version 1</span></span>
-<span id="cb214-2"><a href="data-deriving-quantities.html#cb214-2" tabindex="-1"></a><span class="fu">filter</span>(diamonds, cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="data-deriving-quantities.html#cb216-1" tabindex="-1"></a><span class="do">## Version 1</span></span>
+<span id="cb216-2"><a href="data-deriving-quantities.html#cb216-2" tabindex="-1"></a><span class="fu">filter</span>(diamonds, cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 21,551 × 10
 ##    carat cut   color clarity depth table price     x     y     z
 ##    &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1118,8 +1118,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9  0.32 Ideal I     SI1      60.9    55   404  4.45  4.48  2.72
 ## 10  0.3  Ideal I     SI2      61      59   405  4.3   4.33  2.63
 ## # ℹ 21,541 more rows</code></pre>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="data-deriving-quantities.html#cb216-1" tabindex="-1"></a><span class="do">## Version 2</span></span>
-<span id="cb216-2"><a href="data-deriving-quantities.html#cb216-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="data-deriving-quantities.html#cb218-1" tabindex="-1"></a><span class="do">## Version 2</span></span>
+<span id="cb218-2"><a href="data-deriving-quantities.html#cb218-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 21,551 × 10
 ##    carat cut   color clarity depth table price     x     y     z
 ##    &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1140,21 +1140,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="summarizing" class="section level2 hasAnchor" number="19.2">
 <h2><span class="header-section-number">19.2</span> Summarizing<a href="data-deriving-quantities.html#summarizing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>summarize()</code> function applies a user-provided <em>summary function</em> over all rows, and returns a single row. We can use <code>summarize()</code> to compute things like an average:</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="data-deriving-quantities.html#cb218-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb218-2"><a href="data-deriving-quantities.html#cb218-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
-<span id="cb218-3"><a href="data-deriving-quantities.html#cb218-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price_mean =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="data-deriving-quantities.html#cb220-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb220-2"><a href="data-deriving-quantities.html#cb220-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
+<span id="cb220-3"><a href="data-deriving-quantities.html#cb220-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price_mean =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   price_mean
 ##        &lt;dbl&gt;
 ## 1      3933.</code></pre>
 <p>We can also compute multiple summaries at once:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="data-deriving-quantities.html#cb220-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb220-2"><a href="data-deriving-quantities.html#cb220-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
-<span id="cb220-3"><a href="data-deriving-quantities.html#cb220-3" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb220-4"><a href="data-deriving-quantities.html#cb220-4" tabindex="-1"></a>    <span class="at">price_min =</span> <span class="fu">min</span>(price),</span>
-<span id="cb220-5"><a href="data-deriving-quantities.html#cb220-5" tabindex="-1"></a>    <span class="at">price_mean =</span> <span class="fu">mean</span>(price),</span>
-<span id="cb220-6"><a href="data-deriving-quantities.html#cb220-6" tabindex="-1"></a>    <span class="at">price_max =</span> <span class="fu">max</span>(price),</span>
-<span id="cb220-7"><a href="data-deriving-quantities.html#cb220-7" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="data-deriving-quantities.html#cb222-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb222-2"><a href="data-deriving-quantities.html#cb222-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
+<span id="cb222-3"><a href="data-deriving-quantities.html#cb222-3" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb222-4"><a href="data-deriving-quantities.html#cb222-4" tabindex="-1"></a>    <span class="at">price_min =</span> <span class="fu">min</span>(price),</span>
+<span id="cb222-5"><a href="data-deriving-quantities.html#cb222-5" tabindex="-1"></a>    <span class="at">price_mean =</span> <span class="fu">mean</span>(price),</span>
+<span id="cb222-6"><a href="data-deriving-quantities.html#cb222-6" tabindex="-1"></a>    <span class="at">price_max =</span> <span class="fu">max</span>(price),</span>
+<span id="cb222-7"><a href="data-deriving-quantities.html#cb222-7" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 3
 ##   price_min price_mean price_max
 ##       &lt;int&gt;      &lt;dbl&gt;     &lt;int&gt;
@@ -1193,9 +1193,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>We can combine computation with a summary function to calculate more complex quantities. For instance, the following code computes the number of one (or more) carat diamonds in the <code>diamonds</code> dataset:</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="data-deriving-quantities.html#cb222-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb222-2"><a href="data-deriving-quantities.html#cb222-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
-<span id="cb222-3"><a href="data-deriving-quantities.html#cb222-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_onecarat =</span> <span class="fu">sum</span>(carat <span class="sc">&gt;=</span> <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="data-deriving-quantities.html#cb224-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb224-2"><a href="data-deriving-quantities.html#cb224-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
+<span id="cb224-3"><a href="data-deriving-quantities.html#cb224-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_onecarat =</span> <span class="fu">sum</span>(carat <span class="sc">&gt;=</span> <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   n_onecarat
 ##        &lt;int&gt;
@@ -1205,34 +1205,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">19.2.2</span> <strong>q2</strong> Count the ideal diamonds<a href="data-deriving-quantities.html#q2-count-the-ideal-diamonds" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Using <code>summarize()</code> and a logical summary function, determine the number of rows with <code>Ideal</code> <code>cut</code>. Save this value to a column called <code>n_ideal</code>.</p>
 <p><em>Hint</em>: We learned about checking for equality in <code>e-data01-isolate</code>.</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="data-deriving-quantities.html#cb224-1" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
-<span id="cb224-2"><a href="data-deriving-quantities.html#cb224-2" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb224-3"><a href="data-deriving-quantities.html#cb224-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_ideal =</span> <span class="fu">sum</span>(cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>))</span>
-<span id="cb224-4"><a href="data-deriving-quantities.html#cb224-4" tabindex="-1"></a>df_q2</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="data-deriving-quantities.html#cb226-1" tabindex="-1"></a>df_q2 <span class="ot">&lt;-</span></span>
+<span id="cb226-2"><a href="data-deriving-quantities.html#cb226-2" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb226-3"><a href="data-deriving-quantities.html#cb226-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_ideal =</span> <span class="fu">sum</span>(cut <span class="sc">==</span> <span class="st">&quot;Ideal&quot;</span>))</span>
+<span id="cb226-4"><a href="data-deriving-quantities.html#cb226-4" tabindex="-1"></a>df_q2</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   n_ideal
 ##     &lt;int&gt;
 ## 1   21551</code></pre>
 <p>The following test will verify that your <code>df_q2</code> is correct:</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="data-deriving-quantities.html#cb226-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb226-2"><a href="data-deriving-quantities.html#cb226-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb226-3"><a href="data-deriving-quantities.html#cb226-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb226-4"><a href="data-deriving-quantities.html#cb226-4" tabindex="-1"></a>    df_q2 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(n_ideal),</span>
-<span id="cb226-5"><a href="data-deriving-quantities.html#cb226-5" tabindex="-1"></a>    <span class="dv">21551</span></span>
-<span id="cb226-6"><a href="data-deriving-quantities.html#cb226-6" tabindex="-1"></a>  )</span>
-<span id="cb226-7"><a href="data-deriving-quantities.html#cb226-7" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="data-deriving-quantities.html#cb228-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb228-2"><a href="data-deriving-quantities.html#cb228-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb228-3"><a href="data-deriving-quantities.html#cb228-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb228-4"><a href="data-deriving-quantities.html#cb228-4" tabindex="-1"></a>    df_q2 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(n_ideal),</span>
+<span id="cb228-5"><a href="data-deriving-quantities.html#cb228-5" tabindex="-1"></a>    <span class="dv">21551</span></span>
+<span id="cb228-6"><a href="data-deriving-quantities.html#cb228-6" tabindex="-1"></a>  )</span>
+<span id="cb228-7"><a href="data-deriving-quantities.html#cb228-7" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="data-deriving-quantities.html#cb228-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="data-deriving-quantities.html#cb230-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Great job!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Great job!&quot;</code></pre>
 </div>
 </div>
 <div id="grouping" class="section level2 hasAnchor" number="19.3">
 <h2><span class="header-section-number">19.3</span> Grouping<a href="data-deriving-quantities.html#grouping" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Grouping allows us to modify the behavior of <code>summarize()</code>: It computes the given summaries within the groups defined by columns listed in <code>group_by()</code>. This is perhaps easiest to show with an example:</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="data-deriving-quantities.html#cb230-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb230-2"><a href="data-deriving-quantities.html#cb230-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
-<span id="cb230-3"><a href="data-deriving-quantities.html#cb230-3" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-4"><a href="data-deriving-quantities.html#cb230-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="co"># Count the rows in each group of `cut`</span></span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="data-deriving-quantities.html#cb232-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb232-2"><a href="data-deriving-quantities.html#cb232-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
+<span id="cb232-3"><a href="data-deriving-quantities.html#cb232-3" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span> </span>
+<span id="cb232-4"><a href="data-deriving-quantities.html#cb232-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="co"># Count the rows in each group of `cut`</span></span></code></pre></div>
 <pre><code>## # A tibble: 5 × 2
 ##   cut           n
 ##   &lt;ord&gt;     &lt;int&gt;
@@ -1242,9 +1242,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 Premium   13791
 ## 5 Ideal     21551</code></pre>
 <p><em>Aside</em>: Within-group counting is so useful that <code>dplyr</code> provides a shortcut for this: <code>count()</code>.</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="data-deriving-quantities.html#cb232-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This does the same as the previous code chunk</span></span>
-<span id="cb232-2"><a href="data-deriving-quantities.html#cb232-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
-<span id="cb232-3"><a href="data-deriving-quantities.html#cb232-3" tabindex="-1"></a>  <span class="fu">count</span>(cut)</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="data-deriving-quantities.html#cb234-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: This does the same as the previous code chunk</span></span>
+<span id="cb234-2"><a href="data-deriving-quantities.html#cb234-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
+<span id="cb234-3"><a href="data-deriving-quantities.html#cb234-3" tabindex="-1"></a>  <span class="fu">count</span>(cut)</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 2
 ##   cut           n
 ##   &lt;ord&gt;     &lt;int&gt;
@@ -1257,9 +1257,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="q3-experiment-with-group_by" class="section level3 hasAnchor" number="19.3.1">
 <h3><span class="header-section-number">19.3.1</span> <strong>q3</strong> Experiment with <code>group_by()</code><a href="data-deriving-quantities.html#q3-experiment-with-group_by" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The function <code>group_by()</code> modifies how other dplyr verbs function. Uncomment the <code>group_by()</code> below, and describe how the result changes.</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="data-deriving-quantities.html#cb234-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb234-2"><a href="data-deriving-quantities.html#cb234-2" tabindex="-1"></a>  <span class="do">## group_by(color, clarity) %&gt;%</span></span>
-<span id="cb234-3"><a href="data-deriving-quantities.html#cb234-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price_mean =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="data-deriving-quantities.html#cb236-1" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb236-2"><a href="data-deriving-quantities.html#cb236-2" tabindex="-1"></a>  <span class="do">## group_by(color, clarity) %&gt;%</span></span>
+<span id="cb236-3"><a href="data-deriving-quantities.html#cb236-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price_mean =</span> <span class="fu">mean</span>(price))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   price_mean
 ##        &lt;dbl&gt;
@@ -1273,10 +1273,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="row-computations-with-mutate" class="section level2 hasAnchor" number="19.4">
 <h2><span class="header-section-number">19.4</span> Row computations with <code>mutate()</code><a href="data-deriving-quantities.html#row-computations-with-mutate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Rather than compute summaries, we can apply computations to <em>every</em> row in the dataset using <code>mutate()</code>. This is useful for things like unit conversions. For instance, since 1 carat = <span class="math inline">\(0.2\)</span> grams, we can compute the mass of every diamond:</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="data-deriving-quantities.html#cb236-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
-<span id="cb236-2"><a href="data-deriving-quantities.html#cb236-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
-<span id="cb236-3"><a href="data-deriving-quantities.html#cb236-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">mass(g)</span><span class="st">`</span> <span class="ot">=</span> carat <span class="sc">/</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb236-4"><a href="data-deriving-quantities.html#cb236-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">mass(g)</span><span class="st">`</span>, <span class="fu">everything</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="data-deriving-quantities.html#cb238-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to edit</span></span>
+<span id="cb238-2"><a href="data-deriving-quantities.html#cb238-2" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
+<span id="cb238-3"><a href="data-deriving-quantities.html#cb238-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">mass(g)</span><span class="st">`</span> <span class="ot">=</span> carat <span class="sc">/</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb238-4"><a href="data-deriving-quantities.html#cb238-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">mass(g)</span><span class="st">`</span>, <span class="fu">everything</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 53,940 × 11
 ##    `mass(g)` carat cut       color clarity depth table price     x     y     z
 ##        &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1343,23 +1343,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Additionally, compute the <em>coefficient of variation</em> <code>cov = sd(x) / mean(x)</code> for both <code>depth</code> and <code>diff</code>: This is a dimensionless measure of variation in a variable.</p>
 <p>Assign the resulting tibble to <code>df_q4</code>, and assign the appropriate values to <code>cov_depth</code> and <code>cov_diff</code>. Comment on the relative values of <code>cov_depth</code> and <code>cov_diff</code>; why is <code>cov_diff</code> so large?</p>
 <p><em>Note</em>: Confusingly, the documentation for <code>diamonds</code> leaves out the factor of <code>100</code> in the computation of <code>depth</code>.</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="data-deriving-quantities.html#cb238-1" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
-<span id="cb238-2"><a href="data-deriving-quantities.html#cb238-2" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb238-3"><a href="data-deriving-quantities.html#cb238-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb238-4"><a href="data-deriving-quantities.html#cb238-4" tabindex="-1"></a>    <span class="at">depth_computed =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> z <span class="sc">/</span> (x <span class="sc">+</span> y),</span>
-<span id="cb238-5"><a href="data-deriving-quantities.html#cb238-5" tabindex="-1"></a>    <span class="at">diff =</span> depth <span class="sc">-</span> depth_computed</span>
-<span id="cb238-6"><a href="data-deriving-quantities.html#cb238-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb238-7"><a href="data-deriving-quantities.html#cb238-7" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb238-8"><a href="data-deriving-quantities.html#cb238-8" tabindex="-1"></a>    <span class="at">depth_mean =</span> <span class="fu">mean</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb238-9"><a href="data-deriving-quantities.html#cb238-9" tabindex="-1"></a>    <span class="at">depth_sd =</span> <span class="fu">sd</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb238-10"><a href="data-deriving-quantities.html#cb238-10" tabindex="-1"></a>    <span class="at">cov_depth =</span> depth_sd <span class="sc">/</span> depth_mean,</span>
-<span id="cb238-11"><a href="data-deriving-quantities.html#cb238-11" tabindex="-1"></a></span>
-<span id="cb238-12"><a href="data-deriving-quantities.html#cb238-12" tabindex="-1"></a>    <span class="at">diff_mean =</span> <span class="fu">mean</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb238-13"><a href="data-deriving-quantities.html#cb238-13" tabindex="-1"></a>    <span class="at">diff_sd =</span> <span class="fu">sd</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb238-14"><a href="data-deriving-quantities.html#cb238-14" tabindex="-1"></a>    <span class="at">cov_diff =</span> diff_sd <span class="sc">/</span> diff_mean,</span>
-<span id="cb238-15"><a href="data-deriving-quantities.html#cb238-15" tabindex="-1"></a>    <span class="at">c_diff =</span> <span class="fu">IQR</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">median</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb238-16"><a href="data-deriving-quantities.html#cb238-16" tabindex="-1"></a>  )</span>
-<span id="cb238-17"><a href="data-deriving-quantities.html#cb238-17" tabindex="-1"></a>df_q4</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="data-deriving-quantities.html#cb240-1" tabindex="-1"></a>df_q4 <span class="ot">&lt;-</span></span>
+<span id="cb240-2"><a href="data-deriving-quantities.html#cb240-2" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb240-3"><a href="data-deriving-quantities.html#cb240-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb240-4"><a href="data-deriving-quantities.html#cb240-4" tabindex="-1"></a>    <span class="at">depth_computed =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> z <span class="sc">/</span> (x <span class="sc">+</span> y),</span>
+<span id="cb240-5"><a href="data-deriving-quantities.html#cb240-5" tabindex="-1"></a>    <span class="at">diff =</span> depth <span class="sc">-</span> depth_computed</span>
+<span id="cb240-6"><a href="data-deriving-quantities.html#cb240-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb240-7"><a href="data-deriving-quantities.html#cb240-7" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb240-8"><a href="data-deriving-quantities.html#cb240-8" tabindex="-1"></a>    <span class="at">depth_mean =</span> <span class="fu">mean</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb240-9"><a href="data-deriving-quantities.html#cb240-9" tabindex="-1"></a>    <span class="at">depth_sd =</span> <span class="fu">sd</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb240-10"><a href="data-deriving-quantities.html#cb240-10" tabindex="-1"></a>    <span class="at">cov_depth =</span> depth_sd <span class="sc">/</span> depth_mean,</span>
+<span id="cb240-11"><a href="data-deriving-quantities.html#cb240-11" tabindex="-1"></a></span>
+<span id="cb240-12"><a href="data-deriving-quantities.html#cb240-12" tabindex="-1"></a>    <span class="at">diff_mean =</span> <span class="fu">mean</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb240-13"><a href="data-deriving-quantities.html#cb240-13" tabindex="-1"></a>    <span class="at">diff_sd =</span> <span class="fu">sd</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb240-14"><a href="data-deriving-quantities.html#cb240-14" tabindex="-1"></a>    <span class="at">cov_diff =</span> diff_sd <span class="sc">/</span> diff_mean,</span>
+<span id="cb240-15"><a href="data-deriving-quantities.html#cb240-15" tabindex="-1"></a>    <span class="at">c_diff =</span> <span class="fu">IQR</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">median</span>(diff, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb240-16"><a href="data-deriving-quantities.html#cb240-16" tabindex="-1"></a>  )</span>
+<span id="cb240-17"><a href="data-deriving-quantities.html#cb240-17" tabindex="-1"></a>df_q4</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 7
 ##   depth_mean depth_sd cov_depth diff_mean diff_sd cov_diff   c_diff
 ##        &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -1370,27 +1370,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>cov_diff</code> is enormous! This is because the mean difference between <code>depth</code> and <code>depth_computed</code> is small, which causes the <code>cov</code> to blow up.</li>
 </ul>
 <p>The following test will verify that your <code>df_q4</code> is correct:</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="data-deriving-quantities.html#cb240-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb240-2"><a href="data-deriving-quantities.html#cb240-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(df_q4 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(cov_depth) <span class="sc">-</span> <span class="fl">0.02320057</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="data-deriving-quantities.html#cb242-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb242-2"><a href="data-deriving-quantities.html#cb242-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(df_q4 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(cov_depth) <span class="sc">-</span> <span class="fl">0.02320057</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="data-deriving-quantities.html#cb242-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(df_q4 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(cov_diff) <span class="sc">-</span> <span class="fl">497.5585</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="data-deriving-quantities.html#cb244-1" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(<span class="fu">abs</span>(df_q4 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(cov_diff) <span class="sc">-</span> <span class="fl">497.5585</span>) <span class="sc">&lt;</span> <span class="fl">1e-3</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="data-deriving-quantities.html#cb244-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="data-deriving-quantities.html#cb246-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Nice!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Nice!&quot;</code></pre>
 <p>There is nonzero difference between <code>depth</code> and the computed <code>depth</code>; this raises some questions about how <code>depth</code> was actually computed! It’s often a good idea to try to check derived quantities in your data, if possible. These can sometimes uncover errors in the data!</p>
 </div>
 <div id="q5-compute-and-observe" class="section level3 hasAnchor" number="19.4.3">
 <h3><span class="header-section-number">19.4.3</span> <strong>q5</strong> Compute and observe<a href="data-deriving-quantities.html#q5-compute-and-observe" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Compute the <code>price_mean = mean(price)</code>, <code>price_sd = sd(price)</code>, and <code>price_cov = price_sd / price_mean</code> for each <code>cut</code> of diamond. What observations can you make about the various cuts? Do those observations match your expectations?</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="data-deriving-quantities.html#cb246-1" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
-<span id="cb246-2"><a href="data-deriving-quantities.html#cb246-2" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
-<span id="cb246-3"><a href="data-deriving-quantities.html#cb246-3" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
-<span id="cb246-4"><a href="data-deriving-quantities.html#cb246-4" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb246-5"><a href="data-deriving-quantities.html#cb246-5" tabindex="-1"></a>    <span class="at">price_mean =</span> <span class="fu">mean</span>(price),</span>
-<span id="cb246-6"><a href="data-deriving-quantities.html#cb246-6" tabindex="-1"></a>    <span class="at">price_sd =</span> <span class="fu">sd</span>(price),</span>
-<span id="cb246-7"><a href="data-deriving-quantities.html#cb246-7" tabindex="-1"></a>    <span class="at">price_cov =</span> price_sd <span class="sc">/</span> price_mean</span>
-<span id="cb246-8"><a href="data-deriving-quantities.html#cb246-8" tabindex="-1"></a>  )</span>
-<span id="cb246-9"><a href="data-deriving-quantities.html#cb246-9" tabindex="-1"></a>df_q5</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="data-deriving-quantities.html#cb248-1" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
+<span id="cb248-2"><a href="data-deriving-quantities.html#cb248-2" tabindex="-1"></a>  diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb248-3"><a href="data-deriving-quantities.html#cb248-3" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
+<span id="cb248-4"><a href="data-deriving-quantities.html#cb248-4" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb248-5"><a href="data-deriving-quantities.html#cb248-5" tabindex="-1"></a>    <span class="at">price_mean =</span> <span class="fu">mean</span>(price),</span>
+<span id="cb248-6"><a href="data-deriving-quantities.html#cb248-6" tabindex="-1"></a>    <span class="at">price_sd =</span> <span class="fu">sd</span>(price),</span>
+<span id="cb248-7"><a href="data-deriving-quantities.html#cb248-7" tabindex="-1"></a>    <span class="at">price_cov =</span> price_sd <span class="sc">/</span> price_mean</span>
+<span id="cb248-8"><a href="data-deriving-quantities.html#cb248-8" tabindex="-1"></a>  )</span>
+<span id="cb248-9"><a href="data-deriving-quantities.html#cb248-9" tabindex="-1"></a>df_q5</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 4
 ##   cut       price_mean price_sd price_cov
 ##   &lt;ord&gt;          &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
@@ -1400,21 +1400,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 Premium        4584.    4349.     0.949
 ## 5 Ideal          3458.    3808.     1.10</code></pre>
 <p>The following test will verify that your <code>df_q5</code> is correct:</p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="data-deriving-quantities.html#cb248-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
-<span id="cb248-2"><a href="data-deriving-quantities.html#cb248-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
-<span id="cb248-3"><a href="data-deriving-quantities.html#cb248-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
-<span id="cb248-4"><a href="data-deriving-quantities.html#cb248-4" tabindex="-1"></a>    df_q5 <span class="sc">%&gt;%</span></span>
-<span id="cb248-5"><a href="data-deriving-quantities.html#cb248-5" tabindex="-1"></a>      <span class="fu">select</span>(cut, price_cov) <span class="sc">%&gt;%</span></span>
-<span id="cb248-6"><a href="data-deriving-quantities.html#cb248-6" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">price_cov =</span> <span class="fu">round</span>(price_cov, <span class="at">digits =</span> <span class="dv">3</span>)),</span>
-<span id="cb248-7"><a href="data-deriving-quantities.html#cb248-7" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb248-8"><a href="data-deriving-quantities.html#cb248-8" tabindex="-1"></a>      <span class="at">cut =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>),</span>
-<span id="cb248-9"><a href="data-deriving-quantities.html#cb248-9" tabindex="-1"></a>      <span class="at">price_cov =</span> <span class="fu">c</span>(<span class="fl">0.817</span>, <span class="fl">0.937</span>, <span class="fl">0.988</span>, <span class="fl">0.949</span>, <span class="fl">1.101</span>)</span>
-<span id="cb248-10"><a href="data-deriving-quantities.html#cb248-10" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb248-11"><a href="data-deriving-quantities.html#cb248-11" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cut =</span> <span class="fu">fct_inorder</span>(cut, <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb248-12"><a href="data-deriving-quantities.html#cb248-12" tabindex="-1"></a>  )</span>
-<span id="cb248-13"><a href="data-deriving-quantities.html#cb248-13" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="data-deriving-quantities.html#cb250-1" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: No need to change this!</span></span>
+<span id="cb250-2"><a href="data-deriving-quantities.html#cb250-2" tabindex="-1"></a>assertthat<span class="sc">::</span><span class="fu">assert_that</span>(</span>
+<span id="cb250-3"><a href="data-deriving-quantities.html#cb250-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">are_equal</span>(</span>
+<span id="cb250-4"><a href="data-deriving-quantities.html#cb250-4" tabindex="-1"></a>    df_q5 <span class="sc">%&gt;%</span></span>
+<span id="cb250-5"><a href="data-deriving-quantities.html#cb250-5" tabindex="-1"></a>      <span class="fu">select</span>(cut, price_cov) <span class="sc">%&gt;%</span></span>
+<span id="cb250-6"><a href="data-deriving-quantities.html#cb250-6" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">price_cov =</span> <span class="fu">round</span>(price_cov, <span class="at">digits =</span> <span class="dv">3</span>)),</span>
+<span id="cb250-7"><a href="data-deriving-quantities.html#cb250-7" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb250-8"><a href="data-deriving-quantities.html#cb250-8" tabindex="-1"></a>      <span class="at">cut =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very Good&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Ideal&quot;</span>),</span>
+<span id="cb250-9"><a href="data-deriving-quantities.html#cb250-9" tabindex="-1"></a>      <span class="at">price_cov =</span> <span class="fu">c</span>(<span class="fl">0.817</span>, <span class="fl">0.937</span>, <span class="fl">0.988</span>, <span class="fl">0.949</span>, <span class="fl">1.101</span>)</span>
+<span id="cb250-10"><a href="data-deriving-quantities.html#cb250-10" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb250-11"><a href="data-deriving-quantities.html#cb250-11" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cut =</span> <span class="fu">fct_inorder</span>(cut, <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb250-12"><a href="data-deriving-quantities.html#cb250-12" tabindex="-1"></a>  )</span>
+<span id="cb250-13"><a href="data-deriving-quantities.html#cb250-13" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="data-deriving-quantities.html#cb250-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="data-deriving-quantities.html#cb252-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Excellent!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Excellent!&quot;</code></pre>
 <p><strong>Observations</strong>:
 - I would expect the <code>Ideal</code> diamonds to have the highest price, but that’s not the case!
