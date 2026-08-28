@@ -172,9 +172,8 @@ Interpret the following model by answering the questions below.
 ## TODO: Inspect the regression coefficients for the following model
 fit_q4 <- 
   df_train %>% 
-  # lm(formula = T_norm ~ . - idx - avg_q - avg_T - rms_T)
-  lm(formula = T_norm ~ L + W + U_0 + N_p + k_f + T_f)
-  # lm(formula = T_norm ~ L - W - U_0 - N_p - k_f - T_f)
+  lm(formula = T_norm ~ . - idx - avg_q - avg_T - rms_T)
+## TODO: Use some of the functions we learned in e-model01 through e-model03
 ```
 
 **Observations**:
