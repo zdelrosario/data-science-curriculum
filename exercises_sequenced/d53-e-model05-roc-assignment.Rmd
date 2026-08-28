@@ -303,7 +303,7 @@ To compute an ROC curve, we could construct a confusion matrix at a variety of t
 df_basic %>%
   ## Begin: Shortcut code for computing an ROC
   arrange(desc(pr_heart_disease)) %>%
-  summarize(
+  mutate(
     true_positive_rate = cumsum(heart_disease) / sum(heart_disease),
     false_positive_rate = cumsum(!heart_disease) / sum(!heart_disease)
   ) %>%
@@ -345,7 +345,7 @@ df_cheating <-
 df_cheating %>%
   ## Begin: Shortcut code for computing an ROC
   arrange(desc(pr_heart_disease)) %>%
-  summarize(
+  mutate(
     true_positive_rate = cumsum(heart_disease) / sum(heart_disease),
     false_positive_rate = cumsum(!heart_disease) / sum(!heart_disease)
   ) %>%
@@ -393,14 +393,14 @@ df_baseline <-
 bind_rows(
   df_q4 %>%
     arrange(desc(pr_heart_disease)) %>%
-    summarize(
+    mutate(
       true_positive_rate = cumsum(heart_disease) / sum(heart_disease),
       false_positive_rate = cumsum(!heart_disease) / sum(!heart_disease)
     ) %>%
     mutate(model = "Personal"),
   df_baseline %>%
     arrange(desc(pr_heart_disease)) %>%
-    summarize(
+    mutate(
       true_positive_rate = cumsum(heart_disease) / sum(heart_disease),
       false_positive_rate = cumsum(!heart_disease) / sum(!heart_disease)
     ) %>%
@@ -434,7 +434,7 @@ df_thresholds <-
   df_q4 %>%
   ## Begin: Shortcut code for computing an ROC
   arrange(desc(pr_heart_disease)) %>%
-  summarize(
+  mutate(
     pr_heart_disease = pr_heart_disease,
     true_positive_rate = cumsum(heart_disease) / sum(heart_disease),
     false_positive_rate = cumsum(!heart_disease) / sum(!heart_disease)
