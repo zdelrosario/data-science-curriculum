@@ -67,8 +67,11 @@ We'll use a number of extras for this class. To that end, please install the fol
 - `modelr`
 - `mvtnorm`
 - `rsample`
-- `Rtsne`
 - `viridis`
+
+You can also just copy the following command:
+
+> `install.packages(c("broom", "curl", "fitdistrplus", "gapminder", "ggrepel", "googlesheets4", "nycflights13", "modelr", "mvtnorm", "rsample", "viridis"))`
 
 ### __q5__ Download cheatsheets
 
@@ -77,15 +80,15 @@ a lot of functions to remember. To that end, RStudio has put together a number
 of [cheatsheets](https://rstudio.com/resources/cheatsheets/) to reference when
 doing data science. Some of the most important ones are:
 
-- [Data visualization](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
-- [Data transformation](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
-- [Data importing](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf)
+- [Data visualization](https://rstudio.github.io/cheatsheets/data-visualization.pdf)
+- [Data transformation](https://rstudio.github.io/cheatsheets/data-transformation.pdf)
+- [Data importing](https://rstudio.github.io/cheatsheets/data-import.pdf)
 
 Later, we will learn special tools for handling other types of data. The following cheatsheets will be useful for those:
 
-- [String data](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf)
-- [Dates and times](https://github.com/rstudio/cheatsheets/raw/master/lubridate.pdf)
-- [Factors](https://github.com/rstudio/cheatsheets/raw/master/factors.pdf)
-- [R Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+- [String data](https://rstudio.github.io/cheatsheets/strings.pdf)
+- [Dates and times](https://rstudio.github.io/cheatsheets/lubridate.pdf)
+- [Factors](https://rstudio.github.io/cheatsheets/factors.pdf)
+- [R Markdown](https://rstudio.github.io/cheatsheets/rmarkdown.pdf)
 
 <!-- include-exit-ticket -->
