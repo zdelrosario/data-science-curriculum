@@ -3,7 +3,7 @@
 
 *Purpose*: Git is a powerful tool to manage our work, but it can be confusing at first. Here we will read some introductory materials about Git, and use the software to download and set up the exercises for the course.
 
-*Reading*: [Automated Version Control](https://swcarpentry.github.io/git-novice/01-basics/index.html), complete the steps in [Setting Up Git](https://swcarpentry.github.io/git-novice/02-setup/index.html)
+*Reading*: [Automated Version Control](https://swcarpentry.github.io/git-novice/01-basics.html), complete the steps in [Setting Up Git](https://swcarpentry.github.io/git-novice/02-setup.html)
 
 *Note*: For the steps in the reading, I recommend using the Terminal in RStudio. This should help ensure you have access to Git.
 
@@ -34,7 +34,7 @@ Give this a sensible name, like `data-science-S2023`. **Ensure your repository i
 
 ![Setup](./images/setup01-name-public.png)
 
-Once you've selected the correct settings, click `Create Repository`. This creates a repository on GitHub's servers, but you still need to download it locally. After creating your repository, you'll see the following link in your browser. Copy the SSH link (note, **not** the HTTPS link) and open a Terminal. 
+Once you've selected the correct settings, click `Create Repository`. This creates a repository on GitHub's servers, but you still need to download it locally. After creating your repository, you'll see the following link in your browser. Copy the SSH link (note, **not** the HTTPS link) and open a Terminal.
 
 ![Setup](./images/setup02-clone-link.png)
 
