@@ -136,8 +136,12 @@ So far we've only been looking at built-in datasets. Ultimately, we'll want to r
 ### __q5__ Use the function `read_csv()` to load the file `"./data/tiny.csv"`.
 
 ```{r q5-task}
-# solution-begin
+# Note: R uses the arrow `<-` operator rather than `=` to assign variables
 df_q5 <-
+# task-begin
+  # TODO write your function call here
+# task-end
+# solution-begin
   read_csv("./data/tiny.csv")
 # solution-end
 
