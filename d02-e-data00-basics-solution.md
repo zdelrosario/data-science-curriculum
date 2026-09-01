@@ -193,6 +193,7 @@ So far we've only been looking at built-in datasets. Ultimately, we'll want to r
 
 
 ``` r
+# Note: R uses the arrow `<-` operator rather than `=` to assign variables
 df_q5 <-
   read_csv("./data/tiny.csv")
 ```

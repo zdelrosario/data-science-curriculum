@@ -1225,8 +1225,9 @@ turn it into <code>diamonds %&gt;% glimpse()</code>.</p>
 <p>So far we’ve only been looking at built-in datasets. Ultimately, we’ll want to read in our own data. We’ll get to the art of loading and <em>wrangling</em> data later, but for now, know that the <code>readr</code> package provides us tools to read data. Let’s quickly practice loading data below.</p>
 <div id="q5-use-the-function-read_csv-to-load-the-file-.datatiny.csv." class="section level3 hasAnchor" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> <strong>q5</strong> Use the function <code>read_csv()</code> to load the file <code>"./data/tiny.csv"</code>.<a href="data-basics.html#q5-use-the-function-read_csv-to-load-the-file-.datatiny.csv." class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-basics.html#cb37-1" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
-<span id="cb37-2"><a href="data-basics.html#cb37-2" tabindex="-1"></a>  <span class="fu">read_csv</span>(<span class="st">&quot;./data/tiny.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-basics.html#cb37-1" tabindex="-1"></a><span class="co"># Note: R uses the arrow `&lt;-` operator rather than `=` to assign variables</span></span>
+<span id="cb37-2"><a href="data-basics.html#cb37-2" tabindex="-1"></a>df_q5 <span class="ot">&lt;-</span></span>
+<span id="cb37-3"><a href="data-basics.html#cb37-3" tabindex="-1"></a>  <span class="fu">read_csv</span>(<span class="st">&quot;./data/tiny.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 2 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
