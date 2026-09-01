@@ -113,6 +113,9 @@ So far we've only been looking at built-in datasets. Ultimately, we'll want to r
 ### __q5__ Use the function `read_csv()` to load the file `"./data/tiny.csv"`.
 
 ```{r q5-task}
+# Note: R uses the arrow `<-` operator rather than `=` to assign variables
+df_q5 <-
+  # TODO write your function call here
 
 df_q5
 ```
