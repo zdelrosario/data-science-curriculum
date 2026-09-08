@@ -46,6 +46,7 @@ If you have any issues with installation, __please__ let me know!
 
 We'll use a number of extras for this class. To that end, please install the following packages. Note that you can install multiple packages with the syntax `install.packages(c("curl", "mvtnorm"))`, extending the arguments inside `c()` as desired.
 
+- `assertthat`
 - `broom`
 - `curl`
 - `fitdistrplus`
@@ -60,7 +61,7 @@ We'll use a number of extras for this class. To that end, please install the fol
 
 You can also just copy the following command:
 
-> `install.packages(c("broom", "curl", "fitdistrplus", "gapminder", "ggrepel", "googlesheets4", "nycflights13", "modelr", "mvtnorm", "rsample", "viridis"))`
+> `install.packages(c("assertthat", "broom", "curl", "fitdistrplus", "gapminder", "ggrepel", "googlesheets4", "nycflights13", "modelr", "mvtnorm", "rsample", "viridis"))`
 
 ### __q5__ Download cheatsheets
 
