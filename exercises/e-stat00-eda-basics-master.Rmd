@@ -46,7 +46,7 @@ diamonds %>% glimpse
 
 I'm going to walk you through a train of thought I had when studying the diamonds dataset.
 
-There are four standard "C's" of [judging](https://en.wikipedia.org/wiki/Diamond_(gemstone)) a diamond.[1] These are `carat, cut, color` and `clarity`, all of which are in the `diamonds` dataset.
+There are four standard "C's" of <a href="https://en.wikipedia.org/wiki/Diamond_(gemstone)">judging</a>[judging] a diamond.[1] These are `carat, cut, color` and `clarity`, all of which are in the `diamonds` dataset.
 
 ## Hypothesis 1
 
