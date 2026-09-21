@@ -33,7 +33,7 @@ library(tidyverse)
 
 In the previous stats exercise, we learned about *densities*. In this exercise, we're going to learn a more formal definition using probability. To introduce the idea of probability, let's first think about *frequency*.
 
-Imagine we have some set of events $X$, and we're considering some *particular* subset of cases that we're interested in $A$. For instance, imagine we're rolling a 6-sided die, and we're interested in cases when the number rolled is even. Then the subset of cases is $A = \{2, 4, 6\}$, and an *example run* of rolls might be $X = \{3, 5, 5, 2, 6, 1, 3, 3\}$.
+Imagine we have some set of events $X$, and we're considering some *particular* subset of cases that we're interested in $A$. For instance, imagine we're rolling a 6-sided die, and we're interested in cases when the number rolled is even. Then the subset of cases is $A = \{2, 4, 6\}$, and an *example run* of rolls might be $X = \{3, 5, 5, 2, 6, 1, 3, 4\}$.
 
 The *frequency* with which events in $A$ occurred for a run $X$ is
 
@@ -42,8 +42,8 @@ For the example above, we have
 
 $$\begin{aligned}
   A &= \{2, 4, 6\}, \\
-  X &= \{3, 5, 5, \mathbf{2}, \mathbf{6}, 1, 3, 3\}, \\
-  F_X(A) &= \frac{2}{8} = 1/4
+  X &= \{3, 5, 5, \mathbf{2}, \mathbf{6}, 1, 3, \textbf{4}\}, \\
+  F_X(A) &= \frac{3}{8}
   \end{aligned}$$
 
 Note that this definition of frequency considers both a *set* $A$ and a sample $X$. We need to define both $A, X$ in order to compute a frequency.
@@ -83,7 +83,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      94  0.94
+## 1         100      90   0.9
 ```
 
 Now it's your turn!
@@ -104,7 +104,7 @@ df_z %>%
 ## # A tibble: 1 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1         100      51  0.51
+## 1         100      49  0.49
 ```
 
 **Observations**:
@@ -155,10 +155,10 @@ map_dfr(
 ## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1          10       4 0.4  
-## 2         100      37 0.37 
-## 3        1000     489 0.489
-## 4       10000    4928 0.493
+## 1          10       3 0.3  
+## 2         100      48 0.48 
+## 3        1000     504 0.504
+## 4       10000    4945 0.494
 ```
 
 This is because *probability* is actually defined[1] in terms of the limit
@@ -189,10 +189,10 @@ map_dfr(
 ## # A tibble: 4 × 3
 ##   count_total count_A    fr
 ##         <int>   <int> <dbl>
-## 1          10       9 0.9  
-## 2         100      95 0.95 
-## 3        1000     951 0.951
-## 4       10000    9505 0.950
+## 1          10      10 1    
+## 2         100      92 0.92 
+## 3        1000     957 0.957
+## 4       10000    9484 0.948
 ```
 
 **Observations**:
