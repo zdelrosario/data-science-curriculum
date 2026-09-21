@@ -27,7 +27,7 @@ library(tidyverse)
 
 In the previous stats exercise, we learned about *densities*. In this exercise, we're going to learn a more formal definition using probability. To introduce the idea of probability, let's first think about *frequency*.
 
-Imagine we have some set of events $X$, and we're considering some *particular* subset of cases that we're interested in $A$. For instance, imagine we're rolling a 6-sided die, and we're interested in cases when the number rolled is even. Then the subset of cases is $A = \{2, 4, 6\}$, and an *example run* of rolls might be $X = \{3, 5, 5, 2, 6, 1, 3, 3\}$.
+Imagine we have some set of events $X$, and we're considering some *particular* subset of cases that we're interested in $A$. For instance, imagine we're rolling a 6-sided die, and we're interested in cases when the number rolled is even. Then the subset of cases is $A = \{2, 4, 6\}$, and an *example run* of rolls might be $X = \{3, 5, 5, 2, 6, 1, 3, 4\}$.
 
 The *frequency* with which events in $A$ occurred for a run $X$ is
 
@@ -36,8 +36,8 @@ For the example above, we have
 
 $$\begin{aligned}
   A &= \{2, 4, 6\}, \\
-  X &= \{3, 5, 5, \mathbf{2}, \mathbf{6}, 1, 3, 3\}, \\
-  F_X(A) &= \frac{2}{8} = 1/4
+  X &= \{3, 5, 5, \mathbf{2}, \mathbf{6}, 1, 3, \textbf{4}\}, \\
+  F_X(A) &= \frac{3}{8}
   \end{aligned}$$
 
 Note that this definition of frequency considers both a *set* $A$ and a sample $X$. We need to define both $A, X$ in order to compute a frequency.
