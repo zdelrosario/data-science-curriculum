@@ -192,7 +192,7 @@ cases %>%
   pivot_longer(
     names_to = "Year",
     values_to = "n",
-    c(`2011`, `2012`, `2013`)
+    cols = c(`2011`, `2012`, `2013`)
 
   ) %>%
   summarize(Year = mean(Year))
@@ -221,7 +221,7 @@ cases %>%
   pivot_longer(
     names_to = "Year",
     values_to = "n",
-    c(`2011`, `2012`, `2013`)
+    cols = c(`2011`, `2012`, `2013`)
   ) %>%
   mutate(Year = as.integer(Year))
 ```
@@ -376,7 +376,7 @@ alloys %>%
     names_to = c("var", "angle"),
     names_sep = "_",
     values_to = "val",
-    starts_with("E") | starts_with("mu")
+    cols = starts_with("E") | starts_with("mu")
   ) %>%
   pivot_wider(
     names_from = var, # Cell entries to turn into new column names

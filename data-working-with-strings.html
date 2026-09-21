@@ -1275,7 +1275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="q3-match-alphabet-characters" class="section level3 hasAnchor" number="32.1.5">
 <h3><span class="header-section-number">32.1.5</span> <strong>q3</strong> Match alphabet characters<a href="data-working-with-strings.html#q3-match-alphabet-characters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Notice that the <code>trans</code> column of <code>mpg</code> has many entries of the form <code>auto|manual\\([[:alpha:]]\\d\\)</code>; use <code>str_mutate()</code> to create a new column <code>tmp</code> with just the code inside the parentheses extracting <code>[[:alpha:]]\\d</code>.</p>
+<p>Notice that the <code>trans</code> column of <code>mpg</code> has many entries of the form <code>auto|manual\\([[:alpha:]]\\d\\)</code>; use <code>mutate()</code> with <code>str_extract()</code> to create a new column <code>tmp</code> with just the code inside the parentheses extracting <code>[[:alpha:]]\\d</code>.</p>
 <div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="data-working-with-strings.html#cb597-1" tabindex="-1"></a><span class="do">## </span><span class="al">TASK</span><span class="do">: Mutate `trans` to extract</span></span>
 <span id="cb597-2"><a href="data-working-with-strings.html#cb597-2" tabindex="-1"></a>df_q3 <span class="ot">&lt;-</span></span>
 <span id="cb597-3"><a href="data-working-with-strings.html#cb597-3" tabindex="-1"></a>  mpg <span class="sc">%&gt;%</span></span>

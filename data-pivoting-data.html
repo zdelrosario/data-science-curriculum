@@ -1236,7 +1236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb304-3"><a href="data-pivoting-data.html#cb304-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
 <span id="cb304-4"><a href="data-pivoting-data.html#cb304-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>,</span>
 <span id="cb304-5"><a href="data-pivoting-data.html#cb304-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb304-6"><a href="data-pivoting-data.html#cb304-6" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="st">`</span><span class="at">2013</span><span class="st">`</span>)</span>
+<span id="cb304-6"><a href="data-pivoting-data.html#cb304-6" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="st">`</span><span class="at">2013</span><span class="st">`</span>)</span>
 <span id="cb304-7"><a href="data-pivoting-data.html#cb304-7" tabindex="-1"></a></span>
 <span id="cb304-8"><a href="data-pivoting-data.html#cb304-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb304-9"><a href="data-pivoting-data.html#cb304-9" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Year =</span> <span class="fu">mean</span>(Year))</span></code></pre></div>
@@ -1254,7 +1254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb307-3"><a href="data-pivoting-data.html#cb307-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
 <span id="cb307-4"><a href="data-pivoting-data.html#cb307-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>,</span>
 <span id="cb307-5"><a href="data-pivoting-data.html#cb307-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb307-6"><a href="data-pivoting-data.html#cb307-6" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="st">`</span><span class="at">2013</span><span class="st">`</span>)</span>
+<span id="cb307-6"><a href="data-pivoting-data.html#cb307-6" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">2011</span><span class="st">`</span>, <span class="st">`</span><span class="at">2012</span><span class="st">`</span>, <span class="st">`</span><span class="at">2013</span><span class="st">`</span>)</span>
 <span id="cb307-7"><a href="data-pivoting-data.html#cb307-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb307-8"><a href="data-pivoting-data.html#cb307-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span></code></pre></div>
 <pre><code>## # A tibble: 9 × 3
@@ -1376,7 +1376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb315-4"><a href="data-pivoting-data.html#cb315-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;angle&quot;</span>),</span>
 <span id="cb315-5"><a href="data-pivoting-data.html#cb315-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
 <span id="cb315-6"><a href="data-pivoting-data.html#cb315-6" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;val&quot;</span>,</span>
-<span id="cb315-7"><a href="data-pivoting-data.html#cb315-7" tabindex="-1"></a>    <span class="fu">starts_with</span>(<span class="st">&quot;E&quot;</span>) <span class="sc">|</span> <span class="fu">starts_with</span>(<span class="st">&quot;mu&quot;</span>)</span>
+<span id="cb315-7"><a href="data-pivoting-data.html#cb315-7" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;E&quot;</span>) <span class="sc">|</span> <span class="fu">starts_with</span>(<span class="st">&quot;mu&quot;</span>)</span>
 <span id="cb315-8"><a href="data-pivoting-data.html#cb315-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb315-9"><a href="data-pivoting-data.html#cb315-9" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
 <span id="cb315-10"><a href="data-pivoting-data.html#cb315-10" tabindex="-1"></a>    <span class="at">names_from =</span> var, <span class="co"># Cell entries to turn into new column names</span></span>
