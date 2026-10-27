@@ -186,7 +186,7 @@ df_sample_random <-
 
 Use the following to check your work.
 
-```{r q3-tests}
+```{r q5-tests}
 ## NOTE: No need to change this
 # Check that the dataset has the correct column names
 assertthat::assert_that(setequal(
@@ -204,7 +204,7 @@ numVsamp <-
   pull(house)
 assertthat::assert_that(
   length(numVsamp) == 0,
-  msg = str_c("You are missing the houses: ", numVsamp)
+  msg = str_c("You are missing the houses: ", str_c(numVsamp, collapse = ", "))
 )
 
 sampVnum <- 
@@ -216,7 +216,7 @@ sampVnum <-
   pull(house)
 assertthat::assert_that(
   length(sampVnum) == 0,
-  msg = str_c("You have extra houses: ", sampVnum)
+  msg = str_c("You have extra houses: ", str_c(sampVnum, collapse = ", "))
 )
 
 print("Great work!")
@@ -268,6 +268,11 @@ name_prevalence <- function(df, last = "Collins") {
 }
 ```
 
+```{r}
+name_prevalence(df_sample_random)
+```
+
+
 Use the following code to check your results.
 
 ```{r}
@@ -284,7 +289,7 @@ last_most <-
 # Ensure correct columns
 assertthat::assert_that(
   setequal(
-    tibble(name = c("James")) %>% name_prevalence(., last = "James") %>% names(),
+    tibble(name = c("Mr. James")) %>% name_prevalence(., last = "James") %>% names(),
     c("term", "estimate")
   ),
   msg = "Your code should result a dataframe with just two columns: `term` and `estimate`"
@@ -292,7 +297,7 @@ assertthat::assert_that(
 
 # Ensure NA handling
 assertthat::assert_that(
-  !(tibble(name = c(NA_character_, "James")) %>% 
+  !(tibble(name = c(NA_character_, "Mr. James")) %>% 
     name_prevalence(., last = "James") %>% 
     pull(estimate) %>% 
     is.na()),
