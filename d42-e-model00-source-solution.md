@@ -53,7 +53,7 @@ Other physical quantities exhibit both real and erroneous variability. Since the
 
 *The Context*: A manufacturer is producing cast steel parts for a landing gear. The part in question takes a heavy load, and if it fails it will disable the aircraft on the ground. These parts will be manufactured in bulk; approximately 500 will be made and installed in commercial aircraft that will operate for decades.
 
-*The QOI*: The strength of each steel component---as-manufactured---will ultimately determine whether each aircraft is safe. As we learned in `c08-structures`, a structure is safe if its applied stress is less than its strength. Therefore, a smaller material strength is a more conservative value for design purposes.
+*The QOI*: The strength of each steel component---as-manufactured---will ultimately determine whether each aircraft is safe. A structure is safe if its **applied stress** is less than its **strength**. Therefore, a smaller material strength is a more conservative value for design purposes.
 
 ## Scenarios
 
