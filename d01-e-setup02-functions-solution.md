@@ -77,7 +77,7 @@ rbind
 ```
 ## function (..., deparse.level = 1) 
 ## .Internal(rbind(deparse.level, ...))
-## <bytecode: 0x555ecab1f490>
+## <bytecode: 0x563c6e085fd0>
 ## <environment: namespace:base>
 ```
 
@@ -165,7 +165,7 @@ lm
 ##         z$qr <- NULL
 ##     z
 ## }
-## <bytecode: 0x555ece0296e0>
+## <bytecode: 0x563c71590220>
 ## <environment: namespace:stats>
 ```
 
@@ -252,8 +252,8 @@ rnorm(n = 10)
 ```
 
 ```
-##  [1] -0.4362870  2.0101403  0.9121396  0.2580673 -0.2579332  0.1296341
-##  [7] -1.1500601 -0.9711557 -0.1225582 -0.4578844
+##  [1] -1.012300948  0.086846812  1.251987341 -0.004133477 -2.501117663
+##  [6]  0.456468260 -0.077654238 -0.739895914  0.982541087  0.483730286
 ```
 
 ## Adapting examples
